@@ -1,0 +1,68 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+*.lock
+*.swp
+*.swo
+*~
+
+# Android
+android/.gradle/
+android/.idea/
+android/local.properties
+android/**/build/
+android/**/.cxx/
+
+# iOS
+ios/.generated/
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/**/build/
+
+# Web
+web/
+
+# Desktop
+windows/flutter/generated_*
+macos/Flutter/GeneratedPluginRegistrant.*
+linux/flutter/generated_*
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.iml
+*.iws
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+
+# Logs & Temp
+*.log
+logs/
+tmp/
+temp/
+
+# Symbolication & Obfuscation
+app.*.symbols
+app.*.map.json
+
+.env
+lib/

@@ -1,0 +1,15 @@
+# Установить LF для всех текстовых файлов
+* text=auto
+
+# Явно указать для Dart файлов
+*.dart text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+
+# Бинарные файлы
+*.png binary
+*.jpg binary
+*.ico binary
+*.pdf binary
