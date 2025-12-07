@@ -1,21 +1,21 @@
-# 🎮 Google Play Clone - Flutter
+# Google Play Clone - Flutter
 
 A Google Play Store UI clone built with Flutter & Dart.
 
-## 📱 Screenshots
+## Screenshots
 
 | Home | Search | Details |
 |------|--------|---------|
 | ![Home](screenshots/home.png) | ![Search](screenshots/search.png) | ![Details](screenshots/details.png) |
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Flutter 3.x**
 - **Dart 3.x**
 - **Provider** for state management
 - **Custom UI components**
 
-## 🏗️ Project Structure
+## Project Structure
 lib/
 ├── models/ # Data models (App, Book, Game)
 ├── screens/ # App screens

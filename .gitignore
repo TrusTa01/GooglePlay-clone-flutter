@@ -65,4 +65,3 @@ app.*.symbols
 app.*.map.json
 
 .env
-lib/
