@@ -79,4 +79,12 @@ class AppBarUtils {
       ],
     );
   }
+
+  // static Widget tabsChange(BuildContext context) {
+  //   return Expanded(
+  //     child: GestureDetector(
+  //       onTap: () => setState(() => _selectedIndex = index),
+  //     ),
+  //   );
+  // }
 }
