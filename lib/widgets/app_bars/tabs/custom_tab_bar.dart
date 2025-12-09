@@ -39,7 +39,7 @@ class CustomTabBarState extends State<CustomTabBar> {
     final List<String> tabs = widget.tabs;
 
     return Container(
-      height: 48,
+      height: 38,
       color: Colors.white,
       child: Row(
         children: [
@@ -71,7 +71,7 @@ class CustomTabBarState extends State<CustomTabBar> {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 0.0),
         child: IntrinsicWidth(
           child: Column(
             mainAxisSize: .min,
@@ -90,7 +90,7 @@ class CustomTabBarState extends State<CustomTabBar> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppBarConstants.tabBarIndicatorWeight),
                   child: Container(
-                    margin: const EdgeInsets.only(top: 5),
+                    margin: const EdgeInsets.only(top: 15),
                     height: 2,
                     color: AppBarConstants.tabBarIndicatorColor,
                   ),
