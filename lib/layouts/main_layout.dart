@@ -46,10 +46,6 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Контент с отступом
-        // Positioned.fill(
-        //   bottom: 56 + MediaQuery.of(context).padding.bottom,
-          // IndexedStack с Navigator'ами
           IndexedStack(
             index: _currentPageIndex,
             children: [

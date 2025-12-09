@@ -14,9 +14,12 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
+  # data:
   provider: ^6.1.5+1
   http: ^1.6.0
   json_annotation: ^4.9.0
+  # fonts:
+  google_fonts: ^6.3.3
 
 dev_dependencies:
   flutter_test:

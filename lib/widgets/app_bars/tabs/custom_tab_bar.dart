@@ -35,12 +35,15 @@ class CustomTabBarState extends State<CustomTabBar> {
 
   @override
   Widget build(BuildContext context) {
+    return _customTabs(height: 42);
+  }
+
+  Widget _customTabs({required double height}) {
     final int selectedIndex = widget.controller.index;
     final List<String> tabs = widget.tabs;
-
     return Container(
-      height: 38,
-      color: Colors.white,
+      height: height,
+      color: AppBarConstants.defaultBackgroundColor,
       child: Row(
         children: [
           const SizedBox(width: 10),
@@ -82,17 +85,19 @@ class CustomTabBarState extends State<CustomTabBar> {
                   color: isSelected
                       ? AppBarConstants.tabBarLabelColor
                       : AppBarConstants.tabBarUnselectedLabelColor,
-                  fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
+                  fontWeight: Constants.defaultFontWeight,
                   fontSize: 15,
                 ),
               ),
               if (isSelected)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppBarConstants.tabBarIndicatorWeight),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppBarConstants.tabBarIndicatorWeight,
+                  ),
                   child: Container(
-                    margin: const EdgeInsets.only(top: 15),
+                    margin: const EdgeInsets.only(top: 19),
+                    decoration: AppBarConstants.tabIndicatorBoxDecoration,
                     height: 2,
-                    color: AppBarConstants.tabBarIndicatorColor,
                   ),
                 ),
             ],

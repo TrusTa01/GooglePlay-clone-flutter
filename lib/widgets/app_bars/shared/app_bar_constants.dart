@@ -7,12 +7,20 @@ class AppBarConstants {
 
   // Цвета
   static const defaultBackgroundColor = Colors.white;
-  static const googleBlue = Color(0xFF0B57CE);
   static const tabBarIndicatorColor = Color(0xFF0958CF);
   static const tabBarLabelColor = Color(0xFF0958CF);
   static const tabBarUnselectedLabelColor = Color(0xFF4D4F4E);
-  
+
   // Размеры
   static const tabBarIndicatorWeight = 4.0;
   static const tabBarHeight = 120.0;
+
+  // Стили
+  static const tabIndicatorBoxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(20),
+      topRight: Radius.circular(20),
+    ),
+    color: AppBarConstants.tabBarIndicatorColor,
+  );
 }
