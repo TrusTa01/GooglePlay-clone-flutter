@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/providers/tabs_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'package:google_play/widgets/widgets.dart';
+import '/widgets/widgets.dart';
+import '/providers/tabs_provider.dart';
+import '/routes/routes.dart';
 
 class AppsScreen extends StatefulWidget {
   const AppsScreen({super.key});
@@ -43,11 +44,14 @@ class _AppsScreenState extends State<AppsScreen>
           logoAssetPath: 'assets/images/logo.png',
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => Navigator.of(
+                context,
+                rootNavigator: true,
+              ).pushNamed(AppRoutesName.notificationsScreen,),
               icon: Icon(Icons.notifications_outlined),
             ),
             const SizedBox(width: 10),
-            CircleAvatar(radius: 16),
+            CircleAvatar(radius: 18),
             const SizedBox(width: 20),
           ],
           tabs: _tabs,

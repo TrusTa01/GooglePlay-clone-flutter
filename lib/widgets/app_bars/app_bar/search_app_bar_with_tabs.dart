@@ -4,23 +4,27 @@ import 'package:provider/provider.dart';
 import 'package:google_play/providers/tabs_provider.dart';
 import 'package:google_play/widgets/widgets.dart';
 
-interface class TabbedAppBar extends StatefulWidget
+interface class SearchAppBarWithTabs extends StatefulWidget
     implements PreferredSizeWidget {
+  final String searchHint;
+  final List<Widget>? inputLeading;
+  final List<Widget>? inputActions;
+  final ValueChanged<String>? onSearchChanged;
   final List<Widget>? actions;
+  final Color? backgroundColor;
   final List<String> tabs;
   final TabController? tabController;
-  final Color? backgroundColor;
-  final bool showLogo;
-  final String logoAssetPath;
 
-  const TabbedAppBar({
+  const SearchAppBarWithTabs({
     super.key,
+    required this.searchHint,
+    this.inputLeading,
+    this.inputActions,
+    this.onSearchChanged,
     this.actions,
+    this.backgroundColor,
     required this.tabs,
     this.tabController,
-    this.backgroundColor,
-    this.showLogo = true,
-    this.logoAssetPath = 'assets/images/google_play_logo.png',
   });
 
   @override
@@ -29,21 +33,23 @@ interface class TabbedAppBar extends StatefulWidget
   }
 
   @override
-  State<TabbedAppBar> createState() => TabbedAppBarState();
+  State<SearchAppBarWithTabs> createState() => _SearchAppBarWithTabsState();
 }
 
-class TabbedAppBarState extends State<TabbedAppBar> {
+class _SearchAppBarWithTabsState extends State<SearchAppBarWithTabs> {
   @override
   Widget build(BuildContext context) {
     final tabsProvider = Provider.of<TabsProvider>(context);
     final tabs = tabsProvider.tabs;
 
     return AppBar(
-      leading: widget.showLogo
-          ? AppBarUtils.buildLogo(logoAssetPath: widget.logoAssetPath)
-          : null,
       backgroundColor: AppBarConstants.defaultBackgroundColor,
-      elevation: 0,
+      elevation: AppBarConstants.defaultElevation,
+      title: AppBarUtils.buildSearchContainer(
+        inputLeading: widget.inputLeading,
+        searchHint: widget.searchHint,
+        inputActions: widget.inputActions,
+      ),
       bottom: CustomTabBar(tabs: tabs, controller: widget.tabController!),
       actions: widget.actions,
     );

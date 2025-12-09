@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/providers/tabs_provider.dart';
 
-import 'package:google_play/widgets/widgets.dart';
+import '/providers/tabs_provider.dart';
+import '/widgets/widgets.dart';
+import '/routes/routes.dart';
+
 
 class GamesScreen extends StatefulWidget {
   const GamesScreen({super.key});
@@ -43,9 +45,15 @@ class _GamesScreenState extends State<GamesScreen>
             showLogo: true,
             logoAssetPath: 'assets/images/logo.png',
             actions: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.notifications_outlined)),
+              IconButton(
+              onPressed: () => Navigator.of(
+                context,
+                rootNavigator: true,
+              ).pushNamed(AppRoutesName.notificationsScreen,),
+              icon: Icon(Icons.notifications_outlined),
+            ),
               const SizedBox(width: 10,),
-              CircleAvatar(radius: 16),
+              CircleAvatar(radius: 18),
               const SizedBox(width: 20,)
             ],
             tabs: _tabs,

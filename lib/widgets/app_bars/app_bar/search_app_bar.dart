@@ -1,59 +1,49 @@
 import 'package:flutter/material.dart';
 
-import '../shared/app_bar_utils.dart';
+import 'package:google_play/widgets/widgets.dart';
 
-class SearchAppBar extends StatelessWidget implements PreferredSizeWidget{
-  final String? searchHint;
+interface class SearchAppBar extends StatefulWidget
+    implements PreferredSizeWidget {
+  final String searchHint;
   final ValueChanged<String>? onSearchChanged;
-  final List<Widget>? actions;
+  final List<Widget>? inputLeading;
+  final List<Widget>? inputActions;
   final bool showBackButton;
   final Color? backgroundColor;
-  final Widget? leadingIcon;
-  final VoidCallback? onLeadingPressed;
+  final List<Widget>? actions;
 
   const SearchAppBar({
     super.key,
-    this.searchHint,
+    required this.searchHint,
     this.onSearchChanged,
-    this.actions,
+    this.inputLeading,
+    this.inputActions,
     this.showBackButton = false,
     this.backgroundColor,
-    this.leadingIcon,
-    this.onLeadingPressed,
+    this.actions,
   });
 
- @override
+  @override
   Size get preferredSize {
     return const Size.fromHeight(kToolbarHeight);
   }
 
   @override
+  State<SearchAppBar> createState() => SearchAppBarState();
+}
+
+class SearchAppBarState extends State<SearchAppBar> {
+  @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor ?? Colors.white,
-      elevation: 0,
-      leading: AppBarUtils.buildLeading(
-        context: context,
-        leadingIcon: leadingIcon,
-        showBackButton: false,
-        ),
-      title: Container(
-        height: 40,
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: TextField(
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.search, color: Colors.grey),
-            hintText: searchHint ?? 'Поиск...',
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(vertical: 0),
-          ),
-          onChanged: onSearchChanged,
-        ),
+      backgroundColor: AppBarConstants.defaultBackgroundColor,
+      elevation: AppBarConstants.defaultElevation,
+      title: AppBarUtils.buildSearchContainer(
+        inputLeading: widget.inputLeading,
+        searchHint: widget.searchHint,
+        inputActions: widget.inputActions,
       ),
-      actions: actions,
+      actions: widget.actions,
     );
   }
 }

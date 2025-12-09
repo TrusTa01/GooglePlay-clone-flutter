@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../shared/app_bar_utils.dart';
 
-class TransparentAppBar extends StatelessWidget implements PreferredSizeWidget{
-  final String? title;
+interface class TransparentAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  final Widget? title;
   final List<Widget>? actions;
   final bool showBackButton;
   final Widget? leadingIcon;
@@ -28,13 +29,9 @@ class TransparentAppBar extends StatelessWidget implements PreferredSizeWidget{
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: AppBarUtils.buildLeading(
-        context: context,
-        showBackButton: true,
-        ),
-      title: title != null
-          ? Text(title!, style: const TextStyle(color: Colors.white))
-          : null,
+      leading: AppBarUtils.buildLeading(context: context, showBackButton: true),
+      centerTitle: false,
+      title: title,
       iconTheme: const IconThemeData(color: Colors.white),
       actions: actions,
     );

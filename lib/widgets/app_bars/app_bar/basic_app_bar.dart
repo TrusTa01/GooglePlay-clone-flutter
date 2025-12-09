@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../shared/app_bar_utils.dart';
-import '../shared/app_bar_constants.dart';
+import '../../constants/app_bar_constants.dart';
 
-class BasicAppBar extends StatelessWidget implements PreferredSizeWidget{
-  final String? title;
+interface class BasicAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  final Widget? title;
   final List<Widget>? actions;
   final bool showBackButton;
   final Color? backgroundColor;
@@ -33,11 +34,12 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor ?? AppBarConstants.defaultBackgroundColor,
+      backgroundColor:
+          backgroundColor ?? AppBarConstants.defaultBackgroundColor,
       elevation: 0,
       leading: AppBarUtils.buildLeading(
-      context: context,
-      leadingIcon: leadingIcon,
+        context: context,
+        leadingIcon: leadingIcon,
         onLeadingPressed: onLeadingPressed,
         showBackButton: showBackButton,
       ),

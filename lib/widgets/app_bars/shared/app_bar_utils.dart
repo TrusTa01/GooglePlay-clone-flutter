@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class AppBarUtils {
+import '../../constants/app_bar_constants.dart';
+import '../../constants/global_constants.dart';
+abstract interface class AppBarUtils {
   // Метод построения логотипа
   static Widget buildLogo({
     required String logoAssetPath,
@@ -34,7 +36,7 @@ class AppBarUtils {
         title,
         style: const TextStyle(
           color: Colors.black,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight(500),
         ),
       );
     }
@@ -69,22 +71,47 @@ class AppBarUtils {
   static Widget buildLogoTitleRow({
     required bool showLogo,
     required String logoAssetPath,
-    required String? title,
+    required Widget? title,
   }) {
     return Row(
       children: [
         if (showLogo) buildLogo(logoAssetPath: logoAssetPath),
         const SizedBox(width: 8),
-        Expanded(child: buildTitle(title)),
+        Expanded(child: buildTitle('')),
       ],
     );
   }
 
-  // static Widget tabsChange(BuildContext context) {
-  //   return Expanded(
-  //     child: GestureDetector(
-  //       onTap: () => setState(() => _selectedIndex = index),
-  //     ),
-  //   );
-  // }
+  static Widget buildSearchContainer({
+    required List<Widget>? inputLeading,
+    required String searchHint,
+    required List<Widget>? inputActions,
+  }) {
+    return Container(
+      height: 50,
+      decoration: AppBarConstants.searchAppBarBoxDecoration,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Row(
+          children: [
+            ...(inputLeading ?? []),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  searchHint,
+                  style: const TextStyle(
+                    color: AppBarConstants.searchLabelColor,
+                    fontWeight: Constants.defaultFontWeight,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+            ...(inputActions ?? []),
+          ],
+        ),
+      ),
+    );
+  }
 }

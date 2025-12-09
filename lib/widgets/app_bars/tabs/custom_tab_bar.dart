@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '/widgets/widgets.dart';
 
-class CustomTabBar extends StatefulWidget implements PreferredSizeWidget {
+interface class CustomTabBar extends StatefulWidget
+    implements PreferredSizeWidget {
   final List<String> tabs;
   final TabController controller;
 
@@ -12,10 +13,10 @@ class CustomTabBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(48);
 
   @override
-  State<CustomTabBar> createState() => CustomTabBarState();
+  State<CustomTabBar> createState() => _CustomTabBarState();
 }
 
-class CustomTabBarState extends State<CustomTabBar> {
+class _CustomTabBarState extends State<CustomTabBar> {
   @override
   void initState() {
     super.initState();
@@ -77,18 +78,24 @@ class CustomTabBarState extends State<CustomTabBar> {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 0.0),
         child: IntrinsicWidth(
           child: Column(
-            mainAxisSize: .min,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                text,
-                style: TextStyle(
-                  color: isSelected
-                      ? AppBarConstants.tabBarLabelColor
-                      : AppBarConstants.tabBarUnselectedLabelColor,
-                  fontWeight: Constants.defaultFontWeight,
-                  fontSize: 15,
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    text,
+                    style: TextStyle(
+                      color: isSelected
+                          ? AppBarConstants.tabBarLabelColor
+                          : AppBarConstants.tabBarUnselectedLabelColor,
+                      fontWeight: Constants.defaultFontWeight,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
               ),
+
               if (isSelected)
                 Padding(
                   padding: const EdgeInsets.symmetric(

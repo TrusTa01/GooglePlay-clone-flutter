@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../widgets.dart';
 
-class AppBars extends StatelessWidget implements PreferredSizeWidget{
+interface class AppBars extends StatelessWidget implements PreferredSizeWidget{
   final AppBarType type; // Тип Апбара
-  final String? title; // Заголовок
+  final Widget? title; // Заголовок
   final List<Widget>? actions; // Контент справа
   final bool showBackButton; // Нужна ли кнопка назад
   final String? searchHint; // Подсказка при поиске
+  final List<Widget>? inputLeading;
+  final List<Widget>? inputActions;
   final ValueChanged<String>? onSearchChanged;
   final List<String>? tabs; // Разделы
   final TabController? tabController; // Контроллер разделов
@@ -24,6 +26,8 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget{
     this.actions,
     this.showBackButton = false,
     this.searchHint,
+    this.inputLeading,
+    this.inputActions,
     this.onSearchChanged,
     this.tabs,
     this.tabController,
@@ -36,7 +40,7 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Size get preferredSize {
-    return Size.fromHeight(type == AppBarType.tabbed ? 120 : kToolbarHeight);
+    return Size.fromHeight(type == AppBarType.tabbed || type == AppBarType.searchWithTabbs ? 120 : kToolbarHeight);
   }
   
   @override
@@ -44,13 +48,13 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget{
     switch (type) {
       case AppBarType.search:
         return SearchAppBar(
-          searchHint: searchHint,
+          searchHint: searchHint!,
+          inputLeading: inputLeading,
+          inputActions: inputActions,
           onSearchChanged: onSearchChanged,
           actions: actions,
           showBackButton: showBackButton,
           backgroundColor: backgroundColor,
-          leadingIcon: leadingIcon,
-          onLeadingPressed: onLeadingPressed,
         );
       case AppBarType.tabbed:
       if (tabs == null) {
@@ -64,6 +68,17 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget{
           backgroundColor: backgroundColor,
           showLogo: showLogo,
           logoAssetPath: logoAssetPath,
+        );
+      case AppBarType.searchWithTabbs:
+        return SearchAppBarWithTabs(
+          searchHint: searchHint!,
+          inputLeading: inputLeading,
+          inputActions: inputActions,
+          onSearchChanged: onSearchChanged,
+          actions: actions,
+          backgroundColor: backgroundColor,
+          tabs: tabs!,
+          tabController: tabController,
         );
       case AppBarType.transparent:
         return TransparentAppBar(

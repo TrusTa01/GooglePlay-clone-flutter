@@ -33,12 +33,16 @@ flutter:
   uses-material-design: true
 
   assets:
-  # logo
+  # images
+  ## logo
   - assets/images/logo.png
+
+  # icons
+  - assets/icons/verify.png
+  
   # data
   - assets/data/apps.json
   - assets/data/books.json
   - assets/data/games.json
-  
   # fonts:
     
