@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../shared/app_bar_utils.dart';
+import 'package:google_play/providers/tabs_provider.dart';
+import 'package:google_play/widgets/widgets.dart';
 
-class TabbedAppBar extends StatelessWidget implements PreferredSizeWidget{
+class TabbedAppBar extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final List<String> tabs;
   final TabController? tabController;
@@ -22,25 +24,30 @@ class TabbedAppBar extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Size get preferredSize {
-    return const Size.fromHeight(kToolbarHeight);
+    return const Size.fromHeight(kToolbarHeight + 48);
   }
 
   @override
+  State<TabbedAppBar> createState() => TabbedAppBarState();
+}
+
+class TabbedAppBarState extends State<TabbedAppBar> {
+  
+
+  @override
   Widget build(BuildContext context) {
+    final tabsProvider = Provider.of<TabsProvider>(context);
+    final tabs = tabsProvider.tabs;
+
     return AppBar(
-      leading: showLogo ? AppBarUtils.buildLogo(logoAssetPath: logoAssetPath) : null,
-      backgroundColor: backgroundColor ?? Colors.white,
+      leading: widget.showLogo ? AppBarUtils.buildLogo(logoAssetPath: widget.logoAssetPath) : null,
+      backgroundColor: widget.backgroundColor ?? Colors.white,
       elevation: 0,
-      bottom: TabBar(
-        controller: tabController,
-        tabs: tabs.map((tab) => Tab(text: tab)).toList(),
-        isScrollable: false,
-        labelColor: Colors.black,
-        unselectedLabelColor: Colors.grey[800],
-        indicatorColor: const Color(0xFF4285F4),
-        indicatorWeight: 3.0,      
+      bottom: CustomTabBar(
+        tabs: tabs,
+        controller: widget.tabController!,
       ),
-      actions: actions,
+      actions: widget.actions,
     );
   }
 }

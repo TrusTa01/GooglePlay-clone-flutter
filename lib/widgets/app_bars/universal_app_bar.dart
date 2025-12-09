@@ -54,8 +54,8 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget{
         );
       case AppBarType.tabbed:
       if (tabs == null) {
-        // Возвращаем ошибку или заглушку
-        return BasicAppBar(title: 'Ошибка: нет tabs');
+        // Возвращаем заглушку
+        return BasicAppBar();
       }
         return TabbedAppBar(
           actions: actions,

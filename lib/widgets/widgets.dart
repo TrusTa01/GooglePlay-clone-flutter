@@ -6,8 +6,12 @@ export 'app_bars/app_bar/search_app_bar.dart';
 export 'app_bars/app_bar/tabbed_app_bar.dart';
 export 'app_bars/app_bar/transparent_app_bar.dart';
 
+// shared
+export 'app_bars/shared/app_bar_utils.dart';
+export 'app_bars/shared/app_bar_constants.dart';
+
 // Tabs
-export 'app_bars/tabs/tabs.dart';
+export 'app_bars/tabs/custom_tab_bar.dart';
 
 // Navigation bar
-export 'navigation_bar/custom_navigation_bar.dart';
+export 'navigation_bar/navigation_bar.dart';
