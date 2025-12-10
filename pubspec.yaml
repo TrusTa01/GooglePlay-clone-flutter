@@ -37,12 +37,15 @@ flutter:
   ## logo
   - assets/images/logo.png
 
+  - assets/images/verify.png
+
   # icons
-  - assets/icons/verify.png
-  
+  - assets/icons/gamepad.png
+  - assets/icons/gamepad_outlined.png
+  - assets/icons/app.png
+  - assets/icons/app_outlined.png
+
   # data
   - assets/data/apps.json
   - assets/data/books.json
   - assets/data/games.json
-  # fonts:
-    

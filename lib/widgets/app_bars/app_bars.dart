@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
 import '../widgets.dart';
 
-interface class AppBars extends StatelessWidget implements PreferredSizeWidget{
+interface class AppBars extends StatelessWidget implements PreferredSizeWidget {
   final AppBarType type; // Тип Апбара
   final Widget? title; // Заголовок
   final List<Widget>? actions; // Контент справа
   final bool showBackButton; // Нужна ли кнопка назад
   final String? searchHint; // Подсказка при поиске
-  final List<Widget>? inputLeading;
-  final List<Widget>? inputActions;
-  final ValueChanged<String>? onSearchChanged;
+  final List<Widget>? inputLeading; // Контент в поле поиска слева
+  final List<Widget>? inputActions; // Контент в поле поиска слева
+  final ValueChanged<String>? onSearchChanged; // По нажатию на поиск
   final List<String>? tabs; // Разделы
   final TabController? tabController; // Контроллер разделов
   final Color? backgroundColor; // Цвет заднего фона
@@ -40,14 +39,27 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget{
 
   @override
   Size get preferredSize {
-    return Size.fromHeight(type == AppBarType.tabbed || type == AppBarType.searchWithTabbs ? 120 : kToolbarHeight);
+    const double dividerHeight = 1.0;
+
+    // Больше места для табов
+    final double baseHeight =
+        type == AppBarType.tabbed || type == AppBarType.searchWithTabbs
+        ? 120.0
+        : kToolbarHeight;
+
+    // Условное добавление раздилителя только если он нужен
+    return Size.fromHeight(baseHeight + (_needsDivider ? dividerHeight : 0.0));
   }
-  
+
+  bool get _needsDivider => type != AppBarType.search;
+
   @override
   Widget build(BuildContext context) {
+    final PreferredSizeWidget innerAppBar;
+
     switch (type) {
       case AppBarType.search:
-        return SearchAppBar(
+        innerAppBar = SearchAppBar(
           searchHint: searchHint!,
           inputLeading: inputLeading,
           inputActions: inputActions,
@@ -56,12 +68,14 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget{
           showBackButton: showBackButton,
           backgroundColor: backgroundColor,
         );
+        break;
       case AppBarType.tabbed:
-      if (tabs == null) {
-        // Возвращаем заглушку
-        return BasicAppBar();
-      }
-        return TabbedAppBar(
+        if (tabs == null) {
+          // Возвращаем заглушку
+          innerAppBar = BasicAppBar();
+          break;
+        }
+        innerAppBar = TabbedAppBar(
           actions: actions,
           tabs: tabs!,
           tabController: tabController,
@@ -69,8 +83,9 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget{
           showLogo: showLogo,
           logoAssetPath: logoAssetPath,
         );
+        break;
       case AppBarType.searchWithTabbs:
-        return SearchAppBarWithTabs(
+        innerAppBar = SearchAppBarWithTabs(
           searchHint: searchHint!,
           inputLeading: inputLeading,
           inputActions: inputActions,
@@ -80,16 +95,18 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget{
           tabs: tabs!,
           tabController: tabController,
         );
+        break;
       case AppBarType.transparent:
-        return TransparentAppBar(
+        innerAppBar = TransparentAppBar(
           title: title,
           actions: actions,
           showBackButton: showBackButton,
           leadingIcon: leadingIcon,
           onLeadingPressed: onLeadingPressed,
         );
+        break;
       default:
-        return BasicAppBar(
+        innerAppBar = BasicAppBar(
           title: title,
           actions: actions,
           showBackButton: showBackButton,
@@ -99,6 +116,17 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget{
           showLogo: showLogo,
           logoAssetPath: logoAssetPath,
         );
+        break;
     }
+
+    //  Если разделитель не нужен, возвращаем AppBar как есть
+    if (!_needsDivider) {
+      return innerAppBar as Widget;
+    }
+
+    // Если разделитель нужен, оборачиваем в Container с границей
+    return AppBarUtils.buildAppBarDivider(
+      child: innerAppBar as Widget,
+    );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants/app_bar_constants.dart';
 import '../../constants/global_constants.dart';
+
 abstract interface class AppBarUtils {
   // Метод построения логотипа
   static Widget buildLogo({
@@ -82,12 +83,14 @@ abstract interface class AppBarUtils {
     );
   }
 
+  // Метод построения кастомного инпута для поиска
   static Widget buildSearchContainer({
     required List<Widget>? inputLeading,
     required String searchHint,
     required List<Widget>? inputActions,
   }) {
     return Container(
+      margin: EdgeInsets.all(5),
       height: 50,
       decoration: AppBarConstants.searchAppBarBoxDecoration,
       child: Padding(
@@ -112,6 +115,18 @@ abstract interface class AppBarUtils {
           ],
         ),
       ),
+    );
+  }
+
+  // Метод построения разделителя
+  static Widget buildAppBarDivider({required Widget child}) {
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Color.fromARGB(31, 0, 0, 0), width: 1.5),
+        ),
+      ),
+      child: child,
     );
   }
 }

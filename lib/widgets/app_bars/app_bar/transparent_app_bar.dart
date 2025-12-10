@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../shared/app_bar_utils.dart';
+import '../utils/app_bar_utils.dart';
 
 interface class TransparentAppBar extends StatelessWidget
     implements PreferredSizeWidget {

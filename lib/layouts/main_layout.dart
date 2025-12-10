@@ -21,6 +21,21 @@ class _MainLayoutState extends State<MainLayout> {
     GlobalKey<NavigatorState>(), // Books
   ];
 
+  Widget _buildCurrentScreen() {
+    switch (_currentPageIndex) {
+      case 0:
+        return _navigatorKeys.createNavigator(0, const GamesScreen());
+      case 1:
+        return _navigatorKeys.createNavigator(1, const AppsScreen());
+      case 2:
+        return _navigatorKeys.createNavigator(2, const SearchScreen());
+      case 3:
+        return _navigatorKeys.createNavigator(3, const BooksScreen());
+      default:
+        return Container(); // На всякий случай
+    }
+  }
+
   // Обработчик выбора вкладки
   void _handleTabSelection(int index) {
     if (index == _currentPageIndex) {
@@ -46,15 +61,8 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-          IndexedStack(
-            index: _currentPageIndex,
-            children: [
-              _navigatorKeys.createNavigator(0, const GamesScreen()),
-              _navigatorKeys.createNavigator(1, const AppsScreen()),
-              _navigatorKeys.createNavigator(2, const SearchScreen()),
-              _navigatorKeys.createNavigator(3, const BooksScreen()),
-            ],
-          ),
+        _buildCurrentScreen(),
+        
         // CustomNavigationBar поверх всего
         Positioned(
           bottom: 0,

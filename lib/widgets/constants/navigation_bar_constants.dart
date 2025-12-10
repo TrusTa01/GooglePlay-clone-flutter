@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-class NavBarConstants {
+abstract interface class NavBarConstants {
+  // Background
+  static const navBarBackgroungColor = Color(0xFFF0F4F9);
+
   // Text
-  static const navBarDefaultLabelColor = Color(0xFF4D4F4E);
-  static const tabBarSelectedLabelColor = Color(0xFF0958CF);
+  static const navBarUnselectedLabelColor = Color(0xFF4D4F4E);
+  static const navBarSelectedLabelColor = Color(0xFF2076A7);
 
   // Icons
   static const navBarUnselectedIconColor = Color(0xFF4D4F4E);

@@ -32,8 +32,7 @@ class GooglePlay extends StatelessWidget {
         routes: {
           AppRoutesName.notificationsScreen: (context) => const NotificationsScreen()
         },
-        home: const MainLayout(),
-        
+        home: const MainLayout(),   
       ),
     );
   }

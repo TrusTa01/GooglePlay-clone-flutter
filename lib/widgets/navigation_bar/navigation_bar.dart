@@ -14,17 +14,22 @@ class CustomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationBar(
-      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      indicatorColor: NavBarConstants.navBarIndicatorColor,
-      selectedIndex: currentPageIndex,
-      onDestinationSelected: onDestinationSelected,
-      destinations: const <Widget>[
-        NavigationDestination(icon: Icon(Icons.gamepad, color: NavBarConstants.navBarDefaultLabelColor), label: 'Игры'),
-        NavigationDestination(icon: Icon(Icons.apps, color: NavBarConstants.navBarDefaultLabelColor), label: 'Приложения'),
-        NavigationDestination(icon: Icon(Icons.search, color: NavBarConstants.navBarDefaultLabelColor), label: 'Поиск'),
-        NavigationDestination(icon: Icon(Icons.book, color: NavBarConstants.navBarDefaultLabelColor), label: 'Книги',),
-      ],
+    return SafeArea(
+      bottom: false,
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          navigationBarTheme: buildCustomNavigationBarTheme(),
+        ),
+      child: NavigationBar(
+        height: 65,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        indicatorColor: NavBarConstants.navBarIndicatorColor,
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: onDestinationSelected,
+        backgroundColor: NavBarConstants.navBarBackgroungColor,
+        destinations: destinations,
+      ),
+      ),
     );
   }
 }
