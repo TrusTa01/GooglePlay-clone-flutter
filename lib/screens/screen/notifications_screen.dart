@@ -18,7 +18,7 @@ class NotificationsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/icons/verify.png', width: 100, height: 100),
+            Image.asset('assets/images/verify.png', width: 100, height: 100),
             const SizedBox(height: 10),
             Text(
               'Ничего нет',
@@ -26,8 +26,9 @@ class NotificationsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'Здесь будут появляться уведомления о вашем\n аккаунте Google Play.', textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight(500),),
+              'Здесь будут появляться уведомления о вашем\n аккаунте Google Play.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight(500)),
             ),
           ],
         ),
