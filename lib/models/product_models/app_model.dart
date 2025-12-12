@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../product_interface.dart';
 
-part '../models.g/app_model.g.dart';
+part '../product_models.g/app_model.g.dart';
 
 @JsonSerializable()
 class App implements Product {

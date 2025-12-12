@@ -13,19 +13,14 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   rating: (json['rating'] as num).toDouble(),
   category: json['category'] as String,
   iconUrl: json['iconUrl'] as String,
-  platforms: (json['platforms'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
   gameGenre: json['gameGenre'] as String,
+  screenshots: json['screenshots'] as String,
+  tags: json['tags'] as String,
   isOnline: json['isOnline'] as bool,
   hasMultiplayer: json['hasMultiplayer'] as bool,
   ageCategory: json['ageCategory'] as String,
-  hasControllerSupport: json['hasControllerSupport'] as bool,
-  achievements: (json['achievements'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
+  hasAchievements: json['hasAchievements'] as bool,
   gameModes: json['gameModes'] as String,
-  storyDuration: json['storyDuration'] as String?,
 );
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
@@ -35,13 +30,12 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'rating': instance.rating,
   'category': instance.category,
   'iconUrl': instance.iconUrl,
-  'platforms': instance.platforms,
   'gameGenre': instance.gameGenre,
+  'screenshots': instance.screenshots,
+  'tags': instance.tags,
   'isOnline': instance.isOnline,
   'hasMultiplayer': instance.hasMultiplayer,
   'ageCategory': instance.ageCategory,
-  'hasControllerSupport': instance.hasControllerSupport,
-  'achievements': instance.achievements,
+  'hasAchievements': instance.hasAchievements,
   'gameModes': instance.gameModes,
-  'storyDuration': instance.storyDuration,
 };

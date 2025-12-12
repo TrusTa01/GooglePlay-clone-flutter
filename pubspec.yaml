@@ -18,6 +18,7 @@ dependencies:
   provider: ^6.1.5+1
   http: ^1.6.0
   json_annotation: ^4.9.0
+  faker: ^2.2.0
   # fonts:
   google_fonts: ^6.3.3
 
@@ -34,10 +35,20 @@ flutter:
 
   assets:
   # images
+  - assets/images/verify.png
+
+  ## banners
+  - assets/images/banners/banner1.png
+  - assets/images/banners/banner2.png
+  - assets/images/banners/banner3.png
+  - assets/images/banners/banner4.png
+  - assets/images/banners/banner5.png
+  - assets/images/banners/banner6.png
+  - assets/images/banners/banner7.png
+  - assets/images/banners/banner8.png
+
   ## logo
   - assets/images/logo.png
-
-  - assets/images/verify.png
 
   # icons
   - assets/icons/gamepad.png

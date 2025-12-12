@@ -23,6 +23,7 @@ class GooglePlay extends StatelessWidget {
         theme: baseTheme.copyWith(
           textTheme: GoogleFonts.nunitoTextTheme(baseTheme.textTheme),
           primaryColor: const Color(0xFF0B57CE),
+          scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
             elevation: 0,
