@@ -21,6 +21,8 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   ageCategory: json['ageCategory'] as String,
   hasAchievements: json['hasAchievements'] as bool,
   gameModes: json['gameModes'] as String,
+  isPaid: json['isPaid'] as bool,
+  price: json['price'] as String?,
 );
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
@@ -38,4 +40,6 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'ageCategory': instance.ageCategory,
   'hasAchievements': instance.hasAchievements,
   'gameModes': instance.gameModes,
+  'isPaid': instance.isPaid,
+  'price': instance.price,
 };

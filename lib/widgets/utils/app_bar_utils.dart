@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/app_bar_constants.dart';
-import '../../constants/global_constants.dart';
+import '../constants/app_bar_constants.dart';
+import '../constants/global_constants.dart';
 
 abstract interface class AppBarUtils {
   // Метод построения логотипа

@@ -1,4 +1,4 @@
-// Генерация Мок-данных игр
+// Генерация мок-данных игр
 import 'dart:convert';
 import 'dart:io';
 import 'package:faker/faker.dart';
@@ -166,7 +166,9 @@ void main() async {
     'Руины',
   ];
 
-  for (int i = 1; i <= 1000; i++) {
+  final int randomSuffix = faker.randomGenerator.integer(9, min: 1);
+
+  for (int i = 1; i <= 500000; i++) {
     final List<String> selectedPlatforms = [
       faker.randomGenerator.element(platforms),
     ];
@@ -183,7 +185,7 @@ void main() async {
     final String noun = faker.randomGenerator.element(suffixWords);
 
     // Используем i.toString() для гарантии уникальности
-    final String generatedTitle = '$adj $noun $i';
+    final String generatedTitle = '$adj $noun $randomSuffix';
 
     final String genreTitle = faker.randomGenerator.element(genres);
     final String creatorName =
@@ -199,6 +201,22 @@ void main() async {
       tagCount,
       (_) => faker.randomGenerator.element(gameTags),
     ).toSet().toList();
+
+    final bool isPaid = faker.randomGenerator.boolean();
+    String? price; 
+    
+    if (isPaid) {
+        // Генерируем случайное целое число (от 99 до 9999)
+        // Если price будет в диапазоне от 0.99 до 99.99 (в копейках/центах)
+      
+        final int rawCents = faker.randomGenerator.integer(9999, min: 99); 
+        
+        // Преобразуем целое число в формат валюты (делим на 100)
+        final double rawPrice = rawCents / 100.0;
+        
+        // Форматируем для отображения
+        price = '₽${rawPrice.toStringAsFixed(2)}'; 
+    }
 
     final gameData = {
       "id": i.toString(),
@@ -222,6 +240,8 @@ void main() async {
       "hasControllerSupport": faker.randomGenerator.boolean(),
       "hasAchievements": faker.randomGenerator.boolean(),
       "gameModes": faker.randomGenerator.element(modes),
+      "isPaid": isPaid,
+      "price": price,
 
       "storyDuration": faker.randomGenerator.boolean()
           ? faker.randomGenerator.element([
@@ -246,6 +266,6 @@ void main() async {
 
   // ignore: avoid_print
   print(
-    '✅ Successfully generated ${gamesList.length} game objects to ${file.path}',
+    'Successfully generated ${gamesList.length} game objects to ${file.path}',
   );
 }

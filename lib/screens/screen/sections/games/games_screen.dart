@@ -64,7 +64,7 @@ class _GamesScreenState extends State<GamesScreen>
 
       const SizedBox(width: 10),
       CircleAvatar(radius: 18),
-      const SizedBox(width: 20),
+      const SizedBox(width: 25),
     ];
 
     return ChangeNotifierProvider<TabsProvider>(

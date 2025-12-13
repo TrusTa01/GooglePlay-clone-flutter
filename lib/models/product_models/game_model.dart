@@ -22,11 +22,13 @@ class Game implements Product {
   final String gameGenre; // "РПГ", "Стратегия", "Пазлы"
   final String screenshots; // Скриншоты
   final String tags; // Теги
-  final bool isOnline; // Онлайн игра
+  final bool isOnline; // Онлайн игра?
   final bool hasMultiplayer; // Мультиплеер
   final String ageCategory; // "3+", "12+", "18+"
   final bool hasAchievements; // Достижения
   final String gameModes; // "Single-player", "Co-op"
+  final bool isPaid; // Платная?
+  final String? price; // Цена (если есь)
 
   Game({
     required this.id,
@@ -43,8 +45,12 @@ class Game implements Product {
     required this.ageCategory,
     required this.hasAchievements,
     required this.gameModes,
+    required this.isPaid,
+    this.price,
   });
+
   factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);
+
   @override
   Map<String, dynamic> toJson() => _$GameToJson(this);
 }

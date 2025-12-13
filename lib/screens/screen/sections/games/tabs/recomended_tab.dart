@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/widgets/widgets.dart';
+
 class GamesRecommendedTab extends StatefulWidget {
   const GamesRecommendedTab({super.key});
 
@@ -12,14 +14,14 @@ class _GamesRecommendedTabState extends State<GamesRecommendedTab> {
 
   static const double _viewportFraction = 0.92;
 
-  static const int _initialPageIndex = 3;
+  static const int _initialBannerIndex = 3;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(
       viewportFraction: _viewportFraction,
-      initialPage: _initialPageIndex,
+      initialPage: _initialBannerIndex,
     );
   }
 
@@ -37,117 +39,9 @@ class _GamesRecommendedTabState extends State<GamesRecommendedTab> {
     final thirtyPercentWidth = screenWidth / 3;
     final thirtyPercentHeight = screenHeight / 3;
 
-    final List<Widget> heroBanners = [
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/images/banners/banner1.png'),
-            ),
-          ),
-        ),
-      ),
-
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/images/banners/banner2.png'),
-            ),
-          ),
-        ),
-      ),
-
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/images/banners/banner3.png'),
-            ),
-          ),
-        ),
-      ),
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/images/banners/banner4.png'),
-            ),
-          ),
-        ),
-      ),
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/images/banners/banner5.png'),
-            ),
-          ),
-        ),
-      ),
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/images/banners/banner6.png'),
-            ),
-          ),
-        ),
-      ),
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/images/banners/banner7.png'),
-            ),
-          ),
-        ),
-      ),
-      GestureDetector(
-        onTap: () {},
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage('assets/images/banners/banner8.png'),
-            ),
-          ),
-        ),
-      ),
-    ];
-
     return ListView(
       children: [
+        // Banners
         Padding(
           padding: const EdgeInsets.only(top: 15),
           child: ConstrainedBox(
@@ -160,6 +54,25 @@ class _GamesRecommendedTabState extends State<GamesRecommendedTab> {
               controller: _pageController,
               children: heroBanners,
             ),
+          ),
+        ),
+        // Recomended slider
+        Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: [
+               Text('Специально для вас'),
+               ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  // ListView.builder(
+                  //   padding: EdgeInsets.symmetric(horizontal: 5),
+                  //   itemCount: 7,
+                  //   itemBuilder: 
+                  // ),
+                ],
+              )
+            ],
           ),
         ),
       ],

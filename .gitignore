@@ -65,3 +65,4 @@ app.*.symbols
 app.*.map.json
 
 .env
+assets/data/

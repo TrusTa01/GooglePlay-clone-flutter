@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Constants {
+abstract interface class Constants {
   // Основной цвет
-  static const googleBlue = Color(0xFF0B57CE);
+  static const Color googleBlue = Color(0xFF0B57CE);
 
   // Остновная жирность шрифта
   static const FontWeight defaultFontWeight = FontWeight.w600;
+
+  // Основная тень
+  static const Color boxShadow = Color.fromRGBO(0, 0, 0, 0.25);
 }
