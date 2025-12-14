@@ -9,6 +9,8 @@ abstract interface class Product {
   double get rating;
   String get category;
   String get iconUrl;
+  bool get isPaid;
+  String? get price;
   
   factory Product.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String? ?? 'app';

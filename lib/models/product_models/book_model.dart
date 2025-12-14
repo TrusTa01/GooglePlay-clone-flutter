@@ -18,6 +18,10 @@ class Book implements Product {
   final String category;
   @override
   final String iconUrl;
+  @override
+  final bool isPaid; 
+  @override
+  final String? price;
 
   final String publisher; // Издательство
   final String isbn; // "978-5-389-12345-6"
@@ -34,7 +38,6 @@ class Book implements Product {
   final String? seriesName; // Название серии
   final int? seriesNumber; // Номер в серии
   final bool sampleAvailable; // Есть бесплатный фрагмент
-  final double price; // Цена
   final bool isOnSale; // Со скидкой
   final double? originalPrice; // Цена без скидки
   final List<String> awards;
@@ -46,6 +49,7 @@ class Book implements Product {
     required this.rating,
     required this.category,
     required this.iconUrl,
+    required this.isPaid,
     required this.publisher,
     required this.isbn,
     required this.pageCount,
@@ -61,10 +65,10 @@ class Book implements Product {
     required this.seriesName,
     required this.seriesNumber,
     required this.sampleAvailable,
-    required this.price,
     required this.isOnSale,
     required this.originalPrice,
     required this.awards,
+    this.price,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);

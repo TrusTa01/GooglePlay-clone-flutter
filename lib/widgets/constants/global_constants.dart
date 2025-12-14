@@ -9,4 +9,6 @@ abstract interface class Constants {
 
   // Основная тень
   static const Color boxShadow = Color.fromRGBO(0, 0, 0, 0.25);
+
+  static const ratingBackgroungColor = Color(0xFFF0F4F9);
 }

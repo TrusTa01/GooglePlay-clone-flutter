@@ -28,6 +28,5 @@ export 'navigation_bar/navigation_bar.dart';
 export 'banners/banners.dart';
 
 // Scroll widgets
-export 'scroll_widgets/games_apps_oneline_scroll_widget.dart';
-export 'scroll_widgets/books_oneline_scrole_widget.dart';
-export 'scroll_widgets/games_apps_oneline_card.dart';
+export 'scroll_widgets/product_card.dart';
+export 'scroll_widgets/product_slider.dart';

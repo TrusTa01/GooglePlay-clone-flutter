@@ -18,17 +18,33 @@ class Game implements Product {
   final String category;
   @override
   final String iconUrl;
-
+  @override
+  final bool isPaid;
+  @override
+  final String? price;
+  
+  final bool containsAds;
+  final bool containsPaidContent;
+  final String description;
+  final String version; // "2.1.0"
+  final String size; // "15.3 MB"
+  final int downloadCount;
+  final List<String> permissions;
+  final DateTime releaseDate; // Дата выхода
+  final DateTime lastUpdated; // Последнее обновление
   final String gameGenre; // "РПГ", "Стратегия", "Пазлы"
   final String screenshots; // Скриншоты
   final String tags; // Теги
+  final String websiteUrl;
+  final String emailSupport;
+  final String privacyPolicyUrl;
+  final String creatorDescriotion;
   final bool isOnline; // Онлайн игра?
   final bool hasMultiplayer; // Мультиплеер
-  final String ageCategory; // "3+", "12+", "18+"
+  final int ageRating; // "3+", "12+", "18+"
   final bool hasAchievements; // Достижения
   final String gameModes; // "Single-player", "Co-op"
-  final bool isPaid; // Платная?
-  final String? price; // Цена (если есь)
+  final bool hasControllerSupport;
 
   Game({
     required this.id,
@@ -42,11 +58,25 @@ class Game implements Product {
     required this.tags,
     required this.isOnline,
     required this.hasMultiplayer,
-    required this.ageCategory,
     required this.hasAchievements,
     required this.gameModes,
     required this.isPaid,
+    required this.hasControllerSupport,
     this.price,
+    required this.containsAds,
+    required this.containsPaidContent,
+    required this.description,
+    required this.version,
+    required this.size,
+    required this.downloadCount,
+    required this.permissions,
+    required this.releaseDate,
+    required this.lastUpdated,
+    required this.websiteUrl,
+    required this.emailSupport,
+    required this.privacyPolicyUrl,
+    required this.creatorDescriotion,
+    required this.ageRating,
   });
 
   factory Game.fromJson(Map<String, dynamic> json) => _$GameFromJson(json);

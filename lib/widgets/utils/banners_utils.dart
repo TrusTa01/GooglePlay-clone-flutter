@@ -32,7 +32,7 @@ abstract interface class BannersUtils {
           spreadRadius: 1.5,
         ),
       ],
-      image: DecorationImage(fit: BoxFit.fill, image: assetImage),
+      image: DecorationImage(fit: .cover, image: assetImage),
     );
   }
 }
