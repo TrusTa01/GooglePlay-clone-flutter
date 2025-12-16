@@ -110,7 +110,7 @@ class _GamesRecommendedTabState extends State<GamesRecommendedTab> {
 
         // --- СОСТОЯНИЕ ОШИБКИ ---
         if (snapshot.hasError) {
-          print('Ошибка загрузки данных: ${snapshot.error}');
+          debugPrint('Ошибка загрузки данных: ${snapshot.error}');
           return Center(child: Text('Ошибка загрузки: ${snapshot.error}'));
         }
 
