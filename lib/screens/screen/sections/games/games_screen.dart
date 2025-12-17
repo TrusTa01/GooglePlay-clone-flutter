@@ -77,7 +77,6 @@ class _GamesScreenState extends State<GamesScreen>
         appBar: AppBars(
           type: appBarType,
           showLogo: appBarType == AppBarType.tabbed ? true : false,
-          logoAssetPath: 'assets/images/logo.png',
           actions: actionWidgets,
 
           // Для AppBarType.searchWithTabbs

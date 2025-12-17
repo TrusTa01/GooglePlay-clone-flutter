@@ -21,7 +21,7 @@ class Book implements Product {
   @override
   final bool isPaid; 
   @override
-  final String? price;
+  final double? price;
 
   final String publisher; // Издательство
   final String isbn; // "978-5-389-12345-6"

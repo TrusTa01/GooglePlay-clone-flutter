@@ -11,7 +11,6 @@ interface class TabbedAppBar extends StatefulWidget
   final TabController? tabController;
   final Color? backgroundColor;
   final bool showLogo;
-  final String logoAssetPath;
 
   const TabbedAppBar({
     super.key,
@@ -20,7 +19,6 @@ interface class TabbedAppBar extends StatefulWidget
     this.tabController,
     this.backgroundColor,
     this.showLogo = true,
-    this.logoAssetPath = 'assets/images/google_play_logo.png',
   });
 
   @override
@@ -40,7 +38,7 @@ class TabbedAppBarState extends State<TabbedAppBar> {
 
     return AppBar(
       leading: widget.showLogo
-          ? AppBarUtils.buildLogo(logoAssetPath: widget.logoAssetPath)
+          ? AppBarUtils.buildLogo()
           : null,
       backgroundColor: AppBarConstants.defaultBackgroundColor,
       elevation: 0,

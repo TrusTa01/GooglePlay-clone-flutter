@@ -12,7 +12,6 @@ interface class BasicAppBar extends StatelessWidget
   final Widget? leadingIcon;
   final VoidCallback? onLeadingPressed;
   final bool showLogo;
-  final String logoAssetPath;
 
   const BasicAppBar({
     super.key,
@@ -23,7 +22,6 @@ interface class BasicAppBar extends StatelessWidget
     this.leadingIcon,
     this.onLeadingPressed,
     this.showLogo = true,
-    this.logoAssetPath = 'assets/images/google_play_logo.png',
   });
 
   @override
@@ -45,7 +43,6 @@ interface class BasicAppBar extends StatelessWidget
       ),
       title: AppBarUtils.buildLogoTitleRow(
         showLogo: showLogo,
-        logoAssetPath: logoAssetPath,
         title: title,
       ),
       actions: actions,

@@ -6,14 +6,13 @@ import '../constants/global_constants.dart';
 abstract interface class AppBarUtils {
   // Метод построения логотипа
   static Widget buildLogo({
-    required String logoAssetPath,
     double height = 32,
     double width = 32,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
       child: Image.asset(
-        logoAssetPath,
+        'assets/icons/logo.png',
         height: height,
         width: width,
         errorBuilder: (context, error, stackTrace) {
@@ -71,12 +70,11 @@ abstract interface class AppBarUtils {
   // Метод для Row с логотипом и заголовком
   static Widget buildLogoTitleRow({
     required bool showLogo,
-    required String logoAssetPath,
     required Widget? title,
   }) {
     return Row(
       children: [
-        if (showLogo) buildLogo(logoAssetPath: logoAssetPath),
+        if (showLogo) buildLogo(),
         const SizedBox(width: 8),
         Expanded(child: buildTitle('')),
       ],

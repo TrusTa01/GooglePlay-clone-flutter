@@ -35,7 +35,7 @@ App _$AppFromJson(Map<String, dynamic> json) => App(
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
   websiteUrl: json['websiteUrl'] as String,
   emailSupport: json['emailSupport'] as String,
-  price: json['price'] as String?,
+  price: json['price'] as double?,
   containsPaidContent: json['containsPaidContent'] as bool,
 );
 

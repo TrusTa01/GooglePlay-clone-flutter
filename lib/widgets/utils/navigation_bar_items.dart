@@ -6,13 +6,13 @@ import '/widgets/widgets.dart';
 List<NavigationDestination> destinations = [
   NavigationDestination(
     icon: Image.asset(
-      'assets/icons/gamepad_outlined.png',
+      'assets/icons/nav_bar_icons/gamepad_outlined.png',
       color: NavBarConstants.navBarUnselectedLabelColor,
       width: 20,
       height: 20,
     ),
     selectedIcon: Image.asset(
-      'assets/icons/gamepad.png',
+      'assets/icons/nav_bar_icons/gamepad.png',
       color: NavBarConstants.navBarSelectedIconColor,
       width: 20,
       height: 20,
@@ -22,13 +22,13 @@ List<NavigationDestination> destinations = [
   // Apps
   NavigationDestination(
     icon: Image.asset(
-      'assets/icons/app_outlined.png',
+      'assets/icons/nav_bar_icons/app_outlined.png',
       color: NavBarConstants.navBarUnselectedLabelColor,
       width: 16,
       height: 16,
     ),
     selectedIcon: Image.asset(
-      'assets/icons/app.png',
+      'assets/icons/nav_bar_icons/app.png',
       color: NavBarConstants.navBarSelectedIconColor,
       width: 16,
       height: 16,

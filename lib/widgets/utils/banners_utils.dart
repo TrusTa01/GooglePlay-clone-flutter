@@ -27,12 +27,12 @@ abstract interface class BannersUtils {
       boxShadow: [
         BoxShadow(
           color: Constants.boxShadow,
-          offset: Offset(0, 0),
+          offset: const Offset(0, 0),
           blurRadius: 3.0,
           spreadRadius: 1.5,
         ),
       ],
-      image: DecorationImage(fit: .cover, image: assetImage),
+      image: DecorationImage(fit: BoxFit.cover, image: assetImage),
     );
   }
 }

@@ -11,7 +11,7 @@ class ProductSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Высота слайдера должна включать высоту карточки и отступы
-    const double sliderHeight = 180; 
+    const double sliderHeight = 220; 
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

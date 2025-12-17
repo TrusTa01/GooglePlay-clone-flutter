@@ -35,28 +35,17 @@ flutter:
 
   assets:
   # images
-  - assets/images/verify.png
+  - assets/images/
+  - assets/images/games_screenshots/
 
   ## banners
-  - assets/images/banners/banner1.png
-  - assets/images/banners/banner2.png
-  - assets/images/banners/banner3.png
-  - assets/images/banners/banner4.png
-  - assets/images/banners/banner5.png
-  - assets/images/banners/banner6.png
-  - assets/images/banners/banner7.png
-  - assets/images/banners/banner8.png
-
-  ## logo
-  - assets/images/logo.png
+  - assets/images/banners/
 
   # icons
-  - assets/icons/gamepad.png
-  - assets/icons/gamepad_outlined.png
-  - assets/icons/app.png
-  - assets/icons/app_outlined.png
+  - assets/icons/
+  - assets/icons/logo.png
+  - assets/icons/nav_bar_icons/
+  - assets/icons/games_icons/
 
   # data
-  - assets/data/apps.json
-  - assets/data/books.json
-  - assets/data/games.json
+  - assets/data/

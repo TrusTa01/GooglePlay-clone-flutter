@@ -22,7 +22,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   gameModes: json['gameModes'] as String,
   isPaid: json['isPaid'] as bool,
   hasControllerSupport: json['hasControllerSupport'] as bool,
-  price: json['price'] as String?,
+  price: json['price'] as double?,
   containsAds: json['containsAds'] as bool,
   containsPaidContent: json['containsPaidContent'] as bool,
   description: json['description'] as String,

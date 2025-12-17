@@ -16,7 +16,6 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leadingIcon; // Кастомная иконка слева
   final VoidCallback? onLeadingPressed; // По нажатию на иконку слева
   final bool showLogo; // Показывать ли логотип Google Play
-  final String logoAssetPath; // Путь к логотипу
 
   const AppBars({
     super.key,
@@ -34,7 +33,6 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget {
     this.leadingIcon,
     this.onLeadingPressed,
     this.showLogo = true,
-    this.logoAssetPath = 'assets/images/google_play_logo.png',
   });
 
   @override
@@ -81,7 +79,6 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget {
           tabController: tabController,
           backgroundColor: backgroundColor,
           showLogo: showLogo,
-          logoAssetPath: logoAssetPath,
         );
         break;
       case AppBarType.searchWithTabbs:
@@ -114,7 +111,6 @@ interface class AppBars extends StatelessWidget implements PreferredSizeWidget {
           leadingIcon: leadingIcon,
           onLeadingPressed: onLeadingPressed,
           showLogo: showLogo,
-          logoAssetPath: logoAssetPath,
         );
         break;
     }

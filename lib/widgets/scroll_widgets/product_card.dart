@@ -1,100 +1,135 @@
 import 'package:flutter/material.dart';
 
 import '/models/product_interface.dart';
+import '/widgets/widgets.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.item});
-  final Product item;
 
-  // Логика для отображения цены или рейтинга
-  String get _infoText {
-    // Если платный и цена указана, показываем цену
-    if (item.isPaid && item.price != null) {
-      return item.price!;
-    }
-    // В противном случае показываем рейтинг
-    return '${item.rating.toStringAsFixed(1)} ⭐';
-  }
+  final Product item;
+  String get _rating => item.rating.toStringAsFixed(1);
+  String get _price => (item.price != null)
+      ? '${item.price!.toStringAsFixed(2).replaceFirst('.', ',')} ₽' 
+      : '';
+
+  bool get showPrice => item.isPaid && item.price != null;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 150,
       margin: const EdgeInsets.only(right: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 100,
-            width: 150,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              image: DecorationImage(
-                image: NetworkImage(item.iconUrl), 
-                fit: BoxFit.cover,
-              ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {},
+          onLongPress: () {},
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // Карточка
+              _buildCard(),
+              const SizedBox(height: 6),
+              // Название
+              _buildTitle(),
+              const SizedBox(height: 4),
+              // Рейтинг
+              Align(
+                alignment: .centerLeft,
+                child: showPrice ? _buildPriceTag() : _buildRatingTag()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard() {
+    return Container(
+      height: 110,
+      width: 110,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Constants.boxShadow,
+            offset: const Offset(0, 2),
+            blurRadius: 1.0,
+            spreadRadius: 0,
+          ),
+        ],
+        image: DecorationImage(
+          image: AssetImage(item.iconUrl),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTitle() {
+    return SizedBox(
+      width: 110,
+      child: Text(
+        item.title,
+        maxLines: 3,
+        style: const TextStyle(fontSize: 13),
+      ),
+    );
+  }
+
+  Widget _buildRatingTag() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Constants.ratingBackgroungColor,
+      ),
+      
+      
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            _rating,
+            style: const TextStyle(
+              color: Constants.defautTextColor,
+              fontSize: 12,
             ),
           ),
-          const SizedBox(height: 6),
-
-          // Название
-          Text(
-            item.title,
-            maxLines: 1, // Чтобы название не растягивало карточку
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 14),
+          SizedBox(width: 2),
+          Image.asset(
+            'assets/icons/star.png',
+            height: 10,
+            color: const Color.fromARGB(255, 28, 94, 207),
           ),
-          
-          // Рейтинг / Цена
-          Text(
-            _infoText,
-            style: const TextStyle(color: Colors.grey, fontSize: 12),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPriceTag() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Constants.ratingBackgroungColor,
+      ),
+      height: 20,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              _price,
+              style: const TextStyle(
+                color: Constants.defautTextColor,
+                fontSize: 12,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 }
-
-
-
-// import '/widgets/widgets.dart';
-
-// class ProductCard extends StatelessWidget {
-//   final Product item;
-//   late final rating = item.rating.toStringAsFixed(1) ;
-//   ProductCard({super.key, required this.item});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.only(left: 10, right: 5),
-//       width: 300,
-//       height: 500,
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Image.network(
-//             'https://cdn-icons-png.flaticon.com/512/9029/9029931.png',
-//             fit: BoxFit.cover,
-//             width: 100,
-//             height: 100,
-//           ),
-//           Text(
-//             item.title,
-//             style: TextStyle(fontWeight: FontWeight(600), fontSize: 12),
-//           ),
-//           SizedBox(
-//             child: Container(
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(16),
-//                 color: Constants.ratingBackgroungColor,
-//               ),
-//               child: Text(rating)
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

@@ -41,7 +41,6 @@ class _AppsScreenState extends State<AppsScreen>
         appBar: AppBars(
           type: AppBarType.tabbed,
           showLogo: true,
-          logoAssetPath: 'assets/images/logo.png',
           actions: [
             IconButton(
               onPressed: () => Navigator.of(

@@ -33,7 +33,7 @@ Book _$BookFromJson(Map<String, dynamic> json) => Book(
   isOnSale: json['isOnSale'] as bool,
   originalPrice: (json['originalPrice'] as num?)?.toDouble(),
   awards: (json['awards'] as List<dynamic>).map((e) => e as String).toList(),
-  price: json['price'] as String?,
+  price: json['price'] as double?,
 );
 
 Map<String, dynamic> _$BookToJson(Book instance) => <String, dynamic>{

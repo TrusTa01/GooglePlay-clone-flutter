@@ -21,7 +21,7 @@ class Game implements Product {
   @override
   final bool isPaid;
   @override
-  final String? price;
+  final double? price;
   
   final bool containsAds;
   final bool containsPaidContent;

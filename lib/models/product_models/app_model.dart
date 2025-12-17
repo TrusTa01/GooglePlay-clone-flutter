@@ -21,7 +21,7 @@ class App implements Product {
   @override
   final bool isPaid;
   @override
-  final String? price;
+  final double? price;
 
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
