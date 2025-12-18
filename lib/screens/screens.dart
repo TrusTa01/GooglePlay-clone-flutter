@@ -1,5 +1,5 @@
 // Screens
-export 'details/app_detail_screen.dart';
+export 'details/product_detail_screen.dart';
 export 'screen/sections/apps/app_screen.dart';
 export 'screen/sections/books/books_screen.dart';
 export 'screen/category_screen.dart';

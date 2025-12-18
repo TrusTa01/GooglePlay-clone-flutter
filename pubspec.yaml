@@ -13,7 +13,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # UI
   cupertino_icons: ^1.0.8
+  shimmer: ^3.0.0
   # data:
   provider: ^6.1.5+1
   http: ^1.6.0

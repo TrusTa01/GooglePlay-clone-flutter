@@ -3,11 +3,11 @@ import 'product_models/book_model.dart';
 import 'product_models/game_model.dart';
 
 abstract interface class Product {
+  String get type;
   String get id;
   String get title;
   String get creator;
   double get rating;
-  String get category;
   String get iconUrl;
   bool get isPaid;
   double? get price;

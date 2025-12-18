@@ -7,6 +7,8 @@ part '../product_models.g/app_model.g.dart';
 @JsonSerializable()
 class App implements Product {
   @override
+  final String type;
+  @override
   final String id;
   @override
   final String title;
@@ -14,8 +16,6 @@ class App implements Product {
   final String creator;
   @override
   final double rating;
-  @override
-  final String category;
   @override
   final String iconUrl;
   @override
@@ -41,11 +41,11 @@ class App implements Product {
   final String emailSupport;
 
   App({
+    required this.type,
     required this.id,
     required this.title,
     required this.creator,
     required this.rating,
-    required this.category,
     required this.iconUrl,
     required this.isPaid,
     required this.version,

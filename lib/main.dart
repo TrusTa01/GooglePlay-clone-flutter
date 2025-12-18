@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/providers/products_provider.dart';
 import 'package:google_play/routes/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,8 +16,12 @@ class GooglePlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseTheme = ThemeData.light();
-    return ChangeNotifierProvider(
-      create: (context) => TabsProvider(),
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TabsProvider()),
+        ChangeNotifierProvider(create: (context) => ProductsProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Google Play',
@@ -27,6 +32,7 @@ class GooglePlay extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
             elevation: 0,
+            systemOverlayStyle: .dark,
           ),
           colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0B57CE)),
         ),

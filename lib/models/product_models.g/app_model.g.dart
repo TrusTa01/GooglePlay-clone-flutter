@@ -7,11 +7,11 @@ part of '../product_models/app_model.dart';
 // **************************************************************************
 
 App _$AppFromJson(Map<String, dynamic> json) => App(
+  type: json['type'] as String,
   id: json['id'] as String,
   title: json['title'] as String,
   creator: json['creator'] as String,
   rating: (json['rating'] as num).toDouble(),
-  category: json['category'] as String,
   iconUrl: json['iconUrl'] as String,
   isPaid: json['isPaid'] as bool,
   version: json['version'] as String,
@@ -35,16 +35,16 @@ App _$AppFromJson(Map<String, dynamic> json) => App(
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
   websiteUrl: json['websiteUrl'] as String,
   emailSupport: json['emailSupport'] as String,
-  price: json['price'] as double?,
+  price: (json['price'] as num?)?.toDouble(),
   containsPaidContent: json['containsPaidContent'] as bool,
 );
 
 Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
+  'type': instance.type,
   'id': instance.id,
   'title': instance.title,
   'creator': instance.creator,
   'rating': instance.rating,
-  'category': instance.category,
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,

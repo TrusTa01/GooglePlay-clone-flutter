@@ -25,8 +25,13 @@ export 'app_bars/tabs/custom_tab_bar.dart';
 export 'navigation_bar/navigation_bar.dart';
 
 // Banners
-export 'banners/banners.dart';
+export 'banners/banners_data.dart';
+export 'banners/banner_item.dart';
+export 'banners/banner_section.dart';
 
 // Scroll widgets
 export 'scroll_widgets/product_card.dart';
 export 'scroll_widgets/product_slider.dart';
+
+// Shimers
+export 'shimers/product_slider_skeleton.dart';

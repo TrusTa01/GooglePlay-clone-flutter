@@ -7,11 +7,11 @@ part of '../product_models/game_model.dart';
 // **************************************************************************
 
 Game _$GameFromJson(Map<String, dynamic> json) => Game(
+  type: json['type'] as String,
   id: json['id'] as String,
   title: json['title'] as String,
   creator: json['creator'] as String,
   rating: (json['rating'] as num).toDouble(),
-  category: json['category'] as String,
   iconUrl: json['iconUrl'] as String,
   gameGenre: json['gameGenre'] as String,
   screenshots: json['screenshots'] as String,
@@ -22,7 +22,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   gameModes: json['gameModes'] as String,
   isPaid: json['isPaid'] as bool,
   hasControllerSupport: json['hasControllerSupport'] as bool,
-  price: json['price'] as double?,
+  price: (json['price'] as num?)?.toDouble(),
   containsAds: json['containsAds'] as bool,
   containsPaidContent: json['containsPaidContent'] as bool,
   description: json['description'] as String,
@@ -37,16 +37,16 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   websiteUrl: json['websiteUrl'] as String,
   emailSupport: json['emailSupport'] as String,
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
-  creatorDescriotion: json['creatorDescriotion'] as String,
+  creatorDescription: json['creatorDescription'] as String,
   ageRating: (json['ageRating'] as num).toInt(),
 );
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
+  'type': instance.type,
   'id': instance.id,
   'title': instance.title,
   'creator': instance.creator,
   'rating': instance.rating,
-  'category': instance.category,
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,
@@ -65,7 +65,7 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'websiteUrl': instance.websiteUrl,
   'emailSupport': instance.emailSupport,
   'privacyPolicyUrl': instance.privacyPolicyUrl,
-  'creatorDescriotion': instance.creatorDescriotion,
+  'creatorDescriotion': instance.creatorDescription,
   'isOnline': instance.isOnline,
   'hasMultiplayer': instance.hasMultiplayer,
   'ageRating': instance.ageRating,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/screens/details/product_detail_screen.dart';
 import '/models/product_interface.dart';
 import '/widgets/widgets.dart';
 
@@ -9,7 +10,7 @@ class ProductCard extends StatelessWidget {
   final Product item;
   String get _rating => item.rating.toStringAsFixed(1);
   String get _price => (item.price != null)
-      ? '${item.price!.toStringAsFixed(2).replaceFirst('.', ',')} ₽' 
+      ? '${item.price!.toStringAsFixed(2).replaceFirst('.', ',')} ₽'
       : '';
 
   bool get showPrice => item.isPaid && item.price != null;
@@ -17,13 +18,19 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
       margin: const EdgeInsets.only(right: 12),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetailScreen(product: item),
+              ),
+            );
+          },
           onLongPress: () {},
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,8 +43,9 @@ class ProductCard extends StatelessWidget {
               const SizedBox(height: 4),
               // Рейтинг
               Align(
-                alignment: .centerLeft,
-                child: showPrice ? _buildPriceTag() : _buildRatingTag()),
+                alignment: Alignment.centerLeft,
+                child: showPrice ? _buildPriceTag() : _buildRatingTag(),
+              ),
             ],
           ),
         ),
@@ -47,8 +55,8 @@ class ProductCard extends StatelessWidget {
 
   Widget _buildCard() {
     return Container(
-      height: 110,
-      width: 110,
+      height: 115,
+      width: 115,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
@@ -84,8 +92,8 @@ class ProductCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: Constants.ratingBackgroungColor,
       ),
-      
-      
+      height: 20,
+      width: 45,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -114,6 +122,7 @@ class ProductCard extends StatelessWidget {
         color: Constants.ratingBackgroungColor,
       ),
       height: 20,
+      width: 65,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

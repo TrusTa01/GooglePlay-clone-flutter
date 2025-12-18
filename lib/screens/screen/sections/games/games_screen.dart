@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../screens.dart';
+import '/screens/screens.dart';
 import '/providers/tabs_provider.dart';
 import '/widgets/widgets.dart';
 import '/routes/routes.dart';
@@ -15,6 +15,7 @@ class GamesScreen extends StatefulWidget {
 
 class _GamesScreenState extends State<GamesScreen>
     with SingleTickerProviderStateMixin {
+  
   late final TabController _tabController;
   final List<String> _tabs = [
     'Рекомендуем',
@@ -99,11 +100,11 @@ class _GamesScreenState extends State<GamesScreen>
         body: TabBarView(
           controller: _tabController,
           children: const [
-           GamesRecommendedTab(),
-           GamesBestTab(),
-           GamesKidsTab(),
-           GamesPaidTab(),
-           GamesCategoriesTab(),
+            GamesRecommendedTab(),
+            GamesBestTab(),
+            GamesKidsTab(),
+            GamesPaidTab(),
+            GamesCategoriesTab(),
           ],
         ),
       ),

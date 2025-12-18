@@ -7,6 +7,8 @@ part '../product_models.g/game_model.g.dart';
 @JsonSerializable()
 class Game implements Product {
   @override
+  final String type;
+  @override
   final String id;
   @override
   final String title;
@@ -14,8 +16,6 @@ class Game implements Product {
   final String creator;
   @override
   final double rating;
-  @override
-  final String category;
   @override
   final String iconUrl;
   @override
@@ -38,7 +38,7 @@ class Game implements Product {
   final String websiteUrl;
   final String emailSupport;
   final String privacyPolicyUrl;
-  final String creatorDescriotion;
+  final String creatorDescription;
   final bool isOnline; // Онлайн игра?
   final bool hasMultiplayer; // Мультиплеер
   final int ageRating; // "3+", "12+", "18+"
@@ -47,11 +47,11 @@ class Game implements Product {
   final bool hasControllerSupport;
 
   Game({
+    required this.type,
     required this.id,
     required this.title,
     required this.creator,
     required this.rating,
-    required this.category,
     required this.iconUrl,
     required this.gameGenre,
     required this.screenshots,
@@ -75,7 +75,7 @@ class Game implements Product {
     required this.websiteUrl,
     required this.emailSupport,
     required this.privacyPolicyUrl,
-    required this.creatorDescriotion,
+    required this.creatorDescription,
     required this.ageRating,
   });
 

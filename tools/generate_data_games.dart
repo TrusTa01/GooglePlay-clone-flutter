@@ -1,4 +1,4 @@
-// Генерация мок-данных игр (games_generator.dart)
+// Генерация мок-данных игр
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -257,8 +257,8 @@ void main() async {
     double? price;
 
     if (isPaid) {
-      final int rawCents = faker.randomGenerator.integer(9999, min: 99);
-      price = rawCents / 100.0; 
+      final int wholeAmount = faker.randomGenerator.integer(500, min: 1);
+      price = wholeAmount.toDouble();
     }
 
     // Логика иконок
@@ -319,11 +319,11 @@ void main() async {
     ).toSet().toList();
 
     final gameData = {
+      "type": "game",
       "id": i.toString(),
       "title": generatedTitle,
       "creator": creatorName,
       "rating": faker.randomGenerator.integer(50) / 10.0,
-      "category": "Игры",
       "iconUrl": localIcon,
       "isPaid": isPaid,
       "price": price,

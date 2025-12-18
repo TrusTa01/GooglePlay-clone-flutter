@@ -10,35 +10,29 @@ class ProductSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Высота слайдера должна включать высоту карточки и отступы
-    const double sliderHeight = 220; 
+    const double sliderHeight = 190;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Заголовок слайдера
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 17),
           child: Text(
             title,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: Constants.defaultFontWeight),
           ),
         ),
-        
-        const SizedBox(height: 12),
 
         SizedBox(
           height: sliderHeight,
           child: ListView.builder(
+            // Отступ слева для первого элемента
+            padding: const EdgeInsets.only(left: 22),
             scrollDirection: Axis.horizontal,
             itemCount: items.length,
-            // Отступ слева для первого элемента
-            padding: const EdgeInsets.only(left: 16.0), 
-            
             itemBuilder: (context, index) {
               final item = items[index];
-              
-              // Используем универсальную карточку
               return ProductCard(item: item);
             },
           ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../screens/screens.dart';
-import '../widgets/widgets.dart';
-import '../extensions/navigator_extensions.dart';
+import '/screens/screens.dart';
+import '/widgets/widgets.dart';
+import '/extensions/navigator_extensions.dart';
+import '/providers/products_provider.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -36,6 +38,16 @@ class _MainLayoutState extends State<MainLayout> {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      // Проверяем, жив ли еще виджет в дереве
+      if (!mounted) return;
+      context.read<ProductsProvider>().loadAllProducts();
+    });
+  }
+
   // Обработчик выбора вкладки
   void _handleTabSelection(int index) {
     if (index == _currentPageIndex) {
@@ -62,7 +74,7 @@ class _MainLayoutState extends State<MainLayout> {
     return Stack(
       children: [
         _buildCurrentScreen(),
-        
+
         // CustomNavigationBar поверх всего
         Positioned(
           bottom: 0,

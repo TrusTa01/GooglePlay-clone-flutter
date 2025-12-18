@@ -7,11 +7,11 @@ part of '../product_models/book_model.dart';
 // **************************************************************************
 
 Book _$BookFromJson(Map<String, dynamic> json) => Book(
+  type: json['type'] as String,
   id: json['id'] as String,
   title: json['title'] as String,
   creator: json['creator'] as String,
   rating: (json['rating'] as num).toDouble(),
-  category: json['category'] as String,
   iconUrl: json['iconUrl'] as String,
   isPaid: json['isPaid'] as bool,
   publisher: json['publisher'] as String,
@@ -33,15 +33,15 @@ Book _$BookFromJson(Map<String, dynamic> json) => Book(
   isOnSale: json['isOnSale'] as bool,
   originalPrice: (json['originalPrice'] as num?)?.toDouble(),
   awards: (json['awards'] as List<dynamic>).map((e) => e as String).toList(),
-  price: json['price'] as double?,
+  price: (json['price'] as num?)?.toDouble(),
 );
 
 Map<String, dynamic> _$BookToJson(Book instance) => <String, dynamic>{
+  'type': instance.type,
   'id': instance.id,
   'title': instance.title,
   'creator': instance.creator,
   'rating': instance.rating,
-  'category': instance.category,
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,
