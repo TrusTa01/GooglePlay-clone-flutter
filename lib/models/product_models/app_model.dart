@@ -15,6 +15,8 @@ class App implements Product {
   @override
   final String creator;
   @override
+  final String description;
+  @override
   final double rating;
   @override
   final String iconUrl;
@@ -22,6 +24,8 @@ class App implements Product {
   final bool isPaid;
   @override
   final double? price;
+  @override
+  String get technicalInfo => size;
 
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
@@ -46,6 +50,7 @@ class App implements Product {
     required this.title,
     required this.creator,
     required this.rating,
+    required this.description,
     required this.iconUrl,
     required this.isPaid,
     required this.version,

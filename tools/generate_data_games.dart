@@ -215,7 +215,20 @@ void main() async {
 
   final myIcons = [
     'assets/icons/games_icons/fruit_ninja.jpg',
-    'assets/icons/games_icons/fruit_ninja.jpg',
+    'assets/icons/games_icons/asphalt.jpg',
+    'assets/icons/games_icons/chess.jpg',
+    'assets/icons/games_icons/clash_of_clans.jpg',
+    'assets/icons/games_icons/clash_royale.jpeg',
+    'assets/icons/games_icons/cut_the_rope.jpg',
+    'assets/icons/games_icons/fnaf.png',
+    'assets/icons/games_icons/geometry_dash.jpg',
+    'assets/icons/games_icons/hay_day.jpg',
+    'assets/icons/games_icons/minecraft.jpg',
+    'assets/icons/games_icons/pokemon_go.jpg',
+    'assets/icons/games_icons/swamp_attack.jpg',
+    'assets/icons/games_icons/temple_run.jpg',
+    'assets/icons/games_icons/terraria.png',
+    'assets/icons/games_icons/tomb_of_the_mask.jpg',
   ];
 
   final myHorizontalScreenshots = [
@@ -241,7 +254,7 @@ void main() async {
   ];
 
   // Основной цикл генерации
-  for (int i = 1; i <= 100; i++) {
+  for (int i = 1; i <= 1000; i++) {
     final String adj = faker.randomGenerator.element(titleWords);
     final String noun = faker.randomGenerator.element(suffixWords);
     final int randomSuffix = faker.randomGenerator.integer(9, min: 1);
@@ -301,8 +314,7 @@ void main() async {
     // Логика размера и версии
     final String version =
         '${random.nextInt(5)}.${random.nextInt(10)}.${random.nextInt(10)}';
-    final String size =
-        '${(random.nextDouble() * 500 + 10).toStringAsFixed(1)} MB';
+    final String size = (random.nextDouble() * 500 + 10).toStringAsFixed(1);
 
     // Логика разрешений (от 1 до 5)
     final int permCount = random.nextInt(5) + 1;
@@ -329,7 +341,7 @@ void main() async {
       "price": price,
       "containsAds": faker.randomGenerator.boolean(),
       "containsPaidContent": faker.randomGenerator.boolean(),
-      "description": faker.lorem.sentences(5).join(' '),
+      "description": faker.lorem.sentences(2).join(' '),
       "version": version,
       "size": size,
       "downloadCount": faker.randomGenerator
@@ -341,7 +353,7 @@ void main() async {
       "websiteUrl": faker.internet.httpsUrl(),
       "emailSupport": faker.internet.email(),
       "privacyPolicyUrl": faker.internet.httpsUrl(),
-      "creatorDescription": faker.lorem.sentences(3).join(' '),
+      "creatorDescription": faker.lorem.sentences(2).join(' '),
       "ageRating": faker.randomGenerator.element(ageRatings),
       "gameGenre": genreTitle,
       "screenshots": selectedScreenshots.join('|'),

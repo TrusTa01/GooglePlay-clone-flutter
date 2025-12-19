@@ -12,6 +12,7 @@ export 'utils/app_bar_utils.dart';
 export 'utils/navigation_bar_utils.dart';
 export 'utils/navigation_bar_items.dart';
 export 'utils/banners_utils.dart';
+export 'utils/scroll_widgets_utils.dart';
 
 // Constants
 export 'constants/app_bar_constants.dart';
@@ -30,8 +31,10 @@ export 'banners/banner_item.dart';
 export 'banners/banner_section.dart';
 
 // Scroll widgets
-export 'scroll_widgets/product_card.dart';
-export 'scroll_widgets/product_slider.dart';
+export 'scroll_widgets/one_line/product_card_vertical.dart';
+export 'scroll_widgets/one_line/product_slider_single_row.dart';
+export 'scroll_widgets/three_line/product_card_horizontal.dart';
+export 'scroll_widgets/three_line/product_grid_horizontal.dart';
 
 // Shimers
 export 'shimers/product_slider_skeleton.dart';

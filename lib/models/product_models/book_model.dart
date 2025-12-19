@@ -15,6 +15,8 @@ class Book implements Product {
   @override
   final String creator;
   @override
+  final String description;
+  @override
   final double rating;
   @override
   final String iconUrl;
@@ -22,6 +24,8 @@ class Book implements Product {
   final bool isPaid; 
   @override
   final double? price;
+  @override
+  String get technicalInfo => '$pageCount';
 
   final String publisher; // Издательство
   final String isbn; // "978-5-389-12345-6"
@@ -29,7 +33,6 @@ class Book implements Product {
   final String language; // "Русский"
   // final BookFormat format; // enum: ePub, PDF, Audiobook
   final DateTime publicationDate; // Дата публикации
-  final String description; // Аннотация
   final List<String> genres; // ["Фэнтези", "Приключения"]
   final bool hasAudioVersion; // Есть аудиокнига
   final Duration? audioDuration; // Продолжительность аудио

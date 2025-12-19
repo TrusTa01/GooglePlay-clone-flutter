@@ -10,11 +10,13 @@ class ProductsProvider extends ChangeNotifier {
   List<Product> _allProducts = [];
   bool _isLoading = false;
   String? _error;
+  List<Product> _recommendedGames = [];
 
   // Геттеры для доступа из виджетов
   List<Product> get allProducts => _allProducts;
   bool get isLoading => _isLoading;
   String? get error => _error;
+  List<Product> get recommendedGames => _recommendedGames;
 
   Future<void> loadAllProducts() async {
     if (_allProducts.isNotEmpty) return;
@@ -24,17 +26,36 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      // Приложение продолжит работу если один из json упал
       final results = await Future.wait([
-        _service.loadProducts('games.json'),
-        _service.loadProducts('apps.json'),
-        _service.loadProducts('books.json'),
+        _service.loadProducts('games.json').catchError((e) {
+          debugPrint('Ошибка загрузки игр: $e');
+          return <Product>[];
+        }),
+        _service.loadProducts('apps.json').catchError((e) {
+          debugPrint('Ошибка загрузки приложений: $e');
+          return <Product>[];
+        }),
+        _service.loadProducts('books.json').catchError((e) {
+          debugPrint('Ошибка загрузки книг: $e');
+          return <Product>[];
+        }),
       ]);
       // Склеиваем всё в один список
       _allProducts = results.expand((list) => list).toList();
+
+      List<Product> sortedList = List.from(_allProducts);
+      sortedList.sort((a, b) => b.rating.compareTo(a.rating));
+      _recommendedGames = sortedList.take(7).toList();
     } catch (e) {
       _error = e.toString();
     } finally {
       _isLoading = false;
+      // Если все списки пустые, а ошибки в перехватчике не было,
+      // можно пометить это как специфическую ошибку "Данные отсутствуют"
+      if (_allProducts.isEmpty && _error == null) {
+        _error = "Не удалось загрузить ни одного раздела";
+      }
       notifyListeners();
     }
   }

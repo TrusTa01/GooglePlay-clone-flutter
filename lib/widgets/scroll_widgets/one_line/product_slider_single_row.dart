@@ -4,9 +4,9 @@ import '/models/product_interface.dart';
 import '/widgets/widgets.dart';
 
 class ProductSlider extends StatelessWidget {
-  const ProductSlider({super.key, required this.title, required this.items});
+  const ProductSlider({super.key, required this.title, required this.products});
   final String title;
-  final List<Product> items;
+  final List<Product> products;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ProductSlider extends StatelessWidget {
       children: [
         // Заголовок слайдера
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 17),
+          padding: const EdgeInsets.fromLTRB(22, 0, 22, 20),
           child: Text(
             title,
             style: const TextStyle(fontSize: 18, fontWeight: Constants.defaultFontWeight),
@@ -30,10 +30,10 @@ class ProductSlider extends StatelessWidget {
             // Отступ слева для первого элемента
             padding: const EdgeInsets.only(left: 22),
             scrollDirection: Axis.horizontal,
-            itemCount: items.length,
+            itemCount: products.length,
             itemBuilder: (context, index) {
-              final item = items[index];
-              return ProductCard(item: item);
+              final item = products[index];
+              return ProductCard(product: item);
             },
           ),
         ),

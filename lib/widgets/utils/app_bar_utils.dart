@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/app_bar_constants.dart';
 import '../constants/global_constants.dart';
 
-abstract interface class AppBarUtils {
+abstract class AppBarUtils {
   // Метод построения логотипа
   static Widget buildLogo({
     double height = 32,
@@ -104,7 +104,7 @@ abstract interface class AppBarUtils {
                   style: const TextStyle(
                     color: AppBarConstants.searchLabelColor,
                     fontWeight: Constants.defaultFontWeight,
-                    fontSize: 15,
+                    fontSize: 16,
                   ),
                 ),
               ),

@@ -15,6 +15,8 @@ class Game implements Product {
   @override
   final String creator;
   @override
+  final String description;
+  @override
   final double rating;
   @override
   final String iconUrl;
@@ -22,10 +24,11 @@ class Game implements Product {
   final bool isPaid;
   @override
   final double? price;
+  @override
+  String get technicalInfo => size;
   
   final bool containsAds;
   final bool containsPaidContent;
-  final String description;
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
   final int downloadCount;

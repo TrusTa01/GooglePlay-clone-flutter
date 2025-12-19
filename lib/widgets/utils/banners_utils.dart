@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/widgets/widgets.dart';
 
-abstract interface class BannersUtils {
+abstract class BannersUtils {
   static Widget buildBannerWidget({
     double? width,
     double? height,

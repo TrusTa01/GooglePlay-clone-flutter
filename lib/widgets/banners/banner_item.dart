@@ -49,7 +49,11 @@ class BannerItem extends StatelessWidget {
           if (data.description != null)
             Text(
               data.description!,
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: Constants.defaultFontWeight,
+              ),
             ),
         ],
       ),
@@ -62,12 +66,22 @@ class BannerItem extends StatelessWidget {
       top: 0,
       left: 0,
       child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.only(bottomRight: Radius.circular(12), topLeft: Radius.circular(9)), color: Colors.white70,),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(12),
+            topLeft: Radius.circular(9),
+          ),
+          color: Colors.white70,
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           child: Text(
             text,
-            style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0), fontSize: 12, fontWeight: Constants.defaultFontWeight),
+            style: TextStyle(
+              color: const Color.fromARGB(255, 0, 0, 0),
+              fontSize: 12,
+              fontWeight: Constants.defaultFontWeight,
+            ),
           ),
         ),
       ),

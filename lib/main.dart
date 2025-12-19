@@ -26,6 +26,7 @@ class GooglePlay extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Google Play',
         theme: baseTheme.copyWith(
+          highlightColor: Colors.transparent,
           textTheme: GoogleFonts.nunitoTextTheme(baseTheme.textTheme),
           primaryColor: const Color(0xFF0B57CE),
           scaffoldBackgroundColor: Colors.white,

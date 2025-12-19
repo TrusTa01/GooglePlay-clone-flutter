@@ -73,7 +73,10 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        _buildCurrentScreen(),
+        Padding(
+        padding: const EdgeInsets.only(bottom: 65), // Высота навбара, чтобы не он не перекрывал контент
+        child: _buildCurrentScreen(),
+      ),
 
         // CustomNavigationBar поверх всего
         Positioned(
