@@ -13,7 +13,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final utils = ScrollWidgetsUtils(product: product);
+    final formatter = ProductDataFormatter(product);
+
     return Container(
       margin: const EdgeInsets.only(right: 12),
       child: Material(
@@ -42,8 +43,8 @@ class ProductCard extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: showPrice
-                    ? utils.buildPriceTag()
-                    : utils.buildRatingTag(),
+                    ? ProductPriceTag(price: formatter.price)
+                    : ProductRatingTag(rating: formatter.rating),
               ),
             ],
           ),
@@ -53,30 +54,30 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _buildCard() {
-    return Container(
-      height: 115,
-      width: 115,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Constants.boxShadow,
-            offset: const Offset(0, 2),
-            blurRadius: 1.0,
-            spreadRadius: 0,
-          ),
-        ],
-        image: DecorationImage(
-          image: AssetImage(product.iconUrl),
-          fit: BoxFit.cover,
-        ),
+   return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Image.asset(
+        product.iconUrl,
+        width: 115,
+        height: 115,
+        cacheWidth: 300,
+        fit: BoxFit.cover,
+        // TODO: сделать универсальный еррор билдер
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            color: Colors.grey[200], // Серый фон вместо дырки
+            child: const Center(
+              child: Icon(Icons.broken_image, color: Colors.grey),
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget _buildTitle() {
     return SizedBox(
-      width: 110,
+      width: 115,
       child: Text(
         product.title,
         maxLines: 3,

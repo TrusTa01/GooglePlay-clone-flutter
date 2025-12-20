@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../utils/app_bar_utils.dart';
 import '../../constants/app_bar_constants.dart';
 
-interface class BasicAppBar extends StatelessWidget
+class BasicAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final Widget? title;
   final List<Widget>? actions;

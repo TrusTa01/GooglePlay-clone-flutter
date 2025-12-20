@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:google_play/providers/tabs_provider.dart';
 import 'package:google_play/widgets/widgets.dart';
 
-interface class SearchAppBarWithTabs extends StatefulWidget
+class SearchAppBarWithTabs extends StatefulWidget
     implements PreferredSizeWidget {
   final String searchHint;
   final List<Widget>? inputLeading;

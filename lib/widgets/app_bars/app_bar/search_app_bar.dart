@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_play/widgets/widgets.dart';
 
-interface class SearchAppBar extends StatefulWidget
+class SearchAppBar extends StatefulWidget
     implements PreferredSizeWidget {
   final String searchHint;
   final ValueChanged<String>? onSearchChanged;

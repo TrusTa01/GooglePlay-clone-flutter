@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:google_play/providers/tabs_provider.dart';
 import 'package:google_play/widgets/widgets.dart';
 
-interface class TabbedAppBar extends StatefulWidget
+class TabbedAppBar extends StatefulWidget
     implements PreferredSizeWidget {
   final List<Widget>? actions;
   final List<String> tabs;

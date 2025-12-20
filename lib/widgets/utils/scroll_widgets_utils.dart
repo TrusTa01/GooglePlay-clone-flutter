@@ -3,22 +3,31 @@ import 'package:flutter/material.dart';
 import '/models/models.dart';
 import '/widgets/widgets.dart';
 
-class ScrollWidgetsUtils {
-  const ScrollWidgetsUtils({required this.product});
-
+class ProductDataFormatter {
   final Product product;
-  String get _rating => product.rating.toString();
-  String get _size => product.technicalInfo.toString();
+  ProductDataFormatter(this.product);
 
-  String get _price => (product.price != null)
+  String get rating => product.rating.toString();
+  String get size => '${product.technicalInfo.toString()} МБ';
+
+  String get price => (product.price != null)
       ? '${product.price!.toStringAsFixed(2).replaceFirst('.', ',')} ₽'
       : '';
+}
 
-  static Widget buildTitleButton({
-    required String title,
-    required VoidCallback onTap,
-    required EdgeInsets padding,
-  }) {
+class ProductSectionTitle extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+  final EdgeInsets padding;
+  const ProductSectionTitle({
+    super.key,
+    required this.title,
+    required this.onTap,
+    required this.padding,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: padding,
       child: Row(
@@ -51,8 +60,14 @@ class ScrollWidgetsUtils {
       ),
     );
   }
+}
 
-  Widget buildRatingTag() {
+class ProductRatingTag extends StatelessWidget {
+  final String rating;
+  const ProductRatingTag({super.key, required this.rating});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -64,7 +79,7 @@ class ScrollWidgetsUtils {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            _rating,
+            rating,
             style: const TextStyle(
               color: Constants.defautTextColor,
               fontSize: 12,
@@ -80,15 +95,14 @@ class ScrollWidgetsUtils {
       ),
     );
   }
+}
 
-  Widget buildSize() {
-    return Text(
-      '$_size МБ',
-      style: const TextStyle(color: Constants.defautTextColor, fontSize: 12),
-    );
-  }
+class ProductPriceTag extends StatelessWidget {
+  final String price;
+  const ProductPriceTag({super.key, required this.price});
 
-  Widget buildPriceTag() {
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -103,7 +117,7 @@ class ScrollWidgetsUtils {
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
             child: Text(
-              _price,
+              price,
               style: const TextStyle(
                 color: Constants.defautTextColor,
                 fontSize: 12,
@@ -112,6 +126,19 @@ class ScrollWidgetsUtils {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ProductSize extends StatelessWidget {
+  final String size;
+  const ProductSize({super.key, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      size,
+      style: const TextStyle(color: Constants.defautTextColor, fontSize: 12),
     );
   }
 }

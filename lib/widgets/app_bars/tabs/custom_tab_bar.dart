@@ -38,7 +38,6 @@ class _CustomTabBarState extends State<CustomTabBar> {
             width: 2.5, // Высота полоски
             color: AppBarConstants.tabBarLabelColor,
           ),
-          // insets делают полоску КОРОЧЕ текста (как твой padding 18)
           insets: const EdgeInsets.symmetric(horizontal: 4),
         ),
 

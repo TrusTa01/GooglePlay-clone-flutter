@@ -12,7 +12,7 @@ class ProductCardHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final utils = ScrollWidgetsUtils(product: product);
+    final formatter = ProductDataFormatter(product);
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
@@ -32,7 +32,7 @@ class ProductCardHorizontal extends StatelessWidget {
                   const SizedBox(height: 2),
                   _buildDescription(), // Описание
                   const Spacer(),
-                  _buildBottomRow(utils), // Нижняя строка
+                  _buildBottomRow(formatter), // Нижняя строка
                 ],
               ),
             ),
@@ -49,7 +49,17 @@ class ProductCardHorizontal extends StatelessWidget {
         product.iconUrl,
         width: 60,
         height: 60,
+        cacheWidth: 180,
         fit: BoxFit.cover,
+        // TODO: сделать универсальный еррор билдер
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            color: Colors.grey[200], // Серый фон вместо дырки
+            child: const Center(
+              child: Icon(Icons.broken_image, color: Colors.grey),
+            ),
+          );
+        },
       ),
     );
   }
@@ -72,14 +82,16 @@ class ProductCardHorizontal extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomRow(ScrollWidgetsUtils utils) {
+  Widget _buildBottomRow(ProductDataFormatter formatter) {
     return Row(
       children: <Widget>[
-        utils.buildRatingTag(), // Рейтинг
-        SizedBox(width: 10,),
-        utils.buildSize(), // Размер
-        const SizedBox(width: 10,),
-        showPrice ? utils.buildPriceTag() : const SizedBox.shrink(), // Цена (если есть)
+        ProductRatingTag(rating: formatter.rating), // Рейтинг
+        SizedBox(width: 10),
+        ProductSize(size: formatter.size), // Размер
+        const SizedBox(width: 10),
+        showPrice
+            ? ProductPriceTag(price: formatter.price)
+            : const SizedBox.shrink(), // Цена (если есть)
       ],
     );
   }

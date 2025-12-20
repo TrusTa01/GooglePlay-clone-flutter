@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets.dart';
 
-interface class AppBars extends StatelessWidget implements PreferredSizeWidget {
+class AppBars extends StatelessWidget implements PreferredSizeWidget {
   final AppBarType type; // Тип Апбара
   final Widget? title; // Заголовок
   final List<Widget>? actions; // Контент справа

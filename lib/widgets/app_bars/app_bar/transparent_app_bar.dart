@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../utils/app_bar_utils.dart';
 
-interface class TransparentAppBar extends StatelessWidget
+class TransparentAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   final Widget? title;
   final List<Widget>? actions;

@@ -5,13 +5,13 @@ import '/widgets/widgets.dart';
 const TextStyle unselectedLabelStyle = TextStyle(
   color: NavBarConstants.navBarUnselectedLabelColor,
   fontSize: 12.0,
-  fontWeight: FontWeight.w600,
+  fontWeight: Constants.defaultFontWeight,
 );
 
 const TextStyle selectedLabelStyle = TextStyle(
   color: NavBarConstants.navBarSelectedLabelColor,
   fontSize: 12.0,
-  fontWeight: FontWeight.w600,
+  fontWeight: Constants.defaultFontWeight,
 );
 
 //  Функция, генерирующая NavigationBarThemeData

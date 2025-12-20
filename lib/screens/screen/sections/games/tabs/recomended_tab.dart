@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:google_play/providers/products_provider.dart';
 import 'package:provider/provider.dart';
+
+import '/providers/products_provider.dart';
 import '/widgets/widgets.dart';
 
 class GamesRecommendedTab extends StatefulWidget {
