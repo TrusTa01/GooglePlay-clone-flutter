@@ -22,40 +22,14 @@ class ProductGridHorizontal extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(22, 0, 22, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              // Кнопка больше напротив заголовка
-              Material(
-                color: Constants.ratingBackgroungColor,
-                borderRadius: BorderRadius.circular(23),
-                clipBehavior: Clip.antiAlias,
-                child: InkWell(
-                  onTap: () {},
-                  child: Container(
-                    width: 30,
-                    height: 34,
-                    alignment: Alignment.center,
-                    child: const Center(
-                      child: Icon(Icons.arrow_forward, size: 18),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        // Заголовок и кнопка больше
+        ScrollWidgetsUtils.buildTitleButton(
+          title: title,
+          padding: EdgeInsets.fromLTRB(22, 0, 22, 10),
+          onTap: () {},
         ),
 
+        // Слайдер
         SizedBox(
           height: 240,
           child: PageView.builder(

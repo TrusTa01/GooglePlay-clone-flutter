@@ -12,18 +12,22 @@ class ProductSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     const double sliderHeight = 190;
 
+    if (products.isEmpty) {
+      debugPrint('Ошибка: products.isEmpty');
+      return const SizedBox.shrink();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Заголовок слайдера
-        Padding(
-          padding: const EdgeInsets.fromLTRB(22, 0, 22, 20),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 18, fontWeight: Constants.defaultFontWeight),
-          ),
+        // Заголовок и кнопка больше
+        ScrollWidgetsUtils.buildTitleButton(
+          title: title,
+          padding: EdgeInsets.fromLTRB(22, 0, 22, 20),
+          onTap: () {},
         ),
 
+        // Слайдер
         SizedBox(
           height: sliderHeight,
           child: ListView.builder(

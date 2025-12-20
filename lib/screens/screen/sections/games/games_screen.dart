@@ -99,6 +99,7 @@ class _GamesScreenState extends State<GamesScreen>
 
         body: TabBarView(
           controller: _tabController,
+          physics: const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
           children: const [
             GamesRecommendedTab(),
             GamesBestTab(),

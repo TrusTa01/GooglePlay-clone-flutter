@@ -4,16 +4,53 @@ import '/models/models.dart';
 import '/widgets/widgets.dart';
 
 class ScrollWidgetsUtils {
-  final Product product;
-
   const ScrollWidgetsUtils({required this.product});
 
+  final Product product;
   String get _rating => product.rating.toString();
   String get _size => product.technicalInfo.toString();
 
   String get _price => (product.price != null)
       ? '${product.price!.toStringAsFixed(2).replaceFirst('.', ',')} ₽'
       : '';
+
+  static Widget buildTitleButton({
+    required String title,
+    required VoidCallback onTap,
+    required EdgeInsets padding,
+  }) {
+    return Padding(
+      padding: padding,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: Constants.defaultFontWeight,
+            ),
+          ),
+
+          // Кнопка больше напротив заголовка
+          Material(
+            color: Constants.ratingBackgroungColor,
+            borderRadius: BorderRadius.circular(23),
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: () {},
+              child: Container(
+                width: 30,
+                height: 34,
+                alignment: Alignment.center,
+                child: const Center(child: Icon(Icons.arrow_forward, size: 18)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget buildRatingTag() {
     return Container(

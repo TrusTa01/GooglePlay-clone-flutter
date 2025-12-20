@@ -22,15 +22,6 @@ abstract class AppBarConstants {
   static const tabBarHeight = 120.0;
 
   // Стили
-  /// tabAppBar
-  static const tabIndicatorBoxDecoration = BoxDecoration(
-    borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(20),
-      topRight: Radius.circular(20),
-    ),
-    color: AppBarConstants.tabBarIndicatorColor,
-  );
-
   /// SearchAppBar
   static final searchAppBarBoxDecoration = BoxDecoration(
     color: AppBarConstants.seachInput,
