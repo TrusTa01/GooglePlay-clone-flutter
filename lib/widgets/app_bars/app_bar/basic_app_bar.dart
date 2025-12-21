@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../shared/app_bar_utils.dart';
-import '../shared/app_bar_constants.dart';
+import '../utils/app_bar_utils.dart';
+import '../../../core/constants/app_bar_constants.dart';
 
-class BasicAppBar extends StatelessWidget implements PreferredSizeWidget{
-  final String? title;
+class BasicAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  final Widget? title;
   final List<Widget>? actions;
   final bool showBackButton;
   final Color? backgroundColor;
   final Widget? leadingIcon;
   final VoidCallback? onLeadingPressed;
   final bool showLogo;
-  final String logoAssetPath;
 
   const BasicAppBar({
     super.key,
@@ -22,7 +22,6 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget{
     this.leadingIcon,
     this.onLeadingPressed,
     this.showLogo = true,
-    this.logoAssetPath = 'assets/images/google_play_logo.png',
   });
 
   @override
@@ -33,17 +32,16 @@ class BasicAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor ?? AppBarConstants.defaultBackgroundColor,
+      backgroundColor:
+          backgroundColor ?? AppBarConstants.defaultBackgroundColor,
       elevation: 0,
-      leading: AppBarUtils.buildLeading(
-      context: context,
-      leadingIcon: leadingIcon,
+      leading:AppBarLeading(
+        leadingIcon: leadingIcon,
         onLeadingPressed: onLeadingPressed,
         showBackButton: showBackButton,
       ),
-      title: AppBarUtils.buildLogoTitleRow(
+      title: AppBarLogoTitleRow(
         showLogo: showLogo,
-        logoAssetPath: logoAssetPath,
         title: title,
       ),
       actions: actions,

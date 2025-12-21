@@ -2,10 +2,12 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../product_interface.dart';
 
-part '../models.g/app_model.g.dart';
+part '../product_models.g/app_model.g.dart';
 
 @JsonSerializable()
 class App implements Product {
+  @override
+  final String type;
   @override
   final String id;
   @override
@@ -13,15 +15,20 @@ class App implements Product {
   @override
   final String creator;
   @override
+  final String description;
+  @override
   final double rating;
   @override
-  final String category;
-  @override
   final String iconUrl;
+  @override
+  final bool isPaid;
+  @override
+  final double? price;
+  @override
+  String get technicalInfo => size;
 
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
-  final String minAndroidVersion; // "Android 7.0+"
   final bool containsAds; // true/false
   final bool isEditorChoice; // Выбор редакции
   final int downloadCount; // 1_000_000
@@ -32,23 +39,22 @@ class App implements Product {
   final String packageName; // "com.google.android.youtube"
   final List<String> supportedLanguages; // ["RU", "EN"]
   final int ageRating; // 3+, 12+, 18+
-  final bool isFree; // Бесплатное/платное
-  final double price; // 0.0 если free
-  final bool hasInAppPurchases; // Внутриигровые покупки
+  final bool containsPaidContent; // Внутриигровые покупки
   final String privacyPolicyUrl; // Ссылка на политику
   final String websiteUrl; // Сайт разработчика
   final String emailSupport;
 
   App({
+    required this.type,
     required this.id,
     required this.title,
     required this.creator,
     required this.rating,
-    required this.category,
+    required this.description,
     required this.iconUrl,
+    required this.isPaid,
     required this.version,
     required this.size,
-    required this.minAndroidVersion,
     required this.containsAds,
     required this.isEditorChoice,
     required this.downloadCount,
@@ -59,12 +65,11 @@ class App implements Product {
     required this.packageName,
     required this.supportedLanguages,
     required this.ageRating,
-    required this.isFree,
-    required this.price,
-    required this.hasInAppPurchases,
     required this.privacyPolicyUrl,
     required this.websiteUrl,
     required this.emailSupport,
+    this.price,
+    required this.containsPaidContent,
   });
 
   factory App.fromJson(Map<String, dynamic> json) => _$AppFromJson(json);

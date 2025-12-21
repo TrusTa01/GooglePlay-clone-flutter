@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../shared/app_bar_utils.dart';
+import '../../../providers/tabs_provider.dart';
+import '../../widgets.dart';
 
-class TabbedAppBar extends StatelessWidget implements PreferredSizeWidget{
+class TabbedAppBar extends StatefulWidget
+    implements PreferredSizeWidget {
   final List<Widget>? actions;
   final List<String> tabs;
   final TabController? tabController;
   final Color? backgroundColor;
   final bool showLogo;
-  final String logoAssetPath;
 
   const TabbedAppBar({
     super.key,
@@ -17,30 +19,31 @@ class TabbedAppBar extends StatelessWidget implements PreferredSizeWidget{
     this.tabController,
     this.backgroundColor,
     this.showLogo = true,
-    this.logoAssetPath = 'assets/images/google_play_logo.png',
   });
 
   @override
   Size get preferredSize {
-    return const Size.fromHeight(kToolbarHeight);
+    return const Size.fromHeight(kToolbarHeight + 48);
   }
 
   @override
+  State<TabbedAppBar> createState() => TabbedAppBarState();
+}
+
+class TabbedAppBarState extends State<TabbedAppBar> {
+  @override
   Widget build(BuildContext context) {
+    final tabsProvider = Provider.of<TabsProvider>(context);
+    final tabs = tabsProvider.tabs;
+
     return AppBar(
-      leading: showLogo ? AppBarUtils.buildLogo(logoAssetPath: logoAssetPath) : null,
-      backgroundColor: backgroundColor ?? Colors.white,
+      leading: widget.showLogo
+          ? AppBarLogo()
+          : null,
+      backgroundColor: AppBarConstants.defaultBackgroundColor,
       elevation: 0,
-      bottom: TabBar(
-        controller: tabController,
-        tabs: tabs.map((tab) => Tab(text: tab)).toList(),
-        isScrollable: false,
-        labelColor: Colors.black,
-        unselectedLabelColor: Colors.grey[800],
-        indicatorColor: const Color(0xFF4285F4),
-        indicatorWeight: 3.0,      
-      ),
-      actions: actions,
+      bottom: CustomTabBar(tabs: tabs, controller: widget.tabController!),
+      actions: widget.actions,
     );
   }
 }

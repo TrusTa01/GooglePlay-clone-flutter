@@ -2,10 +2,12 @@ import '../product_interface.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
-part '../models.g/book_model.g.dart';
+part '../product_models.g/book_model.g.dart';
 
 @JsonSerializable()
 class Book implements Product {
+  @override
+  final String type;
   @override
   final String id;
   @override
@@ -13,11 +15,17 @@ class Book implements Product {
   @override
   final String creator;
   @override
+  final String description;
+  @override
   final double rating;
   @override
-  final String category;
-  @override
   final String iconUrl;
+  @override
+  final bool isPaid; 
+  @override
+  final double? price;
+  @override
+  String get technicalInfo => '$pageCount';
 
   final String publisher; // Издательство
   final String isbn; // "978-5-389-12345-6"
@@ -25,7 +33,6 @@ class Book implements Product {
   final String language; // "Русский"
   // final BookFormat format; // enum: ePub, PDF, Audiobook
   final DateTime publicationDate; // Дата публикации
-  final String description; // Аннотация
   final List<String> genres; // ["Фэнтези", "Приключения"]
   final bool hasAudioVersion; // Есть аудиокнига
   final Duration? audioDuration; // Продолжительность аудио
@@ -34,18 +41,18 @@ class Book implements Product {
   final String? seriesName; // Название серии
   final int? seriesNumber; // Номер в серии
   final bool sampleAvailable; // Есть бесплатный фрагмент
-  final double price; // Цена
   final bool isOnSale; // Со скидкой
   final double? originalPrice; // Цена без скидки
   final List<String> awards;
 
   Book({
+    required this.type,
     required this.id,
     required this.title,
     required this.creator,
     required this.rating,
-    required this.category,
     required this.iconUrl,
+    required this.isPaid,
     required this.publisher,
     required this.isbn,
     required this.pageCount,
@@ -61,10 +68,10 @@ class Book implements Product {
     required this.seriesName,
     required this.seriesNumber,
     required this.sampleAvailable,
-    required this.price,
     required this.isOnSale,
     required this.originalPrice,
     required this.awards,
+    this.price,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);

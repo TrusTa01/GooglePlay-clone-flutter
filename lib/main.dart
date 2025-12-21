@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import 'providers/tabs_provider.dart';
+import './screens/screens.dart';
 import 'layouts/main_layout.dart';
+import '/providers/products_provider.dart';
+import '/core/routes/routes.dart';
 
 void main() => runApp(GooglePlay());
 
@@ -9,18 +15,33 @@ class GooglePlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Google Play',
-      theme: ThemeData(
-        primaryColor: const Color(0xFF4285F4), // Google Blue
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0,
+    final baseTheme = ThemeData.light();
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TabsProvider()),
+        ChangeNotifierProvider(create: (context) => ProductsProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Google Play',
+        theme: baseTheme.copyWith(
+          highlightColor: Colors.transparent,
+          textTheme: GoogleFonts.nunitoTextTheme(baseTheme.textTheme),
+          primaryColor: const Color(0xFF0B57CE),
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            systemOverlayStyle: .dark,
+          ),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0B57CE)),
         ),
+        routes: {
+          AppRoutesName.notificationsScreen: (context) => const NotificationsScreen()
+        },
+        home: const MainLayout(),   
       ),
-      home: const MainLayout(),
     );
   }
 }

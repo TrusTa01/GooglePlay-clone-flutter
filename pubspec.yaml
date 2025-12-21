@@ -13,10 +13,16 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # UI
   cupertino_icons: ^1.0.8
+  shimmer: ^3.0.0
+  # data:
   provider: ^6.1.5+1
   http: ^1.6.0
   json_annotation: ^4.9.0
+  faker: ^2.2.0
+  # fonts:
+  google_fonts: ^6.3.3
 
 dev_dependencies:
   flutter_test:
@@ -30,12 +36,18 @@ flutter:
   uses-material-design: true
 
   assets:
-  # logo
-  - assets/images/logo.png
+  # images
+  - assets/images/
+  - assets/images/games_screenshots/
+
+  ## banners
+  - assets/images/banners/
+
+  # icons
+  - assets/icons/
+  - assets/icons/logo.png
+  - assets/icons/nav_bar_icons/
+  - assets/icons/games_icons/
+
   # data
-  - assets/data/apps.json
-  - assets/data/books.json
-  - assets/data/games.json
-  
-  # fonts:
-    
+  - assets/data/

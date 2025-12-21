@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../screens/screens.dart';
+import '/screens/screens.dart';
 import '../widgets/widgets.dart';
-import '../extensions/navigator_extensions.dart';
+import '../core/extensions/navigator_extensions.dart';
+import '../providers/products_provider.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -20,6 +22,31 @@ class _MainLayoutState extends State<MainLayout> {
     GlobalKey<NavigatorState>(), // Search
     GlobalKey<NavigatorState>(), // Books
   ];
+
+  Widget _buildCurrentScreen() {
+    switch (_currentPageIndex) {
+      case 0:
+        return _navigatorKeys.createNavigator(0, const GamesScreen());
+      case 1:
+        return _navigatorKeys.createNavigator(1, const AppsScreen());
+      case 2:
+        return _navigatorKeys.createNavigator(2, const SearchScreen());
+      case 3:
+        return _navigatorKeys.createNavigator(3, const BooksScreen());
+      default:
+        return Container(); // На всякий случай
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      // Проверяем, жив ли еще виджет в дереве
+      if (!mounted) return;
+      context.read<ProductsProvider>().loadAllProducts();
+    });
+  }
 
   // Обработчик выбора вкладки
   void _handleTabSelection(int index) {
@@ -46,19 +73,11 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Контент с отступом
-        // Positioned.fill(
-        //   bottom: 56 + MediaQuery.of(context).padding.bottom,
-          // IndexedStack с Navigator'ами
-          IndexedStack(
-            index: _currentPageIndex,
-            children: [
-              _navigatorKeys.createNavigator(0, const GamesScreen()),
-              _navigatorKeys.createNavigator(1, const AppsScreen()),
-              _navigatorKeys.createNavigator(2, const SearchScreen()),
-              _navigatorKeys.createNavigator(3, const BooksScreen()),
-            ],
-          ),
+        Padding(
+        padding: const EdgeInsets.only(bottom: 65), // Высота навбара, чтобы не он не перекрывал контент
+        child: _buildCurrentScreen(),
+      ),
+
         // CustomNavigationBar поверх всего
         Positioned(
           bottom: 0,

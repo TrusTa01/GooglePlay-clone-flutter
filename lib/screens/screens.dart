@@ -1,9 +1,16 @@
-export 'details/app_detail_screen.dart';
-export 'screen/sections/apps/app_screen.dart';
-export 'screen/sections/books/books_screen.dart';
-export 'screen/category_screen.dart';
-export 'screen/sections/games/games_screen.dart';
-export 'screen/notifications_screen.dart';
-export 'screen/sections/search/search_screen.dart';
-export 'screen/sections/search/search_screen2.dart';
-export 'screen/unknown_screen.dart';
+// Home
+export 'home/app_screen.dart';
+export 'home/books_screen.dart';
+export 'home/games_screen.dart';
+export 'search/search_screen.dart';
+
+// Details
+export 'details/product_detail_screen.dart';
+
+// Notifications
+export 'notifications/notifications_screen.dart';
+
+// Commnon
+export 'common/categories_tab_screen.dart';
+export 'common/error_screen.dart';
+export 'common/generic_tab_screen.dart';
