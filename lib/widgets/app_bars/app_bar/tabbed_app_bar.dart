@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:google_play/providers/tabs_provider.dart';
-import 'package:google_play/widgets/widgets.dart';
+import '/providers/tabs_provider.dart';
+import '/widgets/widgets.dart';
 
 class TabbedAppBar extends StatefulWidget
     implements PreferredSizeWidget {
@@ -38,7 +38,7 @@ class TabbedAppBarState extends State<TabbedAppBar> {
 
     return AppBar(
       leading: widget.showLogo
-          ? AppBarUtils.buildLogo()
+          ? AppBarLogo()
           : null,
       backgroundColor: AppBarConstants.defaultBackgroundColor,
       elevation: 0,

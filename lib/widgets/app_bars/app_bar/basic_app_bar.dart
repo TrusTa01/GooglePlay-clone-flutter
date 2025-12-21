@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/app_bar_utils.dart';
-import '../../constants/app_bar_constants.dart';
+import '../../shared/utils/app_bar_utils.dart';
+import '../../shared/constants/app_bar_constants.dart';
 
 class BasicAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -35,13 +35,12 @@ class BasicAppBar extends StatelessWidget
       backgroundColor:
           backgroundColor ?? AppBarConstants.defaultBackgroundColor,
       elevation: 0,
-      leading: AppBarUtils.buildLeading(
-        context: context,
+      leading:AppBarLeading(
         leadingIcon: leadingIcon,
         onLeadingPressed: onLeadingPressed,
         showBackButton: showBackButton,
       ),
-      title: AppBarUtils.buildLogoTitleRow(
+      title: AppBarLogoTitleRow(
         showLogo: showLogo,
         title: title,
       ),

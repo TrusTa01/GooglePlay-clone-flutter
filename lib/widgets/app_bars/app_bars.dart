@@ -121,7 +121,7 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
     }
 
     // Если разделитель нужен, оборачиваем в Container с границей
-    return AppBarUtils.buildAppBarDivider(
+    return AppBarDivider(
       child: innerAppBar as Widget,
     );
   }

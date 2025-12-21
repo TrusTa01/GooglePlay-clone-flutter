@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../constants/app_bar_constants.dart';
-import '../constants/global_constants.dart';
+import '/widgets/widgets.dart';
 
-abstract class AppBarUtils {
-  // Метод построения логотипа
-  static Widget buildLogo({
-    double height = 32,
-    double width = 32,
-  }) {
+// Логотип
+class AppBarLogo extends StatelessWidget {
+  final double width;
+  final double height;
+
+  const AppBarLogo({super.key, this.width = 32, this.height = 32});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
       child: Image.asset(
@@ -28,32 +30,47 @@ abstract class AppBarUtils {
       ),
     );
   }
+}
 
-  // Метод построения заголовка
-  static Widget buildTitle(String? title) {
+// Заголовка
+class AppBarTitle extends StatelessWidget {
+  final String? title;
+  const AppBarTitle({super.key, this.title});
+
+  @override
+  Widget build(BuildContext context) {
     if (title != null) {
       return Text(
-        title,
+        title!,
         style: const TextStyle(
           color: Colors.black,
-          fontWeight: FontWeight(500),
+          fontWeight: FontWeight.w500,
         ),
       );
     }
     return const SizedBox.shrink();
   }
+}
 
-  // Метод построения leading
-  static Widget? buildLeading({
-    required BuildContext context,
-    Widget? leadingIcon,
-    VoidCallback? onLeadingPressed,
-    bool showBackButton = false,
-  }) {
+// Leading
+class AppBarLeading extends StatelessWidget {
+  final Widget? leadingIcon;
+  final VoidCallback? onLeadingPressed;
+  final bool showBackButton;
+
+  const AppBarLeading({
+    super.key,
+    this.leadingIcon,
+    this.onLeadingPressed,
+    this.showBackButton = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     if (leadingIcon != null) {
       return IconButton(
         onPressed: onLeadingPressed ?? () {},
-        icon: leadingIcon,
+        icon: leadingIcon!,
       );
     }
 
@@ -64,31 +81,46 @@ abstract class AppBarUtils {
       );
     }
 
-    return null;
+    return const SizedBox.shrink();
   }
+}
 
-  // Метод для Row с логотипом и заголовком
-  static Widget buildLogoTitleRow({
-    required bool showLogo,
-    required Widget? title,
-  }) {
+// Row с логотипом и заголовком
+class AppBarLogoTitleRow extends StatelessWidget {
+  final bool showLogo;
+  final Widget? title;
+
+  const AppBarLogoTitleRow({super.key, required this.showLogo, this.title});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
-        if (showLogo) buildLogo(),
+        if (showLogo) AppBarLogo(),
         const SizedBox(width: 8),
-        Expanded(child: buildTitle('')),
+        Expanded(child: AppBarTitle()),
       ],
     );
   }
+}
 
-  // Метод построения кастомного инпута для поиска
-  static Widget buildSearchContainer({
-    required List<Widget>? inputLeading,
-    required String searchHint,
-    required List<Widget>? inputActions,
-  }) {
+// Кастомный инпут для поиска
+class AppBarSearchContainer extends StatelessWidget {
+  final List<Widget>? inputLeading;
+  final String searchHint;
+  final List<Widget>? inputActions;
+
+  const AppBarSearchContainer({
+    super.key,
+    this.inputLeading,
+    required this.searchHint,
+    this.inputActions,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       height: 50,
       decoration: AppBarConstants.searchAppBarBoxDecoration,
       child: Padding(
@@ -101,6 +133,7 @@ abstract class AppBarUtils {
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   searchHint,
+                  maxLines: 1,
                   style: const TextStyle(
                     color: AppBarConstants.searchLabelColor,
                     fontWeight: Constants.defaultFontWeight,
@@ -109,15 +142,22 @@ abstract class AppBarUtils {
                 ),
               ),
             ),
-            ...(inputActions ?? []),
+            if (inputActions != null) ...inputActions!,
           ],
         ),
       ),
     );
   }
+}
 
-  // Метод построения разделителя
-  static Widget buildAppBarDivider({required Widget child}) {
+// Разделитель
+class AppBarDivider extends StatelessWidget {
+  final Widget child;
+
+  const AppBarDivider({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         border: Border(

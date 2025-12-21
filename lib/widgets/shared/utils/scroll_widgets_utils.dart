@@ -62,6 +62,84 @@ class ProductSectionTitle extends StatelessWidget {
   }
 }
 
+class ProductCardIcon extends StatelessWidget {
+  final String iconUrl;
+  final double iconWidth;
+  final double iconHeight;
+  final int cacheWidth;
+
+  const ProductCardIcon({
+    super.key,
+    required this.iconUrl,
+    required this.iconWidth,
+    required this.iconHeight,
+    required this.cacheWidth,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Image.asset(
+        iconUrl,
+        width: iconWidth,
+        height: iconHeight,
+        cacheWidth: cacheWidth,
+        fit: BoxFit.cover,
+
+        // Пока грузится - шимер
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+          if (wasSynchronouslyLoaded) return child;
+          return frame != null
+              ? child
+              : ShimmerBox(width: iconWidth, height: iconHeight);
+        },
+
+        // Если ошибка - заглушка
+        errorBuilder: (context, error, stackTrace) => _buildErrorPlaceholder(),
+      ),
+    );
+  }
+
+  Widget _buildErrorPlaceholder() {
+    return Container(
+      width: iconWidth,
+      height: iconHeight,
+      color: Colors.grey[200],
+      child: Icon(Icons.broken_image, color: Colors.grey, size: 30),
+    );
+  }
+}
+
+class ProductTitle extends StatelessWidget {
+  final String title;
+  final int? maxLines;
+  final TextOverflow overflow;
+  final double? fontSize;
+
+  const ProductTitle({
+    super.key,
+    required this.title,
+    this.maxLines = 2,
+    this.overflow = TextOverflow.ellipsis,
+    this.fontSize,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      maxLines: maxLines,
+      overflow: overflow,
+      softWrap: true,
+      style: TextStyle(
+        fontWeight: Constants.defaultFontWeight,
+        fontSize: fontSize,
+      ),
+    );
+  }
+}
+
 class ProductRatingTag extends StatelessWidget {
   final String rating;
   const ProductRatingTag({super.key, required this.rating});

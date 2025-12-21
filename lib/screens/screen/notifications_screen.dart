@@ -12,7 +12,7 @@ class NotificationsScreen extends StatelessWidget {
         type: AppBarType.transparent,
         showBackButton: true,
         onLeadingPressed: () => Navigator.pop(context),
-        title: AppBarUtils.buildTitle('Уведомления и предложения'),
+        title: AppBarTitle(title: 'Уведомления и предложения'),
       ),
       body: Center(
         child: Column(

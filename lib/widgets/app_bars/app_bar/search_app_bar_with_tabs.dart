@@ -45,7 +45,7 @@ class _SearchAppBarWithTabsState extends State<SearchAppBarWithTabs> {
     return AppBar(
       backgroundColor: AppBarConstants.defaultBackgroundColor,
       elevation: AppBarConstants.defaultElevation,
-      title: AppBarUtils.buildSearchContainer(
+      title: AppBarSearchContainer(
         inputLeading: widget.inputLeading,
         searchHint: widget.searchHint,
         inputActions: widget.inputActions,

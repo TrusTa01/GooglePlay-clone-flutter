@@ -8,15 +8,15 @@ export 'app_bars/app_bar/transparent_app_bar.dart';
 export 'app_bars/app_bar/search_app_bar_with_tabs.dart';
 
 // Utils
-export 'utils/app_bar_utils.dart';
-export 'utils/navigation_bar_utils.dart';
-export 'utils/banners_utils.dart';
-export 'utils/scroll_widgets_utils.dart';
+export 'shared/utils/app_bar_utils.dart';
+export 'shared/utils/navigation_bar_utils.dart';
+export 'shared/utils/banners_utils.dart';
+export 'shared/utils/scroll_widgets_utils.dart';
 
 // Constants
-export 'constants/app_bar_constants.dart';
-export 'constants/global_constants.dart';
-export 'constants/navigation_bar_constants.dart';
+export 'shared/constants/app_bar_constants.dart';
+export 'shared/constants/global_constants.dart';
+export 'shared/constants/navigation_bar_constants.dart';
 
 // Tabs
 export 'app_bars/tabs/custom_tab_bar.dart';
@@ -37,4 +37,5 @@ export 'scroll_widgets/three_line/product_card_horizontal.dart';
 export 'scroll_widgets/three_line/multi_row_slider.dart';
 
 // Shimers
-export 'shimers/product_slider_skeleton.dart';
+export 'shared/shimers/product_slider_skeleton.dart';
+export 'shared/shimers/shimer_box.dart';

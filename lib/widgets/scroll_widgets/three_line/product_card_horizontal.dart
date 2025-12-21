@@ -22,54 +22,38 @@ class ProductCardHorizontal extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           children: <Widget>[
-            _buildIcon(),
+            ProductCardIcon(
+              // Карточка
+              iconUrl: product.iconUrl,
+              iconWidth: 60,
+              iconHeight: 60,
+              cacheWidth: 180,
+            ),
             const SizedBox(width: 15),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildTitle(), // Название
+                  ProductTitle( // Название
+                    title: product.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    fontSize: 14,
+                  ), 
                   const SizedBox(height: 2),
                   _buildDescription(), // Описание
                   const Spacer(),
-                  _buildBottomRow(formatter), // Нижняя строка
+                  _ProductBottomInfo(
+                    // Нижняя строка
+                    formatter: formatter,
+                    showPrice: showPrice,
+                  ),
                 ],
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildIcon() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: Image.asset(
-        product.iconUrl,
-        width: 60,
-        height: 60,
-        cacheWidth: 180,
-        fit: BoxFit.cover,
-        // TODO: сделать универсальный еррор билдер
-        errorBuilder: (context, error, stackTrace) {
-          return Container(
-            color: Colors.grey[200], // Серый фон вместо дырки
-            child: const Center(
-              child: Icon(Icons.broken_image, color: Colors.grey),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildTitle() {
-    return Text(
-      product.title,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
     );
   }
 
@@ -81,8 +65,16 @@ class ProductCardHorizontal extends StatelessWidget {
       style: const TextStyle(fontSize: 12),
     );
   }
+}
 
-  Widget _buildBottomRow(ProductDataFormatter formatter) {
+class _ProductBottomInfo extends StatelessWidget {
+  final ProductDataFormatter formatter;
+  final bool showPrice;
+
+  const _ProductBottomInfo({required this.formatter, required this.showPrice});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         ProductRatingTag(rating: formatter.rating), // Рейтинг

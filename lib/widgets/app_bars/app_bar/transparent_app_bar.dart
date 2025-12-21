@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/app_bar_utils.dart';
+import '/widgets/widgets.dart';
 
 class TransparentAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -29,7 +29,7 @@ class TransparentAppBar extends StatelessWidget
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: AppBarUtils.buildLeading(context: context, showBackButton: true),
+      leading: AppBarLeading(showBackButton: true),
       centerTitle: false,
       title: title,
       iconTheme: const IconThemeData(color: Colors.white),
