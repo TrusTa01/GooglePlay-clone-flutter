@@ -12,7 +12,7 @@ class ProductSliderSkeleton extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.all(16.0),
-          child: ShimmerBox(width: 150, height: 20), // Универсальный заголовок
+          child: ShimmerBox(width: 150, height: 20),
         ),
         SizedBox(
           height: 200,

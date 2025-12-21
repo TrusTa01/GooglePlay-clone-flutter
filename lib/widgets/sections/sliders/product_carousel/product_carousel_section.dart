@@ -4,13 +4,18 @@ import '../../../../models/product_interface.dart';
 import '../../../widgets.dart';
 
 class ProductCarousel extends StatelessWidget {
-  const ProductCarousel({super.key, required this.title, required this.products});
+  const ProductCarousel({
+    super.key,
+    required this.title,
+    required this.products,
+  });
   final String title;
   final List<Product> products;
 
   @override
   Widget build(BuildContext context) {
-    const double sliderHeight = 190;
+    // Размер слайдера 
+    const double sliderHeight = 180;
 
     if (products.isEmpty) {
       debugPrint('Ошибка: products.isEmpty');
@@ -23,7 +28,7 @@ class ProductCarousel extends StatelessWidget {
         // Заголовок и кнопка больше
         ProductSectionTitle(
           title: title,
-          padding: EdgeInsets.fromLTRB(22, 0, 22, 20),
+          padding: EdgeInsets.fromLTRB(22, 10, 22, 20),
           onTap: () {},
         ),
 

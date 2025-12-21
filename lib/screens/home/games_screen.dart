@@ -15,7 +15,6 @@ class GamesScreen extends StatefulWidget {
 
 class _GamesScreenState extends State<GamesScreen>
     with SingleTickerProviderStateMixin {
-  
   late final TabController _tabController;
   final List<String> _tabs = [
     'Рекомендуем',
@@ -101,14 +100,18 @@ class _GamesScreenState extends State<GamesScreen>
 
         body: TabBarView(
           controller: _tabController,
-          physics: const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+          physics:
+              const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
           children: [
-          // Таб 'Рекомендуем'
-           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
-           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
-           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
-           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
-           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
+            // Таб 'Рекомендуем'
+            GenericTabScreen(
+              sections: watchProvider.recommendedGamesSections,
+              onLoad: () => context.read<ProductsProvider>().getRecomendations(),
+            ),
+            SizedBox.shrink(),
+            SizedBox.shrink(),
+            SizedBox.shrink(),
+            SizedBox.shrink(),
           ],
         ),
       ),

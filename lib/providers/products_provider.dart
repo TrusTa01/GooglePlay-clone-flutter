@@ -12,69 +12,56 @@ class ProductsProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   List<Product> _recommendations = [];
+  List<HomeSection> _recommendedGamesSections = [];
 
-  List<HomeSection> get recommendedGamesSections {
-    if (_isLoading) return [];
-    return [
-      HomeSection(
-        type: SectionType.banners, 
-        title: '', 
-        items: BannerData.banners,
-      ),
+  List<HomeSection> get recommendedGamesSections => _recommendedGamesSections;
 
-      HomeSection(
-        type: SectionType.carousel, 
-        title: 'Рекомендуем для вас', 
-        items: recommendations,
-      ),
-
-      HomeSection(
-        type: SectionType.grid, 
-        title: 'Файтинги', 
-        items: getGamesByCategory('Файтинг'),
-      ),
-      HomeSection(
-        type: SectionType.banners, 
-        title: '', 
-        items: BannerData.banners,
-      ),
-
-      HomeSection(
-        type: SectionType.carousel, 
-        title: 'Рекомендуем для вас', 
-        items: recommendations,
-      ),
-
-      HomeSection(
-        type: SectionType.grid, 
-        title: 'Файтинги', 
-        items: getGamesByCategory('Файтинг'),
-      ),
-      HomeSection(
-        type: SectionType.banners, 
-        title: '', 
-        items: BannerData.banners,
-      ),
-
-      HomeSection(
-        type: SectionType.carousel, 
-        title: 'Рекомендуем для вас', 
-        items: recommendations,
-      ),
-
-      HomeSection(
-        type: SectionType.grid, 
-        title: 'Файтинги', 
-        items: getGamesByCategory('Файтинг'),
-      ),
+    void _prepareRecommendedSections() {
+    // Делаем тяжелые вычисления один раз и сохраняем в переменную
+    final fightGames = getGamesByCategory('Файтинг');
+    
+    _recommendedGamesSections = [
+      HomeSection(type: SectionType.banners, title: '', items: BannerData.banners),
+      HomeSection(type: SectionType.carousel, title: 'Рекомендуем для вас', items: _recommendations),
+      HomeSection(type: SectionType.grid, title: 'Файтинги', items: fightGames),
+      HomeSection(type: SectionType.carousel, title: 'Рекомендуем для вас', items: _recommendations),
+      HomeSection(type: SectionType.grid, title: 'Файтинги', items: fightGames),
+      HomeSection(type: SectionType.carousel, title: 'Рекомендуем для вас', items: _recommendations),
+      HomeSection(type: SectionType.grid, title: 'Файтинги', items: fightGames),
+      HomeSection(type: SectionType.carousel, title: 'Рекомендуем для вас', items: _recommendations),
+      HomeSection(type: SectionType.grid, title: 'Файтинги', items: fightGames),
+      HomeSection(type: SectionType.carousel, title: 'Рекомендуем для вас', items: _recommendations),
+      HomeSection(type: SectionType.grid, title: 'Файтинги', items: fightGames),
+      HomeSection(type: SectionType.carousel, title: 'Рекомендуем для вас', items: _recommendations),
+      HomeSection(type: SectionType.grid, title: 'Файтинги', items: fightGames),
+      HomeSection(type: SectionType.carousel, title: 'Рекомендуем для вас', items: _recommendations),
+      HomeSection(type: SectionType.grid, title: 'Файтинги', items: fightGames),
     ];
+  }
+
+  Future<void> getRecomendations() async {
+    if (_recommendations.isNotEmpty) return;
+
+    _isLoading = true;
+    notifyListeners();
+
+    await Future.delayed(const Duration(milliseconds: 500)); 
+
+    List<Product> sortedList = List.from(_allProducts);
+    sortedList.sort((a, b) => b.rating.compareTo(a.rating));
+    _recommendations = sortedList.take(7).toList();
+
+    // ВАЖНО: собираем секции перед тем как выключить загрузку
+    _prepareRecommendedSections();
+
+    _isLoading = false;
+    notifyListeners(); 
   }
 
   // Геттеры для доступа из виджетов
   List<Product> get allProducts => _allProducts;
   bool get isLoading => _isLoading;
   String? get error => _error;
-  List<Product> get recommendations => _recommendations;
 
   Future<void> loadAllProducts() async {
     if (_allProducts.isNotEmpty) return;
@@ -103,9 +90,6 @@ class ProductsProvider extends ChangeNotifier {
       _allProducts = results.expand((list) => list).toList();
 
       // Логика рекомендация, берем 7 самых высоко оцененных продуктов
-      List<Product> sortedList = List.from(_allProducts);
-      sortedList.sort((a, b) => b.rating.compareTo(a.rating));
-      _recommendations = sortedList.take(7).toList();
     } catch (e) {
       _error = e.toString();
     } finally {

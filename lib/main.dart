@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/providers/products_provider.dart';
-import 'package:google_play/core/routes/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'providers/tabs_provider.dart';
 import './screens/screens.dart';
 import 'layouts/main_layout.dart';
+import '/providers/products_provider.dart';
+import '/core/routes/routes.dart';
 
 void main() => runApp(GooglePlay());
 

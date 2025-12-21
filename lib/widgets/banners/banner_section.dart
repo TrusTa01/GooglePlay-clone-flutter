@@ -53,9 +53,8 @@ class _BannerSectionState extends State<BannerSection> {
     final double screenHeight = MediaQuery.of(context).size.height;
     final thirtyPercentHeight = screenHeight / 3.5;
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: NotificationListener<ScrollNotification>(
+    return 
+       NotificationListener<ScrollNotification>(
         onNotification: (notification) {
           if (notification is ScrollStartNotification) {
             _timer?.cancel();
@@ -66,17 +65,19 @@ class _BannerSectionState extends State<BannerSection> {
         },
         child: SizedBox(
           height: thirtyPercentHeight,
-          child: PageView.builder(
-            onPageChanged: (index) => _currentPage = index,
-            scrollDirection: Axis.horizontal,
-            controller: _controller,
-            itemCount: widget.banners.length,
-            itemBuilder: (context, index) {
-              return BannerItem(data: widget.banners[index]);
-            },
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 0),
+            child: PageView.builder(
+              onPageChanged: (index) => _currentPage = index,
+              scrollDirection: Axis.horizontal,
+              controller: _controller,
+              itemCount: widget.banners.length,
+              itemBuilder: (context, index) {
+                return BannerItem(data: widget.banners[index]);
+              },
+            ),
           ),
         ),
-      ),
     );
   }
 }

@@ -28,6 +28,7 @@ class ProductGridCard extends StatelessWidget {
               iconWidth: 60,
               iconHeight: 60,
               cacheWidth: 180,
+              cacheHeight: 180,
             ),
             const SizedBox(width: 15),
             Expanded(

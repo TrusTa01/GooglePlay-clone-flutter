@@ -39,6 +39,7 @@ class ProductCarouselCard extends StatelessWidget {
                 iconWidth: 115, 
                 iconHeight: 115, 
                 cacheWidth: 300,
+                cacheHeight: 300,
                 ),
               const SizedBox(height: 6),
               SizedBox(

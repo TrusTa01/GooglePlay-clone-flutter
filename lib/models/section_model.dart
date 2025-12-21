@@ -1,4 +1,4 @@
-enum SectionType { carousel, grid, banners }
+enum SectionType { banners, carousel, grid }
 
 class HomeSection {
   final SectionType type;

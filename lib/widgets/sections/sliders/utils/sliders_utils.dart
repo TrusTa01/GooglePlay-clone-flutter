@@ -67,6 +67,7 @@ class ProductCardIcon extends StatelessWidget {
   final double iconWidth;
   final double iconHeight;
   final int cacheWidth;
+  final int cacheHeight;
 
   const ProductCardIcon({
     super.key,
@@ -74,6 +75,7 @@ class ProductCardIcon extends StatelessWidget {
     required this.iconWidth,
     required this.iconHeight,
     required this.cacheWidth,
+    required this.cacheHeight,
   });
 
   @override
@@ -85,6 +87,7 @@ class ProductCardIcon extends StatelessWidget {
         width: iconWidth,
         height: iconHeight,
         cacheWidth: cacheWidth,
+        cacheHeight: cacheHeight,
         fit: BoxFit.cover,
 
         // Пока грузится - шимер
