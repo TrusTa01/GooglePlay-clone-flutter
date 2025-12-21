@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/widgets/banners/banners_data.dart';
 
 import '../models/models.dart';
 import '../services/product_service.dart';
@@ -10,13 +11,70 @@ class ProductsProvider extends ChangeNotifier {
   List<Product> _allProducts = [];
   bool _isLoading = false;
   String? _error;
-  List<Product> _recommendedGames = [];
+  List<Product> _recommendations = [];
+
+  List<HomeSection> get recommendedGamesSections {
+    if (_isLoading) return [];
+    return [
+      HomeSection(
+        type: SectionType.banners, 
+        title: '', 
+        items: BannerData.banners,
+      ),
+
+      HomeSection(
+        type: SectionType.carousel, 
+        title: 'Рекомендуем для вас', 
+        items: recommendations,
+      ),
+
+      HomeSection(
+        type: SectionType.grid, 
+        title: 'Файтинги', 
+        items: getGamesByCategory('Файтинг'),
+      ),
+      HomeSection(
+        type: SectionType.banners, 
+        title: '', 
+        items: BannerData.banners,
+      ),
+
+      HomeSection(
+        type: SectionType.carousel, 
+        title: 'Рекомендуем для вас', 
+        items: recommendations,
+      ),
+
+      HomeSection(
+        type: SectionType.grid, 
+        title: 'Файтинги', 
+        items: getGamesByCategory('Файтинг'),
+      ),
+      HomeSection(
+        type: SectionType.banners, 
+        title: '', 
+        items: BannerData.banners,
+      ),
+
+      HomeSection(
+        type: SectionType.carousel, 
+        title: 'Рекомендуем для вас', 
+        items: recommendations,
+      ),
+
+      HomeSection(
+        type: SectionType.grid, 
+        title: 'Файтинги', 
+        items: getGamesByCategory('Файтинг'),
+      ),
+    ];
+  }
 
   // Геттеры для доступа из виджетов
   List<Product> get allProducts => _allProducts;
   bool get isLoading => _isLoading;
   String? get error => _error;
-  List<Product> get recommendedGames => _recommendedGames;
+  List<Product> get recommendations => _recommendations;
 
   Future<void> loadAllProducts() async {
     if (_allProducts.isNotEmpty) return;
@@ -44,9 +102,10 @@ class ProductsProvider extends ChangeNotifier {
       // Склеиваем всё в один список
       _allProducts = results.expand((list) => list).toList();
 
+      // Логика рекомендация, берем 7 самых высоко оцененных продуктов
       List<Product> sortedList = List.from(_allProducts);
       sortedList.sort((a, b) => b.rating.compareTo(a.rating));
-      _recommendedGames = sortedList.take(7).toList();
+      _recommendations = sortedList.take(7).toList();
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -61,7 +120,6 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   // Поиск по категориям
-
   // Поиск игр и приложений общий
   List<Product> searchGamesAndApps(String query) {
     if (query.isEmpty) return [];
@@ -90,7 +148,6 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   // Поиск по названию
-
   // Метод поиска игр по категориям
   List<Product> getGamesByCategory(String genre) {
     return _allProducts.where((product) {

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/screens/screens.dart';
-import '../../providers/tabs_provider.dart';
 import '../../widgets/widgets.dart';
 import '../../core/routes/routes.dart';
+import '../../providers/providers.dart';
 
 class GamesScreen extends StatefulWidget {
   const GamesScreen({super.key});
@@ -46,6 +46,8 @@ class _GamesScreenState extends State<GamesScreen>
   @override
   Widget build(BuildContext context) {
     final int currentIndex = _tabController.index;
+
+    final watchProvider = context.watch<ProductsProvider>();
 
     final AppBarType appBarType = switch (currentIndex) {
       0 || 1 || 3 || 4 => AppBarType.tabbed,
@@ -100,12 +102,13 @@ class _GamesScreenState extends State<GamesScreen>
         body: TabBarView(
           controller: _tabController,
           physics: const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-          children: const [
-            // GamesRecommendedTab(),
-            // GamesBestTab(),
-            // GamesKidsTab(),
-            // GamesPaidTab(),
-            // GamesCategoriesTab(),
+          children: [
+          // Таб 'Рекомендуем'
+           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
+           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
+           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
+           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
+           GenericTabScreen(sections: watchProvider.recommendedGamesSections),
           ],
         ),
       ),
