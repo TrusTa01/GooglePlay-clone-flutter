@@ -19,9 +19,9 @@
 // }
 
 import 'package:flutter/material.dart';
-import '/models/product_interface.dart';
-import '/widgets/widgets.dart';
-import '/models/product_models/game_model.dart'; // Импортируем, чтобы проверить тип
+import '../../models/product_interface.dart';
+import '../../widgets/widgets.dart';
+import '../../models/product_models/game_model.dart'; // Импортируем, чтобы проверить тип
 
 class ProductDetailScreen extends StatelessWidget {
   final Product product;

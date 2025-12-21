@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/utils/app_bar_utils.dart';
-import '../../shared/constants/app_bar_constants.dart';
+import '../utils/app_bar_utils.dart';
+import '../../../core/constants/app_bar_constants.dart';
 
 class BasicAppBar extends StatelessWidget
     implements PreferredSizeWidget {

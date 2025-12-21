@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/providers/products_provider.dart';
-import 'package:google_play/routes/routes.dart';
+import 'package:google_play/core/routes/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 

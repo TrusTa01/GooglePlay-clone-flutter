@@ -8,18 +8,18 @@ export 'app_bars/app_bar/transparent_app_bar.dart';
 export 'app_bars/app_bar/search_app_bar_with_tabs.dart';
 
 // Utils
-export 'shared/utils/app_bar_utils.dart';
-export 'shared/utils/navigation_bar_utils.dart';
-export 'shared/utils/banners_utils.dart';
-export 'shared/utils/scroll_widgets_utils.dart';
+export 'app_bars/utils/app_bar_utils.dart';
+export 'navigation_bar/utils/navigation_bar_utils.dart';
+export 'banners/utils/banners_utils.dart';
+export 'sections/sliders/utils/sliders_utils.dart';
 
 // Constants
-export 'shared/constants/app_bar_constants.dart';
-export 'shared/constants/global_constants.dart';
-export 'shared/constants/navigation_bar_constants.dart';
+export '../core/constants/app_bar_constants.dart';
+export '../core/constants/global_constants.dart';
+export '../core/constants/navigation_bar_constants.dart';
 
 // Tabs
-export 'app_bars/tabs/custom_tab_bar.dart';
+export 'app_bars/app_bar_tabs/custom_tab_bar.dart';
 
 // Navigation bar
 export 'navigation_bar/navigation_bar.dart';
@@ -31,11 +31,11 @@ export 'banners/banner_item.dart';
 export 'banners/banner_section.dart';
 
 // Scroll widgets
-export 'scroll_widgets/one_line/product_card_vertical.dart';
-export 'scroll_widgets/one_line/single_row_slider.dart';
-export 'scroll_widgets/three_line/product_card_horizontal.dart';
-export 'scroll_widgets/three_line/multi_row_slider.dart';
+export 'sections/sliders/product_carousel/product_card_carousel_section.dart';
+export 'sections/sliders/product_carousel/product_carousel_section.dart';
+export 'sections/sliders/product_grid/product_grid_card_section.dart';
+export 'sections/sliders/product_grid/product_grid_section.dart';
 
 // Shimers
-export 'shared/shimers/product_slider_skeleton.dart';
-export 'shared/shimers/shimer_box.dart';
+export '../core/shimers/product_slider_skeleton.dart';
+export '../core/shimers/shimer_box.dart';

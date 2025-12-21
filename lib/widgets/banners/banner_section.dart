@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import '/widgets/widgets.dart';
+import '../widgets.dart';
 
 class BannerSection extends StatefulWidget {
   final List<BannerData> banners;

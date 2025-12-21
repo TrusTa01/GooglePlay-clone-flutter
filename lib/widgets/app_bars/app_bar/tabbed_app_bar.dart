@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/providers/tabs_provider.dart';
-import '/widgets/widgets.dart';
+import '../../../providers/tabs_provider.dart';
+import '../../widgets.dart';
 
 class TabbedAppBar extends StatefulWidget
     implements PreferredSizeWidget {
