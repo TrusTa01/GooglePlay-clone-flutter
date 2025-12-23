@@ -7,11 +7,7 @@ class ProductGrid extends StatelessWidget {
   final String title;
   final List<Product> products;
 
-  const ProductGrid({
-    super.key,
-    required this.title,
-    required this.products,
-  });
+  const ProductGrid({super.key, required this.title, required this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +30,7 @@ class ProductGrid extends StatelessWidget {
         SizedBox(
           height: 240,
           child: PageView.builder(
+            key: PageStorageKey('grid_$title'),
             controller: PageController(viewportFraction: 0.9),
             padEnds: false,
             itemCount: (products.length / 3).ceil(),
@@ -44,10 +41,14 @@ class ProductGrid extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: List.generate(3, (index) {
                     final productIndex = pageIndex * 3 + index;
-                    if (productIndex >= products.length) return const SizedBox(height: 80);
+                    if (productIndex >= products.length) {
+                      return const SizedBox(height: 80);
+                    }
                     // Оборачиваем в Expanded, чтобы каждая карточка занимала ровно 1/3 высоты
                     return Expanded(
-                      child: ProductGridCard(product: products[productIndex]),
+                      child: productIndex < products.length
+                          ? ProductGridCard(product: products[productIndex])
+                          : const SizedBox.shrink(),
                     );
                   }),
                 ),

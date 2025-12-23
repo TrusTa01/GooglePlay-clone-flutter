@@ -68,6 +68,7 @@ class _BannerSectionState extends State<BannerSection> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 0),
             child: PageView.builder(
+              key: PageStorageKey('banner_${widget.banners}'),
               onPageChanged: (index) => _currentPage = index,
               scrollDirection: Axis.horizontal,
               controller: _controller,

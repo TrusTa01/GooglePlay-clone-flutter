@@ -36,6 +36,7 @@ class ProductCarousel extends StatelessWidget {
         SizedBox(
           height: sliderHeight,
           child: ListView.builder(
+            key: PageStorageKey('carousel_$title'),
             // Отступ слева для первого элемента
             padding: const EdgeInsets.only(left: 22),
             scrollDirection: Axis.horizontal,
