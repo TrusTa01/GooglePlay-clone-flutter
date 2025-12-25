@@ -23,6 +23,7 @@ dependencies:
   faker: ^2.2.0
   # fonts:
   google_fonts: ^6.3.3
+  # firebase_core: ^4.3.0
 
 dev_dependencies:
   flutter_test:

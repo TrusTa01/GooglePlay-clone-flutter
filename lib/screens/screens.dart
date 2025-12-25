@@ -14,3 +14,4 @@ export 'notifications/notifications_screen.dart';
 export 'common/categories_tab_screen.dart';
 export 'common/error_screen.dart';
 export 'common/generic_tab_screen.dart';
+export 'common/page_builder.dart';

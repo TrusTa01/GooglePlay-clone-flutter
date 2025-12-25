@@ -1,4 +1,6 @@
+// ignore_for_file: avoid_print
 // Генерация мок-данных игр
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -201,7 +203,6 @@ void main() async {
     'Война',
     'Исследование',
     'Аниме',
-    'Фурри',
     'Steampunk',
     'VR',
     'PvP',
@@ -371,9 +372,12 @@ void main() async {
       (_) => faker.randomGenerator.element(gameTags),
     ).toSet().toList();
 
+    // Генерируем ID с префиксом 'g' (game)
+    final String id = 'g_$i'.toString(); 
+
     final gameData = {
       "type": "game",
-      "id": i.toString(),
+      "id": id,
       "title": generatedTitle,
       "creator": creatorName,
       "rating": faker.randomGenerator.integer(50) / 10.0,
@@ -416,7 +420,6 @@ void main() async {
   }
   await file.writeAsString(jsonEncode(gamesList));
 
-  // ignore: avoid_print
   print(
     'Successfully generated ${gamesList.length} game objects to ${file.path}',
   );

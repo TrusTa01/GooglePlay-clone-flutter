@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import '/models/models.dart';
 import 'dart:async';
 
 import '../widgets.dart';
 
 class BannerSection extends StatefulWidget {
-  final List<BannerData> banners;
+  final List<AppBanner> banners;
+  final BannerType type;
+  final double heightFactor;
 
-  const BannerSection({super.key, required this.banners});
+  const BannerSection({
+    super.key,
+    required this.banners,
+    this.type = BannerType.simple,
+    this.heightFactor = 3.5,
+  });
 
   @override
   State<BannerSection> createState() => _BannerSectionState();
@@ -50,35 +58,34 @@ class _BannerSectionState extends State<BannerSection> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.of(context).size.height;
-    final thirtyPercentHeight = screenHeight / 3.5;
+    final double adaptiveHeight =
+        MediaQuery.of(context).size.height / widget.heightFactor;
 
-    return 
-       NotificationListener<ScrollNotification>(
-        onNotification: (notification) {
-          if (notification is ScrollStartNotification) {
-            _timer?.cancel();
-          } else if (notification is ScrollEndNotification) {
-            _startTimer();
-          }
-          return true;
-        },
-        child: SizedBox(
-          height: thirtyPercentHeight,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 0),
-            child: PageView.builder(
-              key: PageStorageKey('banner_${widget.banners}'),
-              onPageChanged: (index) => _currentPage = index,
-              scrollDirection: Axis.horizontal,
-              controller: _controller,
-              itemCount: widget.banners.length,
-              itemBuilder: (context, index) {
-                return BannerItem(data: widget.banners[index]);
-              },
-            ),
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        if (notification is ScrollStartNotification) {
+          _timer?.cancel();
+        } else if (notification is ScrollEndNotification) {
+          _startTimer();
+        }
+        return true;
+      },
+      child: SizedBox(
+        height: adaptiveHeight,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 0),
+          child: PageView.builder(
+            key: PageStorageKey('banner_${widget.type.toString()}'),
+            onPageChanged: (index) => _currentPage = index,
+            scrollDirection: Axis.horizontal,
+            controller: _controller,
+            itemCount: widget.banners.length,
+            itemBuilder: (context, index) {
+              return BannerItem(banner: widget.banners[index], type: widget.type);
+            },
           ),
         ),
+      ),
     );
   }
 }

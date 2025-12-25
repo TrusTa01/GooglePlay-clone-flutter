@@ -1,7 +1,4 @@
-import 'product_models/app_model.dart';
-import 'product_models/book_model.dart';
-import 'product_models/game_model.dart';
-
+import 'models.dart';
 abstract interface class Product {
   String get type;
   String get id;
@@ -10,6 +7,7 @@ abstract interface class Product {
   String get description;
   double get rating;
   String get iconUrl;
+  int get ageRating;
   bool get isPaid;
   double? get price;
   String get technicalInfo {

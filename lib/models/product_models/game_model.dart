@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../product_interface.dart';
+import '../models.dart';
 
 part '../product_models.g/game_model.g.dart';
 
@@ -24,6 +24,8 @@ class Game implements Product {
   final bool isPaid;
   @override
   final double? price;
+  @override 
+  final int ageRating;
   @override
   String get technicalInfo => size;
   
@@ -44,7 +46,7 @@ class Game implements Product {
   final String creatorDescription;
   final bool isOnline; // Онлайн игра?
   final bool hasMultiplayer; // Мультиплеер
-  final int ageRating; // "3+", "12+", "18+"
+ 
   final bool hasAchievements; // Достижения
   final String gameModes; // "Single-player", "Co-op"
   final bool hasControllerSupport;

@@ -1,6 +1,6 @@
-import '../product_interface.dart';
-
 import 'package:json_annotation/json_annotation.dart';
+
+import '../models.dart';
 
 part '../product_models.g/book_model.g.dart';
 
@@ -24,6 +24,8 @@ class Book implements Product {
   final bool isPaid; 
   @override
   final double? price;
+  @override 
+  final int ageRating;
   @override
   String get technicalInfo => '$pageCount';
 
@@ -71,7 +73,8 @@ class Book implements Product {
     required this.isOnSale,
     required this.originalPrice,
     required this.awards,
-    this.price,
+    this.price, 
+    required this.ageRating,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);

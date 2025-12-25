@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../product_interface.dart';
+import '../models.dart';
 
 part '../product_models.g/app_model.g.dart';
 
@@ -21,6 +21,8 @@ class App implements Product {
   @override
   final String iconUrl;
   @override
+  final int ageRating;
+  @override
   final bool isPaid;
   @override
   final double? price;
@@ -38,7 +40,6 @@ class App implements Product {
   final List<String> screenshots; // URLs скриншотов
   final String packageName; // "com.google.android.youtube"
   final List<String> supportedLanguages; // ["RU", "EN"]
-  final int ageRating; // 3+, 12+, 18+
   final bool containsPaidContent; // Внутриигровые покупки
   final String privacyPolicyUrl; // Ссылка на политику
   final String websiteUrl; // Сайт разработчика

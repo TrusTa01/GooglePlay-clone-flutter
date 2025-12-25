@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/providers/products_provider.dart';
 import 'package:provider/provider.dart';
 
+import '/providers/products_provider.dart';
 import '/models/models.dart';
 import '../../widgets/widgets.dart';
 
@@ -9,7 +9,11 @@ class GenericTabScreen extends StatefulWidget {
   final List<HomeSection> sections;
   final VoidCallback? onLoad;
 
-  const GenericTabScreen({super.key, required this.sections, this.onLoad});
+  const GenericTabScreen({
+    super.key,
+    required this.sections,
+    this.onLoad,
+  });
 
   @override
   State<GenericTabScreen> createState() => _GenericTabScreenState();
@@ -51,7 +55,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     return ListView.builder(
       itemCount: widget.sections.length,
       // Общие отступы для всего списка
-      padding: const EdgeInsets.symmetric(vertical: 0),
+      padding: const EdgeInsets.only(bottom: 45),
       itemBuilder: (context, index) {
         final section = widget.sections[index];
         return Padding(
@@ -65,7 +69,10 @@ class _GenericTabScreenState extends State<GenericTabScreen>
 
   Widget _buildSection(HomeSection section) {
     switch (section.type) {
+      case SectionType.banners:
+        return BannerSection(banners: section.items.whereType<AppBanner>().toList(),);
       case SectionType.carousel:
+      if (products.isEmpty) return const SizedBox.shrink();
         return ProductCarousel(
           title: section.title,
           products: section.items.cast<Product>(),
@@ -75,8 +82,6 @@ class _GenericTabScreenState extends State<GenericTabScreen>
           title: section.title,
           products: section.items.cast<Product>(),
         );
-      case SectionType.banners:
-        return BannerSection(banners: section.items.cast<BannerData>());
     }
   }
 }
