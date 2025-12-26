@@ -33,25 +33,4 @@ class PageBuilder {
       ),
     ];
   }
-
-  // // Сборка вкладки "Детям"
-  // List<HomeSection> buildKidsPage() {
-  //   return [
-  //     HomeSection(
-  //       type: SectionType.grid,
-  //       title: 'Для самых маленьких',
-  //       items: provider.getGamesByCategory('Образовательные'),
-  //     ),
-  //     HomeSection(
-  //       type: SectionType.banners,
-  //       title: '',
-  //       items: provider.getBannersByPrefix('k_'),
-  //     ),
-  //     HomeSection(
-  //       type: SectionType.carousel,
-  //       title: 'Популярные мультики',
-  //       items: provider.getGamesByCategory('Мультфильмы'),
-  //     ),
-  //   ];
-  // }
 }

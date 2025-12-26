@@ -251,3 +251,44 @@ class ProductSize extends StatelessWidget {
     );
   }
 }
+
+class ProductDescription extends StatelessWidget {
+  final String description;
+  const ProductDescription({super.key, required this.description});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      description,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(fontSize: 12),
+    );
+  }
+}
+
+class ProductBottomInfo extends StatelessWidget {
+  final ProductDataFormatter formatter;
+  final bool showPrice;
+
+  const ProductBottomInfo({
+    super.key,
+    required this.formatter,
+    required this.showPrice,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        ProductRatingTag(rating: formatter.rating), // Рейтинг
+        SizedBox(width: 10),
+        ProductSize(size: formatter.size), // Размер
+        const SizedBox(width: 10),
+        showPrice
+            ? ProductPriceTag(price: formatter.price)
+            : const SizedBox.shrink(), // Цена (если есть)
+      ],
+    );
+  }
+}

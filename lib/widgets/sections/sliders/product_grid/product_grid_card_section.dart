@@ -36,16 +36,19 @@ class ProductGridCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ProductTitle( // Название
+                  ProductTitle(
+                    // Название
                     title: product.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     fontSize: 14,
-                  ), 
+                  ),
                   const SizedBox(height: 2),
-                  _buildDescription(), // Описание
+                  ProductDescription(
+                    description: product.description,
+                  ), // Описание
                   const Spacer(),
-                  _ProductBottomInfo(
+                  ProductBottomInfo(
                     // Нижняя строка
                     formatter: formatter,
                     showPrice: showPrice,
@@ -56,37 +59,6 @@ class ProductGridCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildDescription() {
-    return Text(
-      product.description,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(fontSize: 12),
-    );
-  }
-}
-
-class _ProductBottomInfo extends StatelessWidget {
-  final ProductDataFormatter formatter;
-  final bool showPrice;
-
-  const _ProductBottomInfo({required this.formatter, required this.showPrice});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        ProductRatingTag(rating: formatter.rating), // Рейтинг
-        SizedBox(width: 10),
-        ProductSize(size: formatter.size), // Размер
-        const SizedBox(width: 10),
-        showPrice
-            ? ProductPriceTag(price: formatter.price)
-            : const SizedBox.shrink(), // Цена (если есть)
-      ],
     );
   }
 }
