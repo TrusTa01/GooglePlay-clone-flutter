@@ -35,6 +35,7 @@ class ProductCarouselCard extends StatelessWidget {
             children: <Widget>[
               // Карточка
               ProductCardIcon(
+                borderRadius: BorderRadius.circular(20),
                 iconUrl: product.iconUrl, 
                 iconWidth: 115, 
                 iconHeight: 115, 

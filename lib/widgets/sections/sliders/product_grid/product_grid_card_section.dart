@@ -24,6 +24,7 @@ class ProductGridCard extends StatelessWidget {
           children: <Widget>[
             ProductCardIcon(
               // Карточка
+              borderRadius: BorderRadius.circular(12),
               iconUrl: product.iconUrl,
               iconWidth: 60,
               iconHeight: 60,

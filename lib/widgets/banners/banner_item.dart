@@ -79,6 +79,7 @@ class ActionRow extends StatelessWidget {
       child: Row(
         children: [
           ProductCardIcon(
+            borderRadius: BorderRadius.circular(12),
             iconUrl: product.iconUrl,
             iconWidth: 45,
             iconHeight: 45,

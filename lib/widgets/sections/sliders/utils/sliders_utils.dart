@@ -63,6 +63,7 @@ class ProductSectionTitle extends StatelessWidget {
 }
 
 class ProductCardIcon extends StatelessWidget {
+  final BorderRadius borderRadius;
   final String iconUrl;
   final double iconWidth;
   final double iconHeight;
@@ -71,6 +72,7 @@ class ProductCardIcon extends StatelessWidget {
 
   const ProductCardIcon({
     super.key,
+    required this.borderRadius,
     required this.iconUrl,
     required this.iconWidth,
     required this.iconHeight,
@@ -80,26 +82,44 @@ class ProductCardIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Image.asset(
-        iconUrl,
-        width: iconWidth,
-        height: iconHeight,
-        cacheWidth: cacheWidth,
-        cacheHeight: cacheHeight,
-        fit: BoxFit.cover,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: borderRadius,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            spreadRadius: 1,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.black.withValues(alpha: 0.1),
+          width: 0.5,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: Image.asset(
+          iconUrl,
+          width: iconWidth,
+          height: iconHeight,
+          cacheWidth: cacheWidth,
+          cacheHeight: cacheHeight,
+          fit: BoxFit.cover,
 
-        // Пока грузится - шимер
-        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-          if (wasSynchronouslyLoaded) return child;
-          return frame != null
-              ? child
-              : ShimmerBox(width: iconWidth, height: iconHeight);
-        },
+          // Пока грузится - шимер
+          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+            if (wasSynchronouslyLoaded) return child;
+            return frame != null
+                ? child
+                : ShimmerBox(width: iconWidth, height: iconHeight);
+          },
 
-        // Если ошибка - заглушка
-        errorBuilder: (context, error, stackTrace) => _buildErrorPlaceholder(),
+          // Если ошибка - заглушка
+          errorBuilder: (context, error, stackTrace) =>
+              _buildErrorPlaceholder(),
+        ),
       ),
     );
   }
