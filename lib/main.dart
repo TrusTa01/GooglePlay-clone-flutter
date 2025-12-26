@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -40,7 +41,7 @@ class GooglePlay extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
             elevation: 0,
-            systemOverlayStyle: .dark,
+            systemOverlayStyle: SystemUiOverlayStyle.dark,
           ),
           colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0B57CE)),
         ),

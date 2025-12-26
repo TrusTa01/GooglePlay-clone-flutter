@@ -4,14 +4,15 @@ import '../../../../models/product_interface.dart';
 import '../../../widgets.dart';
 
 class ProductCarousel extends StatelessWidget {
+  final String title;
+  final List<Product> products;
+
   const ProductCarousel({
     super.key,
     required this.title,
     required this.products,
   });
-  final String title;
-  final List<Product> products;
-
+  
   @override
   Widget build(BuildContext context) {
     // Размер слайдера 
@@ -30,6 +31,7 @@ class ProductCarousel extends StatelessWidget {
           title: title,
           padding: EdgeInsets.fromLTRB(22, 10, 22, 20),
           onTap: () {},
+          showButton: true,
         ),
 
         // Слайдер

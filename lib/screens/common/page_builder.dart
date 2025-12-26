@@ -12,6 +12,7 @@ class PageBuilder {
       HomeSection(
         type: SectionType.banners,
         title: '',
+        showButton: false,
         items: provider.getBannersByPrefix('g_'),
       ),
       HomeSection(
@@ -23,6 +24,12 @@ class PageBuilder {
         type: SectionType.grid,
         title: 'Файтинги',
         items: provider.getGamesByCategory('Файтинг'),
+      ),
+      HomeSection(
+        type: SectionType.banners,
+        title: 'dsdssdds',
+        showButton: true,
+        items: provider.getBannersByPrefix('g_'),
       ),
     ];
   }

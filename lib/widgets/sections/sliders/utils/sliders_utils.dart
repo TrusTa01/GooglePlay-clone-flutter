@@ -19,11 +19,14 @@ class ProductSectionTitle extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final EdgeInsets padding;
+  final bool showButton;
+
   const ProductSectionTitle({
     super.key,
     required this.title,
     required this.onTap,
-    required this.padding,
+    required this.padding, 
+    this.showButton = true,
   });
 
   @override
@@ -33,15 +36,20 @@ class ProductSectionTitle extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: Constants.defaultFontWeight,
+          Flexible(
+            child: Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: Constants.defaultFontWeight,
+              ),
             ),
           ),
 
-          // Кнопка больше напротив заголовка
+          // Если showButton == true, рисуем кнопку, иначе — ничего
+          if (showButton)
           Material(
             color: Constants.ratingBackgroungColor,
             borderRadius: BorderRadius.circular(23),

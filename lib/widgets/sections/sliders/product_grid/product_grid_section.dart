@@ -24,6 +24,7 @@ class ProductGrid extends StatelessWidget {
           title: title,
           padding: EdgeInsets.fromLTRB(22, 0, 22, 10),
           onTap: () {},
+          showButton: true,
         ),
 
         // Слайдер

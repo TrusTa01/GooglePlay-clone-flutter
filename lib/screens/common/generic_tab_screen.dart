@@ -9,11 +9,7 @@ class GenericTabScreen extends StatefulWidget {
   final List<HomeSection> sections;
   final VoidCallback? onLoad;
 
-  const GenericTabScreen({
-    super.key,
-    required this.sections,
-    this.onLoad,
-  });
+  const GenericTabScreen({super.key, required this.sections, this.onLoad});
 
   @override
   State<GenericTabScreen> createState() => _GenericTabScreenState();
@@ -70,9 +66,13 @@ class _GenericTabScreenState extends State<GenericTabScreen>
   Widget _buildSection(HomeSection section) {
     switch (section.type) {
       case SectionType.banners:
-        return BannerSection(banners: section.items.whereType<AppBanner>().toList(),);
+        return BannerSection(
+          banners: section.items.whereType<AppBanner>().toList(),
+          title: section.title,
+          showButton: section.showButton,
+        );
       case SectionType.carousel:
-      // if (products.isEmpty) return const SizedBox.shrink();
+        // if (products.isEmpty) return const SizedBox.shrink();
         return ProductCarousel(
           title: section.title,
           products: section.items.cast<Product>(),
