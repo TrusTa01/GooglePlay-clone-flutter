@@ -41,7 +41,7 @@ class _BannerSectionState extends State<BannerSection> {
 
   void _startTimer() {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 180), (timer) {
       if (_controller.hasClients) {
         _currentPage++;
         if (_currentPage >= widget.banners.length) {

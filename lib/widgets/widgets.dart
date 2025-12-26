@@ -23,7 +23,6 @@ export 'navigation_bar/utils/navigation_bar_utils.dart';
 
 // Banners
 export 'banners/banners_type.dart';
-export 'banners/banners_data.dart';
 export 'banners/banner_item.dart';
 export 'banners/banner_section.dart';
 export 'banners/utils/banners_utils.dart';

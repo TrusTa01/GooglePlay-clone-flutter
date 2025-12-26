@@ -46,7 +46,6 @@ class Game implements Product {
   final String creatorDescription;
   final bool isOnline; // Онлайн игра?
   final bool hasMultiplayer; // Мультиплеер
- 
   final bool hasAchievements; // Достижения
   final String gameModes; // "Single-player", "Co-op"
   final bool hasControllerSupport;

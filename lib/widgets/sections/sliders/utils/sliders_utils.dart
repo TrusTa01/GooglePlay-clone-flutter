@@ -81,7 +81,7 @@ class ProductCardIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(10),
       child: Image.asset(
         iconUrl,
         width: iconWidth,
@@ -134,7 +134,7 @@ class ProductTitle extends StatelessWidget {
       title,
       maxLines: maxLines,
       overflow: overflow,
-      softWrap: true,
+      softWrap: false,
       style: TextStyle(
         fontWeight: Constants.defaultFontWeight,
         fontSize: fontSize,

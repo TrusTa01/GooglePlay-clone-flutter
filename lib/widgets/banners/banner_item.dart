@@ -42,7 +42,6 @@ class BannerItem extends StatelessWidget {
                       title: banner.title,
                       description: banner.description,
                     ),
-                    const BannerGradientOverlay(),
                   ],
                 ),
               ),
@@ -57,7 +56,6 @@ class BannerItem extends StatelessWidget {
 
 class ActionRow extends StatelessWidget {
   final ActionBanner banner;
-
   const ActionRow({required this.banner, super.key});
 
   @override
@@ -68,16 +66,22 @@ class ActionRow extends StatelessWidget {
 
     if (product == null) return const SizedBox.shrink();
 
-    final game = product is Game ? product : null;
+    // Логика: если продукт — это Game или App, берем их поле. Иначе (книги) — false.
+    bool containsPaidContent = false;
+    if (product is Game) {
+      containsPaidContent = product.containsPaidContent;
+    } else if (product is App) {
+      containsPaidContent = product.containsPaidContent;
+    }
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 10),
       child: Row(
         children: [
           ProductCardIcon(
-            iconUrl: product.iconUrl, // Берем путь из продукта
-            iconWidth: 40,
-            iconHeight: 40,
+            iconUrl: product.iconUrl,
+            iconWidth: 45,
+            iconHeight: 45,
             cacheWidth: 150,
             cacheHeight: 150,
           ),
@@ -94,12 +98,9 @@ class ActionRow extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(product.creator, style: const TextStyle(fontSize: 12)),
-                    const Text(' • ', style: TextStyle(fontSize: 12)),
-                    Text(
-                      '${game?.ageRating ?? 0}+',
-                      style: const TextStyle(fontSize: 12),
-                    ),
+                    ProductCreatorText(creator: product.creator),
+                    const Text(' • ', style: TextStyle(fontSize: 10)),
+                    AgeBadge(age: product.ageRating),
                     const SizedBox(width: 5),
                     ProductRatingTag(rating: product.rating.toString()),
                   ],
@@ -107,17 +108,11 @@ class ActionRow extends StatelessWidget {
               ],
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor:
-                  Colors.blue[700], // Замени на Constants.googleBlue
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            onPressed: () {},
-            child: const Text('Установить'),
+          // Кнопка
+          ActionRowButton(
+            isPaid: product.isPaid,
+            price: product.price,
+            containsPaidContent: containsPaidContent,
           ),
         ],
       ),

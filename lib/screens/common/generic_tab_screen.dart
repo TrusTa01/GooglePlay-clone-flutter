@@ -72,7 +72,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
       case SectionType.banners:
         return BannerSection(banners: section.items.whereType<AppBanner>().toList(),);
       case SectionType.carousel:
-      if (products.isEmpty) return const SizedBox.shrink();
+      // if (products.isEmpty) return const SizedBox.shrink();
         return ProductCarousel(
           title: section.title,
           products: section.items.cast<Product>(),
