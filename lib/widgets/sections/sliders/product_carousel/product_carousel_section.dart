@@ -42,6 +42,7 @@ class ProductCarousel extends StatelessWidget {
             // Отступ слева для первого элемента
             padding: const EdgeInsets.only(left: 22),
             scrollDirection: Axis.horizontal,
+            physics: const PageScrollPhysics(),
             itemCount: products.length,
             itemBuilder: (context, index) {
               final item = products[index];

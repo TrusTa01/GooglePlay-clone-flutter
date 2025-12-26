@@ -5,9 +5,9 @@ import '../../../../models/product_interface.dart';
 import '../../../widgets.dart';
 
 class ProductCarouselCard extends StatelessWidget {
-  const ProductCarouselCard({super.key, required this.product});
-
   final Product product;
+
+  const ProductCarouselCard({super.key, required this.product});
 
   bool get showPrice => product.isPaid && product.price != null;
 
