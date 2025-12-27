@@ -108,9 +108,13 @@ class _GamesScreenState extends State<GamesScreen>
               sections: watchProvider.recommendedGamesSections,
               onLoad: () => context.read<ProductsProvider>().getRecomendations(),
             ),
+            // Таб 'Лучшее'
             SizedBox.shrink(),
+            // Таб 'Детям'
             SizedBox.shrink(),
+            // Таб 'Платные'
             SizedBox.shrink(),
+            // Таб 'Категории'
             SizedBox.shrink(),
           ],
         ),

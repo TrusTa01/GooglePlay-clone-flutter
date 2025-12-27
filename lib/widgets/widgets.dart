@@ -47,3 +47,5 @@ export 'sections/sliders/game_preview/utils/game_preview_utils.dart';
 export '../core/shimers/product_slider_skeleton.dart';
 export '../core/shimers/shimer_box.dart';
 export '../core/shimers/game_preview_skeleton.dart';
+
+export 'full_screen_image.dart';
