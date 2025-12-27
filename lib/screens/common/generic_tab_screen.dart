@@ -82,6 +82,10 @@ class _GenericTabScreenState extends State<GenericTabScreen>
           title: section.title,
           products: section.items.cast<Product>(),
         );
+      case SectionType.preview:
+      return GamePreviewSection(
+        games: section.items.whereType<Game>().toList(),
+      );
     }
   }
 }

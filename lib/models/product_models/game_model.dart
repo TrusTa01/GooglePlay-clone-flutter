@@ -38,7 +38,7 @@ class Game implements Product {
   final DateTime releaseDate; // Дата выхода
   final DateTime lastUpdated; // Последнее обновление
   final String gameGenre; // "РПГ", "Стратегия", "Пазлы"
-  final String screenshots; // Скриншоты
+  final List<String> screenshots; // Скриншоты
   final String tags; // Теги
   final String websiteUrl;
   final String emailSupport;

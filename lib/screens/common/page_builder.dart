@@ -31,6 +31,11 @@ class PageBuilder {
         showButton: true,
         items: provider.getBannersByPrefix('g_'),
       ),
+      HomeSection(
+        type: SectionType.preview, 
+        title: '', 
+        items: provider.getGamesByCategory('Файтинг')
+      ),
     ];
   }
 }

@@ -38,6 +38,12 @@ export 'sections/sliders/product_carousel/product_carousel_section.dart';
 export 'sections/sliders/product_grid/product_grid_card_section.dart';
 export 'sections/sliders/product_grid/product_grid_section.dart';
 
+// Game preview widget
+export 'sections/sliders/game_preview/game_preview_card.dart';
+export 'sections/sliders/game_preview/game_preview_section.dart';
+export 'sections/sliders/game_preview/utils/game_preview_utils.dart';
+
 // Shimers
 export '../core/shimers/product_slider_skeleton.dart';
 export '../core/shimers/shimer_box.dart';
+export '../core/shimers/game_preview_skeleton.dart';

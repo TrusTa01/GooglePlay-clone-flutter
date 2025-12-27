@@ -45,6 +45,7 @@ class BannerItem extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
               if (isAction)
                 ActionRow(banner: banner as ActionBanner, showGenre: false),
             ],
@@ -59,8 +60,15 @@ class ActionRow extends StatelessWidget {
   final ActionBanner? banner;
   final Game? game;
   final bool showGenre;
+  final bool showButton;
 
-  const ActionRow({this.banner, super.key, this.game, required this.showGenre});
+  const ActionRow({
+    this.banner,
+    super.key,
+    this.game,
+    required this.showGenre,
+    this.showButton = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -80,52 +88,50 @@ class ActionRow extends StatelessWidget {
       containsPaidContent = product.containsPaidContent;
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: Row(
-        children: [
-          ProductCardIcon(
-            borderRadius: BorderRadius.circular(12),
-            iconUrl: product.iconUrl,
-            iconWidth: 45,
-            iconHeight: 45,
-            cacheWidth: 150,
-            cacheHeight: 150,
+    return Row(
+      children: [
+        ProductCardIcon(
+          borderRadius: BorderRadius.circular(12),
+          iconUrl: product.iconUrl,
+          iconWidth: 45,
+          iconHeight: 45,
+          cacheWidth: 150,
+          cacheHeight: 150,
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ProductTitle(
+                title: product.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Row(
+                children: [
+                  if (showGenre && product is Game)
+                    GameGenre(game: product)
+                  else
+                    ProductCreatorText(creator: product.creator),
+                  const Text(' • ', style: TextStyle(fontSize: 10)),
+                  AgeBadge(age: product.ageRating),
+                  const SizedBox(width: 5),
+                  ProductRatingTag(rating: product.rating.toString()),
+                ],
+              ),
+            ],
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ProductTitle(
-                  title: product.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Row(
-                  children: [
-                    if (showGenre && product is Game)
-                      GameGenre(game: product)
-                    else
-                      ProductCreatorText(creator: product.creator),
-                    const Text(' • ', style: TextStyle(fontSize: 10)),
-                    AgeBadge(age: product.ageRating),
-                    const SizedBox(width: 5),
-                    ProductRatingTag(rating: product.rating.toString()),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          // Кнопка
-          ActionRowButton(
-            isPaid: product.isPaid,
-            price: product.price,
-            containsPaidContent: containsPaidContent,
-          ),
-        ],
-      ),
+        ),
+        showButton 
+        ? ActionRowButton( // Кнопка
+          isPaid: product.isPaid,
+          price: product.price,
+          containsPaidContent: containsPaidContent,
+        )
+        : const SizedBox.shrink(),
+      ],
     );
   }
 }

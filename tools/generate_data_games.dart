@@ -404,7 +404,7 @@ void main() async {
       "creatorDescription": faker.lorem.sentences(2).join(' '),
       "ageRating": faker.randomGenerator.element(ageRatings),
       "gameGenre": genreTitle,
-      "screenshots": selectedScreenshots.join('|'),
+      "screenshots": selectedScreenshots,
       "tags": selectedTags.join(', '),
       "isOnline": faker.randomGenerator.boolean(),
       "hasMultiplayer": faker.randomGenerator.boolean(),
