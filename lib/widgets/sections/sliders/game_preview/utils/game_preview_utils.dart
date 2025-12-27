@@ -10,14 +10,14 @@ class GameScreenshotImage extends StatelessWidget {
   const GameScreenshotImage({
     super.key,
     required this.imageUrl,
-    this.height = 210,
-    this.borderRadius = 16,
+    this.height = 180,
+    this.borderRadius = 6,
   });
 
   @override
   Widget build(BuildContext context) {
     final bool isHorizontal = imageUrl.contains('horiz');
-    final double currentWidth = isHorizontal ? 300 : 140;
+    final double currentWidth = isHorizontal ? 300 : 120;
 
     // Кеширование: рассчитываем пиксели (обычно x3 от логических единиц для четкости)
     final int cacheWidth = (currentWidth * 3).toInt();
