@@ -11,15 +11,21 @@ class ProductsProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   List<Product> _recommendations = [];
-  List<HomeSection> _recommendedGamesSections = [];
   List<AppBanner> _allBanners = [];
+  // Вкладки игр
+  List<HomeSection> _recommendedGamesSection = [];
+  List<HomeSection> _categoriesSection = [];
+
+  // Вкладки приложений
 
   List<Product> get allProducts => _allProducts;
   bool get isLoading => _isLoading;
   String? get error => _error;
   List<Product> get recommendations => _recommendations;
-  List<HomeSection> get recommendedGamesSections => _recommendedGamesSections;
   List<AppBanner> get allBanners => _allBanners;
+
+  List<HomeSection> get recommendedGamesSection => _recommendedGamesSection;
+  List<HomeSection> get categogoriesSection => _categoriesSection;
 
   Future<void> loadAllProducts() async {
     if (_allProducts.isNotEmpty) return;
@@ -84,7 +90,10 @@ class ProductsProvider extends ChangeNotifier {
     final builder = PageBuilder(this);
 
     // Секции для вкладки игр
-    _recommendedGamesSections = builder.buildGamesRecommendedPage();
+    _recommendedGamesSection = builder.buildGamesRecommendedPage();
+    _categoriesSection = builder.buildGamesCategoriesPage();
+
+    // Секции для вкладки приложений
   }
 
   // Логика рекомендаций, берем 7 самых высоко оцененных продуктов

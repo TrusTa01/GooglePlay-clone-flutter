@@ -1,4 +1,4 @@
-import 'models.dart';
+import '../models.dart';
 abstract interface class Product {
   String get type;
   String get id;

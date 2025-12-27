@@ -1,4 +1,4 @@
-import 'models.dart';
+import '../models.dart';
 
 class BannerMapper {
   static AppBanner fromJson(Map<String, dynamic> json) {

@@ -105,7 +105,7 @@ class _GamesScreenState extends State<GamesScreen>
           children: [
             // Таб 'Рекомендуем'
             GenericTabScreen(
-              sections: watchProvider.recommendedGamesSections,
+              sections: watchProvider.recommendedGamesSection,
               onLoad: () => context.read<ProductsProvider>().getRecomendations(),
             ),
             // Таб 'Лучшее'
@@ -115,7 +115,9 @@ class _GamesScreenState extends State<GamesScreen>
             // Таб 'Платные'
             SizedBox.shrink(),
             // Таб 'Категории'
-            SizedBox.shrink(),
+            GenericTabScreen(
+              sections: watchProvider.categogoriesSection,
+            )
           ],
         ),
       ),

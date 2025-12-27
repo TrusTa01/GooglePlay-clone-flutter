@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/products_provider.dart';
@@ -85,6 +86,10 @@ class _GenericTabScreenState extends State<GenericTabScreen>
       case SectionType.preview:
       return GamePreviewSection(
         games: section.items.whereType<Game>().toList(),
+      );
+      case SectionType.categotyList:
+      return CategoriesTabScreen(
+        categories: section.items.cast<ProductCategories>(),
       );
     }
   }
