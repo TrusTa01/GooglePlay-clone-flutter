@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/models/models.dart';
 import '../../widgets.dart';
 
 class BannerImage extends StatelessWidget {
@@ -168,6 +169,20 @@ class AgeBadge extends StatelessWidget {
         '$age+',
         style: const TextStyle(fontSize: 7, fontWeight: FontWeight.w900),
       ),
+    );
+  }
+}
+
+class GameGenre extends StatelessWidget {
+  final Game game;
+
+  const GameGenre({super.key, required this.game});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      (game).gameGenre,
+      style: const TextStyle(fontSize: 12, color: Colors.grey),
     );
   }
 }

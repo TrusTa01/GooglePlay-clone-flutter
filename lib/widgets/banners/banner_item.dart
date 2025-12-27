@@ -45,7 +45,8 @@ class BannerItem extends StatelessWidget {
                   ],
                 ),
               ),
-              if (isAction) ActionRow(banner: banner as ActionBanner),
+              if (isAction)
+                ActionRow(banner: banner as ActionBanner, showGenre: false),
             ],
           ),
         ),
@@ -55,14 +56,19 @@ class BannerItem extends StatelessWidget {
 }
 
 class ActionRow extends StatelessWidget {
-  final ActionBanner banner;
-  const ActionRow({required this.banner, super.key});
+  final ActionBanner? banner;
+  final Game? game;
+  final bool showGenre;
+
+  const ActionRow({this.banner, super.key, this.game, required this.showGenre});
 
   @override
   Widget build(BuildContext context) {
-    final product = context.read<ProductsProvider>().getProductById(
-      banner.productId,
-    );
+    final product =
+        game ??
+        (banner != null
+            ? context.read<ProductsProvider>().getProductById(banner!.productId)
+            : null);
 
     if (product == null) return const SizedBox.shrink();
 
@@ -99,7 +105,10 @@ class ActionRow extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    ProductCreatorText(creator: product.creator),
+                    if (showGenre && product is Game)
+                      GameGenre(game: product)
+                    else
+                      ProductCreatorText(creator: product.creator),
                     const Text(' • ', style: TextStyle(fontSize: 10)),
                     AgeBadge(age: product.ageRating),
                     const SizedBox(width: 5),

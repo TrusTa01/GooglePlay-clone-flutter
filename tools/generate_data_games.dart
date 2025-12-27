@@ -274,13 +274,16 @@ void main() async {
   ];
 
   final myHorizontalScreenshots = [
-    'assets/images/games/horiz_1.jpg',
-    'assets/images/games/horiz_2.jpg',
+    'assets/images/games_screenshots/game_screenshot_horiz1.webp',
+    'assets/images/games_screenshots/game_screenshot_horiz2.webp',
   ];
 
   final myVerticalScreenshots = [
-    'assets/images/games/vert_1.jpg',
-    'assets/images/games/vert_2.jpg',
+    'assets/images/games_screenshots/game_screenshot_vert1.webp',
+    'assets/images/games_screenshots/game_screenshot_vert2.webp',
+    'assets/images/games_screenshots/game_screenshot_vert3.webp',
+    'assets/images/games_screenshots/game_screenshot_vert4.webp',
+    'assets/images/games_screenshots/game_screenshot_vert5.webp',
   ];
 
   final List<int> ageRatings = [3, 7, 12, 16, 18];
