@@ -49,8 +49,7 @@ class _GamesScreenState extends State<GamesScreen>
     final watchProvider = context.watch<ProductsProvider>();
 
     final AppBarType appBarType = switch (currentIndex) {
-      0 || 1 || 3 || 4 => AppBarType.tabbed,
-      2 => AppBarType.searchWithTabbs,
+      0 || 1 || 2 || 3 || 4 => AppBarType.tabbed,
       _ => AppBarType.tabbed,
     };
 
@@ -81,46 +80,46 @@ class _GamesScreenState extends State<GamesScreen>
           showLogo: appBarType == AppBarType.tabbed ? true : false,
           actions: actionWidgets,
 
-          // Для AppBarType.searchWithTabbs
-          searchHint: appBarType == AppBarType.searchWithTabbs
-              ? 'Поиск приложений и игр'
-              : null,
+          // // Для AppBarType.searchWithTabbs
+          // searchHint: appBarType == AppBarType.searchWithTabbs
+          //     ? 'Поиск приложений и игр'
+          //     : null,
 
-          inputLeading: appBarType == AppBarType.searchWithTabbs
-              ? [const Icon(Icons.search)]
-              : null,
+          // inputLeading: appBarType == AppBarType.searchWithTabbs
+          //     ? [const Icon(Icons.search)]
+          //     : null,
 
-          inputActions: appBarType == AppBarType.searchWithTabbs
-              ? [const Icon(Icons.mic_none_outlined)]
-              : null,
+          // inputActions: appBarType == AppBarType.searchWithTabbs
+          //     ? [const Icon(Icons.mic_none_outlined)]
+          //     : null,
 
           tabs: _tabs,
           tabController: _tabController,
         ),
 
         body: TabBarView(
-          controller: _tabController,
-          physics:
-              const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-          children: [
-            // Таб 'Рекомендуем'
-            GenericTabScreen(
-              sections: watchProvider.recommendedGamesSection,
-              onLoad: () => context.read<ProductsProvider>().getRecomendations(),
-            ),
-            // Таб 'Лучшее'
-            SizedBox.shrink(),
-            // Таб 'Детям'
-            SizedBox.shrink(),
-            // Таб 'Платные'
-            SizedBox.shrink(),
-            // Таб 'Категории'
-            GenericTabScreen(
-              sections: watchProvider.categogoriesSection,
-            )
-          ],
+            controller: _tabController,
+            physics:
+                const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+            children: [
+              // Таб 'Рекомендуем'
+              GenericTabScreen(
+                sections: watchProvider.recommendedGamesSection,
+                onLoad: () => context.read<ProductsProvider>().getRecomendations(),
+              ),
+              // Таб 'Лучшее'
+              SizedBox.shrink(),
+              // Таб 'Детям'
+              SizedBox.shrink(),
+              // Таб 'Платные'
+              SizedBox.shrink(),
+              // Таб 'Категории'
+              GenericTabScreen(
+                sections: watchProvider.categogoriesSection,
+              )
+            ],
+          ),
         ),
-      ),
     );
   }
 }
