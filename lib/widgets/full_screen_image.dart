@@ -3,8 +3,13 @@ import 'package:photo_view/photo_view.dart';
 
 class FullScreenImage extends StatelessWidget {
   final String imageUrl;
+  final String heroTag;
 
-  const FullScreenImage({super.key, required this.imageUrl});
+  const FullScreenImage({
+    super.key,
+    required this.imageUrl,
+    required this.heroTag,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class FullScreenImage extends StatelessWidget {
               imageProvider: AssetImage(imageUrl),
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.covered * 2,
-              heroAttributes: PhotoViewHeroAttributes(tag: imageUrl),
+              heroAttributes: PhotoViewHeroAttributes(tag: heroTag),
             ),
           ),
           // Кнопка закрытия

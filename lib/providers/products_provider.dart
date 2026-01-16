@@ -151,7 +151,7 @@ class ProductsProvider extends ChangeNotifier {
     if (query.isEmpty) return [];
 
     return _allProducts.where((p) {
-      // Условие: это должна быть только Книга
+      // Условие: это должна быть только книга
       final isBook = p is Book;
       final matchesQuery = p.title.toLowerCase().contains(query.toLowerCase());
 

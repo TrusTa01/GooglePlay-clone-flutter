@@ -26,6 +26,7 @@ class GamePreviewCard extends StatelessWidget {
               padding: const EdgeInsets.only(right: 12),
               child: GameScreenshotImage(
                 imageUrl: game.screenshots[index],
+                productId: game.id,
               ),
              );
             },

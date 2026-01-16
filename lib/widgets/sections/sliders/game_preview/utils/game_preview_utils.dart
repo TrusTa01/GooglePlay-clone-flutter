@@ -4,11 +4,13 @@ import '../../../../widgets.dart';
 
 class GameScreenshotImage extends StatelessWidget {
   final String imageUrl;
+  final String productId;
   final double height;
   final double borderRadius;
 
   const GameScreenshotImage({
     super.key,
+    required this.productId,
     required this.imageUrl,
     this.height = 180,
     this.borderRadius = 6,
@@ -16,6 +18,8 @@ class GameScreenshotImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String heroTag = '${productId}_$imageUrl';
+
     final bool isHorizontal = imageUrl.contains('horiz');
     final double currentWidth = isHorizontal ? 300 : 120;
 
@@ -24,14 +28,8 @@ class GameScreenshotImage extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        showGeneralDialog( // Cоздается в отдельном слое (Overlay), который находится над всеми Stack и навбарами.
-          context: context,
-          barrierDismissible: true,
-          barrierLabel: "Close",
-          barrierColor: Colors.black, // Цвет фона за картинкой
-          pageBuilder: (context, anim1, anim2) {
-            return FullScreenImage(imageUrl: imageUrl);
-          },
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute(builder: (context) => FullScreenImage(imageUrl: imageUrl, heroTag: heroTag)),
         );
       },
       child: Hero(
