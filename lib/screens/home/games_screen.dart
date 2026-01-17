@@ -47,6 +47,7 @@ class _GamesScreenState extends State<GamesScreen>
     final int currentIndex = _tabController.index;
 
     final watchProvider = context.watch<ProductsProvider>();
+    final readProvider = context.read<ProductsProvider>();
 
     final AppBarType appBarType = switch (currentIndex) {
       0 || 1 || 2 || 3 || 4 => AppBarType.tabbed,
@@ -92,34 +93,32 @@ class _GamesScreenState extends State<GamesScreen>
           // inputActions: appBarType == AppBarType.searchWithTabbs
           //     ? [const Icon(Icons.mic_none_outlined)]
           //     : null,
-
           tabs: _tabs,
           tabController: _tabController,
         ),
 
         body: TabBarView(
-            controller: _tabController,
-            physics:
-                const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-            children: [
-              // Таб 'Рекомендуем'
-              GenericTabScreen(
-                sections: watchProvider.recommendedGamesSection,
-                onLoad: () => context.read<ProductsProvider>().getRecomendations(),
-              ),
-              // Таб 'Лучшее'
-              SizedBox.shrink(),
-              // Таб 'Детям'
-              SizedBox.shrink(),
-              // Таб 'Платные'
-              SizedBox.shrink(),
-              // Таб 'Категории'
-              GenericTabScreen(
-                sections: watchProvider.categogoriesSection,
-              )
-            ],
-          ),
+          controller: _tabController,
+          physics:
+              const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+          children: [
+            // Таб 'Рекомендуем'
+            GenericTabScreen(
+              sections: watchProvider.recommendedGamesSection,
+              onLoad: () => readProvider.getRecomendations(),
+            ),
+            // Таб 'Лучшее'
+            const TopChartsPage(type: FilterType.games,),
+            // Таб 'Детям'
+            SizedBox.shrink(),
+            // Таб 'Платные'
+            SizedBox.shrink(),
+            // Таб 'Категории'
+            // CategoriesTabScreen(categories: watchProvider.categoriesSection),
+            SizedBox.shrink(),
+          ],
         ),
+      ),
     );
   }
 }

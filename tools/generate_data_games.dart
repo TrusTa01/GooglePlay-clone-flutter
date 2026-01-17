@@ -156,21 +156,24 @@ void main() async {
   ];
 
   final genres = [
-    'Экшен',
-    'Симуляторы',
-    'Головоломки',
-    'Приключения',
-    'Гонки',
-    'Ролевые',
-    'Стратегии',
-    'Спортивные',
-    'Карточные',
-    'Настольные',
-    'Файтинг',
-    'Выживание',
-    'Песочница',
-    'Визуальная новелла',
-    'Ритм-игра',
+  'Все категории',
+  'Аркады',
+  'Викторины',
+  'Головоломки',
+  'Гонки',
+  'Казино',
+  'Казуальные',
+  'Карточные',
+  'Музыкальные',
+  'Настольные',
+  'Обучающие',
+  'Приключения',
+  'Ролевые',
+  'Симуляторы',
+  'Словесные',
+  'Спортивные',
+  'Стратегии',
+  'Экшен',
   ];
 
   final gameTags = [
@@ -214,7 +217,7 @@ void main() async {
     'Кроссплатформенность',
   ];
 
-  final myIcons = [
+  final icons = [
     'assets/icons/games_icons/zenless_zone_zero.webp',
     'assets/icons/games_icons/tomb_of_the_mask.webp',
     'assets/icons/games_icons/the_battle_cats.webp',
@@ -273,12 +276,12 @@ void main() async {
     'assets/icons/games_icons/afk_arena.webp',
   ];
 
-  final myHorizontalScreenshots = [
+  final horizontalScreenshots = [
     'assets/images/games_screenshots/game_screenshot_horiz1.webp',
     'assets/images/games_screenshots/game_screenshot_horiz2.webp',
   ];
 
-  final myVerticalScreenshots = [
+  final verticalScreenshots = [
     'assets/images/games_screenshots/game_screenshot_vert1.webp',
     'assets/images/games_screenshots/game_screenshot_vert2.webp',
     'assets/images/games_screenshots/game_screenshot_vert3.webp',
@@ -320,7 +323,7 @@ void main() async {
     }
 
     // Логика иконок
-    final String localIcon = faker.randomGenerator.element(myIcons);
+    final String localIcon = faker.randomGenerator.element(icons);
 
     // Логика скриншотов
     List<String> selectedScreenshots = [];
@@ -331,17 +334,17 @@ void main() async {
       selectedScreenshots = List.generate(
         5,
         (_) =>
-            myVerticalScreenshots[random.nextInt(myVerticalScreenshots.length)],
+            verticalScreenshots[random.nextInt(verticalScreenshots.length)],
       );
     } else {
       // Вариант 2: сначала 1-2 горизонтальных (трейлеры/промо), потом вертикальные
       selectedScreenshots.add(
-        faker.randomGenerator.element(myHorizontalScreenshots),
+        faker.randomGenerator.element(horizontalScreenshots),
       );
       selectedScreenshots.addAll(
         List.generate(
           6,
-          (_) => faker.randomGenerator.element(myVerticalScreenshots),
+          (_) => faker.randomGenerator.element(verticalScreenshots),
         ),
       );
     }

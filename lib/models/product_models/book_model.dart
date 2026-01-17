@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../models.dart';
 
-part '../product_models.g/book_model.g.dart';
+part '../book_model.g.dart';
 
 @JsonSerializable()
 class Book implements Product {
@@ -18,6 +18,8 @@ class Book implements Product {
   final String description;
   @override
   final double rating;
+  @override
+  final DateTime releaseDate;
   @override
   final String iconUrl;
   @override
@@ -74,7 +76,8 @@ class Book implements Product {
     required this.originalPrice,
     required this.awards,
     this.price, 
-    required this.ageRating,
+    required this.ageRating, 
+    required this.releaseDate,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);

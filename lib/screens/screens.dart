@@ -14,8 +14,10 @@ export 'notifications/notifications_screen.dart';
 export 'common/error_screen.dart';
 export 'common/generic_tab_screen.dart';
 export 'common/page_builder.dart';
+export 'common/top_charts_page.dart';
 
 // Category
 export 'category/categories_tab_screen.dart';
-export 'category/product_categories_list.dart';
-export 'category/category_detail_screen.dart';
+export 'category/product_categories_data.dart';
+export 'category/category_details_screen.dart';
+export 'category/product_filter_options.dart';

@@ -49,3 +49,12 @@ export '../core/shimers/shimer_box.dart';
 export '../core/shimers/game_preview_skeleton.dart';
 
 export 'full_screen_image.dart';
+
+// Filter bars
+export 'filters/filter_bar.dart';
+export 'filters/components/top_filter.dart';
+export 'filters/components/category_filter.dart';
+export 'filters/components/recent_filter.dart';
+export 'filters/custom_filter_chip.dart';
+export 'filters/selection_modal.dart';
+export 'filters/filter_factory.dart';

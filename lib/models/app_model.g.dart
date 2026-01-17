@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../product_models/app_model.dart';
+part of 'product_models/app_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -47,7 +47,9 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
   'creator': instance.creator,
   'description': instance.description,
   'rating': instance.rating,
+  'releaseDate': instance.releaseDate.toIso8601String(),
   'iconUrl': instance.iconUrl,
+  'ageRating': instance.ageRating,
   'isPaid': instance.isPaid,
   'price': instance.price,
   'version': instance.version,
@@ -55,13 +57,11 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
   'containsAds': instance.containsAds,
   'isEditorChoice': instance.isEditorChoice,
   'downloadCount': instance.downloadCount,
-  'releaseDate': instance.releaseDate.toIso8601String(),
   'lastUpdated': instance.lastUpdated.toIso8601String(),
   'permissions': instance.permissions,
   'screenshots': instance.screenshots,
   'packageName': instance.packageName,
   'supportedLanguages': instance.supportedLanguages,
-  'ageRating': instance.ageRating,
   'containsPaidContent': instance.containsPaidContent,
   'privacyPolicyUrl': instance.privacyPolicyUrl,
   'websiteUrl': instance.websiteUrl,

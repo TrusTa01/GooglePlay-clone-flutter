@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../models/models.dart';
+import '/providers/providers.dart';
+import '/models/models.dart';
 import '../../../widgets.dart';
 
 class ProductDataFormatter {
@@ -25,7 +27,7 @@ class ProductSectionTitle extends StatelessWidget {
     super.key,
     required this.title,
     required this.onTap,
-    required this.padding, 
+    required this.padding,
     this.showButton = true,
   });
 
@@ -50,20 +52,22 @@ class ProductSectionTitle extends StatelessWidget {
 
           // Если showButton == true, рисуем кнопку, иначе — ничего
           if (showButton)
-          Material(
-            color: Constants.ratingBackgroungColor,
-            borderRadius: BorderRadius.circular(23),
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                width: 30,
-                height: 34,
-                alignment: Alignment.center,
-                child: const Center(child: Icon(Icons.arrow_forward, size: 18)),
+            Material(
+              color: Constants.ratingBackgroungColor,
+              borderRadius: BorderRadius.circular(23),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  width: 30,
+                  height: 34,
+                  alignment: Alignment.center,
+                  child: const Center(
+                    child: Icon(Icons.arrow_forward, size: 18),
+                  ),
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
@@ -288,6 +292,93 @@ class ProductBottomInfo extends StatelessWidget {
         showPrice
             ? ProductPriceTag(price: formatter.price)
             : const SizedBox.shrink(), // Цена (если есть)
+      ],
+    );
+  }
+}
+
+class ActionRow extends StatelessWidget {
+  final ActionBanner? banner;
+  final dynamic product;
+  final bool showGenre;
+  final bool showButton;
+  final double iconWidth;
+  final double iconHeight;
+  final int cacheWidth;
+  final int cacheHeight;
+
+  const ActionRow({
+    super.key,
+    this.banner,
+    this.product,
+    required this.showGenre,
+    this.showButton = true,
+    this.iconWidth = 45,
+    this.iconHeight = 45,
+    this.cacheWidth = 150,
+    this.cacheHeight = 150,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final currentProduct =
+        product ??
+        (banner != null
+            ? context.read<ProductsProvider>().getProductById(banner!.productId)
+            : null);
+
+    if (currentProduct == null) return const SizedBox.shrink();
+
+    // Логика: если продукт — это Game или App, берем их поле. Иначе (книги) — false.
+    bool containsPaidContent = false;
+    if (currentProduct is Game || currentProduct is App) {
+      containsPaidContent = currentProduct.containsPaidContent;
+    }
+
+    return Row(
+      children: [
+        ProductCardIcon(
+          borderRadius: BorderRadius.circular(12),
+          iconUrl: currentProduct.iconUrl,
+          iconWidth: iconWidth,
+          iconHeight: iconHeight,
+          cacheWidth: cacheWidth,
+          cacheHeight: cacheHeight,
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ProductTitle(
+                title: currentProduct.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Row(
+                children: [
+                  if (showGenre && currentProduct is Game)
+                    GameGenre(game: currentProduct)
+                  else
+                    ProductCreatorText(creator: currentProduct.creator),
+                  const Text(' • ', style: TextStyle(fontSize: 10)),
+                  AgeBadge(age: currentProduct.ageRating),
+                  const SizedBox(width: 5),
+                  ProductRatingTag(rating: currentProduct.rating.toString()),
+                ],
+              ),
+            ],
+          ),
+        ),
+        showButton
+            ? ActionRowButton(
+                // Кнопка
+                isPaid: currentProduct.isPaid,
+                price: currentProduct.price,
+                containsPaidContent: containsPaidContent,
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }

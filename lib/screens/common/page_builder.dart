@@ -1,4 +1,3 @@
-import 'package:google_play/screens/screens.dart';
 
 import '/models/section_model.dart';
 import '/providers/providers.dart';
@@ -38,16 +37,6 @@ class PageBuilder {
         type: SectionType.preview, 
         title: '', 
         items: provider.getGamesByCategory('Файтинг')
-      ),
-    ];
-  }
-  // Сборка вкладки "Категории"
-  List<HomeSection> buildGamesCategoriesPage() {
-    return [
-      HomeSection(
-        type: SectionType.categotyList, 
-        title: '', 
-        items: gamesCategories
       ),
     ];
   }

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart' hide Banner;
+import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../services/product_service.dart';
 import '../screens/screens.dart';
+import '../widgets/filters/filter_factory.dart';
 
 class ProductsProvider extends ChangeNotifier {
   final ProductService _service = ProductService();
@@ -12,9 +13,23 @@ class ProductsProvider extends ChangeNotifier {
   String? _error;
   List<Product> _recommendations = [];
   List<AppBanner> _allBanners = [];
+
+  // Фильтры
+  String _selectedGameCategory = 'Все категории';
+  String _selectedAppCategory = 'Все категории';
+  String _selectedBookCategory = 'Жанр';
+
+  String _selectedTopFilter = 'Топ бесплатных';
+  final String _selectedRecentFilter = 'Новое';
+  bool _isRecentFilterActive = false;
+  final List<String> topFilterOptions = [
+    'Топ бесплатных',
+    'Бестселлеры',
+    'Топ платных',
+  ];
+
   // Вкладки игр
   List<HomeSection> _recommendedGamesSection = [];
-  List<HomeSection> _categoriesSection = [];
 
   // Вкладки приложений
 
@@ -24,8 +39,15 @@ class ProductsProvider extends ChangeNotifier {
   List<Product> get recommendations => _recommendations;
   List<AppBanner> get allBanners => _allBanners;
 
+  // Фильтры
+  String get selectedTopFilter => _selectedTopFilter;
+  String get selectedGameCategory => _selectedGameCategory;
+  String get selectedAppCategory => _selectedAppCategory;
+  String get selectedBookCategory => _selectedBookCategory;
+  String get selectedRecentFilter => _selectedRecentFilter;
+  bool get isRecentFilterActive => _isRecentFilterActive;
+
   List<HomeSection> get recommendedGamesSection => _recommendedGamesSection;
-  List<HomeSection> get categogoriesSection => _categoriesSection;
 
   Future<void> loadAllProducts() async {
     if (_allProducts.isNotEmpty) return;
@@ -91,7 +113,6 @@ class ProductsProvider extends ChangeNotifier {
 
     // Секции для вкладки игр
     _recommendedGamesSection = builder.buildGamesRecommendedPage();
-    _categoriesSection = builder.buildGamesCategoriesPage();
 
     // Секции для вкладки приложений
   }
@@ -123,13 +144,13 @@ class ProductsProvider extends ChangeNotifier {
 
   // Метод-поиск, передаем id из баннера, а сервис возвращает продукт или null
   Product? getProductById(String id) {
-  if (_allProducts.isEmpty) return null;
-  try {
-    return _allProducts.firstWhere((p) => p.id == id);
-  } catch (e) {
-    return null;
+    if (_allProducts.isEmpty) return null;
+    try {
+      return _allProducts.firstWhere((p) => p.id == id);
+    } catch (e) {
+      return null;
+    }
   }
-}
 
   // Поиск по категориям
   // Поиск игр и приложений общий
@@ -192,5 +213,84 @@ class ProductsProvider extends ChangeNotifier {
       }
       return false;
     }).toList();
+  }
+
+  // Фильтры
+  void setTopFilter(String value) {
+    _selectedTopFilter = value;
+    notifyListeners();
+  }
+
+  void updateGameCategory(String value) {
+    _selectedGameCategory = value;
+    notifyListeners();
+  }
+
+  void updateAppCategory(String value) {
+    _selectedAppCategory = value;
+    notifyListeners();
+  }
+
+  void updateBookCategory(String value) {
+    _selectedBookCategory = value;
+    notifyListeners();
+  }
+
+  void toggleRecentOnly() {
+    _isRecentFilterActive = !_isRecentFilterActive;
+    notifyListeners();
+  }
+
+  List<Product> getFilteredProducts(FilterType type) {
+    // Сначала фильтруем по типу контента
+    // Чтобы на странице Игр не было Книг и наоборот
+    List<Product> result = _allProducts.where((p) {
+      switch (type) {
+        case FilterType.games:
+          return p is Game;
+        case FilterType.apps:
+          return p is App;
+        case FilterType.booksTop:
+        case FilterType.booksNovelty:
+        case FilterType.booksTopFree:
+          return p is Book;
+      }
+    }).toList();
+
+    // Фильтруем по основному статусу (Бесплатные/Платные/Бестселлеры)
+    if (_selectedTopFilter == 'Топ бесплатных') {
+      result = result.where((p) => !p.isPaid).toList();
+    } else if (_selectedTopFilter == 'Топ платных') {
+      result = result.where((p) => p.isPaid).toList();
+    } else if (_selectedTopFilter == 'Бестселлеры') {
+      result = result.where((p) => p.rating >= 4.0).toList();
+    }
+
+    // Фильтр по категориям
+    String currentCategory;
+    if (type == FilterType.games) {
+      currentCategory = _selectedGameCategory;
+    } else if (type == FilterType.apps) {
+      currentCategory = _selectedAppCategory;
+    } else {
+      currentCategory = _selectedBookCategory;
+    }
+
+    if (currentCategory != 'Все категории' && currentCategory != 'Жанр') {
+      result = result.where((p) {
+        if (p is Game) return p.gameGenre == currentCategory;
+        if (p is App) return p.type == currentCategory;
+        if (p is Book) return p.genres.contains(currentCategory);
+        return false;
+      }).toList();
+    }
+
+    // Фильтр Новое
+    if (_isRecentFilterActive) {
+      final recentThreshold = result.length > 10 ? result.length - 10 : 0;
+      result = result.sublist(recentThreshold);
+    }
+
+    return result;
   }
 }

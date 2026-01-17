@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../product_models/game_model.dart';
+part of 'product_models/game_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -50,6 +50,7 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'creator': instance.creator,
   'description': instance.description,
   'rating': instance.rating,
+  'releaseDate': instance.releaseDate.toIso8601String(),
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,
@@ -60,7 +61,6 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'size': instance.size,
   'downloadCount': instance.downloadCount,
   'permissions': instance.permissions,
-  'releaseDate': instance.releaseDate.toIso8601String(),
   'lastUpdated': instance.lastUpdated.toIso8601String(),
   'gameGenre': instance.gameGenre,
   'screenshots': instance.screenshots,

@@ -5,6 +5,7 @@ abstract interface class Product {
   String get title;
   String get creator;
   String get description;
+  DateTime get releaseDate;
   double get rating;
   String get iconUrl;
   int get ageRating;

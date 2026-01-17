@@ -4,7 +4,7 @@ import '../../widgets/widgets.dart';
 import '/screens/screens.dart';
 
 class CategoriesTabScreen extends StatelessWidget {
-  final List<ProductCategories> categories;
+  final List<ProductCategoriesData> categories;
 
   const CategoriesTabScreen({super.key, required this.categories});
 
@@ -17,7 +17,7 @@ class CategoriesTabScreen extends StatelessWidget {
     );
   }
   
-  Widget _buildCategoryTile(BuildContext context, ProductCategories category) {
+  Widget _buildCategoryTile(BuildContext context, ProductCategoriesData category) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
      child: ListTile(

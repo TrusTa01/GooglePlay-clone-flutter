@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../models.dart';
 
-part '../product_models.g/app_model.g.dart';
+part '../app_model.g.dart';
 
 @JsonSerializable()
 class App implements Product {
@@ -19,6 +19,8 @@ class App implements Product {
   @override
   final double rating;
   @override
+  final DateTime releaseDate;
+  @override
   final String iconUrl;
   @override
   final int ageRating;
@@ -34,7 +36,6 @@ class App implements Product {
   final bool containsAds; // true/false
   final bool isEditorChoice; // Выбор редакции
   final int downloadCount; // 1_000_000
-  final DateTime releaseDate; // Дата выхода
   final DateTime lastUpdated; // Последнее обновление
   final List<String> permissions; // ["Камера", "Микрофон"]
   final List<String> screenshots; // URLs скриншотов

@@ -12,7 +12,7 @@ class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (products.isEmpty) {
-      debugPrint('Ошибка: products.isEmpty');
+      debugPrint('Ошибка: products.isEmpty (product grid carousel)');
       return const SizedBox.shrink();
     }
 

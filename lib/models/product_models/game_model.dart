@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../models.dart';
 
-part '../product_models.g/game_model.g.dart';
+part '../game_model.g.dart';
 
 @JsonSerializable()
 class Game implements Product {
@@ -18,6 +18,8 @@ class Game implements Product {
   final String description;
   @override
   final double rating;
+  @override
+  final DateTime releaseDate;
   @override
   final String iconUrl;
   @override
@@ -35,7 +37,6 @@ class Game implements Product {
   final String size; // "15.3 MB"
   final int downloadCount;
   final List<String> permissions;
-  final DateTime releaseDate; // Дата выхода
   final DateTime lastUpdated; // Последнее обновление
   final String gameGenre; // "РПГ", "Стратегия", "Пазлы"
   final List<String> screenshots; // Скриншоты
