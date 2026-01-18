@@ -5,14 +5,14 @@ class ProductCategoriesData {
   final IconData? icon;
   final Color color;
 
-  ProductCategoriesData({
+  const ProductCategoriesData({
     required this.title,
     this.icon,
     this.color = Colors.black,
   });
 }
 
-final List<ProductCategoriesData> gamesCategoriesData = [
+final List<ProductCategoriesData> gamesCategoriesData = const [
   ProductCategoriesData(title: 'Все категории', icon: Icons.category_outlined),
   ProductCategoriesData(title: 'Аркады', icon: Icons.videogame_asset_outlined),
   ProductCategoriesData(title: 'Викторины', icon: Icons.quiz_outlined),
@@ -33,7 +33,7 @@ final List<ProductCategoriesData> gamesCategoriesData = [
   ProductCategoriesData(title: 'Экшен', icon: Icons.bolt_outlined),
 ];
 
-final List<ProductCategoriesData> appsCategoriesData = [
+final List<ProductCategoriesData> appsCategoriesData = const [
   ProductCategoriesData(title: 'Все категории', icon: Icons.category_outlined),
   ProductCategoriesData(title: 'Автомобили и транспорт', icon: Icons.directions_bus_outlined),
   ProductCategoriesData(title: 'Бизнес', icon: Icons.business_center_outlined),
@@ -73,7 +73,7 @@ final List<ProductCategoriesData> appsCategoriesData = [
   ProductCategoriesData(title: 'Циферблаты', icon: Icons.watch_later_outlined),
 ];
 
-final List<ProductCategoriesData> booksGenresData = [
+final List<ProductCategoriesData> booksGenresData = const [
   ProductCategoriesData(title: 'Все категории', icon: Icons.category_outlined),
   ProductCategoriesData(title: 'Бизнес и инвестиции', icon: Icons.trending_up_outlined),
   ProductCategoriesData(title: 'Биографии и мемуары', icon: Icons.person_search_outlined),
@@ -90,10 +90,65 @@ final List<ProductCategoriesData> booksGenresData = [
   ProductCategoriesData(title: 'Художественная литература', icon: Icons.edit_note_outlined),
 ];
 
-// final List<ProductCategoriesData> ageFilterData = [
-//   ProductCategoriesData(title: 'Все'),
-//   ProductCategoriesData(title: 'До 5 лет'),
-//   ProductCategoriesData(title: 'От 6 до 8 лет'),
-//   ProductCategoriesData(title: 'От 9 до 12 лет'),
-//   ProductCategoriesData(title: 'От 13 лет'),
-// ];
+ final List<ProductCategoriesData> topFilterOptions = const [
+  ProductCategoriesData(title: 'Топ бесплатных'),
+  ProductCategoriesData(title: 'Бестселлеры'),
+  ProductCategoriesData(title: 'Топ платных'),
+];
+
+final List<ProductCategoriesData> ageFilterData = const [
+  ProductCategoriesData(title: 'Все'),
+  ProductCategoriesData(title: 'До 5 лет'),
+  ProductCategoriesData(title: 'От 6 до 8 лет'),
+  ProductCategoriesData(title: 'От 9 до 12 лет'),
+  ProductCategoriesData(title: 'От 13 лет'),
+];
+
+final List<ProductCategoriesData> byRating = const [
+  ProductCategoriesData(title: 'Все'),
+  ProductCategoriesData(title: '4,5★ и выше'),
+  ProductCategoriesData(title: '4,0★ и выше'),
+];
+
+final List<ProductCategoriesData> languagesData = const [
+  ProductCategoriesData(title: 'Все'),
+  ProductCategoriesData(title: 'Čeština'),
+  ProductCategoriesData(title: 'Dansk'),
+  ProductCategoriesData(title: 'Deutsch'),
+  ProductCategoriesData(title: 'English'),
+  ProductCategoriesData(title: 'Español'),
+  ProductCategoriesData(title: 'Français'),
+  ProductCategoriesData(title: 'Indonesia'),
+  ProductCategoriesData(title: 'Italiano'),
+  ProductCategoriesData(title: 'Magyar'),
+  ProductCategoriesData(title: 'Melayu'),
+  ProductCategoriesData(title: 'Nederlands'),
+  ProductCategoriesData(title: 'Norsk bokmål'),
+  ProductCategoriesData(title: 'Polski'),
+  ProductCategoriesData(title: 'Português'),
+  ProductCategoriesData(title: 'Română'),
+  ProductCategoriesData(title: 'Slovenčina'),
+  ProductCategoriesData(title: 'Suomi'),
+  ProductCategoriesData(title: 'Svenska'),
+  ProductCategoriesData(title: 'Tiếng Việt'),
+  ProductCategoriesData(title: 'Türkçe'),
+  ProductCategoriesData(title: 'Ελληνικά'),
+  ProductCategoriesData(title: 'Русский'),
+  ProductCategoriesData(title: 'українська'),
+  ProductCategoriesData(title: 'עברית'),
+  ProductCategoriesData(title: 'العربية'),
+  ProductCategoriesData(title: 'मराठी'),
+  ProductCategoriesData(title: 'हिंदी'),
+  ProductCategoriesData(title: 'বাংলা'),
+  ProductCategoriesData(title: 'தமிழ்'),
+  ProductCategoriesData(title: 'ไทย'),
+  ProductCategoriesData(title: '한국어'),
+  ProductCategoriesData(title: '日本語'),
+  ProductCategoriesData(title: '中文'),
+];
+
+final List<ProductCategoriesData> abridgetVersion = const [
+  ProductCategoriesData(title: 'Все'),
+  ProductCategoriesData(title: 'Сокращенная версия'),
+  ProductCategoriesData(title: 'Полная версия'),
+];

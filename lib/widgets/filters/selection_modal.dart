@@ -7,7 +7,7 @@ class SelectionModal {
   static Future<void> show({
     required BuildContext context,
     required String title,
-    required List<String> options,
+    required List<ProductCategoriesData> options,
     required String activeOption,
     required Function(String) onSelect,
   }) {
@@ -47,7 +47,7 @@ class SelectionModal {
                   child: Column(
                     children: List.generate(options.length, (index) {
                       final option = options[index];
-                      final isSelected = option == activeOption;
+                      final isSelected = option.title == activeOption;
 
                       return Column(
                         children: [
@@ -57,7 +57,7 @@ class SelectionModal {
                                 : Colors.transparent,
                             child: ListTile(
                               onTap: () {
-                                onSelect(option);
+                                onSelect(option.title);
                                 Navigator.pop(context);
                               },
                               trailing: isSelected
@@ -68,7 +68,7 @@ class SelectionModal {
                                     )
                                   : null,
                               title: Text(
-                                option,
+                                option.title,
                                 style: TextStyle(
                                   color: isSelected
                                       ? NavBarConstants.navBarSelectedLabelColor

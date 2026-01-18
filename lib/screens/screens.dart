@@ -20,4 +20,3 @@ export 'common/top_charts_page.dart';
 export 'category/categories_tab_screen.dart';
 export 'category/product_categories_data.dart';
 export 'category/category_details_screen.dart';
-export 'category/product_filter_options.dart';

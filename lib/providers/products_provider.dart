@@ -18,21 +18,18 @@ class ProductsProvider extends ChangeNotifier {
   String _selectedGameCategory = 'Все категории';
   String _selectedAppCategory = 'Все категории';
   String _selectedBookCategory = 'Жанр';
-
   String _selectedTopFilter = 'Топ бесплатных';
   final String _selectedRecentFilter = 'Новое';
+  final String _selectedAgeFilter = 'Возраст';
+  final String _selectedRatingFilter = 'По рейтингу';
+  final String _selectedLanguageFilter = 'Язык';
+  final String _selectedAbridgetVersionFilter = 'Сокращенное издание';
   bool _isRecentFilterActive = false;
-  final List<String> topFilterOptions = [
-    'Топ бесплатных',
-    'Бестселлеры',
-    'Топ платных',
-  ];
 
   // Вкладки игр
   List<HomeSection> _recommendedGamesSection = [];
 
   // Вкладки приложений
-
   List<Product> get allProducts => _allProducts;
   bool get isLoading => _isLoading;
   String? get error => _error;
@@ -45,6 +42,11 @@ class ProductsProvider extends ChangeNotifier {
   String get selectedAppCategory => _selectedAppCategory;
   String get selectedBookCategory => _selectedBookCategory;
   String get selectedRecentFilter => _selectedRecentFilter;
+  String get selectedAgeFilter => _selectedAgeFilter;
+  String get selectedRatingFilter => _selectedRatingFilter;
+  String get selectedLanguageFilter => _selectedLanguageFilter;
+  String get selectedAbridgetVersionFilter => _selectedAbridgetVersionFilter;
+
   bool get isRecentFilterActive => _isRecentFilterActive;
 
   List<HomeSection> get recommendedGamesSection => _recommendedGamesSection;
@@ -241,6 +243,7 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Фильтрация
   List<Product> getFilteredProducts(FilterType type) {
     // Сначала фильтруем по типу контента
     // Чтобы на странице Игр не было Книг и наоборот

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/screens/category/product_categories_data.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/providers.dart';
@@ -18,7 +19,7 @@ class TopFilter extends StatelessWidget {
       onSelected: () => SelectionModal.show(
         context: context,
         title: 'Лучшее',
-        options: provider.topFilterOptions,
+        options: topFilterOptions,
         activeOption: provider.selectedTopFilter,
         onSelect: (value) => provider.setTopFilter(value),
       ),
