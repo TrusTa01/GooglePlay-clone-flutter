@@ -156,24 +156,24 @@ void main() async {
   ];
 
   final genres = [
-  'Все категории',
-  'Аркады',
-  'Викторины',
-  'Головоломки',
-  'Гонки',
-  'Казино',
-  'Казуальные',
-  'Карточные',
-  'Музыкальные',
-  'Настольные',
-  'Обучающие',
-  'Приключения',
-  'Ролевые',
-  'Симуляторы',
-  'Словесные',
-  'Спортивные',
-  'Стратегии',
-  'Экшен',
+    'Все категории',
+    'Аркады',
+    'Викторины',
+    'Головоломки',
+    'Гонки',
+    'Казино',
+    'Казуальные',
+    'Карточные',
+    'Музыкальные',
+    'Настольные',
+    'Обучающие',
+    'Приключения',
+    'Ролевые',
+    'Симуляторы',
+    'Словесные',
+    'Спортивные',
+    'Стратегии',
+    'Экшен',
   ];
 
   final gameTags = [
@@ -308,9 +308,16 @@ void main() async {
     final int randomSuffix = faker.randomGenerator.integer(9, min: 1);
 
     final String generatedTitle = '$adj $noun $randomSuffix';
-    final String genreTitle = faker.randomGenerator.element(genres);
+
+    // Логика жанров (от 1 до 3)
+    int count = faker.randomGenerator.integer(4, min: 1);
+    List<String> selectedGenres = (genres.skip(1).toList()..shuffle())
+        .take(count)
+        .toList();
+    final String genreTitle = selectedGenres.join(', ');
+
     final String creatorName =
-        '${faker.person.firstName()} ${faker.person.lastName()} ${faker.randomGenerator.element(['Studios', 'Games', 'Labs'])}';
+        '${faker.person.firstName()} ${faker.person.lastName()}';
 
     // Логика цены (10% шанс, что isPaid будет true)
     // Генерируем число от 0 до 99. Если оно < 10, то это 10% шанс.
@@ -333,8 +340,7 @@ void main() async {
       // Вариант 1: только вертикальные (часто для портретных игр)
       selectedScreenshots = List.generate(
         5,
-        (_) =>
-            verticalScreenshots[random.nextInt(verticalScreenshots.length)],
+        (_) => verticalScreenshots[random.nextInt(verticalScreenshots.length)],
       );
     } else {
       // Вариант 2: сначала 1-2 горизонтальных (трейлеры/промо), потом вертикальные
@@ -379,7 +385,7 @@ void main() async {
     ).toSet().toList();
 
     // Генерируем ID с префиксом 'g' (game)
-    final String id = 'g_$i'.toString(); 
+    final String id = 'g_$i'.toString();
 
     final gameData = {
       "type": "game",
