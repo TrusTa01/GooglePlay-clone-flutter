@@ -27,7 +27,7 @@ class ProductCarousel extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Заголовок и кнопка больше
-        ProductSectionTitle(
+        ProductSectionHeader(
           title: title,
           padding: EdgeInsets.fromLTRB(22, 10, 22, 20),
           onTap: () {},

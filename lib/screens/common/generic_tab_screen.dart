@@ -67,6 +67,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     final productList = section.products.whereType<Product>().toList();
 
     if (section.products.isEmpty) {
+      debugPrint('Error: section.products.isEmpty');
       return const SizedBox.shrink();
     }
 

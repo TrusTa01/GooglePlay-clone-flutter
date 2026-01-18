@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_models/game_model.dart';
+part of '../product_models/game_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -13,11 +13,13 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   creator: json['creator'] as String,
   rating: (json['rating'] as num).toDouble(),
   iconUrl: json['iconUrl'] as String,
-  gameGenre: json['gameGenre'] as String,
+  gameGenre: (json['gameGenre'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
   screenshots: (json['screenshots'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
-  tags: json['tags'] as String,
+  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
   isOnline: json['isOnline'] as bool,
   hasMultiplayer: json['hasMultiplayer'] as bool,
   hasAchievements: json['hasAchievements'] as bool,
@@ -29,6 +31,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   containsPaidContent: json['containsPaidContent'] as bool,
   description: json['description'] as String,
   version: json['version'] as String,
+  eventText: json['eventText'] as String?,
   size: json['size'] as String,
   downloadCount: (json['downloadCount'] as num).toInt(),
   permissions: (json['permissions'] as List<dynamic>)
@@ -59,6 +62,7 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'containsPaidContent': instance.containsPaidContent,
   'version': instance.version,
   'size': instance.size,
+  'eventText': instance.eventText,
   'downloadCount': instance.downloadCount,
   'permissions': instance.permissions,
   'lastUpdated': instance.lastUpdated.toIso8601String(),

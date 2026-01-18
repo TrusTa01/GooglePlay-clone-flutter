@@ -10,12 +10,12 @@ class PageBuilder {
   // Сборка вкладки 'Рекомендуем'
   List<HomeSection> buildGamesRecommendedPage() {
     return [
-      // HomeSection(
-      //   type: SectionType.banners,
-      //   title: '',
-      //   showButton: false,
-      //   products: provider.getBannersByPrefix('g_'),
-      // ),
+      HomeSection(
+        type: SectionType.banners,
+        title: '',
+        showButton: false,
+        products: provider.getBannersByPrefix('g_'),
+      ),
       HomeSection(
         type: SectionType.carousel,
         title: 'Рекомендуем',

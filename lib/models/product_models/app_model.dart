@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../models.dart';
 
-part '../app_model.g.dart';
+part '../product_models.g/app_model.g.dart';
 
 @JsonSerializable()
 class App implements Product {
@@ -39,6 +39,7 @@ class App implements Product {
   final DateTime lastUpdated; // Последнее обновление
   final List<String> permissions; // ["Камера", "Микрофон"]
   final List<String> screenshots; // URLs скриншотов
+  final List<String> tags;
   final String packageName; // "com.google.android.youtube"
   final List<String> supportedLanguages; // ["RU", "EN"]
   final bool containsPaidContent; // Внутриигровые покупки
@@ -64,6 +65,7 @@ class App implements Product {
     required this.lastUpdated,
     required this.permissions,
     required this.screenshots,
+    required this.tags,
     required this.packageName,
     required this.supportedLanguages,
     required this.ageRating,

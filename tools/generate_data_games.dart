@@ -303,18 +303,39 @@ void main() async {
 
   // Основной цикл генерации
   for (int i = 1; i <= 1000; i++) {
+    // Генерируем ID с префиксом 'g' (game)
+    final String id = 'g_$i'.toString();
+
     final String adj = faker.randomGenerator.element(titleWords);
     final String noun = faker.randomGenerator.element(suffixWords);
     final int randomSuffix = faker.randomGenerator.integer(9, min: 1);
 
     final String generatedTitle = '$adj $noun $randomSuffix';
 
+  // Логика ивентов
+  String? generateEventText(Random random) {
+  // Шанс 10% (0, 1, 2... 9 из 100)
+  if (random.nextInt(100) >= 10) return null;
+
+  final variations = [
+    'Крупное обновление',
+    'Событие',
+    'Распродажа',
+    'Одобрено преподавателями',
+    'Скоро выйдет',
+    'Закончится через ${random.nextInt(9) + 1} дня',
+    'Завершится ${random.nextInt(28) + 1}.02.2026',
+    'Специальное предложение',
+  ];
+
+  return variations[random.nextInt(variations.length)];
+}
+
     // Логика жанров (от 1 до 3)
-    int count = faker.randomGenerator.integer(4, min: 1);
-    List<String> selectedGenres = (genres.skip(1).toList()..shuffle())
-        .take(count)
-        .toList();
-    final String genreTitle = selectedGenres.join(', ');
+    int genreCount = faker.randomGenerator.integer(4, min: 1);
+    List<String> selectedGenres = (genres.where((g) => g != 'Все категории').toList()..shuffle())
+            .take(genreCount)
+            .toList();
 
     final String creatorName =
         '${faker.person.firstName()} ${faker.person.lastName()}';
@@ -379,13 +400,9 @@ void main() async {
 
     // Теги (от 3 до 7)
     final int tagCount = random.nextInt(5) + 3;
-    final List<String> selectedTags = List.generate(
-      tagCount,
-      (_) => faker.randomGenerator.element(gameTags),
-    ).toSet().toList();
-
-    // Генерируем ID с префиксом 'g' (game)
-    final String id = 'g_$i'.toString();
+    final List<String> selectedTags = (List<String>.from(gameTags)..shuffle())
+            .take(tagCount)
+            .toList();
 
     final gameData = {
       "type": "game",
@@ -401,6 +418,7 @@ void main() async {
       "description": faker.lorem.sentences(2).join(' '),
       "version": version,
       "size": size,
+      "eventText": generateEventText(random),
       "downloadCount": faker.randomGenerator
           .integer(100000000, min: 100)
           .toInt(),
@@ -412,9 +430,9 @@ void main() async {
       "privacyPolicyUrl": faker.internet.httpsUrl(),
       "creatorDescription": faker.lorem.sentences(2).join(' '),
       "ageRating": faker.randomGenerator.element(ageRatings),
-      "gameGenre": genreTitle,
+      "gameGenre": selectedGenres,
       "screenshots": selectedScreenshots,
-      "tags": selectedTags.join(', '),
+      "tags": selectedTags,
       "isOnline": faker.randomGenerator.boolean(),
       "hasMultiplayer": faker.randomGenerator.boolean(),
       "hasAchievements": faker.randomGenerator.boolean(),

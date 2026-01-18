@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../models.dart';
 
-part '../game_model.g.dart';
+part '../product_models.g/game_model.g.dart';
 
 @JsonSerializable()
 class Game implements Product {
@@ -35,12 +35,13 @@ class Game implements Product {
   final bool containsPaidContent;
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
+  final String? eventText;
   final int downloadCount;
   final List<String> permissions;
   final DateTime lastUpdated; // Последнее обновление
-  final String gameGenre; // "РПГ", "Стратегия", "Пазлы"
+  final List<String> gameGenre; // "РПГ", "Стратегия", "Пазлы"
   final List<String> screenshots; // Скриншоты
-  final String tags; // Теги
+  final List<String> tags; // Теги
   final String websiteUrl;
   final String emailSupport;
   final String privacyPolicyUrl;
@@ -72,6 +73,7 @@ class Game implements Product {
     required this.containsPaidContent,
     required this.description,
     required this.version,
+    this.eventText,
     required this.size,
     required this.downloadCount,
     required this.permissions,

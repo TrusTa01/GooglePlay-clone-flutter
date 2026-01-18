@@ -10,20 +10,20 @@ class ProductDataFormatter {
   ProductDataFormatter(this.product);
 
   String get rating => product.rating.toString();
-  String get size => '${product.technicalInfo.toString()} МБ';
+  String get technicalInfo => '${product.technicalInfo.toString()} МБ';
 
   String get price => (product.price != null)
       ? '${product.price!.toStringAsFixed(2).replaceFirst('.', ',')} ₽'
       : '';
 }
 
-class ProductSectionTitle extends StatelessWidget {
+class ProductSectionHeader extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final EdgeInsets padding;
   final bool showButton;
 
-  const ProductSectionTitle({
+  const ProductSectionHeader({
     super.key,
     required this.title,
     required this.onTap,
@@ -74,7 +74,7 @@ class ProductSectionTitle extends StatelessWidget {
   }
 }
 
-class ProductCardIcon extends StatelessWidget {
+class ProductCardThumbnail extends StatelessWidget {
   final BorderRadius borderRadius;
   final String iconUrl;
   final double iconWidth;
@@ -82,7 +82,7 @@ class ProductCardIcon extends StatelessWidget {
   final int cacheWidth;
   final int cacheHeight;
 
-  const ProductCardIcon({
+  const ProductCardThumbnail({
     super.key,
     required this.borderRadius,
     required this.iconUrl,
@@ -175,87 +175,6 @@ class ProductTitle extends StatelessWidget {
   }
 }
 
-class ProductRatingTag extends StatelessWidget {
-  final String rating;
-  const ProductRatingTag({super.key, required this.rating});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Constants.ratingBackgroungColor,
-      ),
-      height: 20,
-      width: 45,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            rating,
-            style: const TextStyle(
-              color: Constants.defautTextColor,
-              fontSize: 12,
-            ),
-          ),
-          SizedBox(width: 2),
-          Image.asset(
-            'assets/icons/star.png',
-            height: 10,
-            color: const Color.fromARGB(255, 28, 94, 207),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ProductPriceTag extends StatelessWidget {
-  final String price;
-  const ProductPriceTag({super.key, required this.price});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Constants.ratingBackgroungColor,
-      ),
-      height: 20,
-      width: 65,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              price,
-              style: const TextStyle(
-                color: Constants.defautTextColor,
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ProductSize extends StatelessWidget {
-  final String size;
-  const ProductSize({super.key, required this.size});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      size,
-      style: const TextStyle(color: Constants.defautTextColor, fontSize: 12),
-    );
-  }
-}
-
 class ProductDescription extends StatelessWidget {
   final String description;
   const ProductDescription({super.key, required this.description});
@@ -271,54 +190,166 @@ class ProductDescription extends StatelessWidget {
   }
 }
 
-class ProductBottomInfo extends StatelessWidget {
-  final ProductDataFormatter formatter;
-  final bool showPrice;
-
-  const ProductBottomInfo({
-    super.key,
-    required this.formatter,
-    required this.showPrice,
-  });
+class ProductCreatorText extends StatelessWidget {
+  final String creator;
+  const ProductCreatorText({super.key, required this.creator});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        ProductRatingTag(rating: formatter.rating), // Рейтинг
-        SizedBox(width: 10),
-        ProductSize(size: formatter.size), // Размер
-        const SizedBox(width: 10),
-        showPrice
-            ? ProductPriceTag(price: formatter.price)
-            : const SizedBox.shrink(), // Цена (если есть)
-      ],
+    return Flexible(
+      child: Text(
+        creator,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
+        style: const TextStyle(fontSize: 12),
+      ),
     );
   }
 }
 
+class AgeBadge extends StatelessWidget {
+  final int age;
+  const AgeBadge({super.key, required this.age});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black, width: 0.8),
+      ),
+      child: Text(
+        '$age+',
+        style: const TextStyle(fontSize: 7, fontWeight: FontWeight.w900),
+      ),
+    );
+  }
+}
+
+// Вспомогательный разделитель
+class DotSeparator extends StatelessWidget {
+  const DotSeparator({super.key});
+  @override
+  Widget build(BuildContext context) => const Padding(
+    padding: EdgeInsets.symmetric(horizontal: 4),
+    child: Text('•', style: TextStyle(fontSize: 10, color: Colors.grey)),
+  );
+}
+
+class ProductTags extends StatelessWidget {
+  final Product product;
+  const ProductTags({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> items = [];
+
+    if (product is Game) {
+      items = (product as Game).gameGenre;
+    } else if (product is App) {
+      items = (product as App).tags;
+    }
+
+    // Берем первые 3, соединяем точкой
+    String displayString = items.take(3).join(' • ');
+
+    return Text(
+      displayString,
+      maxLines: 1,
+      softWrap: false,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(fontSize: 12),
+    );
+  }
+}
+
+class ProductInfoTag extends StatelessWidget {
+  final String text;
+  final String? iconPath;
+  final bool hasBackground;
+  final Color? textColor;
+  final Color? iconColor;
+
+  const ProductInfoTag({
+    super.key,
+    required this.text,
+    this.iconPath,
+    this.hasBackground = true,
+    this.textColor,
+    this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (!hasBackground) {
+      return Text(
+        text,
+        style: TextStyle(
+          color: textColor ?? Constants.defautTextColor,
+          fontSize: 12,
+        ),
+      );
+    }
+
+    return Container(
+      height: 20,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Constants.ratingBackgroungColor,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Flexible(
+            child: Text(
+              text,
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: textColor ?? Constants.defautTextColor,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          if (iconPath != null) ...[
+            const SizedBox(width: 4),
+            Image.asset(
+              iconPath!,
+              height: 10,
+              color: iconColor ?? const Color.fromARGB(255, 28, 94, 207),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+
 class ActionRow extends StatelessWidget {
-  final ActionBanner? banner;
   final dynamic product;
-  final bool showGenre;
+  final ActionBanner? banner;
+  final bool hasThreeLines;
   final bool showButton;
+  final String? eventText;
   final double iconWidth;
   final double iconHeight;
   final int cacheWidth;
   final int cacheHeight;
-  final bool isVertical;
 
   const ActionRow({
     super.key,
-    this.banner,
     this.product,
-    required this.showGenre,
-    this.showButton = true,
+    this.banner,
     this.iconWidth = 45,
     this.iconHeight = 45,
     this.cacheWidth = 150,
     this.cacheHeight = 150,
-    this.isVertical = false,
+    this.eventText,
+    this.showButton = false,
+    this.hasThreeLines = false,
   });
 
   @override
@@ -331,6 +362,8 @@ class ActionRow extends StatelessWidget {
 
     if (currentProduct == null) return const SizedBox.shrink();
 
+    final formatter = ProductDataFormatter(currentProduct);
+
     // Логика: если продукт — это Game или App, берем их поле. Иначе (книги) — false.
     bool containsPaidContent = false;
     if (currentProduct is Game || currentProduct is App) {
@@ -339,7 +372,7 @@ class ActionRow extends StatelessWidget {
 
     return Row(
       children: [
-        ProductCardIcon(
+        ProductCardThumbnail(
           borderRadius: BorderRadius.circular(12),
           iconUrl: currentProduct.iconUrl,
           iconWidth: iconWidth,
@@ -353,23 +386,68 @@ class ActionRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              ProductTitle(
-                title: currentProduct.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Row(
+                children: [
+                  ProductTitle(
+                    title: currentProduct.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
               Row(
                 children: [
-                  if (showGenre && currentProduct is Game)
-                    GameGenre(game: currentProduct)
-                  else
+                  if (!hasThreeLines) ...[
                     ProductCreatorText(creator: currentProduct.creator),
-                  const Text(' • ', style: TextStyle(fontSize: 10)),
-                  AgeBadge(age: currentProduct.ageRating),
-                  const SizedBox(width: 5),
-                  ProductRatingTag(rating: currentProduct.rating.toString()),
+                    const DotSeparator(),
+                    AgeBadge(age: currentProduct.ageRating),
+                    const SizedBox(width: 10),
+                    ProductInfoTag(
+                      text: formatter.rating,
+                      iconPath: 'assets/icons/star.png',
+                    ),
+                  ],
                 ],
               ),
+              if (hasThreeLines)
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(child: ProductTags(product: currentProduct)),
+                      ],
+                    ),
+                    const SizedBox(height: 3),
+                    Row(
+                      children: [
+                        // 1. Рейтинг
+                        ProductInfoTag(
+                          text: formatter.rating,
+                          iconPath: 'assets/icons/star.png',
+                          iconColor: Constants.googleBlue,
+                        ),
+                        const SizedBox(width: 10),
+
+                        // 2. Размер
+                        ProductInfoTag(
+                          text: formatter.technicalInfo,
+                          hasBackground: false,
+                        ),
+                        const SizedBox(width: 10),
+
+                        // 3. Блок событий (только для бесплатных игр/приложений)
+                        if (currentProduct is Game || currentProduct is App)
+                          if (currentProduct.eventText != null &&
+                              !currentProduct.isPaid)
+                            Flexible(child: ProductInfoTag(text: currentProduct.eventText!)),
+
+                        // 4. Цена (только если платная)
+                        if (currentProduct.isPaid)
+                          ProductInfoTag(text: formatter.price),
+                      ],
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
@@ -381,6 +459,61 @@ class ActionRow extends StatelessWidget {
                 containsPaidContent: containsPaidContent,
               )
             : const SizedBox.shrink(),
+      ],
+    );
+  }
+}
+
+class ActionRowButton extends StatelessWidget {
+  final bool isPaid;
+  final double? price;
+  final bool containsPaidContent;
+  final VoidCallback? onPressed;
+
+  const ActionRowButton({
+    super.key,
+    required this.isPaid,
+    required this.price,
+    this.onPressed,
+    required this.containsPaidContent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Constants.googleBlue,
+            foregroundColor: Colors.white,
+            elevation: 0,
+            minimumSize: const Size(0, 32),
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            tapTargetSize: MaterialTapTargetSize
+                .shrinkWrap, // Убирает лишние пустые зоны вокруг кнопки
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          onPressed: () {},
+          child: Text(
+            !isPaid ? 'Установить' : '${price.toString()} ₽',
+            style: TextStyle(
+              fontWeight: Constants.defaultFontWeight,
+              fontSize: 13,
+            ),
+          ),
+        ),
+        if (containsPaidContent)
+          const Padding(
+            padding: EdgeInsets.only(top: 4),
+            child: Text(
+              'Есть платный контент',
+              style: TextStyle(fontSize: 8, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+          ),
       ],
     );
   }

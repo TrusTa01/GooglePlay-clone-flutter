@@ -28,20 +28,22 @@ class TopChartsPage extends StatelessWidget {
 
               return Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 10,
+                  vertical: 15,
                   horizontal: 15,
                 ),
                 child: Row(
                   children: [
                     Text('${index + 1}', style: const TextStyle(fontSize: 14)),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: ActionRow(
                         product: item,
-                        showGenre: true,
+                        hasThreeLines: true,
                         showButton: false,
-                        iconWidth: 60,
-                        iconHeight: 60,
+                        iconWidth: 65,
+                        iconHeight: 65,
+                        cacheHeight: 190,
+                        cacheWidth: 190,
                       ),
                     ),
                   ],

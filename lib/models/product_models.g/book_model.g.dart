@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_models/book_model.dart';
+part of '../product_models/book_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

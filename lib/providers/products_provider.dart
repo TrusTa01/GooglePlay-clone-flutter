@@ -104,7 +104,7 @@ class ProductsProvider extends ChangeNotifier {
 
   List<Product> getProductsByCategory(String category, {required bool isGame}) {
     return _allProducts.where((p) {
-      if (isGame) return p is Game && p.gameGenre == category;
+      if (isGame) return p is Game && p.gameGenre.contains(category);
       return p is App && p.type == category;
     }).toList();
   }
@@ -185,12 +185,10 @@ class ProductsProvider extends ChangeNotifier {
   // Поиск по названию
   // Метод поиска игр по категориям
   List<Product> getGamesByCategory(String genre) {
-    return _allProducts.where((product) {
-      if (product is Game) {
-        // Сравниваем жанр игры с тем, что мы ищем
-        return product.gameGenre == genre;
-      }
-      return false;
+    return _allProducts.whereType<Game>().where((game) {
+      return game.gameGenre.any(
+        (g) => g.trim().toLowerCase() == genre.trim().toLowerCase(),
+      );
     }).toList();
   }
 
@@ -281,9 +279,14 @@ class ProductsProvider extends ChangeNotifier {
 
     if (currentCategory != 'Все категории' && currentCategory != 'Жанр') {
       result = result.where((p) {
-        if (p is Game) return p.gameGenre == currentCategory;
+        if (p is Game) return p.gameGenre.contains(currentCategory);
         if (p is App) return p.type == currentCategory;
         if (p is Book) return p.genres.contains(currentCategory);
+        if (result.isEmpty) {
+          debugPrint(
+            'Категория "$currentCategory" пуста',
+          );
+        }
         return false;
       }).toList();
     }

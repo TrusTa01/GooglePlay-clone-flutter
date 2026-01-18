@@ -71,7 +71,7 @@ class _BannerSectionState extends State<BannerSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.title.isNotEmpty)
-          ProductSectionTitle(
+          ProductSectionHeader(
             title: widget.title,
             onTap: () {},
             padding: const EdgeInsets.fromLTRB(22, 10, 22, 20),

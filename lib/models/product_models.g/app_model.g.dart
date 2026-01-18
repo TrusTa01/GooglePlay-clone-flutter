@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_models/app_model.dart';
+part of '../product_models/app_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -28,6 +28,7 @@ App _$AppFromJson(Map<String, dynamic> json) => App(
   screenshots: (json['screenshots'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
+  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
   packageName: json['packageName'] as String,
   supportedLanguages: (json['supportedLanguages'] as List<dynamic>)
       .map((e) => e as String)
@@ -60,6 +61,7 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
   'lastUpdated': instance.lastUpdated.toIso8601String(),
   'permissions': instance.permissions,
   'screenshots': instance.screenshots,
+  'tags': instance.tags,
   'packageName': instance.packageName,
   'supportedLanguages': instance.supportedLanguages,
   'containsPaidContent': instance.containsPaidContent,

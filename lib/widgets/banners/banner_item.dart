@@ -45,7 +45,7 @@ class BannerItem extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               if (isAction)
-                ActionRow(banner: banner as ActionBanner, showGenre: false),
+                ActionRow(banner: banner as ActionBanner, showButton: true,),
             ],
           ),
         ),

@@ -32,7 +32,7 @@ class ProductCarouselCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               // Карточка
-              ProductCardIcon(
+              ProductCardThumbnail(
                 borderRadius: BorderRadius.circular(20),
                 iconUrl: product.iconUrl,
                 iconWidth: 115,
@@ -55,8 +55,11 @@ class ProductCarouselCard extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: showPrice
-                    ? ProductPriceTag(price: formatter.price)
-                    : ProductRatingTag(rating: formatter.rating),
+                    ? ProductInfoTag(text: formatter.price)
+                    : ProductInfoTag(
+                        text: formatter.rating,
+                        iconPath: 'assets/icons/star.png',
+                      ),
               ),
             ],
           ),

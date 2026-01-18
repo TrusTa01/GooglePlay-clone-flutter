@@ -37,7 +37,7 @@ class GamePreviewCard extends StatelessWidget {
 
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 22),
-          child: ActionRow(product: game, showGenre: true, showButton: false),
+          child: ActionRow(product: game, showButton: true),
         ),
       ],
     );

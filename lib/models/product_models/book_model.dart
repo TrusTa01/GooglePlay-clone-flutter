@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../models.dart';
 
-part '../book_model.g.dart';
+part '../product_models.g/book_model.g.dart';
 
 @JsonSerializable()
 class Book implements Product {
