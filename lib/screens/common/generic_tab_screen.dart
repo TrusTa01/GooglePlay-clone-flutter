@@ -64,27 +64,32 @@ class _GenericTabScreenState extends State<GenericTabScreen>
   }
 
   Widget _buildSection(HomeSection section) {
+    final productList = section.products.whereType<Product>().toList();
+
+    if (section.products.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     switch (section.type) {
       case SectionType.banners:
         return BannerSection(
-          banners: section.items.whereType<AppBanner>().toList(),
+          banners: section.products.whereType<AppBanner>().toList(),
           title: section.title,
           showButton: section.showButton,
         );
       case SectionType.carousel:
-        // if (products.isEmpty) return const SizedBox.shrink();
         return ProductCarousel(
           title: section.title,
-          products: section.items.cast<Product>(),
+          products: productList,
         );
       case SectionType.grid:
         return ProductGrid(
           title: section.title,
-          products: section.items.cast<Product>(),
+          products: productList,
         );
       case SectionType.preview:
         return GamePreviewSection(
-          games: section.items.whereType<Game>().toList(),
+          games: section.products.whereType<Game>().toList(),
         );
     }
   }

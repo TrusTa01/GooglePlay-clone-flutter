@@ -1,4 +1,3 @@
-
 import '/models/section_model.dart';
 import '/providers/providers.dart';
 
@@ -11,32 +10,32 @@ class PageBuilder {
   // Сборка вкладки 'Рекомендуем'
   List<HomeSection> buildGamesRecommendedPage() {
     return [
-      HomeSection(
-        type: SectionType.banners,
-        title: '',
-        showButton: false,
-        items: provider.getBannersByPrefix('g_'),
-      ),
+      // HomeSection(
+      //   type: SectionType.banners,
+      //   title: '',
+      //   showButton: false,
+      //   products: provider.getBannersByPrefix('g_'),
+      // ),
       HomeSection(
         type: SectionType.carousel,
         title: 'Рекомендуем',
-        items: provider.recommendations,
+        products: provider.recommendations,
       ),
       HomeSection(
         type: SectionType.grid,
-        title: 'Файтинги',
-        items: provider.getGamesByCategory('Файтинг'),
+        title: 'Казино',
+        products: provider.getGamesByCategory('Казино'),
       ),
-      HomeSection(
-        type: SectionType.banners,
-        title: 'dsdssdds',
-        showButton: true,
-        items: provider.getBannersByPrefix('g_'),
-      ),
+      // HomeSection(
+      //   type: SectionType.banners,
+      //   title: 'dsdssdds',
+      //   showButton: true,
+      //   products: provider.getBannersByPrefix('g_'),
+      // ),
       HomeSection(
         type: SectionType.preview, 
         title: '', 
-        items: provider.getGamesByCategory('Файтинг')
+        products: provider.getGamesByCategory('Казино')
       ),
     ];
   }

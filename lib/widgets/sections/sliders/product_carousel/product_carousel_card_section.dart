@@ -24,9 +24,7 @@ class ProductCarouselCard extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => ProductPageScreen(),
-              ),
+              MaterialPageRoute(builder: (context) => ProductPageScreen()),
             );
           },
           onLongPress: () {},
@@ -36,21 +34,22 @@ class ProductCarouselCard extends StatelessWidget {
               // Карточка
               ProductCardIcon(
                 borderRadius: BorderRadius.circular(20),
-                iconUrl: product.iconUrl, 
-                iconWidth: 115, 
-                iconHeight: 115, 
+                iconUrl: product.iconUrl,
+                iconWidth: 115,
+                iconHeight: 115,
                 cacheWidth: 300,
                 cacheHeight: 300,
-                ),
+              ),
               const SizedBox(height: 6),
               SizedBox(
                 width: 115,
-                child: ProductTitle( // Название
-                      title: product.title,
-                      maxLines: 2,
-                      fontSize: 12,
-                    ),
-              ), 
+                child: ProductTitle(
+                  // Название
+                  title: product.title,
+                  maxLines: 2,
+                  fontSize: 12,
+                ),
+              ),
               const SizedBox(height: 4),
               // Рейтинг
               Align(

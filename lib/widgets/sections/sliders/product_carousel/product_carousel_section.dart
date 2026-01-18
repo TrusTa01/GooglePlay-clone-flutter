@@ -19,7 +19,7 @@ class ProductCarousel extends StatelessWidget {
     const double sliderHeight = 180;
 
     if (products.isEmpty) {
-      debugPrint('Ошибка: products.isEmpty');
+      debugPrint('Ошибка: products.isEmpty (product carousel)');
       return const SizedBox.shrink();
     }
 

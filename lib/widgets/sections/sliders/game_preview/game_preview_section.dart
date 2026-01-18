@@ -10,7 +10,10 @@ class GamePreviewSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (games.isEmpty) return const SizedBox.shrink();
+    if (games.isEmpty) {
+      debugPrint('Ошибка: products.isEmpty (game preview section)');
+      return const SizedBox.shrink();
+    }
 
     return ListView.separated(
       shrinkWrap: true, // Чтобы не было конфликта с основным скроллом

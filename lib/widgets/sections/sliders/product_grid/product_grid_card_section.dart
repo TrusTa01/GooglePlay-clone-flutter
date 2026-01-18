@@ -20,6 +20,13 @@ class ProductGridCard extends StatelessWidget {
       child: Container(
         // Контейнер для контроля высоты
         padding: const EdgeInsets.symmetric(vertical: 8),
+        // child: ActionRow(
+        //   showGenre: false,
+        //   iconWidth: 60,
+        //   iconHeight: 60,
+        //   cacheWidth: 180,
+        //   cacheHeight: 180,
+        // ),
         child: Row(
           children: <Widget>[
             ProductCardIcon(

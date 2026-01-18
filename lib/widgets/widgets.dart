@@ -31,7 +31,7 @@ export 'banners/utils/banners_utils.dart';
 export 'sections/sliders/utils/sliders_utils.dart';
 
 // Carousel widget
-export 'sections/sliders/product_carousel/product_card_carousel_section.dart';
+export 'sections/sliders/product_carousel/product_carousel_card_section.dart';
 export 'sections/sliders/product_carousel/product_carousel_section.dart';
 
 // Grid widget

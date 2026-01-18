@@ -306,6 +306,7 @@ class ActionRow extends StatelessWidget {
   final double iconHeight;
   final int cacheWidth;
   final int cacheHeight;
+  final bool isVertical;
 
   const ActionRow({
     super.key,
@@ -317,6 +318,7 @@ class ActionRow extends StatelessWidget {
     this.iconHeight = 45,
     this.cacheWidth = 150,
     this.cacheHeight = 150,
+    this.isVertical = false,
   });
 
   @override
