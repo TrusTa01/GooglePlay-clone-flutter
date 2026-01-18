@@ -327,7 +327,6 @@ class ProductInfoTag extends StatelessWidget {
   }
 }
 
-
 class ActionRow extends StatelessWidget {
   final dynamic product;
   final ActionBanner? banner;

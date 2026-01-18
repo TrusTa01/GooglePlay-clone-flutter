@@ -13,7 +13,12 @@ class FilterSets {
     switch (type) {
       case FilterType.games:
         activeFilters = [
-          const TopFilter(),
+           TopFilter(
+            defaultTitle: 'Топ Бесплатных',
+            currentSelection: provider.selectedTopFilter,
+            options: topFilterOptions,
+            onSelected: (val) => provider.setTopFilter(val),
+            ),
           CategoryFilter(
             defaultTitle: 'Категории',
             options: gamesCategoriesData,
@@ -26,7 +31,12 @@ class FilterSets {
 
       case FilterType.apps:
         activeFilters = [
-          const TopFilter(),
+          TopFilter(
+            defaultTitle: 'Топ Бесплатных',
+            currentSelection: provider.selectedTopFilter,
+            options: topFilterOptions,
+            onSelected: (val) => provider.setTopFilter(val),
+            ),
           CategoryFilter(
             defaultTitle: 'Категории',
             options: appsCategoriesData,

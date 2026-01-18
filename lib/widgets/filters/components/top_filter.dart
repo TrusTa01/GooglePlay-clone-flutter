@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/screens/category/product_categories_data.dart';
-import 'package:provider/provider.dart';
 
-import '/providers/providers.dart';
 import '/widgets/widgets.dart';
+import '/screens/category/product_categories_data.dart';
 
 class TopFilter extends StatelessWidget {
-  const TopFilter({super.key});
+  final String defaultTitle;
+  final List<ProductCategoriesData> options;
+  final String currentSelection;
+  final Function(String) onSelected;
+
+  const TopFilter({
+    super.key,
+    required this.defaultTitle,
+    required this.options,
+    required this.currentSelection,
+    required this.onSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<ProductsProvider>();
-
     return CustomFilterChip(
       hasOptions: true,
-      label: provider.selectedTopFilter,
+      label: currentSelection == 'Топ Бесплатных'
+          ? defaultTitle
+          : currentSelection,
       isSelected: true,
       onSelected: () => SelectionModal.show(
         context: context,
         title: 'Лучшее',
         options: topFilterOptions,
-        activeOption: provider.selectedTopFilter,
-        onSelect: (value) => provider.setTopFilter(value),
+        activeOption: currentSelection,
+        onSelect: (val) => onSelected(val),
       ),
     );
   }
