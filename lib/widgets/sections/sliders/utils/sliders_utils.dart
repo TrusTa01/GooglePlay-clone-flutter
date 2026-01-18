@@ -232,7 +232,7 @@ class DotSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Padding(
     padding: EdgeInsets.symmetric(horizontal: 4),
-    child: Text('•', style: TextStyle(fontSize: 10, color: Colors.grey)),
+    child: Text('•', style: TextStyle(fontSize: 10,)),
   );
 }
 

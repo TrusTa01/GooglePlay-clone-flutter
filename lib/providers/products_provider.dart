@@ -260,11 +260,11 @@ class ProductsProvider extends ChangeNotifier {
 
     // Фильтруем по основному статусу (Бесплатные/Платные/Бестселлеры)
     if (_selectedTopFilter == 'Топ бесплатных') {
-      result = result.where((p) => !p.isPaid).toList();
+      result = result.where((p) => !p.isPaid && p.rating >= 4.0).toList();
     } else if (_selectedTopFilter == 'Топ платных') {
-      result = result.where((p) => p.isPaid).toList();
+      result = result.where((p) => p.isPaid && p.rating >= 4.0).toList();
     } else if (_selectedTopFilter == 'Бестселлеры') {
-      result = result.where((p) => p.rating >= 4.0).toList();
+      result = result.where((p) => p.rating >= 4.5).toList();
     }
 
     // Фильтр по категориям
