@@ -114,8 +114,7 @@ class _GamesScreenState extends State<GamesScreen>
             // Таб 'Платные'
             SizedBox.shrink(),
             // Таб 'Категории'
-            // CategoriesTabScreen(categories: watchProvider.categoriesSection),
-            SizedBox.shrink(),
+            CategoriesTabScreen(categories: gamesCategoriesData),
           ],
         ),
       ),

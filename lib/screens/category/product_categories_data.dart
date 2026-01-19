@@ -74,7 +74,7 @@ final List<ProductCategoriesData> appsCategoriesData = const [
 ];
 
 final List<ProductCategoriesData> booksGenresData = const [
-  ProductCategoriesData(title: 'Все категории', icon: Icons.category_outlined),
+  ProductCategoriesData(title: 'Все', icon: Icons.category_outlined),
   ProductCategoriesData(title: 'Бизнес и инвестиции', icon: Icons.trending_up_outlined),
   ProductCategoriesData(title: 'Биографии и мемуары', icon: Icons.person_search_outlined),
   ProductCategoriesData(title: 'Детективы и триллеры', icon: Icons.fingerprint_outlined),
