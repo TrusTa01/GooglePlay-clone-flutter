@@ -1,4 +1,6 @@
+// ignore_for_file: avoid_print
 // Генерация мок-данных игр
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -154,21 +156,26 @@ void main() async {
   ];
 
   final genres = [
-    'Экшен',
-    'Симуляторы',
+    'Все категории',
+    'Аркады',
+    'Викторины',
     'Головоломки',
-    'Приключения',
     'Гонки',
-    'Ролевые',
-    'Стратегии',
-    'Спортивные',
+    'Казино',
+    'Казуальные',
     'Карточные',
+    'Музыкальные',
     'Настольные',
+    'Обучающие',
+    'Приключения',
+    'Ролевые',
+    'Симуляторы',
+    'Словесные',
+    'Спортивные',
+    'Стратегии',
+    'Экшен',
     'Файтинг',
-    'Выживание',
-    'Песочница',
-    'Визуальная новелла',
-    'Ритм-игра',
+    'Образование',
   ];
 
   final gameTags = [
@@ -201,7 +208,6 @@ void main() async {
     'Война',
     'Исследование',
     'Аниме',
-    'Фурри',
     'Steampunk',
     'VR',
     'PvP',
@@ -211,9 +217,29 @@ void main() async {
     'Расслабляющая',
     'Процедурная генерация',
     'Кроссплатформенность',
+    'Математика',
+    'Рисование',
+    'Алфавит',
+    'Буквы',
+    'Цифры',
+    'Языки',
+    'Здоровье',
+    'Логика',
+    'Творчество',
+    'Сказки',
+    'Мультфильмы',
+    'Для всей семьи',
+    'Реалистичная',
+    'Стилизованная',
+    'Абстрактная',
+    'Минимализм',
+    'Постапокалипсис',
+    'Киберспорт',
+    'Офлайн',
+    'Низкие цены',
   ];
 
-  final myIcons = [
+  final icons = [
     'assets/icons/games_icons/zenless_zone_zero.webp',
     'assets/icons/games_icons/tomb_of_the_mask.webp',
     'assets/icons/games_icons/the_battle_cats.webp',
@@ -272,14 +298,17 @@ void main() async {
     'assets/icons/games_icons/afk_arena.webp',
   ];
 
-  final myHorizontalScreenshots = [
-    'assets/images/games/horiz_1.jpg',
-    'assets/images/games/horiz_2.jpg',
+  final horizontalScreenshots = [
+    'assets/images/games_screenshots/game_screenshot_horiz1.webp',
+    'assets/images/games_screenshots/game_screenshot_horiz2.webp',
   ];
 
-  final myVerticalScreenshots = [
-    'assets/images/games/vert_1.jpg',
-    'assets/images/games/vert_2.jpg',
+  final verticalScreenshots = [
+    'assets/images/games_screenshots/game_screenshot_vert1.webp',
+    'assets/images/games_screenshots/game_screenshot_vert2.webp',
+    'assets/images/games_screenshots/game_screenshot_vert3.webp',
+    'assets/images/games_screenshots/game_screenshot_vert4.webp',
+    'assets/images/games_screenshots/game_screenshot_vert5.webp',
   ];
 
   final List<int> ageRatings = [3, 7, 12, 16, 18];
@@ -296,14 +325,43 @@ void main() async {
 
   // Основной цикл генерации
   for (int i = 1; i <= 1000; i++) {
+    // Генерируем ID с префиксом 'g' (game)
+    final String id = 'g_$i'.toString();
+
     final String adj = faker.randomGenerator.element(titleWords);
     final String noun = faker.randomGenerator.element(suffixWords);
     final int randomSuffix = faker.randomGenerator.integer(9, min: 1);
 
     final String generatedTitle = '$adj $noun $randomSuffix';
-    final String genreTitle = faker.randomGenerator.element(genres);
+
+    // Логика ивентов
+    String? generateEventText(Random random) {
+      // Шанс 10% (0, 1, 2... 9 из 100)
+      if (random.nextInt(100) >= 10) return null;
+
+      final variations = [
+        'Крупное обновление',
+        'Событие',
+        'Распродажа',
+        'Одобрено преподавателями',
+        'Скоро выйдет',
+        'Закончится через ${random.nextInt(9) + 1} дня',
+        'Завершится ${random.nextInt(28) + 1}.02.2026',
+        'Специальное предложение',
+      ];
+
+      return variations[random.nextInt(variations.length)];
+    }
+
+    // Логика жанров (от 1 до 3)
+    int genreCount = faker.randomGenerator.integer(4, min: 1);
+    List<String> selectedGenres =
+        (genres.where((g) => g != 'Все категории').toList()..shuffle())
+            .take(genreCount)
+            .toList();
+
     final String creatorName =
-        '${faker.person.firstName()} ${faker.person.lastName()} ${faker.randomGenerator.element(['Studios', 'Games', 'Labs'])}';
+        '${faker.person.firstName()} ${faker.person.lastName()}';
 
     // Логика цены (10% шанс, что isPaid будет true)
     // Генерируем число от 0 до 99. Если оно < 10, то это 10% шанс.
@@ -316,7 +374,7 @@ void main() async {
     }
 
     // Логика иконок
-    final String localIcon = faker.randomGenerator.element(myIcons);
+    final String localIcon = faker.randomGenerator.element(icons);
 
     // Логика скриншотов
     List<String> selectedScreenshots = [];
@@ -326,18 +384,17 @@ void main() async {
       // Вариант 1: только вертикальные (часто для портретных игр)
       selectedScreenshots = List.generate(
         5,
-        (_) =>
-            myVerticalScreenshots[random.nextInt(myVerticalScreenshots.length)],
+        (_) => verticalScreenshots[random.nextInt(verticalScreenshots.length)],
       );
     } else {
       // Вариант 2: сначала 1-2 горизонтальных (трейлеры/промо), потом вертикальные
       selectedScreenshots.add(
-        faker.randomGenerator.element(myHorizontalScreenshots),
+        faker.randomGenerator.element(horizontalScreenshots),
       );
       selectedScreenshots.addAll(
         List.generate(
           6,
-          (_) => faker.randomGenerator.element(myVerticalScreenshots),
+          (_) => faker.randomGenerator.element(verticalScreenshots),
         ),
       );
     }
@@ -366,14 +423,13 @@ void main() async {
 
     // Теги (от 3 до 7)
     final int tagCount = random.nextInt(5) + 3;
-    final List<String> selectedTags = List.generate(
-      tagCount,
-      (_) => faker.randomGenerator.element(gameTags),
-    ).toSet().toList();
+    final List<String> selectedTags = (List<String>.from(
+      gameTags,
+    )..shuffle()).take(tagCount).toList();
 
     final gameData = {
       "type": "game",
-      "id": i.toString(),
+      "id": id,
       "title": generatedTitle,
       "creator": creatorName,
       "rating": faker.randomGenerator.integer(50) / 10.0,
@@ -385,6 +441,7 @@ void main() async {
       "description": faker.lorem.sentences(2).join(' '),
       "version": version,
       "size": size,
+      "eventText": generateEventText(random),
       "downloadCount": faker.randomGenerator
           .integer(100000000, min: 100)
           .toInt(),
@@ -396,9 +453,9 @@ void main() async {
       "privacyPolicyUrl": faker.internet.httpsUrl(),
       "creatorDescription": faker.lorem.sentences(2).join(' '),
       "ageRating": faker.randomGenerator.element(ageRatings),
-      "gameGenre": genreTitle,
-      "screenshots": selectedScreenshots.join('|'),
-      "tags": selectedTags.join(', '),
+      "gameGenre": selectedGenres,
+      "screenshots": selectedScreenshots,
+      "tags": selectedTags,
       "isOnline": faker.randomGenerator.boolean(),
       "hasMultiplayer": faker.randomGenerator.boolean(),
       "hasAchievements": faker.randomGenerator.boolean(),
@@ -416,7 +473,6 @@ void main() async {
   }
   await file.writeAsString(jsonEncode(gamesList));
 
-  // ignore: avoid_print
   print(
     'Successfully generated ${gamesList.length} game objects to ${file.path}',
   );

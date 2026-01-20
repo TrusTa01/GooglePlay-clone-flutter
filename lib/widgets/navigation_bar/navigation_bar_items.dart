@@ -19,6 +19,7 @@ List<NavigationDestination> destinations = [
     ),
     label: 'Игры',
   ),
+
   // Apps
   NavigationDestination(
     icon: Image.asset(
@@ -35,6 +36,7 @@ List<NavigationDestination> destinations = [
     ),
     label: 'Приложения',
   ),
+
   // Search
   NavigationDestination(
     icon: Icon(Icons.search, color: NavBarConstants.navBarUnselectedLabelColor),
@@ -44,6 +46,7 @@ List<NavigationDestination> destinations = [
     ),
     label: 'Поиск',
   ),
+  
   // Books
   NavigationDestination(
     icon: Icon(

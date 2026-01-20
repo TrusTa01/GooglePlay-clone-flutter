@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../product_interface.dart';
+import '../models.dart';
 
 part '../product_models.g/app_model.g.dart';
 
@@ -19,6 +19,8 @@ class App implements Product {
   @override
   final double rating;
   @override
+  final DateTime releaseDate;
+  @override
   final String iconUrl;
   @override
   final bool isPaid;
@@ -29,16 +31,16 @@ class App implements Product {
 
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
+  final int ageRating;
   final bool containsAds; // true/false
   final bool isEditorChoice; // Выбор редакции
   final int downloadCount; // 1_000_000
-  final DateTime releaseDate; // Дата выхода
   final DateTime lastUpdated; // Последнее обновление
   final List<String> permissions; // ["Камера", "Микрофон"]
   final List<String> screenshots; // URLs скриншотов
+  final List<String> tags;
   final String packageName; // "com.google.android.youtube"
   final List<String> supportedLanguages; // ["RU", "EN"]
-  final int ageRating; // 3+, 12+, 18+
   final bool containsPaidContent; // Внутриигровые покупки
   final String privacyPolicyUrl; // Ссылка на политику
   final String websiteUrl; // Сайт разработчика
@@ -62,6 +64,7 @@ class App implements Product {
     required this.lastUpdated,
     required this.permissions,
     required this.screenshots,
+    required this.tags,
     required this.packageName,
     required this.supportedLanguages,
     required this.ageRating,

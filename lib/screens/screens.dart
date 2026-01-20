@@ -2,15 +2,27 @@
 export 'home/app_screen.dart';
 export 'home/books_screen.dart';
 export 'home/games_screen.dart';
-export 'search/search_screen.dart';
+export 'home/search_screen.dart';
 
 // Details
-export 'details/product_detail_screen.dart';
+export 'product_screens/product_screen.dart';
 
 // Notifications
 export 'notifications/notifications_screen.dart';
 
 // Commnon
-export 'common/categories_tab_screen.dart';
 export 'common/error_screen.dart';
 export 'common/generic_tab_screen.dart';
+export 'common/page_builder.dart';
+
+// Category
+export 'category/categories_tab_screen.dart';
+export 'category/product_categories_data.dart';
+export 'category/category_details_screen.dart';
+export 'charts_screens/top_charts_screen.dart';
+
+// Kids
+export 'kids_screen/kids_age_category_screen.dart';
+export 'kids_screen/kids_details_screen.dart';
+export 'kids_screen/kids_hero_banner.dart';
+export 'kids_screen/kids_age_filter_selector.dart';

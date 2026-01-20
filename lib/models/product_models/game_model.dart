@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../product_interface.dart';
+import '../models.dart';
 
 part '../product_models.g/game_model.g.dart';
 
@@ -19,6 +19,8 @@ class Game implements Product {
   @override
   final double rating;
   @override
+  final DateTime releaseDate;
+  @override
   final String iconUrl;
   @override
   final bool isPaid;
@@ -31,20 +33,20 @@ class Game implements Product {
   final bool containsPaidContent;
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
+  final String? eventText;
   final int downloadCount;
+  final int ageRating;
   final List<String> permissions;
-  final DateTime releaseDate; // Дата выхода
   final DateTime lastUpdated; // Последнее обновление
-  final String gameGenre; // "РПГ", "Стратегия", "Пазлы"
-  final String screenshots; // Скриншоты
-  final String tags; // Теги
+  final List<String> gameGenre; // "РПГ", "Стратегия", "Пазлы"
+  final List<String> screenshots; // Скриншоты
+  final List<String> tags; // Теги
   final String websiteUrl;
   final String emailSupport;
   final String privacyPolicyUrl;
   final String creatorDescription;
   final bool isOnline; // Онлайн игра?
   final bool hasMultiplayer; // Мультиплеер
-  final int ageRating; // "3+", "12+", "18+"
   final bool hasAchievements; // Достижения
   final String gameModes; // "Single-player", "Co-op"
   final bool hasControllerSupport;
@@ -70,6 +72,7 @@ class Game implements Product {
     required this.containsPaidContent,
     required this.description,
     required this.version,
+    this.eventText,
     required this.size,
     required this.downloadCount,
     required this.permissions,

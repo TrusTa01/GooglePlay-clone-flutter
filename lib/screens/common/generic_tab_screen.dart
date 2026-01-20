@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/providers/products_provider.dart';
 import 'package:provider/provider.dart';
 
+import '/providers/products_provider.dart';
 import '/models/models.dart';
 import '../../widgets/widgets.dart';
+import '/screens/screens.dart';
 
 class GenericTabScreen extends StatefulWidget {
   final List<HomeSection> sections;
@@ -40,7 +41,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     // Если данных нет и идет загрузка — показываем шиммеры
     if (watchProvider.isLoading && widget.sections.isEmpty) {
       return ListView.builder(
-        itemCount: 5, // Показываем 5 скелетонов
+        itemCount: 5,
         itemBuilder: (context, index) => const Padding(
           padding: EdgeInsets.only(bottom: 10),
           child: ProductSliderSkeleton(),
@@ -51,12 +52,12 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     return ListView.builder(
       itemCount: widget.sections.length,
       // Общие отступы для всего списка
-      padding: const EdgeInsets.symmetric(vertical: 0),
+      padding: const EdgeInsets.only(bottom: 45),
       itemBuilder: (context, index) {
         final section = widget.sections[index];
         return Padding(
           // Отступ между cекциями
-          padding: const EdgeInsets.only(top: 20),
+          padding: EdgeInsets.only(top: section.needsTopPadding ? 15 : 0),
           child: _buildSection(section),
         );
       },
@@ -64,19 +65,62 @@ class _GenericTabScreenState extends State<GenericTabScreen>
   }
 
   Widget _buildSection(HomeSection section) {
+    final rawProducts = section.products ?? [];
+    final productList = rawProducts.whereType<Product>().toList();
+
+    if (section.type != SectionType.kidsHeroBanner &&
+        section.type != SectionType.ageFIlterSelector &&
+        rawProducts.isEmpty) {
+      debugPrint(
+        'Error: section.products.isEmpty. Section ${section.title} is empty and skipped (generic_tab_screen.dart)',
+      );
+      return const SizedBox.shrink();
+    }
+
     switch (section.type) {
+      case SectionType.banners:
+        return BannerSection(
+          banners: rawProducts.whereType<AppBanner>().toList(),
+          title: section.title ?? '',
+          subtitle: section.subtitle ?? '',
+          showButton: section.showButton,
+        );
       case SectionType.carousel:
         return ProductCarousel(
-          title: section.title,
-          products: section.items.cast<Product>(),
+          title: section.title ?? '',
+          subtitle: section.subtitle ?? '',
+          products: productList,
         );
       case SectionType.grid:
         return ProductGrid(
-          title: section.title,
-          products: section.items.cast<Product>(),
+          title: section.title ?? '',
+          subtitle: section.subtitle ?? '',
+          products: productList,
         );
-      case SectionType.banners:
-        return BannerSection(banners: section.items.cast<BannerData>());
+      case SectionType.preview:
+        return GamePreviewSection(
+          games: rawProducts.whereType<Game>().toList(),
+        );
+      case SectionType.kidsHeroBanner:
+        return KidsHeroBanner(
+          title: section.title ?? '',
+          subtitle: section.subtitle ?? '',
+          imageAssetPath: section.imageAssetPath ?? '',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const KidsDetailsScreen(),
+              ),
+            );
+          },
+        );
+      case SectionType.ageFIlterSelector:
+        return KidsAgeFilterSelector(
+          type: FilterType.kidsAge,
+          title: section.title ?? '',
+          subtitle: section.subtitle ?? '',
+        );
     }
   }
 }

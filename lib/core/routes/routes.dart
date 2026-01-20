@@ -1,3 +1,3 @@
-abstract interface class AppRoutesName{
+abstract class AppRoutesName{
   static const String notificationsScreen = '/notifications';
 }

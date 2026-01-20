@@ -28,6 +28,7 @@ App _$AppFromJson(Map<String, dynamic> json) => App(
   screenshots: (json['screenshots'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
+  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
   packageName: json['packageName'] as String,
   supportedLanguages: (json['supportedLanguages'] as List<dynamic>)
       .map((e) => e as String)
@@ -47,21 +48,22 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
   'creator': instance.creator,
   'description': instance.description,
   'rating': instance.rating,
+  'releaseDate': instance.releaseDate.toIso8601String(),
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,
   'version': instance.version,
   'size': instance.size,
+  'ageRating': instance.ageRating,
   'containsAds': instance.containsAds,
   'isEditorChoice': instance.isEditorChoice,
   'downloadCount': instance.downloadCount,
-  'releaseDate': instance.releaseDate.toIso8601String(),
   'lastUpdated': instance.lastUpdated.toIso8601String(),
   'permissions': instance.permissions,
   'screenshots': instance.screenshots,
+  'tags': instance.tags,
   'packageName': instance.packageName,
   'supportedLanguages': instance.supportedLanguages,
-  'ageRating': instance.ageRating,
   'containsPaidContent': instance.containsPaidContent,
   'privacyPolicyUrl': instance.privacyPolicyUrl,
   'websiteUrl': instance.websiteUrl,

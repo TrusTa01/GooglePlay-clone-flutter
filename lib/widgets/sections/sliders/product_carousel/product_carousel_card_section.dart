@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '/screens/details/product_detail_screen.dart';
-import '../../../../models/product_interface.dart';
+import '../../../../screens/product_screens/product_screen.dart';
+import '../../../../models/product_models/product_interface.dart';
 import '../../../widgets.dart';
 
 class ProductCarouselCard extends StatelessWidget {
-  const ProductCarouselCard({super.key, required this.product});
-
   final Product product;
+
+  const ProductCarouselCard({super.key, required this.product});
 
   bool get showPrice => product.isPaid && product.price != null;
 
@@ -24,9 +24,7 @@ class ProductCarouselCard extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => ProductDetailScreen(product: product),
-              ),
+              MaterialPageRoute(builder: (context) => ProductPageScreen()),
             );
           },
           onLongPress: () {},
@@ -34,29 +32,34 @@ class ProductCarouselCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               // Карточка
-              ProductCardIcon(
-                iconUrl: product.iconUrl, 
-                iconWidth: 115, 
-                iconHeight: 115, 
+              ProductCardThumbnail(
+                borderRadius: BorderRadius.circular(20),
+                iconUrl: product.iconUrl,
+                iconWidth: 115,
+                iconHeight: 115,
                 cacheWidth: 300,
                 cacheHeight: 300,
-                ),
+              ),
               const SizedBox(height: 6),
               SizedBox(
                 width: 115,
-                child: ProductTitle( // Название
-                      title: product.title,
-                      maxLines: 2,
-                      fontSize: 12,
-                    ),
-              ), 
+                child: ProductTitle(
+                  // Название
+                  title: product.title,
+                  maxLines: 2,
+                  fontSize: 12,
+                ),
+              ),
               const SizedBox(height: 4),
               // Рейтинг
               Align(
                 alignment: Alignment.centerLeft,
                 child: showPrice
-                    ? ProductPriceTag(price: formatter.price)
-                    : ProductRatingTag(rating: formatter.rating),
+                    ? ProductInfoTag(text: formatter.price)
+                    : ProductInfoTag(
+                        text: formatter.rating,
+                        iconPath: 'assets/icons/star.png',
+                      ),
               ),
             ],
           ),

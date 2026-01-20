@@ -22,22 +22,7 @@ class _MainLayoutState extends State<MainLayout> {
     GlobalKey<NavigatorState>(), // Search
     GlobalKey<NavigatorState>(), // Books
   ];
-
-  Widget _buildCurrentScreen() {
-    switch (_currentPageIndex) {
-      case 0:
-        return _navigatorKeys.createNavigator(0, const GamesScreen());
-      case 1:
-        return _navigatorKeys.createNavigator(1, const AppsScreen());
-      case 2:
-        return _navigatorKeys.createNavigator(2, const SearchScreen());
-      case 3:
-        return _navigatorKeys.createNavigator(3, const BooksScreen());
-      default:
-        return Container(); // На всякий случай
-    }
-  }
-
+  
   @override
   void initState() {
     super.initState();
@@ -71,24 +56,20 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-        padding: const EdgeInsets.only(bottom: 65), // Высота навбара, чтобы не он не перекрывал контент
-        child: _buildCurrentScreen(),
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentPageIndex,
+        children: [
+          _navigatorKeys.createNavigator(0, const GamesScreen()),
+          _navigatorKeys.createNavigator(1, const AppsScreen()),
+          _navigatorKeys.createNavigator(2, const SearchScreen()),
+          _navigatorKeys.createNavigator(3, const BooksScreen()),
+        ],
       ),
-
-        // CustomNavigationBar поверх всего
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: CustomNavigationBar(
-            currentPageIndex: _currentPageIndex,
-            onDestinationSelected: _handleTabSelection,
-          ),
-        ),
-      ],
+      bottomNavigationBar: CustomNavigationBar(
+        currentPageIndex: _currentPageIndex,
+        onDestinationSelected: _handleTabSelection,
+      ),
     );
   }
 }

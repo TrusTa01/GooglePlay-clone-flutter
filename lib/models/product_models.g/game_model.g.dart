@@ -13,9 +13,13 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   creator: json['creator'] as String,
   rating: (json['rating'] as num).toDouble(),
   iconUrl: json['iconUrl'] as String,
-  gameGenre: json['gameGenre'] as String,
-  screenshots: json['screenshots'] as String,
-  tags: json['tags'] as String,
+  gameGenre: (json['gameGenre'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  screenshots: (json['screenshots'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
   isOnline: json['isOnline'] as bool,
   hasMultiplayer: json['hasMultiplayer'] as bool,
   hasAchievements: json['hasAchievements'] as bool,
@@ -27,6 +31,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   containsPaidContent: json['containsPaidContent'] as bool,
   description: json['description'] as String,
   version: json['version'] as String,
+  eventText: json['eventText'] as String?,
   size: json['size'] as String,
   downloadCount: (json['downloadCount'] as num).toInt(),
   permissions: (json['permissions'] as List<dynamic>)
@@ -48,6 +53,7 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'creator': instance.creator,
   'description': instance.description,
   'rating': instance.rating,
+  'releaseDate': instance.releaseDate.toIso8601String(),
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,
@@ -55,9 +61,10 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'containsPaidContent': instance.containsPaidContent,
   'version': instance.version,
   'size': instance.size,
+  'eventText': instance.eventText,
   'downloadCount': instance.downloadCount,
+  'ageRating': instance.ageRating,
   'permissions': instance.permissions,
-  'releaseDate': instance.releaseDate.toIso8601String(),
   'lastUpdated': instance.lastUpdated.toIso8601String(),
   'gameGenre': instance.gameGenre,
   'screenshots': instance.screenshots,
@@ -68,7 +75,6 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'creatorDescription': instance.creatorDescription,
   'isOnline': instance.isOnline,
   'hasMultiplayer': instance.hasMultiplayer,
-  'ageRating': instance.ageRating,
   'hasAchievements': instance.hasAchievements,
   'gameModes': instance.gameModes,
   'hasControllerSupport': instance.hasControllerSupport,

@@ -47,10 +47,10 @@ class _GamesScreenState extends State<GamesScreen>
     final int currentIndex = _tabController.index;
 
     final watchProvider = context.watch<ProductsProvider>();
+    final readProvider = context.read<ProductsProvider>();
 
     final AppBarType appBarType = switch (currentIndex) {
-      0 || 1 || 3 || 4 => AppBarType.tabbed,
-      2 => AppBarType.searchWithTabbs,
+      0 || 1 || 2 || 3 || 4 => AppBarType.tabbed,
       _ => AppBarType.tabbed,
     };
 
@@ -81,19 +81,18 @@ class _GamesScreenState extends State<GamesScreen>
           showLogo: appBarType == AppBarType.tabbed ? true : false,
           actions: actionWidgets,
 
-          // Для AppBarType.searchWithTabbs
-          searchHint: appBarType == AppBarType.searchWithTabbs
-              ? 'Поиск приложений и игр'
-              : null,
+          // // Для AppBarType.searchWithTabbs
+          // searchHint: appBarType == AppBarType.searchWithTabbs
+          //     ? 'Поиск приложений и игр'
+          //     : null,
 
-          inputLeading: appBarType == AppBarType.searchWithTabbs
-              ? [const Icon(Icons.search)]
-              : null,
+          // inputLeading: appBarType == AppBarType.searchWithTabbs
+          //     ? [const Icon(Icons.search)]
+          //     : null,
 
-          inputActions: appBarType == AppBarType.searchWithTabbs
-              ? [const Icon(Icons.mic_none_outlined)]
-              : null,
-
+          // inputActions: appBarType == AppBarType.searchWithTabbs
+          //     ? [const Icon(Icons.mic_none_outlined)]
+          //     : null,
           tabs: _tabs,
           tabController: _tabController,
         ),
@@ -105,13 +104,17 @@ class _GamesScreenState extends State<GamesScreen>
           children: [
             // Таб 'Рекомендуем'
             GenericTabScreen(
-              sections: watchProvider.recommendedGamesSections,
-              onLoad: () => context.read<ProductsProvider>().getRecomendations(),
+              sections: watchProvider.recommendedGamesSection,
+              onLoad: () => readProvider.getRecomendations(),
             ),
-            SizedBox.shrink(),
-            SizedBox.shrink(),
-            SizedBox.shrink(),
-            SizedBox.shrink(),
+            // Таб 'Лучшее'
+            const TopChartsPage(type: FilterType.games),
+            // Таб 'Детям'
+            GenericTabScreen(sections: watchProvider.kidsPaidSection),
+            // Таб 'Платные'
+            GenericTabScreen(sections: watchProvider.paidGamesSection),
+            // Таб 'Категории'
+            CategoriesTabScreen(categories: gamesCategoriesData),
           ],
         ),
       ),

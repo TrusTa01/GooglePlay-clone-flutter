@@ -7,12 +7,12 @@ class AppBarLogo extends StatelessWidget {
   final double width;
   final double height;
 
-  const AppBarLogo({super.key, this.width = 32, this.height = 32});
+  const AppBarLogo({super.key, this.width = 25, this.height = 25});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 14),
       child: Image.asset(
         'assets/icons/logo.png',
         height: height,
@@ -32,7 +32,7 @@ class AppBarLogo extends StatelessWidget {
   }
 }
 
-// Заголовка
+// Заголовок
 class AppBarTitle extends StatelessWidget {
   final String? title;
   const AppBarTitle({super.key, this.title});
@@ -161,7 +161,7 @@ class AppBarDivider extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Color.fromARGB(31, 0, 0, 0), width: 1.5),
+          bottom: BorderSide(color: Color.fromARGB(31, 0, 0, 0), width: 1),
         ),
       ),
       child: child,

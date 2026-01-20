@@ -1,13 +1,11 @@
-import 'product_models/app_model.dart';
-import 'product_models/book_model.dart';
-import 'product_models/game_model.dart';
-
+import '../models.dart';
 abstract interface class Product {
   String get type;
   String get id;
   String get title;
   String get creator;
   String get description;
+  DateTime get releaseDate;
   double get rating;
   String get iconUrl;
   bool get isPaid;

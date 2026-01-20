@@ -23,6 +23,8 @@ dependencies:
   faker: ^2.2.0
   # fonts:
   google_fonts: ^6.3.3
+  photo_view: ^0.15.0
+  # firebase_core: ^4.3.0
 
 dev_dependencies:
   flutter_test:
@@ -39,13 +41,15 @@ flutter:
   # images
   - assets/images/
   - assets/images/games_screenshots/
-
-  ## banners
+  - assets/images/apps_screenshots/
+  - assets/images/kids_tab/
+  - assets/images/notifications/
   - assets/images/banners/
 
   # icons
   - assets/icons/
-  - assets/icons/logo.png
+  - assets/icons/apps_icons/
+  - assets/icons/books_icons/
   - assets/icons/nav_bar_icons/
   - assets/icons/games_icons/
 
