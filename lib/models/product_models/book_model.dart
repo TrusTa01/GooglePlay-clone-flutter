@@ -26,8 +26,6 @@ class Book implements Product {
   final bool isPaid; 
   @override
   final double? price;
-  @override 
-  final int ageRating;
   @override
   String get technicalInfo => '$pageCount';
 
@@ -76,7 +74,6 @@ class Book implements Product {
     required this.originalPrice,
     required this.awards,
     this.price, 
-    required this.ageRating, 
     required this.releaseDate,
   });
 

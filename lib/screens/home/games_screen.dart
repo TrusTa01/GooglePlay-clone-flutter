@@ -108,11 +108,11 @@ class _GamesScreenState extends State<GamesScreen>
               onLoad: () => readProvider.getRecomendations(),
             ),
             // Таб 'Лучшее'
-            const TopChartsPage(type: FilterType.games,),
+            const TopChartsPage(type: FilterType.games),
             // Таб 'Детям'
-            SizedBox.shrink(),
+            GenericTabScreen(sections: watchProvider.kidsPaidSection),
             // Таб 'Платные'
-            SizedBox.shrink(),
+            GenericTabScreen(sections: watchProvider.paidGamesSection),
             // Таб 'Категории'
             CategoriesTabScreen(categories: gamesCategoriesData),
           ],

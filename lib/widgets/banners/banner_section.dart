@@ -9,6 +9,7 @@ class BannerSection extends StatefulWidget {
   final BannerType type;
   final double heightFactor;
   final String title;
+  final String subtitle;
   final bool showButton;
 
   const BannerSection({
@@ -17,6 +18,7 @@ class BannerSection extends StatefulWidget {
     this.type = BannerType.simple,
     this.heightFactor = 3.5,
     required this.title,
+    this.subtitle = '',
     required this.showButton,
   });
 
@@ -73,6 +75,7 @@ class _BannerSectionState extends State<BannerSection> {
         if (widget.title.isNotEmpty)
           ProductSectionHeader(
             title: widget.title,
+            subtitle: widget.subtitle,
             onTap: () {},
             padding: const EdgeInsets.fromLTRB(22, 10, 22, 20),
             showButton: widget.showButton,

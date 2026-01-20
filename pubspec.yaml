@@ -41,13 +41,15 @@ flutter:
   # images
   - assets/images/
   - assets/images/games_screenshots/
-
-  ## banners
+  - assets/images/apps_screenshots/
+  - assets/images/kids_tab/
+  - assets/images/notifications/
   - assets/images/banners/
 
   # icons
   - assets/icons/
-  - assets/icons/logo.png
+  - assets/icons/apps_icons/
+  - assets/icons/books_icons/
   - assets/icons/nav_bar_icons/
   - assets/icons/games_icons/
 

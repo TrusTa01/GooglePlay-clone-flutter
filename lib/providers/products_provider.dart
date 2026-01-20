@@ -24,10 +24,18 @@ class ProductsProvider extends ChangeNotifier {
   final String _selectedRatingFilter = 'По рейтингу';
   final String _selectedLanguageFilter = 'Язык';
   final String _selectedAbridgetVersionFilter = 'Сокращенное издание';
+  final List<String> _selectedKidsFilters = [
+    'До 5 лет',
+    'От 6 до 8 лет',
+    'От 9 до 12 лет',
+  ];
   bool _isRecentFilterActive = false;
 
   // Вкладки игр
   List<HomeSection> _recommendedGamesSection = [];
+  List<HomeSection> _paidGamesSection = [];
+
+  List<HomeSection> _kidsPaidSection = [];
 
   // Вкладки приложений
   List<Product> get allProducts => _allProducts;
@@ -46,10 +54,14 @@ class ProductsProvider extends ChangeNotifier {
   String get selectedRatingFilter => _selectedRatingFilter;
   String get selectedLanguageFilter => _selectedLanguageFilter;
   String get selectedAbridgetVersionFilter => _selectedAbridgetVersionFilter;
+  List<String> get selectedKidsFilters => _selectedKidsFilters;
 
   bool get isRecentFilterActive => _isRecentFilterActive;
 
   List<HomeSection> get recommendedGamesSection => _recommendedGamesSection;
+  List<HomeSection> get paidGamesSection => _paidGamesSection;
+
+  List<HomeSection> get kidsPaidSection => _kidsPaidSection;
 
   Future<void> loadAllProducts() async {
     if (_allProducts.isNotEmpty) return;
@@ -115,7 +127,9 @@ class ProductsProvider extends ChangeNotifier {
 
     // Секции для вкладки игр
     _recommendedGamesSection = builder.buildGamesRecommendedPage();
+    _paidGamesSection = builder.buildGamesPaidPage();
 
+    _kidsPaidSection = builder.buildKidsPage();
     // Секции для вкладки приложений
   }
 
@@ -251,10 +265,10 @@ class ProductsProvider extends ChangeNotifier {
           return p is Game;
         case FilterType.apps:
           return p is App;
-        case FilterType.booksTop:
-        case FilterType.booksNovelty:
-        case FilterType.booksTopFree:
+        case FilterType.books:
           return p is Book;
+        case FilterType.kidsAge:
+          return p is Game || p is App;
       }
     }).toList();
 
@@ -283,9 +297,7 @@ class ProductsProvider extends ChangeNotifier {
         if (p is App) return p.type == currentCategory;
         if (p is Book) return p.genres.contains(currentCategory);
         if (result.isEmpty) {
-          debugPrint(
-            'Категория "$currentCategory" пуста',
-          );
+          debugPrint('Категория "$currentCategory" пуста');
         }
         return false;
       }).toList();
@@ -298,5 +310,79 @@ class ProductsProvider extends ChangeNotifier {
     }
 
     return result;
+  }
+
+  // Универсальный метод фильтрации по любому признаку (тег, жанр, название)
+  List<Product> getProductsByTag(String query) {
+    final q = query.toLowerCase();
+    return _allProducts.where((p) {
+      // Базовая проверка названия
+      if (p.title.toLowerCase().contains(q)) return true;
+
+      // Если это игра, проверяем жанры и теги
+      if (p is Game) {
+        final inGenres = p.gameGenre.any((g) => g.toLowerCase().contains(q));
+        final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
+        return inGenres || inTags;
+      }
+      return false;
+    }).toList();
+  }
+
+  // Получение игр по возрастному рейтингу (для Kids Tab)
+  List<Product> getGamesByAge(int maxAge) {
+    return _allProducts.whereType<Game>().where((g) => g.ageRating <= maxAge).toList();
+  }
+
+  // Получение платных игр конкретного жанра
+  List<Product> getPaidGamesByGenre(String genre) {
+    return _allProducts.whereType<Game>().where((g) {
+      return g.isPaid && g.gameGenre.contains(genre);
+    }).toList();
+  }
+  
+  // Получение игр, которые работают без интернета
+  List<Product> getOfflineGames() {
+    return _allProducts.whereType<Game>().where((g) => !g.isOnline).toList();
+  }
+
+  List<Product> getKidsAgeFilteredProducts(int minAge, int maxAge) {
+    return _allProducts.where((p) {
+      if (p is Game) {
+        return p.ageRating >= minAge && p.ageRating <= maxAge;
+      } else if (p is App) {
+        return p.ageRating >= minAge && p.ageRating <= maxAge;
+      }
+      return false; // Игнорировать другие типы продуктов
+    }).toList();
+  }
+
+
+  Map<String, int> getAgeRangeFromLabel(String ageLabel) {
+    int minAge = 0;
+    int maxAge = 999;
+
+    switch (ageLabel) {
+      case 'До 5 лет':
+        minAge = 0;
+        maxAge = 5;
+        break;
+      case 'От 6 до 8 лет':
+        minAge = 6;
+        maxAge = 8;
+        break;
+      case 'От 9 до 12 лет':
+        minAge = 9;
+        maxAge = 12;
+        break;
+      case '13+ лет':
+        minAge = 13;
+        maxAge = 999;
+        break;
+      default:
+        minAge = 0;
+        maxAge = 999;
+    }
+    return {'minAge': minAge, 'maxAge': maxAge};
   }
 }

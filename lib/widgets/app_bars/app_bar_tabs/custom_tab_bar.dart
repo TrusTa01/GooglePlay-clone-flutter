@@ -25,7 +25,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
         controller: widget.controller,
         isScrollable: true,
         tabAlignment: TabAlignment.start,
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 6),
 
         // Настройка анимации полоски (индикатора)
         indicatorSize: TabBarIndicatorSize.label, // По ширине текста

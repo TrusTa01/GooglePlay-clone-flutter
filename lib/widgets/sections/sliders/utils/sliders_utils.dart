@@ -19,6 +19,7 @@ class ProductDataFormatter {
 
 class ProductSectionHeader extends StatelessWidget {
   final String title;
+  final String subtitle;
   final VoidCallback onTap;
   final EdgeInsets padding;
   final bool showButton;
@@ -26,38 +27,55 @@ class ProductSectionHeader extends StatelessWidget {
   const ProductSectionHeader({
     super.key,
     required this.title,
+    this.subtitle = '',
     required this.onTap,
     required this.padding,
     this.showButton = true,
   });
+
+  bool get _hasSubtitle => subtitle.trim().isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: padding,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Flexible(
-            child: Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: Constants.defaultFontWeight,
-              ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: Constants.defaultFontWeight,
+                  ),
+                ),
+                if (_hasSubtitle)
+                  Text(
+                    subtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black.withValues(alpha: 0.6),
+                    ),
+                  ),
+              ],
             ),
           ),
 
-          // Если showButton == true, рисуем кнопку, иначе — ничего
           if (showButton)
             Material(
               color: Constants.ratingBackgroungColor,
               borderRadius: BorderRadius.circular(23),
               clipBehavior: Clip.antiAlias,
               child: InkWell(
-                onTap: () {},
+                onTap: onTap,
                 child: Container(
                   width: 30,
                   height: 34,
@@ -232,7 +250,7 @@ class DotSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Padding(
     padding: EdgeInsets.symmetric(horizontal: 4),
-    child: Text('•', style: TextStyle(fontSize: 10,)),
+    child: Text('•', style: TextStyle(fontSize: 10)),
   );
 }
 
@@ -438,7 +456,11 @@ class ActionRow extends StatelessWidget {
                         if (currentProduct is Game || currentProduct is App)
                           if (currentProduct.eventText != null &&
                               !currentProduct.isPaid)
-                            Flexible(child: ProductInfoTag(text: currentProduct.eventText!)),
+                            Flexible(
+                              child: ProductInfoTag(
+                                text: currentProduct.eventText!,
+                              ),
+                            ),
 
                         // 4. Цена (только если платная)
                         if (currentProduct.isPaid)

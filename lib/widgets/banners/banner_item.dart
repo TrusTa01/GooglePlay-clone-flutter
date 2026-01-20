@@ -45,7 +45,7 @@ class BannerItem extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               if (isAction)
-                ActionRow(banner: banner as ActionBanner, showButton: true,),
+                ActionRow(banner: banner as ActionBanner, showButton: true),
             ],
           ),
         ),
@@ -53,5 +53,3 @@ class BannerItem extends StatelessWidget {
     );
   }
 }
-
-

@@ -26,8 +26,6 @@ class Game implements Product {
   final bool isPaid;
   @override
   final double? price;
-  @override 
-  final int ageRating;
   @override
   String get technicalInfo => size;
   
@@ -37,6 +35,7 @@ class Game implements Product {
   final String size; // "15.3 MB"
   final String? eventText;
   final int downloadCount;
+  final int ageRating;
   final List<String> permissions;
   final DateTime lastUpdated; // Последнее обновление
   final List<String> gameGenre; // "РПГ", "Стратегия", "Пазлы"

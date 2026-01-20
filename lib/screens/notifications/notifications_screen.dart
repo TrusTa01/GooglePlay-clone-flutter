@@ -18,7 +18,7 @@ class NotificationsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/verify.png', width: 100, height: 100),
+            Image.asset('assets/images/notifications/verify.png', width: 100, height: 100),
             const SizedBox(height: 10),
             Text(
               'Ничего нет',

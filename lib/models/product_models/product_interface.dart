@@ -8,7 +8,6 @@ abstract interface class Product {
   DateTime get releaseDate;
   double get rating;
   String get iconUrl;
-  int get ageRating;
   bool get isPaid;
   double? get price;
   String get technicalInfo {

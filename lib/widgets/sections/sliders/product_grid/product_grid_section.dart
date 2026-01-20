@@ -5,9 +5,15 @@ import '../../../../models/models.dart';
 
 class ProductGrid extends StatelessWidget {
   final String title;
+  final String subtitle;
   final List<Product> products;
 
-  const ProductGrid({super.key, required this.title, required this.products});
+  const ProductGrid({
+    super.key,
+    required this.title,
+    this.subtitle = '',
+    required this.products,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +28,7 @@ class ProductGrid extends StatelessWidget {
         // Заголовок и кнопка больше
         ProductSectionHeader(
           title: title,
+          subtitle: subtitle,
           padding: EdgeInsets.fromLTRB(22, 0, 22, 10),
           onTap: () {},
           showButton: true,

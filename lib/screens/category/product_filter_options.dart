@@ -1,1 +1,0 @@
-enum ProductFilterOptions {topFree, categories, recent}

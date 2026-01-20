@@ -23,8 +23,6 @@ class App implements Product {
   @override
   final String iconUrl;
   @override
-  final int ageRating;
-  @override
   final bool isPaid;
   @override
   final double? price;
@@ -33,6 +31,7 @@ class App implements Product {
 
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
+  final int ageRating;
   final bool containsAds; // true/false
   final bool isEditorChoice; // Выбор редакции
   final int downloadCount; // 1_000_000

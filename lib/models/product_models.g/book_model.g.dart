@@ -34,7 +34,6 @@ Book _$BookFromJson(Map<String, dynamic> json) => Book(
   originalPrice: (json['originalPrice'] as num?)?.toDouble(),
   awards: (json['awards'] as List<dynamic>).map((e) => e as String).toList(),
   price: (json['price'] as num?)?.toDouble(),
-  ageRating: (json['ageRating'] as num).toInt(),
   releaseDate: DateTime.parse(json['releaseDate'] as String),
 );
 
@@ -49,7 +48,6 @@ Map<String, dynamic> _$BookToJson(Book instance) => <String, dynamic>{
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,
-  'ageRating': instance.ageRating,
   'publisher': instance.publisher,
   'isbn': instance.isbn,
   'pageCount': instance.pageCount,

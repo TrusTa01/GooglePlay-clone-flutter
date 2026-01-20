@@ -5,11 +5,13 @@ import '../../../widgets.dart';
 
 class ProductCarousel extends StatelessWidget {
   final String title;
+  final String subtitle;
   final List<Product> products;
 
   const ProductCarousel({
     super.key,
     required this.title,
+    this.subtitle = '',
     required this.products,
   });
   
@@ -29,6 +31,7 @@ class ProductCarousel extends StatelessWidget {
         // Заголовок и кнопка больше
         ProductSectionHeader(
           title: title,
+          subtitle: subtitle,
           padding: EdgeInsets.fromLTRB(22, 10, 22, 20),
           onTap: () {},
           showButton: true,

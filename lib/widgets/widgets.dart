@@ -58,3 +58,4 @@ export 'filters/components/recent_filter.dart';
 export 'filters/custom_filter_chip.dart';
 export 'filters/selection_modal.dart';
 export 'filters/filter_factory.dart';
+export 'filters/components/kids_age_filter.dart';

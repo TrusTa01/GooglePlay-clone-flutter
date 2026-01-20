@@ -174,6 +174,8 @@ void main() async {
     'Спортивные',
     'Стратегии',
     'Экшен',
+    'Файтинг',
+    'Образование',
   ];
 
   final gameTags = [
@@ -215,6 +217,26 @@ void main() async {
     'Расслабляющая',
     'Процедурная генерация',
     'Кроссплатформенность',
+    'Математика',
+    'Рисование',
+    'Алфавит',
+    'Буквы',
+    'Цифры',
+    'Языки',
+    'Здоровье',
+    'Логика',
+    'Творчество',
+    'Сказки',
+    'Мультфильмы',
+    'Для всей семьи',
+    'Реалистичная',
+    'Стилизованная',
+    'Абстрактная',
+    'Минимализм',
+    'Постапокалипсис',
+    'Киберспорт',
+    'Офлайн',
+    'Низкие цены',
   ];
 
   final icons = [
@@ -312,28 +334,29 @@ void main() async {
 
     final String generatedTitle = '$adj $noun $randomSuffix';
 
-  // Логика ивентов
-  String? generateEventText(Random random) {
-  // Шанс 10% (0, 1, 2... 9 из 100)
-  if (random.nextInt(100) >= 10) return null;
+    // Логика ивентов
+    String? generateEventText(Random random) {
+      // Шанс 10% (0, 1, 2... 9 из 100)
+      if (random.nextInt(100) >= 10) return null;
 
-  final variations = [
-    'Крупное обновление',
-    'Событие',
-    'Распродажа',
-    'Одобрено преподавателями',
-    'Скоро выйдет',
-    'Закончится через ${random.nextInt(9) + 1} дня',
-    'Завершится ${random.nextInt(28) + 1}.02.2026',
-    'Специальное предложение',
-  ];
+      final variations = [
+        'Крупное обновление',
+        'Событие',
+        'Распродажа',
+        'Одобрено преподавателями',
+        'Скоро выйдет',
+        'Закончится через ${random.nextInt(9) + 1} дня',
+        'Завершится ${random.nextInt(28) + 1}.02.2026',
+        'Специальное предложение',
+      ];
 
-  return variations[random.nextInt(variations.length)];
-}
+      return variations[random.nextInt(variations.length)];
+    }
 
     // Логика жанров (от 1 до 3)
     int genreCount = faker.randomGenerator.integer(4, min: 1);
-    List<String> selectedGenres = (genres.where((g) => g != 'Все категории').toList()..shuffle())
+    List<String> selectedGenres =
+        (genres.where((g) => g != 'Все категории').toList()..shuffle())
             .take(genreCount)
             .toList();
 
@@ -400,9 +423,9 @@ void main() async {
 
     // Теги (от 3 до 7)
     final int tagCount = random.nextInt(5) + 3;
-    final List<String> selectedTags = (List<String>.from(gameTags)..shuffle())
-            .take(tagCount)
-            .toList();
+    final List<String> selectedTags = (List<String>.from(
+      gameTags,
+    )..shuffle()).take(tagCount).toList();
 
     final gameData = {
       "type": "game",
