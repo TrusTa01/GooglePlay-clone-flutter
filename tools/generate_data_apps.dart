@@ -380,6 +380,21 @@ void main() async {
     // isEditorChoice (5% шанс)
     final bool isEditorChoice = faker.randomGenerator.integer(100) < 5;
 
+    // eventText (10% шанс)
+    String? generateEventText(Random random) {
+      if (random.nextInt(100) >= 10) return null;
+
+      final variations = [
+        'Новая версия',
+        'Обновление',
+        'Специальное предложение',
+        'Скидка',
+        'Выбор редакции',
+      ];
+
+      return variations[random.nextInt(variations.length)];
+    }
+
     final appData = {
       "type": "app",
       "id": id,
@@ -403,6 +418,8 @@ void main() async {
       "websiteUrl": faker.internet.httpsUrl(),
       "emailSupport": faker.internet.email(),
       "privacyPolicyUrl": faker.internet.httpsUrl(),
+      "creatorDescription": faker.lorem.sentences(2).join(' '),
+      "eventText": generateEventText(random),
       "ageRating": faker.randomGenerator.element(ageRatings),
       "screenshots": selectedScreenshots,
       "tags": selectedTags,

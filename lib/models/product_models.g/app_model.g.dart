@@ -37,6 +37,8 @@ App _$AppFromJson(Map<String, dynamic> json) => App(
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
   websiteUrl: json['websiteUrl'] as String,
   emailSupport: json['emailSupport'] as String,
+  creatorDescription: json['creatorDescription'] as String,
+  eventText: json['eventText'] as String?,
   price: (json['price'] as num?)?.toDouble(),
   containsPaidContent: json['containsPaidContent'] as bool,
 );
@@ -55,6 +57,8 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
   'version': instance.version,
   'size': instance.size,
   'ageRating': instance.ageRating,
+  'creatorDescription': instance.creatorDescription,
+  'eventText': instance.eventText,
   'containsAds': instance.containsAds,
   'isEditorChoice': instance.isEditorChoice,
   'downloadCount': instance.downloadCount,

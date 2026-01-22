@@ -32,6 +32,8 @@ class App implements Product {
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
   final int ageRating;
+   final String creatorDescription;
+  final String? eventText;
   final bool containsAds; // true/false
   final bool isEditorChoice; // Выбор редакции
   final int downloadCount; // 1_000_000
@@ -71,6 +73,8 @@ class App implements Product {
     required this.privacyPolicyUrl,
     required this.websiteUrl,
     required this.emailSupport,
+    required this.creatorDescription,
+    this.eventText,
     this.price,
     required this.containsPaidContent,
   });

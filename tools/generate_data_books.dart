@@ -393,18 +393,10 @@ void main() async {
     // Логика цены (60% шанс, что isPaid будет true)
     final bool isPaid = faker.randomGenerator.integer(100) < 60;
     double? price;
-    double? originalPrice;
-    final bool isOnSale = faker.randomGenerator.integer(100) < 15;
 
     if (isPaid) {
       final int wholeAmount = faker.randomGenerator.integer(800, min: 100);
       price = wholeAmount.toDouble();
-      
-      if (isOnSale) {
-        // Оригинальная цена на 20-50% выше
-        final double multiplier = 1.2 + (random.nextDouble() * 0.3);
-        originalPrice = (price * multiplier).roundToDouble();
-      }
     }
 
     // Логика иконок
@@ -448,15 +440,20 @@ void main() async {
     // Издательство
     final String publisher = faker.randomGenerator.element(publishers);
 
+    // Формат книги
+    final List<String> formats = ['ePub', 'PDF', 'Audiobook'];
+    final String format = faker.randomGenerator.element(formats);
+
     // Аудиоверсия (30% шанс)
     final bool hasAudioVersion = faker.randomGenerator.integer(100) < 30;
-    Duration? audioDuration;
-    String narrator = faker.randomGenerator.element(narrators);
+    int? audioDuration;
+    String? narrator;
 
     if (hasAudioVersion) {
       final int hours = random.nextInt(18) + 3; // От 3 до 20 часов
       final int minutes = random.nextInt(60);
-      audioDuration = Duration(hours: hours, minutes: minutes);
+      audioDuration = Duration(hours: hours, minutes: minutes).inSeconds;
+      narrator = faker.randomGenerator.element(narrators);
     }
 
     // Серия (20% шанс)
@@ -493,17 +490,17 @@ void main() async {
       "isbn": isbn,
       "pageCount": pageCount,
       "language": language,
+      "format": format,
       "publicationDate": publicationDate.toIso8601String(),
       "genres": selectedGenres,
+      "tags": selectedTags,
       "hasAudioVersion": hasAudioVersion,
-      "audioDuration": audioDuration?.inSeconds,
+      "audioDuration": audioDuration,
       "narrator": narrator,
       "isSeries": isSeries,
       "seriesName": seriesName,
       "seriesNumber": seriesNumber,
       "sampleAvailable": faker.randomGenerator.boolean(),
-      "isOnSale": isOnSale,
-      "originalPrice": originalPrice,
       "awards": bookAwards,
     };
 
