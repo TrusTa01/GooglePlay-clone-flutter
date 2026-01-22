@@ -92,6 +92,12 @@ class SectionBuilderService {
       case 'getRecommendations':
         return recommendations;
 
+      case 'getGameRecommendations':
+        return queryService.getGameRecommendations(recommendations);
+
+      case 'getAppRecommendations':
+        return queryService.getAppRecommendations(recommendations);
+
       case 'getGamesByCategory':
         return queryService.getGamesByCategory(
           allProducts,
@@ -100,6 +106,12 @@ class SectionBuilderService {
 
       case 'getRecommendationsReversed':
         return recommendations.reversed.toList();
+
+      case 'getGameRecommendationsReversed':
+        return queryService.getGameRecommendationsReversed(recommendations);
+
+      case 'getAppRecommendationsReversed':
+        return queryService.getAppRecommendationsReversed(recommendations);
 
       case 'getPaidGamesByGenre':
         return queryService.getPaidGamesByGenre(
@@ -182,6 +194,13 @@ class SectionBuilderService {
   // Построить страницу рекомендуемых приложений
   List<HomeSection> buildAppsRecommendedPage() {
     final pageConfig = getPageConfig('appsRecommended');
+    if (pageConfig == null) return [];
+    return buildFromConfig(pageConfig);
+  }
+
+  // Построить страницу рекомендуемых книг
+  List<HomeSection> buildBooksRecommendedPage() {
+    final pageConfig = getPageConfig('booksRecommended');
     if (pageConfig == null) return [];
     return buildFromConfig(pageConfig);
   }

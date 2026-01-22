@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/models/product_models/book_model.dart';
 import '../../../../screens/product_screens/product_screen.dart';
 import '../../../../models/product_models/product_interface.dart';
 import '../../../widgets.dart';
@@ -35,10 +36,11 @@ class ProductCarouselCard extends StatelessWidget {
               ProductCardThumbnail(
                 borderRadius: BorderRadius.circular(20),
                 iconUrl: product.iconUrl,
-                iconWidth: 115,
-                iconHeight: 115,
+                iconWidth: product is Book ? 110 : 115,
+                iconHeight: product is Book ? 165 : 115,
                 cacheWidth: 300,
-                cacheHeight: 300,
+                cacheHeight: 350,
+                fit: product is Book ? BoxFit.fill : BoxFit.cover,
               ),
               const SizedBox(height: 6),
               SizedBox(

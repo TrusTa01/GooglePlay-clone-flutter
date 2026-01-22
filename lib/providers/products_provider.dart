@@ -22,6 +22,7 @@ class ProductsProvider extends ChangeNotifier {
   List<HomeSection> _paidGamesSection = [];
   List<HomeSection> _kidsPaidSection = [];
   List<HomeSection> _recommendedAppsSection = [];
+  List<HomeSection> _recommendedBooksSection = [];
 
   // Геттеры
   List<Product> get allProducts => _allProducts;
@@ -34,6 +35,7 @@ class ProductsProvider extends ChangeNotifier {
   List<HomeSection> get paidGamesSection => _paidGamesSection;
   List<HomeSection> get kidsPaidSection => _kidsPaidSection;
   List<HomeSection> get recommendedAppsSection => _recommendedAppsSection;
+  List<HomeSection> get recommendedBooksSection => _recommendedBooksSection;
 
   PageConfig? getPageConfig(String id) {
     try {
@@ -127,6 +129,9 @@ class ProductsProvider extends ChangeNotifier {
     _kidsPaidSection = _sectionBuilder!.buildKidsPage();
     // Секции для вкладки приложений
     _recommendedAppsSection = _sectionBuilder!.buildAppsRecommendedPage();
+
+    // Секции для вкладки книг
+    _recommendedBooksSection = _sectionBuilder!.buildBooksRecommendedPage();
   }
 
   // Логика рекомендаций, берем 7 самых высоко оцененных продуктов

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../models/product_models/book_model.dart';
 import '../../../../models/product_models/product_interface.dart';
 import '../../../widgets.dart';
 
@@ -7,18 +8,20 @@ class ProductCarousel extends StatelessWidget {
   final String title;
   final String subtitle;
   final List<Product> products;
+  final bool isBookCarousel;
 
   const ProductCarousel({
     super.key,
     required this.title,
     this.subtitle = '',
     required this.products,
+    this.isBookCarousel = false,
   });
   
   @override
   Widget build(BuildContext context) {
     // Размер слайдера 
-    const double sliderHeight = 180;
+    final double sliderHeight = products.first is Book ? 400 : 180;
 
     if (products.isEmpty) {
       debugPrint('Ошибка: products.isEmpty (product carousel)');

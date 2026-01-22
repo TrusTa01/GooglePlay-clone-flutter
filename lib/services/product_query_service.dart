@@ -5,7 +5,7 @@ import '../widgets/filters/filter_factory.dart';
 // Сервис для запросов и фильтрации продуктов.
 // Все методы - чистые функции без состояния.
 class ProductQueryService {
-  
+
   // -------------------------Поиск-----------------------
   // Поиск игр и приложений по запросу
   List<Product> searchGamesAndApps(List<Product> allProducts, String query) {
@@ -184,6 +184,28 @@ class ProductQueryService {
     int age,
   ) {
     return recommendations.whereType<Game>().where((g) => g.ageRating <= age).toList();
+  }
+
+  // -------------------------Фильтрация рекомендаций по типу-----------------------
+
+  // Получить только игры из рекомендаций
+  List<Product> getGameRecommendations(List<Product> recommendations) {
+    return recommendations.whereType<Game>().toList();
+  }
+
+  // Получить только приложения из рекомендаций
+  List<Product> getAppRecommendations(List<Product> recommendations) {
+    return recommendations.whereType<App>().toList();
+  }
+
+  // Получить реверсированные рекомендации игр
+  List<Product> getGameRecommendationsReversed(List<Product> recommendations) {
+    return recommendations.whereType<Game>().toList().reversed.toList();
+  }
+
+  // Получить реверсированные рекомендации приложений
+  List<Product> getAppRecommendationsReversed(List<Product> recommendations) {
+    return recommendations.whereType<App>().toList().reversed.toList();
   }
 
   /// Получить рекомендации для детей с фильтрацией по возрастному диапазону

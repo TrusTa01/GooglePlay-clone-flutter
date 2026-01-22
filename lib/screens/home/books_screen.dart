@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:google_play/widgets/widgets.dart';
-import '../../providers/tabs_provider.dart';
+import '/screens/screens.dart';
+import '../../widgets/widgets.dart';
+import '../../providers/providers.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({super.key});
@@ -14,22 +15,37 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
-  final List<String> _tabs = ['Рекомендуем', 'Лучшее', 'Новинки', 'Жанры', 'Топ бесплатных'];
+  final List<String> _tabs = [
+    'Рекомендуем',
+    'Топ продаж',
+    'Новинки',
+    'Жанры',
+    'Топ бесплатных',
+  ];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController.addListener(_handleTabChange);
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     super.dispose();
   }
 
+  void _handleTabChange() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    final watchProvider = context.watch<ProductsProvider>();
+    final readProvider = context.read<ProductsProvider>();
+
     return ChangeNotifierProvider(
       create: (context) {
         final tabsProvider = TabsProvider();
@@ -53,18 +69,24 @@ class _BooksScreenState extends State<BooksScreen>
         ),
         body: TabBarView(
           controller: _tabController,
+          physics: const NeverScrollableScrollPhysics(),
           children: [
-            _buildTabContent(''),
-            _buildTabContent(''),
-            _buildTabContent(''),
-            _buildTabContent(''),
-            _buildTabContent(''),
+            // Таб 'Рекомендуем'
+            GenericTabScreen(
+              sections: watchProvider.recommendedBooksSection,
+              onLoad: () => readProvider.getRecomendations(),
+            ),
+            // Таб 'Топ продаж'
+            const TopChartsPage(type: FilterType.books),
+            // Таб 'Новинки'
+            const TopChartsPage(type: FilterType.books),
+            // Таб 'Жанры'
+            CategoriesTabScreen(categories: booksGenresData),
+            // Таб 'Топ бесплатных'
+            const TopChartsPage(type: FilterType.books),
           ],
         ),
       ),
     );
-  }
-   Widget _buildTabContent(String text) {
-    return Center(child: Text(text, style: const TextStyle(fontSize: 24)));
   }
 }

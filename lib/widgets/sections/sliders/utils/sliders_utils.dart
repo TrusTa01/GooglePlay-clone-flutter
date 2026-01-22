@@ -99,6 +99,7 @@ class ProductCardThumbnail extends StatelessWidget {
   final double iconHeight;
   final int cacheWidth;
   final int cacheHeight;
+  final BoxFit fit;
 
   const ProductCardThumbnail({
     super.key,
@@ -108,6 +109,7 @@ class ProductCardThumbnail extends StatelessWidget {
     required this.iconHeight,
     required this.cacheWidth,
     required this.cacheHeight,
+    this.fit = BoxFit.cover,
   });
 
   @override
@@ -136,7 +138,7 @@ class ProductCardThumbnail extends StatelessWidget {
           height: iconHeight,
           cacheWidth: cacheWidth,
           cacheHeight: cacheHeight,
-          fit: BoxFit.cover,
+          fit: fit,
 
           // Пока грузится - шимер
           frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
