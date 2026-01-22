@@ -21,7 +21,7 @@ class KidsAgeFilter extends StatelessWidget {
       allProducts: productsProvider.allProducts,
       allBanners: productsProvider.allBanners,
       recommendations: productsProvider.recommendations,
-      pageConfigs: [],
+      pageConfigs: productsProvider.pageConfigs,
       queryService: ProductQueryService(),
     );
     

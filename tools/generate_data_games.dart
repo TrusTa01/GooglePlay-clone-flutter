@@ -217,6 +217,18 @@ void main() async {
     'Расслабляющая',
     'Процедурная генерация',
     'Кроссплатформенность',
+    'Реалистичная',
+    'Стилизованная',
+    'Абстрактная',
+    'Минимализм',
+    'Постапокалипсис',
+    'Киберспорт',
+    'Офлайн',
+    'Низкие цены',
+  ];
+
+  // Теги для детских игр
+  final kidsTags = [
     'Математика',
     'Рисование',
     'Алфавит',
@@ -229,14 +241,6 @@ void main() async {
     'Сказки',
     'Мультфильмы',
     'Для всей семьи',
-    'Реалистичная',
-    'Стилизованная',
-    'Абстрактная',
-    'Минимализм',
-    'Постапокалипсис',
-    'Киберспорт',
-    'Офлайн',
-    'Низкие цены',
   ];
 
   final icons = [
@@ -311,7 +315,7 @@ void main() async {
     'assets/images/games_screenshots/game_screenshot_vert5.webp',
   ];
 
-  final List<int> ageRatings = [3, 7, 12, 16, 18];
+  final List<int> ageRatings = [3, 5, 6, 8, 9, 12, 16, 18];
 
   final modes = ['Single-player', 'Multiplayer', 'Co-op'];
 
@@ -423,9 +427,26 @@ void main() async {
 
     // Теги (от 3 до 7)
     final int tagCount = random.nextInt(5) + 3;
-    final List<String> selectedTags = (List<String>.from(
-      gameTags,
-    )..shuffle()).take(tagCount).toList();
+    List<String> selectedTags;
+    
+    // Для детских игр (возраст 3 или 7, или жанр "Обучающие") добавляем детские теги
+    final int ageRating = faker.randomGenerator.element(ageRatings);
+    final bool isKidsGame = ageRating <= 7 || selectedGenres.contains('Обучающие');
+    
+    if (isKidsGame) {
+      // Для детских игр берем 2-3 детских тега и 2-4 обычных
+      final int kidsTagCount = random.nextInt(1) + 2; // 1-2
+      final int regularTagCount = random.nextInt(2) + 2; // 2-3
+      
+      selectedTags = [
+        ...(List<String>.from(kidsTags)..shuffle()).take(kidsTagCount),
+        ...(List<String>.from(gameTags)..shuffle()).take(regularTagCount),
+      ];
+    } else {
+      selectedTags = (List<String>.from(
+        gameTags,
+      )..shuffle()).take(tagCount).toList();
+    }
 
     final gameData = {
       "type": "game",
@@ -452,7 +473,7 @@ void main() async {
       "emailSupport": faker.internet.email(),
       "privacyPolicyUrl": faker.internet.httpsUrl(),
       "creatorDescription": faker.lorem.sentences(2).join(' '),
-      "ageRating": faker.randomGenerator.element(ageRatings),
+      "ageRating": ageRating,
       "gameGenre": selectedGenres,
       "screenshots": selectedScreenshots,
       "tags": selectedTags,

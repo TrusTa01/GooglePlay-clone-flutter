@@ -30,7 +30,7 @@ class FilterBar extends StatelessWidget {
             showButton: false,
           ),
         Align(
-          alignment: AlignmentGeometry.centerLeft,
+          alignment: Alignment.centerLeft,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(

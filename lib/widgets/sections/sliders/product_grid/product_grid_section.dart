@@ -7,12 +7,14 @@ class ProductGrid extends StatelessWidget {
   final String title;
   final String subtitle;
   final List<Product> products;
+  final int? maxItems;
 
   const ProductGrid({
     super.key,
     required this.title,
     this.subtitle = '',
     required this.products,
+    this.maxItems,
   });
 
   @override
@@ -21,6 +23,11 @@ class ProductGrid extends StatelessWidget {
       debugPrint('Ошибка: products.isEmpty (product grid carousel)');
       return const SizedBox.shrink();
     }
+
+    // Ограничиваем количество продуктов, если задан maxItems
+    final displayProducts = maxItems != null && maxItems! < products.length
+        ? products.sublist(0, maxItems!)
+        : products;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,28 +45,25 @@ class ProductGrid extends StatelessWidget {
         SizedBox(
           height: 240,
           child: PageView.builder(
+            clipBehavior: Clip.none,
             key: PageStorageKey('grid_$title'),
             controller: PageController(viewportFraction: 0.9),
-            padEnds: false,
-            itemCount: (products.length / 3).ceil(),
+
+            itemCount: (displayProducts.length / 3).ceil(),
             itemBuilder: (context, pageIndex) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 22),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(3, (index) {
-                    final productIndex = pageIndex * 3 + index;
-                    if (productIndex >= products.length) {
-                      return const SizedBox(height: 80);
-                    }
-                    // Оборачиваем в Expanded, чтобы каждая карточка занимала ровно 1/3 высоты
-                    return Expanded(
-                      child: productIndex < products.length
-                          ? ProductGridCard(product: products[productIndex])
-                          : const SizedBox.shrink(),
-                    );
-                  }),
-                ),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: List.generate(3, (index) {
+                  final productIndex = pageIndex * 3 + index;
+                  // Оборачиваем в Expanded, чтобы каждая карточка занимала ровно 1/3 высоты
+                  return Expanded(
+                    child: productIndex < displayProducts.length
+                        ? ProductGridCard(
+                            product: displayProducts[productIndex],
+                          )
+                        : const SizedBox.shrink(),
+                  );
+                }),
               );
             },
           ),

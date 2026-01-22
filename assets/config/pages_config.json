@@ -113,8 +113,8 @@
       {
         "type": "carousel",
         "title": "Новинки и обновления",
-        "dataMethod": "getKidsAgeRecommendations",
-        "dataParams": {"age": 3}
+        "dataMethod": "getKidsAgeRecommendationsByAgeRange",
+        "dataParams": {"ageLabel": "$AGE_LABEL$"}
       },
       {
         "type": "carousel",
@@ -190,7 +190,8 @@
       {
         "type": "carousel",
         "title": "Рекомендуем",
-        "dataMethod": "getAppRecommendations"
+        "dataMethod": "getAppRecommendations",
+        "needsTopPadding": false
       },
       {
         "type": "grid",
@@ -232,7 +233,8 @@
         "type": "carousel",
         "title": "Топ продаж: электронные книги",
         "dataMethod": "getProductsByTag",
-        "dataParams": {"query": "Бестселлер"}
+        "dataParams": {"query": "Бестселлер"},
+        "needsTopPadding": false
       },
       {
         "type": "carousel",

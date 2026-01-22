@@ -9,6 +9,7 @@ class ProductCarousel extends StatelessWidget {
   final String subtitle;
   final List<Product> products;
   final bool isBookCarousel;
+  final int? maxItems;
 
   const ProductCarousel({
     super.key,
@@ -16,17 +17,23 @@ class ProductCarousel extends StatelessWidget {
     this.subtitle = '',
     required this.products,
     this.isBookCarousel = false,
+    this.maxItems,
   });
   
   @override
   Widget build(BuildContext context) {
     // Размер слайдера 
-    final double sliderHeight = products.first is Book ? 400 : 180;
+    final double sliderHeight = products.first is Book ? 230 : 180;
 
     if (products.isEmpty) {
       debugPrint('Ошибка: products.isEmpty (product carousel)');
       return const SizedBox.shrink();
     }
+
+    // Ограничиваем количество продуктов, если задан maxItems
+    final displayProducts = maxItems != null && maxItems! < products.length
+        ? products.sublist(0, maxItems!)
+        : products;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,9 +56,9 @@ class ProductCarousel extends StatelessWidget {
             padding: const EdgeInsets.only(left: 22),
             scrollDirection: Axis.horizontal,
             physics: const PageScrollPhysics(),
-            itemCount: products.length,
+            itemCount: displayProducts.length,
             itemBuilder: (context, index) {
-              final item = products[index];
+              final item = displayProducts[index];
               return ProductCarouselCard(product: item);
             },
           ),

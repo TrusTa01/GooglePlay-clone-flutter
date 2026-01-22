@@ -180,6 +180,10 @@ void main() async {
     'Списки дел',
     'Продуктивность',
     'Тайм-менеджмент',
+    'Работа',
+    'Списки',
+    'Утилиты',
+    'Развлечения',
   ];
 
   final icons = [
@@ -265,7 +269,7 @@ void main() async {
     'assets/images/apps_screenshots/app_screenshot_vert5.webp',
   ];
 
-  final List<int> ageRatings = [0, 3, 7, 12, 16, 18];
+  final List<int> ageRatings = [3, 5, 6, 8, 9, 12, 16, 18];
 
   final permissions = [
     'Камера',
@@ -442,3 +446,8 @@ void main() async {
     'Successfully generated ${appsList.length} app objects to ${file.path}',
   );
 }
+
+
+// flutter pub run tools/generate_data_games.dart
+// flutter pub run tools/generate_data_apps.dart
+// flutter pub run tools/generate_data_books.dart

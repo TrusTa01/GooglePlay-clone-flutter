@@ -90,12 +90,14 @@ class _GenericTabScreenState extends State<GenericTabScreen>
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
           products: productList,
+          maxItems: 10,
         );
       case SectionType.grid:
         return ProductGrid(
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
           products: productList,
+          maxItems: 15,
         );
       case SectionType.preview:
         return GamePreviewSection(

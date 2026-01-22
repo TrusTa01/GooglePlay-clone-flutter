@@ -77,6 +77,35 @@ class SectionBuilderService {
     }
   }
 
+  // Вспомогательный метод для конвертации возрастных меток
+  Map<String, int> _getAgeRangeFromLabel(String ageLabel) {
+    int minAge = 0;
+    int maxAge = 999;
+
+    switch (ageLabel) {
+      case 'До 5 лет':
+        minAge = 0;
+        maxAge = 5;
+        break;
+      case 'От 6 до 8 лет':
+        minAge = 6;
+        maxAge = 8;
+        break;
+      case 'От 9 до 12 лет':
+        minAge = 9;
+        maxAge = 12;
+        break;
+      case '13+ лет':
+        minAge = 13;
+        maxAge = 999;
+        break;
+      default:
+        minAge = 0;
+        maxAge = 999;
+    }
+    return {'minAge': minAge, 'maxAge': maxAge};
+  }
+
   // Логика связки строк из json с методами сервиса
   List<dynamic> _resolveProducts(String? methodName, Map<String, dynamic>? params) {
     if (methodName == null) return [];
@@ -100,6 +129,12 @@ class SectionBuilderService {
 
       case 'getGamesByCategory':
         return queryService.getGamesByCategory(
+          allProducts,
+          params?['genre'] ?? '',
+        );
+
+      case 'getBooksByCategory':
+        return queryService.getBooksByCategory(
           allProducts,
           params?['genre'] ?? '',
         );
@@ -147,16 +182,28 @@ class SectionBuilderService {
         );
 
       case 'getKidsAgeRecommendationsByAgeRange':
-        // Заглушка для getAgeRange - будет передана из FilterProvider
-        return [];
+        final ageLabel = params?['ageLabel'] ?? '';
+        return queryService.getKidsAgeRecommendationsByAgeRange(
+          recommendations,
+          ageLabel,
+          _getAgeRangeFromLabel,
+        );
 
       case 'getProductsByTagAndAge':
-        // Заглушка для getAgeRange - будет передана из FilterProvider
-        return [];
+        return queryService.getProductsByTagAndAge(
+          allProducts,
+          params?['query'] ?? '',
+          params?['ageLabel'] ?? '',
+          _getAgeRangeFromLabel,
+        );
 
       case 'getGamesByCategoryAndAge':
-        // Заглушка для getAgeRange - будет передана из FilterProvider
-        return [];
+        return queryService.getGamesByCategoryAndAge(
+          allProducts,
+          params?['genre'] ?? '',
+          params?['ageLabel'] ?? '',
+          _getAgeRangeFromLabel,
+        );
 
       default:
         return [];

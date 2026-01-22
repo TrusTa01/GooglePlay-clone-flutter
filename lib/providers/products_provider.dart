@@ -30,6 +30,7 @@ class ProductsProvider extends ChangeNotifier {
   String? get error => _error;
   List<Product> get recommendations => _recommendations;
   List<AppBanner> get allBanners => _allBanners;
+  List<PageConfig> get pageConfigs => _pageConfigs;
 
   List<HomeSection> get recommendedGamesSection => _recommendedGamesSection;
   List<HomeSection> get paidGamesSection => _paidGamesSection;
@@ -72,13 +73,12 @@ class ProductsProvider extends ChangeNotifier {
       _allBanners = results[3] as List<AppBanner>;
       _pageConfigs = results[4] as List<PageConfig>;
 
-      _prepareAllSections();
-
       notifyListeners();
 
-      getRecomendations();
+      await getRecomendations();
 
       // Все данные в памяти, можно готовить секции
+      _prepareAllSections();
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -148,9 +148,6 @@ class ProductsProvider extends ChangeNotifier {
       List<Product> allAvailable = List.from(_allProducts);
       allAvailable.sort((a, b) => b.rating.compareTo(a.rating));
       _recommendations = allAvailable.take(7).toList();
-
-      // Собираем структуру страниц, чтобы UI увидел данные
-      _prepareAllSections();
     } catch (e) {
       _error = "Ошибка при выборе лучших товаров: $e";
     } finally {
