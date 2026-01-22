@@ -33,7 +33,7 @@ class Book implements Product {
   final String isbn; // "978-5-389-12345-6"
   final int pageCount; // 320
   final String language; // "Русский"
-  // final BookFormat format; // enum: ePub, PDF, Audiobook
+  // final BookFormat format; // enum: ePub, Audiobook
   final DateTime publicationDate; // Дата публикации
   final List<String> genres; // ["Фэнтези", "Приключения"]
   final bool hasAudioVersion; // Есть аудиокнига
