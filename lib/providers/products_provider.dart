@@ -38,6 +38,8 @@ class ProductsProvider extends ChangeNotifier {
 
   List<HomeSection> _kidsPaidSection = [];
 
+  List<HomeSection> _recommendedAppsSection = [];
+
   // Вкладки приложений
   List<Product> get allProducts => _allProducts;
   bool get isLoading => _isLoading;
@@ -63,6 +65,8 @@ class ProductsProvider extends ChangeNotifier {
   List<HomeSection> get paidGamesSection => _paidGamesSection;
 
   List<HomeSection> get kidsPaidSection => _kidsPaidSection;
+
+  List<HomeSection> get recommendedAppsSection => _recommendedAppsSection;
 
   PageConfig? getPageConfig(String id) {
     try {
@@ -143,6 +147,7 @@ class ProductsProvider extends ChangeNotifier {
 
     _kidsPaidSection = builder.buildKidsPage();
     // Секции для вкладки приложений
+    _recommendedAppsSection = builder.buildAppsRecommendedPage();
   }
 
   // Логика рекомендаций, берем 7 самых высоко оцененных продуктов
@@ -337,6 +342,20 @@ class ProductsProvider extends ChangeNotifier {
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inGenres || inTags;
       }
+      
+      // Если это приложение, проверяем теги
+      if (p is App) {
+        final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
+        return inTags;
+      }
+      
+      // Если это книга, проверяем жанры и теги
+      if (p is Book) {
+        final inGenres = p.genres.any((g) => g.toLowerCase().contains(q));
+        final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
+        return inGenres || inTags;
+      }
+      
       return false;
     }).toList();
   }
@@ -457,6 +476,13 @@ class ProductsProvider extends ChangeNotifier {
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inGenres || inTags;
       }
+      
+      // Если это приложение, проверяем теги
+      if (p is App) {
+        final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
+        return inTags;
+      }
+      
       return false;
     }).toList();
   }

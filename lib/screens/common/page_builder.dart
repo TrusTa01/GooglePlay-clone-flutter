@@ -123,4 +123,11 @@ class PageBuilder {
     if (pageConfig == null) return [];
     return buildFromConfig(pageConfig, ageLabel: ageLabel);
   }
+
+  // Рекомендуемые приложения
+  List<HomeSection> buildAppsRecommendedPage() {
+    final pageConfig = provider.getPageConfig('appsRecommended');
+    if (pageConfig == null) return [];
+    return buildFromConfig(pageConfig);
+  }
 }

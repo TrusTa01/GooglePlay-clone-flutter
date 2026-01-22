@@ -183,5 +183,59 @@
         "dataParams": {"genre": "Обучающие", "ageLabel": "$AGE_LABEL$"}
       }
     ]
+  },
+  {
+    "id": "appsRecommended",
+    "sections": [
+      {
+        "type": "banners",
+        "title": "",
+        "showButton": false,
+        "dataMethod": "getBannersByPrefix",
+        "dataParams": {"prefix": "a_"}
+      },
+      {
+        "type": "carousel",
+        "title": "Специально для вас",
+        "dataMethod": "getRecommendations"
+      },
+      {
+        "type": "grid",
+        "title": "Популярные приложения",
+        "subtitle": "Скачивают все!",
+        "dataMethod": "getProductsByTag",
+        "dataParams": {"query": "Облачное хранилище"}
+      },
+      {
+        "type": "grid",
+        "title": "Рекомендуем",
+        "dataMethod": "getRecommendationsReversed"
+      },
+      {
+        "type": "banners",
+        "title": "",
+        "showButton": false,
+        "dataMethod": "getBannersByPrefix",
+        "dataParams": {"prefix": "a_"}
+      },
+      {
+        "type": "grid",
+        "title": "Продуктивность",
+        "dataMethod": "getProductsByTag",
+        "dataParams": {"query": "Продуктивность"}
+      },
+      {
+        "type": "grid",
+        "title": "Фото и видео",
+        "dataMethod": "getProductsByTag",
+        "dataParams": {"query": "Редактор фото"}
+      },
+      {
+        "type": "carousel",
+        "title": "Социальные сети",
+        "dataMethod": "getProductsByTag",
+        "dataParams": {"query": "Мессенджер"}
+      }
+    ]
   }
 ]
