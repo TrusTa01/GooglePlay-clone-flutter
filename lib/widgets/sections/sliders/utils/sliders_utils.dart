@@ -10,7 +10,15 @@ class ProductDataFormatter {
   ProductDataFormatter(this.product);
 
   String get rating => product.rating.toString();
-  String get technicalInfo => '${product.technicalInfo.toString()} МБ';
+
+  String get technicalInfoFormatted {
+    return switch (product) {
+      Book b => '${b.pageCount} стр.',
+      Game g => '${g.size} МБ',
+      App a => '${a.size} МБ',
+      _ => '',
+    };
+  }
 
   String get price => (product.price != null)
       ? '${product.price!.toStringAsFixed(2).replaceFirst('.', ',')} ₽'
@@ -268,6 +276,8 @@ class ProductTags extends StatelessWidget {
       items = (product as Game).gameGenre;
     } else if (product is App) {
       items = (product as App).tags;
+    } else if (product is Book) {
+      items = [product.creator];
     }
 
     // Берем первые 3, соединяем точкой
@@ -357,6 +367,8 @@ class ActionRow extends StatelessWidget {
   final double iconHeight;
   final int cacheWidth;
   final int cacheHeight;
+  final BorderRadius? borderRadius;
+  final BoxFit? fit; 
 
   const ActionRow({
     super.key,
@@ -369,6 +381,8 @@ class ActionRow extends StatelessWidget {
     this.eventText,
     this.showButton = false,
     this.hasThreeLines = false,
+    this.borderRadius,
+    this.fit,
   });
 
   @override
@@ -389,15 +403,18 @@ class ActionRow extends StatelessWidget {
       containsPaidContent = currentProduct.containsPaidContent;
     }
 
+    final String iconPath = 'assets/icons/star.png';
+
     return Row(
       children: [
         ProductCardThumbnail(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: borderRadius ?? BorderRadius.circular(12),
           iconUrl: currentProduct.iconUrl,
           iconWidth: iconWidth,
           iconHeight: iconHeight,
           cacheWidth: cacheWidth,
           cacheHeight: cacheHeight,
+          fit: fit ?? BoxFit.cover,
         ),
         const SizedBox(width: 10),
         Expanded(
@@ -421,10 +438,7 @@ class ActionRow extends StatelessWidget {
                     const DotSeparator(),
                     AgeBadge(age: currentProduct.ageRating),
                     const SizedBox(width: 10),
-                    ProductInfoTag(
-                      text: formatter.rating,
-                      iconPath: 'assets/icons/star.png',
-                    ),
+                    ProductInfoTag(text: formatter.rating, iconPath: iconPath),
                   ],
                 ],
               ),
@@ -442,16 +456,21 @@ class ActionRow extends StatelessWidget {
                         // 1. Рейтинг
                         ProductInfoTag(
                           text: formatter.rating,
-                          iconPath: 'assets/icons/star.png',
+                          iconPath: iconPath,
                           iconColor: Constants.googleBlue,
                         ),
                         const SizedBox(width: 10),
-
+                        if (currentProduct is Book)
+                          ProductInfoTag(
+                            text: currentProduct.format,
+                            hasBackground: true,
+                          ),
                         // 2. Размер
-                        ProductInfoTag(
-                          text: formatter.technicalInfo,
-                          hasBackground: false,
-                        ),
+                        if (currentProduct is! Book)
+                          ProductInfoTag(
+                            text: formatter.technicalInfoFormatted,
+                            hasBackground: false,
+                          ),
                         const SizedBox(width: 10),
 
                         // 3. Блок событий (только для бесплатных игр/приложений)
@@ -467,6 +486,8 @@ class ActionRow extends StatelessWidget {
                         // 4. Цена (только если платная)
                         if (currentProduct.isPaid)
                           ProductInfoTag(text: formatter.price),
+                        if (currentProduct is Book && !currentProduct.isPaid)
+                          ProductInfoTag(text: 'Бесплатно'),
                       ],
                     ),
                   ],

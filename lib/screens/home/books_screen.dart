@@ -77,13 +77,13 @@ class _BooksScreenState extends State<BooksScreen>
               onLoad: () => readProvider.getRecomendations(),
             ),
             // Таб 'Топ продаж'
-            const TopChartsPage(type: FilterType.books),
+            const TopChartsScreen(type: FilterType.books),
             // Таб 'Новинки'
-            const TopChartsPage(type: FilterType.books),
+            const TopChartsScreen(type: FilterType.books),
             // Таб 'Жанры'
             CategoriesTabScreen(categories: booksGenresData),
             // Таб 'Топ бесплатных'
-            const TopChartsPage(type: FilterType.books),
+            const TopChartsScreen(type: FilterType.books),
           ],
         ),
       ),

@@ -36,19 +36,3 @@ abstract interface class Product {
 
   Map<String, dynamic> toJson();
 }
-
-// dart run build_runner build --delete-conflicting-outputs
-
-// String get technicalInfo {
-  //   if (this is Book) {
-  //     // Приводим к Book и берем количество страниц
-  //     return '${(this as Book).pageCount} стр.';
-  //   } else if (this is Game) {
-  //     // Приводим к Game и берем размер
-  //     return '${(this as Game).size} МБ';
-  //   } else if (this is App) {
-  //     // Приводим к App и берем размер
-  //     return '${(this as App).size} МБ';
-  //   }
-  //   return '';
-  // }

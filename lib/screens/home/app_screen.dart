@@ -102,7 +102,7 @@ class _AppsScreenState extends State<AppsScreen>
               onLoad: () => readProvider.getRecomendations(),
             ),
             // Таб 'Лучшее'
-            const TopChartsPage(type: FilterType.apps),
+            const TopChartsScreen(type: FilterType.apps),
             // Таб 'Детям'
             GenericTabScreen(sections: watchProvider.kidsPaidSection),
             // Таб 'Категории'

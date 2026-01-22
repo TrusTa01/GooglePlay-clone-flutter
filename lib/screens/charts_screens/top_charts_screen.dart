@@ -4,18 +4,19 @@ import 'package:provider/provider.dart';
 import '/providers/providers.dart';
 import '/services/product_query_service.dart';
 import '/widgets/widgets.dart';
+import '/models/product_models/book_model.dart';
 
-class TopChartsPage extends StatelessWidget {
+class TopChartsScreen extends StatelessWidget {
   final FilterType type;
 
-  const TopChartsPage({super.key, required this.type});
+  const TopChartsScreen({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {
     final productsProvider = context.watch<ProductsProvider>();
     final filterProvider = context.watch<FilterProvider>();
     final queryService = ProductQueryService();
-    
+
     // Используем ProductQueryService для фильтрации
     final items = queryService.getFilteredProducts(
       productsProvider.allProducts,
@@ -53,10 +54,14 @@ class TopChartsPage extends StatelessWidget {
                         product: item,
                         hasThreeLines: true,
                         showButton: false,
-                        iconWidth: 65,
-                        iconHeight: 65,
-                        cacheHeight: 190,
-                        cacheWidth: 190,
+                        iconWidth: item is Book ? 60 : 65,
+                        iconHeight: item is Book ? 90 : 65,
+                        cacheWidth: item is Book ? 180 : 190,
+                        cacheHeight: item is Book ? 270 : 190,
+                        borderRadius: item is Book
+                            ? BorderRadius.circular(6)
+                            : BorderRadius.circular(12),
+                        fit: item is Book ? BoxFit.fill : BoxFit.cover,
                       ),
                     ),
                   ],
