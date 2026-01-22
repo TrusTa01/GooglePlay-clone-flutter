@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/providers/providers.dart';
+import '/providers/filter_provider.dart';
 import '/widgets/widgets.dart';
 
 class RecentFilter extends StatelessWidget {
@@ -9,12 +9,12 @@ class RecentFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ProductsProvider>();
+    final filterProvider = context.watch<FilterProvider>();
 
     return CustomFilterChip(
-      label: provider.selectedRecentFilter,
-      isSelected: provider.isRecentFilterActive,
-      onSelected: provider.toggleRecentOnly,
+      label: filterProvider.selectedRecentFilter,
+      isSelected: filterProvider.isRecentFilterActive,
+      onSelected: filterProvider.toggleRecentOnly,
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'providers/tabs_provider.dart';
+import 'providers/filter_provider.dart';
 import './screens/screens.dart';
 import 'layouts/main_layout.dart';
 import '/providers/products_provider.dart';
@@ -28,6 +29,7 @@ class GooglePlay extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => TabsProvider()),
+        ChangeNotifierProvider(create: (context) => FilterProvider()),
         ChangeNotifierProvider(create: (context) => ProductsProvider()),
       ],
       child: MaterialApp(

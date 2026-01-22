@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '/screens/screens.dart';
-import '../../providers/providers.dart';
+import '../../providers/filter_provider.dart';
 import '/widgets/widgets.dart';
 
 enum FilterType { games, apps, books, kidsAge }
@@ -9,7 +9,7 @@ enum FilterType { games, apps, books, kidsAge }
 class FilterSets {
   static Widget getFilters(
     FilterType type,
-    ProductsProvider provider, {
+    FilterProvider filterProvider, {
     String sectionTitle = '',
     String subtitle = '',
   }) {
@@ -20,15 +20,15 @@ class FilterSets {
         activeFilters = [
           TopFilter(
             defaultTitle: 'Топ Бесплатных',
-            currentSelection: provider.selectedTopFilter,
+            currentSelection: filterProvider.selectedTopFilter,
             options: topFilterOptions,
-            onSelected: (val) => provider.setTopFilter(val),
+            onSelected: (val) => filterProvider.setTopFilter(val),
           ),
           CategoryFilter(
             defaultTitle: 'Категории',
             options: gamesCategoriesData,
-            currentSelection: provider.selectedGameCategory,
-            onSelected: (val) => provider.updateGameCategory(val),
+            currentSelection: filterProvider.selectedGameCategory,
+            onSelected: (val) => filterProvider.updateGameCategory(val),
           ),
           const RecentFilter(),
         ];
@@ -38,15 +38,15 @@ class FilterSets {
         activeFilters = [
           TopFilter(
             defaultTitle: 'Топ Бесплатных',
-            currentSelection: provider.selectedTopFilter,
+            currentSelection: filterProvider.selectedTopFilter,
             options: topFilterOptions,
-            onSelected: (val) => provider.setTopFilter(val),
+            onSelected: (val) => filterProvider.setTopFilter(val),
           ),
           CategoryFilter(
             defaultTitle: 'Категории',
             options: appsCategoriesData,
-            currentSelection: provider.selectedAppCategory,
-            onSelected: (val) => provider.updateAppCategory(val),
+            currentSelection: filterProvider.selectedAppCategory,
+            onSelected: (val) => filterProvider.updateAppCategory(val),
           ),
         ];
         break;
@@ -55,22 +55,22 @@ class FilterSets {
         activeFilters = [
           TopFilter(
             defaultTitle: 'Топ Бесплатных',
-            currentSelection: provider.selectedTopFilter,
+            currentSelection: filterProvider.selectedTopFilter,
             options: topFilterOptions,
-            onSelected: (val) => provider.setTopFilter(val),
+            onSelected: (val) => filterProvider.setTopFilter(val),
           ),
           CategoryFilter(
             defaultTitle: 'Категории',
             options: gamesCategoriesData,
-            currentSelection: provider.selectedGameCategory,
-            onSelected: (val) => provider.updateGameCategory(val),
+            currentSelection: filterProvider.selectedGameCategory,
+            onSelected: (val) => filterProvider.updateGameCategory(val),
           ),
           const RecentFilter(),
         ];
         break;
 
       case FilterType.kidsAge:
-        activeFilters = provider.selectedKidsFilters
+        activeFilters = filterProvider.selectedKidsFilters
             .map((age) => KidsAgeFilter(label: age))
             .toList();
         break;

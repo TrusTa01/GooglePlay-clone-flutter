@@ -18,7 +18,7 @@ class KidsAgeFilterSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ProductsProvider>();
+    final provider = context.read<FilterProvider>();
 
     return FilterSets.getFilters(
       type,

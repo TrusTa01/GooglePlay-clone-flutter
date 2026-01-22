@@ -13,7 +13,6 @@ export 'notifications/notifications_screen.dart';
 // Commnon
 export 'common/error_screen.dart';
 export 'common/generic_tab_screen.dart';
-export 'common/page_builder.dart';
 
 // Category
 export 'category/categories_tab_screen.dart';

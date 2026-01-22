@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/providers.dart';
+import '/services/product_query_service.dart';
 import '/widgets/widgets.dart';
 
 class TopChartsPage extends StatelessWidget {
@@ -11,12 +12,24 @@ class TopChartsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ProductsProvider>();
-    final items = provider.getFilteredProducts(type);
+    final productsProvider = context.watch<ProductsProvider>();
+    final filterProvider = context.watch<FilterProvider>();
+    final queryService = ProductQueryService();
+    
+    // Используем ProductQueryService для фильтрации
+    final items = queryService.getFilteredProducts(
+      productsProvider.allProducts,
+      type: type,
+      selectedTopFilter: filterProvider.selectedTopFilter,
+      selectedGameCategory: filterProvider.selectedGameCategory,
+      selectedAppCategory: filterProvider.selectedAppCategory,
+      selectedBookCategory: filterProvider.selectedBookCategory,
+      isRecentFilterActive: filterProvider.isRecentFilterActive,
+    );
 
     return Column(
       children: [
-        FilterSets.getFilters(type, provider), // Фильтры
+        FilterSets.getFilters(type, filterProvider), // Фильтры
 
         Expanded(
           child: ListView.builder(

@@ -193,17 +193,11 @@
         "showButton": false,
         "dataMethod": "getBannersByPrefix",
         "dataParams": {"prefix": "a_"}
-      },
+      }, 
       {
         "type": "carousel",
-        "title": "Специально для вас",
-        "dataMethod": "getRecommendations"
-      },
-      {
-        "type": "grid",
-        "title": "Популярные приложения",
-        "subtitle": "Скачивают все!",
-        "dataMethod": "getProductsByTag",
+        "title": "Рекомендуем",
+        "dataMethod": "getRecommendationsReversed",
         "dataParams": {"query": "Облачное хранилище"}
       },
       {
