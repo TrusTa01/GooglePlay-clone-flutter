@@ -441,7 +441,7 @@ void main() async {
     final String publisher = faker.randomGenerator.element(publishers);
 
     // Формат книги
-    final List<String> formats = ['ePub', 'PDF', 'Audiobook'];
+    final List<String> formats = ['Эл. книга', 'Аудиокнига'];
     final String format = faker.randomGenerator.element(formats);
 
     // Аудиоверсия (30% шанс)
