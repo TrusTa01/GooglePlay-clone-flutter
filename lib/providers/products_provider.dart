@@ -13,6 +13,7 @@ class ProductsProvider extends ChangeNotifier {
   String? _error;
   List<Product> _recommendations = [];
   List<AppBanner> _allBanners = [];
+  List<PageConfig> _pageConfigs = [];
 
   // Фильтры
   String _selectedGameCategory = 'Все категории';
@@ -63,6 +64,15 @@ class ProductsProvider extends ChangeNotifier {
 
   List<HomeSection> get kidsPaidSection => _kidsPaidSection;
 
+  PageConfig? getPageConfig(String id) {
+    try {
+      return _pageConfigs.firstWhere((config) => config.id == id);
+    } catch (e) {
+      debugPrint('PageConfig with id "$id" not found');
+      return null;
+    }
+  }
+
   Future<void> loadAllProducts() async {
     if (_allProducts.isNotEmpty) return;
 
@@ -77,6 +87,7 @@ class ProductsProvider extends ChangeNotifier {
         _service.loadProducts('apps.json').catchError((e) => <Product>[]),
         _service.loadProducts('books.json').catchError((e) => <Product>[]),
         _service.loadBanners().catchError((e) => <AppBanner>[]),
+        _service.loadPageConfigs().catchError((e) => <PageConfig>[]),
       ]);
       // Склеиваем всё в один список
       _allProducts = [
@@ -86,6 +97,7 @@ class ProductsProvider extends ChangeNotifier {
       ];
 
       _allBanners = results[3] as List<AppBanner>;
+      _pageConfigs = results[4] as List<PageConfig>;
 
       _prepareAllSections();
 
@@ -384,5 +396,83 @@ class ProductsProvider extends ChangeNotifier {
         maxAge = 999;
     }
     return {'minAge': minAge, 'maxAge': maxAge};
+  }
+
+  // Получение платных продуктов с ограничением количества
+  List<Product> getAllPaidProductsTake(int count) {
+    final allPaid = _allProducts.whereType<Game>().where((g) => g.isPaid).toList();
+    return allPaid.take(count).toList();
+  }
+
+  // Получение платных продуктов дешевле указанной цены
+  List<Product> getAllPaidProductsUnderPrice(int price) {
+    final allPaid = _allProducts.whereType<Game>().where((g) => g.isPaid).toList();
+    return allPaid.where((g) => (g.price ?? 0) < price).toList();
+  }
+
+  // Получение рекомендаций для детей с ageRating <= age
+  List<Product> getKidsAgeRecommendations(int age) {
+    return _recommendations.whereType<Game>().where((g) => g.ageRating <= age).toList();
+  }
+
+  // Получение рекомендаций для детей с фильтрацией по возрастному диапазону
+  List<Product> getKidsAgeRecommendationsByAgeRange(String ageLabel) {
+    final ageRange = getAgeRangeFromLabel(ageLabel);
+    final minAge = ageRange['minAge']!;
+    final maxAge = ageRange['maxAge']!;
+    
+    return _recommendations.where((p) {
+      if (p is Game) {
+        return p.ageRating >= minAge && p.ageRating <= maxAge;
+      } else if (p is App) {
+        return p.ageRating >= minAge && p.ageRating <= maxAge;
+      }
+      return false;
+    }).toList();
+  }
+
+  // Получение продуктов по тегу с фильтрацией по возрасту
+  List<Product> getProductsByTagAndAge(String query, String ageLabel) {
+    final ageRange = getAgeRangeFromLabel(ageLabel);
+    final minAge = ageRange['minAge']!;
+    final maxAge = ageRange['maxAge']!;
+    
+    final q = query.toLowerCase();
+    return _allProducts.where((p) {
+      // Проверка возраста
+      bool ageMatches = false;
+      if (p is Game) {
+        ageMatches = p.ageRating >= minAge && p.ageRating <= maxAge;
+      } else if (p is App) {
+        ageMatches = p.ageRating >= minAge && p.ageRating <= maxAge;
+      }
+      if (!ageMatches) return false;
+
+      // Базовая проверка названия
+      if (p.title.toLowerCase().contains(q)) return true;
+
+      // Если это игра, проверяем жанры и теги
+      if (p is Game) {
+        final inGenres = p.gameGenre.any((g) => g.toLowerCase().contains(q));
+        final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
+        return inGenres || inTags;
+      }
+      return false;
+    }).toList();
+  }
+
+  // Получение игр по категории с фильтрацией по возрасту
+  List<Product> getGamesByCategoryAndAge(String genre, String ageLabel) {
+    final ageRange = getAgeRangeFromLabel(ageLabel);
+    final minAge = ageRange['minAge']!;
+    final maxAge = ageRange['maxAge']!;
+    
+    return _allProducts.whereType<Game>().where((game) {
+      final genreMatches = game.gameGenre.any(
+        (g) => g.trim().toLowerCase() == genre.trim().toLowerCase(),
+      );
+      final ageMatches = game.ageRating >= minAge && game.ageRating <= maxAge;
+      return genreMatches && ageMatches;
+    }).toList();
   }
 }

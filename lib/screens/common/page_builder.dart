@@ -6,175 +6,121 @@ class PageBuilder {
 
   PageBuilder(this.provider);
 
+  List<HomeSection> buildFromConfig(PageConfig pageConfig, {String? ageLabel}) {
+    return pageConfig.sections.map((config) {
+      // Подстановка $AGE_LABEL$ в заголовок
+      String? title = config.title;
+      if (title != null && ageLabel != null) {
+        title = title.replaceAll('\$AGE_LABEL\$', ageLabel);
+      }
+
+      // Подстановка $AGE_LABEL$ в параметры данных
+      Map<String, dynamic>? dataParams = config.dataParams;
+      if (dataParams != null && ageLabel != null) {
+        dataParams = Map.from(dataParams);
+        dataParams.forEach((key, value) {
+          if (value is String && value.contains('\$AGE_LABEL\$')) {
+            dataParams![key] = value.replaceAll('\$AGE_LABEL\$', ageLabel);
+          }
+        });
+      }
+
+      return HomeSection(
+        type: _mapType(config.type), 
+        title: title ?? '',
+        subtitle: config.subtitle,
+        imageAssetPath: config.imageAssetPath,
+        showButton: config.showButton,
+        needsTopPadding: config.needsTopPadding,
+        products: _resolveProducts(config.dataMethod, dataParams),
+      );
+    }).toList();
+  }
+
+  // Преобразование SectionConfigType в SectionType
+  SectionType _mapType(SectionConfigType configType) {
+    switch (configType) {
+      case SectionConfigType.carousel:
+        return SectionType.carousel;
+      case SectionConfigType.grid:
+        return SectionType.grid;
+      case SectionConfigType.banners:
+        return SectionType.banners;
+      case SectionConfigType.preview:
+        return SectionType.preview;
+      case SectionConfigType.kidsHeroBanner:
+        return SectionType.kidsHeroBanner;
+      case SectionConfigType.ageFilterSelector:
+        return SectionType.ageFIlterSelector;
+    }
+  }
+
+  // Логика связки строк из json с методами Provider
+  List<dynamic> _resolveProducts(String? methodName, Map<String, dynamic>? params) {
+    if (methodName == null) return [];
+
+    switch (methodName) {
+      case 'getBannersByPrefix':
+        return provider.getBannersByPrefix(params?['prefix'] ?? '');
+      case 'getRecommendations':
+        return provider.recommendations;
+      case 'getGamesByCategory':
+        return provider.getGamesByCategory(params?['genre'] ?? '');
+      case 'getRecommendationsReversed':
+        return provider.recommendations.reversed.toList();
+      case 'getPaidGamesByGenre':
+        return provider.getPaidGamesByGenre(params?['genre'] ?? '').take(1).toList();
+      case 'getAllPaidProductsTake':
+        return provider.getAllPaidProductsTake(params?['count'] ?? 10);
+      case 'getAllPaidProductsUnderPrice':
+        return provider.getAllPaidProductsUnderPrice(params?['price'] ?? 150);
+      case 'getProductsByTag':
+        return provider.getProductsByTag(params?['query'] ?? '');
+      case 'getOfflineGames':
+        return provider.getOfflineGames();
+      case 'getKidsAgeRecommendations':
+        return provider.getKidsAgeRecommendations(params?['age'] ?? 3);
+      case 'getKidsAgeRecommendationsByAgeRange':
+        return provider.getKidsAgeRecommendationsByAgeRange(params?['ageLabel'] ?? '');
+      case 'getProductsByTagAndAge':
+        return provider.getProductsByTagAndAge(
+          params?['query'] ?? '',
+          params?['ageLabel'] ?? '',
+        );
+      case 'getGamesByCategoryAndAge':
+        return provider.getGamesByCategoryAndAge(
+          params?['genre'] ?? '',
+          params?['ageLabel'] ?? '',
+        );
+      default:
+        return [];
+    }
+  }
+
   // Рекомендуемые игры
   List<HomeSection> buildGamesRecommendedPage() {
-    return [
-      HomeSection(
-        type: SectionType.banners,
-        title: '',
-        showButton: false,
-        products: provider.getBannersByPrefix('g_'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Специально для вас',
-        products: provider.recommendations,
-      ),
-      HomeSection(
-        type: SectionType.grid,
-        title: 'Играют все',
-        subtitle: 'Попробуйте и вы!',
-        products: provider.getGamesByCategory('Казино'),
-      ),
-      HomeSection(
-        type: SectionType.grid,
-        title: 'Рекомендуем',
-        products: provider.recommendations.reversed.toList(),
-      ),
-      HomeSection(
-        type: SectionType.banners,
-        title: 'Специально для вас',
-        showButton: false,
-        products: provider.getBannersByPrefix('g_'),
-      ),
-      HomeSection(
-        type: SectionType.grid,
-        title: 'Экшен-игры',
-        products: provider.getGamesByCategory('Экшен'),
-      ),
-      HomeSection(
-        type: SectionType.grid,
-        title: 'Настольные игры',
-        products: provider.getGamesByCategory('Настольные'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Файтинги',
-        products: provider.getGamesByCategory('Файтинг'),
-      ),
-    ];
+    final pageConfig = provider.getPageConfig('gamesRecommended');
+    if (pageConfig == null) return [];
+    return buildFromConfig(pageConfig);
   }
 
   // Платные игры
   List<HomeSection> buildGamesPaidPage() {
-    final allPaid = provider.allProducts
-        .whereType<Game>()
-        .where((g) => g.isPaid)
-        .toList();
-
-    return [
-      HomeSection(
-        type: SectionType.preview,
-        title: 'Необычные головоломки',
-        // Берем 1 платную игру из жанра головоломки
-        products: provider.getPaidGamesByGenre('Головоломки').take(1).toList(),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Сыграйте перед покупкой',
-        subtitle: 'Пробуйте сейчас, платите позже',
-        products: allPaid.take(10).toList(),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Игры по низким ценам',
-        products: allPaid.where((g) => (g.price ?? 0) < 150).toList(),
-      ),
-      HomeSection(
-        type: SectionType.banners,
-        title: '',
-        showButton: false,
-        products: provider.getBannersByPrefix('g_'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Лучшие инди игры',
-        products: provider.getProductsByTag('Инди'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Офлайн-игры',
-        products: provider.getOfflineGames(),
-      ),
-    ];
+    final pageConfig = provider.getPageConfig('gamesPaid');
+    if (pageConfig == null) return [];
+    return buildFromConfig(pageConfig);
   }
 
   // Детям
   List<HomeSection> buildKidsPage() {
-    return [
-      HomeSection(
-        type: SectionType.kidsHeroBanner,
-        needsTopPadding: false,
-        title: 'Одобрено преподавателями',
-        subtitle: 'Проверенное качество',
-        imageAssetPath: 'assets/images/kids_tab/kids_tab_image2.webp',
-      ),
-      HomeSection(
-        type: SectionType.ageFIlterSelector,
-        title: 'Выберите возраст',
-        needsTopPadding: false,
-        products: [], // Чипы возраста создаются в FilterSets
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Математические игры',
-        products: provider.getProductsByTag('Математика'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Рисование',
-        products: provider.getProductsByTag('Рисование'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Для всей семьи',
-        products: provider.getProductsByTag('Для всей семьи'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Обучающие игры',
-        products: provider.getGamesByCategory('Обучающие'),
-      ),
-    ];
+    final pageConfig = provider.getPageConfig('kidsPage');
+    if (pageConfig == null) return [];
+    return buildFromConfig(pageConfig);
   }
 
   List<HomeSection> buildKidsCategoryPage(String ageLabel) {
-    final ageRange = provider.getAgeRangeFromLabel(ageLabel);
-    final minAge = ageRange['minAge']!;
-    final maxAge = ageRange['maxAge']!;
-    
-    final ageFilteredProducts = provider.getKidsAgeFilteredProducts(minAge, maxAge);
-    final mathProducts = provider.getProductsByTag('Математика');
-    final combinedProducts = <Product>{...ageFilteredProducts, ...mathProducts}.toList();
-
-    return [
-      HomeSection(
-        type: SectionType.kidsHeroBanner,
-        needsTopPadding: false,
-        title: 'Одобрено преподавателями',
-        subtitle: 'Проверенное качество',
-        imageAssetPath: 'assets/images/kids_tab/kids_tab_image2.webp',
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Игры для $ageLabel и Математические игры',
-        products: combinedProducts,
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Рисование',
-        products: provider.getProductsByTag('Рисование'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Для всей семьи',
-        products: provider.getProductsByTag('Для всей семьи'),
-      ),
-      HomeSection(
-        type: SectionType.carousel,
-        title: 'Обучающие игры',
-        products: provider.getGamesByCategory('Обучающие'),
-      ),
-    ];
+    final pageConfig = provider.getPageConfig('kidsCategoryPage');
+    if (pageConfig == null) return [];
+    return buildFromConfig(pageConfig, ageLabel: ageLabel);
   }
 }

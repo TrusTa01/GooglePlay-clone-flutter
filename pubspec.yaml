@@ -55,3 +55,4 @@ flutter:
 
   # data
   - assets/data/
+  - assets/config/

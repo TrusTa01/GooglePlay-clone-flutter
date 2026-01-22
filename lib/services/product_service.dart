@@ -40,4 +40,16 @@ class ProductService {
 
   // Метод-поиск, передаем id из баннера, а сервис возвращает продукт или null
   Product? getProductById(String id) => _allProductsById[id];
+
+  Future<List<PageConfig>> loadPageConfigs() async { 
+    try {
+      final jsonString = await rootBundle.loadString('assets/config/pages_config.json');
+      final List<dynamic> jsonList = json.decode(jsonString);
+      return jsonList.map((json) => PageConfig.fromJson(json)).toList();
+    } catch (e, stacktrace) {
+      debugPrint('DEBUG ERROR: $e');
+      debugPrint('STACKTRACE: $stacktrace');
+      throw Exception('Failed to load page configs : $e');
+    }
+  }
 }
