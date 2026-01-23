@@ -328,21 +328,25 @@ class ProductQueryService {
     }).toList();
 
     // Фильтруем по основному статусу (Бесплатные/Платные/Бестселлеры)
-    if (selectedTopFilter == 'Топ бесплатных') {
-      // Только бесплатные продукты, без требования рейтинга
-      result = result.where((p) => !p.isPaid).toList();
-      debugPrint('После фильтра "$selectedTopFilter": ${result.length} книг');
-    } else if (selectedTopFilter == 'Топ платных') {
-      result = result.where((p) => p.isPaid && p.rating >= 4.0).toList();
-      debugPrint('После фильтра "$selectedTopFilter": ${result.length} книг');
-    } else if (selectedTopFilter == 'Бестселлеры') {
-      result = result.where((p) => p.rating >= 4.5).toList();
-      // Сортировка по рейтингу по убыванию (только если не активен фильтр "Новое")
-      if (!isToggleFilterActive) {
+    // Если активен фильтр "Новое", не применяем фильтр по бесплатным/платным
+    if (!isToggleFilterActive) {
+      if (selectedTopFilter == 'Топ бесплатных') {
+        // Только бесплатные продукты, без требования рейтинга
+        result = result.where((p) => !p.isPaid).toList();
+        debugPrint('После фильтра "$selectedTopFilter": ${result.length} книг');
+      } else if (selectedTopFilter == 'Топ платных') {
+        result = result.where((p) => p.isPaid && p.rating >= 4.0).toList();
+        debugPrint('После фильтра "$selectedTopFilter": ${result.length} книг');
+      } else if (selectedTopFilter == 'Бестселлеры') {
+        result = result.where((p) => p.rating >= 4.5).toList();
+        // Сортировка по рейтингу по убыванию
         result.sort((a, b) => b.rating.compareTo(a.rating));
-      } 
+      } else {
+        debugPrint('Фильтр "$selectedTopFilter" не применен: ${result.length} книг');
+      }
     } else {
-      debugPrint('Фильтр "$selectedTopFilter" не применен: ${result.length} книг');
+      // Если активен фильтр "Новое", показываем все новинки (и платные, и бесплатные)
+      debugPrint('Фильтр "Новое" активен - показываем все новинки: ${result.length} книг');
     }
 
     // Фильтр по категориям
