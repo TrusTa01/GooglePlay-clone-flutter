@@ -44,6 +44,7 @@ class Book implements Product {
   final String? seriesName; // Название серии
   final int? seriesNumber; // Номер в серии
   final bool sampleAvailable; // Есть бесплатный фрагмент
+  final bool isAbridged; // Сокращенное издание
   final List<String> awards;
 
   Book({
@@ -70,6 +71,7 @@ class Book implements Product {
     this.seriesName,
     this.seriesNumber,
     required this.sampleAvailable,
+    required this.isAbridged,
     this.price,
     required this.awards,
     required this.releaseDate,

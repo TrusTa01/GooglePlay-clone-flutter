@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '/models/models.dart';
 import 'dart:async';
 
-import '../widgets.dart';
+import '../../widgets.dart';
 
 class BannerSection extends StatefulWidget {
   final List<AppBanner> banners;
@@ -11,6 +11,7 @@ class BannerSection extends StatefulWidget {
   final String title;
   final String subtitle;
   final bool showButton;
+  final int? maxItems;
 
   const BannerSection({
     super.key,
@@ -20,6 +21,7 @@ class BannerSection extends StatefulWidget {
     required this.title,
     this.subtitle = '',
     required this.showButton,
+    this.maxItems,
   });
 
   @override
@@ -47,10 +49,13 @@ class _BannerSectionState extends State<BannerSection> {
 
   void _startTimer() {
     _timer?.cancel();
+    final displayBannersLength = widget.maxItems != null && widget.maxItems! < widget.banners.length
+        ? widget.maxItems!
+        : widget.banners.length;
     _timer = Timer.periodic(const Duration(seconds: 7), (timer) {
       if (_controller.hasClients) {
         _currentPage++;
-        if (_currentPage >= widget.banners.length) {
+        if (_currentPage >= displayBannersLength) {
           _currentPage = 0;
         }
         _controller.animateToPage(
@@ -68,6 +73,10 @@ class _BannerSectionState extends State<BannerSection> {
 
     final double adaptiveHeight =
         MediaQuery.of(context).size.height / widget.heightFactor;
+
+    final displayBanners = widget.maxItems != null && widget.maxItems! < widget.banners.length
+        ? widget.banners.sublist(0, widget.maxItems!)
+        : widget.banners;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,10 +105,10 @@ class _BannerSectionState extends State<BannerSection> {
               onPageChanged: (index) => _currentPage = index,
               scrollDirection: Axis.horizontal,
               controller: _controller,
-              itemCount: widget.banners.length,
+              itemCount: displayBanners.length,
               itemBuilder: (context, index) {
                 return BannerItem(
-                  banner: widget.banners[index],
+                  banner: displayBanners[index],
                   type: widget.type,
                 );
               },

@@ -6,6 +6,40 @@ import '../widgets/filters/filter_factory.dart';
 // Все методы - чистые функции без состояния.
 class ProductQueryService {
 
+  // Маппинг составных жанров фильтра на отдельные жанры в книгах
+  static List<String> _getBookGenresForFilter(String filterGenre) {
+    final normalized = filterGenre.trim().toLowerCase();
+    
+    // Составные жанры, которые нужно разбить на отдельные
+    switch (normalized) {
+      case 'фантастика и фэнтези':
+        // Ищем книги с жанром "Фантастика" или "Фэнтези"
+        return ['фантастика', 'фэнтези'];
+      case 'бизнес и инвестиции':
+        // В данных есть только "Бизнес", ищем его
+        return ['бизнес'];
+      case 'биографии и мемуары':
+        // Ищем книги с жанром "Биография" или "Мемуары"
+        return ['биография', 'мемуары'];
+      case 'детективы и триллеры':
+        // В данных есть и составной "Детективы и триллеры", и отдельные "Детектив", "Триллер"
+        return ['детективы и триллеры', 'детектив', 'триллер'];
+      default:
+        return [normalized];
+    }
+  }
+
+  // Проверка, соответствует ли книга жанру (с учетом составных жанров)
+  static bool _bookMatchesGenre(Book book, String filterGenre) {
+    final genresToMatch = _getBookGenresForFilter(filterGenre);
+    final normalizedGenresToMatch = genresToMatch.map((g) => g.trim().toLowerCase()).toList();
+    
+    return book.genres.any((bookGenre) {
+      final normalizedBookGenre = bookGenre.trim().toLowerCase();
+      return normalizedGenresToMatch.contains(normalizedBookGenre);
+    });
+  }
+
   // -------------------------Поиск-----------------------
   // Поиск игр и приложений по запросу
   List<Product> searchGamesAndApps(List<Product> allProducts, String query) {
@@ -117,7 +151,7 @@ class ProductQueryService {
   List<Product> getBooksByCategory(List<Product> allProducts, String genre) {
     return allProducts.where((product) {
       if (product is Book) {
-        return product.genres.contains(genre);
+        return _bookMatchesGenre(product, genre);
       }
       return false;
     }).toList();
@@ -149,9 +183,16 @@ class ProductQueryService {
     String category, {
     required bool isGame,
   }) {
+    final normalizedCategory = category.trim().toLowerCase();
     return allProducts.where((p) {
-      if (isGame) return p is Game && p.gameGenre.contains(category);
-      return p is App && p.type == category;
+      if (isGame) {
+        return p is Game && p.gameGenre.any(
+          (g) => g.trim().toLowerCase() == normalizedCategory,
+        );
+      }
+      return p is App && p.appCategory.any(
+        (c) => c.trim().toLowerCase() == normalizedCategory,
+      );
     }).toList();
   }
 
@@ -264,7 +305,13 @@ class ProductQueryService {
     required String selectedGameCategory,
     required String selectedAppCategory,
     required String selectedBookCategory,
-    required bool isRecentFilterActive,
+    required bool isToggleFilterActive,
+    // Дополнительные фильтры для книг
+    String? selectedAgeFilter,
+    String? selectedRatingFilter,
+    String? selectedLanguageFilter,
+    String? selectedAbridgedVersionFilter,
+    double? Function(String)? getMinRatingFromFilter,
   }) {
     // Фильтруем по типу контента
     List<Product> result = allProducts.where((p) {
@@ -282,11 +329,20 @@ class ProductQueryService {
 
     // Фильтруем по основному статусу (Бесплатные/Платные/Бестселлеры)
     if (selectedTopFilter == 'Топ бесплатных') {
-      result = result.where((p) => !p.isPaid && p.rating >= 4.0).toList();
+      // Только бесплатные продукты, без требования рейтинга
+      result = result.where((p) => !p.isPaid).toList();
+      debugPrint('После фильтра "$selectedTopFilter": ${result.length} книг');
     } else if (selectedTopFilter == 'Топ платных') {
       result = result.where((p) => p.isPaid && p.rating >= 4.0).toList();
+      debugPrint('После фильтра "$selectedTopFilter": ${result.length} книг');
     } else if (selectedTopFilter == 'Бестселлеры') {
       result = result.where((p) => p.rating >= 4.5).toList();
+      // Сортировка по рейтингу по убыванию (только если не активен фильтр "Новое")
+      if (!isToggleFilterActive) {
+        result.sort((a, b) => b.rating.compareTo(a.rating));
+      } 
+    } else {
+      debugPrint('Фильтр "$selectedTopFilter" не применен: ${result.length} книг');
     }
 
     // Фильтр по категориям
@@ -299,22 +355,123 @@ class ProductQueryService {
       currentCategory = selectedBookCategory;
     }
 
-    if (currentCategory != 'Все категории' && currentCategory != 'Жанр') {
+    if (currentCategory != 'Все категории' && 
+        currentCategory != 'Все') {
+      final normalizedCategory = currentCategory.trim().toLowerCase();
+      
       result = result.where((p) {
-        if (p is Game) return p.gameGenre.contains(currentCategory);
-        if (p is App) return p.type == currentCategory;
-        if (p is Book) return p.genres.contains(currentCategory);
-        if (result.isEmpty) {
-          debugPrint('Категория "$currentCategory" пуста');
+        if (p is Game) {
+          return p.gameGenre.any(
+            (g) => g.trim().toLowerCase() == normalizedCategory,
+          );
+        }
+        if (p is App) {
+          final matches = p.appCategory.any(
+            (c) => c.trim().toLowerCase() == normalizedCategory,
+          );
+          if (matches) {
+        
+          }
+          return matches;
+        }
+        if (p is Book) {
+          return _bookMatchesGenre(p, currentCategory);
         }
         return false;
       }).toList();
+      
+      // Проверка на пустую категорию после фильтрации
+      if (result.isEmpty) {
+        debugPrint('Категория пуста! Проверьте совпадение названий.');
+      }
+    } else {
+      debugPrint('Фильтр по категории не применен: ${result.length} книг');
     }
 
-    // Фильтр Новое
-    if (isRecentFilterActive) {
-      final recentThreshold = result.length > 10 ? result.length - 10 : 0;
-      result = result.sublist(recentThreshold);
+    // Фильтр Новое - сортировка по дате выхода (имеет приоритет над сортировкой по рейтингу)
+    if (isToggleFilterActive) {
+      result.sort((a, b) => b.releaseDate.compareTo(a.releaseDate));
+    }
+
+    // Дополнительные фильтры для книг
+    if (type == FilterType.books) {
+      // Фильтр по возрасту (для книг - через жанр "Для детей" или теги)
+      if (selectedAgeFilter != null && selectedAgeFilter != 'Все') {
+        final beforeAge = result.length;
+        result = result.where((p) {
+          if (p is Book) {
+            // Проверяем наличие жанра "Для детей" (точное или частичное совпадение)
+            final hasChildrenGenre = p.genres.any((g) {
+              final normalizedGenre = g.trim().toLowerCase();
+              return normalizedGenre == 'для детей' || 
+                     normalizedGenre.contains('для детей');
+            });
+            // Проверяем теги на наличие детских тегов
+            final hasChildrenTag = p.tags.any((t) {
+              final normalizedTag = t.trim().toLowerCase();
+              return normalizedTag.contains('детск') || 
+                     normalizedTag.contains('детская') ||
+                     normalizedTag.contains('для детей');
+            });
+            
+            final isChildrenBook = hasChildrenGenre || hasChildrenTag;
+            
+            // Для детских категорий показываем только детские книги
+            if (selectedAgeFilter == 'До 5 лет' || 
+                selectedAgeFilter == 'От 6 до 8 лет' || 
+                selectedAgeFilter == 'От 9 до 12 лет') {
+              return isChildrenBook;
+            }
+            // Для "От 13 лет" исключаем детские книги
+            if (selectedAgeFilter == 'От 13 лет') {
+              return !isChildrenBook;
+            }
+          }
+          return true;
+        }).toList();
+        debugPrint('5. После фильтра по возрасту "$selectedAgeFilter": $beforeAge → ${result.length} книг');
+      }
+
+      // Фильтр по рейтингу
+      if (selectedRatingFilter != null && selectedRatingFilter != 'Все' && getMinRatingFromFilter != null) {
+        final beforeRating = result.length;
+        final minRating = getMinRatingFromFilter(selectedRatingFilter);
+        if (minRating != null) {
+          result = result.where((p) => p.rating >= minRating).toList();
+          debugPrint('6. После фильтра по рейтингу "$selectedRatingFilter" (>=$minRating): $beforeRating → ${result.length} книг');
+        }
+      }
+
+      // Фильтр по языку
+      if (selectedLanguageFilter != null && selectedLanguageFilter != 'Все') {
+        final beforeLang = result.length;
+        final normalizedLanguageFilter = selectedLanguageFilter.trim().toLowerCase();
+        result = result.where((p) {
+          if (p is Book) {
+            return p.language.trim().toLowerCase() == normalizedLanguageFilter;
+          }
+          return false;
+        }).toList();
+        debugPrint('7. После фильтра по языку "$selectedLanguageFilter": $beforeLang → ${result.length} книг');
+      }
+
+      // Фильтр по сокращенному изданию
+      if (selectedAbridgedVersionFilter != null && selectedAbridgedVersionFilter != 'Все') {
+        final beforeAbr = result.length;
+        result = result.where((p) {
+          if (p is Book) {
+            if (selectedAbridgedVersionFilter == 'Сокращенная версия') {
+              return p.isAbridged;
+            } else if (selectedAbridgedVersionFilter == 'Полная версия') {
+              return !p.isAbridged;
+            }
+          }
+          return true;
+        }).toList();
+        debugPrint('8. После фильтра по изданию "$selectedAbridgedVersionFilter": $beforeAbr → ${result.length} книг');
+      }
+      
+      debugPrint('=== Итого: ${result.length} книг ===');
     }
 
     return result;

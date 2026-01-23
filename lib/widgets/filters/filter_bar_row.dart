@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '/widgets/widgets.dart';
 
-class FilterBar extends StatelessWidget {
+class FilterBarRow extends StatelessWidget {
   final String sectionTitle;
   final String subtitle;
   final List<Widget> filters;
 
-  const FilterBar({
+  const FilterBarRow({
     super.key,
     required this.filters,
     required this.sectionTitle,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets.dart';
+import '../../../widgets.dart';
 
 class BannerImage extends StatelessWidget {
   final String assetPath;

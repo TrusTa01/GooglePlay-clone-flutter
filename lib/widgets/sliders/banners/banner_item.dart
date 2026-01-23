@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets.dart';
+import '../../widgets.dart';
 import '/models/models.dart';
 
 class BannerItem extends StatelessWidget {

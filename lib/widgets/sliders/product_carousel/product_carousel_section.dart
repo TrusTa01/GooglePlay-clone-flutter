@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../models/product_models/book_model.dart';
-import '../../../../models/product_models/product_interface.dart';
-import '../../../widgets.dart';
+import '../../../models/product_models/book_model.dart';
+import '../../../models/product_models/product_interface.dart';
+import '../../widgets.dart';
 
 class ProductCarousel extends StatelessWidget {
   final String title;

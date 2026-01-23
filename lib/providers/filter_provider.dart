@@ -4,24 +4,40 @@ class FilterProvider extends ChangeNotifier {
   // Фильтры для разных категорий
   String _selectedGameCategory = 'Все категории';
   String _selectedAppCategory = 'Все категории';
-  String _selectedBookCategory = 'Жанр';
+  String _selectedBookGenre = 'Все';
   String _selectedTopFilter = 'Топ бесплатных';
   final String _selectedRecentFilter = 'Новое';
-  final String _selectedAgeFilter = 'Возраст';
-  final String _selectedRatingFilter = 'По рейтингу';
-  final String _selectedLanguageFilter = 'Язык';
-  final String _selectedAbridgetVersionFilter = 'Сокращенное издание';
+  String _selectedAgeFilter = 'Все';
+  String _selectedRatingFilter = 'Все';
+  String _selectedLanguageFilter = 'Все';
+  String _selectedAbridgetVersionFilter = 'Все';
   final List<String> _selectedKidsFilters = [
     'До 5 лет',
     'От 6 до 8 лет',
     'От 9 до 12 лет',
   ];
-  bool _isRecentFilterActive = false;
+  bool _isToggleFilterActive = false;
+
+  // Конструктор по умолчанию
+  FilterProvider();
+
+  // Именованный конструктор для книг с настройками по умолчанию
+  FilterProvider.forBooks({
+    String? selectedTopFilter,
+    bool? isToggleFilterActive,
+  }) {
+    if (selectedTopFilter != null) {
+      _selectedTopFilter = selectedTopFilter;
+    }
+    if (isToggleFilterActive != null) {
+      _isToggleFilterActive = isToggleFilterActive;
+    }
+  }
 
   // Геттеры
   String get selectedGameCategory => _selectedGameCategory;
   String get selectedAppCategory => _selectedAppCategory;
-  String get selectedBookCategory => _selectedBookCategory;
+  String get selectedBookGenre => _selectedBookGenre;
   String get selectedTopFilter => _selectedTopFilter;
   String get selectedRecentFilter => _selectedRecentFilter;
   String get selectedAgeFilter => _selectedAgeFilter;
@@ -29,7 +45,7 @@ class FilterProvider extends ChangeNotifier {
   String get selectedLanguageFilter => _selectedLanguageFilter;
   String get selectedAbridgetVersionFilter => _selectedAbridgetVersionFilter;
   List<String> get selectedKidsFilters => _selectedKidsFilters;
-  bool get isRecentFilterActive => _isRecentFilterActive;
+  bool get isToggleFilterActive => _isToggleFilterActive;
 
   // Методы для изменения фильтров
   void setTopFilter(String value) {
@@ -47,17 +63,37 @@ class FilterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateBookCategory(String value) {
-    _selectedBookCategory = value;
+  void updateBookGenre(String value) {
+    _selectedBookGenre = value;
     notifyListeners();
   }
 
-  void toggleRecentOnly() {
-    _isRecentFilterActive = !_isRecentFilterActive;
+  void setAgeFilter(String value) {
+    _selectedAgeFilter = value;
     notifyListeners();
   }
 
-  // Вспомогательный метод для конвертации возрастных меток
+  void setRatingFilter(String value) {
+    _selectedRatingFilter = value;
+    notifyListeners();
+  }
+
+  void setLanguageFilter(String value) {
+    _selectedLanguageFilter = value;
+    notifyListeners();
+  }
+
+  void setAbridgedVersionFilter(String value) {
+    _selectedAbridgetVersionFilter = value;
+    notifyListeners();
+  }
+
+  void toggleFilterOnly() {
+    _isToggleFilterActive = !_isToggleFilterActive;
+    notifyListeners();
+  }
+
+  // Вспомогательный метод для конвертации возрастных меток (для игр/приложений)
   Map<String, int> getAgeRangeFromLabel(String ageLabel) {
     int minAge = 0;
     int maxAge = 999;
@@ -75,6 +111,7 @@ class FilterProvider extends ChangeNotifier {
         minAge = 9;
         maxAge = 12;
         break;
+      case 'От 13 лет':
       case '13+ лет':
         minAge = 13;
         maxAge = 999;
@@ -84,5 +121,17 @@ class FilterProvider extends ChangeNotifier {
         maxAge = 999;
     }
     return {'minAge': minAge, 'maxAge': maxAge};
+  }
+
+  // Вспомогательный метод для получения минимального рейтинга из фильтра
+  double? getMinRatingFromFilter(String ratingFilter) {
+    switch (ratingFilter) {
+      case '4,5★ и выше':
+        return 4.5;
+      case '4,0★ и выше':
+        return 4.0;
+      default:
+        return null; // 'Все' - без фильтрации по рейтингу
+    }
   }
 }

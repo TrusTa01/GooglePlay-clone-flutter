@@ -19,12 +19,7 @@
         "title": "Играют все",
         "subtitle": "Попробуйте и вы!",
         "dataMethod": "getGamesByCategory",
-        "dataParams": {"genre": "Казино"}
-      },
-      {
-        "type": "grid",
-        "title": "Рекомендуем",
-        "dataMethod": "getGameRecommendationsReversed"
+        "dataParams": {"genre": "Экшен"}
       },
       {
         "type": "banners",

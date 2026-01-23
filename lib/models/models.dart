@@ -11,4 +11,4 @@ export 'banner_models/banner_mapper.dart';
 
 export 'section_models/section_config_model.dart';
 
-export 'section_model.dart';
+export 'section_models/section_model.dart';

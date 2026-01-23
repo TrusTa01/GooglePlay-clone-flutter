@@ -286,6 +286,45 @@ void main() async {
 
   final languages = ['RU', 'EN', 'ES', 'FR', 'DE', 'IT', 'PT', 'ZH', 'JA', 'KO'];
 
+  final appCategories = [
+    'Автомобили и транспорт',
+    'Бизнес',
+    'Виеоплееры и редакторы',
+    'Детям',
+    'Еда и напитки',
+    'Жилье и дом',
+    'Здоровье и фитнес',
+    'Знакомства',
+    'Игры',
+    'Инструменты',
+    'Исскуство и дизайн',
+    'Карты и навигации',
+    'Книги и справочники',
+    'Комиксы',
+    'Красота',
+    'Материнство и детство',
+    'Медицина',
+    'Мероприятия',
+    'Музыка и аудио',
+    'Новости и журналы',
+    'Образование',
+    'Персонализация',
+    'Погода',
+    'Покупки',
+    'Приложения для часов',
+    'Путешествия',
+    'Работа',
+    'Развлечения',
+    'Разное',
+    'Связь',
+    'Социальные',
+    'Спорт',
+    'Стиль жизни',
+    'Финансы',
+    'Фотография',
+    'Циферблаты',
+  ];
+
   final companies = [
     'google',
     'microsoft',
@@ -366,6 +405,12 @@ void main() async {
       appTags,
     )..shuffle()).take(tagCount).toList();
 
+    // Категории (от 1 до 3)
+    final int categoryCount = random.nextInt(3) + 1;
+    final List<String> selectedCategories = (List<String>.from(
+      appCategories,
+    )..shuffle()).take(categoryCount).toList();
+
     // Поддерживаемые языки (от 2 до 10)
     final int langCount = random.nextInt(9) + 2;
     final List<String> supportedLanguages = (List<String>.from(
@@ -427,6 +472,7 @@ void main() async {
       "ageRating": faker.randomGenerator.element(ageRatings),
       "screenshots": selectedScreenshots,
       "tags": selectedTags,
+      "appCategory": selectedCategories,
       "packageName": packageName,
       "supportedLanguages": supportedLanguages,
       "isEditorChoice": isEditorChoice,

@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../models.dart';
-import '../../widgets/banners/banners_type.dart';
+import '../../widgets/sliders/banners/banners_type.dart';
 
 part '../banner_models.g/simple_banner_model.g.dart';
 

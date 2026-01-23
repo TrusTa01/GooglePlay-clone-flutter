@@ -32,6 +32,7 @@ class App implements Product {
   final String version; // "2.1.0"
   final String size; // "15.3 MB"
   final int ageRating;
+  final List<String> appCategory;
   final String creatorDescription;
   final String? eventText;
   final bool containsAds; // true/false
@@ -76,7 +77,8 @@ class App implements Product {
     required this.creatorDescription,
     this.eventText,
     this.price,
-    required this.containsPaidContent,
+    required this.containsPaidContent, 
+    required this.appCategory,
   });
 
   factory App.fromJson(Map<String, dynamic> json) => _$AppFromJson(json);

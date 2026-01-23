@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '/providers/providers.dart';
 import '/models/models.dart';
-import '../../../widgets.dart';
+import '../../widgets.dart';
 
 class ProductDataFormatter {
   final Product product;

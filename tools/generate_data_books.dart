@@ -187,6 +187,16 @@ void main() async {
     'Постапокалипсис',
     'Антиутопия',
     'Бизнес',
+    'Для детей',
+    'Детективы и триллеры',
+    'Для души и тела',
+    'Здоровье и спорт',
+    'История',
+    'Компьютеры и технологии',
+    'Кулинария и домашнее хозяйство',
+    'Любовные романы',
+    'Саморазвитие',
+    'Художественная литература',
   ];
 
   final bookTags = [
@@ -196,6 +206,7 @@ void main() async {
     'Экранизация',
     'Серия',
     'Молодежная литература',
+    'Детская литература',
     'Антиутопия',
     'Мистика',
     'Детектив',
@@ -380,8 +391,49 @@ void main() async {
     'Врата времени',
   ];
 
+  final languages = [
+    'Čeština',
+    'Dansk',
+    'Deutsch',
+    'English',
+    'Español',
+    'Français',
+    'Indonesia',
+    'Italiano',
+    'Magyar',
+    'Melayu',
+    'Nederlands',
+    'Norsk bokmål',
+    'Polski',
+    'Português',
+    'Română',
+    'Slovenčina',
+    'Suomi',
+    'Svenska',
+    'Tiếng Việt',
+    'Türkçe',
+    'Ελληνικά',
+    'Русский',
+    'українська',
+    'עברית',
+    'العربية',
+    'मराठी',
+    'हिंदी',
+    'বাংলা',
+    'தமிழ்',
+    'ไทย',
+    '한국어',
+    '日本語',
+    '中文',
+  ];
+
+  final formats = ['Эл. книга', 'Аудиокнига'];
+
   // Основной цикл генерации
-  for (int i = 1; i <= 1000; i++) {
+  // Для равномерного распределения по жанрам и языкам используем циклические индексы
+  int genreIndex = 0;
+  
+  for (int i = 1; i <= 5000; i++) {
     // Генерируем ID с префиксом 'b' (book)
     final String id = 'b_$i';
 
@@ -389,8 +441,8 @@ void main() async {
     final String suffix = faker.randomGenerator.element(suffixWords);
     final int randomSuffix = faker.randomGenerator.integer(5, min: 1);
 
-    final String generatedTitle = randomSuffix > 3 
-        ? '$prefix $suffix' 
+    final String generatedTitle = randomSuffix > 3
+        ? '$prefix $suffix'
         : '$prefix $suffix $randomSuffix';
 
     // Логика цены (60% шанс, что isPaid будет true)
@@ -415,26 +467,45 @@ void main() async {
       maxYear: 2024,
     );
 
-    // Логика жанров (от 1 до 3)
-    final int genreCount = faker.randomGenerator.integer(3, min: 1);
-    final List<String> selectedGenres = (List<String>.from(
-      genres,
-    )..shuffle()).take(genreCount).toList();
+    // Логика жанров - равномерное распределение
+    // Каждая книга получает 1-2 жанра, причем первый жанр распределяется циклически
+    final int genreCount = faker.randomGenerator.integer(2, min: 1);
+    final List<String> selectedGenres = [];
+    
+    // Первый жанр - циклическое распределение для гарантии равномерности
+    selectedGenres.add(genres[genreIndex % genres.length]);
+    genreIndex++;
+    
+    // Второй жанр (если нужен) - случайный, но не должен совпадать с первым
+    if (genreCount > 1) {
+      String secondGenre;
+      do {
+        secondGenre = faker.randomGenerator.element(genres);
+      } while (secondGenre == selectedGenres[0]);
+      selectedGenres.add(secondGenre);
+    }
 
     // Теги (от 2 до 6)
     final int tagCount = random.nextInt(5) + 2;
     final List<String> selectedTags = (List<String>.from(
       bookTags,
     )..shuffle()).take(tagCount).toList();
+    
+    // Для детских книг добавляем специальный тег, чтобы фильтр по возрасту работал
+    final bool isChildrenBook = selectedGenres.contains('Для детей');
+    if (isChildrenBook && !selectedTags.any((t) => t.toLowerCase().contains('детск'))) {
+      selectedTags.add('Детская литература');
+    }
 
     // ISBN генерация (российский формат)
-    final String isbn = '978-5-${random.nextInt(900) + 100}-${random.nextInt(90000) + 10000}-${random.nextInt(10)}';
+    final String isbn =
+        '978-5-${random.nextInt(900) + 100}-${random.nextInt(90000) + 10000}-${random.nextInt(10)}';
 
     // Количество страниц
     final int pageCount = random.nextInt(800) + 100;
 
-    // Язык (85% русский, 15% английский)
-    final String language = random.nextInt(100) < 85 ? 'Русский' : 'English';
+    // Язык
+    final String language = faker.randomGenerator.element(languages);
 
     // Автор
     final String authorName =
@@ -444,7 +515,6 @@ void main() async {
     final String publisher = faker.randomGenerator.element(publishers);
 
     // Формат книги
-    final List<String> formats = ['Эл. книга', 'Аудиокнига'];
     final String format = faker.randomGenerator.element(formats);
 
     // Аудиоверсия (30% шанс)
@@ -478,12 +548,26 @@ void main() async {
       );
     }
 
+    // Сокращенное издание (20% шанс)
+    final bool isAbridged = faker.randomGenerator.integer(100) < 20;
+
+    // Генерация рейтинга с перекосом в сторону высоких значений
+    // 70% книг будут иметь рейтинг 3.5-5.0
+    final double rating;
+    if (faker.randomGenerator.integer(100) < 70) {
+      // Высокий рейтинг: от 3.5 до 5.0
+      rating = 3.5 + (faker.randomGenerator.integer(16) / 10.0);
+    } else {
+      // Средний/низкий рейтинг: от 2.0 до 3.5
+      rating = 2.0 + (faker.randomGenerator.integer(16) / 10.0);
+    }
+
     final bookData = {
       "type": "book",
       "id": id,
       "title": generatedTitle,
       "creator": authorName,
-      "rating": faker.randomGenerator.integer(50) / 10.0,
+      "rating": rating,
       "iconUrl": localIcon,
       "isPaid": isPaid,
       "price": price,
@@ -504,6 +588,7 @@ void main() async {
       "seriesName": seriesName,
       "seriesNumber": seriesNumber,
       "sampleAvailable": faker.randomGenerator.boolean(),
+      "isAbridged": isAbridged,
       "awards": bookAwards,
     };
 

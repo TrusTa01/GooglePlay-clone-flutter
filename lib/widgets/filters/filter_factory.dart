@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '/screens/screens.dart';
-import '../../providers/filter_provider.dart';
 import '/widgets/widgets.dart';
+import '/providers/providers.dart';
+import '/services/section_builder_service.dart';
+import '/services/product_query_service.dart';
 
 enum FilterType { games, apps, books, kidsAge }
 
@@ -18,31 +21,45 @@ class FilterSets {
     switch (type) {
       case FilterType.games:
         activeFilters = [
-          TopFilter(
-            defaultTitle: 'Топ Бесплатных',
+          ModalFilter(
+            isFullScreen: false,
+            defaultTitle: 'Топ бесплатных',
+            modalTitle: 'Лучшее',
             currentSelection: filterProvider.selectedTopFilter,
             options: topFilterOptions,
             onSelected: (val) => filterProvider.setTopFilter(val),
+            highlightDefault: true,
           ),
-          CategoryFilter(
+          ModalFilter(
+            isFullScreen: true,
+            modalTitle: 'Категории',
             defaultTitle: 'Категории',
             options: gamesCategoriesData,
             currentSelection: filterProvider.selectedGameCategory,
             onSelected: (val) => filterProvider.updateGameCategory(val),
           ),
-          const RecentFilter(),
+          ToggleFilter(
+            label: filterProvider.selectedRecentFilter,
+            isSelected: filterProvider.isToggleFilterActive,
+            onSelected: filterProvider.toggleFilterOnly,
+          ),
         ];
         break;
 
       case FilterType.apps:
         activeFilters = [
-          TopFilter(
-            defaultTitle: 'Топ Бесплатных',
+          ModalFilter(
+            isFullScreen: false,
+            defaultTitle: 'Топ бесплатных',
+            modalTitle: 'Лучшее',
             currentSelection: filterProvider.selectedTopFilter,
             options: topFilterOptions,
             onSelected: (val) => filterProvider.setTopFilter(val),
+            highlightDefault: true,
           ),
-          CategoryFilter(
+          ModalFilter(
+            isFullScreen: true,
+            modalTitle: 'Категории',
             defaultTitle: 'Категории',
             options: appsCategoriesData,
             currentSelection: filterProvider.selectedAppCategory,
@@ -51,32 +68,84 @@ class FilterSets {
         ];
         break;
 
-      case FilterType.books:
-        activeFilters = [
-          TopFilter(
-            defaultTitle: 'Топ Бесплатных',
-            currentSelection: filterProvider.selectedTopFilter,
-            options: topFilterOptions,
-            onSelected: (val) => filterProvider.setTopFilter(val),
-          ),
-          CategoryFilter(
-            defaultTitle: 'Категории',
-            options: gamesCategoriesData,
-            currentSelection: filterProvider.selectedGameCategory,
-            onSelected: (val) => filterProvider.updateGameCategory(val),
-          ),
-          const RecentFilter(),
-        ];
-        break;
-
       case FilterType.kidsAge:
         activeFilters = filterProvider.selectedKidsFilters
-            .map((age) => KidsAgeFilter(label: age))
+            .map((age) => Builder(
+                  builder: (context) {
+                    final productsProvider = context.read<ProductsProvider>();
+                    final sectionBuilder = SectionBuilderService(
+                      allProducts: productsProvider.allProducts,
+                      allBanners: productsProvider.allBanners,
+                      recommendations: productsProvider.recommendations,
+                      pageConfigs: productsProvider.pageConfigs,
+                      queryService: ProductQueryService(),
+                    );
+                    final sections = sectionBuilder.buildKidsCategoryPage(age);
+                    
+                    return ToggleFilter(
+                      label: age,
+                      isSelected: false,
+                      onSelected: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => KidsAgeCategoryScreen(
+                            ageLabel: age,
+                            sections: sections,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ))
             .toList();
+        break;
+
+      case FilterType.books:
+        activeFilters = [
+          ModalFilter(
+            isFullScreen: true,
+            modalTitle: 'Жанр',
+            defaultTitle: 'Жанр',
+            options: booksGenresData,
+            currentSelection: filterProvider.selectedBookGenre,
+            onSelected: (val) => filterProvider.updateBookGenre(val),
+          ),
+          ModalFilter(
+            isFullScreen: false,
+            defaultTitle: 'Возраст',
+            modalTitle: 'Возраст',
+            options: ageFilterData,
+            currentSelection: filterProvider.selectedAgeFilter,
+            onSelected: (val) => filterProvider.setAgeFilter(val),
+          ),
+          ModalFilter(
+            isFullScreen: false,
+            defaultTitle: 'По рейтингу',
+            modalTitle: 'По рейтингу',
+            options: byRating,
+            currentSelection: filterProvider.selectedRatingFilter,
+            onSelected: (val) => filterProvider.setRatingFilter(val),
+          ),
+          ModalFilter(
+            isFullScreen: true,
+            modalTitle: 'Язык',
+            defaultTitle: 'Язык',
+            options: languagesData,
+            currentSelection: filterProvider.selectedLanguageFilter,
+            onSelected: (val) => filterProvider.setLanguageFilter(val),
+          ),
+          ModalFilter(
+            isFullScreen: false,
+            defaultTitle: 'Сокращенное издание',
+            modalTitle: 'Сокращенное издание',
+            options: abridgetVersion,
+            currentSelection: filterProvider.selectedAbridgetVersionFilter,
+            onSelected: (val) => filterProvider.setAbridgedVersionFilter(val),
+          ),
+        ];
         break;
     }
 
-    return FilterBar(
+    return FilterBarRow(
       filters: activeFilters,
       sectionTitle: sectionTitle,
       subtitle: subtitle,

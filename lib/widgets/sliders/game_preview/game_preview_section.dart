@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../models/models.dart';
-import '../../../widgets.dart';
+import '../../../models/models.dart';
+import '../../widgets.dart';
 
 class GamePreviewSection extends StatelessWidget {
   final List<Game> games;

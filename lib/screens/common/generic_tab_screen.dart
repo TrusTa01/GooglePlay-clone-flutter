@@ -84,6 +84,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
           showButton: section.showButton,
+          maxItems: 8,
         );
       case SectionType.carousel:
         return ProductCarousel(

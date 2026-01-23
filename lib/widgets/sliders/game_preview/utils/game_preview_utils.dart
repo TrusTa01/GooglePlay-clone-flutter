@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../widgets.dart';
+import '../../../widgets.dart';
 
 class GameScreenshotImage extends StatelessWidget {
   final String imageUrl;

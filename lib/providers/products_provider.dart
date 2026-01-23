@@ -111,9 +111,16 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   List<Product> getProductsByCategory(String category, {required bool isGame}) {
+    final normalizedCategory = category.trim().toLowerCase();
     return _allProducts.where((p) {
-      if (isGame) return p is Game && p.gameGenre.contains(category);
-      return p is App && p.type == category;
+      if (isGame) {
+        return p is Game && p.gameGenre.any(
+          (g) => g.trim().toLowerCase() == normalizedCategory,
+        );
+      }
+      return p is App && p.appCategory.any(
+        (c) => c.trim().toLowerCase() == normalizedCategory,
+      );
     }).toList();
   }
 

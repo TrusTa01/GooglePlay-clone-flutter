@@ -77,13 +77,37 @@ class _BooksScreenState extends State<BooksScreen>
               onLoad: () => readProvider.getRecomendations(),
             ),
             // Таб 'Топ продаж'
-            const TopChartsScreen(type: FilterType.books),
+            ChangeNotifierProvider(
+              create: (_) => FilterProvider.forBooks(
+                selectedTopFilter: 'Бестселлеры',
+              ),
+              child: const TopChartsScreen(
+                type: FilterType.books,
+                booksTabMode: BooksTabMode.topSales,
+              ),
+            ),
             // Таб 'Новинки'
-            const TopChartsScreen(type: FilterType.books),
+            ChangeNotifierProvider(
+              create: (_) => FilterProvider.forBooks(
+                isToggleFilterActive: true,
+              ),
+              child: const TopChartsScreen(
+                type: FilterType.books,
+                booksTabMode: BooksTabMode.newReleases,
+              ),
+            ),
             // Таб 'Жанры'
             CategoriesTabScreen(categories: booksGenresData),
             // Таб 'Топ бесплатных'
-            const TopChartsScreen(type: FilterType.books),
+            ChangeNotifierProvider(
+              create: (_) => FilterProvider.forBooks(
+                selectedTopFilter: 'Топ бесплатных',
+              ),
+              child: const TopChartsScreen(
+                type: FilterType.books,
+                booksTabMode: BooksTabMode.topFree,
+              ),
+            ),
           ],
         ),
       ),
