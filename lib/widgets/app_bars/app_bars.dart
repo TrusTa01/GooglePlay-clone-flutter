@@ -58,8 +58,9 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
 
     switch (type) {
       case AppBarType.search:
-        innerAppBar = SearchAppBar(
-          searchHint: searchHint!,
+        innerAppBar = SimpleAppBar(
+          hasSearch: true,
+          searchHint: searchHint,
           inputLeading: inputLeading,
           inputActions: inputActions,
           onSearchChanged: onSearchChanged,
@@ -69,33 +70,41 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
         );
         break;
       case AppBarType.tabbed:
-        if (tabs == null) {
-          // Возвращаем заглушку
-          innerAppBar = BasicAppBar();
+        if (tabs == null || tabController == null) {
+          // Возвращаем заглушку, если нет табов или контроллера
+          innerAppBar = SimpleAppBar(
+            actions: actions,
+            showLogo: showLogo,
+            backgroundColor: backgroundColor,
+          );
           break;
         }
-        innerAppBar = TabbedAppBar(
-          actions: actions,
-          tabs: tabs!,
+        innerAppBar = SimpleAppBar(
+          hasTabs: true,
+          tabs: tabs,
           tabController: tabController,
-          backgroundColor: backgroundColor,
+          actions: actions,
           showLogo: showLogo,
+          backgroundColor: backgroundColor,
         );
         break;
       case AppBarType.searchWithTabbs:
-        innerAppBar = SearchAppBarWithTabs(
-          searchHint: searchHint!,
+        innerAppBar = SimpleAppBar(
+          hasSearch: true,
+          hasTabs: true,
+          searchHint: searchHint,
           inputLeading: inputLeading,
           inputActions: inputActions,
           onSearchChanged: onSearchChanged,
           actions: actions,
           backgroundColor: backgroundColor,
-          tabs: tabs!,
+          tabs: tabs,
           tabController: tabController,
         );
         break;
       case AppBarType.transparent:
-        innerAppBar = TransparentAppBar(
+        innerAppBar = SimpleAppBar(
+          isTransparent: true,
           title: title,
           actions: actions,
           showBackButton: showBackButton,
@@ -104,7 +113,7 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
         );
         break;
       default:
-        innerAppBar = BasicAppBar(
+        innerAppBar = SimpleAppBar(
           title: title,
           actions: actions,
           showBackButton: showBackButton,

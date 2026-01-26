@@ -76,46 +76,39 @@ class _GamesScreenState extends State<GamesScreen>
         return tabsProvider;
       },
       child: Scaffold(
-        appBar: AppBars(
-          type: appBarType,
-          showLogo: appBarType == AppBarType.tabbed ? true : false,
-          actions: actionWidgets,
-
-          // // Для AppBarType.searchWithTabbs
-          // searchHint: appBarType == AppBarType.searchWithTabbs
-          //     ? 'Поиск приложений и игр'
-          //     : null,
-
-          // inputLeading: appBarType == AppBarType.searchWithTabbs
-          //     ? [const Icon(Icons.search)]
-          //     : null,
-
-          // inputActions: appBarType == AppBarType.searchWithTabbs
-          //     ? [const Icon(Icons.mic_none_outlined)]
-          //     : null,
-          tabs: _tabs,
-          tabController: _tabController,
-        ),
-
-        body: TabBarView(
-          controller: _tabController,
-          physics:
-              const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-          children: [
-            // Таб 'Рекомендуем'
-            GenericTabScreen(
-              sections: watchProvider.recommendedGamesSection,
-              onLoad: () => readProvider.getRecomendations(),
-            ),
-            // Таб 'Лучшее'
-            const TopChartsScreen(type: FilterType.games),
-            // Таб 'Детям'
-            GenericTabScreen(sections: watchProvider.kidsPaidSection),
-            // Таб 'Платные'
-            GenericTabScreen(sections: watchProvider.paidGamesSection),
-            // Таб 'Категории'
-            CategoriesTabScreen(categories: gamesCategoriesData),
-          ],
+        body: SafeArea(
+          bottom: false,
+          child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return buildSliverTabbedAppBar(
+              context: context,
+              showLogo: true,
+              tabs: _tabs,
+              tabController: _tabController,
+              actions: actionWidgets,
+              forceElevated: false,
+            );
+          },
+          body: TabBarView(
+            controller: _tabController,
+            physics: const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+            children: [
+              // Таб 'Рекомендуем'
+              GenericTabScreen(
+                sections: watchProvider.recommendedGamesSection,
+                onLoad: () => readProvider.getRecomendations(),
+              ),
+              // Таб 'Лучшее'
+              const TopChartsScreen(type: FilterType.games),
+              // Таб 'Детям'
+              GenericTabScreen(sections: watchProvider.kidsPaidSection),
+              // Таб 'Платные'
+              GenericTabScreen(sections: watchProvider.paidGamesSection),
+              // Таб 'Категории'
+              CategoriesTabScreen(categories: gamesCategoriesData),
+            ],
+          ),
+          ),
         ),
       ),
     );
