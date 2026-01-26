@@ -83,7 +83,11 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
     // Определяем leading
     Widget? leading;
     if (widget.isTransparent) {
-      leading = AppBarLeading(showBackButton: true);
+      leading = AppBarLeading(
+        showBackButton: widget.showBackButton,
+        leadingIcon: widget.leadingIcon,
+        onLeadingPressed: widget.onLeadingPressed,
+      );
     } else if (widget.showLogo && !widget.hasSearch) {
       leading = AppBarLogo();
     } else if (widget.showBackButton || widget.leadingIcon != null) {
@@ -102,13 +106,13 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
         searchHint: widget.searchHint ?? '',
         inputActions: widget.inputActions,
       );
+    } else if (widget.isTransparent && widget.title != null) {
+      title = widget.title;
     } else if (widget.title != null || widget.showLogo) {
       title = AppBarLogoTitleRow(
         showLogo: widget.showLogo,
         title: widget.title,
       );
-    } else if (widget.isTransparent && widget.title != null) {
-      title = widget.title;
     }
 
     // Определяем bottom (табы)
