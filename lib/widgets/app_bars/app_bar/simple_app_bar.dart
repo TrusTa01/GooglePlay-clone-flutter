@@ -4,9 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../providers/tabs_provider.dart';
 import '../../widgets.dart';
 
-/// Универсальный AppBar для использования в Scaffold.appBar
-/// Объединяет функциональность BasicAppBar, TransparentAppBar, SearchAppBar,
-/// TabbedAppBar и SearchAppBarWithTabs
+// Универсальный AppBar для использования в Scaffold.appBar
 class SimpleAppBar extends StatefulWidget implements PreferredSizeWidget {
   // Основные параметры
   final Widget? title;

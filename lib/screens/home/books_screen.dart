@@ -27,18 +27,12 @@ class _BooksScreenState extends State<BooksScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
-    _tabController.addListener(_handleTabChange);
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     super.dispose();
-  }
-
-  void _handleTabChange() {
-    setState(() {});
   }
 
   @override
@@ -48,7 +42,7 @@ class _BooksScreenState extends State<BooksScreen>
 
     final List<Widget> actionWidgets = [
       const SizedBox(width: 3),
-      CircleAvatar(radius: 18),
+      const CircleAvatar(radius: 18),
       const SizedBox(width: 25),
     ];
 
