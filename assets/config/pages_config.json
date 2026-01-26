@@ -17,6 +17,7 @@
       {
         "type": "grid",
         "title": "Играют все",
+        "needsTopPadding": false,
         "subtitle": "Попробуйте и вы!",
         "dataMethod": "getGamesByCategory",
         "dataParams": {"genre": "Экшен"}

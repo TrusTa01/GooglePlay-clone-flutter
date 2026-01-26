@@ -44,17 +44,15 @@ class ProductCarousel extends StatelessWidget {
           title: title,
           subtitle: subtitle,
           padding: EdgeInsets.fromLTRB(22, 10, 22, 20),
-          onTap: () {},
-          //  Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     settings: RouteSettings(
-          //       name: '/category_details',
-          //       arguments: {'title': title,},
-          //     ),
-          //     builder: (context) => const CategoryDetailsScreen(),
-          //   ),
-          // ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CategoryDetailsScreen(
+                title: title,
+                products: products,
+              ),
+            ),
+          ),
           showButton: true,
         ),
 

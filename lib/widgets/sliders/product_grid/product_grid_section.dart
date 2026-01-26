@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/screens/screens.dart';
 import '../../widgets.dart';
 import '../../../models/models.dart';
 
@@ -37,7 +38,13 @@ class ProductGrid extends StatelessWidget {
           title: title,
           subtitle: subtitle,
           padding: EdgeInsets.fromLTRB(22, 0, 22, 10),
-          onTap: () {},
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CategoryDetailsScreen(title: title, products: products),
+            ),
+          ),
           showButton: true,
         ),
 

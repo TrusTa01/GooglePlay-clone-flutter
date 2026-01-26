@@ -45,6 +45,8 @@ export '../core/shimers/product_slider_skeleton.dart';
 export '../core/shimers/shimer_box.dart';
 export '../core/shimers/game_preview_skeleton.dart';
 
+export 'category_details_section.dart';
+
 export 'full_screen_image.dart';
 
 // Filter bars
