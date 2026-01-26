@@ -46,6 +46,12 @@ class _BooksScreenState extends State<BooksScreen>
     final watchProvider = context.watch<ProductsProvider>();
     final readProvider = context.read<ProductsProvider>();
 
+    final List<Widget> actionWidgets = [
+      const SizedBox(width: 3),
+      CircleAvatar(radius: 18),
+      const SizedBox(width: 25),
+    ];
+
     return ChangeNotifierProvider(
       create: (context) {
         final tabsProvider = TabsProvider();
@@ -58,11 +64,7 @@ class _BooksScreenState extends State<BooksScreen>
           inputLeading: [Icon(Icons.search)],
           inputActions: [Icon(Icons.mic_none_outlined)],
           searchHint: 'Поиск книг',
-          actions: [
-            const SizedBox(width: 4),
-            CircleAvatar(radius: 18),
-            const SizedBox(width: 20),
-          ],
+          actions: actionWidgets,
           tabs: _tabs,
           tabController: _tabController,
           onSearchChanged: (value) {},
@@ -78,9 +80,8 @@ class _BooksScreenState extends State<BooksScreen>
             ),
             // Таб 'Топ продаж'
             ChangeNotifierProvider(
-              create: (_) => FilterProvider.forBooks(
-                selectedTopFilter: 'Бестселлеры',
-              ),
+              create: (_) =>
+                  FilterProvider.forBooks(selectedTopFilter: 'Бестселлеры'),
               child: const TopChartsScreen(
                 type: FilterType.books,
                 booksTabMode: BooksTabMode.topSales,
@@ -88,9 +89,8 @@ class _BooksScreenState extends State<BooksScreen>
             ),
             // Таб 'Новинки'
             ChangeNotifierProvider(
-              create: (_) => FilterProvider.forBooks(
-                isToggleFilterActive: true,
-              ),
+              create: (_) =>
+                  FilterProvider.forBooks(isToggleFilterActive: true),
               child: const TopChartsScreen(
                 type: FilterType.books,
                 booksTabMode: BooksTabMode.newReleases,
@@ -100,9 +100,8 @@ class _BooksScreenState extends State<BooksScreen>
             CategoriesTabScreen(categories: booksGenresData),
             // Таб 'Топ бесплатных'
             ChangeNotifierProvider(
-              create: (_) => FilterProvider.forBooks(
-                selectedTopFilter: 'Топ бесплатных',
-              ),
+              create: (_) =>
+                  FilterProvider.forBooks(selectedTopFilter: 'Топ бесплатных'),
               child: const TopChartsScreen(
                 type: FilterType.books,
                 booksTabMode: BooksTabMode.topFree,

@@ -50,7 +50,7 @@ class _AppsScreenState extends State<AppsScreen>
         icon: const Icon(Icons.notifications_outlined),
       ),
 
-      const SizedBox(width: 10),
+      const SizedBox(width: 3),
       CircleAvatar(radius: 18),
       const SizedBox(width: 25),
     ];
