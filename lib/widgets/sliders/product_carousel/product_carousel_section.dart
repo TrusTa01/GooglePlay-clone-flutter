@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/product_models/book_model.dart';
 import '../../../models/product_models/product_interface.dart';
+import '../../../screens/category/category_details_screen.dart';
 import '../../widgets.dart';
 
 class ProductCarousel extends StatelessWidget {
@@ -19,10 +20,10 @@ class ProductCarousel extends StatelessWidget {
     this.isBookCarousel = false,
     this.maxItems,
   });
-  
+
   @override
   Widget build(BuildContext context) {
-    // Размер слайдера 
+    // Размер слайдера
     final double sliderHeight = products.first is Book ? 230 : 180;
 
     if (products.isEmpty) {
@@ -44,6 +45,16 @@ class ProductCarousel extends StatelessWidget {
           subtitle: subtitle,
           padding: EdgeInsets.fromLTRB(22, 10, 22, 20),
           onTap: () {},
+          //  Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     settings: RouteSettings(
+          //       name: '/category_details',
+          //       arguments: {'title': title,},
+          //     ),
+          //     builder: (context) => const CategoryDetailsScreen(),
+          //   ),
+          // ),
           showButton: true,
         ),
 

@@ -357,6 +357,61 @@ class ProductInfoTag extends StatelessWidget {
   }
 }
 
+class ProductCardContent extends StatelessWidget {
+  final Product product;
+  final bool showPrice;
+  final ProductDataFormatter formatter;
+  
+  const ProductCardContent({
+    super.key,
+    required this.product,
+    required this.showPrice,
+    required this.formatter,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        // Карточка
+        ProductCardThumbnail(
+          borderRadius: product is Book
+              ? BorderRadius.circular(6)
+              : BorderRadius.circular(20),
+          iconUrl: product.iconUrl,
+          iconWidth: product is Book ? 110 : 115,
+          iconHeight: product is Book ? 165 : 115,
+          cacheWidth: 300,
+          cacheHeight: 350,
+          fit: product is Book ? BoxFit.fill : BoxFit.cover,
+        ),
+        const SizedBox(height: 6),
+        SizedBox(
+          width: 115,
+          child: ProductTitle(
+            // Название
+            title: product.title,
+            maxLines: 2,
+            fontSize: 12,
+          ),
+        ),
+        const SizedBox(height: 4),
+        // Рейтинг
+        Align(
+          alignment: Alignment.centerLeft,
+          child: showPrice
+              ? ProductInfoTag(text: formatter.price)
+              : ProductInfoTag(
+                  text: formatter.rating,
+                  iconPath: 'assets/icons/star.png',
+                ),
+        ),
+      ],
+    );
+  }
+}
+
 class ActionRow extends StatelessWidget {
   final dynamic product;
   final ActionBanner? banner;
@@ -368,7 +423,7 @@ class ActionRow extends StatelessWidget {
   final int cacheWidth;
   final int cacheHeight;
   final BorderRadius? borderRadius;
-  final BoxFit? fit; 
+  final BoxFit? fit;
 
   const ActionRow({
     super.key,
