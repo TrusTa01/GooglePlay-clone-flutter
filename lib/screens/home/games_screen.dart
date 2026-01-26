@@ -44,25 +44,17 @@ class _GamesScreenState extends State<GamesScreen>
 
   @override
   Widget build(BuildContext context) {
-    final int currentIndex = _tabController.index;
-
     final watchProvider = context.watch<ProductsProvider>();
     final readProvider = context.read<ProductsProvider>();
 
-    final AppBarType appBarType = switch (currentIndex) {
-      0 || 1 || 2 || 3 || 4 => AppBarType.tabbed,
-      _ => AppBarType.tabbed,
-    };
-
     final List<Widget> actionWidgets = [
-      if (appBarType == AppBarType.tabbed)
-        IconButton(
-          onPressed: () => Navigator.of(
-            context,
-            rootNavigator: true,
-          ).pushNamed(AppRoutesName.notificationsScreen),
-          icon: const Icon(Icons.notifications_outlined),
-        ),
+      IconButton(
+        onPressed: () => Navigator.of(
+          context,
+          rootNavigator: true,
+        ).pushNamed(AppRoutesName.notificationsScreen),
+        icon: const Icon(Icons.notifications_outlined),
+      ),
 
       const SizedBox(width: 10),
       CircleAvatar(radius: 18),
@@ -79,35 +71,37 @@ class _GamesScreenState extends State<GamesScreen>
         body: SafeArea(
           bottom: false,
           child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return buildSliverTabbedAppBar(
-              context: context,
-              showLogo: true,
-              tabs: _tabs,
-              tabController: _tabController,
-              actions: actionWidgets,
-              forceElevated: false,
-            );
-          },
-          body: TabBarView(
-            controller: _tabController,
-            physics: const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-            children: [
-              // Таб 'Рекомендуем'
-              GenericTabScreen(
-                sections: watchProvider.recommendedGamesSection,
-                onLoad: () => readProvider.getRecomendations(),
-              ),
-              // Таб 'Лучшее'
-              const TopChartsScreen(type: FilterType.games),
-              // Таб 'Детям'
-              GenericTabScreen(sections: watchProvider.kidsPaidSection),
-              // Таб 'Платные'
-              GenericTabScreen(sections: watchProvider.paidGamesSection),
-              // Таб 'Категории'
-              CategoriesTabScreen(categories: gamesCategoriesData),
-            ],
-          ),
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+                  return buildSliverTabbedAppBar(
+                    context: context,
+                    showLogo: true,
+                    tabs: _tabs,
+                    tabController: _tabController,
+                    actions: actionWidgets,
+                    forceElevated: false,
+                  );
+                },
+            body: TabBarView(
+              controller: _tabController,
+              physics:
+                  const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+              children: [
+                // Таб 'Рекомендуем'
+                GenericTabScreen(
+                  sections: watchProvider.recommendedGamesSection,
+                  onLoad: () => readProvider.getRecomendations(),
+                ),
+                // Таб 'Лучшее'
+                const TopChartsScreen(type: FilterType.games),
+                // Таб 'Детям'
+                GenericTabScreen(sections: watchProvider.kidsPaidSection),
+                // Таб 'Платные'
+                GenericTabScreen(sections: watchProvider.paidGamesSection),
+                // Таб 'Категории'
+                CategoriesTabScreen(categories: gamesCategoriesData),
+              ],
+            ),
           ),
         ),
       ),
