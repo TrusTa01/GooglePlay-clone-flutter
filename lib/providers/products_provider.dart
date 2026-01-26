@@ -147,10 +147,6 @@ class ProductsProvider extends ChangeNotifier {
 
     _isLoading = true;
     notifyListeners();
-
-    // Небольшая пауза, чтобы пользователь увидел анимацию загрузки (шиммеры)
-    await Future.delayed(const Duration(milliseconds: 500));
-
     try {
       List<Product> allAvailable = List.from(_allProducts);
       allAvailable.sort((a, b) => b.rating.compareTo(a.rating));
