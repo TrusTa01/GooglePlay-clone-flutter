@@ -20,52 +20,78 @@ class FilterSets {
 
     switch (type) {
       case FilterType.games:
-        activeFilters = [
-          ModalFilter(
-            isFullScreen: false,
-            defaultTitle: 'Топ бесплатных',
-            modalTitle: 'Лучшее',
-            currentSelection: filterProvider.selectedTopFilter,
-            options: topFilterOptions,
-            onSelected: (val) => filterProvider.setTopFilter(val),
-            highlightDefault: true,
-          ),
-          ModalFilter(
-            isFullScreen: true,
-            modalTitle: 'Категории',
-            defaultTitle: 'Категории',
-            options: gamesCategoriesData,
-            currentSelection: filterProvider.selectedGameCategory,
-            onSelected: (val) => filterProvider.updateGameCategory(val),
-          ),
-          ToggleFilter(
-            label: filterProvider.selectedRecentFilter,
-            isSelected: filterProvider.isFilterOnlyMode,
-            onSelected: filterProvider.toggleFilterOnly,
-          ),
-        ];
+        if (filterProvider.isCategoryOverviewMode) {
+          activeFilters = [
+            ModalFilter(
+              isFullScreen: true,
+              modalTitle: 'Категории',
+              defaultTitle: 'Категории',
+              options: gamesCategoriesData,
+              currentSelection: filterProvider.selectedGameCategory,
+              onSelected: (val) => filterProvider.updateGameCategory(val),
+            ),
+          ];
+        } else {
+          activeFilters = [
+            ModalFilter(
+              isFullScreen: false,
+              defaultTitle: 'Топ бесплатных',
+              modalTitle: 'Лучшее',
+              currentSelection: filterProvider.selectedTopFilter,
+              options: topFilterOptions,
+              onSelected: (val) => filterProvider.setTopFilter(val),
+              highlightDefault: true,
+            ),
+            ModalFilter(
+              isFullScreen: true,
+              modalTitle: 'Категории',
+              defaultTitle: 'Категории',
+              options: gamesCategoriesData,
+              currentSelection: filterProvider.selectedGameCategory,
+              onSelected: (val) => filterProvider.updateGameCategory(val),
+            ),
+            ToggleFilter(
+              label: filterProvider.selectedRecentFilter,
+              isSelected: filterProvider.isFilterOnlyMode,
+              onSelected: filterProvider.toggleFilterOnly,
+            ),
+          ];
+        }
         break;
 
       case FilterType.apps:
-        activeFilters = [
-          ModalFilter(
-            isFullScreen: false,
-            defaultTitle: 'Топ бесплатных',
-            modalTitle: 'Лучшее',
-            currentSelection: filterProvider.selectedTopFilter,
-            options: topFilterOptions,
-            onSelected: (val) => filterProvider.setTopFilter(val),
-            highlightDefault: true,
-          ),
-          ModalFilter(
-            isFullScreen: true,
-            modalTitle: 'Категории',
-            defaultTitle: 'Категории',
-            options: appsCategoriesData,
-            currentSelection: filterProvider.selectedAppCategory,
-            onSelected: (val) => filterProvider.updateAppCategory(val),
-          ),
-        ];
+        if (filterProvider.isCategoryOverviewMode) {
+          activeFilters = [
+            ModalFilter(
+              isFullScreen: true,
+              modalTitle: 'Категории',
+              defaultTitle: 'Категории',
+              options: appsCategoriesData,
+              currentSelection: filterProvider.selectedAppCategory,
+              onSelected: (val) => filterProvider.updateAppCategory(val),
+            ),
+          ];
+        } else {
+          activeFilters = [
+            ModalFilter(
+              isFullScreen: false,
+              defaultTitle: 'Топ бесплатных',
+              modalTitle: 'Лучшее',
+              currentSelection: filterProvider.selectedTopFilter,
+              options: topFilterOptions,
+              onSelected: (val) => filterProvider.setTopFilter(val),
+              highlightDefault: true,
+            ),
+            ModalFilter(
+              isFullScreen: true,
+              modalTitle: 'Категории',
+              defaultTitle: 'Категории',
+              options: appsCategoriesData,
+              currentSelection: filterProvider.selectedAppCategory,
+              onSelected: (val) => filterProvider.updateAppCategory(val),
+            ),
+          ];
+        }
         break;
 
       case FilterType.kidsAge:
@@ -100,48 +126,61 @@ class FilterSets {
         break;
 
       case FilterType.books:
-        activeFilters = [
-          ModalFilter(
-            isFullScreen: true,
-            modalTitle: 'Жанр',
-            defaultTitle: 'Жанр',
-            options: booksGenresData,
-            currentSelection: filterProvider.selectedBookGenre,
-            onSelected: (val) => filterProvider.updateBookGenre(val),
-          ),
-          ModalFilter(
-            isFullScreen: false,
-            defaultTitle: 'Возраст',
-            modalTitle: 'Возраст',
-            options: ageFilterData,
-            currentSelection: filterProvider.selectedAgeFilter,
-            onSelected: (val) => filterProvider.setAgeFilter(val),
-          ),
-          ModalFilter(
-            isFullScreen: false,
-            defaultTitle: 'По рейтингу',
-            modalTitle: 'По рейтингу',
-            options: byRating,
-            currentSelection: filterProvider.selectedRatingFilter,
-            onSelected: (val) => filterProvider.setRatingFilter(val),
-          ),
-          ModalFilter(
-            isFullScreen: true,
-            modalTitle: 'Язык',
-            defaultTitle: 'Язык',
-            options: languagesData,
-            currentSelection: filterProvider.selectedLanguageFilter,
-            onSelected: (val) => filterProvider.setLanguageFilter(val),
-          ),
-          ModalFilter(
-            isFullScreen: false,
-            defaultTitle: 'Сокращенное издание',
-            modalTitle: 'Сокращенное издание',
-            options: abridgetVersion,
-            currentSelection: filterProvider.selectedAbridgetVersionFilter,
-            onSelected: (val) => filterProvider.setAbridgedVersionFilter(val),
-          ),
-        ];
+        if (filterProvider.isCategoryOverviewMode) {
+          activeFilters = [
+            ModalFilter(
+              isFullScreen: true,
+              modalTitle: 'Жанр',
+              defaultTitle: 'Жанр',
+              options: booksGenresData,
+              currentSelection: filterProvider.selectedBookGenre,
+              onSelected: (val) => filterProvider.updateBookGenre(val),
+            ),
+          ];
+        } else {
+          activeFilters = [
+            ModalFilter(
+              isFullScreen: true,
+              modalTitle: 'Жанр',
+              defaultTitle: 'Жанр',
+              options: booksGenresData,
+              currentSelection: filterProvider.selectedBookGenre,
+              onSelected: (val) => filterProvider.updateBookGenre(val),
+            ),
+            ModalFilter(
+              isFullScreen: false,
+              defaultTitle: 'Возраст',
+              modalTitle: 'Возраст',
+              options: ageFilterData,
+              currentSelection: filterProvider.selectedAgeFilter,
+              onSelected: (val) => filterProvider.setAgeFilter(val),
+            ),
+            ModalFilter(
+              isFullScreen: false,
+              defaultTitle: 'По рейтингу',
+              modalTitle: 'По рейтингу',
+              options: byRating,
+              currentSelection: filterProvider.selectedRatingFilter,
+              onSelected: (val) => filterProvider.setRatingFilter(val),
+            ),
+            ModalFilter(
+              isFullScreen: true,
+              modalTitle: 'Язык',
+              defaultTitle: 'Язык',
+              options: languagesData,
+              currentSelection: filterProvider.selectedLanguageFilter,
+              onSelected: (val) => filterProvider.setLanguageFilter(val),
+            ),
+            ModalFilter(
+              isFullScreen: false,
+              defaultTitle: 'Сокращенное издание',
+              modalTitle: 'Сокращенное издание',
+              options: abridgetVersion,
+              currentSelection: filterProvider.selectedAbridgetVersionFilter,
+              onSelected: (val) => filterProvider.setAbridgedVersionFilter(val),
+            ),
+          ];
+        }
         break;
     }
 

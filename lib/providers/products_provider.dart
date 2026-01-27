@@ -26,6 +26,10 @@ class ProductsProvider extends ChangeNotifier {
 
   // Геттеры
   List<Product> get allProducts => _allProducts;
+  List<Product> get games => _allProducts.whereType<Game>().toList();
+  List<Product> get apps => _allProducts.whereType<App>().toList();
+  List<Product> get books => _allProducts.whereType<Book>().toList();
+  
   bool get isLoading => _isLoading;
   String? get error => _error;
   List<Product> get recommendations => _recommendations;

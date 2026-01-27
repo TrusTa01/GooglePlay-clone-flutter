@@ -85,7 +85,10 @@ class _BooksScreenState extends State<BooksScreen>
               child: const TopChartsScreen(type: FilterType.books),
             ),
             // Таб 'Жанры'
-            CategoriesTabScreen(categories: booksGenresData),
+            CategoriesTabScreen(
+              categories: booksGenresData,
+              products: watchProvider.books,
+            ),
             // Таб 'Топ бесплатных'
             ChangeNotifierProvider(
               create: (_) =>

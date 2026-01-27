@@ -47,9 +47,6 @@ class _AppsScreenState extends State<AppsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final watchProvider = context.watch<ProductsProvider>();
-    final readProvider = context.read<ProductsProvider>();
-
     return ChangeNotifierProvider<TabsProvider>(
       create: (context) {
         final tabsProvider = TabsProvider();
@@ -77,16 +74,30 @@ class _AppsScreenState extends State<AppsScreen>
                   const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
               children: [
                 // Таб 'Рекомендуем'
-                GenericTabScreen(
-                  sections: watchProvider.recommendedAppsSection,
-                  onLoad: () => readProvider.getRecomendations(),
+                Consumer<ProductsProvider>(
+                  builder: (context, productsProvider, _) =>
+                      GenericTabScreen(
+                    sections: productsProvider.recommendedAppsSection,
+                    onLoad: () => productsProvider.getRecomendations(),
+                  ),
                 ),
                 // Таб 'Лучшее'
                 const TopChartsScreen(type: FilterType.apps),
                 // Таб 'Детям'
-                GenericTabScreen(sections: watchProvider.kidsPaidSection),
+                Consumer<ProductsProvider>(
+                  builder: (context, productsProvider, _) =>
+                      GenericTabScreen(
+                    sections: productsProvider.kidsPaidSection,
+                  ),
+                ),
                 // Таб 'Категории'
-                CategoriesTabScreen(categories: appsCategoriesData),
+                Consumer<ProductsProvider>(
+                  builder: (context, productsProvider, _) =>
+                      CategoriesTabScreen(
+                    categories: appsCategoriesData,
+                    products: productsProvider.apps,
+                  ),
+                ),
               ],
             ),
           ),

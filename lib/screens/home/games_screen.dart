@@ -94,7 +94,10 @@ class _GamesScreenState extends State<GamesScreen>
                 // Таб 'Платные'
                 GenericTabScreen(sections: watchProvider.paidGamesSection),
                 // Таб 'Категории'
-                CategoriesTabScreen(categories: gamesCategoriesData),
+                CategoriesTabScreen(
+                  categories: gamesCategoriesData,
+                  products: watchProvider.games,
+                ),
               ],
             ),
           ),

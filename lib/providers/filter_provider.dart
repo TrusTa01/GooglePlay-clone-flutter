@@ -19,6 +19,8 @@ class FilterProvider extends ChangeNotifier {
   /// Режим «только этот фильтр»: когда true, учитывается только выбранный
   /// ToggleFilter (например «Новое»), остальные топ-фильтры не применяются.
   bool _isFilterOnlyMode = false;
+  /// Режим обзора категории: только фильтр по категории/жанру, без «Топ бесплатных» и остальных.
+  bool _isCategoryOverviewMode = false;
 
   // Конструктор по умолчанию
   FilterProvider();
@@ -36,6 +38,19 @@ class FilterProvider extends ChangeNotifier {
     }
   }
 
+  // Режим обзора категории: только категория/жанр, топ-фильтр не активен и не применяется.
+  FilterProvider.forCategoryOverview({
+    String? initialBookGenre,
+    String? initialGameCategory,
+    String? initialAppCategory,
+  }) {
+    _isCategoryOverviewMode = true;
+    _selectedTopFilter = ''; // чтобы getFilteredProducts не применял «Топ бесплатных» и т.п.
+    if (initialBookGenre != null) _selectedBookGenre = initialBookGenre;
+    if (initialGameCategory != null) _selectedGameCategory = initialGameCategory;
+    if (initialAppCategory != null) _selectedAppCategory = initialAppCategory;
+  }
+
   // Геттеры
   String get selectedGameCategory => _selectedGameCategory;
   String get selectedAppCategory => _selectedAppCategory;
@@ -48,6 +63,7 @@ class FilterProvider extends ChangeNotifier {
   String get selectedAbridgetVersionFilter => _selectedAbridgetVersionFilter;
   List<String> get selectedKidsFilters => _selectedKidsFilters;
   bool get isFilterOnlyMode => _isFilterOnlyMode;
+  bool get isCategoryOverviewMode => _isCategoryOverviewMode;
 
   // Методы для изменения фильтров
   void setTopFilter(String value) {

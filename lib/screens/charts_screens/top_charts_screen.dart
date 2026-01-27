@@ -6,14 +6,10 @@ import '/services/product_query_service.dart';
 import '/widgets/widgets.dart';
 import '/models/product_models/book_model.dart';
 
-
 class TopChartsScreen extends StatelessWidget {
   final FilterType type;
 
-  const TopChartsScreen({
-    super.key,
-    required this.type,
-  });
+  const TopChartsScreen({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +27,21 @@ class TopChartsScreen extends StatelessWidget {
       selectedBookCategory: filterProvider.selectedBookGenre,
       isFilterOnlyMode: filterProvider.isFilterOnlyMode,
       // Фильтры для книг
-      selectedAgeFilter: type == FilterType.books ? filterProvider.selectedAgeFilter : null,
-      selectedRatingFilter: type == FilterType.books ? filterProvider.selectedRatingFilter : null,
-      selectedLanguageFilter: type == FilterType.books ? filterProvider.selectedLanguageFilter : null,
-      selectedAbridgedVersionFilter: type == FilterType.books ? filterProvider.selectedAbridgetVersionFilter : null,
-      getMinRatingFromFilter: type == FilterType.books ? filterProvider.getMinRatingFromFilter : null,
+      selectedAgeFilter: type == FilterType.books
+          ? filterProvider.selectedAgeFilter
+          : null,
+      selectedRatingFilter: type == FilterType.books
+          ? filterProvider.selectedRatingFilter
+          : null,
+      selectedLanguageFilter: type == FilterType.books
+          ? filterProvider.selectedLanguageFilter
+          : null,
+      selectedAbridgedVersionFilter: type == FilterType.books
+          ? filterProvider.selectedAbridgetVersionFilter
+          : null,
+      getMinRatingFromFilter: type == FilterType.books
+          ? filterProvider.getMinRatingFromFilter
+          : null,
     );
 
     return Column(
