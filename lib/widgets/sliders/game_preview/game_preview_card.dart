@@ -21,12 +21,12 @@ class GamePreviewCard extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemCount: game.screenshots.length,
             itemBuilder: (context, index) {
-
              return Padding(
               padding: const EdgeInsets.only(right: 12),
               child: GameScreenshotImage(
                 imageUrl: game.screenshots[index],
                 productId: game.id,
+                index: index,
               ),
              );
             },

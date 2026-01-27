@@ -23,7 +23,6 @@ class GamePreviewSection extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: nestedInScrollView,
       physics: nestedInScrollView ? const NeverScrollableScrollPhysics() : null,
-      padding: const EdgeInsets.only(bottom: 20),
       separatorBuilder: (context, index) => const SizedBox(height: 35),
       itemCount: games.length,
       itemBuilder: (context, index) {

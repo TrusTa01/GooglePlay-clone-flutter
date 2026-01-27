@@ -5,6 +5,7 @@ import '../../../widgets.dart';
 class GameScreenshotImage extends StatelessWidget {
   final String imageUrl;
   final String productId;
+  final int index;
   final double height;
   final double borderRadius;
 
@@ -12,13 +13,14 @@ class GameScreenshotImage extends StatelessWidget {
     super.key,
     required this.productId,
     required this.imageUrl,
+    required this.index,
     this.height = 180,
     this.borderRadius = 6,
   });
 
   @override
   Widget build(BuildContext context) {
-    final String heroTag = '${productId}_$imageUrl';
+    final String heroTag = '${productId}_screenshot_$index';
 
     final bool isHorizontal = imageUrl.contains('horiz');
     final double currentWidth = isHorizontal ? 300 : 120;
@@ -29,11 +31,14 @@ class GameScreenshotImage extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute(builder: (context) => FullScreenImage(imageUrl: imageUrl, heroTag: heroTag)),
+          MaterialPageRoute(
+            builder: (context) =>
+                FullScreenImage(imageUrl: imageUrl, heroTag: heroTag),
+          ),
         );
       },
       child: Hero(
-        tag: imageUrl, // Уникальный тег для анимации перехода
+        tag: heroTag,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(borderRadius),
           child: Image.asset(
