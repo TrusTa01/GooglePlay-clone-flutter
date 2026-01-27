@@ -16,7 +16,9 @@ class FilterProvider extends ChangeNotifier {
     'От 6 до 8 лет',
     'От 9 до 12 лет',
   ];
-  bool _isToggleFilterActive = false;
+  /// Режим «только этот фильтр»: когда true, учитывается только выбранный
+  /// ToggleFilter (например «Новое»), остальные топ-фильтры не применяются.
+  bool _isFilterOnlyMode = false;
 
   // Конструктор по умолчанию
   FilterProvider();
@@ -24,13 +26,13 @@ class FilterProvider extends ChangeNotifier {
   // Именованный конструктор для книг с настройками по умолчанию
   FilterProvider.forBooks({
     String? selectedTopFilter,
-    bool? isToggleFilterActive,
+    bool? filterOnlyMode,
   }) {
     if (selectedTopFilter != null) {
       _selectedTopFilter = selectedTopFilter;
     }
-    if (isToggleFilterActive != null) {
-      _isToggleFilterActive = isToggleFilterActive;
+    if (filterOnlyMode != null) {
+      _isFilterOnlyMode = filterOnlyMode;
     }
   }
 
@@ -45,7 +47,7 @@ class FilterProvider extends ChangeNotifier {
   String get selectedLanguageFilter => _selectedLanguageFilter;
   String get selectedAbridgetVersionFilter => _selectedAbridgetVersionFilter;
   List<String> get selectedKidsFilters => _selectedKidsFilters;
-  bool get isToggleFilterActive => _isToggleFilterActive;
+  bool get isFilterOnlyMode => _isFilterOnlyMode;
 
   // Методы для изменения фильтров
   void setTopFilter(String value) {
@@ -88,8 +90,9 @@ class FilterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Переключает режим «только этот фильтр» (для ToggleFilter, например «Новое»).
   void toggleFilterOnly() {
-    _isToggleFilterActive = !_isToggleFilterActive;
+    _isFilterOnlyMode = !_isFilterOnlyMode;
     notifyListeners();
   }
 

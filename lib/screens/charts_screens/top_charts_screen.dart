@@ -6,20 +6,13 @@ import '/services/product_query_service.dart';
 import '/widgets/widgets.dart';
 import '/models/product_models/book_model.dart';
 
-enum BooksTabMode {
-  topSales,    // Топ продаж
-  newReleases, // Новинки
-  topFree,     // Топ бесплатных
-}
 
 class TopChartsScreen extends StatelessWidget {
   final FilterType type;
-  final BooksTabMode? booksTabMode;
 
   const TopChartsScreen({
     super.key,
     required this.type,
-    this.booksTabMode,
   });
 
   @override
@@ -36,7 +29,7 @@ class TopChartsScreen extends StatelessWidget {
       selectedGameCategory: filterProvider.selectedGameCategory,
       selectedAppCategory: filterProvider.selectedAppCategory,
       selectedBookCategory: filterProvider.selectedBookGenre,
-      isToggleFilterActive: filterProvider.isToggleFilterActive,
+      isFilterOnlyMode: filterProvider.isFilterOnlyMode,
       // Фильтры для книг
       selectedAgeFilter: type == FilterType.books ? filterProvider.selectedAgeFilter : null,
       selectedRatingFilter: type == FilterType.books ? filterProvider.selectedRatingFilter : null,

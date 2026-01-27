@@ -76,19 +76,13 @@ class _BooksScreenState extends State<BooksScreen>
             ChangeNotifierProvider(
               create: (_) =>
                   FilterProvider.forBooks(selectedTopFilter: 'Бестселлеры'),
-              child: const TopChartsScreen(
-                type: FilterType.books,
-                booksTabMode: BooksTabMode.topSales,
-              ),
+              child: const TopChartsScreen(type: FilterType.books),
             ),
             // Таб 'Новинки'
             ChangeNotifierProvider(
               create: (_) =>
-                  FilterProvider.forBooks(isToggleFilterActive: true),
-              child: const TopChartsScreen(
-                type: FilterType.books,
-                booksTabMode: BooksTabMode.newReleases,
-              ),
+                  FilterProvider.forBooks(filterOnlyMode: true),
+              child: const TopChartsScreen(type: FilterType.books),
             ),
             // Таб 'Жанры'
             CategoriesTabScreen(categories: booksGenresData),
@@ -96,10 +90,7 @@ class _BooksScreenState extends State<BooksScreen>
             ChangeNotifierProvider(
               create: (_) =>
                   FilterProvider.forBooks(selectedTopFilter: 'Топ бесплатных'),
-              child: const TopChartsScreen(
-                type: FilterType.books,
-                booksTabMode: BooksTabMode.topFree,
-              ),
+              child: const TopChartsScreen(type: FilterType.books),
             ),
           ],
         ),

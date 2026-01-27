@@ -40,7 +40,7 @@ class FilterSets {
           ),
           ToggleFilter(
             label: filterProvider.selectedRecentFilter,
-            isSelected: filterProvider.isToggleFilterActive,
+            isSelected: filterProvider.isFilterOnlyMode,
             onSelected: filterProvider.toggleFilterOnly,
           ),
         ];

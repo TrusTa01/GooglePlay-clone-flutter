@@ -305,7 +305,7 @@ class ProductQueryService {
     required String selectedGameCategory,
     required String selectedAppCategory,
     required String selectedBookCategory,
-    required bool isToggleFilterActive,
+    required bool isFilterOnlyMode,
     // Дополнительные фильтры для книг
     String? selectedAgeFilter,
     String? selectedRatingFilter,
@@ -328,8 +328,8 @@ class ProductQueryService {
     }).toList();
 
     // Фильтруем по основному статусу (Бесплатные/Платные/Бестселлеры)
-    // Если активен фильтр "Новое", не применяем фильтр по бесплатным/платным
-    if (!isToggleFilterActive) {
+    // В режиме «только этот фильтр» (например «Новое») не применяем топ-фильтр
+    if (!isFilterOnlyMode) {
       if (selectedTopFilter == 'Топ бесплатных') {
         // Только бесплатные продукты, без требования рейтинга
         result = result.where((p) => !p.isPaid).toList();
@@ -345,8 +345,8 @@ class ProductQueryService {
         debugPrint('Фильтр "$selectedTopFilter" не применен: ${result.length} книг');
       }
     } else {
-      // Если активен фильтр "Новое", показываем все новинки (и платные, и бесплатные)
-      debugPrint('Фильтр "Новое" активен - показываем все новинки: ${result.length} книг');
+      // Режим «только этот фильтр» — показываем все по выбранному чипу (напр. новинки)
+      debugPrint('Режим «только этот фильтр» — показываем все: ${result.length}');
     }
 
     // Фильтр по категориям
@@ -392,8 +392,8 @@ class ProductQueryService {
       debugPrint('Фильтр по категории не применен: ${result.length} книг');
     }
 
-    // Фильтр Новое - сортировка по дате выхода (имеет приоритет над сортировкой по рейтингу)
-    if (isToggleFilterActive) {
+    // В режиме «только этот фильтр» — сортировка по дате (приоритет над рейтингом)
+    if (isFilterOnlyMode) {
       result.sort((a, b) => b.releaseDate.compareTo(a.releaseDate));
     }
 

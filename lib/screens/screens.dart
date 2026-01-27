@@ -18,6 +18,9 @@ export 'common/generic_tab_screen.dart';
 export 'category/categories_tab_screen.dart';
 export 'category/product_categories_data.dart';
 export 'category/category_full_list_screen.dart';
+export 'category/category_overview_screen.dart';
+
+// Charts 
 export 'charts_screens/top_charts_screen.dart';
 
 // Kids
