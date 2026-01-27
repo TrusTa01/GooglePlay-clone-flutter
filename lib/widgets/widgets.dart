@@ -11,7 +11,7 @@ export '../core/constants/global_constants.dart';
 export '../core/constants/navigation_bar_constants.dart';
 
 // Tabs
-export 'app_bars/app_bar_tabs/custom_tab_bar.dart';
+export 'app_bars/tabs/custom_tab_bar.dart';
 
 // Navigation bar
 export 'navigation_bar/navigation_bar.dart';
