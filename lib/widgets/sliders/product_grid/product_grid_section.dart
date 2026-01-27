@@ -37,12 +37,12 @@ class ProductGrid extends StatelessWidget {
         ProductSectionHeader(
           title: title,
           subtitle: subtitle,
-          padding: EdgeInsets.fromLTRB(22, 0, 22, 10),
+          padding: EdgeInsets.fromLTRB(22, 0, 22, 5),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  CategoryDetailsScreen(title: title, products: products),
+                  CategoryFullListScreen(title: title, products: products),
             ),
           ),
           showButton: true,

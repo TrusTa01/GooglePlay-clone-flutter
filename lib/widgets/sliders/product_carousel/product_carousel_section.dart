@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/product_models/book_model.dart';
 import '../../../models/product_models/product_interface.dart';
-import '../../../screens/category/category_details_screen.dart';
+import '../../../screens/category/category_full_list_screen.dart';
 import '../../widgets.dart';
 
 class ProductCarousel extends StatelessWidget {
@@ -23,13 +23,13 @@ class ProductCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Размер слайдера
-    final double sliderHeight = products.first is Book ? 230 : 180;
-
     if (products.isEmpty) {
       debugPrint('Ошибка: products.isEmpty (product carousel)');
       return const SizedBox.shrink();
     }
+
+    // Размер слайдера
+    final double sliderHeight = products.first is Book ? 230 : 180;
 
     // Ограничиваем количество продуктов, если задан maxItems
     final displayProducts = maxItems != null && maxItems! < products.length
@@ -47,7 +47,7 @@ class ProductCarousel extends StatelessWidget {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CategoryDetailsScreen(
+              builder: (context) => CategoryFullListScreen(
                 title: title,
                 products: products,
               ),

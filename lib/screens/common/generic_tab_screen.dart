@@ -103,6 +103,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
       case SectionType.preview:
         return GamePreviewSection(
           games: rawProducts.whereType<Game>().toList(),
+          nestedInScrollView: true,
         );
       case SectionType.kidsHeroBanner:
         return KidsHeroBanner(

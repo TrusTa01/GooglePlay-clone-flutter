@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../../widgets/widgets.dart';
 import '../../models/models.dart';
 
-class CategoryDetailsScreen extends StatelessWidget {
+class CategoryFullListScreen extends StatelessWidget {
   final String title;
   final List<Product> products;
 
-  const CategoryDetailsScreen({
+  const CategoryFullListScreen({
     super.key,
     required this.title,
     required this.products,

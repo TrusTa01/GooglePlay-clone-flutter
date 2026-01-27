@@ -5,8 +5,13 @@ import '../../widgets.dart';
 
 class GamePreviewSection extends StatelessWidget {
   final List<Game> games;
+  final bool nestedInScrollView;
 
-  const GamePreviewSection({super.key, required this.games});
+  const GamePreviewSection({
+    super.key,
+    required this.games,
+    this.nestedInScrollView = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +21,14 @@ class GamePreviewSection extends StatelessWidget {
     }
 
     return ListView.separated(
-      shrinkWrap: true, // Чтобы не было конфликта с основным скроллом
-      physics: const NeverScrollableScrollPhysics(),
-      separatorBuilder: (context, index) => const SizedBox(height: 35,), 
+      shrinkWrap: nestedInScrollView,
+      physics: nestedInScrollView ? const NeverScrollableScrollPhysics() : null,
+      padding: const EdgeInsets.only(bottom: 20),
+      separatorBuilder: (context, index) => const SizedBox(height: 35),
       itemCount: games.length,
       itemBuilder: (context, index) {
         return GamePreviewCard(game: games[index]);
-      }, 
+      },
     );
   }
 }
