@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
 
 import '/screens/screens.dart';
 import '/models/models.dart';
+import '/providers/products_provider.dart';
 import '../../widgets.dart';
 
 class BannerSection extends StatefulWidget {
@@ -69,6 +71,53 @@ class _BannerSectionState extends State<BannerSection> {
     });
   }
 
+  void _handleBannerTap(BuildContext context, AppBanner banner) {
+    debugPrint('Banner tapped: ${banner.id}, type: ${banner.runtimeType}');
+    
+    if (banner is ActionBanner) {
+      debugPrint('ActionBanner detected, navigating to product: ${banner.productId}');
+      // Navigate to product page
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductPageScreen(
+            productId: banner.productId,
+          ),
+        ),
+      );
+    } else if (banner is SimpleBanner) {
+      debugPrint('SimpleBanner detected, eventId: ${banner.eventId}, eventCategory: ${banner.eventCategory}');
+      
+      if (banner.eventId != null) {
+        // Navigate to event screen with sections
+        final provider = context.read<ProductsProvider>();
+        final sections = provider.getEventSections(banner);
+        
+        debugPrint('Event sections count: ${sections.length}');
+        
+        if (sections.isEmpty) {
+          debugPrint('No sections available for event ${banner.eventId}');
+          return;
+        }
+        
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductEventScreen(
+              eventBanner: banner,
+              sections: sections,
+            ),
+          ),
+        );
+      } else {
+        debugPrint('SimpleBanner ${banner.id} has no eventId');
+      }
+    } else {
+      // Default simple banner without event - show a placeholder or do nothing
+      debugPrint('Banner ${banner.id} has no action or event');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.banners.isEmpty) return const SizedBox.shrink();
@@ -88,12 +137,12 @@ class _BannerSectionState extends State<BannerSection> {
           ProductSectionHeader(
             title: widget.title,
             subtitle: widget.subtitle,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProductEventScreen()),
-            ),
+            onTap: () {
+              // Banner sections don't have a "see all" page
+              debugPrint('Banner section header tapped - no action');
+            },
             padding: const EdgeInsets.fromLTRB(22, 10, 22, 20),
-            showButton: widget.showButton,
+            showButton: false, // Hide arrow button for banner sections
           ),
         NotificationListener<ScrollNotification>(
           onNotification: (notification) {
@@ -114,27 +163,10 @@ class _BannerSectionState extends State<BannerSection> {
               itemCount: displayBanners.length,
               itemBuilder: (context, index) {
                 final banner = displayBanners[index];
-                final actionBanner = banner is ActionBanner ? banner : null;
                 return BannerItem(
                   banner: banner,
                   type: widget.type,
-                  onTap: actionBanner != null
-                      ? () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProductPageScreen(
-                                productId: actionBanner.productId,
-                              ),
-                            ),
-                          );
-                        }
-                      : () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductEventScreen(),
-                          ),
-                        ),
+                  onTap: () => _handleBannerTap(context, banner),
                 );
               },
             ),

@@ -49,6 +49,10 @@ export 'category_details_section.dart';
 
 export 'full_screen_image.dart';
 
+// Event widgets
+export 'events/event_hero_banner.dart';
+export 'events/event_description.dart';
+
 // Filter bars
 export 'filters/filter_bar_row.dart';
 export 'filters/components/modal_filter.dart';

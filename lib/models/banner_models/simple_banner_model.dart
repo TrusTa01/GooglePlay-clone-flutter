@@ -22,6 +22,11 @@ class SimpleBanner implements AppBanner {
   @override
   BannerType get type => BannerType.simple;
 
+  // Event fields
+  final String? eventId;
+  final String? eventCategory;
+  final String? eventDescription;
+
   SimpleBanner({
     required this.id,
     required this.imageAssetPath,
@@ -29,6 +34,9 @@ class SimpleBanner implements AppBanner {
     required this.hasTopToolTip,
     this.topToolTipText,
     this.description,
+    this.eventId,
+    this.eventCategory,
+    this.eventDescription,
   });
 
   factory SimpleBanner.fromJson(Map<String, dynamic> json) => _$SimpleBannerFromJson(json);

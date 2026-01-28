@@ -328,7 +328,7 @@ void main() async {
   ];
 
   // Основной цикл генерации
-  for (int i = 1; i <= 300; i++) {
+  for (int i = 1; i <= 1000; i++) {
     // Генерируем ID с префиксом 'g' (game)
     final String id = 'g_$i'.toString();
 

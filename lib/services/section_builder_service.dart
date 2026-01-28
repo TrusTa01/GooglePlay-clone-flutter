@@ -251,4 +251,56 @@ class SectionBuilderService {
     if (pageConfig == null) return [];
     return buildFromConfig(pageConfig);
   }
+
+  // Построить секции для экрана события
+  List<HomeSection> buildEventSections(SimpleBanner eventBanner) {
+    if (eventBanner.eventCategory == null || eventBanner.eventCategory!.isEmpty) {
+      return [];
+    }
+
+    final category = eventBanner.eventCategory!;
+    final filteredProducts = queryService.getProductsByTag(
+      allProducts,
+      category,
+    );
+
+    if (filteredProducts.isEmpty) {
+      return [];
+    }
+
+    final sections = <HomeSection>[];
+
+    // Section 1: Carousel with top products
+    if (filteredProducts.length >= 5) {
+      sections.add(HomeSection(
+        type: SectionType.carousel,
+        title: 'Рекомендуем',
+        products: filteredProducts.take(10).toList(),
+        showButton: true,
+      ));
+    }
+
+    // Section 2: Grid with more products
+    if (filteredProducts.length >= 15) {
+      sections.add(HomeSection(
+        type: SectionType.grid,
+        title: 'Популярное в категории',
+        products: filteredProducts.skip(10).take(15).toList(),
+        showButton: true,
+      ));
+    }
+
+    // Section 3: Preview for games (if we have games)
+    final games = filteredProducts.whereType<Game>().toList();
+    if (games.length >= 3) {
+      sections.add(HomeSection(
+        type: SectionType.preview,
+        title: 'Избранное',
+        products: games.skip(5).take(3).toList(),
+        showButton: false,
+      ));
+    }
+
+    return sections;
+  }
 }

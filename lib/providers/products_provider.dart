@@ -173,4 +173,10 @@ class ProductsProvider extends ChangeNotifier {
     }
   }
 
+  // Получить секции для экрана события
+  List<HomeSection> getEventSections(SimpleBanner eventBanner) {
+    if (_sectionBuilder == null) return [];
+    return _sectionBuilder!.buildEventSections(eventBanner);
+  }
+
 }

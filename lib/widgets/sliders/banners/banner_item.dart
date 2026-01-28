@@ -24,8 +24,11 @@ class BannerItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6),
       child: Material(
         color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

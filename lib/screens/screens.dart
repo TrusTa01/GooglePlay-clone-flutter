@@ -29,4 +29,5 @@ export 'kids_screen/kids_details_screen.dart';
 export 'kids_screen/kids_hero_banner.dart';
 export 'kids_screen/kids_age_filter_selector.dart';
 
-export 'product_event_screen.dart';
+// Events
+export 'events/product_event_screen.dart';
