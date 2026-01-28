@@ -32,7 +32,7 @@ export 'sliders/product_carousel/product_carousel_card.dart';
 export 'sliders/product_carousel/product_carousel_section.dart';
 
 // Grid widget
-export 'sliders/product_grid/product_grid_card_section.dart';
+export 'sliders/product_grid/product_grid_card.dart';
 export 'sliders/product_grid/product_grid_section.dart';
 
 // Game preview widget

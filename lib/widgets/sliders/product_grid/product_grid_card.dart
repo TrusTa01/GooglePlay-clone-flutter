@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../screens/screens.dart';
 import '../../../models/models.dart';
 import '../../widgets.dart';
 
@@ -14,7 +15,12 @@ class ProductGridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () {},
+       onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProductPageScreen()),
+            );
+          },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ActionRow(
