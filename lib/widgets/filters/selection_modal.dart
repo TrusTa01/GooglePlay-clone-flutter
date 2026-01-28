@@ -116,7 +116,7 @@ class SelectionModal {
       backgroundColor: Colors.white,
       builder: (context) {
         return SizedBox(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height - 50,
           child: Padding(
             padding: EdgeInsets.fromLTRB(
               16,
