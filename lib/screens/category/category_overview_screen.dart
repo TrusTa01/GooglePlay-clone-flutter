@@ -42,7 +42,7 @@ class CategoryOverviewScreen extends StatelessWidget {
       ),
       body: ChangeNotifierProvider<FilterProvider>(
         create: (_) => filterProvider,
-        child: TopChartsScreen(type: filterType),
+        child: TopChartsScreen(type: filterType, showFilters: false),
       ),
     );
   }

@@ -8,8 +8,13 @@ import '/models/product_models/book_model.dart';
 
 class TopChartsScreen extends StatelessWidget {
   final FilterType type;
+  final bool showFilters;
 
-  const TopChartsScreen({super.key, required this.type});
+  const TopChartsScreen({
+    super.key,
+    required this.type,
+    this.showFilters = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +51,7 @@ class TopChartsScreen extends StatelessWidget {
 
     return Column(
       children: [
-        FilterSets.getFilters(type, filterProvider), // Фильтры
+        if (showFilters) FilterSets.getFilters(type, filterProvider),
 
         Expanded(
           child: ListView.builder(
