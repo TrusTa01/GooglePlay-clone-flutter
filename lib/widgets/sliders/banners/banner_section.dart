@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '/models/models.dart';
 import 'dart:async';
 
+import '/screens/screens.dart';
+import '/models/models.dart';
 import '../../widgets.dart';
 
 class BannerSection extends StatefulWidget {
@@ -49,7 +50,8 @@ class _BannerSectionState extends State<BannerSection> {
 
   void _startTimer() {
     _timer?.cancel();
-    final displayBannersLength = widget.maxItems != null && widget.maxItems! < widget.banners.length
+    final displayBannersLength =
+        widget.maxItems != null && widget.maxItems! < widget.banners.length
         ? widget.maxItems!
         : widget.banners.length;
     _timer = Timer.periodic(const Duration(seconds: 7), (timer) {
@@ -74,7 +76,8 @@ class _BannerSectionState extends State<BannerSection> {
     final double adaptiveHeight =
         MediaQuery.of(context).size.height / widget.heightFactor;
 
-    final displayBanners = widget.maxItems != null && widget.maxItems! < widget.banners.length
+    final displayBanners =
+        widget.maxItems != null && widget.maxItems! < widget.banners.length
         ? widget.banners.sublist(0, widget.maxItems!)
         : widget.banners;
 
@@ -85,7 +88,10 @@ class _BannerSectionState extends State<BannerSection> {
           ProductSectionHeader(
             title: widget.title,
             subtitle: widget.subtitle,
-            onTap: () {},
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProductEventScreen()),
+            ),
             padding: const EdgeInsets.fromLTRB(22, 10, 22, 20),
             showButton: widget.showButton,
           ),
@@ -107,9 +113,28 @@ class _BannerSectionState extends State<BannerSection> {
               controller: _controller,
               itemCount: displayBanners.length,
               itemBuilder: (context, index) {
+                final banner = displayBanners[index];
+                final actionBanner = banner is ActionBanner ? banner : null;
                 return BannerItem(
-                  banner: displayBanners[index],
+                  banner: banner,
                   type: widget.type,
+                  onTap: actionBanner != null
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductPageScreen(
+                                productId: actionBanner.productId,
+                              ),
+                            ),
+                          );
+                        }
+                      : () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductEventScreen(),
+                          ),
+                        ),
                 );
               },
             ),

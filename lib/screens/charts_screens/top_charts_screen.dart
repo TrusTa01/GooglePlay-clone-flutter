@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/providers.dart';
+import '/screens/screens.dart';
 import '/services/product_query_service.dart';
 import '/widgets/widgets.dart';
 import '/models/product_models/book_model.dart';
@@ -78,18 +79,30 @@ class TopChartsScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 15),
                     Expanded(
-                      child: ActionRow(
-                        product: item,
-                        hasThreeLines: true,
-                        showButton: false,
-                        iconWidth: item is Book ? 60 : 65,
-                        iconHeight: item is Book ? 90 : 65,
-                        cacheWidth: item is Book ? 180 : 190,
-                        cacheHeight: item is Book ? 270 : 190,
-                        borderRadius: item is Book
-                            ? BorderRadius.circular(6)
-                            : BorderRadius.circular(12),
-                        fit: item is Book ? BoxFit.fill : BoxFit.cover,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductPageScreen(productId: item.id),
+                            ),
+                          );
+                        },
+                        borderRadius: BorderRadius.circular(12),
+                        child: ActionRow(
+                          product: item,
+                          hasThreeLines: true,
+                          showButton: false,
+                          iconWidth: item is Book ? 60 : 65,
+                          iconHeight: item is Book ? 90 : 65,
+                          cacheWidth: item is Book ? 180 : 190,
+                          cacheHeight: item is Book ? 270 : 190,
+                          borderRadius: item is Book
+                              ? BorderRadius.circular(6)
+                              : BorderRadius.circular(12),
+                          fit: item is Book ? BoxFit.fill : BoxFit.cover,
+                        ),
                       ),
                     ),
                   ],
