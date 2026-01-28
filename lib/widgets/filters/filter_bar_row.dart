@@ -34,7 +34,7 @@ class FilterBarRow extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: const EdgeInsets.only(left: 22, right: 22, top: 10),
+              padding: const EdgeInsets.only(left: 22, right: 22, top: 8),
               child: Row(
                 children:
                     filters

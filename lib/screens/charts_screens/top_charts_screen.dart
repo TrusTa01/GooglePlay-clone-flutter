@@ -63,7 +63,14 @@ class TopChartsScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Text('${index + 1}', style: const TextStyle(fontSize: 14)),
+                    SizedBox(
+                      width: 28,
+                      child: Text(
+                        '${index + 1}',
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ),
                     const SizedBox(width: 15),
                     Expanded(
                       child: ActionRow(
