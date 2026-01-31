@@ -68,3 +68,5 @@ app.*.map.json
 assets/data/
 
 .cursorignore
+
+tools/command.md

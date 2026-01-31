@@ -371,43 +371,57 @@ class ProductCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        // Карточка
-        ProductCardThumbnail(
-          borderRadius: product is Book
-              ? BorderRadius.circular(6)
-              : BorderRadius.circular(20),
-          iconUrl: product.iconUrl,
-          iconWidth: product is Book ? 110 : 115,
-          iconHeight: product is Book ? 165 : 115,
-          cacheWidth: 300,
-          cacheHeight: 350,
-          fit: product is Book ? BoxFit.fill : BoxFit.cover,
-        ),
-        const SizedBox(height: 6),
-        SizedBox(
-          width: 115,
-          child: ProductTitle(
-            // Название
-            title: product.title,
-            maxLines: 2,
-            fontSize: 12,
-          ),
-        ),
-        const SizedBox(height: 4),
-        // Рейтинг
-        Align(
-          alignment: Alignment.centerLeft,
-          child: showPrice
-              ? ProductInfoTag(text: formatter.price)
-              : ProductInfoTag(
-                  text: formatter.rating,
-                  iconPath: 'assets/icons/star.png',
-                ),
-        ),
-      ],
+    final bool isBook = product is Book;
+    
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Если constraints не ограничены, используем фиксированные размеры
+        final bool hasConstraints = constraints.maxWidth != double.infinity;
+        final double iconWidth = hasConstraints 
+            ? constraints.maxWidth 
+            : (isBook ? 110 : 115);
+        // Для книг соотношение 2:3, для приложений 1:1
+        final double iconHeight = isBook 
+            ? iconWidth * 1.5 
+            : iconWidth;
+        
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            // Карточка
+            ProductCardThumbnail(
+              borderRadius: isBook
+                  ? BorderRadius.circular(6)
+                  : BorderRadius.circular(20),
+              iconUrl: product.iconUrl,
+              iconWidth: iconWidth,
+              iconHeight: iconHeight,
+              cacheWidth: 300,
+              cacheHeight: 350,
+              fit: isBook ? BoxFit.fill : BoxFit.cover,
+            ),
+            const SizedBox(height: 6),
+            SizedBox(
+              width: hasConstraints ? null : 115,
+              child: ProductTitle(
+                // Название
+                title: product.title,
+                maxLines: 2,
+                fontSize: 12,
+              ),
+            ),
+            const SizedBox(height: 4),
+            // Рейтинг
+            showPrice
+                ? ProductInfoTag(text: formatter.price)
+                : ProductInfoTag(
+                    text: formatter.rating,
+                    iconPath: 'assets/icons/star.png',
+                  ),
+          ],
+        );
+      },
     );
   }
 }

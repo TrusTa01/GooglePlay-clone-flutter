@@ -21,12 +21,12 @@ class ProductCarouselCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProductPageScreen()),
-            );
-          },
+          onTap: () {},
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => ProductPageScreen()),
+          //   );
+          // },
           onLongPress: () {},
           child: ProductCardContent(
             product: product,

@@ -15,12 +15,12 @@ class ProductGridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-       onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProductPageScreen()),
-            );
-          },
+       onTap: () {},
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => ProductPageScreen()),
+          //   );
+          // },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ActionRow(
