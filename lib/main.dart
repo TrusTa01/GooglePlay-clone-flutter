@@ -16,7 +16,7 @@ void main() {
 //   await Firebase.initializeApp(
 //     options: DefaultFirebaseOptions.currentPlatform,
 // );
-  runApp(GooglePlay()); 
+  runApp(GooglePlay());
 }
 
 class GooglePlay extends StatelessWidget {

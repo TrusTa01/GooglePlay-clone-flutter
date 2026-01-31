@@ -282,9 +282,52 @@ void main() async {
     'Фото',
     'Видео',
     'Bluetooth',
+    'Информация о Wi-Fi подключении',
+    'Идентификатор устройства и данные о вызовах',
+    'Неограниченный доступ к Интернету',
+    'Просмотр сетевых подключений',
+    'Запуск при включении устройства',
+    'Предотвращение спящего режима',
+    'Управление вибросигналом',
+    'Изменение настроек системы',
+    'Точное местоположение (на основе сети и сигналов GPS)',
+    'Приблизительное местоположение (на основе сети)',
+    'Чтение журнала вызовов',
+    'Чтение SMS',
+    'Отправка SMS',
+    'Чтение содержимого USB-накопителя',
+    'Изменение или удаление содержимого USB-накопителя',
+    'Поиск аккаунтов на устройстве',
+    'NFC-модуль',
+    'Нательные датчики',
+    'Получение данных из Интернета',
+    'Play Install Referrer API',
+    'Запуск фоновых служб',
+    'Разрешение на рекламный идентификатор',
+    'Доступ к списку установленных приложений',
+    'Доступ к биометрическим данным',
+    'Статистика использования',
+    'Наложение поверх других окон',
+    'Доступ к медиафайлам',
+    'Чтение истории браузера',
+    'Установка пакетов приложений',
+    'Доступ к списку вызовов',
+    'Доступ к буферу обмена',
   ];
 
   final languages = ['RU', 'EN', 'ES', 'FR', 'DE', 'IT', 'PT', 'ZH', 'JA', 'KO'];
+
+  final ageRatingReasons = [
+    'Насилие',
+    'Страх',
+    'Сцены сексуального характера',
+    'Наркотики',
+    'Сквернословие',
+    'Азартные игры',
+    'Дискриминация',
+    'Внутриигровые покупки',
+    'Взаимодействие пользователей',
+  ];
 
   final appCategories = [
     'Автомобили и транспорт',
@@ -348,6 +391,122 @@ void main() async {
     'unity',
   ];
 
+  // Данные разработчиков
+  final developerCompanies = [
+    'Google LLC',
+    'Microsoft Corporation',
+    'Meta Platforms, Inc.',
+    'Apple Inc.',
+    'Amazon.com, Inc.',
+    'Netflix, Inc.',
+    'Spotify AB',
+    'Adobe Inc.',
+    'Telegram FZ-LLC',
+    'Discord Inc.',
+    'Zoom Video Communications, Inc.',
+    'Slack Technologies, LLC',
+    'Dropbox, Inc.',
+    'Evernote Corporation',
+    'Notion Labs, Inc.',
+    'Atlassian Pty Ltd',
+    'Canva Pty Ltd',
+    'Figma, Inc.',
+    'Unity Technologies',
+    'ByteDance Ltd.',
+  ];
+
+  final developerAddresses = [
+    '1600 Amphitheatre Parkway',
+    'One Microsoft Way',
+    '1 Hacker Way',
+    'One Apple Park Way',
+    '410 Terry Avenue North',
+    '100 Winchester Circle',
+    'Regeringsgatan 19',
+    '345 Park Avenue',
+    'Dubai Media City',
+    '444 De Haro Street',
+    '55 Almaden Boulevard',
+    '500 Howard Street',
+    '1800 Owens Street',
+    '305 Walnut Street',
+    '2300 Harrison Street',
+    '350 Bush Street',
+    '110 Kippax Street',
+    '760 Market Street',
+    '30 3rd Street',
+    '2-36 Jiuxianqiao Road',
+  ];
+
+  final developerCities = [
+    'Mountain View, CA 94043',
+    'Redmond, WA 98052',
+    'Menlo Park, CA 94025',
+    'Cupertino, CA 95014',
+    'Seattle, WA 98109',
+    'Los Gatos, CA 95032',
+    'Stockholm, 111 57',
+    'San Jose, CA 95110',
+    'Dubai, UAE',
+    'San Francisco, CA 94107',
+    'San Jose, CA 95113',
+    'San Francisco, CA 94105',
+    'San Francisco, CA 94158',
+    'Redwood City, CA 94063',
+    'San Francisco, CA 94110',
+    'San Francisco, CA 94104',
+    'Surry Hills, NSW 2010',
+    'San Francisco, CA 94102',
+    'San Francisco, CA 94103',
+    'Chaoyang District, Beijing 100015',
+  ];
+
+  final developerCountries = [
+    'United States',
+    'United States',
+    'United States',
+    'United States',
+    'United States',
+    'United States',
+    'Sweden',
+    'United States',
+    'United Arab Emirates',
+    'United States',
+    'United States',
+    'United States',
+    'United States',
+    'United States',
+    'United States',
+    'United States',
+    'Australia',
+    'United States',
+    'United States',
+    'China',
+  ];
+
+  final developerPhones = [
+    '+1 650-253-0000',
+    '+1 425-882-8080',
+    '+1 650-543-4800',
+    '+1 408-996-1010',
+    '+1 206-266-1000',
+    '+1 408-540-3700',
+    '+46 8-611 26 30',
+    '+1 408-536-6000',
+    '+971 4 391 6666',
+    '+1 415-723-5100',
+    '+1 888-799-9666',
+    '+1 415-630-7943',
+    '+1 415-857-0150',
+    '+1 650-257-0000',
+    '+1 415-854-5152',
+    '+1 415-701-1110',
+    '+61 2 8335 0800',
+    '+1 415-697-9000',
+    '+1 415-539-3232',
+    '+86 10 5765 1234',
+  ];
+
   // Основной цикл генерации
   for (int i = 1; i <= 300; i++) {
     // Генерируем ID с префиксом 'a' (app)
@@ -392,8 +551,8 @@ void main() async {
         '${random.nextInt(10)}.${random.nextInt(20)}.${random.nextInt(50)}';
     final String size = (random.nextDouble() * 200 + 5).toStringAsFixed(1);
 
-    // Логика разрешений (от 1 до 6)
-    final int permCount = random.nextInt(6) + 1;
+    // Логика разрешений (от 3 до 15)
+    final int permCount = random.nextInt(13) + 3;
     final List<String> selectedPermissions = List.generate(
       permCount,
       (_) => faker.randomGenerator.element(permissions),
@@ -416,6 +575,12 @@ void main() async {
     final List<String> supportedLanguages = (List<String>.from(
       languages,
     )..shuffle()).take(langCount).toList();
+
+    // Причины возрастного рейтинга (от 1 до 3)
+    final int reasonCount = random.nextInt(3) + 1;
+    final List<String> selectedAgeRatingReasons = (List<String>.from(
+      ageRatingReasons,
+    )..shuffle()).take(reasonCount).toList();
 
     // Package name
     final String company = faker.randomGenerator.element(companies);
@@ -444,6 +609,9 @@ void main() async {
       return variations[random.nextInt(variations.length)];
     }
 
+    // Выбираем случайный индекс разработчика (одинаковый для всех полей)
+    final int devIndex = random.nextInt(developerCompanies.length);
+
     final appData = {
       "type": "app",
       "id": id,
@@ -455,12 +623,14 @@ void main() async {
       "price": price,
       "containsAds": faker.randomGenerator.boolean(),
       "containsPaidContent": faker.randomGenerator.boolean(),
-      "description": faker.lorem.sentences(2).join(' '),
+      "shortDescription": faker.lorem.sentences(2).join(' '),
+      "description": List.generate(6, (_) => faker.lorem.sentences(5).join(' ')).join('\n\n'),
       "version": version,
       "size": size,
       "downloadCount": faker.randomGenerator
           .integer(500000000, min: 1000)
           .toInt(),
+      "reviewsCount": faker.randomGenerator.integer(10000000, min: 1000),
       "permissions": selectedPermissions,
       "releaseDate": releaseDate.toIso8601String(),
       "lastUpdated": lastUpdated.toIso8601String(),
@@ -468,14 +638,22 @@ void main() async {
       "emailSupport": faker.internet.email(),
       "privacyPolicyUrl": faker.internet.httpsUrl(),
       "creatorDescription": faker.lorem.sentences(2).join(' '),
+      "whatsNewText": faker.lorem.sentences(3).join(' '),
       "eventText": generateEventText(random),
       "ageRating": faker.randomGenerator.element(ageRatings),
+      "ageRatingReasons": selectedAgeRatingReasons,
       "screenshots": selectedScreenshots,
       "tags": selectedTags,
       "appCategory": selectedCategories,
       "packageName": packageName,
       "supportedLanguages": supportedLanguages,
       "isEditorChoice": isEditorChoice,
+      // Информация о разработчике
+      "developerCompany": developerCompanies[devIndex],
+      "developerAddress": developerAddresses[devIndex],
+      "developerCity": developerCities[devIndex],
+      "developerCountry": developerCountries[devIndex],
+      "developerPhone": developerPhones[devIndex],
     };
 
     appsList.add(appData);

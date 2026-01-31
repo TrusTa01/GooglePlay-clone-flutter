@@ -50,68 +50,68 @@ class TopChartsScreen extends StatelessWidget {
           : null,
     );
 
-    return Column(
-      children: [
-        if (showFilters) FilterSets.getFilters(type, filterProvider),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Constants.screenHorizontalPadding,
+        vertical: 8,
+      ),
+      child: Column(
+        children: [
+          if (showFilters) FilterSets.getFilters(type, filterProvider),
 
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            scrollDirection: Axis.vertical,
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final item = items[index];
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 15,
-                  horizontal: 15,
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 28,
-                      child: Text(
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Row(
+                    children: [
+                      Text(
                         '${index + 1}',
                         textAlign: TextAlign.right,
                         style: const TextStyle(fontSize: 14),
                       ),
-                    ),
-                    const SizedBox(width: 15),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProductPageScreen(productId: item.id),
-                            ),
-                          );
-                        },
-                        borderRadius: BorderRadius.circular(12),
-                        child: ActionRow(
-                          product: item,
-                          hasThreeLines: true,
-                          showButton: false,
-                          iconWidth: item is Book ? 60 : 65,
-                          iconHeight: item is Book ? 90 : 65,
-                          cacheWidth: item is Book ? 180 : 190,
-                          cacheHeight: item is Book ? 270 : 190,
-                          borderRadius: item is Book
-                              ? BorderRadius.circular(6)
-                              : BorderRadius.circular(12),
-                          fit: item is Book ? BoxFit.fill : BoxFit.cover,
+
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ProductPageScreen(product: item),
+                              ),
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(12),
+                          child: ActionRow(
+                            product: item,
+                            hasThreeLines: true,
+                            showButton: false,
+                            iconWidth: item is Book ? 60 : 65,
+                            iconHeight: item is Book ? 90 : 65,
+                            cacheWidth: item is Book ? 180 : 190,
+                            cacheHeight: item is Book ? 270 : 190,
+                            borderRadius: item is Book
+                                ? BorderRadius.circular(6)
+                                : BorderRadius.circular(12),
+                            fit: item is Book ? BoxFit.fill : BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

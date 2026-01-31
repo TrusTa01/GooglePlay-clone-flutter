@@ -427,7 +427,7 @@ void main() async {
     '中文',
   ];
 
-  final formats = ['Эл. книга', 'Аудиокнига'];
+  final formats = ['ePub', 'Audiobook'];
 
   // Основной цикл генерации
   // Для равномерного распределения по жанрам и языкам используем циклические индексы
@@ -562,16 +562,27 @@ void main() async {
       rating = 2.0 + (faker.randomGenerator.integer(16) / 10.0);
     }
 
+    // Описание автора (от 3 предложений до нескольких абзацев)
+    final int paragraphCount = random.nextInt(4) + 1; // 1-4 абзаца
+    final List<String> paragraphs = List.generate(paragraphCount, (index) {
+      final int sentenceCount = random.nextInt(5) + 3; // 3-7 предложений в абзаце
+      return faker.lorem.sentences(sentenceCount).join(' ');
+    });
+    final String creatorDescription = '$authorName — ${paragraphs.join('\n\n')}';
+
     final bookData = {
       "type": "book",
       "id": id,
       "title": generatedTitle,
       "creator": authorName,
+      "creatorDescription": creatorDescription,
       "rating": rating,
+      "reviewsCount": faker.randomGenerator.integer(500000, min: 1000),
       "iconUrl": localIcon,
       "isPaid": isPaid,
       "price": price,
-      "description": faker.lorem.sentences(3).join(' '),
+      "shortDescription": faker.lorem.sentences(2).join(' '),
+      "description": List.generate(6, (_) => faker.lorem.sentences(5).join(' ')).join('\n\n'),
       "releaseDate": releaseDate.toIso8601String(),
       "publisher": publisher,
       "isbn": isbn,

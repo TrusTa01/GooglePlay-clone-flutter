@@ -28,7 +28,6 @@ class ProductEventScreen extends StatelessWidget {
             },
             icon: const Icon(Icons.share_outlined, color: Colors.black),
           ),
-          const SizedBox(width: 10),
         ],
       ),
       body: ListView(
@@ -82,7 +81,7 @@ class ProductEventScreen extends StatelessWidget {
         );
       case SectionType.preview:
         return GamePreviewSection(
-          games: rawProducts.whereType<Game>().toList(),
+          game: rawProducts.whereType<Game>().toList(),
           nestedInScrollView: true,
         );
       case SectionType.banners:

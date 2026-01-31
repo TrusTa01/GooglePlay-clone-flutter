@@ -21,7 +21,8 @@ class ProductPreviewCard extends StatelessWidget {
         SizedBox(
           height: 180,
           child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 22),
+            clipBehavior: Clip
+                .none, // Элементы будут визуально выезжать за пределы контейнера
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemCount: product.screenshots.length,
@@ -39,10 +40,7 @@ class ProductPreviewCard extends StatelessWidget {
         ),
         if (showActionRow) ...[
           const SizedBox(height: 10),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22),
-            child: ActionRow(product: product, showButton: true),
-          ),
+          ActionRow(product: product, showButton: true),
         ],
       ],
     );

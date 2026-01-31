@@ -15,15 +15,21 @@ class Book implements Product {
   @override
   final String creator;
   @override
+  final String shortDescription;
+  @override
   final String description;
   @override
   final double rating;
   @override
+  final int reviewsCount;
+  @override
   final DateTime releaseDate;
+  @override
+  final String creatorDescription;
   @override
   final String iconUrl;
   @override
-  final bool isPaid; 
+  final bool isPaid;
   @override
   final double? price;
   @override
@@ -34,8 +40,13 @@ class Book implements Product {
   final int pageCount; // 320
   final String language; // "Русский"
   final String format; // ePub, Audiobook
+
+  // Геттер для проверки типа книги
+  bool get isEbook => format == 'ePub';
+  bool get isAudiobook => format == 'Audiobook';
   final DateTime publicationDate; // Дата публикации
   final List<String> genres; // ["Фэнтези", "Приключения"]
+  @override
   final List<String> tags; // Теги книги
   final bool hasAudioVersion; // Есть аудиокнига
   final int? audioDuration; // Продолжительность аудио в секундах
@@ -53,6 +64,7 @@ class Book implements Product {
     required this.title,
     required this.creator,
     required this.rating,
+    required this.shortDescription,
     required this.iconUrl,
     required this.isPaid,
     required this.publisher,
@@ -75,9 +87,54 @@ class Book implements Product {
     this.price,
     required this.awards,
     required this.releaseDate,
+    required this.reviewsCount,
+    required this.creatorDescription,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$BookToJson(this);
+
+  // Геттеры для совместимости с Product интерфейсом
+  // Книгам эти поля не нужны — возвращаем дефолтные значения
+  @override
+  int? get ageRating => null;
+  @override
+  List<String> get ageRatingReasons => [];
+  @override
+  bool get containsAds => false;
+  @override
+  bool get containsPaidContent => false;
+  @override
+  int get downloadCount => 0;
+  @override
+  String? get emailSupport => null;
+  @override
+  String? get eventText => null;
+  @override
+  String? get whatsNewText => null;
+  @override
+  DateTime? get lastUpdated => null;
+  @override
+  List<String> get permissions => [];
+  @override
+  String? get privacyPolicyUrl => null;
+  @override
+  List<String> get screenshots => [];
+  @override
+  String? get size => null;
+  @override
+  String? get version => null;
+  @override
+  String? get websiteUrl => null;
+  @override
+  String? get developerCompany => null;
+  @override
+  String? get developerAddress => null;
+  @override
+  String? get developerCity => null;
+  @override
+  String? get developerCountry => null;
+  @override
+  String? get developerPhone => null;
 }

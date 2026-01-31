@@ -94,6 +94,21 @@ class ProductQueryService {
     }).toList();
   }
 
+  // Поиск только электронных книг (без аудиокниг) по тегу
+  List<Product> getEbooksByTag(List<Product> allProducts, String query) {
+    final q = query.toLowerCase();
+    return allProducts.where((p) {
+      if (p is! Book) return false;
+      // Фильтруем только ePub книги (не аудиокниги)
+      if (!p.isEbook) return false;
+      
+      // Проверяем жанры и теги
+      final inGenres = p.genres.any((g) => g.toLowerCase().contains(q));
+      final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
+      return inGenres || inTags;
+    }).toList();
+  }
+
   // Поиск по тегу с фильтрацией по возрасту
   List<Product> getProductsByTagAndAge(
     List<Product> allProducts,
@@ -134,6 +149,77 @@ class ProductQueryService {
       
       return false;
     }).toList();
+  }
+
+  // -------------------------Похожие продукты-----------------------
+
+  /// Находит похожие продукты на основе тегов и категорий.
+  /// Возвращает продукты того же типа с наибольшим количеством совпадающих тегов.
+  List<Product> getSimilarProducts(
+    List<Product> allProducts,
+    Product currentProduct, {
+    int maxResults = 15,
+  }) {
+    // Получаем теги и категории текущего продукта
+    final currentTags = currentProduct.tags.map((t) => t.toLowerCase()).toSet();
+    
+    Set<String> currentCategories = {};
+    if (currentProduct is Game) {
+      currentCategories = currentProduct.gameGenre.map((g) => g.toLowerCase()).toSet();
+    } else if (currentProduct is App) {
+      currentCategories = currentProduct.appCategory.map((c) => c.toLowerCase()).toSet();
+    } else if (currentProduct is Book) {
+      currentCategories = currentProduct.genres.map((g) => g.toLowerCase()).toSet();
+    }
+    
+    // Объединяем теги и категории для поиска
+    final allCurrentKeywords = {...currentTags, ...currentCategories};
+    
+    if (allCurrentKeywords.isEmpty) {
+      return [];
+    }
+    
+    // Фильтруем продукты того же типа и считаем совпадения
+    final similarProducts = <Product, int>{};
+    
+    for (final product in allProducts) {
+      // Пропускаем текущий продукт
+      if (product.id == currentProduct.id) continue;
+      
+      // Проверяем что тип совпадает
+      if (product.runtimeType != currentProduct.runtimeType) continue;
+      
+      // Получаем теги и категории продукта
+      final productTags = product.tags.map((t) => t.toLowerCase()).toSet();
+      
+      Set<String> productCategories = {};
+      if (product is Game) {
+        productCategories = product.gameGenre.map((g) => g.toLowerCase()).toSet();
+      } else if (product is App) {
+        productCategories = product.appCategory.map((c) => c.toLowerCase()).toSet();
+      } else if (product is Book) {
+        productCategories = product.genres.map((g) => g.toLowerCase()).toSet();
+      }
+      
+      final allProductKeywords = {...productTags, ...productCategories};
+      
+      // Считаем количество совпадений
+      final matchCount = allCurrentKeywords.intersection(allProductKeywords).length;
+      
+      if (matchCount > 0) {
+        similarProducts[product] = matchCount;
+      }
+    }
+    
+    // Сортируем по количеству совпадений (по убыванию), затем по рейтингу
+    final sortedProducts = similarProducts.entries.toList()
+      ..sort((a, b) {
+        final matchComparison = b.value.compareTo(a.value);
+        if (matchComparison != 0) return matchComparison;
+        return b.key.rating.compareTo(a.key.rating);
+      });
+    
+    return sortedProducts.take(maxResults).map((e) => e.key).toList();
   }
 
   // -------------------------По категориям-----------------------

@@ -73,40 +73,40 @@ class _BannerSectionState extends State<BannerSection> {
 
   void _handleBannerTap(BuildContext context, AppBanner banner) {
     debugPrint('Banner tapped: ${banner.id}, type: ${banner.runtimeType}');
-    
+
     if (banner is ActionBanner) {
-      debugPrint('ActionBanner detected, navigating to product: ${banner.productId}');
+      debugPrint(
+        'ActionBanner detected, navigating to product: ${banner.productId}',
+      );
       // Navigate to product page
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ProductPageScreen(
-            productId: banner.productId,
-          ),
+          builder: (context) => ProductPageScreen(productId: banner.productId),
         ),
       );
     } else if (banner is SimpleBanner) {
-      debugPrint('SimpleBanner detected, eventId: ${banner.eventId}, eventCategory: ${banner.eventCategory}');
-      
+      debugPrint(
+        'SimpleBanner detected, eventId: ${banner.eventId}, eventCategory: ${banner.eventCategory}',
+      );
+
       if (banner.eventId != null) {
         // Navigate to event screen with sections
         final provider = context.read<ProductsProvider>();
         final sections = provider.getEventSections(banner);
-        
+
         debugPrint('Event sections count: ${sections.length}');
-        
+
         if (sections.isEmpty) {
           debugPrint('No sections available for event ${banner.eventId}');
           return;
         }
-        
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductEventScreen(
-              eventBanner: banner,
-              sections: sections,
-            ),
+            builder: (context) =>
+                ProductEventScreen(eventBanner: banner, sections: sections),
           ),
         );
       } else {
@@ -138,11 +138,9 @@ class _BannerSectionState extends State<BannerSection> {
             title: widget.title,
             subtitle: widget.subtitle,
             onTap: () {
-              // Banner sections don't have a "see all" page
               debugPrint('Banner section header tapped - no action');
             },
-            padding: const EdgeInsets.fromLTRB(22, 10, 22, 20),
-            showButton: false, // Hide arrow button for banner sections
+            showButton: false,
           ),
         NotificationListener<ScrollNotification>(
           onNotification: (notification) {
@@ -160,6 +158,8 @@ class _BannerSectionState extends State<BannerSection> {
               onPageChanged: (index) => _currentPage = index,
               scrollDirection: Axis.horizontal,
               controller: _controller,
+              clipBehavior: Clip
+                  .none, // Элементы будут визуально выезжать за пределы контейнера
               itemCount: displayBanners.length,
               itemBuilder: (context, index) {
                 final banner = displayBanners[index];

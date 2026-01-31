@@ -18,11 +18,13 @@ class ProductGridCard extends StatelessWidget {
        onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProductPageScreen()),
+              MaterialPageRoute(
+              builder: (context) => ProductPageScreen(product: product),
+            ),
             );
           },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.only(bottom: 8),
         child: ActionRow(
           product: product,
           showButton: false,

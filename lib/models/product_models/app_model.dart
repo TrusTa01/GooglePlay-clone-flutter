@@ -15,9 +15,13 @@ class App implements Product {
   @override
   final String creator;
   @override
+  final String shortDescription;
+  @override
   final String description;
   @override
   final double rating;
+  @override
+  final int reviewsCount;
   @override
   final DateTime releaseDate;
   @override
@@ -28,26 +32,55 @@ class App implements Product {
   final double? price;
   @override
   String get technicalInfo => size;
-
+  @override
   final String version; // "2.1.0"
+  @override
   final String size; // "15.3 MB"
+  @override
   final int ageRating;
+  @override
+  final List<String> ageRatingReasons;
   final List<String> appCategory;
+  @override
   final String creatorDescription;
+  @override
   final String? eventText;
+  @override
+  final String? whatsNewText;
+  @override
   final bool containsAds; // true/false
   final bool isEditorChoice; // Выбор редакции
+  @override
   final int downloadCount; // 1_000_000
+  @override
   final DateTime lastUpdated; // Последнее обновление
+  @override
   final List<String> permissions; // ["Камера", "Микрофон"]
+  @override
   final List<String> screenshots; // URLs скриншотов
+  @override
   final List<String> tags;
   final String packageName; // "com.google.android.youtube"
   final List<String> supportedLanguages; // ["RU", "EN"]
+  @override
   final bool containsPaidContent; // Внутриигровые покупки
+  @override
   final String privacyPolicyUrl; // Ссылка на политику
+  @override
   final String websiteUrl; // Сайт разработчика
+  @override
   final String emailSupport;
+  // Информация о разработчике
+  @override
+  final String developerCompany;
+  @override // "Take-Two Interactive Software, Inc."
+  final String developerAddress; // "110 W 44th St"
+  @override
+  final String developerCity; // "New York, NY 10036"
+  @override
+  final String developerCountry; // "United States"
+  @override
+  final String developerPhone; // "+1 646-817-2429"
 
   App({
     required this.type,
@@ -55,6 +88,7 @@ class App implements Product {
     required this.title,
     required this.creator,
     required this.rating,
+    required this.shortDescription,
     required this.description,
     required this.iconUrl,
     required this.isPaid,
@@ -71,14 +105,22 @@ class App implements Product {
     required this.packageName,
     required this.supportedLanguages,
     required this.ageRating,
+    required this.ageRatingReasons,
     required this.privacyPolicyUrl,
     required this.websiteUrl,
     required this.emailSupport,
     required this.creatorDescription,
+    required this.developerCompany,
+    required this.developerAddress,
+    required this.developerCity,
+    required this.developerCountry,
+    required this.developerPhone,
     this.eventText,
+    this.whatsNewText,
     this.price,
-    required this.containsPaidContent, 
+    required this.containsPaidContent,
     required this.appCategory,
+    required this.reviewsCount,
   });
 
   factory App.fromJson(Map<String, dynamic> json) => _$AppFromJson(json);

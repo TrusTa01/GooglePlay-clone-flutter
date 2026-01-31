@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../screens/screens.dart';
 import '../../../models/product_models/product_interface.dart';
 import '../../widgets.dart';
+import '../../../core/utils/formatters.dart';
 
 class ProductCarouselCard extends StatelessWidget {
   final Product product;
@@ -24,7 +25,9 @@ class ProductCarouselCard extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProductPageScreen()),
+              MaterialPageRoute(
+                builder: (context) => ProductPageScreen(product: product),
+              ),
             );
           },
           onLongPress: () {},

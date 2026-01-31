@@ -12,6 +12,7 @@ Book _$BookFromJson(Map<String, dynamic> json) => Book(
   title: json['title'] as String,
   creator: json['creator'] as String,
   rating: (json['rating'] as num).toDouble(),
+  shortDescription: json['shortDescription'] as String,
   iconUrl: json['iconUrl'] as String,
   isPaid: json['isPaid'] as bool,
   publisher: json['publisher'] as String,
@@ -34,6 +35,8 @@ Book _$BookFromJson(Map<String, dynamic> json) => Book(
   price: (json['price'] as num?)?.toDouble(),
   awards: (json['awards'] as List<dynamic>).map((e) => e as String).toList(),
   releaseDate: DateTime.parse(json['releaseDate'] as String),
+  reviewsCount: (json['reviewsCount'] as num).toInt(),
+  creatorDescription: json['creatorDescription'] as String,
 );
 
 Map<String, dynamic> _$BookToJson(Book instance) => <String, dynamic>{
@@ -41,9 +44,12 @@ Map<String, dynamic> _$BookToJson(Book instance) => <String, dynamic>{
   'id': instance.id,
   'title': instance.title,
   'creator': instance.creator,
+  'shortDescription': instance.shortDescription,
   'description': instance.description,
   'rating': instance.rating,
+  'reviewsCount': instance.reviewsCount,
   'releaseDate': instance.releaseDate.toIso8601String(),
+  'creatorDescription': instance.creatorDescription,
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,

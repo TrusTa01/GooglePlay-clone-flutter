@@ -4,41 +4,22 @@ import 'package:provider/provider.dart';
 import '/providers/providers.dart';
 import '/models/models.dart';
 import '../../widgets.dart';
-
-class ProductDataFormatter {
-  final Product product;
-  ProductDataFormatter(this.product);
-
-  String get rating => product.rating.toString();
-
-  String get technicalInfoFormatted {
-    return switch (product) {
-      Book b => '${b.pageCount} стр.',
-      Game g => '${g.size} МБ',
-      App a => '${a.size} МБ',
-      _ => '',
-    };
-  }
-
-  String get price => (product.price != null)
-      ? '${product.price!.toStringAsFixed(2).replaceFirst('.', ',')} ₽'
-      : '';
-}
+import '../../../core/utils/formatters.dart';
 
 class ProductSectionHeader extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-  final EdgeInsets padding;
   final bool showButton;
+  final Widget? button;
 
   const ProductSectionHeader({
     super.key,
     required this.title,
     this.subtitle = '',
     required this.onTap,
-    required this.padding,
     this.showButton = true,
+    this.button,
   });
 
   bool get _hasSubtitle => subtitle.trim().isNotEmpty;
@@ -46,7 +27,7 @@ class ProductSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding,
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -77,23 +58,7 @@ class ProductSectionHeader extends StatelessWidget {
             ),
           ),
 
-          if (showButton)
-            Material(
-              color: Constants.ratingBackgroungColor,
-              borderRadius: BorderRadius.circular(23),
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: onTap,
-                child: Container(
-                  width: 30,
-                  height: 34,
-                  alignment: Alignment.center,
-                  child: const Center(
-                    child: Icon(Icons.arrow_forward, size: 18),
-                  ),
-                ),
-              ),
-            ),
+          if (showButton) button ?? CustomIconButton(onTap: onTap),
         ],
       ),
     );
@@ -135,7 +100,7 @@ class ProductCardThumbnail extends StatelessWidget {
         ],
         border: Border.all(
           color: Colors.black.withValues(alpha: 0.1),
-          width: 0.5,
+          width: 1,
         ),
       ),
       child: ClipRRect(
@@ -237,7 +202,9 @@ class ProductCreatorText extends StatelessWidget {
 
 class AgeBadge extends StatelessWidget {
   final int age;
-  const AgeBadge({super.key, required this.age});
+  final double fontSize;
+
+  const AgeBadge({super.key, required this.age, this.fontSize = 7});
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +215,7 @@ class AgeBadge extends StatelessWidget {
       ),
       child: Text(
         '$age+',
-        style: const TextStyle(fontSize: 7, fontWeight: FontWeight.w900),
+        style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w900),
       ),
     );
   }
@@ -264,21 +231,13 @@ class DotSeparator extends StatelessWidget {
   );
 }
 
-class ProductTags extends StatelessWidget {
+class ActionRowTags extends StatelessWidget {
   final Product product;
-  const ProductTags({super.key, required this.product});
+  const ActionRowTags({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    List<String> items = [];
-
-    if (product is Game) {
-      items = (product as Game).gameGenre;
-    } else if (product is App) {
-      items = (product as App).tags;
-    } else if (product is Book) {
-      items = [product.creator];
-    }
+    List<String> items = product.tags;
 
     // Берем первые 3, соединяем точкой
     String displayString = items.take(3).join(' • ');
@@ -361,7 +320,7 @@ class ProductCardContent extends StatelessWidget {
   final Product product;
   final bool showPrice;
   final ProductDataFormatter formatter;
-  
+
   const ProductCardContent({
     super.key,
     required this.product,
@@ -502,7 +461,7 @@ class ActionRow extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Expanded(child: ProductTags(product: currentProduct)),
+                        Expanded(child: ActionRowTags(product: currentProduct)),
                       ],
                     ),
                     const SizedBox(height: 3),
@@ -550,68 +509,25 @@ class ActionRow extends StatelessWidget {
             ],
           ),
         ),
-        showButton
-            ? ActionRowButton(
-                // Кнопка
+        if (showButton)
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomElevatedButton(
                 isPaid: currentProduct.isPaid,
-                price: currentProduct.price,
-                containsPaidContent: containsPaidContent,
-              )
-            : const SizedBox.shrink(),
-      ],
-    );
-  }
-}
-
-class ActionRowButton extends StatelessWidget {
-  final bool isPaid;
-  final double? price;
-  final bool containsPaidContent;
-  final VoidCallback? onPressed;
-
-  const ActionRowButton({
-    super.key,
-    required this.isPaid,
-    required this.price,
-    this.onPressed,
-    required this.containsPaidContent,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Constants.googleBlue,
-            foregroundColor: Colors.white,
-            elevation: 0,
-            minimumSize: const Size(0, 32),
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            tapTargetSize: MaterialTapTargetSize
-                .shrinkWrap, // Убирает лишние пустые зоны вокруг кнопки
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-          onPressed: () {},
-          child: Text(
-            !isPaid ? 'Установить' : '${price.toString()} ₽',
-            style: TextStyle(
-              fontWeight: Constants.defaultFontWeight,
-              fontSize: 13,
-            ),
-          ),
-        ),
-        if (containsPaidContent)
-          const Padding(
-            padding: EdgeInsets.only(top: 4),
-            child: Text(
-              'Есть платный контент',
-              style: TextStyle(fontSize: 8, color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
+                price: formatter.price,
+                defaultButtonText: 'Установить',
+              ),
+              if (containsPaidContent)
+                const Padding(
+                  padding: EdgeInsets.only(top: 4),
+                  child: Text(
+                    'Есть платный контент',
+                    style: TextStyle(fontSize: 8, color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+            ],
           ),
       ],
     );

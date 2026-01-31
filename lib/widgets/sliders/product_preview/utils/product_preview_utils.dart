@@ -39,30 +39,47 @@ class ProductScreenshotImage extends StatelessWidget {
       },
       child: Hero(
         tag: heroTag,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(borderRadius),
-          child: Image.asset(
-            imageUrl,
-            width: currentWidth,
-            height: height,
-            cacheWidth: cacheWidth,
-            cacheHeight: cacheHeight,
-            fit: BoxFit.cover,
-            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-              if (wasSynchronouslyLoaded) return child;
-              return frame != null
-                  ? child
-                  : ShimmerBox(
-                      width: currentWidth,
-                      height: height,
-                      borderRadius: borderRadius,
-                    );
-            },
-            errorBuilder: (context, error, stackTrace) => Container(
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08),
+                spreadRadius: 1,
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+            borderRadius: BorderRadius.circular(borderRadius),
+            border: Border.all(
+              color: Colors.black.withValues(alpha: 0.1),
+              width: 1,
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(borderRadius),
+            child: Image.asset(
+              imageUrl,
               width: currentWidth,
               height: height,
-              color: Colors.grey[300],
-              child: const Icon(Icons.broken_image, color: Colors.grey),
+              cacheWidth: cacheWidth,
+              cacheHeight: cacheHeight,
+              fit: BoxFit.cover,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return frame != null
+                    ? child
+                    : ShimmerBox(
+                        width: currentWidth,
+                        height: height,
+                        borderRadius: borderRadius,
+                      );
+              },
+              errorBuilder: (context, error, stackTrace) => Container(
+                width: currentWidth,
+                height: height,
+                color: Colors.grey[300],
+                child: const Icon(Icons.broken_image, color: Colors.grey),
+              ),
             ),
           ),
         ),

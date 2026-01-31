@@ -37,7 +37,6 @@ class ProductGrid extends StatelessWidget {
         ProductSectionHeader(
           title: title,
           subtitle: subtitle,
-          padding: EdgeInsets.fromLTRB(22, 0, 22, 5),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -52,10 +51,11 @@ class ProductGrid extends StatelessWidget {
         SizedBox(
           height: 240,
           child: PageView.builder(
-            clipBehavior: Clip.none,
+            clipBehavior: Clip
+                .none, // Элементы будут визуально выезжать за пределы контейнера
             key: PageStorageKey('grid_$title'),
-            controller: PageController(viewportFraction: 0.9),
-
+            controller: PageController(viewportFraction: 0.95),
+            padEnds: false,
             itemCount: (displayProducts.length / 3).ceil(),
             itemBuilder: (context, pageIndex) {
               return Column(

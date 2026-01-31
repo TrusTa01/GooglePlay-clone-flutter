@@ -111,25 +111,3 @@ class BannerTextContent extends StatelessWidget {
     );
   }
 }
-
-// Виджет для градиента
-// class BannerGradientOverlay extends StatelessWidget {
-//   const BannerGradientOverlay({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Positioned.fill(
-//       child: DecoratedBox(
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(10),
-//           gradient: LinearGradient(
-//             begin: Alignment.topCenter,
-//             end: Alignment.bottomCenter,
-//             colors: [Colors.transparent, Colors.black.withValues(alpha: 0.4)],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-

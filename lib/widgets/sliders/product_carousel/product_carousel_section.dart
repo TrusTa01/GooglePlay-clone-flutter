@@ -29,7 +29,7 @@ class ProductCarousel extends StatelessWidget {
     }
 
     // Размер слайдера
-    final double sliderHeight = products.first is Book ? 230 : 180;
+    final double sliderHeight = products.first is Book ? 235 : 185;
 
     // Ограничиваем количество продуктов, если задан maxItems
     final displayProducts = maxItems != null && maxItems! < products.length
@@ -43,14 +43,11 @@ class ProductCarousel extends StatelessWidget {
         ProductSectionHeader(
           title: title,
           subtitle: subtitle,
-          padding: EdgeInsets.fromLTRB(22, 10, 22, 20),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CategoryFullListScreen(
-                title: title,
-                products: products,
-              ),
+              builder: (context) =>
+                  CategoryFullListScreen(title: title, products: products),
             ),
           ),
           showButton: true,
@@ -60,9 +57,9 @@ class ProductCarousel extends StatelessWidget {
         SizedBox(
           height: sliderHeight,
           child: ListView.builder(
+            clipBehavior: Clip
+                .none, // Элементы будут визуально выезжать за пределы контейнера
             key: PageStorageKey('carousel_$title'),
-            // Отступ слева для первого элемента
-            padding: const EdgeInsets.only(left: 22),
             scrollDirection: Axis.horizontal,
             physics: const PageScrollPhysics(),
             itemCount: displayProducts.length,

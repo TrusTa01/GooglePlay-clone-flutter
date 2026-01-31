@@ -8,6 +8,8 @@ import '../../widgets.dart';
 class SimpleAppBar extends StatefulWidget implements PreferredSizeWidget {
   // Основные параметры
   final Widget? title;
+  final Widget? subtitle;
+  final Widget? titleLeading;
   final List<Widget>? actions;
   final bool showBackButton;
   final Color? backgroundColor;
@@ -33,6 +35,8 @@ class SimpleAppBar extends StatefulWidget implements PreferredSizeWidget {
   const SimpleAppBar({
     super.key,
     this.title,
+    this.subtitle,
+    this.titleLeading,
     this.actions,
     this.showBackButton = false,
     this.backgroundColor,
@@ -71,13 +75,6 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
         ? Colors.transparent
         : (widget.backgroundColor ?? AppBarConstants.defaultBackgroundColor);
 
-    // Определяем elevation
-    final elevation = widget.isTransparent
-        ? 0.0
-        : (widget.hasSearch
-            ? AppBarConstants.defaultElevation
-            : 0.0);
-
     // Определяем leading
     Widget? leading;
     if (widget.isTransparent) {
@@ -104,13 +101,44 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
         searchHint: widget.searchHint ?? '',
         inputActions: widget.inputActions,
       );
-    } else if (widget.isTransparent && widget.title != null) {
-      title = widget.title;
-    } else if (widget.title != null || widget.showLogo) {
-      title = AppBarLogoTitleRow(
-        showLogo: widget.showLogo,
-        title: widget.title,
-      );
+    } else {
+      final List<Widget> titleRowChildren = [];
+
+      // Добавляем иконку в начало заголовка (titleLeading или Logo)
+      if (widget.titleLeading != null) {
+        titleRowChildren.add(widget.titleLeading!);
+        titleRowChildren.add(const SizedBox(width: 8));
+      } else if (!widget.isTransparent && widget.showLogo) {
+        titleRowChildren.add(const AppBarLogo());
+        titleRowChildren.add(const SizedBox(width: 8));
+      }
+
+      // Добавляем колонку с заголовком и подзаголовком
+      final List<Widget> titleColumnChildren = [];
+      if (widget.title != null) {
+        titleColumnChildren.add(widget.title!);
+      }
+      if (widget.subtitle != null) {
+        titleColumnChildren.add(widget.subtitle!);
+      }
+
+      if (titleColumnChildren.isNotEmpty) {
+        titleRowChildren.add(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: titleColumnChildren,
+          ),
+        );
+      }
+
+      if (titleRowChildren.isNotEmpty) {
+        title = Row(
+          mainAxisSize: MainAxisSize.min,
+          children: titleRowChildren,
+        );
+      }
     }
 
     // Определяем bottom (табы)
@@ -127,7 +155,9 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
 
     return AppBar(
       backgroundColor: backgroundColor,
-      elevation: elevation,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      surfaceTintColor: Colors.transparent,
       leading: leading,
       title: title,
       bottom: bottom,

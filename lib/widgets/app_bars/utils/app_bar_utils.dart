@@ -160,8 +160,12 @@ class AppBarDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
+        color: Colors.white,
         border: Border(
-          bottom: BorderSide(color: Color.fromARGB(31, 0, 0, 0), width: 1),
+          bottom: BorderSide(
+            color: Color.fromRGBO(0, 0, 0, 0.35),
+            width: 1,
+          ),
         ),
       ),
       child: child,

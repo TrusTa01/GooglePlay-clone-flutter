@@ -18,4 +18,7 @@ abstract class Constants {
 
   // Для виджета InkWell
   static final BorderRadius cardRadius = BorderRadius.circular(12);
+
+  // Горизонтальный отступ экрана
+  static const double screenHorizontalPadding = 20.0;
 }

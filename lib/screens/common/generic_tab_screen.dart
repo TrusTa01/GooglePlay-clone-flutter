@@ -51,12 +51,10 @@ class _GenericTabScreenState extends State<GenericTabScreen>
 
     return ListView.builder(
       itemCount: widget.sections.length,
-      // Общие отступы для всего списка
       padding: const EdgeInsets.only(bottom: 45),
       itemBuilder: (context, index) {
         final section = widget.sections[index];
         return Padding(
-          // Отступ между cекциями
           padding: EdgeInsets.only(top: section.needsTopPadding ? 15 : 0),
           child: _buildSection(section),
         );
@@ -77,9 +75,13 @@ class _GenericTabScreenState extends State<GenericTabScreen>
       return const SizedBox.shrink();
     }
 
+    Widget sectionWidget;
+    bool needsHorizontalPadding = true;
+
     switch (section.type) {
       case SectionType.banners:
-        return BannerSection(
+        needsHorizontalPadding = false;
+        sectionWidget = BannerSection(
           banners: rawProducts.whereType<AppBanner>().toList(),
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
@@ -87,26 +89,27 @@ class _GenericTabScreenState extends State<GenericTabScreen>
           maxItems: 8,
         );
       case SectionType.carousel:
-        return ProductCarousel(
+        sectionWidget = ProductCarousel(
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
           products: productList,
           maxItems: 10,
         );
       case SectionType.grid:
-        return ProductGrid(
+        sectionWidget = ProductGrid(
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
           products: productList,
           maxItems: 15,
         );
       case SectionType.preview:
-        return GamePreviewSection(
-          games: rawProducts.whereType<Game>().toList(),
+        sectionWidget = GamePreviewSection(
+          game: rawProducts.whereType<Game>().toList(),
           nestedInScrollView: true,
         );
       case SectionType.kidsHeroBanner:
-        return KidsHeroBanner(
+        needsHorizontalPadding = false;
+        sectionWidget = KidsHeroBanner(
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
           imageAssetPath: section.imageAssetPath ?? '',
@@ -120,11 +123,21 @@ class _GenericTabScreenState extends State<GenericTabScreen>
           },
         );
       case SectionType.ageFIlterSelector:
-        return KidsAgeFilterSelector(
+        sectionWidget = KidsAgeFilterSelector(
           type: FilterType.kidsAge,
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
         );
     }
+
+    if (needsHorizontalPadding) {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: Constants.screenHorizontalPadding,
+        ),
+        child: sectionWidget,
+      );
+    }
+    return sectionWidget;
   }
 }

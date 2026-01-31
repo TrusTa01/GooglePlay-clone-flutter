@@ -235,7 +235,7 @@
       {
         "type": "carousel",
         "title": "Новые электронные книги",
-        "dataMethod": "getProductsByTag",
+        "dataMethod": "getEbooksByTag",
         "dataParams": {"query": "Новинка"}
       },
       {

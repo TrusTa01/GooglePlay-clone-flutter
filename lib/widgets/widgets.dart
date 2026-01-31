@@ -1,6 +1,7 @@
 // App bars
 export 'app_bars/app_bar_type.dart';
 export 'app_bars/app_bars.dart';
+export 'app_bars/product_app_bar.dart';
 export 'app_bars/app_bar/simple_app_bar.dart';
 export 'app_bars/app_bar/tabbed_app_bar.dart';
 export 'app_bars/utils/app_bar_utils.dart';
@@ -36,9 +37,9 @@ export 'sliders/product_grid/product_grid_card.dart';
 export 'sliders/product_grid/product_grid_section.dart';
 
 // Game preview widget
-export 'sliders/game_preview/game_preview_card.dart';
-export 'sliders/game_preview/game_preview_section.dart';
-export 'sliders/game_preview/utils/game_preview_utils.dart';
+export 'sliders/product_preview/product_preview_card.dart';
+export 'sliders/product_preview/game_preview_section.dart';
+export 'sliders/product_preview/utils/product_preview_utils.dart';
 
 // Shimers
 export '../core/shimers/product_slider_skeleton.dart';
@@ -48,6 +49,16 @@ export '../core/shimers/game_preview_skeleton.dart';
 export 'category_details_section.dart';
 
 export 'full_screen_image.dart';
+
+export 'popup_menu.dart';
+
+export 'custom_show_dialog.dart';
+export 'custom_expansion_tile.dart';
+
+// Buttons
+export 'buttons/elevated_button.dart';
+export 'buttons/text_button.dart';
+export 'buttons/icon_button.dart';
 
 // Event widgets
 export 'events/event_hero_banner.dart';

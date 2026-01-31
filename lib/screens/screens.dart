@@ -4,9 +4,6 @@ export 'home/books_screen.dart';
 export 'home/games_screen.dart';
 export 'home/search_screen.dart';
 
-// Details
-export 'product_screens/product_screen.dart';
-
 // Notifications
 export 'notifications/notifications_screen.dart';
 
@@ -31,3 +28,9 @@ export 'kids_screen/kids_age_filter_selector.dart';
 
 // Events
 export 'events/product_event_screen.dart';
+
+// Product
+export 'product_screens/details_screen.dart';
+export 'product_screens/product_screen.dart';
+export 'product_screens/permissions_screen.dart';
+export 'product_screens/about_author_screen.dart';

@@ -172,6 +172,12 @@ class SectionBuilderService {
           params?['query'] ?? '',
         );
 
+      case 'getEbooksByTag':
+        return queryService.getEbooksByTag(
+          allProducts,
+          params?['query'] ?? '',
+        );
+
       case 'getOfflineGames':
         return queryService.getOfflineGames(allProducts);
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'widgets.dart';
 import '../../models/models.dart';
+import '../core/utils/formatters.dart';
 
 class CategoryDetailsSection extends StatelessWidget {
   final List<Product> products;
@@ -11,7 +12,7 @@ class CategoryDetailsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isBook = products.first is Book;
-    final double aspectRatio = isBook ? 0.52 : 0.65;
+    final double aspectRatio = isBook ? 0.51 : 0.65;
 
     return GridView.builder(
       padding: const EdgeInsets.all(16),

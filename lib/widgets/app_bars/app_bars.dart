@@ -15,8 +15,11 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
   final TabController? tabController; // Контроллер разделов
   final Color? backgroundColor; // Цвет заднего фона
   final Widget? leadingIcon; // Кастомная иконка слева
+  final Widget? titleLeading; // Кастомная иконка в заголовке
+  final Widget? subtitle; // Подзаголовок
   final VoidCallback? onLeadingPressed; // По нажатию на иконку слева
   final bool showLogo; // Показывать ли логотип Google Play
+  final bool forceShowDivider; // Принудительно показать разделитель
 
   const AppBars({
     super.key,
@@ -32,8 +35,11 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
     this.tabController,
     this.backgroundColor,
     this.leadingIcon,
+    this.titleLeading,
+    this.subtitle,
     this.onLeadingPressed,
     this.showLogo = true,
+    this.forceShowDivider = false,
   });
 
   @override
@@ -50,7 +56,9 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
     return Size.fromHeight(baseHeight + (_needsDivider ? dividerHeight : 0.0));
   }
 
-  bool get _needsDivider => type != AppBarType.search;
+  bool get _needsDivider =>
+      forceShowDivider ||
+      (type != AppBarType.search && type != AppBarType.transparent);
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +114,8 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
         innerAppBar = SimpleAppBar(
           isTransparent: true,
           title: title,
+          subtitle: subtitle,
+          titleLeading: titleLeading,
           actions: actions,
           showBackButton: showBackButton,
           leadingIcon: leadingIcon,
@@ -115,6 +125,8 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
       default:
         innerAppBar = SimpleAppBar(
           title: title,
+          subtitle: subtitle,
+          titleLeading: titleLeading,
           actions: actions,
           showBackButton: showBackButton,
           backgroundColor: backgroundColor,
@@ -131,8 +143,6 @@ class AppBars extends StatelessWidget implements PreferredSizeWidget {
     }
 
     // Если разделитель нужен, оборачиваем в Container с границей
-    return AppBarDivider(
-      child: innerAppBar as Widget,
-    );
+    return AppBarDivider(child: innerAppBar as Widget);
   }
 }
