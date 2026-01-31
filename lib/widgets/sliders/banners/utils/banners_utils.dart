@@ -132,4 +132,3 @@ class BannerTextContent extends StatelessWidget {
 //     );
 //   }
 // }
-

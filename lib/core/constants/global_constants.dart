@@ -18,4 +18,8 @@ abstract class Constants {
 
   // Для виджета InkWell
   static final BorderRadius cardRadius = BorderRadius.circular(12);
+
+  static const EdgeInsets horizontalContentPadding = EdgeInsets.symmetric(
+    horizontal: 22,
+  );
 }

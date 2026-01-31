@@ -29,6 +29,7 @@ class ProductSectionHeader extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
+  final EdgeInsets padding;
   final bool showButton;
 
   const ProductSectionHeader({
@@ -36,6 +37,7 @@ class ProductSectionHeader extends StatelessWidget {
     required this.title,
     this.subtitle = '',
     required this.onTap,
+    required this.padding,
     this.showButton = true,
   });
 
@@ -43,7 +45,9 @@ class ProductSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Padding(
+      padding: padding,
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
@@ -91,6 +95,7 @@ class ProductSectionHeader extends StatelessWidget {
               ),
             ),
         ],
+      ),
     );
   }
 }
@@ -374,13 +379,16 @@ class ProductCardContent extends StatelessWidget {
         final bool hasConstraints = constraints.maxWidth != double.infinity;
         final double iconWidth = hasConstraints 
             ? constraints.maxWidth 
-            : (isBook ? 110 : 115);
+            : 115;
         // Для книг соотношение 2:3, для приложений 1:1
         final double iconHeight = isBook 
             ? iconWidth * 1.5 
             : iconWidth;
         
-        return Column(
+        // Если есть ограничения по высоте - используем их
+        final bool hasHeightConstraints = hasConstraints && constraints.maxHeight != double.infinity;
+        
+        final column = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -416,6 +424,19 @@ class ProductCardContent extends StatelessWidget {
                   ),
           ],
         );
+        
+        // Если есть ограничения - обрезаем overflow
+        if (hasHeightConstraints) {
+          return ClipRect(
+            child: SizedBox(
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+              child: column,
+            ),
+          );
+        }
+        
+        return column;
       },
     );
   }
@@ -488,10 +509,12 @@ class ActionRow extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  ProductTitle(
-                    title: currentProduct.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: ProductTitle(
+                      title: currentProduct.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

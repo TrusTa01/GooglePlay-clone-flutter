@@ -25,6 +25,7 @@ class FilterBarRow extends StatelessWidget {
           ProductSectionHeader(
             title: sectionTitle,
             subtitle: subtitle,
+            padding: Constants.horizontalContentPadding,
             onTap: () {},
             showButton: false,
           ),
@@ -33,7 +34,7 @@ class FilterBarRow extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: const EdgeInsets.only(left: 22, right: 22, top: 8),
+              padding: Constants.horizontalContentPadding.copyWith(top: 8),
               child: Row(
                 children:
                     filters

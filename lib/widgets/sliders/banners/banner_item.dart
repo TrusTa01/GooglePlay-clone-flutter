@@ -7,12 +7,14 @@ class BannerItem extends StatelessWidget {
   final AppBanner banner;
   final BannerType type;
   final VoidCallback? onTap;
+  final double horizontalPadding;
 
   const BannerItem({
     super.key,
     required this.banner,
     this.onTap,
     required this.type,
+    this.horizontalPadding = 6,
   });
 
   @override
@@ -37,8 +39,9 @@ class BannerItem extends StatelessWidget {
                   fit: StackFit.expand,
                   children: [
                     BannerImage(assetPath: banner.imageAssetPath),
-                    if (banner.topToolTipText != null)
+                    if (banner.topToolTipText != null) ...[
                       BannerToolTip(text: banner.topToolTipText!),
+                    ],
                     BannerTextContent(
                       title: banner.title,
                       description: banner.description,

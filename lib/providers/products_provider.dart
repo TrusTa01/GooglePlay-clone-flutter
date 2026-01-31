@@ -145,7 +145,7 @@ class ProductsProvider extends ChangeNotifier {
     _recommendedBooksSection = _sectionBuilder!.buildBooksRecommendedPage();
   }
 
-  // Логика рекомендаций, берем 7 самых высоко оцененных продуктов
+  // Логика рекомендаций, берем 8 самых высоко оцененных продуктов
   Future<void> getRecomendations() async {
     if (_recommendations.isNotEmpty) return;
 
@@ -154,7 +154,7 @@ class ProductsProvider extends ChangeNotifier {
     try {
       List<Product> allAvailable = List.from(_allProducts);
       allAvailable.sort((a, b) => b.rating.compareTo(a.rating));
-      _recommendations = allAvailable.take(7).toList();
+      _recommendations = allAvailable.take(8).toList();
     } catch (e) {
       _error = "Ошибка при выборе лучших товаров: $e";
     } finally {

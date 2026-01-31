@@ -37,6 +37,7 @@ class ProductGrid extends StatelessWidget {
         ProductSectionHeader(
           title: title,
           subtitle: subtitle,
+          padding: Constants.horizontalContentPadding.copyWith(bottom: 5),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
