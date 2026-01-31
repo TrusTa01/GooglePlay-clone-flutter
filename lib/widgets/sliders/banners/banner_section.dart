@@ -141,7 +141,6 @@ class _BannerSectionState extends State<BannerSection> {
               // Banner sections don't have a "see all" page
               debugPrint('Banner section header tapped - no action');
             },
-            padding: const EdgeInsets.fromLTRB(22, 10, 22, 20),
             showButton: false, // Hide arrow button for banner sections
           ),
         NotificationListener<ScrollNotification>(

@@ -43,7 +43,6 @@ class ProductCarousel extends StatelessWidget {
         ProductSectionHeader(
           title: title,
           subtitle: subtitle,
-          padding: EdgeInsets.fromLTRB(22, 10, 22, 20),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -62,7 +61,6 @@ class ProductCarousel extends StatelessWidget {
           child: ListView.builder(
             key: PageStorageKey('carousel_$title'),
             // Отступ слева для первого элемента
-            padding: const EdgeInsets.only(left: 22),
             scrollDirection: Axis.horizontal,
             physics: const PageScrollPhysics(),
             itemCount: displayProducts.length,

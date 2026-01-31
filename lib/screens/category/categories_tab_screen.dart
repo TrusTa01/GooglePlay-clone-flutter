@@ -17,6 +17,7 @@ class CategoriesTabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      primary: false,
       itemCount: categories.length - 1,
       itemBuilder: (context, index) {
         return _buildCategoryTile(context, categories[index + 1]);

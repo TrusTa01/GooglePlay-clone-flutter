@@ -56,6 +56,7 @@ class TopChartsScreen extends StatelessWidget {
 
         Expanded(
           child: ListView.builder(
+            primary: false,
             padding: const EdgeInsets.all(8),
             scrollDirection: Axis.vertical,
             itemCount: items.length,

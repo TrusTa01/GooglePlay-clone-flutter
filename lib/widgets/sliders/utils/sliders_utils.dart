@@ -29,7 +29,6 @@ class ProductSectionHeader extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-  final EdgeInsets padding;
   final bool showButton;
 
   const ProductSectionHeader({
@@ -37,7 +36,6 @@ class ProductSectionHeader extends StatelessWidget {
     required this.title,
     this.subtitle = '',
     required this.onTap,
-    required this.padding,
     this.showButton = true,
   });
 
@@ -45,9 +43,7 @@ class ProductSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: Row(
+    return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
@@ -95,7 +91,6 @@ class ProductSectionHeader extends StatelessWidget {
               ),
             ),
         ],
-      ),
     );
   }
 }

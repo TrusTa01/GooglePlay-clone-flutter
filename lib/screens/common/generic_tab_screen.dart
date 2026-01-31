@@ -41,6 +41,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     // Если данных нет и идет загрузка — показываем шиммеры
     if (watchProvider.isLoading && widget.sections.isEmpty) {
       return ListView.builder(
+        primary: false,
         itemCount: 5,
         itemBuilder: (context, index) => const Padding(
           padding: EdgeInsets.only(bottom: 10),
@@ -50,6 +51,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     }
 
     return ListView.builder(
+      primary: false,
       itemCount: widget.sections.length,
       // Общие отступы для всего списка
       padding: const EdgeInsets.only(bottom: 45),
