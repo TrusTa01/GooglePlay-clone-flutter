@@ -31,6 +31,7 @@ class ProductSectionHeader extends StatelessWidget {
   final VoidCallback onTap;
   final EdgeInsets padding;
   final bool showButton;
+  final MainAxisAlignment mainAxisAlignment;
 
   const ProductSectionHeader({
     super.key,
@@ -39,6 +40,7 @@ class ProductSectionHeader extends StatelessWidget {
     required this.onTap,
     required this.padding,
     this.showButton = true,
+    this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
   });
 
   bool get _hasSubtitle => subtitle.trim().isNotEmpty;
@@ -47,7 +49,7 @@ class ProductSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: mainAxisAlignment,
       children: [
         Padding(
           padding: padding,
@@ -57,7 +59,7 @@ class ProductSectionHeader extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 18,

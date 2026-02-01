@@ -22,15 +22,18 @@ class FilterBarRow extends StatelessWidget {
     return Column(
       children: [
         if (_hasHeader)
-          ProductSectionHeader(
-            title: sectionTitle,
-            subtitle: subtitle,
-            padding: Constants.horizontalContentPadding,
-            onTap: () {},
-            showButton: false,
+          Center(
+            child: ProductSectionHeader(
+              title: sectionTitle,
+              subtitle: subtitle,
+              padding: Constants.horizontalContentPadding,
+              onTap: () {},
+              showButton: false,
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
           ),
         Align(
-          alignment: Alignment.centerLeft,
+          alignment: Alignment.center,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
