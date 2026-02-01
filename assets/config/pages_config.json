@@ -55,6 +55,7 @@
       {
         "type": "preview",
         "title": "Необычные головоломки",
+        "showButton": true,
         "dataMethod": "getPaidGamesByGenre",
         "dataParams": {"genre": "Головоломки"}
       },

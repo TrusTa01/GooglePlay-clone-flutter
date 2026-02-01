@@ -6,11 +6,13 @@ import '../../widgets.dart';
 class GamePreviewSection extends StatelessWidget {
   final List<Game> games;
   final bool nestedInScrollView;
+  final bool showButton;
 
   const GamePreviewSection({
     super.key,
     required this.games,
     this.nestedInScrollView = false,
+    this.showButton = false,
   });
 
   @override
@@ -20,14 +22,30 @@ class GamePreviewSection extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return ListView.separated(
-      shrinkWrap: nestedInScrollView,
-      physics: nestedInScrollView ? const NeverScrollableScrollPhysics() : null,
-      separatorBuilder: (context, index) => const SizedBox(height: 35),
-      itemCount: games.length,
-      itemBuilder: (context, index) {
-        return GamePreviewCard(game: games[index]);
-      },
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final width = constraints.maxWidth;
+
+            return ListView.separated(
+              shrinkWrap: nestedInScrollView,
+              physics: nestedInScrollView
+                  ? const NeverScrollableScrollPhysics()
+                  : null,
+              separatorBuilder: (context, index) => const SizedBox(height: 35),
+              itemCount: games.length,
+              itemBuilder: (context, index) {
+                return GamePreviewCard(
+                  game: games[index],
+                  showButton: showButton,
+                );
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }

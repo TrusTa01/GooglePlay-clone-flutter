@@ -266,8 +266,8 @@ class _BannerSectionState extends State<BannerSection> {
                     showButton: false,
                   ),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: width > 1000 ? 23 : 0,
+                  padding: EdgeInsets.only(
+                    left: width > 1000 ? 23 : 0,
                   ),
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (notification) {

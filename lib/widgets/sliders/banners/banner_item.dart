@@ -23,7 +23,7 @@ class BannerItem extends StatelessWidget {
     final bool isAction = banner is ActionBanner;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6),
+      padding: const EdgeInsets.only(right: 12),
       child: Material(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),

@@ -16,7 +16,7 @@ class ProductCarouselCard extends StatelessWidget {
     final formatter = ProductDataFormatter(product);
 
     return Container(
-      margin: const EdgeInsets.only(right: 12),
+      margin: const EdgeInsets.only(right: 12.9),
       child: Material(
         color: Colors.transparent,
         child: InkWell(

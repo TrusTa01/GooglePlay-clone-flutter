@@ -82,20 +82,17 @@ class ProductSectionHeader extends StatelessWidget {
         ),
 
         if (showButton)
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Material(
-              color: Constants.ratingBackgroungColor,
-              borderRadius: BorderRadius.circular(23),
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: onTap,
-                child: Container(
-                  width: 30,
-                  height: 34,
-                  alignment: Alignment.center,
-                  child: const Center(child: Icon(Icons.arrow_forward, size: 18)),
-                ),
+          Material(
+            color: Constants.ratingBackgroungColor,
+            borderRadius: BorderRadius.circular(23),
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: onTap,
+              child: Container(
+                width: 30,
+                height: 34,
+                alignment: Alignment.center,
+                child: const Center(child: Icon(Icons.arrow_forward, size: 18)),
               ),
             ),
           ),
@@ -492,6 +489,7 @@ class ActionRow extends StatelessWidget {
     final String iconPath = 'assets/icons/star.png';
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         ProductCardThumbnail(
           borderRadius: borderRadius ?? BorderRadius.circular(12),
@@ -510,12 +508,10 @@ class ActionRow extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Expanded(
-                    child: ProductTitle(
-                      title: currentProduct.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  ProductTitle(
+                    title: currentProduct.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -583,14 +579,13 @@ class ActionRow extends StatelessWidget {
             ],
           ),
         ),
-        showButton
-            ? ActionRowButton(
-                // Кнопка
-                isPaid: currentProduct.isPaid,
-                price: currentProduct.price,
-                containsPaidContent: containsPaidContent,
-              )
-            : const SizedBox.shrink(),
+        if (showButton)
+          ActionRowButton(
+            // Кнопка
+            isPaid: currentProduct.isPaid,
+            price: currentProduct.price,
+            containsPaidContent: containsPaidContent,
+          ),
       ],
     );
   }

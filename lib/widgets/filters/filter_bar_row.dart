@@ -26,7 +26,7 @@ class FilterBarRow extends StatelessWidget {
             child: ProductSectionHeader(
               title: sectionTitle,
               subtitle: subtitle,
-              padding: Constants.horizontalContentPadding,
+              padding: const EdgeInsets.only(top: 10),
               onTap: () {},
               showButton: false,
               mainAxisAlignment: MainAxisAlignment.center,

@@ -69,6 +69,7 @@ class TopChartsScreen extends StatelessWidget {
                   horizontal: 15,
                 ),
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
                       width: 28,
@@ -79,7 +80,7 @@ class TopChartsScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 15),
-                    Expanded(
+                    Flexible(
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
