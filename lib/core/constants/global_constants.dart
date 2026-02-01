@@ -22,4 +22,10 @@ abstract class Constants {
   static const EdgeInsets horizontalContentPadding = EdgeInsets.symmetric(
     horizontal: 22,
   );
+
+  // Константы для расчёта maxContentWidth слайдеров
+  static const double sliderCardWidth = 115;
+  static const double sliderCardMargin = 12;
+  static const int sliderMaxVisibleItems = 8;
+  static const double sliderMaxContentWidth = 1040;
 }

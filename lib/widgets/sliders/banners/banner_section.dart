@@ -49,47 +49,71 @@ class _BannerLayoutConfig {
 class _BannerSectionState extends State<BannerSection> {
   PageController? _controller;
   Timer? _timer;
-  int _currentPage = 0;
+  int _currentPage = 1;
   double _lastViewportFraction = 0;
 
   // Breakpoints и их конфигурации (от меньшего к большему)
   static const List<(int, _BannerLayoutConfig)> _breakpoints = [
-    (0, _BannerLayoutConfig(     // < 400
-      viewportFraction: 0.92,
-      heightFactor: 3.5,
-      bannerPadding: 6,
-      horizontalPadding: 16,
-    )),
-    (400, _BannerLayoutConfig(   // 400-500
-      viewportFraction: 0.88,
-      heightFactor: 3.2,
-      bannerPadding: 8,
-      horizontalPadding: 18,
-    )),
-    (500, _BannerLayoutConfig(   // 500-600
-      viewportFraction: 0.80,
-      heightFactor: 2.9,
-      bannerPadding: 12,
-      horizontalPadding: 22,
-    )),
-    (600, _BannerLayoutConfig(   // 600-800
-      viewportFraction: 0.70,
-      heightFactor: 2.6,
-      bannerPadding: 16,
-      horizontalPadding: 28,
-    )),
-    (800, _BannerLayoutConfig(   // 800-1000
-      viewportFraction: 0.55,
-      heightFactor: 2.6,
-      bannerPadding: 20,
-      horizontalPadding: 36,
-    )),
-    (1000, _BannerLayoutConfig(  // > 1000
-      viewportFraction: 0.45,
-      heightFactor: 2.6,
-      bannerPadding: 24,
-      horizontalPadding: 44,
-    )),
+    (
+      0,
+      _BannerLayoutConfig(
+        // < 400
+        viewportFraction: 0.92,
+        heightFactor: 3.5,
+        bannerPadding: 6,
+        horizontalPadding: 16,
+      ),
+    ),
+    (
+      400,
+      _BannerLayoutConfig(
+        // 400-500
+        viewportFraction: 0.88,
+        heightFactor: 3.2,
+        bannerPadding: 8,
+        horizontalPadding: 18,
+      ),
+    ),
+    (
+      500,
+      _BannerLayoutConfig(
+        // 500-600
+        viewportFraction: 0.80,
+        heightFactor: 2.9,
+        bannerPadding: 12,
+        horizontalPadding: 22,
+      ),
+    ),
+    (
+      600,
+      _BannerLayoutConfig(
+        // 600-800
+        viewportFraction: 0.70,
+        heightFactor: 2.6,
+        bannerPadding: 16,
+        horizontalPadding: 28,
+      ),
+    ),
+    (
+      800,
+      _BannerLayoutConfig(
+        // 800-1000
+        viewportFraction: 0.55,
+        heightFactor: 2.6,
+        bannerPadding: 20,
+        horizontalPadding: 36,
+      ),
+    ),
+    (
+      1000,
+      _BannerLayoutConfig(
+        // > 1000
+        viewportFraction: 0.45,
+        heightFactor: 2.6,
+        bannerPadding: 24,
+        horizontalPadding: 44,
+      ),
+    ),
   ];
 
   // Получить конфигурацию для текущей ширины
@@ -138,8 +162,8 @@ class _BannerSectionState extends State<BannerSection> {
     _timer = Timer.periodic(const Duration(seconds: 7), (timer) {
       if (_controller != null && _controller!.hasClients) {
         _currentPage++;
-        if (_currentPage >= displayBannersLength) {
-          _currentPage = 0;
+        if (_currentPage >= displayBannersLength - 1) {
+          _currentPage = 1;
         }
         _controller!.animateToPage(
           _currentPage,
@@ -197,10 +221,6 @@ class _BannerSectionState extends State<BannerSection> {
     }
   }
 
-  // Константы для расчёта maxContentWidth
-  static const double _cardWidth = 115;
-  static const double _cardMargin = 12;
-  static const int _maxVisibleItems = 8;
 
   @override
   Widget build(BuildContext context) {
@@ -213,13 +233,7 @@ class _BannerSectionState extends State<BannerSection> {
         ? widget.banners.sublist(0, widget.maxItems!)
         : widget.banners;
 
-    // Рассчитываем максимальную ширину контента
-    final double horizontalPadding =
-        Constants.horizontalContentPadding.horizontal;
-    final double maxContentWidth =
-        _maxVisibleItems * _cardWidth +
-        (_maxVisibleItems - 1.5) * _cardMargin +
-        horizontalPadding;
+    final double maxContentWidth = Constants.sliderMaxContentWidth;
 
     return Center(
       child: ConstrainedBox(
@@ -229,8 +243,10 @@ class _BannerSectionState extends State<BannerSection> {
             final width = constraints.maxWidth;
             final config = _getConfig(width);
             _updateController(config.viewportFraction);
-            
-            debugPrint('Banner: width=$width, viewport=${config.viewportFraction}, height=${config.heightFactor}');
+
+            debugPrint(
+              'Banner: width=$width, viewport=${config.viewportFraction}, height=${config.heightFactor}',
+            );
 
             final adaptiveHeight = screenHeight / config.heightFactor;
 
@@ -244,15 +260,14 @@ class _BannerSectionState extends State<BannerSection> {
                     onTap: () {
                       debugPrint('Banner section header tapped - no action');
                     },
-                    padding: EdgeInsets.symmetric(horizontal: config.horizontalPadding).copyWith(
-                      top: 10,
-                      bottom: 20,
-                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: config.horizontalPadding,
+                    ).copyWith(top: 10, bottom: 20),
                     showButton: false,
                   ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: width > 1000 ? config.horizontalPadding : 0,
+                    horizontal: width > 1000 ? 23 : 0,
                   ),
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
@@ -266,7 +281,9 @@ class _BannerSectionState extends State<BannerSection> {
                     child: SizedBox(
                       height: adaptiveHeight,
                       child: PageView.builder(
-                        key: ValueKey('banner_${widget.type}_${config.viewportFraction}'),
+                        key: ValueKey(
+                          'banner_${widget.type}_${config.viewportFraction}',
+                        ),
                         onPageChanged: (index) => _currentPage = index,
                         scrollDirection: Axis.horizontal,
                         controller: _controller,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/core/constants/global_constants.dart';
+
 class EventDescription extends StatelessWidget {
   final String text;
 
@@ -11,7 +13,7 @@ class EventDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(22, 20, 22, 10),
+      padding: Constants.horizontalContentPadding.copyWith(top: 20, bottom: 10),
       child: Text(
         text,
         maxLines: 5,

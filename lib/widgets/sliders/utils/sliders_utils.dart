@@ -45,12 +45,13 @@ class ProductSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: padding,
+          child: Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -76,9 +77,12 @@ class ProductSectionHeader extends StatelessWidget {
               ],
             ),
           ),
+        ),
 
-          if (showButton)
-            Material(
+        if (showButton)
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Material(
               color: Constants.ratingBackgroungColor,
               borderRadius: BorderRadius.circular(23),
               clipBehavior: Clip.antiAlias,
@@ -88,14 +92,12 @@ class ProductSectionHeader extends StatelessWidget {
                   width: 30,
                   height: 34,
                   alignment: Alignment.center,
-                  child: const Center(
-                    child: Icon(Icons.arrow_forward, size: 18),
-                  ),
+                  child: const Center(child: Icon(Icons.arrow_forward, size: 18)),
                 ),
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }
@@ -361,7 +363,7 @@ class ProductCardContent extends StatelessWidget {
   final Product product;
   final bool showPrice;
   final ProductDataFormatter formatter;
-  
+
   const ProductCardContent({
     super.key,
     required this.product,
@@ -372,22 +374,19 @@ class ProductCardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isBook = product is Book;
-    
+
     return LayoutBuilder(
       builder: (context, constraints) {
         // Если constraints не ограничены, используем фиксированные размеры
         final bool hasConstraints = constraints.maxWidth != double.infinity;
-        final double iconWidth = hasConstraints 
-            ? constraints.maxWidth 
-            : 115;
+        final double iconWidth = hasConstraints ? constraints.maxWidth : 115;
         // Для книг соотношение 2:3, для приложений 1:1
-        final double iconHeight = isBook 
-            ? iconWidth * 1.5 
-            : iconWidth;
-        
+        final double iconHeight = isBook ? iconWidth * 1.5 : iconWidth;
+
         // Если есть ограничения по высоте - используем их
-        final bool hasHeightConstraints = hasConstraints && constraints.maxHeight != double.infinity;
-        
+        final bool hasHeightConstraints =
+            hasConstraints && constraints.maxHeight != double.infinity;
+
         final column = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -424,7 +423,7 @@ class ProductCardContent extends StatelessWidget {
                   ),
           ],
         );
-        
+
         // Если есть ограничения - обрезаем overflow
         if (hasHeightConstraints) {
           return ClipRect(
@@ -435,7 +434,7 @@ class ProductCardContent extends StatelessWidget {
             ),
           );
         }
-        
+
         return column;
       },
     );

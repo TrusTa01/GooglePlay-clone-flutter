@@ -22,10 +22,7 @@ class ProductCarousel extends StatelessWidget {
   });
 
   // Константы размеров карточек
-  static const double _appCardWidth = 115;
   static const double _bookCardWidth = 115;
-  static const double _cardMargin = 12;
-  static const int _maxVisibleItems = 8;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +34,7 @@ class ProductCarousel extends StatelessWidget {
     final bool isBook = products.first is Book;
     
     // Фиксированные размеры карточек
-    final double cardWidth = isBook ? _bookCardWidth : _appCardWidth;
+    final double cardWidth = isBook ? _bookCardWidth : Constants.sliderCardWidth;
     final double cardHeight = isBook ? cardWidth * 1.5 : cardWidth;
     final double sliderHeight = cardHeight + 65; // +65 для текста и рейтинга
 
@@ -47,11 +44,7 @@ class ProductCarousel extends StatelessWidget {
         : products;
 
     // Рассчитываем максимальную ширину контента (8 карточек)
-    final double horizontalPadding = Constants.horizontalContentPadding.horizontal;
-    final double maxContentWidth = 
-        _maxVisibleItems * cardWidth + 
-        (_maxVisibleItems - 1.5) * _cardMargin + 
-        horizontalPadding;
+    final double maxContentWidth = Constants.sliderMaxContentWidth;
 
     return Center(
       child: ConstrainedBox(
