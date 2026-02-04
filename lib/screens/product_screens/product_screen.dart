@@ -67,294 +67,305 @@ class _ProductPageContent extends StatelessWidget {
         type: AppBarType.transparent,
         actions: [ProductPopupMenu()],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Column(
-                children: [
-                  // Иконка и название продукта
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+      body: Center(
+        heightFactor: 1,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
+                  child: Column(
                     children: [
-                      ProductCardThumbnail(
-                        borderRadius: utils.borderRadius,
-                        iconUrl: product.iconUrl,
-                        iconWidth: utils.iconWidth,
-                        iconHeight: utils.iconHeight,
-                        cacheWidth: utils.cacheWidth,
-                        cacheHeight: utils.cacheHeight,
-                        fit: utils.isBook ? BoxFit.fill : BoxFit.cover,
+                      // Иконка и название продукта
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ProductCardThumbnail(
+                            borderRadius: utils.borderRadius,
+                            iconUrl: product.iconUrl,
+                            iconWidth: utils.iconWidth,
+                            iconHeight: utils.iconHeight,
+                            cacheWidth: utils.cacheWidth,
+                            cacheHeight: utils.cacheHeight,
+                            fit: utils.isBook ? BoxFit.fill : BoxFit.cover,
+                          ),
+                          const SizedBox(width: 25),
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  product.title,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: Constants.defaultFontWeight,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  product.creator,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Constants.googleBlue,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                if (product is Book) ...[
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    (product as Book).publisher,
+                                    style: const TextStyle(fontSize: 12),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ] else if (product.isPaid)
+                                  Text(
+                                    'Есть платный контент',
+                                    style: const TextStyle(fontSize: 10),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 25),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+          
+                      const SizedBox(height: 25),
+          
+                      // Рейтинг и количество оценок
+                      IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
-                            Text(
-                              product.title,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: Constants.defaultFontWeight,
+                            Expanded(
+                              child: _RatingAndReviewsColumn(
+                                text: Text(product.rating.toStringAsFixed(1)),
+                                subText: '${formatter.reviewsCount} отзывов',
+                                isReview: true,
+                                isTapping: true,
+                                onTap: () => AlertDialogs.showAlertDialog(
+                                  context: context,
+                                  title: 'Как рассчитываются оценки',
+                                  content:
+                                      'Оценки основаны на недавних отзывах от жителей вашего региона, использующих такой же тип устройства, как и вы.\n\nОтзывы оставляют пользователи с подтвержденными аккаунтами Google на основе своего опыта работы с приложением.',
+                                  detailsText: 'Подробнее...',
+                                  onDetails: () {}, // TODO: на страницу с отзывами
+                                  confirmText: 'ОК',
+                                ),
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                            Text(
-                              product.creator,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Constants.googleBlue,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            const VerticalDivider(
+                              indent: 10,
+                              endIndent: 10,
+                              color: Constants.defautTextColor,
+                              width: 10,
                             ),
-                            if (product is Book) ...[
-                              const SizedBox(height: 10),
-                              Text(
-                                (product as Book).publisher,
-                                style: const TextStyle(fontSize: 12),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ] else if (product.isPaid)
-                              Text(
-                                'Есть платный контент',
-                                style: const TextStyle(fontSize: 10),
-                              ),
+          
+                            Expanded(
+                              child: product is Book
+                                  ? _RatingAndReviewsColumn(
+                                      text: (product as Book).isEbook
+                                          ? const Icon(
+                                              Icons.book_outlined,
+                                              size: 20,
+                                            )
+                                          : const Icon(
+                                              Icons.audio_file_outlined,
+                                              size: 20,
+                                            ),
+                                      subText: (product as Book).isEbook
+                                          ? 'Электронная книга'
+                                          : 'Аудиокнига',
+                                      isTapping: false,
+                                      onTap: null,
+                                    )
+                                  : _RatingAndReviewsColumn(
+                                      text: Text(formatter.downloadCount),
+                                      subText: 'Скачивания',
+                                      isTapping: false,
+                                      onTap: null,
+                                    ),
+                            ),
+          
+                            const VerticalDivider(
+                              indent: 10,
+                              endIndent: 10,
+                              color: Constants.defautTextColor,
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: product is Book
+                                  ? _RatingAndReviewsColumn(
+                                      text: Text(formatter.technicalInfoValue),
+                                      subText: 'стр.',
+                                      isTapping: false,
+                                      onTap: null,
+                                    )
+                                  : _RatingAndReviewsColumn(
+                                      leading: AgeBadge(
+                                        fontSize: 12,
+                                        age: product is App
+                                            ? (product as App).ageRating
+                                            : (product as Game).ageRating,
+                                      ),
+                                      subText: product is App
+                                          ? '${(product as App).ageRating}+'
+                                          : '${(product as Game).ageRating}+',
+                                      isTapping: true,
+                                      onTap: () => AlertDialogs.showAlertDialog(
+                                        context: context,
+                                        title: product is App
+                                            ? '${(product as App).ageRating}+'
+                                            : '${(product as Game).ageRating}+',
+                                        content: product is App
+                                            ? (product as App).ageRatingReasons
+                                                  .join(', ')
+                                            : (product as Game).ageRatingReasons
+                                                  .join(', '),
+          
+                                        detailsText: 'Подробнее...',
+                                        onDetails: () {}, // TODO: url launcher
+                                        confirmText: 'ОК',
+                                      ),
+                                    ),
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  // Рейтинг и количество оценок
-                  IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: _RatingAndReviewsColumn(
-                            text: Text(product.rating.toStringAsFixed(1)),
-                            subText: '${formatter.reviewsCount} отзывов',
-                            isReview: true,
-                            isTapping: true,
-                            onTap: () => AlertDialogs.showAlertDialog(
-                              context: context,
-                              title: 'Как рассчитываются оценки',
-                              content:
-                                  'Оценки основаны на недавних отзывах от жителей вашего региона, использующих такой же тип устройства, как и вы.\n\nОтзывы оставляют пользователи с подтвержденными аккаунтами Google на основе своего опыта работы с приложением.',
-                              detailsText: 'Подробнее...',
-                              onDetails: () {}, // TODO: на страницу с отзывами
-                              confirmText: 'ОК',
+          
+                      const SizedBox(height: 25),
+          
+                      // Кнопка установить
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          if (product is Book &&
+                              (product as Book).hasAudioVersion) ...[
+                            Expanded(
+                              child: CustomElevatedButton(
+                                defaultButtonText: 'Фрагмент',
+                                isPaid: false,
+                                isOutlined: true,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                          ],
+                          Expanded(
+                            child: CustomElevatedButton(
+                              isPaid: product.isPaid,
+                              price: formatter.price,
+                              defaultButtonText: 'Установить',
+                            ),
+                          ),
+                        ],
+                      ),
+          
+                      const SizedBox(height: 15),
+                      if (product is App || product is Game)
+                        ProductPreviewCard(product: product, showActionRow: false),
+          
+                      // Описание
+                      const SizedBox(height: 25),
+                      ProductSectionHeader(
+                        title: utils.titleText,
+                        padding: EdgeInsets.zero,
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailsScreen(product: product),
+                          ),         
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            product.shortDescription,
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
+          
+                      // Теги
+                      const SizedBox(height: 25),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [Flexible(child: ProductTags(product: product))],
+                      ),
+                      const SizedBox(height: 25),
+          
+                      // Поддержка приложения
+                      if (product is Book) ...[
+                        ProductSectionHeader(
+                          title: 'Об авторе',
+                          padding: Constants.horizontalContentPadding,
+                          subtitle: product.creator,
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  AboutAuthorScreen(product: product),
                             ),
                           ),
                         ),
-                        const VerticalDivider(
-                          indent: 10,
-                          endIndent: 10,
-                          color: Constants.defautTextColor,
-                          width: 10,
-                        ),
-
-                        Expanded(
-                          child: product is Book
-                              ? _RatingAndReviewsColumn(
-                                  text: (product as Book).isEbook
-                                      ? const Icon(
-                                          Icons.book_outlined,
-                                          size: 20,
-                                        )
-                                      : const Icon(
-                                          Icons.audio_file_outlined,
-                                          size: 20,
-                                        ),
-                                  subText: (product as Book).isEbook
-                                      ? 'Электронная книга'
-                                      : 'Аудиокнига',
-                                  isTapping: false,
-                                  onTap: null,
-                                )
-                              : _RatingAndReviewsColumn(
-                                  text: Text(formatter.downloadCount),
-                                  subText: 'Скачивания',
-                                  isTapping: false,
-                                  onTap: null,
-                                ),
-                        ),
-
-                        const VerticalDivider(
-                          indent: 10,
-                          endIndent: 10,
-                          color: Constants.defautTextColor,
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: product is Book
-                              ? _RatingAndReviewsColumn(
-                                  text: Text(formatter.technicalInfoValue),
-                                  subText: 'стр.',
-                                  isTapping: false,
-                                  onTap: null,
-                                )
-                              : _RatingAndReviewsColumn(
-                                  leading: AgeBadge(
-                                    fontSize: 12,
-                                    age: product is App
-                                        ? (product as App).ageRating
-                                        : (product as Game).ageRating,
-                                  ),
-                                  subText: product is App
-                                      ? '${(product as App).ageRating}+'
-                                      : '${(product as Game).ageRating}+',
-                                  isTapping: true,
-                                  onTap: () => AlertDialogs.showAlertDialog(
-                                    context: context,
-                                    title: product is App
-                                        ? '${(product as App).ageRating}+'
-                                        : '${(product as Game).ageRating}+',
-                                    content: product is App
-                                        ? (product as App).ageRatingReasons
-                                              .join(', ')
-                                        : (product as Game).ageRatingReasons
-                                              .join(', '),
-
-                                    detailsText: 'Подробнее...',
-                                    onDetails: () {}, // TODO: url launcher
-                                    confirmText: 'ОК',
-                                  ),
-                                ),
-                        ),
                       ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  // Кнопка установить
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      if (product is Book &&
-                          (product as Book).hasAudioVersion) ...[
-                        Expanded(
-                          child: CustomElevatedButton(
-                            defaultButtonText: 'Фрагмент',
-                            isPaid: false,
-                            isOutlined: true,
+                      if (product is App || product is Game) ...[
+                        CustomExpansionTile(
+                          items: getSupportItems(product),
+                          title: Text(
+                            'Поддержка приложения',
+                            style: TextStyle(
+                              fontWeight: Constants.defaultFontWeight,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 10),
                       ],
-                      Expanded(
-                        child: CustomElevatedButton(
-                          isPaid: product.isPaid,
-                          price: formatter.price,
-                          defaultButtonText: 'Установить',
+          
+                      // Похожие продукты
+                      if (similarProducts.isNotEmpty) ...[
+                        const SizedBox(height: 15),
+                        ProductCarousel(
+                          title: product is Book
+                              ? 'Похожие книги'
+                              : product is Game
+                              ? 'Похожие игры'
+                              : 'Похожие приложения',
+                          products: similarProducts,
+                          maxItems: 10,
+                          contentPadding: EdgeInsets.zero,
                         ),
+                      ],
+          
+                      const SizedBox(height: 25),
+                      Row(
+                        children: [
+                          CustomTextButton(
+                            title: 'Правила возврата платежей в Google Play',
+                            icon: Icons.arrow_back,
+                            onTap: () {}, // TODO: url launcher
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 20),
+                      Row(children: [const Text('Все цены указаны с учетом НДС.')]),
                     ],
                   ),
-
-                  const SizedBox(height: 15),
-                  if (product is App || product is Game)
-                    ProductPreviewCard(product: product, showActionRow: false),
-
-                  // Описание
-                  const SizedBox(height: 25),
-                  ProductSectionHeader(
-                    title: utils.titleText,
-                    padding: Constants.horizontalContentPadding,
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsScreen(product: product),
-                      ),         
-                    ),
-                  ),
-                  Text(
-                    product.shortDescription,
-                    style: const TextStyle(fontSize: 14),
-                  ),
-
-                  // Теги
-                  const SizedBox(height: 25),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Flexible(child: ProductTags(product: product))],
-                  ),
-                  const SizedBox(height: 25),
-
-                  // Поддержка приложения
-                  if (product is Book) ...[
-                    ProductSectionHeader(
-                      title: 'Об авторе',
-                      padding: Constants.horizontalContentPadding,
-                      subtitle: product.creator,
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              AboutAuthorScreen(product: product),
-                        ),
-                      ),
-                    ),
-                  ],
-                  if (product is App || product is Game) ...[
-                    CustomExpansionTile(
-                      items: getSupportItems(product),
-                      title: Text(
-                        'Поддержка приложения',
-                        style: TextStyle(
-                          fontWeight: Constants.defaultFontWeight,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ],
-
-                  // Похожие продукты
-                  if (similarProducts.isNotEmpty) ...[
-                    const SizedBox(height: 15),
-                    ProductCarousel(
-                      title: product is Book
-                          ? 'Похожие книги'
-                          : product is Game
-                          ? 'Похожие игры'
-                          : 'Похожие приложения',
-                      products: similarProducts,
-                      maxItems: 10,
-                    ),
-                  ],
-
-                  const SizedBox(height: 25),
-                  Row(
-                    children: [
-                      CustomTextButton(
-                        title: 'Правила возврата платежей в Google Play',
-                        icon: Icons.arrow_back,
-                        onTap: () {}, // TODO: url launcher
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(children: [const Text('Все цены указаны с учетом НДС.')]),
-                ],
-              ),
+                ),
+          
+                const SizedBox(height: 20),
+              ],
             ),
-
-            const SizedBox(height: 20),
-          ],
+          ),
         ),
       ),
     );

@@ -16,26 +16,32 @@ class PermissionsScreen extends StatelessWidget {
         subtitle: 'Разрешения для приложения',
       ),
 
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: product.permissions.length + 1, // +1 для заголовка
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                'Возможные разрешения для версии ${product.version}',
-                style: const TextStyle(fontSize: 16),
-              ),
-            );
-          }
-          return _BulletItem(
-            permission: product.permissions[index - 1],
-          );
-        },
+      body: Center(
+        heightFactor: 1,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: product.permissions.length + 1, // +1 для заголовка
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    'Возможные разрешения для версии ${product.version}',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                );
+              }
+              return _BulletItem(
+                permission: product.permissions[index - 1],
+              );
+            },
+          ),
+        ),
       ),
     );
   }

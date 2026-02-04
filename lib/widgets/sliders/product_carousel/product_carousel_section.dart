@@ -11,6 +11,9 @@ class ProductCarousel extends StatelessWidget {
   final List<Product> products;
   final bool isBookCarousel;
   final int? maxItems;
+  /// Горизонтальный отступ секции. По умолчанию [Constants.horizontalContentPadding].
+  /// Передайте [EdgeInsets.zero], если карусель уже внутри контейнера с отступами (например, на странице продукта).
+  final EdgeInsets? contentPadding;
 
   const ProductCarousel({
     super.key,
@@ -19,6 +22,7 @@ class ProductCarousel extends StatelessWidget {
     required this.products,
     this.isBookCarousel = false,
     this.maxItems,
+    this.contentPadding,
   });
 
   // Константы размеров карточек
@@ -45,6 +49,7 @@ class ProductCarousel extends StatelessWidget {
 
     // Рассчитываем максимальную ширину контента (8 карточек)
     final double maxContentWidth = Constants.sliderMaxContentWidth;
+    final EdgeInsets padding = contentPadding ?? Constants.horizontalContentPadding;
 
     return Center(
       child: ConstrainedBox(
@@ -56,7 +61,7 @@ class ProductCarousel extends StatelessWidget {
             ProductSectionHeader(
               title: title,
               subtitle: subtitle,
-              padding: Constants.horizontalContentPadding.copyWith(
+              padding: padding.copyWith(
                 top: 10,
                 bottom: 20,
               ),
@@ -75,9 +80,8 @@ class ProductCarousel extends StatelessWidget {
               height: sliderHeight,
               child: ListView.builder(
                 key: PageStorageKey('carousel_$title'),
-                clipBehavior: Clip
-                .none, // Элементы будут визуально выезжать за пределы контейнера
-                padding: Constants.horizontalContentPadding,
+                // Элементы будут визуально выезжать за пределы контейнера
+                padding: padding,
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemCount: displayProducts.length,

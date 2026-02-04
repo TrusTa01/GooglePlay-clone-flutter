@@ -19,148 +19,172 @@ class DetailsScreen extends StatelessWidget {
     final utils = ProductUIConfig(product);
 
     return Scaffold(
-      appBar: ProductAppBar(
-        product: product,
-        subtitle: 'Сведения',
-      ),
+      appBar: ProductAppBar(product: product, subtitle: 'Сведения'),
 
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(utils.titleText, style: const TextStyle(fontSize: 16)),
-              const SizedBox(height: 10),
-              Text(
-                product.shortDescription,
-                style: const TextStyle(fontSize: 14),
-              ),
-              const SizedBox(height: 10),
-              Text(product.description, style: const TextStyle(fontSize: 14)),
-              const Divider(),
-              if (product is! Book) ...[
-                Row(
-                  children: const [
-                    Text('Что нового', style: TextStyle(fontSize: 16)),
-                    SizedBox(width: 10),
+      body: Center(
+        heightFactor: 1,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: Constants.sliderMaxContentWidth,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(utils.titleText, style: const TextStyle(fontSize: 16)),
+                  const SizedBox(height: 10),
+                  Text(
+                    product.shortDescription,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    product.description,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  const Divider(),
+                  if (product is! Book) ...[
+                    Row(
+                      children: const [
+                        Text('Что нового', style: TextStyle(fontSize: 16)),
+                        SizedBox(width: 10),
+                        Text(
+                          '●',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Constants.googleBlue,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                     Text(
-                      '●',
-                      style: TextStyle(
+                      product.whatsNewText ?? 'Нет информации',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    const Divider(),
+
+                    const Text('Дополнительно', style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 20),
+                    _DetailRow(
+                      icon: AgeBadge(
+                        age: product is App
+                            ? (product as App).ageRating
+                            : (product as Game).ageRating,
                         fontSize: 20,
-                        color: Constants.googleBlue,
                       ),
+                      title:
+                          '${product is App ? (product as App).ageRating : (product as Game).ageRating}+',
+                      subtitle: product is App
+                          ? (product as App).ageRatingReasons.join(', ')
+                          : (product as Game).ageRatingReasons.join(', '),
+                      actionText: 'Подробнее...',
+                      onActionPressed: () {},
                     ),
+
+                    if (product.containsAds) ...[
+                      const SizedBox(height: 20),
+                      _DetailRow(
+                        icon: Icon(Icons.ad_units),
+                        title: 'Есть реклама',
+                        subtitle: 'Рекламу размещает разработчик приложения.',
+                        actionText: 'Подробнее...',
+                      ),
+                    ],
+                    if (product is Game &&
+                        (product as Game).hasAchievements) ...[
+                      const SizedBox(height: 20),
+                      _DetailRow(
+                        icon: Icon(Icons.emoji_events),
+                        title: 'Достижения',
+                        subtitle:
+                            'За выполнения целей вам будут присваиваться достижения',
+                      ),
+                    ],
+                    const Divider(),
                   ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  product.whatsNewText ?? 'Нет информации',
-                  style: TextStyle(fontSize: 14),
-                ),
-                const Divider(),
-
-                const Text('Дополнительно', style: TextStyle(fontSize: 16)),
-                const SizedBox(height: 20),
-                _DetailRow(
-                  icon: AgeBadge(
-                    age: product is App
-                        ? (product as App).ageRating
-                        : (product as Game).ageRating,
-                    fontSize: 20,
+                  Text(
+                    utils.aboutTitleText,
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  title:
-                      '${product is App ? (product as App).ageRating : (product as Game).ageRating}+',
-                  subtitle: product is App
-                      ? (product as App).ageRatingReasons.join(', ')
-                      : (product as Game).ageRatingReasons.join(', '),
-                  actionText: 'Подробнее...',
-                  onActionPressed: () {},
-                ),
-
-                if (product.containsAds) ...[
                   const SizedBox(height: 20),
-                  _DetailRow(
-                    icon: Icon(Icons.ad_units),
-                    title: 'Есть реклама',
-                    subtitle: 'Рекламу размещает разработчик приложения.',
-                    actionText: 'Подробнее...',
-                  ),
-                ],
-                if (product is Game && (product as Game).hasAchievements) ...[
-                  const SizedBox(height: 20),
-                  _DetailRow(
-                    icon: Icon(Icons.emoji_events),
-                    title: 'Достижения',
-                    subtitle:
-                        'За выполнения целей вам будут присваиваться достижения',
-                  ),
-                ],
-                const Divider(),
-              ],
-              Text(utils.aboutTitleText, style: const TextStyle(fontSize: 16)),
-              const SizedBox(height: 20),
 
-              if (product is App || product is Game) ..._withSpacing([
-                _InfoRow(label: 'Версия', value: product.version.toString()),
-                _InfoRow(
-                  label: 'Последнее обновление',
-                  value: productFormatter.lastUpdatedFormatted,
-                ),
-                _InfoRow(
-                  label: 'Кол-во скачиваний',
-                  value: productFormatter.downloadCountFull,
-                ),
-                _InfoRow(
-                  label: 'Размер файла',
-                  value: productFormatter.technicalInfoFormatted,
-                ),
-                _InfoRow(
-                  label: 'Разработчик',
-                  value: product.creator.toString(),
-                ),
-                _InfoRow(
-                  label: 'Дата выпуска',
-                  value: productFormatter.releaseDateFormatted,
-                ),
-                _InfoRow(
-                  label: 'Разрешения для приложения',
-                  value: 'Еще',
-                  hasTextButton: true,
-                  onTextButtonPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PermissionsScreen(product: product),
-                    ),
-                  ),
-                ),
-              ]),
+                  if (product is App || product is Game)
+                    ..._withSpacing([
+                      _InfoRow(
+                        label: 'Версия',
+                        value: product.version.toString(),
+                      ),
+                      _InfoRow(
+                        label: 'Последнее обновление',
+                        value: productFormatter.lastUpdatedFormatted,
+                      ),
+                      _InfoRow(
+                        label: 'Кол-во скачиваний',
+                        value: productFormatter.downloadCountFull,
+                      ),
+                      _InfoRow(
+                        label: 'Размер файла',
+                        value: productFormatter.technicalInfoFormatted,
+                      ),
+                      _InfoRow(
+                        label: 'Разработчик',
+                        value: product.creator.toString(),
+                      ),
+                      _InfoRow(
+                        label: 'Дата выпуска',
+                        value: productFormatter.releaseDateFormatted,
+                      ),
+                      _InfoRow(
+                        label: 'Разрешения для приложения',
+                        value: 'Еще',
+                        hasTextButton: true,
+                        onTextButtonPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PermissionsScreen(product: product),
+                          ),
+                        ),
+                      ),
+                    ]),
 
-              if (product is Book) ..._withSpacing([
-                _InfoRow(label: 'Автор', value: product.creator.toString()),
-                _InfoRow(label: 'Издатель', value: product.creator.toString()),
-                _InfoRow(
-                  label: 'Дата публикации',
-                  value: productFormatter.releaseDateFormatted.toString(),
-                ),
-                _InfoRow(
-                  label: 'Количество страниц',
-                  value: (product as Book).pageCount.toString(),
-                ),
-                _InfoRow(
-                  label: 'Язык',
-                  value: (product as Book).language.toString(),
-                ),
-                _InfoRow(
-                  label: 'Формат',
-                  value: (product as Book).format.toString(),
-                ),
-                _InfoRow(
-                  label: 'Жанры',
-                  value: (product as Book).genres.join(', '),
-                ),
-              ]),
-            ],
+                  if (product is Book)
+                    ..._withSpacing([
+                      _InfoRow(
+                        label: 'Автор',
+                        value: product.creator.toString(),
+                      ),
+                      _InfoRow(
+                        label: 'Издатель',
+                        value: product.creator.toString(),
+                      ),
+                      _InfoRow(
+                        label: 'Дата публикации',
+                        value: productFormatter.releaseDateFormatted.toString(),
+                      ),
+                      _InfoRow(
+                        label: 'Количество страниц',
+                        value: (product as Book).pageCount.toString(),
+                      ),
+                      _InfoRow(
+                        label: 'Язык',
+                        value: (product as Book).language.toString(),
+                      ),
+                      _InfoRow(
+                        label: 'Формат',
+                        value: (product as Book).format.toString(),
+                      ),
+                      _InfoRow(
+                        label: 'Жанры',
+                        value: (product as Book).genres.join(', '),
+                      ),
+                    ]),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -169,9 +193,7 @@ class DetailsScreen extends StatelessWidget {
 
   List<Widget> _withSpacing(List<Widget> widgets, {double spacing = 25}) {
     if (widgets.isEmpty) return [];
-    return widgets
-        .expand((w) => [w, SizedBox(height: spacing)])
-        .toList()
+    return widgets.expand((w) => [w, SizedBox(height: spacing)]).toList()
       ..removeLast();
   }
 }
