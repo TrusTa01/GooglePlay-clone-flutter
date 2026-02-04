@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/constants/global_constants.dart';
 import '../../../providers/tabs_provider.dart';
 import '../../widgets.dart';
 
@@ -84,7 +85,7 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
         onLeadingPressed: widget.onLeadingPressed,
       );
     } else if (widget.showLogo && !widget.hasSearch) {
-      leading = AppBarLogo();
+      leading = AppBarLogo(translate: const Offset(6, 0)); // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
     } else if (widget.showBackButton || widget.leadingIcon != null) {
       leading = AppBarLeading(
         leadingIcon: widget.leadingIcon,
@@ -109,7 +110,7 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
         titleRowChildren.add(widget.titleLeading!);
         titleRowChildren.add(const SizedBox(width: 8));
       } else if (!widget.isTransparent && widget.showLogo) {
-        titleRowChildren.add(const AppBarLogo());
+        titleRowChildren.add(const AppBarLogo(translate: Offset(6, 0))); // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
         titleRowChildren.add(const SizedBox(width: 8));
       }
 
@@ -141,27 +142,63 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
       }
     }
 
-    // Определяем bottom (табы)
+    // Определяем bottom (табы) с ограничением по sliderMaxContentWidth
     PreferredSizeWidget? bottom;
     if (widget.hasTabs && widget.tabs != null && widget.tabController != null) {
       final tabsProvider = Provider.of<TabsProvider>(context);
       final tabsList = tabsProvider.tabs.isNotEmpty ? tabsProvider.tabs : widget.tabs!;
       
-      bottom = CustomTabBar(
-        tabs: tabsList,
-        controller: widget.tabController!,
+      bottom = PreferredSize(
+        preferredSize: const Size.fromHeight(48),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+            child: CustomTabBar(
+              tabs: tabsList,
+              controller: widget.tabController!,
+            ),
+          ),
+        ),
       );
     }
+
+    // Контент шапки ограничиваем sliderMaxContentWidth, как основной контент
+    final toolbarContent = Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            children: [
+              if (leading != null) leading,
+              if (title != null) Expanded(child: title) else const Spacer(),
+              ...?widget.actions,
+            ],
+          ),
+        ),
+      ),
+    );
 
     return AppBar(
       backgroundColor: backgroundColor,
       elevation: 0,
       scrolledUnderElevation: 0,
       surfaceTintColor: Colors.transparent,
-      leading: leading,
-      title: title,
+      automaticallyImplyLeading: false,
+      leading: null,
+      title: null,
+      actions: null,
+      flexibleSpace: Align(
+        alignment: Alignment.topLeft,
+        child: SizedBox(
+          height: kToolbarHeight,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: toolbarContent,
+          ),
+        ),
+      ),
       bottom: bottom,
-      actions: widget.actions,
       centerTitle: widget.isTransparent ? false : null,
       iconTheme: widget.isTransparent
           ? const IconThemeData(color: Colors.white)

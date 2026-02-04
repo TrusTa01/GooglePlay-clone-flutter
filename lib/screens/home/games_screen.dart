@@ -47,7 +47,6 @@ class _GamesScreenState extends State<GamesScreen>
       ),
       const SizedBox(width: 10),
       const CircleAvatar(radius: 18),
-      const SizedBox(width: 25),
     ];
   }
 

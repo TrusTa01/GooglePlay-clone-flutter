@@ -41,7 +41,7 @@ class _AppsScreenState extends State<AppsScreen>
       ),
       const SizedBox(width: 10),
       const CircleAvatar(radius: 18),
-      const SizedBox(width: 25),
+      
     ];
   }
 

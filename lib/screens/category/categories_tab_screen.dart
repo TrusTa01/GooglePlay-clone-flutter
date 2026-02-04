@@ -19,7 +19,8 @@ class CategoriesTabScreen extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         const double minItemWidth = 260;
-        int crossAxisCount = (constraints.maxWidth / minItemWidth).floor();
+        final double contentWidth = constraints.maxWidth.clamp(0.0, Constants.sliderMaxContentWidth);
+        int crossAxisCount = (contentWidth / minItemWidth).floor();
         crossAxisCount = crossAxisCount.clamp(1, 3);
 
         return Center(

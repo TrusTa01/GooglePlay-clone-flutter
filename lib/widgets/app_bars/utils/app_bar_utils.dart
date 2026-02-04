@@ -6,13 +6,19 @@ import '../../widgets.dart';
 class AppBarLogo extends StatelessWidget {
   final double width;
   final double height;
+  final Offset translate;
 
-  const AppBarLogo({super.key, this.width = 25, this.height = 25});
+  const AppBarLogo({
+    super.key,
+    this.width = 34,
+    this.height = 34,
+    this.translate = Offset.zero,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 14),
+    return Transform.translate(
+      offset: Offset(-translate.dx, -translate.dy),
       child: Image.asset(
         'assets/icons/logo.png',
         height: height,
@@ -21,9 +27,9 @@ class AppBarLogo extends StatelessWidget {
           return const Text(
             'GP',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 26,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF4285F4),
+              color: Constants.googleBlue,
             ),
           );
         },
@@ -40,11 +46,15 @@ class AppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (title != null) {
-      return Text(
-        title!,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
+      return Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: Text(
+          title!,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+            fontSize: 22,
+          ),
         ),
       );
     }
@@ -96,7 +106,7 @@ class AppBarLogoTitleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        if (showLogo) AppBarLogo(),
+        if (showLogo) const AppBarLogo(translate: Offset(8, 0)),
         const SizedBox(width: 8),
         Expanded(child: AppBarTitle()),
       ],
@@ -137,7 +147,7 @@ class AppBarSearchContainer extends StatelessWidget {
                   style: const TextStyle(
                     color: AppBarConstants.searchLabelColor,
                     fontWeight: Constants.defaultFontWeight,
-                    fontSize: 16,
+                    fontSize: 18,
                   ),
                 ),
               ),
@@ -162,10 +172,7 @@ class AppBarDivider extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
-          bottom: BorderSide(
-            color: Color.fromRGBO(0, 0, 0, 0.35),
-            width: 1,
-          ),
+          bottom: BorderSide(color: Color.fromRGBO(0, 0, 0, 0.35), width: 1),
         ),
       ),
       child: child,

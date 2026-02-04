@@ -16,8 +16,9 @@ class CategoryDetailsSection extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        // Сначала вычисляем количество колонок
-        final int crossAxisCount = ((constraints.maxWidth - 30) / minItemWidth)
+        // Ширина контента ограничена sliderMaxContentWidth
+        final double contentWidth = constraints.maxWidth.clamp(0.0, Constants.sliderMaxContentWidth);
+        final int crossAxisCount = ((contentWidth - 30) / minItemWidth)
             .floor()
             .clamp(2, 8);
 

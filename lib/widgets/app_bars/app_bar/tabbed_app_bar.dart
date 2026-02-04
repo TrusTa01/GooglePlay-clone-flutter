@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/constants/global_constants.dart';
 import '../../../providers/tabs_provider.dart';
 import '../../widgets.dart';
 
@@ -34,24 +35,59 @@ List<Widget> buildSliverTabbedAppBar({
       forceElevated: forceElevated,
       expandedHeight: kToolbarHeight,
       toolbarHeight: kToolbarHeight,
-      leading: showLogo ? AppBarLogo() : null,
+      leading: null,
+      automaticallyImplyLeading: false,
+      title: null,
+      actions: null,
       backgroundColor: AppBarConstants.defaultBackgroundColor,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
-      title: hasSearch
-          ? AppBarSearchContainer(
-              inputLeading: inputLeading,
-              searchHint: searchHint ?? '',
-              inputActions: inputActions,
-            )
-          : null,
-      actions: actions,
+      flexibleSpace: Align(
+        alignment: Alignment.centerLeft,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+            // LayoutBuilder: паддинг от доступной ширины контента (а не от экрана)
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final padding = constraints.maxWidth > 1000
+                    ? const EdgeInsets.only(left: 22)
+                    : const EdgeInsets.symmetric(horizontal: 22);
+                return Padding(
+                  padding: padding,
+                  child: Row(
+                    children: [
+                      if (showLogo) const AppBarLogo(translate: Offset(6, 0)), // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
+                      if (hasSearch)
+                        Expanded(
+                          child: AppBarSearchContainer(
+                            inputLeading: inputLeading,
+                            searchHint: searchHint ?? '',
+                            inputActions: inputActions,
+                          ),
+                        )
+                      else
+                        const Spacer(),
+                      if (actions != null) ...actions,
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
     ),
-    // Табы - остаются закрепленными
+    // Табы - остаются закрепленными, с ограничением по sliderMaxContentWidth
     SliverPersistentHeader(
       pinned: true,
       delegate: _SliverTabBarDelegate(
-        child: CustomTabBar(tabs: tabsList, controller: tabController),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+            child: CustomTabBar(tabs: tabsList, controller: tabController),
+          ),
+        ),
       ),
     ),
   ];
@@ -75,7 +111,10 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return child;
+    return Material(
+      color: AppBarConstants.defaultBackgroundColor,
+      child: child,
+    );
   }
 
   @override

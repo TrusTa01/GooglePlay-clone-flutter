@@ -43,7 +43,6 @@ class _BooksScreenState extends State<BooksScreen>
     final List<Widget> actionWidgets = [
       const SizedBox(width: 3),
       const CircleAvatar(radius: 18),
-      const SizedBox(width: 25),
     ];
 
     return ChangeNotifierProvider(
