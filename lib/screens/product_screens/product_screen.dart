@@ -70,13 +70,18 @@ class _ProductPageContent extends StatelessWidget {
       body: Center(
         heightFactor: 1,
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+          constraints: BoxConstraints(
+            maxWidth: Constants.sliderMaxContentWidth,
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 22,
+                  ),
                   child: Column(
                     children: [
                       // Иконка и название продукта
@@ -136,9 +141,9 @@ class _ProductPageContent extends StatelessWidget {
                           ),
                         ],
                       ),
-          
+
                       const SizedBox(height: 25),
-          
+
                       // Рейтинг и количество оценок
                       IntrinsicHeight(
                         child: Row(
@@ -158,7 +163,8 @@ class _ProductPageContent extends StatelessWidget {
                                   content:
                                       'Оценки основаны на недавних отзывах от жителей вашего региона, использующих такой же тип устройства, как и вы.\n\nОтзывы оставляют пользователи с подтвержденными аккаунтами Google на основе своего опыта работы с приложением.',
                                   detailsText: 'Подробнее...',
-                                  onDetails: () {}, // TODO: на страницу с отзывами
+                                  onDetails:
+                                      () {}, // TODO: на страницу с отзывами
                                   confirmText: 'ОК',
                                 ),
                               ),
@@ -169,7 +175,7 @@ class _ProductPageContent extends StatelessWidget {
                               color: Constants.defautTextColor,
                               width: 10,
                             ),
-          
+
                             Expanded(
                               child: product is Book
                                   ? _RatingAndReviewsColumn(
@@ -195,7 +201,7 @@ class _ProductPageContent extends StatelessWidget {
                                       onTap: null,
                                     ),
                             ),
-          
+
                             const VerticalDivider(
                               indent: 10,
                               endIndent: 10,
@@ -231,7 +237,7 @@ class _ProductPageContent extends StatelessWidget {
                                                   .join(', ')
                                             : (product as Game).ageRatingReasons
                                                   .join(', '),
-          
+
                                         detailsText: 'Подробнее...',
                                         onDetails: () {}, // TODO: url launcher
                                         confirmText: 'ОК',
@@ -241,9 +247,9 @@ class _ProductPageContent extends StatelessWidget {
                           ],
                         ),
                       ),
-          
+
                       const SizedBox(height: 25),
-          
+
                       // Кнопка установить
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -268,11 +274,14 @@ class _ProductPageContent extends StatelessWidget {
                           ),
                         ],
                       ),
-          
+
                       const SizedBox(height: 15),
                       if (product is App || product is Game)
-                        ProductPreviewCard(product: product, showActionRow: false),
-          
+                        ProductPreviewCard(
+                          product: product,
+                          showActionRow: false,
+                        ),
+
                       // Описание
                       const SizedBox(height: 25),
                       ProductSectionHeader(
@@ -281,8 +290,9 @@ class _ProductPageContent extends StatelessWidget {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailsScreen(product: product),
-                          ),         
+                            builder: (context) =>
+                                DetailsScreen(product: product),
+                          ),
                         ),
                       ),
                       Row(
@@ -293,21 +303,23 @@ class _ProductPageContent extends StatelessWidget {
                           ),
                         ],
                       ),
-          
+
                       // Теги
                       const SizedBox(height: 25),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [Flexible(child: ProductTags(product: product))],
+                        children: [
+                          Flexible(child: ProductTags(product: product)),
+                        ],
                       ),
                       const SizedBox(height: 25),
-          
+
                       // Поддержка приложения
                       if (product is Book) ...[
                         ProductSectionHeader(
                           title: 'Об авторе',
-                          padding: Constants.horizontalContentPadding,
+                          padding: EdgeInsets.zero,
                           subtitle: product.creator,
                           onTap: () => Navigator.push(
                             context,
@@ -330,7 +342,7 @@ class _ProductPageContent extends StatelessWidget {
                           ),
                         ),
                       ],
-          
+
                       // Похожие продукты
                       if (similarProducts.isNotEmpty) ...[
                         const SizedBox(height: 15),
@@ -345,7 +357,7 @@ class _ProductPageContent extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                         ),
                       ],
-          
+
                       const SizedBox(height: 25),
                       Row(
                         children: [
@@ -357,11 +369,15 @@ class _ProductPageContent extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Row(children: [const Text('Все цены указаны с учетом НДС.')]),
+                      Row(
+                        children: [
+                          const Text('Все цены указаны с учетом НДС.'),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-          
+
                 const SizedBox(height: 20),
               ],
             ),
@@ -475,13 +491,8 @@ class ProductTag extends StatelessWidget {
             fontWeight: Constants.defaultFontWeight,
           ),
         ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 0,
-        ),
-        labelPadding: EdgeInsets.symmetric(
-          horizontal: 4,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+        labelPadding: EdgeInsets.symmetric(horizontal: 4),
         visualDensity: VisualDensity.compact,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
@@ -499,25 +510,32 @@ class ProductTags extends StatelessWidget {
       spacing: 12,
       runSpacing: 12,
       children: product.tags
-          .map((tag) => ProductTag(
-                product: product,
-                tag: tag,
-                onTap: () {
-                  final allProducts = context.read<ProductsProvider>().allProducts;
-                  final queryService = ProductQueryService();
-                  final filteredProducts = queryService.getProductsByTag(allProducts, tag);
+          .map(
+            (tag) => ProductTag(
+              product: product,
+              tag: tag,
+              onTap: () {
+                final allProducts = context
+                    .read<ProductsProvider>()
+                    .allProducts;
+                final queryService = ProductQueryService();
+                final filteredProducts = queryService.getProductsByTag(
+                  allProducts,
+                  tag,
+                );
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CategoryFullListScreen(
-                        title: tag,
-                        products: filteredProducts,
-                      ),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CategoryFullListScreen(
+                      title: tag,
+                      products: filteredProducts,
                     ),
-                  );
-                },
-              ))
+                  ),
+                );
+              },
+            ),
+          )
           .toList(),
     );
   }
