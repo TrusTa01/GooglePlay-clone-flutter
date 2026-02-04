@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/constants/global_constants.dart';
 import '../../../providers/tabs_provider.dart';
 import '../../widgets.dart';
 
@@ -78,15 +77,25 @@ List<Widget> buildSliverTabbedAppBar({
         ),
       ),
     ),
-    // Табы - остаются закрепленными, с ограничением по sliderMaxContentWidth
+    // Табы - остаются закрепленными, с ограничением по sliderMaxContentWidth.
+    // Разделитель под табами — на всю ширину экрана.
     SliverPersistentHeader(
       pinned: true,
       delegate: _SliverTabBarDelegate(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
-            child: CustomTabBar(tabs: tabsList, controller: tabController),
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+                child: CustomTabBar(tabs: tabsList, controller: tabController),
+              ),
+            ),
+            Container(
+              height: 1,
+              color: const Color.fromRGBO(0, 0, 0, 0.35),
+            ),
+          ],
         ),
       ),
     ),
@@ -100,10 +109,10 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverTabBarDelegate({required this.child});
 
   @override
-  double get minExtent => 48.0;
+  double get minExtent => 49.0;
 
   @override
-  double get maxExtent => 48.0;
+  double get maxExtent => 49.0;
 
   @override
   Widget build(
