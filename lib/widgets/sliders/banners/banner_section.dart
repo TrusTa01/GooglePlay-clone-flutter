@@ -52,35 +52,85 @@ class _BannerSectionState extends State<BannerSection> {
   int _currentPage = 1;
   double _lastViewportFraction = 0;
 
-  // Breakpoints и их конфигурации (от меньшего к большему)
+  // Breakpoints и их конфигурации (от меньшего к большему) PS: до 500 очень точные значения потому что невозможно сделать универсальный адаптив под такой виджет
   static const List<(int, _BannerLayoutConfig)> _breakpoints = [
     (
       0,
       _BannerLayoutConfig(
         // < 400
-        viewportFraction: 0.92,
+        viewportFraction: 0.88,
         heightFactor: 3.5,
-        bannerPadding: 6,
-        horizontalPadding: 16,
+        bannerPadding: 8,
+        horizontalPadding: 18,
+      ),
+    ),
+    (
+      350,
+      _BannerLayoutConfig(
+        // < 400
+        viewportFraction: 0.88,
+        heightFactor: 3.5,
+        bannerPadding: 8,
+        horizontalPadding: 18,
+      ),
+    ),
+    (
+      370,
+      _BannerLayoutConfig(
+        // < 400
+        viewportFraction: 0.89,
+        heightFactor: 3.5,
+        bannerPadding: 8,
+        horizontalPadding: 18,
       ),
     ),
     (
       400,
       _BannerLayoutConfig(
         // 400-500
-        viewportFraction: 0.88,
+        viewportFraction: 0.89,
         heightFactor: 3.2,
         bannerPadding: 8,
-        horizontalPadding: 18,
+        horizontalPadding: 22,
+      ),
+    ),
+    (
+      411,
+      _BannerLayoutConfig(
+        // 400-500
+        viewportFraction: 0.9,
+        heightFactor: 3.2,
+        bannerPadding: 8,
+        horizontalPadding: 22,
+      ),
+    ),
+    (
+      431,
+      _BannerLayoutConfig(
+        // 400-500
+        viewportFraction: 0.91,
+        heightFactor: 3.2,
+        bannerPadding: 8,
+        horizontalPadding: 22,
+      ),
+    ),
+    (
+      485,
+      _BannerLayoutConfig(
+        // 400-500
+        viewportFraction: 0.915,
+        heightFactor: 3.2,
+        bannerPadding: 8,
+        horizontalPadding: 22,
       ),
     ),
     (
       500,
       _BannerLayoutConfig(
         // 500-600
-        viewportFraction: 0.80,
-        heightFactor: 2.9,
-        bannerPadding: 12,
+        viewportFraction: 0.7,
+        heightFactor: 3.1,
+        bannerPadding: 8,
         horizontalPadding: 22,
       ),
     ),
@@ -88,8 +138,18 @@ class _BannerSectionState extends State<BannerSection> {
       600,
       _BannerLayoutConfig(
         // 600-800
-        viewportFraction: 0.70,
-        heightFactor: 2.6,
+        viewportFraction: 0.6,
+        heightFactor: 2.8,
+        bannerPadding: 16,
+        horizontalPadding: 28,
+      ),
+    ),
+    (
+      700,
+      _BannerLayoutConfig(
+        // 700-800
+        viewportFraction: 0.5,
+        heightFactor: 3,
         bannerPadding: 16,
         horizontalPadding: 28,
       ),
@@ -98,8 +158,8 @@ class _BannerSectionState extends State<BannerSection> {
       800,
       _BannerLayoutConfig(
         // 800-1000
-        viewportFraction: 0.55,
-        heightFactor: 2.6,
+        viewportFraction: 0.45,
+        heightFactor: 3.5,
         bannerPadding: 20,
         horizontalPadding: 36,
       ),
@@ -108,8 +168,8 @@ class _BannerSectionState extends State<BannerSection> {
       1000,
       _BannerLayoutConfig(
         // > 1000
-        viewportFraction: 0.45,
-        heightFactor: 2.6,
+        viewportFraction: 0.4,
+        heightFactor: 3.5,
         bannerPadding: 24,
         horizontalPadding: 44,
       ),
@@ -221,7 +281,6 @@ class _BannerSectionState extends State<BannerSection> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (widget.banners.isEmpty) return const SizedBox.shrink();
@@ -266,9 +325,7 @@ class _BannerSectionState extends State<BannerSection> {
                     showButton: false,
                   ),
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: width > 1000 ? 23 : 0,
-                  ),
+                  padding: EdgeInsets.only(left: width > 1000 ? 23 : 0),
                   child: NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
                       if (notification is ScrollStartNotification) {
