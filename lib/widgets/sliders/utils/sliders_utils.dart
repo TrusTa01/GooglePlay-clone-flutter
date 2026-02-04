@@ -11,7 +11,9 @@ class ProductSectionHeader extends StatelessWidget {
   final String subtitle;
   final VoidCallback onTap;
   final bool showButton;
+  final EdgeInsets padding;
   final Widget? button;
+  final MainAxisAlignment mainAxisAlignment;
 
   const ProductSectionHeader({
     super.key,
@@ -19,48 +21,60 @@ class ProductSectionHeader extends StatelessWidget {
     this.subtitle = '',
     required this.onTap,
     this.showButton = true,
+    required this.padding,
     this.button,
+    this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
   });
 
   bool get _hasSubtitle => subtitle.trim().isNotEmpty;
 
+  static const double _maxWidthForPadding = 1050;
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+    final width = MediaQuery.sizeOf(context).width;
+    final buttonRightPadding = width <= _maxWidthForPadding
+        ? padding.right
+        : 0.0;
+    final headerContent = Padding(
+      padding: padding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: Constants.defaultFontWeight,
-                  ),
-                ),
-                if (_hasSubtitle)
-                  Text(
-                    subtitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black.withValues(alpha: 0.6),
-                    ),
-                  ),
-              ],
+          Text(
+            title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: Constants.defaultFontWeight,
             ),
           ),
-
-          if (showButton) button ?? CustomIconButton(onTap: onTap),
+          if (_hasSubtitle)
+            Text(
+              subtitle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.black.withValues(alpha: 0.6),
+              ),
+            ),
         ],
       ),
+    );
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: mainAxisAlignment,
+      children: [
+        if (showButton) Expanded(child: headerContent) else headerContent,
+        if (showButton)
+          Padding(
+            padding: EdgeInsets.only(right: buttonRightPadding),
+            child: button ?? CustomIconButton(onTap: onTap),
+          ),
+      ],
     );
   }
 }
@@ -330,43 +344,70 @@ class ProductCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        // Карточка
-        ProductCardThumbnail(
-          borderRadius: product is Book
-              ? BorderRadius.circular(6)
-              : BorderRadius.circular(20),
-          iconUrl: product.iconUrl,
-          iconWidth: product is Book ? 110 : 115,
-          iconHeight: product is Book ? 165 : 115,
-          cacheWidth: 300,
-          cacheHeight: 350,
-          fit: product is Book ? BoxFit.fill : BoxFit.cover,
-        ),
-        const SizedBox(height: 6),
-        SizedBox(
-          width: 115,
-          child: ProductTitle(
-            // Название
-            title: product.title,
-            maxLines: 2,
-            fontSize: 12,
-          ),
-        ),
-        const SizedBox(height: 4),
-        // Рейтинг
-        Align(
-          alignment: Alignment.centerLeft,
-          child: showPrice
-              ? ProductInfoTag(text: formatter.price)
-              : ProductInfoTag(
-                  text: formatter.rating,
-                  iconPath: 'assets/icons/star.png',
-                ),
-        ),
-      ],
+    final bool isBook = product is Book;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Если constraints не ограничены, используем фиксированные размеры
+        final bool hasConstraints = constraints.maxWidth != double.infinity;
+        final double iconWidth = hasConstraints ? constraints.maxWidth : 115;
+        // Для книг соотношение 2:3, для приложений 1:1
+        final double iconHeight = isBook ? iconWidth * 1.4 : iconWidth;
+
+        // Если есть ограничения по высоте - используем их
+        final bool hasHeightConstraints =
+            hasConstraints && constraints.maxHeight != double.infinity;
+
+        final column = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            // Карточка
+            ProductCardThumbnail(
+              borderRadius: isBook
+                  ? BorderRadius.circular(6)
+                  : BorderRadius.circular(20),
+              iconUrl: product.iconUrl,
+              iconWidth: iconWidth,
+              iconHeight: iconHeight,
+              cacheWidth: 300,
+              cacheHeight: 350,
+              fit: isBook ? BoxFit.fill : BoxFit.cover,
+            ),
+            const SizedBox(height: 6),
+            SizedBox(
+              width: hasConstraints ? null : 115,
+              child: ProductTitle(
+                // Название
+                title: product.title,
+                maxLines: 2,
+                fontSize: 12,
+              ),
+            ),
+            const SizedBox(height: 4),
+            // Рейтинг
+            showPrice
+                ? ProductInfoTag(text: formatter.price)
+                : ProductInfoTag(
+                    text: formatter.rating,
+                    iconPath: 'assets/icons/star.png',
+                  ),
+          ],
+        );
+
+        // Если есть ограничения - обрезаем overflow
+        if (hasHeightConstraints) {
+          return ClipRect(
+            child: SizedBox(
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+              child: column,
+            ),
+          );
+        }
+
+        return column;
+      },
     );
   }
 }
@@ -383,6 +424,7 @@ class ActionRow extends StatelessWidget {
   final int cacheHeight;
   final BorderRadius? borderRadius;
   final BoxFit? fit;
+  final bool spaceBetween;
 
   const ActionRow({
     super.key,
@@ -393,10 +435,11 @@ class ActionRow extends StatelessWidget {
     this.cacheWidth = 150,
     this.cacheHeight = 150,
     this.eventText,
-    this.showButton = false,
+    this.showButton = true,
     this.hasThreeLines = false,
     this.borderRadius,
     this.fit,
+    this.spaceBetween = true,
   });
 
   @override
@@ -420,6 +463,7 @@ class ActionRow extends StatelessWidget {
     final String iconPath = 'assets/icons/star.png';
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         ProductCardThumbnail(
           borderRadius: borderRadius ?? BorderRadius.circular(12),
@@ -431,19 +475,16 @@ class ActionRow extends StatelessWidget {
           fit: fit ?? BoxFit.cover,
         ),
         const SizedBox(width: 10),
-        Expanded(
+
+        Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                children: [
-                  ProductTitle(
-                    title: currentProduct.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+              ProductTitle(
+                title: currentProduct.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               Row(
                 children: [
@@ -528,6 +569,44 @@ class ActionRow extends StatelessWidget {
                   ),
                 ),
             ],
+          ),
+      ],
+    );
+  }
+}
+
+class ActionRowButton extends StatelessWidget {
+  final bool isPaid;
+  final String price;
+  final String defaultButtonText;
+  final bool containsPaidContent;
+
+  const ActionRowButton({
+    super.key,
+    required this.isPaid,
+    required this.price,
+    required this.defaultButtonText,
+    required this.containsPaidContent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CustomElevatedButton(
+          isPaid: isPaid,
+          price: price,
+          defaultButtonText: 'Установить',
+        ),
+        if (containsPaidContent)
+          const Padding(
+            padding: EdgeInsets.only(top: 4),
+            child: Text(
+              'Есть платный контент',
+              style: TextStyle(fontSize: 8, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
           ),
       ],
     );

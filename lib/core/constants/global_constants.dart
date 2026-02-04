@@ -19,6 +19,13 @@ abstract class Constants {
   // Для виджета InkWell
   static final BorderRadius cardRadius = BorderRadius.circular(12);
 
-  // Горизонтальный отступ экрана
-  static const double screenHorizontalPadding = 20.0;
+  static const EdgeInsets horizontalContentPadding = EdgeInsets.symmetric(
+    horizontal: 22,
+  );
+
+  // Константы для расчёта maxContentWidth слайдеров
+  static const double sliderCardWidth = 115;
+  static const double sliderCardMargin = 12;
+  static const int sliderMaxVisibleItems = 8;
+  static const double sliderMaxContentWidth = 1040;
 }

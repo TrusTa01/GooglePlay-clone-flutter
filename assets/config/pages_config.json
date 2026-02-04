@@ -55,6 +55,7 @@
       {
         "type": "preview",
         "title": "Необычные головоломки",
+        "showButton": true,
         "dataMethod": "getPaidGamesByGenre",
         "dataParams": {"genre": "Головоломки"}
       },
@@ -97,9 +98,9 @@
       {
         "type": "kidsHeroBanner",
         "needsTopPadding": false,
-        "title": "Одобрено преподавателями",
-        "subtitle": "Проверенное качество",
-        "imageAssetPath": "assets/images/kids_tab/kids_tab_image2.webp"
+        "title": "",
+        "subtitle": "",
+        "imageAssetPath": "assets/images/kids_tab/kids_tab_image.webp"
       },
       {
         "type": "ageFilterSelector",

@@ -21,6 +21,9 @@ class ProductCarousel extends StatelessWidget {
     this.maxItems,
   });
 
+  // Константы размеров карточек
+  static const double _bookCardWidth = 115;
+
   @override
   Widget build(BuildContext context) {
     if (products.isEmpty) {
@@ -28,48 +31,65 @@ class ProductCarousel extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    // Размер слайдера
-    final double sliderHeight = products.first is Book ? 235 : 185;
+    final bool isBook = products.first is Book;
+    
+    // Фиксированные размеры карточек
+    final double cardWidth = isBook ? _bookCardWidth : Constants.sliderCardWidth;
+    final double cardHeight = isBook ? cardWidth * 1.5 : cardWidth;
+    final double sliderHeight = cardHeight + 70; // +65 для текста и рейтинга
 
     // Ограничиваем количество продуктов, если задан maxItems
     final displayProducts = maxItems != null && maxItems! < products.length
         ? products.sublist(0, maxItems!)
         : products;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Заголовок и кнопка больше
-        ProductSectionHeader(
-          title: title,
-          subtitle: subtitle,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  CategoryFullListScreen(title: title, products: products),
-            ),
-          ),
-          showButton: true,
-        ),
+    // Рассчитываем максимальную ширину контента (8 карточек)
+    final double maxContentWidth = Constants.sliderMaxContentWidth;
 
-        // Слайдер
-        SizedBox(
-          height: sliderHeight,
-          child: ListView.builder(
-            clipBehavior: Clip
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxContentWidth),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Заголовок и кнопка больше
+            ProductSectionHeader(
+              title: title,
+              subtitle: subtitle,
+              padding: Constants.horizontalContentPadding.copyWith(
+                top: 10,
+                bottom: 20,
+              ),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      CategoryFullListScreen(title: title, products: products),
+                ),
+              ),
+              showButton: true,
+            ),
+
+            // Слайдер
+            SizedBox(
+              height: sliderHeight,
+              child: ListView.builder(
+                key: PageStorageKey('carousel_$title'),
+                clipBehavior: Clip
                 .none, // Элементы будут визуально выезжать за пределы контейнера
-            key: PageStorageKey('carousel_$title'),
-            scrollDirection: Axis.horizontal,
-            physics: const PageScrollPhysics(),
-            itemCount: displayProducts.length,
-            itemBuilder: (context, index) {
-              final item = displayProducts[index];
-              return ProductCarouselCard(product: item);
-            },
-          ),
+                padding: Constants.horizontalContentPadding,
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                itemCount: displayProducts.length,
+                itemBuilder: (context, index) {
+                  final item = displayProducts[index];
+                  return ProductCarouselCard(product: item);
+                },
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

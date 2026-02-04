@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/core/constants/global_constants.dart';
 import '/providers/providers.dart';
-import '/screens/screens.dart';
 import '/services/product_query_service.dart';
 import '/widgets/widgets.dart';
-import '/models/product_models/book_model.dart';
 
 class TopChartsScreen extends StatelessWidget {
   final FilterType type;
@@ -50,68 +49,45 @@ class TopChartsScreen extends StatelessWidget {
           : null,
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Constants.screenHorizontalPadding,
-        vertical: 8,
-      ),
-      child: Column(
-        children: [
-          if (showFilters) FilterSets.getFilters(type, filterProvider),
-
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final item = items[index];
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Row(
-                    children: [
-                      Text(
-                        '${index + 1}',
-                        textAlign: TextAlign.right,
-                        style: const TextStyle(fontSize: 14),
-                      ),
-
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductPageScreen(product: item),
-                              ),
-                            );
-                          },
-                          borderRadius: BorderRadius.circular(12),
-                          child: ActionRow(
-                            product: item,
-                            hasThreeLines: true,
-                            showButton: false,
-                            iconWidth: item is Book ? 60 : 65,
-                            iconHeight: item is Book ? 90 : 65,
-                            cacheWidth: item is Book ? 180 : 190,
-                            cacheHeight: item is Book ? 270 : 190,
-                            borderRadius: item is Book
-                                ? BorderRadius.circular(6)
-                                : BorderRadius.circular(12),
-                            fit: item is Book ? BoxFit.fill : BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+    return CustomScrollView(
+      slivers: [
+        if (showFilters)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: Constants.horizontalContentPadding.copyWith(top: 5, bottom: 15),
+              child: FilterSets.getFilters(type, filterProvider),
             ),
           ),
-        ],
-      ),
+        SliverLayoutBuilder(
+          builder: (context, constraints) {
+            final width = constraints.crossAxisExtent;
+            final effectiveWidth = width > Constants.sliderMaxContentWidth
+                ? Constants.sliderMaxContentWidth
+                : width;
+            const double minItemWidth = 350;
+            int crossAxisCount = (effectiveWidth / minItemWidth).floor();
+            crossAxisCount = crossAxisCount.clamp(1, 3);
+            return SliverPadding(
+              padding: Constants.horizontalContentPadding.copyWith(bottom: 45),
+              sliver: SliverGrid(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  mainAxisExtent: 90,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 20,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => TopChartsCard(
+                    product: items[index],
+                    rank: index + 1,
+                  ),
+                  childCount: items.length,
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

@@ -12,26 +12,67 @@ class CategoryDetailsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isBook = products.first is Book;
-    final double aspectRatio = isBook ? 0.51 : 0.65;
+    final double minItemWidth = isBook ? 100 : 125;
+    // Высота текстовой части: SizedBox(6) + Title 2 строки (~36) + SizedBox(4) + Rating(~18) + запас
+    const double textAreaHeight = 90;
 
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: aspectRatio,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 20,
-      ),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        final product = products[index];
-        final showPrice = product.isPaid && product.price != null;
-        final formatter = ProductDataFormatter(product);
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        // Сначала вычисляем количество колонок
+        final int crossAxisCount = ((constraints.maxWidth - 30) / minItemWidth)
+            .floor()
+            .clamp(2, 8);
 
-        return ProductCardContent(
-          product: product,
-          showPrice: showPrice,
-          formatter: formatter,
+        // Фиксированные отступы
+        final double horizontalPadding = 16;
+        final double availableWidth =
+            constraints.maxWidth - (horizontalPadding * 2);
+        final double totalSpacing = (crossAxisCount - 1) * 10;
+
+        // Вычисляем реальную ширину элемента
+        final double itemWidth =
+            (availableWidth - totalSpacing) / crossAxisCount;
+
+        // Динамически вычисляем высоту: иконка + текстовая часть
+        // Книги: соотношение 2:3 (height = width * 1.5)
+        // Приложения: соотношение 1:1
+        final double iconHeight = isBook ? itemWidth * 1.5 : itemWidth;
+        final double itemHeight = iconHeight + textAreaHeight;
+
+        // Вычисляем aspectRatio
+        final double aspectRatio = itemWidth / itemHeight;
+
+        return Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: Constants.sliderMaxContentWidth,
+            ),
+            child: GridView.builder(
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: 16,
+              ),
+            
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                childAspectRatio: aspectRatio,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 20,
+              ),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                final showPrice = product.isPaid && product.price != null;
+                final formatter = ProductDataFormatter(product);
+            
+                return ProductCardContent(
+                  product: product,
+                  showPrice: showPrice,
+                  formatter: formatter,
+                );
+              },
+            ),
+          ),
         );
       },
     );

@@ -41,6 +41,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     // Если данных нет и идет загрузка — показываем шиммеры
     if (watchProvider.isLoading && widget.sections.isEmpty) {
       return ListView.builder(
+        primary: false,
         itemCount: 5,
         itemBuilder: (context, index) => const Padding(
           padding: EdgeInsets.only(bottom: 10),
@@ -50,12 +51,16 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     }
 
     return ListView.builder(
+      primary: false,
       itemCount: widget.sections.length,
       padding: const EdgeInsets.only(bottom: 45),
       itemBuilder: (context, index) {
         final section = widget.sections[index];
+        final prevIsAgeFilter = index > 0 &&
+            widget.sections[index - 1].type == SectionType.ageFIlterSelector;
+        final topPadding = section.needsTopPadding && !prevIsAgeFilter ? 15.0 : 0.0;
         return Padding(
-          padding: EdgeInsets.only(top: section.needsTopPadding ? 15 : 0),
+          padding: EdgeInsets.only(top: topPadding),
           child: _buildSection(section),
         );
       },
@@ -76,7 +81,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     }
 
     Widget sectionWidget;
-    bool needsHorizontalPadding = true;
+    bool needsHorizontalPadding = false;
 
     switch (section.type) {
       case SectionType.banners:
@@ -106,6 +111,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
         sectionWidget = GamePreviewSection(
           game: rawProducts.whereType<Game>().toList(),
           nestedInScrollView: true,
+          showButton: section.showButton,
         );
       case SectionType.kidsHeroBanner:
         needsHorizontalPadding = false;
@@ -132,9 +138,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
 
     if (needsHorizontalPadding) {
       return Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: Constants.screenHorizontalPadding,
-        ),
+        padding: Constants.horizontalContentPadding,
         child: sectionWidget,
       );
     }

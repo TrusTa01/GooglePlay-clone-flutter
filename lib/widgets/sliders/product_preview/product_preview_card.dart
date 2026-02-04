@@ -40,7 +40,11 @@ class ProductPreviewCard extends StatelessWidget {
         ),
         if (showActionRow) ...[
           const SizedBox(height: 10),
-          ActionRow(product: product, showButton: true),
+          ActionRow(
+            product: product,
+            showButton: false,
+            spaceBetween: false,
+          ),
         ],
       ],
     );

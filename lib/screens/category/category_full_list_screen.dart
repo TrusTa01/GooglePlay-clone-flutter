@@ -24,12 +24,12 @@ class CategoryFullListScreen extends StatelessWidget {
         onLeadingPressed: () => Navigator.pop(context),
         title: AppBarTitle(title: title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Constants.screenHorizontalPadding),
-        child: isGame
+      body: 
+      // Padding(padding: const EdgeInsets.symmetric(horizontal: Constants.screenHorizontalPadding),
+        isGame
             ? GamePreviewSection(game: products.whereType<Game>().toList())
             : CategoryDetailsSection(products: products),
-      ),
+      // ),
     );
   }
 }

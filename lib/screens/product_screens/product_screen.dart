@@ -273,11 +273,12 @@ class _ProductPageContent extends StatelessWidget {
                   const SizedBox(height: 25),
                   ProductSectionHeader(
                     title: utils.titleText,
+                    padding: Constants.horizontalContentPadding,
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DetailsScreen(product: product),
-                      ),
+                      ),         
                     ),
                   ),
                   Text(
@@ -298,6 +299,7 @@ class _ProductPageContent extends StatelessWidget {
                   if (product is Book) ...[
                     ProductSectionHeader(
                       title: 'Об авторе',
+                      padding: Constants.horizontalContentPadding,
                       subtitle: product.creator,
                       onTap: () => Navigator.push(
                         context,

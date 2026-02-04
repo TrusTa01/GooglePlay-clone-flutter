@@ -36,6 +36,10 @@ export 'sliders/product_carousel/product_carousel_section.dart';
 export 'sliders/product_grid/product_grid_card.dart';
 export 'sliders/product_grid/product_grid_section.dart';
 
+// Charts widget
+export 'charts/top_charts_card.dart';
+export 'charts/top_charts_section.dart';
+
 // Game preview widget
 export 'sliders/product_preview/product_preview_card.dart';
 export 'sliders/product_preview/game_preview_section.dart';

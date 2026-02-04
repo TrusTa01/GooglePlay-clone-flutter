@@ -22,22 +22,30 @@ class FilterBarRow extends StatelessWidget {
     return Column(
       children: [
         if (_hasHeader)
-          ProductSectionHeader(
-            title: sectionTitle,
-            subtitle: subtitle,
-            onTap: () {},
-            showButton: false,
+          Center(
+            child: ProductSectionHeader(
+              title: sectionTitle,
+              subtitle: subtitle,
+              padding: const EdgeInsets.only(top: 10),
+              onTap: () {},
+              showButton: false,
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
           ),
         Align(
-          alignment: Alignment.centerLeft,
+          alignment: Alignment.center,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children:
-                  filters
-                      .expand((widget) => [widget, const SizedBox(width: 10)])
-                      .toList()
-                    ..removeLast(),
+            child: Padding(
+              padding: Constants.horizontalContentPadding.copyWith(top: 8),
+              child: Row(
+                children: filters.isEmpty
+                    ? []
+                    : (filters
+                        .expand((widget) => [widget, const SizedBox(width: 10)])
+                        .toList()
+                      ..removeLast()),
+              ),
             ),
           ),
         ),
