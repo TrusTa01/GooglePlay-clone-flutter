@@ -19,25 +19,29 @@ class TopChartsSection extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             const double minItemWidth = 350;
-            int crossAxisCount = (constraints.maxWidth / minItemWidth).floor();
+            final width = constraints.maxWidth;
+            int crossAxisCount = (width / minItemWidth).floor();
             crossAxisCount = crossAxisCount.clamp(1, 3);
 
-            return GridView.builder(
-              primary: false,
-              padding: const EdgeInsets.all(8),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                mainAxisExtent: 90,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 20,
+            return SizedBox(
+              width: width,
+              child: GridView.builder(
+                primary: false,
+                padding: const EdgeInsets.all(8),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: crossAxisCount,
+                  mainAxisExtent: 90,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 20,
+                ),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return TopChartsCard(
+                    product: items[index],
+                    rank: index + 1,
+                  );
+                },
               ),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return TopChartsCard(
-                  product: items[index],
-                  rank: index + 1,
-                );
-              },
             );
           },
         ),

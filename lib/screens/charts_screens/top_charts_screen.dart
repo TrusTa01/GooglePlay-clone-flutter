@@ -53,22 +53,39 @@ class TopChartsScreen extends StatelessWidget {
       slivers: [
         if (showFilters)
           SliverToBoxAdapter(
-            child: Padding(
-              padding: Constants.horizontalContentPadding.copyWith(top: 5, bottom: 15),
-              child: FilterSets.getFilters(type, filterProvider),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: Constants.sliderMaxContentWidth,
+                ),
+                child: Padding(
+                  padding: Constants.horizontalContentPadding.copyWith(
+                    top: 5,
+                    bottom: 15,
+                  ),
+                  child: FilterSets.getFilters(type, filterProvider),
+                ),
+              ),
             ),
           ),
         SliverLayoutBuilder(
           builder: (context, constraints) {
-            final width = constraints.crossAxisExtent;
-            final effectiveWidth = width > Constants.sliderMaxContentWidth
-                ? Constants.sliderMaxContentWidth
-                : width;
+            final double width = constraints.crossAxisExtent;
+            final double maxWidth = Constants.sliderMaxContentWidth;
+
+            // Вычисляем горизонтальный отступ для центрирования
+            final double horizontalPadding =
+                width > maxWidth ? (width - maxWidth) / 2 : 0;
+
             const double minItemWidth = 350;
+            // Считаем количество колонок исходя из доступной ширины внутри ограничений
+            final double effectiveWidth = width > maxWidth ? maxWidth : width;
             int crossAxisCount = (effectiveWidth / minItemWidth).floor();
             crossAxisCount = crossAxisCount.clamp(1, 3);
+
             return SliverPadding(
-              padding: Constants.horizontalContentPadding.copyWith(bottom: 45),
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding)
+                  .add(const EdgeInsets.only(bottom: 45)),
               sliver: SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
