@@ -19,7 +19,7 @@ class ProductGrid extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => _ProductGridState();
+  State<ProductGrid> createState() => _ProductGridState();
 }
 
 class _ProductGridLayoutConfig {

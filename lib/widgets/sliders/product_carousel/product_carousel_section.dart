@@ -11,8 +11,6 @@ class ProductCarousel extends StatelessWidget {
   final List<Product> products;
   final bool isBookCarousel;
   final int? maxItems;
-  /// Горизонтальный отступ секции. По умолчанию [Constants.horizontalContentPadding].
-  /// Передайте [EdgeInsets.zero], если карусель уже внутри контейнера с отступами (например, на странице продукта).
   final EdgeInsets? contentPadding;
 
   const ProductCarousel({
@@ -80,7 +78,6 @@ class ProductCarousel extends StatelessWidget {
               height: sliderHeight,
               child: ListView.builder(
                 key: PageStorageKey('carousel_$title'),
-                // Элементы будут визуально выезжать за пределы контейнера
                 padding: padding,
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
