@@ -15,108 +15,113 @@ class KidsDetailsScreen extends StatelessWidget {
         showBackButton: true,
         onLeadingPressed: () => Navigator.pop(context),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              'assets/images/kids_tab/kids_details_image1.webp',
-              width: double.infinity,
-              height: screenHeight / 4,
-              fit: BoxFit.cover,
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text(
-                      'Детям - всё лучшее',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: Constants.defaultFontWeight,
-                        color: Colors.black,
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset(
+                  'assets/images/kids_tab/kids_details_image1.webp',
+                  width: double.infinity,
+                  height: screenHeight / 4,
+                  fit: BoxFit.cover,
+                ),
+          
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          'Детям - всё лучшее',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: Constants.defaultFontWeight,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 16),
+          
+                      Text(
+                        'Все приложения на вкладке для детей - как обучающие, так и развлекательные - получили одобрение преподавателей и отмечены специаным знаком.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          height: 1.5,
+                          color: Colors.grey.shade800,
+                        ),
+                      ),
+          
+                      const SizedBox(height: 24),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          'assets/images/kids_tab/kids_details_image2.webp',
+                          width: double.infinity,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+          
+                      const SizedBox(height: 32),
+                      _buildSectionTitle('Для учебы и не только'),
+                      _buildMainText(
+                        'Вместе с учителями, специалистами в области образования и специалистами по работе с мультимедийными технологиями мы выбираем лучшие приложения для детей в Google Play. Эксперты оценивают приложения и одобряют только те из них, которые:',
+                      ),
+          
+                      const SizedBox(height: 10),
+                      _buildBulletPoint('дарят позитивные эмоции и вдохновение;'),
+                      _buildBulletPoint(
+                        'соответствуют указанной возрастной группе;',
+                      ),
+                      _buildBulletPoint('тщательно продуманы.'),
+          
+                      const SizedBox(height: 32),
+                      _buildSectionTitle('Наши ведущие консультанты:'),
+                      _buildMainText(
+                        'Джо Блатт, Гарвардская высшая школа педагогических наук;\n'
+                        'доктор Сандра Калверт, Джорджтаунский университет.',
+                      ),
+          
+                      const SizedBox(height: 32),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(
+                          'assets/images/kids_tab/kids_details_image3.webp',
+                          width: double.infinity,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+          
+                      const SizedBox(height: 32),
+                      _buildSectionTitle('Значок "Одобрено преподавателями"'),
+                      _buildMainText(
+                        'Если приложению присвоен значок "Одобрено преподавателями", вы увидите его в верхней части страницы сведений. Ниже вы найдете отзывы преподавателей и экспертов. Из них вы сможете узнать, к примеру, способствует ли приложение развитию воображения и любознательности.',
+                      ),
+          
+                      _buildLinkButton(
+                        'Подробнее об оценках преподавателей...',
+                        () {},
+                      ),
+          
+                      const SizedBox(height: 32),
+                      _buildSectionTitle('Сервисы и приложения для учащихся'),
+                      _buildMainText(
+                        'Приложения из Google Play (в том числе одобренные преподавателями) могут быть недоступны для учебных аккаунтов G Suite for Education. Совет для преподавателей: выясните у системного администратора, какие приложения и сервисы можно использовать в вашем учебном заведении. Узнайте больше о приложениях для учебных заведений на портале Chromebook App Hub.',
+                      ),
+                      _buildLinkButton('Подробнее...', () {}),
+          
+                      const SizedBox(height: 40),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-
-                  Text(
-                    'Все приложения на вкладке для детей - как обучающие, так и развлекательные - получили одобрение преподавателей и отмечены специаным знаком.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      height: 1.5,
-                      color: Colors.grey.shade800,
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      'assets/images/kids_tab/kids_details_image2.webp',
-                      width: double.infinity,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-
-                  const SizedBox(height: 32),
-                  _buildSectionTitle('Для учебы и не только'),
-                  _buildMainText(
-                    'Вместе с учителями, специалистами в области образования и специалистами по работе с мультимедийными технологиями мы выбираем лучшие приложения для детей в Google Play. Эксперты оценивают приложения и одобряют только те из них, которые:',
-                  ),
-
-                  const SizedBox(height: 10),
-                  _buildBulletPoint('дарят позитивные эмоции и вдохновение;'),
-                  _buildBulletPoint(
-                    'соответствуют указанной возрастной группе;',
-                  ),
-                  _buildBulletPoint('тщательно продуманы.'),
-
-                  const SizedBox(height: 32),
-                  _buildSectionTitle('Наши ведущие консультанты:'),
-                  _buildMainText(
-                    'Джо Блатт, Гарвардская высшая школа педагогических наук;\n'
-                    'доктор Сандра Калверт, Джорджтаунский университет.',
-                  ),
-
-                  const SizedBox(height: 32),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      'assets/images/kids_tab/kids_details_image3.webp',
-                      width: double.infinity,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-
-                  const SizedBox(height: 32),
-                  _buildSectionTitle('Значок "Одобрено преподавателями"'),
-                  _buildMainText(
-                    'Если приложению присвоен значок "Одобрено преподавателями", вы увидите его в верхней части страницы сведений. Ниже вы найдете отзывы преподавателей и экспертов. Из них вы сможете узнать, к примеру, способствует ли приложение развитию воображения и любознательности.',
-                  ),
-
-                  _buildLinkButton(
-                    'Подробнее об оценках преподавателей...',
-                    () {},
-                  ),
-
-                  const SizedBox(height: 32),
-                  _buildSectionTitle('Сервисы и приложения для учащихся'),
-                  _buildMainText(
-                    'Приложения из Google Play (в том числе одобренные преподавателями) могут быть недоступны для учебных аккаунтов G Suite for Education. Совет для преподавателей: выясните у системного администратора, какие приложения и сервисы можно использовать в вашем учебном заведении. Узнайте больше о приложениях для учебных заведений на портале Chromebook App Hub.',
-                  ),
-                  _buildLinkButton('Подробнее...', () {}),
-
-                  const SizedBox(height: 40),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -193,7 +198,7 @@ class KidsDetailsScreen extends StatelessWidget {
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         child: Text(
-          text,
+          text, // TODO: url launcher
           style: const TextStyle(
             color: Constants.googleBlue,
             fontWeight: FontWeight.bold,
