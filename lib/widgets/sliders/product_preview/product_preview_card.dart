@@ -21,8 +21,6 @@ class ProductPreviewCard extends StatelessWidget {
         SizedBox(
           height: 180,
           child: ListView.builder(
-            clipBehavior: Clip
-                .none, // Элементы будут визуально выезжать за пределы контейнера
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemCount: product.screenshots.length,
