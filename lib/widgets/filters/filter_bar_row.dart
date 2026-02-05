@@ -35,6 +35,7 @@ class FilterBarRow extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: SingleChildScrollView(
+            clipBehavior: Clip.none,
             scrollDirection: Axis.horizontal,
             child: Padding(
               padding: Constants.horizontalContentPadding.copyWith(top: 8),

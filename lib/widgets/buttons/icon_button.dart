@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 
 class CustomIconButton extends StatelessWidget {
   final double width;
@@ -8,6 +9,7 @@ class CustomIconButton extends StatelessWidget {
   final Clip clipBehavior;
   final IconData icon;
   final double iconSize;
+  final Color color;
 
   const CustomIconButton({
     super.key,
@@ -18,6 +20,7 @@ class CustomIconButton extends StatelessWidget {
     this.clipBehavior = Clip.antiAlias,
     this.icon = Icons.arrow_forward,
     this.iconSize = 18,
+    this.color = Constants.ratingBackgroungColor,
   });
 
   @override
@@ -29,6 +32,7 @@ class CustomIconButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
+          color: color,
           width: width,
           height: height,
           alignment: Alignment.center,

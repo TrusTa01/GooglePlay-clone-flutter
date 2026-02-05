@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/core/constants/global_constants.dart';
 import '/providers/providers.dart';
 import '/services/product_query_service.dart';
 import '/widgets/widgets.dart';
@@ -59,10 +58,7 @@ class TopChartsScreen extends StatelessWidget {
                   maxWidth: Constants.sliderMaxContentWidth,
                 ),
                 child: Padding(
-                  padding: Constants.horizontalContentPadding.copyWith(
-                    top: 5,
-                    bottom: 15,
-                  ),
+                  padding: const EdgeInsets.only(top: 5, bottom: 15),
                   child: FilterSets.getFilters(type, filterProvider),
                 ),
               ),
@@ -74,8 +70,9 @@ class TopChartsScreen extends StatelessWidget {
             final double maxWidth = Constants.sliderMaxContentWidth;
 
             // Вычисляем горизонтальный отступ для центрирования
-            final double horizontalPadding =
-                width > maxWidth ? (width - maxWidth) / 2 : 0;
+            final double horizontalPadding = width > maxWidth
+                ? (width - maxWidth) / 2
+                : 0;
 
             const double minItemWidth = 350;
             // Считаем количество колонок исходя из доступной ширины внутри ограничений
@@ -84,8 +81,9 @@ class TopChartsScreen extends StatelessWidget {
             crossAxisCount = crossAxisCount.clamp(1, 3);
 
             return SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding)
-                  .add(const EdgeInsets.only(bottom: 45)),
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+              ).add(const EdgeInsets.only(bottom: 45)),
               sliver: SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
@@ -94,10 +92,8 @@ class TopChartsScreen extends StatelessWidget {
                   mainAxisSpacing: 20,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (context, index) => TopChartsCard(
-                    product: items[index],
-                    rank: index + 1,
-                  ),
+                  (context, index) =>
+                      TopChartsCard(product: items[index], rank: index + 1),
                   childCount: items.length,
                 ),
               ),

@@ -24,7 +24,7 @@ class ProductCarousel extends StatelessWidget {
   });
 
   // Константы размеров карточек
-  static const double _bookCardWidth = 115;
+  static const double _bookCardWidth = 110;
 
   @override
   Widget build(BuildContext context) {
