@@ -134,20 +134,20 @@ class AppBarSearchContainer extends StatelessWidget {
       height: 50,
       decoration: AppBarConstants.searchAppBarBoxDecoration,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: [
             ...(inputLeading ?? []),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   searchHint,
                   maxLines: 1,
                   style: const TextStyle(
                     color: AppBarConstants.searchLabelColor,
                     fontWeight: Constants.defaultFontWeight,
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),

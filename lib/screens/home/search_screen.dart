@@ -11,7 +11,6 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen>
     with SingleTickerProviderStateMixin {
-
   @override
   void initState() {
     super.initState();
@@ -22,13 +21,12 @@ class _SearchScreenState extends State<SearchScreen>
     return Scaffold(
       appBar: AppBars(
         type: AppBarType.search,
-        inputLeading: [Icon(Icons.search),],
+        inputLeading: [Icon(Icons.search)],
         inputActions: [Icon(Icons.mic_none_outlined)],
         searchHint: 'Поиск приложений и игр',
         actions: [
-          const SizedBox(width: 4),
-            CircleAvatar(radius: 18),
-            const SizedBox(width: 20),
+          const SizedBox(width: 25),
+          CircleAvatar(radius: 18),
         ],
         onSearchChanged: (value) {},
       ),

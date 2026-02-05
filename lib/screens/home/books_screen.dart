@@ -41,7 +41,7 @@ class _BooksScreenState extends State<BooksScreen>
     final readProvider = context.read<ProductsProvider>();
 
     final List<Widget> actionWidgets = [
-      const SizedBox(width: 3),
+      const SizedBox(width: 25),
       const CircleAvatar(radius: 18),
     ];
 

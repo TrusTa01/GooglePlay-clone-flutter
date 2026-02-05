@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/constants/global_constants.dart';
 import '../../../providers/tabs_provider.dart';
 import '../../widgets.dart';
 
@@ -179,6 +178,8 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
       ),
     );
 
+    final topPadding = MediaQuery.viewPaddingOf(context).top;
+
     return AppBar(
       backgroundColor: backgroundColor,
       elevation: 0,
@@ -190,11 +191,14 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
       actions: null,
       flexibleSpace: Align(
         alignment: Alignment.topLeft,
-        child: SizedBox(
-          height: kToolbarHeight,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: toolbarContent,
+        child: Padding(
+          padding: EdgeInsets.only(top: topPadding),
+          child: SizedBox(
+            height: kToolbarHeight,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: toolbarContent,
+            ),
           ),
         ),
       ),
