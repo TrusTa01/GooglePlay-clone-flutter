@@ -297,9 +297,11 @@ class _ProductPageContent extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            product.shortDescription,
-                            style: const TextStyle(fontSize: 14),
+                          Flexible(
+                            child: Text(
+                              product.shortDescription,
+                              style: const TextStyle(fontSize: 14),
+                            ),
                           ),
                         ],
                       ),
@@ -483,18 +485,22 @@ class ProductTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Chip(
-        label: Text(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          border: Border.all(
+            color: Constants.defautTextColor.withValues(alpha: 0.5),
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
           tag,
           style: const TextStyle(
             fontSize: 14,
             fontWeight: Constants.defaultFontWeight,
           ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-        labelPadding: EdgeInsets.symmetric(horizontal: 4),
-        visualDensity: VisualDensity.compact,
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
     );
   }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets.dart';
-
 class CustomIconButton extends StatelessWidget {
   final double width;
   final double height;
@@ -25,7 +23,7 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Constants.ratingBackgroungColor,
+      color: Colors.transparent,
       borderRadius: BorderRadius.circular(borderRadius),
       clipBehavior: clipBehavior,
       child: InkWell(
