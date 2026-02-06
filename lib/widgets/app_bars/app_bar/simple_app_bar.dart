@@ -14,9 +14,7 @@ class SimpleSliverAppBar extends StatefulWidget {
   final Widget? leadingIcon;
   final VoidCallback? onLeadingPressed;
   final bool showLogo;
-
-  // Показывать разделитель под шапкой (для slivers)
-  final bool forceShowDivider;
+  final bool innerBoxIsScrolled;
 
   // Параметры для прозрачного фона
   final bool isTransparent;
@@ -44,7 +42,7 @@ class SimpleSliverAppBar extends StatefulWidget {
     this.leadingIcon,
     this.onLeadingPressed,
     this.showLogo = false,
-    this.forceShowDivider = false,
+    this.innerBoxIsScrolled = false,
     this.isTransparent = false,
     this.hasSearch = false,
     this.searchHint,
@@ -181,6 +179,15 @@ class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
           ),
         ),
       ),
+      bottom: (widget.innerBoxIsScrolled)
+        ? PreferredSize(
+            preferredSize: const Size.fromHeight(1),
+            child: Container(
+              color: const Color.fromRGBO(0, 0, 0, 0.1), // Цвет разделителя
+              height: 1,
+            ),
+          )
+        : null,
       centerTitle: widget.isTransparent ? false : null,
       iconTheme: widget.isTransparent
           ? const IconThemeData(color: Colors.white)

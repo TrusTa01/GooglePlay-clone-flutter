@@ -92,7 +92,7 @@ class TopChartsScreen extends StatelessWidget {
             sliver: SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
-                mainAxisExtent: 90,
+                mainAxisExtent: 80,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 20,
               ),

@@ -67,21 +67,21 @@ class _GamesScreenState extends State<GamesScreen>
           child: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
+                  final appBarSlivers = buildSliverTabbedAppBar(
+                    context: context,
+                    tabs: _tabs,
+                    tabController: _tabController,
+                    actions: _buildActionWidgets(context),
+                  );
                   return [
+                    // Шапка
+                    appBarSlivers[0],
                     SliverOverlapAbsorber(
                       handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
                         context,
                       ),
-                      sliver: SliverMainAxisGroup(
-                        slivers: buildSliverTabbedAppBar(
-                          context: context,
-                          showLogo: true,
-                          tabs: _tabs,
-                          tabController: _tabController,
-                          actions: _buildActionWidgets(context),
-                          forceElevated: false,
-                        ),
-                      ),
+                      // Табы
+                      sliver: appBarSlivers[1],
                     ),
                   ];
                 },
@@ -93,7 +93,6 @@ class _GamesScreenState extends State<GamesScreen>
                 return Builder(
                   builder: (context) {
                     return CustomScrollView(
-                      // Key нужен, чтобы сохранять позицию скролла при переключении табов
                       key: PageStorageKey<String>(tabName),
                       slivers: [
                         SliverOverlapInjector(
@@ -102,7 +101,6 @@ class _GamesScreenState extends State<GamesScreen>
                                 context,
                               ),
                         ),
-
                         if (tabName == 'Рекомендуем')
                           GenericTabScreen.asSliver(
                             sections: watchProvider.recommendedGamesSection,
@@ -139,20 +137,3 @@ class _GamesScreenState extends State<GamesScreen>
     );
   }
 }
-
-// // Таб 'Рекомендуем'
-                // GenericTabScreen(
-                //   sections: watchProvider.recommendedGamesSection,
-                //   onLoad: () => readProvider.getRecomendations(),
-                // ),
-                // // Таб 'Лучшее'
-                // const TopChartsScreen(type: FilterType.games),
-                // // Таб 'Детям'
-                // GenericTabScreen(sections: watchProvider.kidsPaidSection),
-                // // Таб 'Платные'
-                // GenericTabScreen(sections: watchProvider.paidGamesSection),
-                // // Таб 'Категории'
-                // CategoriesTabScreen(
-                //   categories: gamesCategoriesData,
-                //   products: watchProvider.games,
-                // ),

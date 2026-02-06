@@ -41,12 +41,14 @@ class _AppsScreenState extends State<AppsScreen>
       ),
       const SizedBox(width: 10),
       const CircleAvatar(radius: 18),
-      
     ];
   }
 
   @override
   Widget build(BuildContext context) {
+    final watchProvider = context.watch<ProductsProvider>();
+    final readProvider = context.read<ProductsProvider>();
+
     return ChangeNotifierProvider<TabsProvider>(
       create: (context) {
         final tabsProvider = TabsProvider();
@@ -59,7 +61,7 @@ class _AppsScreenState extends State<AppsScreen>
           child: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
-                  return buildSliverTabbedAppBar(
+                  final appBarSlivers = buildSliverTabbedAppBar(
                     context: context,
                     showLogo: true,
                     tabs: _tabs,
@@ -67,38 +69,59 @@ class _AppsScreenState extends State<AppsScreen>
                     actions: _buildActionWidgets(context),
                     forceElevated: false,
                   );
+                  return [
+                    // Шапка
+                    appBarSlivers[0],
+                    SliverOverlapAbsorber(
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context,
+                      ),
+                      // Табы
+                      sliver: appBarSlivers[1],
+                    ),
+                  ];
                 },
             body: TabBarView(
-              controller: _tabController,
               physics:
                   const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-              children: [
-                // Таб 'Рекомендуем'
-                Consumer<ProductsProvider>(
-                  builder: (context, productsProvider, _) =>
-                      GenericTabScreen(
-                    sections: productsProvider.recommendedAppsSection,
-                    onLoad: () => productsProvider.getRecomendations(),
-                  ),
-                ),
-                // Таб 'Лучшее'
-                const TopChartsScreen(type: FilterType.apps),
-                // Таб 'Детям'
-                Consumer<ProductsProvider>(
-                  builder: (context, productsProvider, _) =>
-                      GenericTabScreen(
-                    sections: productsProvider.kidsPaidSection,
-                  ),
-                ),
-                // Таб 'Категории'
-                Consumer<ProductsProvider>(
-                  builder: (context, productsProvider, _) =>
-                      CategoriesTabScreen(
-                    categories: appsCategoriesData,
-                    products: productsProvider.apps,
-                  ),
-                ),
-              ],
+              controller: _tabController,
+              children: _tabs.map((tabName) {
+                return Builder(
+                  builder: (context) {
+                    return CustomScrollView(
+                      key: PageStorageKey<String>(tabName),
+                      slivers: [
+                        SliverOverlapInjector(
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                context,
+                              ),
+                        ),
+                        if (tabName == 'Рекомендуем')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.recommendedAppsSection,
+                            onLoad: () => readProvider.getRecomendations(),
+                          )
+                        else if (tabName == 'Лучшее')
+                          ...TopChartsScreen.buildSlivers(
+                            context,
+                            type: FilterType.apps,
+                            showFilters: true,
+                          )
+                        else if (tabName == 'Детям')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.kidsPaidSection,
+                          )
+                        else if (tabName == 'Категории')
+                          CategoriesTabScreen.asSliver(
+                            categories: appsCategoriesData,
+                            products: watchProvider.apps,
+                          ),
+                      ],
+                    );
+                  },
+                );
+              }).toList(),
             ),
           ),
         ),

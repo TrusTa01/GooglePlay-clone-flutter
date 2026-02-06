@@ -157,10 +157,7 @@ class _ProductGridState extends State<ProductGrid> {
                     itemBuilder: (context, pageIndex) {
                       return Padding(
                         padding: EdgeInsets.only(
-                          left: pageIndex == 0
-                              ? Constants.horizontalContentPadding.left
-                              : config.cardPadding,
-                          right: config.cardPadding,
+                          left: Constants.horizontalContentPadding.left,
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

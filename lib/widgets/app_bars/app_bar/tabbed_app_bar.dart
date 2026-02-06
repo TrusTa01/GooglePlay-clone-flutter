@@ -56,7 +56,7 @@ List<Widget> buildSliverTabbedAppBar({
                   padding: padding,
                   child: Row(
                     children: [
-                      if (showLogo) const AppBarLogo(translate: Offset(6, 0)), // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
+                      if (showLogo) const AppBarLogo(translate: Offset(5, 0)), // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
                       if (hasSearch)
                         Expanded(
                           child: AppBarSearchContainer(
@@ -78,24 +78,14 @@ List<Widget> buildSliverTabbedAppBar({
       ),
     ),
     // Табы - остаются закрепленными, с ограничением по sliderMaxContentWidth.
-    // Разделитель под табами — на всю ширину экрана.
     SliverPersistentHeader(
       pinned: true,
       delegate: _SliverTabBarDelegate(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
-                child: CustomTabBar(tabs: tabsList, controller: tabController),
-              ),
-            ),
-            Container(
-              height: 1,
-              color: const Color.fromRGBO(0, 0, 0, 0.35),
-            ),
-          ],
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+            child: CustomTabBar(tabs: tabsList, controller: tabController),
+          ),
         ),
       ),
     ),

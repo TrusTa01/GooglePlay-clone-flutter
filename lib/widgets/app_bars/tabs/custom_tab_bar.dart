@@ -19,9 +19,11 @@ class _CustomTabBarState extends State<CustomTabBar> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        // Уменьшаем ширину контента на размер отступов (22 слева + 22 справа = 44)
+        final double availableWidth = constraints.maxWidth - 44;
         final double estimatedTabWidth = 100;
         final double totalTabsWidth = widget.tabs.length * estimatedTabWidth;
-        final bool shouldScroll = totalTabsWidth > constraints.maxWidth;
+        final bool shouldScroll = totalTabsWidth > availableWidth;
 
         return Container(
           width: double.infinity,
@@ -31,10 +33,8 @@ class _CustomTabBarState extends State<CustomTabBar> {
             controller: widget.controller,
             isScrollable: shouldScroll,
             tabAlignment: shouldScroll ? TabAlignment.start : TabAlignment.fill,
-            padding: shouldScroll
-                ? const EdgeInsets.only(left: 6)
-                : EdgeInsets.zero,
-
+            padding: Constants.horizontalContentPadding,
+                
             // Настройка анимации полоски (индикатора)
             indicatorSize: TabBarIndicatorSize.label, // По ширине текста
             indicator: UnderlineTabIndicator(
@@ -62,7 +62,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
             ),
 
             // Отступы
-            labelPadding: const EdgeInsets.symmetric(horizontal: 14),
+            labelPadding: const EdgeInsets.only(right: 28),
 
             // Сами табы
             tabs: widget.tabs.map((String text) {
@@ -72,6 +72,9 @@ class _CustomTabBarState extends State<CustomTabBar> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
                     text,
+                    maxLines: 1,
+                    softWrap: false,
+                    overflow: TextOverflow.visible,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: Constants.defaultFontWeight,

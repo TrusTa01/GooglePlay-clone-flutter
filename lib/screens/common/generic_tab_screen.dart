@@ -22,11 +22,7 @@ class GenericTabScreen extends StatefulWidget {
     required List<HomeSection> sections,
     VoidCallback? onLoad,
   }) {
-    return GenericTabScreen(
-      sections: sections,
-      onLoad: onLoad,
-      isSliver: true,
-    );
+    return GenericTabScreen(sections: sections, onLoad: onLoad, isSliver: true);
   }
 
   @override
@@ -76,14 +72,11 @@ class _GenericTabScreenState extends State<GenericTabScreen>
 
     // Основной список секций
     if (widget.isSliver) {
-      return SliverPadding(
-        padding: const EdgeInsets.only(bottom: 45),
-        sliver: SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) =>
-                _buildSectionWrapper(index, widget.sections[index]),
-            childCount: widget.sections.length,
-          ),
+      return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) =>
+              _buildSectionWrapper(index, widget.sections[index]),
+          childCount: widget.sections.length,
         ),
       );
     }
@@ -91,7 +84,6 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     return ListView.builder(
       primary: false,
       itemCount: widget.sections.length,
-      padding: const EdgeInsets.only(bottom: 45),
       itemBuilder: (context, index) =>
           _buildSectionWrapper(index, widget.sections[index]),
     );
@@ -151,10 +143,12 @@ class _GenericTabScreenState extends State<GenericTabScreen>
           maxItems: 15,
         );
       case SectionType.preview:
-        sectionWidget = GamePreviewSection(
-          game: rawProducts.whereType<Game>().toList(),
-          nestedInScrollView: true,
-          showButton: section.showButton,
+        sectionWidget = _KeepAliveSection(
+          child: GamePreviewSection(
+            game: rawProducts.whereType<Game>().toList(),
+            nestedInScrollView: true,
+            showButton: section.showButton,
+          ),
         );
       case SectionType.kidsHeroBanner:
         needsHorizontalPadding = false;
@@ -186,5 +180,27 @@ class _GenericTabScreenState extends State<GenericTabScreen>
       );
     }
     return sectionWidget;
+  }
+}
+
+// Обёртка, чтобы секция не пересоздавалась при скролле
+class _KeepAliveSection extends StatefulWidget {
+  final Widget child;
+
+  const _KeepAliveSection({required this.child});
+
+  @override
+  State<_KeepAliveSection> createState() => _KeepAliveSectionState();
+}
+
+class _KeepAliveSectionState extends State<_KeepAliveSection>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.child;
   }
 }

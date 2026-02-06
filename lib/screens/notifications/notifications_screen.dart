@@ -16,7 +16,8 @@ class NotificationsScreen extends StatelessWidget {
               onLeadingPressed: () => Navigator.pop(context),
               title: AppBarTitle(title: 'Уведомления и предложения'),
             ),
-            SliverToBoxAdapter(
+            SliverFillRemaining(
+              hasScrollBody: false,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +39,10 @@ class NotificationsScreen extends StatelessWidget {
                     Text(
                       'Здесь будут появляться уведомления о вашем\n аккаунте Google Play.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),

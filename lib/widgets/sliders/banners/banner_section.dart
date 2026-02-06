@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:provider/provider.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '/screens/screens.dart';
 import '/models/models.dart';
@@ -46,13 +47,18 @@ class _BannerLayoutConfig {
   });
 }
 
-class _BannerSectionState extends State<BannerSection> {
+class _BannerSectionState extends State<BannerSection>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   PageController? _controller;
   Timer? _timer;
   int _currentPage = 1;
   double _lastViewportFraction = 0;
+  bool _isVisible = true;
 
-  // Breakpoints и их конфигурации (от меньшего к большему) PS: до 500 очень точные значения потому что невозможно сделать универсальный адаптив под такой виджет
+  // Breakpoints и их конфигурации PS: до 500 очень точные значения потому что невозможно сделать универсальный адаптив под такой виджет
   static const List<(int, _BannerLayoutConfig)> _breakpoints = [
     (
       0,
@@ -68,7 +74,7 @@ class _BannerSectionState extends State<BannerSection> {
       350,
       _BannerLayoutConfig(
         // < 400
-        viewportFraction: 0.88,
+        viewportFraction: 0.905,
         heightFactor: 3.5,
         bannerPadding: 8,
         horizontalPadding: 18,
@@ -78,7 +84,7 @@ class _BannerSectionState extends State<BannerSection> {
       370,
       _BannerLayoutConfig(
         // < 400
-        viewportFraction: 0.89,
+        viewportFraction: 0.915,
         heightFactor: 3.5,
         bannerPadding: 8,
         horizontalPadding: 18,
@@ -88,7 +94,7 @@ class _BannerSectionState extends State<BannerSection> {
       400,
       _BannerLayoutConfig(
         // 400-500
-        viewportFraction: 0.895,
+        viewportFraction: 0.925,
         heightFactor: 3.2,
         bannerPadding: 8,
         horizontalPadding: 22,
@@ -98,7 +104,7 @@ class _BannerSectionState extends State<BannerSection> {
       431,
       _BannerLayoutConfig(
         // 400-500
-        viewportFraction: 0.91,
+        viewportFraction: 0.925,
         heightFactor: 3.2,
         bannerPadding: 8,
         horizontalPadding: 22,
@@ -194,23 +200,32 @@ class _BannerSectionState extends State<BannerSection> {
 
   void _updateController(double viewportFraction) {
     if (_controller == null || _lastViewportFraction != viewportFraction) {
+      // Сохраняем текущую реальную позицию перед dispose
+      int currentRealPage = _currentPage;
+      if (_controller != null && _controller!.hasClients) {
+        currentRealPage = _controller!.page?.round() ?? _currentPage;
+      }
+      
       _controller?.dispose();
       _lastViewportFraction = viewportFraction;
       _controller = PageController(
         viewportFraction: viewportFraction,
-        initialPage: _currentPage,
+        initialPage: currentRealPage,
       );
+      _currentPage = currentRealPage;
     }
   }
 
   void _startTimer() {
     _timer?.cancel();
+    if (!_isVisible) return; // Не запускаем таймер если виджет не видим
+
     final displayBannersLength =
         widget.maxItems != null && widget.maxItems! < widget.banners.length
         ? widget.maxItems!
         : widget.banners.length;
     _timer = Timer.periodic(const Duration(seconds: 7), (timer) {
-      if (_controller != null && _controller!.hasClients) {
+      if (_controller != null && _controller!.hasClients && _isVisible) {
         _currentPage++;
         if (_currentPage >= displayBannersLength - 1) {
           _currentPage = 1;
@@ -222,6 +237,26 @@ class _BannerSectionState extends State<BannerSection> {
         );
       }
     });
+  }
+
+  void _onVisibilityChanged(VisibilityInfo info) {
+    final isVisible =
+        info.visibleFraction > 0.1; // Считаем видимым если видно хотя бы 10%
+    if (_isVisible != isVisible) {
+      _isVisible = isVisible;
+      if (isVisible) {
+        // Синхронизируем _currentPage с реальной позицией PageView БЕЗ анимации
+        if (_controller != null && _controller!.hasClients) {
+          final realPage = _controller!.page?.round() ?? 0;
+          _currentPage = realPage;
+          debugPrint('Banner became visible, synced to page: $_currentPage');
+        }
+        _startTimer();
+      } else {
+        _timer?.cancel();
+        debugPrint('Banner hidden, timer cancelled');
+      }
+    }
   }
 
   void _handleBannerTap(BuildContext context, AppBanner banner) {
@@ -273,6 +308,7 @@ class _BannerSectionState extends State<BannerSection> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (widget.banners.isEmpty) return const SizedBox.shrink();
 
     final screenHeight = MediaQuery.of(context).size.height;
@@ -284,73 +320,77 @@ class _BannerSectionState extends State<BannerSection> {
 
     final double maxContentWidth = Constants.sliderMaxContentWidth;
 
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: maxContentWidth),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final config = _getConfig(width);
-            _updateController(config.viewportFraction);
+    return VisibilityDetector(
+      key: Key('banner_section_${widget.title}'),
+      onVisibilityChanged: _onVisibilityChanged,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: maxContentWidth),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final width = constraints.maxWidth;
+              final config = _getConfig(width);
+              _updateController(config.viewportFraction);
 
-            debugPrint(
-              'Banner: width=$width, viewport=${config.viewportFraction}, height=${config.heightFactor}',
-            );
+              debugPrint(
+                'Banner: width=$width, viewport=${config.viewportFraction}, height=${config.heightFactor}',
+              );
 
-            final adaptiveHeight = screenHeight / config.heightFactor;
+              final adaptiveHeight = screenHeight / config.heightFactor;
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.title.isNotEmpty)
-                  ProductSectionHeader(
-                    title: widget.title,
-                    subtitle: widget.subtitle,
-                    onTap: () {
-                      debugPrint('Banner section header tapped - no action');
-                    },
-                    padding: EdgeInsets.symmetric(
-                      horizontal: config.horizontalPadding,
-                    ).copyWith(top: 10, bottom: 20),
-                    showButton: false,
-                  ),
-                Padding(
-                  padding: EdgeInsets.only(left: width > 1000 ? 23 : 0),
-                  child: NotificationListener<ScrollNotification>(
-                    onNotification: (notification) {
-                      if (notification is ScrollStartNotification) {
-                        _timer?.cancel();
-                      } else if (notification is ScrollEndNotification) {
-                        _startTimer();
-                      }
-                      return true;
-                    },
-                    child: SizedBox(
-                      height: adaptiveHeight,
-                      child: PageView.builder(
-                        key: ValueKey(
-                          'banner_${widget.type}_${config.viewportFraction}',
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (widget.title.isNotEmpty)
+                    ProductSectionHeader(
+                      title: widget.title,
+                      subtitle: widget.subtitle,
+                      onTap: () {
+                        debugPrint('Banner section header tapped - no action');
+                      },
+                      padding: EdgeInsets.symmetric(
+                        horizontal: config.horizontalPadding,
+                      ).copyWith(top: 10, bottom: 20),
+                      showButton: false,
+                    ),
+                  Padding(
+                    padding: EdgeInsets.only(left: width > 1000 ? 23 : 0),
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (notification) {
+                        if (notification is ScrollStartNotification) {
+                          _timer?.cancel();
+                        } else if (notification is ScrollEndNotification) {
+                          _startTimer();
+                        }
+                        return true;
+                      },
+                      child: SizedBox(
+                        height: adaptiveHeight,
+                        child: PageView.builder(
+                          key: ValueKey(
+                            'banner_${widget.type}_${config.viewportFraction}',
+                          ),
+                          onPageChanged: (index) => _currentPage = index,
+                          scrollDirection: Axis.horizontal,
+                          controller: _controller,
+                          itemCount: displayBanners.length,
+                          itemBuilder: (context, index) {
+                            final banner = displayBanners[index];
+                            return BannerItem(
+                              banner: banner,
+                              type: widget.type,
+                              horizontalPadding: config.bannerPadding,
+                              onTap: () => _handleBannerTap(context, banner),
+                            );
+                          },
                         ),
-                        onPageChanged: (index) => _currentPage = index,
-                        scrollDirection: Axis.horizontal,
-                        controller: _controller,
-                        itemCount: displayBanners.length,
-                        itemBuilder: (context, index) {
-                          final banner = displayBanners[index];
-                          return BannerItem(
-                            banner: banner,
-                            type: widget.type,
-                            horizontalPadding: config.bannerPadding,
-                            onTap: () => _handleBannerTap(context, banner),
-                          );
-                        },
                       ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

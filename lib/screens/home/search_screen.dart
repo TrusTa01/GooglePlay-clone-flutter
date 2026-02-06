@@ -30,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen>
       //   ],
       //   onSearchChanged: (value) {},
       // ),
-      body: Column(),
+      body: Center(child: Text('Здесь будет поиск')),
     );
   }
 }

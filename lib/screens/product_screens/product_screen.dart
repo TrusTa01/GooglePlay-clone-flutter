@@ -298,7 +298,8 @@ class _ProductPageContent extends StatelessWidget {
                           ),
                         ),
                       ),
-            
+                      
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           Flexible(

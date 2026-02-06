@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '/screens/screens.dart';
 import '/widgets/widgets.dart';
 import '/models/models.dart';
 
@@ -38,10 +39,21 @@ class ProductPreviewCard extends StatelessWidget {
         ),
         if (showActionRow) ...[
           const SizedBox(height: 10),
-          ActionRow(
-            product: product,
-            showButton: false,
-            spaceBetween: false,
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProductPageScreen(product: product),
+                  ),
+                );
+              },
+              child: ActionRow(
+                product: product,
+                showButton: false,
+              ),
+            ),
           ),
         ],
       ],

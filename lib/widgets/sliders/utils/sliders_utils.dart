@@ -424,7 +424,6 @@ class ActionRow extends StatelessWidget {
   final int cacheHeight;
   final BorderRadius? borderRadius;
   final BoxFit? fit;
-  final bool spaceBetween;
 
   const ActionRow({
     super.key,
@@ -439,7 +438,6 @@ class ActionRow extends StatelessWidget {
     this.hasThreeLines = false,
     this.borderRadius,
     this.fit,
-    this.spaceBetween = true,
   });
 
   @override

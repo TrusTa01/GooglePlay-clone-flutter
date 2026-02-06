@@ -25,7 +25,6 @@ class PermissionsScreen extends StatelessWidget {
                 SimpleSliverAppBar(
                   showBackButton: true,
                   showLogo: false,
-                  forceShowDivider: true,
                   titleLeading: ProductAppBarLeading(product: product),
                   title: Text(
                     product.title,
