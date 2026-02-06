@@ -15,44 +15,46 @@ class ProductEventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SimpleSliverAppBar(
-            showBackButton: true,
-            showLogo: false,
-            onLeadingPressed: () => Navigator.pop(context),
-            title: const Text(''),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  debugPrint('Share event: ${eventBanner.eventId}');
-                },
-                icon: const Icon(Icons.share_outlined, color: Colors.black),
-              ),
-            ],
-          ),
-
-          SliverToBoxAdapter(child: EventHeroBanner(banner: eventBanner)),
-
-          if (eventBanner.eventDescription != null &&
-              eventBanner.eventDescription!.isNotEmpty)
-            SliverToBoxAdapter(
-              child: EventDescription(text: eventBanner.eventDescription!),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SimpleSliverAppBar(
+              showBackButton: true,
+              showLogo: false,
+              onLeadingPressed: () => Navigator.pop(context),
+              title: const Text(''),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    debugPrint('Share event: ${eventBanner.eventId}');
+                  },
+                  icon: const Icon(Icons.share_outlined, color: Colors.black),
+                ),
+              ],
             ),
-
-          SliverList.builder(
-            itemCount: sections.length,
-            itemBuilder: (context, index) {
-              final section = sections[index];
-              return Padding(
-                padding: EdgeInsets.only(top: index == 0 ? 10 : 15),
-                child: _buildSection(context, section),
-              );
-            },
-          ),
-
-          const SliverToBoxAdapter(child: SizedBox(height: 45)),
-        ],
+        
+            SliverToBoxAdapter(child: EventHeroBanner(banner: eventBanner)),
+        
+            if (eventBanner.eventDescription != null &&
+                eventBanner.eventDescription!.isNotEmpty)
+              SliverToBoxAdapter(
+                child: EventDescription(text: eventBanner.eventDescription!),
+              ),
+        
+            SliverList.builder(
+              itemCount: sections.length,
+              itemBuilder: (context, index) {
+                final section = sections[index];
+                return Padding(
+                  padding: EdgeInsets.only(top: index == 0 ? 10 : 15),
+                  child: _buildSection(context, section),
+                );
+              },
+            ),
+        
+            const SliverToBoxAdapter(child: SizedBox(height: 45)),
+          ],
+        ),
       ),
     );
   }

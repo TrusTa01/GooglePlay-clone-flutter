@@ -23,20 +23,22 @@ class CategoryFullListScreen extends StatelessWidget {
           constraints: BoxConstraints(
             maxWidth: Constants.sliderMaxContentWidth,
           ),
-          child: CustomScrollView(
-            slivers: [
-              SimpleSliverAppBar(
-                showLogo: false,
-                showBackButton: true,
-                onLeadingPressed: () => Navigator.pop(context),
-                title: AppBarTitle(title: title),
-              ),
-              isGame
-                  ? GamePreviewSection.asSliver(
-                      game: products.whereType<Game>().toList(),
-                    )
-                  : CategoryDetailsSection.asSliver(products: products),
-            ],
+          child: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SimpleSliverAppBar(
+                  showLogo: false,
+                  showBackButton: true,
+                  onLeadingPressed: () => Navigator.pop(context),
+                  title: AppBarTitle(title: title),
+                ),
+                isGame
+                    ? GamePreviewSection.asSliver(
+                        game: products.whereType<Game>().toList(),
+                      )
+                    : CategoryDetailsSection.asSliver(products: products),
+              ],
+            ),
           ),
         ),
       ),

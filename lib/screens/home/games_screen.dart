@@ -63,7 +63,7 @@ class _GamesScreenState extends State<GamesScreen>
       },
       child: Scaffold(
         body: SafeArea(
-          bottom: false,
+          bottom: true,
           child: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {

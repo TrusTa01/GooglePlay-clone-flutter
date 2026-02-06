@@ -38,20 +38,22 @@ class CategoryOverviewScreen extends StatelessWidget {
         create: (_) => filterProvider,
         child: Builder(
           builder: (context) {
-            return CustomScrollView(
-              slivers: [
-                SimpleSliverAppBar(
-                  showBackButton: true,
-                  showLogo: false,
-                  onLeadingPressed: () => Navigator.pop(context),
-                  title: AppBarTitle(title: title),
-                ),
-                ...TopChartsScreen.buildSlivers(
-                  context,
-                  type: filterType,
-                  showFilters: false,
-                ),
-              ],
+            return SafeArea(
+              child: CustomScrollView(
+                slivers: [
+                  SimpleSliverAppBar(
+                    showBackButton: true,
+                    showLogo: false,
+                    onLeadingPressed: () => Navigator.pop(context),
+                    title: AppBarTitle(title: title),
+                  ),
+                  ...TopChartsScreen.buildSlivers(
+                    context,
+                    type: filterType,
+                    showFilters: false,
+                  ),
+                ],
+              ),
             );
           },
         ),

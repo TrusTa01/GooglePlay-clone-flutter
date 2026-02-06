@@ -31,199 +31,201 @@ class DetailsScreen extends StatelessWidget {
           constraints: BoxConstraints(
             maxWidth: Constants.sliderMaxContentWidth,
           ),
-          child: CustomScrollView(
-            slivers: [
-              SimpleSliverAppBar(
-                showBackButton: true,
-                showLogo: false,
-                forceShowDivider: true,
-                titleLeading: ProductAppBarLeading(product: product),
-                title: Text(
-                  product.title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: Constants.defaultFontWeight,
+          child: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SimpleSliverAppBar(
+                  showBackButton: true,
+                  showLogo: false,
+                  forceShowDivider: true,
+                  titleLeading: ProductAppBarLeading(product: product),
+                  title: Text(
+                    product.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: Constants.defaultFontWeight,
+                    ),
                   ),
+                  subtitle: Text(
+                    'Сведения',
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                  onLeadingPressed: () => Navigator.pop(context),
                 ),
-                subtitle: Text(
-                  'Сведения',
-                  style: const TextStyle(fontSize: 14, color: Colors.grey),
-                ),
-                onLeadingPressed: () => Navigator.pop(context),
-              ),
-
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 22,
-                ),
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate([
-                    // Заголовок
-                    Text(utils.titleText, style: const TextStyle(fontSize: 16)),
-                    const SizedBox(height: 10),
-
-                    // Краткое описание
-                    Text(
-                      product.shortDescription,
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                    const SizedBox(height: 10),
-
-                    // Полное описание
-                    Text(
-                      product.description,
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                    const Divider(),
-
-                    // Что нового
-                    if (product is! Book) ...[
-                      Row(
-                        children: const [
-                          Text('Что нового', style: TextStyle(fontSize: 16)),
-                          SizedBox(width: 10),
-                          Text(
-                            '●',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Constants.googleBlue,
-                            ),
-                          ),
-                        ],
+            
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 22,
+                  ),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate([
+                      // Заголовок
+                      Text(utils.titleText, style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 10),
+            
+                      // Краткое описание
+                      Text(
+                        product.shortDescription,
+                        style: const TextStyle(fontSize: 14),
                       ),
                       const SizedBox(height: 10),
+            
+                      // Полное описание
                       Text(
-                        product.whatsNewText ?? 'Нет информации',
-                        style: TextStyle(fontSize: 14),
+                        product.description,
+                        style: const TextStyle(fontSize: 14),
                       ),
                       const Divider(),
-
-                      // Дополнительно
-                      const Text(
-                        'Дополнительно',
-                        style: TextStyle(fontSize: 16),
+            
+                      // Что нового
+                      if (product is! Book) ...[
+                        Row(
+                          children: const [
+                            Text('Что нового', style: TextStyle(fontSize: 16)),
+                            SizedBox(width: 10),
+                            Text(
+                              '●',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Constants.googleBlue,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          product.whatsNewText ?? 'Нет информации',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        const Divider(),
+            
+                        // Дополнительно
+                        const Text(
+                          'Дополнительно',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(height: 20),
+                        _DetailRow(
+                          icon: AgeBadge(
+                            age: product is App
+                                ? (product as App).ageRating
+                                : (product as Game).ageRating,
+                            fontSize: 20,
+                          ),
+                          title:
+                              '${product is App ? (product as App).ageRating : (product as Game).ageRating}+',
+                          subtitle: product is App
+                              ? (product as App).ageRatingReasons.join(', ')
+                              : (product as Game).ageRatingReasons.join(', '),
+                          actionText: 'Подробнее...',
+                          onActionPressed: () {},
+                        ),
+            
+                        if (product.containsAds) ...[
+                          const SizedBox(height: 20),
+                          _DetailRow(
+                            icon: Icon(Icons.ad_units),
+                            title: 'Есть реклама',
+                            subtitle: 'Рекламу размещает разработчик приложения.',
+                            actionText: 'Подробнее...',
+                          ),
+                        ],
+                        if (product is Game &&
+                            (product as Game).hasAchievements) ...[
+                          const SizedBox(height: 20),
+                          _DetailRow(
+                            icon: Icon(Icons.emoji_events),
+                            title: 'Достижения',
+                            subtitle:
+                                'За выполнения целей вам будут присваиваться достижения',
+                          ),
+                        ],
+                        const Divider(),
+                      ],
+                      Text(
+                        utils.aboutTitleText,
+                        style: const TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 20),
-                      _DetailRow(
-                        icon: AgeBadge(
-                          age: product is App
-                              ? (product as App).ageRating
-                              : (product as Game).ageRating,
-                          fontSize: 20,
-                        ),
-                        title:
-                            '${product is App ? (product as App).ageRating : (product as Game).ageRating}+',
-                        subtitle: product is App
-                            ? (product as App).ageRatingReasons.join(', ')
-                            : (product as Game).ageRatingReasons.join(', '),
-                        actionText: 'Подробнее...',
-                        onActionPressed: () {},
-                      ),
-
-                      if (product.containsAds) ...[
-                        const SizedBox(height: 20),
-                        _DetailRow(
-                          icon: Icon(Icons.ad_units),
-                          title: 'Есть реклама',
-                          subtitle: 'Рекламу размещает разработчик приложения.',
-                          actionText: 'Подробнее...',
-                        ),
-                      ],
-                      if (product is Game &&
-                          (product as Game).hasAchievements) ...[
-                        const SizedBox(height: 20),
-                        _DetailRow(
-                          icon: Icon(Icons.emoji_events),
-                          title: 'Достижения',
-                          subtitle:
-                              'За выполнения целей вам будут присваиваться достижения',
-                        ),
-                      ],
-                      const Divider(),
-                    ],
-                    Text(
-                      utils.aboutTitleText,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 20),
-
-                    if (product is App || product is Game)
-                      ..._withSpacing([
-                        _InfoRow(
-                          label: 'Версия',
-                          value: product.version.toString(),
-                        ),
-                        _InfoRow(
-                          label: 'Последнее обновление',
-                          value: productFormatter.lastUpdatedFormatted,
-                        ),
-                        _InfoRow(
-                          label: 'Кол-во скачиваний',
-                          value: productFormatter.downloadCountFull,
-                        ),
-                        _InfoRow(
-                          label: 'Размер файла',
-                          value: productFormatter.technicalInfoFormatted,
-                        ),
-                        _InfoRow(
-                          label: 'Разработчик',
-                          value: product.creator.toString(),
-                        ),
-                        _InfoRow(
-                          label: 'Дата выпуска',
-                          value: productFormatter.releaseDateFormatted,
-                        ),
-                        _InfoRow(
-                          label: 'Разрешения для приложения',
-                          value: 'Еще',
-                          hasTextButton: true,
-                          onTextButtonPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PermissionsScreen(product: product),
+            
+                      if (product is App || product is Game)
+                        ..._withSpacing([
+                          _InfoRow(
+                            label: 'Версия',
+                            value: product.version.toString(),
+                          ),
+                          _InfoRow(
+                            label: 'Последнее обновление',
+                            value: productFormatter.lastUpdatedFormatted,
+                          ),
+                          _InfoRow(
+                            label: 'Кол-во скачиваний',
+                            value: productFormatter.downloadCountFull,
+                          ),
+                          _InfoRow(
+                            label: 'Размер файла',
+                            value: productFormatter.technicalInfoFormatted,
+                          ),
+                          _InfoRow(
+                            label: 'Разработчик',
+                            value: product.creator.toString(),
+                          ),
+                          _InfoRow(
+                            label: 'Дата выпуска',
+                            value: productFormatter.releaseDateFormatted,
+                          ),
+                          _InfoRow(
+                            label: 'Разрешения для приложения',
+                            value: 'Еще',
+                            hasTextButton: true,
+                            onTextButtonPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PermissionsScreen(product: product),
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
-
-                    if (product is Book)
-                      ..._withSpacing([
-                        _InfoRow(
-                          label: 'Автор',
-                          value: product.creator.toString(),
-                        ),
-                        _InfoRow(
-                          label: 'Издатель',
-                          value: product.creator.toString(),
-                        ),
-                        _InfoRow(
-                          label: 'Дата публикации',
-                          value: productFormatter.releaseDateFormatted
-                              .toString(),
-                        ),
-                        _InfoRow(
-                          label: 'Количество страниц',
-                          value: (product as Book).pageCount.toString(),
-                        ),
-                        _InfoRow(
-                          label: 'Язык',
-                          value: (product as Book).language.toString(),
-                        ),
-                        _InfoRow(
-                          label: 'Формат',
-                          value: (product as Book).format.toString(),
-                        ),
-                        _InfoRow(
-                          label: 'Жанры',
-                          value: (product as Book).genres.join(', '),
-                        ),
-                      ]),
-                  ]),
+                        ]),
+            
+                      if (product is Book)
+                        ..._withSpacing([
+                          _InfoRow(
+                            label: 'Автор',
+                            value: product.creator.toString(),
+                          ),
+                          _InfoRow(
+                            label: 'Издатель',
+                            value: product.creator.toString(),
+                          ),
+                          _InfoRow(
+                            label: 'Дата публикации',
+                            value: productFormatter.releaseDateFormatted
+                                .toString(),
+                          ),
+                          _InfoRow(
+                            label: 'Количество страниц',
+                            value: (product as Book).pageCount.toString(),
+                          ),
+                          _InfoRow(
+                            label: 'Язык',
+                            value: (product as Book).language.toString(),
+                          ),
+                          _InfoRow(
+                            label: 'Формат',
+                            value: (product as Book).format.toString(),
+                          ),
+                          _InfoRow(
+                            label: 'Жанры',
+                            value: (product as Book).genres.join(', '),
+                          ),
+                        ]),
+                    ]),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
