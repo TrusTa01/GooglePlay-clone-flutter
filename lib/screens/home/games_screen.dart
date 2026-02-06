@@ -67,37 +67,71 @@ class _GamesScreenState extends State<GamesScreen>
           child: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
-                  return buildSliverTabbedAppBar(
-                    context: context,
-                    showLogo: true,
-                    tabs: _tabs,
-                    tabController: _tabController,
-                    actions: _buildActionWidgets(context),
-                    forceElevated: false,
-                  );
+                  return [
+                    SliverOverlapAbsorber(
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context,
+                      ),
+                      sliver: SliverMainAxisGroup(
+                        slivers: buildSliverTabbedAppBar(
+                          context: context,
+                          showLogo: true,
+                          tabs: _tabs,
+                          tabController: _tabController,
+                          actions: _buildActionWidgets(context),
+                          forceElevated: false,
+                        ),
+                      ),
+                    ),
+                  ];
                 },
             body: TabBarView(
-              controller: _tabController,
               physics:
                   const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-              children: [
-                // Таб 'Рекомендуем'
-                GenericTabScreen(
-                  sections: watchProvider.recommendedGamesSection,
-                  onLoad: () => readProvider.getRecomendations(),
-                ),
-                // Таб 'Лучшее'
-                const TopChartsScreen(type: FilterType.games),
-                // Таб 'Детям'
-                GenericTabScreen(sections: watchProvider.kidsPaidSection),
-                // Таб 'Платные'
-                GenericTabScreen(sections: watchProvider.paidGamesSection),
-                // Таб 'Категории'
-                CategoriesTabScreen(
-                  categories: gamesCategoriesData,
-                  products: watchProvider.games,
-                ),
-              ],
+              controller: _tabController,
+              children: _tabs.map((tabName) {
+                return Builder(
+                  builder: (context) {
+                    return CustomScrollView(
+                      // Key нужен, чтобы сохранять позицию скролла при переключении табов
+                      key: PageStorageKey<String>(tabName),
+                      slivers: [
+                        SliverOverlapInjector(
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                context,
+                              ),
+                        ),
+
+                        if (tabName == 'Рекомендуем')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.recommendedGamesSection,
+                            onLoad: () => readProvider.getRecomendations(),
+                          )
+                        else if (tabName == 'Лучшее')
+                          ...TopChartsScreen.buildSlivers(
+                            context,
+                            type: FilterType.games,
+                            showFilters: true,
+                          )
+                        else if (tabName == 'Детям')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.kidsPaidSection,
+                          )
+                        else if (tabName == 'Платные')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.paidGamesSection,
+                          )
+                        else if (tabName == 'Категории')
+                          CategoriesTabScreen.asSliver(
+                            categories: gamesCategoriesData,
+                            products: watchProvider.games,
+                          ),
+                      ],
+                    );
+                  },
+                );
+              }).toList(),
             ),
           ),
         ),
@@ -105,3 +139,20 @@ class _GamesScreenState extends State<GamesScreen>
     );
   }
 }
+
+// // Таб 'Рекомендуем'
+                // GenericTabScreen(
+                //   sections: watchProvider.recommendedGamesSection,
+                //   onLoad: () => readProvider.getRecomendations(),
+                // ),
+                // // Таб 'Лучшее'
+                // const TopChartsScreen(type: FilterType.games),
+                // // Таб 'Детям'
+                // GenericTabScreen(sections: watchProvider.kidsPaidSection),
+                // // Таб 'Платные'
+                // GenericTabScreen(sections: watchProvider.paidGamesSection),
+                // // Таб 'Категории'
+                // CategoriesTabScreen(
+                //   categories: gamesCategoriesData,
+                //   products: watchProvider.games,
+                // ),

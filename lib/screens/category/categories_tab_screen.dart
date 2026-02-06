@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show SliverConstraints;
 
 import '../../models/models.dart';
 import '../../widgets/widgets.dart';
@@ -7,33 +8,46 @@ import '/screens/screens.dart';
 class CategoriesTabScreen extends StatelessWidget {
   final List<ProductCategoriesData> categories;
   final List<Product> products;
+  final bool isSliver;
 
   const CategoriesTabScreen({
     super.key,
     required this.categories,
     required this.products,
+    this.isSliver = false,
   });
+
+  static Widget asSliver({
+    required List<ProductCategoriesData> categories,
+    required List<Product> products,
+  }) {
+    return CategoriesTabScreen(
+      categories: categories,
+      products: products,
+      isSliver: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        const double minItemWidth = 260;
-        final double contentWidth = constraints.maxWidth.clamp(0.0, Constants.sliderMaxContentWidth);
-        int crossAxisCount = (contentWidth / minItemWidth).floor();
-        crossAxisCount = crossAxisCount.clamp(1, 3);
+    return SliverLayoutBuilder(
+      builder: (BuildContext context, SliverConstraints constraints) {
+        final double fullWidth = constraints.crossAxisExtent;
+        final double maxWidth = Constants.sliderMaxContentWidth;
 
-        return Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: Constants.sliderMaxContentWidth,
+        final double horizontalPadding = fullWidth > maxWidth
+            ? (fullWidth - maxWidth) / 2
+            : 22;
+
+        final int crossAxisCount = _calculateAxisCount(fullWidth);
+
+        if (isSliver) {
+          return SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPadding,
+              vertical: 22,
             ),
-            child: GridView.builder(
-              primary: false,
-              padding: Constants.horizontalContentPadding.copyWith(
-                top: 20,
-                bottom: 20,
-              ),
+            sliver: SliverGrid.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
                 mainAxisExtent: 56,
@@ -41,14 +55,47 @@ class CategoriesTabScreen extends StatelessWidget {
                 crossAxisSpacing: 20,
               ),
               itemCount: categories.length - 1,
-              itemBuilder: (context, index) {
-                return _buildCategoryTile(context, categories[index + 1]);
-              },
+              itemBuilder: (context, index) =>
+                  _buildCategoryTile(context, categories[index + 1]),
             ),
-          ),
+          );
+        }
+
+        return LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: Constants.sliderMaxContentWidth,
+                ),
+                child: GridView.builder(
+                  primary: false,
+                  padding: EdgeInsets.all(22),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    mainAxisExtent: 56,
+                    mainAxisSpacing: 30,
+                    crossAxisSpacing: 20,
+                  ),
+                  itemCount: categories.length - 1,
+                  itemBuilder: (context, index) =>
+                      _buildCategoryTile(context, categories[index + 1]),
+                ),
+              ),
+            );
+          },
         );
       },
     );
+  }
+
+  int _calculateAxisCount(double width) {
+    const double minItemWidth = 260;
+    final double contentWidth = width.clamp(
+      0.0,
+      Constants.sliderMaxContentWidth,
+    );
+    return (contentWidth / minItemWidth).floor().clamp(1, 3);
   }
 
   Widget _buildCategoryTile(

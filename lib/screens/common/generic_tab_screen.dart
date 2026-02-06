@@ -18,6 +18,17 @@ class GenericTabScreen extends StatefulWidget {
     this.isSliver = false,
   });
 
+  static Widget asSliver({
+    required List<HomeSection> sections,
+    VoidCallback? onLoad,
+  }) {
+    return GenericTabScreen(
+      sections: sections,
+      onLoad: onLoad,
+      isSliver: true,
+    );
+  }
+
   @override
   State<GenericTabScreen> createState() => _GenericTabScreenState();
 }
@@ -37,15 +48,6 @@ class _GenericTabScreenState extends State<GenericTabScreen>
         widget.onLoad!();
       }
     });
-  }
-
-  // ignore: unused_element
-  static Widget asSliver({
-    // На будующее, для использования в других местах
-    required List<HomeSection> sections,
-    VoidCallback? onLoad,
-  }) {
-    return GenericTabScreen(sections: sections, onLoad: onLoad, isSliver: true);
   }
 
   @override
