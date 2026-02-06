@@ -19,17 +19,17 @@ class _SearchScreenState extends State<SearchScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBars(
-        type: AppBarType.search,
-        inputLeading: [Icon(Icons.search)],
-        inputActions: [Icon(Icons.mic_none_outlined)],
-        searchHint: 'Поиск приложений и игр',
-        actions: [
-          const SizedBox(width: 25),
-          CircleAvatar(radius: 18),
-        ],
-        onSearchChanged: (value) {},
-      ),
+      // appBar: AppBars(
+      //   type: AppBarType.search,
+      //   inputLeading: [Icon(Icons.search)],
+      //   inputActions: [Icon(Icons.mic_none_outlined)],
+      //   searchHint: 'Поиск приложений и игр',
+      //   actions: [
+      //     const SizedBox(width: 25),
+      //     CircleAvatar(radius: 18),
+      //   ],
+      //   onSearchChanged: (value) {},
+      // ),
       body: Column(),
     );
   }

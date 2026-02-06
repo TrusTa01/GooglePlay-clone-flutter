@@ -5,7 +5,7 @@ abstract class Constants {
   static const Color googleBlue = Color(0xFF0B57CE);
 
   // Основной цвет текста
-  static const Color defautTextColor = Color(0xFF4D4F4E);
+  static const Color defaultTextColor = Color(0xFF4D4F4E);
 
   // Остновная жирность шрифта
   static const FontWeight defaultFontWeight = FontWeight.w600;

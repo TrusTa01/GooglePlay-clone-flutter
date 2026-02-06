@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
 import '../../widgets/widgets.dart';
+import 'utils/product_app_bar_leading.dart';
 
 class PermissionsScreen extends StatelessWidget {
   final Product product;
@@ -11,35 +12,59 @@ class PermissionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ProductAppBar(
-        product: product,
-        subtitle: 'Разрешения для приложения',
-      ),
-
       body: Center(
         heightFactor: 1,
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: product.permissions.length + 1, // +1 для заголовка
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+          constraints: BoxConstraints(
+            maxWidth: Constants.sliderMaxContentWidth,
+          ),
+
+          child: CustomScrollView(
+            slivers: [
+              SimpleSliverAppBar(
+                showBackButton: true,
+                showLogo: false,
+                forceShowDivider: true,
+                titleLeading: ProductAppBarLeading(product: product),
+                title: Text(
+                  product.title,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: Constants.defaultFontWeight,
+                  ),
+                ),
+                subtitle: const Text(
+                  'Разрешения для приложения',
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+                onLeadingPressed: () => Navigator.pop(context),
+              ),
+
+              // Заголовок списка
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(22, 20, 22, 10),
+                sliver: SliverToBoxAdapter(
                   child: Text(
                     'Возможные разрешения для версии ${product.version}',
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                );
-              }
-              return _BulletItem(
-                permission: product.permissions[index - 1],
-              );
-            },
+                ),
+              ),
+
+              // Сам список разрешений
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                sliver: SliverList.builder(
+                  itemCount: product.permissions.length,
+                  itemBuilder: (context, index) {
+                    return _BulletItem(permission: product.permissions[index]);
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -57,10 +82,9 @@ class _BulletItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(" • ", style: TextStyle(fontSize: 14)), 
+          const Text(" • ", style: TextStyle(fontSize: 14)),
           const SizedBox(width: 4),
           Expanded(
             child: Text(

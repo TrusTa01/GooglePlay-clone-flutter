@@ -18,18 +18,28 @@ class CategoryFullListScreen extends StatelessWidget {
     final bool isGame = products.first is Game;
 
     return Scaffold(
-      appBar: AppBars(
-        type: AppBarType.transparent,
-        showBackButton: true,
-        onLeadingPressed: () => Navigator.pop(context),
-        title: AppBarTitle(title: title),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: Constants.sliderMaxContentWidth,
+          ),
+          child: CustomScrollView(
+            slivers: [
+              SimpleSliverAppBar(
+                showLogo: false,
+                showBackButton: true,
+                onLeadingPressed: () => Navigator.pop(context),
+                title: AppBarTitle(title: title),
+              ),
+              isGame
+                  ? GamePreviewSection.asSliver(
+                      game: products.whereType<Game>().toList(),
+                    )
+                  : CategoryDetailsSection.asSliver(products: products),
+            ],
+          ),
+        ),
       ),
-      body: 
-      // Padding(padding: const EdgeInsets.symmetric(horizontal: Constants.screenHorizontalPadding),
-        isGame
-            ? GamePreviewSection(game: products.whereType<Game>().toList())
-            : CategoryDetailsSection(products: products),
-      // ),
     );
   }
 }

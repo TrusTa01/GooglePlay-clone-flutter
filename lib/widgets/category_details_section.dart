@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show SliverConstraints;
 
 import 'widgets.dart';
 import '../../models/models.dart';
@@ -6,61 +7,89 @@ import '../core/utils/formatters.dart';
 
 class CategoryDetailsSection extends StatelessWidget {
   final List<Product> products;
+  final bool isSliver;
 
-  const CategoryDetailsSection({super.key, required this.products});
+  const CategoryDetailsSection({
+    super.key,
+    required this.products,
+    this.isSliver = false,
+  });
+
+  static Widget asSliver({required List<Product> products}) {
+    return CategoryDetailsSection(products: products, isSliver: true);
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (products.isEmpty) {
+      debugPrint('Ошибка: products.isEmpty (category details section)');
+      return isSliver
+          ? const SliverToBoxAdapter(child: SizedBox.shrink())
+          : const SizedBox.shrink();
+    }
+
     final bool isBook = products.first is Book;
     final double minItemWidth = isBook ? 100 : 125;
+    // Вычисляем aspectRatio
+    final double aspectRatio = isBook ? 0.5 : 0.6;
 
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        // Ширина контента ограничена sliderMaxContentWidth
-        final double contentWidth = constraints.maxWidth.clamp(0.0, Constants.sliderMaxContentWidth);
-        final int crossAxisCount = ((contentWidth - 30) / minItemWidth)
-            .floor()
-            .clamp(2, 8);
+    if (isSliver) {
+      return SliverLayoutBuilder(
+        builder: (BuildContext context, SliverConstraints constraints) {
+          final double width = constraints.crossAxisExtent;
+          final int crossAxisCount = ((width - 32) / minItemWidth)
+              .floor()
+              .clamp(2, 8);
 
-        // Фиксированные отступы
-        final double horizontalPadding = 16;
-
-        // Вычисляем aspectRatio
-        final double aspectRatio = isBook ? 0.5 : 0.6;
-
-        return Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: Constants.sliderMaxContentWidth,
-            ),
-            child: GridView.builder(
-              padding: EdgeInsets.symmetric(
-                horizontal: horizontalPadding,
-                vertical: 16,
-              ),
-
+          return SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            sliver: SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
                 childAspectRatio: aspectRatio,
                 crossAxisSpacing: 15,
                 mainAxisSpacing: 20,
               ),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                final showPrice = product.isPaid && product.price != null;
-                final formatter = ProductDataFormatter(product);
-
-                return ProductCardContent(
-                  product: product,
-                  showPrice: showPrice,
-                  formatter: formatter,
-                );
-              },
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => _buildItem(products[index]),
+                childCount: products.length,
+              ),
             ),
+          );
+        },
+      );
+    }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double width = constraints.maxWidth;
+        final int crossAxisCount = ((width - 32) / minItemWidth).floor().clamp(
+          2,
+          8,
+        );
+
+        return GridView.builder(
+          padding: const EdgeInsets.all(16),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: aspectRatio,
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 20,
           ),
+          itemCount: products.length,
+          itemBuilder: (context, index) => _buildItem(products[index]),
         );
       },
+    );
+  }
+
+  Widget _buildItem(Product product) {
+    final showPrice = product.isPaid && product.price != null;
+    final formatter = ProductDataFormatter(product);
+
+    return ProductCardContent(
+      product: product,
+      showPrice: showPrice,
+      formatter: formatter,
     );
   }
 }

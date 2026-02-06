@@ -8,37 +8,42 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBars(
-        type: AppBarType.transparent,
-        showBackButton: true,
-        onLeadingPressed: () => Navigator.pop(context),
-        title: AppBarTitle(title: 'Уведомления и предложения'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/notifications/verify.png',
-              width: 100,
-              height: 100,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Ничего нет',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: Constants.defaultFontWeight,
+      body: CustomScrollView(
+        slivers: [
+          SimpleSliverAppBar(
+            showBackButton: true,
+            onLeadingPressed: () => Navigator.pop(context),
+            title: AppBarTitle(title: 'Уведомления и предложения'),
+          ),
+          SliverToBoxAdapter(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/notifications/verify.png',
+                    width: 100,
+                    height: 100,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Ничего нет',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: Constants.defaultFontWeight,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Здесь будут появляться уведомления о вашем\n аккаунте Google Play.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
-            Text(
-              'Здесь будут появляться уведомления о вашем\n аккаунте Google Play.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
     );

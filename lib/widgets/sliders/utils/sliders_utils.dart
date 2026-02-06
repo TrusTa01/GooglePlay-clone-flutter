@@ -288,7 +288,7 @@ class ProductInfoTag extends StatelessWidget {
       return Text(
         text,
         style: TextStyle(
-          color: textColor ?? Constants.defautTextColor,
+          color: textColor ?? Constants.defaultTextColor,
           fontSize: 12,
         ),
       );
@@ -311,7 +311,7 @@ class ProductInfoTag extends StatelessWidget {
               softWrap: false,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: textColor ?? Constants.defautTextColor,
+                color: textColor ?? Constants.defaultTextColor,
                 fontSize: 12,
               ),
             ),

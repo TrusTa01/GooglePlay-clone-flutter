@@ -88,17 +88,7 @@ class _BannerSectionState extends State<BannerSection> {
       400,
       _BannerLayoutConfig(
         // 400-500
-        viewportFraction: 0.89,
-        heightFactor: 3.2,
-        bannerPadding: 8,
-        horizontalPadding: 22,
-      ),
-    ),
-    (
-      411,
-      _BannerLayoutConfig(
-        // 400-500
-        viewportFraction: 0.9,
+        viewportFraction: 0.895,
         heightFactor: 3.2,
         bannerPadding: 8,
         horizontalPadding: 22,

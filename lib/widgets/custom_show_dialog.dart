@@ -18,14 +18,14 @@ class AlertDialogs {
         title: Text(
           title,
           style: const TextStyle(
-            color: Constants.defautTextColor,
+            color: Constants.defaultTextColor,
             fontSize: 16,
             fontWeight: Constants.defaultFontWeight,
           ),
         ),
         content: Text(
           content,
-          style: const TextStyle(color: Constants.defautTextColor, fontSize: 14),
+          style: const TextStyle(color: Constants.defaultTextColor, fontSize: 14),
         ),
         actions: [
           TextButton(

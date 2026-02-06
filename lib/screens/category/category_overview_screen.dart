@@ -24,25 +24,37 @@ class CategoryOverviewScreen extends StatelessWidget {
     final FilterType filterType = isBooks
         ? FilterType.books
         : isApps
-            ? FilterType.apps
-            : FilterType.games;
+        ? FilterType.apps
+        : FilterType.games;
 
     final FilterProvider filterProvider = isBooks
         ? FilterProvider.forCategoryOverview(initialBookGenre: title)
         : isApps
-            ? FilterProvider.forCategoryOverview(initialAppCategory: title)
-            : FilterProvider.forCategoryOverview(initialGameCategory: title);
+        ? FilterProvider.forCategoryOverview(initialAppCategory: title)
+        : FilterProvider.forCategoryOverview(initialGameCategory: title);
 
     return Scaffold(
-      appBar: AppBars(
-        type: AppBarType.transparent,
-        showBackButton: true,
-        onLeadingPressed: () => Navigator.pop(context),
-        title: AppBarTitle(title: title),
-      ),
       body: ChangeNotifierProvider<FilterProvider>(
         create: (_) => filterProvider,
-        child: TopChartsScreen(type: filterType, showFilters: false),
+        child: Builder(
+          builder: (context) {
+            return CustomScrollView(
+              slivers: [
+                SimpleSliverAppBar(
+                  showBackButton: true,
+                  showLogo: false,
+                  onLeadingPressed: () => Navigator.pop(context),
+                  title: AppBarTitle(title: title),
+                ),
+                ...TopChartsScreen.buildSlivers(
+                  context,
+                  type: filterType,
+                  showFilters: false,
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

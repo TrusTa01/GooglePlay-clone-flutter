@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '/models/models.dart';
 import '../../widgets/widgets.dart';
 
@@ -16,51 +15,54 @@ class ProductEventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBars(
-        type: AppBarType.transparent,
-        showBackButton: true,
-        title: const Text(''),
-        onLeadingPressed: () => Navigator.pop(context),
-        actions: [
-          IconButton(
-            onPressed: () {
-              debugPrint('Share event: ${eventBanner.eventId}');
-            },
-            icon: const Icon(Icons.share_outlined, color: Colors.black),
+      body: CustomScrollView(
+        slivers: [
+          SimpleSliverAppBar(
+            showBackButton: true,
+            showLogo: false,
+            onLeadingPressed: () => Navigator.pop(context),
+            title: const Text(''),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  debugPrint('Share event: ${eventBanner.eventId}');
+                },
+                icon: const Icon(Icons.share_outlined, color: Colors.black),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          EventHeroBanner(banner: eventBanner),
+
+          SliverToBoxAdapter(child: EventHeroBanner(banner: eventBanner)),
+
           if (eventBanner.eventDescription != null &&
               eventBanner.eventDescription!.isNotEmpty)
-            EventDescription(text: eventBanner.eventDescription!),
-          ...sections.asMap().entries.map((entry) {
-            final index = entry.key;
-            final section = entry.value;
-            return Padding(
-              padding: EdgeInsets.only(top: index == 0 ? 10 : 15),
-              child: _buildSection(context, section),
-            );
-          }),
+            SliverToBoxAdapter(
+              child: EventDescription(text: eventBanner.eventDescription!),
+            ),
 
-          // Bottom padding
-          const SizedBox(height: 45),
+          SliverList.builder(
+            itemCount: sections.length,
+            itemBuilder: (context, index) {
+              final section = sections[index];
+              return Padding(
+                padding: EdgeInsets.only(top: index == 0 ? 10 : 15),
+                child: _buildSection(context, section),
+              );
+            },
+          ),
+
+          const SliverToBoxAdapter(child: SizedBox(height: 45)),
         ],
       ),
     );
   }
 
+  // Метод вынесен за пределы build — теперь всё аккуратно
   Widget _buildSection(BuildContext context, HomeSection section) {
     final rawProducts = section.products ?? [];
     final productList = rawProducts.whereType<Product>().toList();
 
     if (rawProducts.isEmpty) {
-      debugPrint(
-        'Error: section.products.isEmpty. Section ${section.title} is empty and skipped (product_event_screen.dart)',
-      );
       return const SizedBox.shrink();
     }
 
@@ -92,8 +94,7 @@ class ProductEventScreen extends StatelessWidget {
           showButton: section.showButton,
           maxItems: 8,
         );
-      case SectionType.kidsHeroBanner:
-      case SectionType.ageFIlterSelector:
+      default:
         return const SizedBox.shrink();
     }
   }

@@ -1,7 +1,4 @@
 // App bars
-export 'app_bars/app_bar_type.dart';
-export 'app_bars/app_bars.dart';
-export 'app_bars/product_app_bar.dart';
 export 'app_bars/app_bar/simple_app_bar.dart';
 export 'app_bars/app_bar/tabbed_app_bar.dart';
 export 'app_bars/utils/app_bar_utils.dart';

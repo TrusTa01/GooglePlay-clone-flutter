@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../providers/tabs_provider.dart';
 import '../../widgets.dart';
 
-// Универсальный AppBar для использования в Scaffold.appBar
-class SimpleAppBar extends StatefulWidget implements PreferredSizeWidget {
+// Универсальный AppBar для использования в slivers (CustomScrollView)
+class SimpleSliverAppBar extends StatefulWidget {
   // Основные параметры
   final Widget? title;
   final Widget? subtitle;
@@ -16,6 +14,9 @@ class SimpleAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Widget? leadingIcon;
   final VoidCallback? onLeadingPressed;
   final bool showLogo;
+
+  // Показывать разделитель под шапкой (для slivers)
+  final bool forceShowDivider;
 
   // Параметры для прозрачного фона
   final bool isTransparent;
@@ -32,7 +33,7 @@ class SimpleAppBar extends StatefulWidget implements PreferredSizeWidget {
   final List<String>? tabs;
   final TabController? tabController;
 
-  const SimpleAppBar({
+  const SimpleSliverAppBar({
     super.key,
     this.title,
     this.subtitle,
@@ -42,7 +43,8 @@ class SimpleAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.leadingIcon,
     this.onLeadingPressed,
-    this.showLogo = true,
+    this.showLogo = false,
+    this.forceShowDivider = false,
     this.isTransparent = false,
     this.hasSearch = false,
     this.searchHint,
@@ -55,19 +57,10 @@ class SimpleAppBar extends StatefulWidget implements PreferredSizeWidget {
   });
 
   @override
-  Size get preferredSize {
-    // Если есть табы, добавляем высоту табов
-    if (hasTabs) {
-      return const Size.fromHeight(kToolbarHeight + 48);
-    }
-    return const Size.fromHeight(kToolbarHeight);
-  }
-
-  @override
-  State<SimpleAppBar> createState() => _SimpleAppBarState();
+  State<SimpleSliverAppBar> createState() => _SimpleSliverAppBarState();
 }
 
-class _SimpleAppBarState extends State<SimpleAppBar> {
+class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
   @override
   Widget build(BuildContext context) {
     // Определяем backgroundColor
@@ -84,7 +77,9 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
         onLeadingPressed: widget.onLeadingPressed,
       );
     } else if (widget.showLogo && !widget.hasSearch) {
-      leading = AppBarLogo(translate: const Offset(6, 0)); // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
+      leading = AppBarLogo(
+        translate: const Offset(6, 0),
+      ); // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
     } else if (widget.showBackButton || widget.leadingIcon != null) {
       leading = AppBarLeading(
         leadingIcon: widget.leadingIcon,
@@ -109,7 +104,9 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
         titleRowChildren.add(widget.titleLeading!);
         titleRowChildren.add(const SizedBox(width: 8));
       } else if (!widget.isTransparent && widget.showLogo) {
-        titleRowChildren.add(const AppBarLogo(translate: Offset(6, 0))); // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
+        titleRowChildren.add(
+          const AppBarLogo(translate: Offset(6, 0)),
+        ); // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
         titleRowChildren.add(const SizedBox(width: 8));
       }
 
@@ -134,37 +131,16 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
       }
 
       if (titleRowChildren.isNotEmpty) {
-        title = Row(
-          mainAxisSize: MainAxisSize.min,
-          children: titleRowChildren,
-        );
+        title = Row(mainAxisSize: MainAxisSize.min, children: titleRowChildren);
       }
-    }
-
-    // Определяем bottom (табы) с ограничением по sliderMaxContentWidth
-    PreferredSizeWidget? bottom;
-    if (widget.hasTabs && widget.tabs != null && widget.tabController != null) {
-      final tabsProvider = Provider.of<TabsProvider>(context);
-      final tabsList = tabsProvider.tabs.isNotEmpty ? tabsProvider.tabs : widget.tabs!;
-      
-      bottom = PreferredSize(
-        preferredSize: const Size.fromHeight(48),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
-            child: CustomTabBar(
-              tabs: tabsList,
-              controller: widget.tabController!,
-            ),
-          ),
-        ),
-      );
     }
 
     // Контент шапки ограничиваем sliderMaxContentWidth, как основной контент
     final toolbarContent = Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+        constraints: const BoxConstraints(
+          maxWidth: Constants.sliderMaxContentWidth,
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Row(
@@ -180,7 +156,10 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
 
     final topPadding = MediaQuery.viewPaddingOf(context).top;
 
-    return AppBar(
+    final sliverAppBar = SliverAppBar(
+      floating: true,
+      snap: true,
+      pinned: false,
       backgroundColor: backgroundColor,
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -202,11 +181,14 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
           ),
         ),
       ),
-      bottom: bottom,
       centerTitle: widget.isTransparent ? false : null,
       iconTheme: widget.isTransparent
           ? const IconThemeData(color: Colors.white)
           : null,
     );
+
+    // Разделитель при forceShowDivider рисуется в контенте экрана (под шапкой),
+    // чтобы не использовать SliverMainAxisGroup и избежать unbounded layout.
+    return sliverAppBar;
   }
 }

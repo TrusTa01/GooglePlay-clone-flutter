@@ -9,8 +9,14 @@ import '/screens/screens.dart';
 class GenericTabScreen extends StatefulWidget {
   final List<HomeSection> sections;
   final VoidCallback? onLoad;
+  final bool isSliver;
 
-  const GenericTabScreen({super.key, required this.sections, this.onLoad});
+  const GenericTabScreen({
+    super.key,
+    required this.sections,
+    this.onLoad,
+    this.isSliver = false,
+  });
 
   @override
   State<GenericTabScreen> createState() => _GenericTabScreenState();
@@ -33,19 +39,49 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     });
   }
 
+  // ignore: unused_element
+  static Widget asSliver({
+    // На будующее, для использования в других местах
+    required List<HomeSection> sections,
+    VoidCallback? onLoad,
+  }) {
+    return GenericTabScreen(sections: sections, onLoad: onLoad, isSliver: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     final watchProvider = context.watch<ProductsProvider>();
+    final bool isLoading = watchProvider.isLoading && widget.sections.isEmpty;
 
     // Если данных нет и идет загрузка — показываем шиммеры
-    if (watchProvider.isLoading && widget.sections.isEmpty) {
-      return ListView.builder(
-        primary: false,
-        itemCount: 5,
-        itemBuilder: (context, index) => const Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: ProductSliderSkeleton(),
+    if (isLoading) {
+      return widget.isSliver
+          ? SliverList.builder(
+              itemCount: widget.sections.length,
+              itemBuilder: (context, index) =>
+                  _buildSectionWrapper(index, widget.sections[index]),
+            )
+          : ListView.builder(
+              primary: false,
+              itemCount: 5,
+              itemBuilder: (context, index) => const Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: ProductSliderSkeleton(),
+              ),
+            );
+    }
+
+    // Основной список секций
+    if (widget.isSliver) {
+      return SliverPadding(
+        padding: const EdgeInsets.only(bottom: 45),
+        sliver: SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) =>
+                _buildSectionWrapper(index, widget.sections[index]),
+            childCount: widget.sections.length,
+          ),
         ),
       );
     }
@@ -54,16 +90,21 @@ class _GenericTabScreenState extends State<GenericTabScreen>
       primary: false,
       itemCount: widget.sections.length,
       padding: const EdgeInsets.only(bottom: 45),
-      itemBuilder: (context, index) {
-        final section = widget.sections[index];
-        final prevIsAgeFilter = index > 0 &&
-            widget.sections[index - 1].type == SectionType.ageFIlterSelector;
-        final topPadding = section.needsTopPadding && !prevIsAgeFilter ? 15.0 : 0.0;
-        return Padding(
-          padding: EdgeInsets.only(top: topPadding),
-          child: _buildSection(section),
-        );
-      },
+      itemBuilder: (context, index) =>
+          _buildSectionWrapper(index, widget.sections[index]),
+    );
+  }
+
+  Widget _buildSectionWrapper(int index, HomeSection section) {
+    final section = widget.sections[index];
+
+    final prevIsAgeFilter =
+        index > 0 &&
+        widget.sections[index - 1].type == SectionType.ageFIlterSelector;
+    final topPadding = section.needsTopPadding && !prevIsAgeFilter ? 15.0 : 0.0;
+    return Padding(
+      padding: EdgeInsets.only(top: topPadding),
+      child: _buildSection(section),
     );
   }
 
