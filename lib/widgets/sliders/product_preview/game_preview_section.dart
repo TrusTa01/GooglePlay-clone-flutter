@@ -46,13 +46,18 @@ class GamePreviewSection extends StatelessWidget {
       );
     }
 
-    return ListView.separated(
-      shrinkWrap: nestedInScrollView,
-      physics: nestedInScrollView ? const NeverScrollableScrollPhysics() : null,
-      padding: const EdgeInsets.only(left: 22),
-      separatorBuilder: (context, index) => const SizedBox(height: 35),
-      itemCount: game.length,
-      itemBuilder: (context, index) => ProductPreviewCard(product: game[index]),
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+        child: ListView.separated(
+          shrinkWrap: nestedInScrollView,
+          physics: nestedInScrollView ? const NeverScrollableScrollPhysics() : null,
+          padding: const EdgeInsets.only(left: 22),
+          separatorBuilder: (context, index) => const SizedBox(height: 35),
+          itemCount: game.length,
+          itemBuilder: (context, index) => ProductPreviewCard(product: game[index]),
+        ),
+      ),
     );
   }
 }
