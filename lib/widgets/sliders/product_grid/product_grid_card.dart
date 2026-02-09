@@ -23,17 +23,14 @@ class ProductGridCard extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: ActionRow(
-          product: product,
-          showButton: false,
-          iconWidth: 65,
-          iconHeight: 65,
-          cacheWidth: 190,
-          cacheHeight: 190,
-          hasThreeLines: true,
-        ),
+      child: ActionRow(
+        product: product,
+        showButton: false,
+        iconWidth: 65,
+        iconHeight: 65,
+        cacheWidth: 190,
+        cacheHeight: 190,
+        hasThreeLines: true,
       ),
     );
   }

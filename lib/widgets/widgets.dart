@@ -60,6 +60,7 @@ export 'custom_expansion_tile.dart';
 export 'buttons/elevated_button.dart';
 export 'buttons/text_button.dart';
 export 'buttons/icon_button.dart';
+export 'buttons/scroll_button.dart';
 
 // Event widgets
 export 'events/event_hero_banner.dart';

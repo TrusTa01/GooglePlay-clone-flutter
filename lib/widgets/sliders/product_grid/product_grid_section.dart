@@ -38,47 +38,35 @@ class _ProductGridState extends State<ProductGrid> {
   PageController? _pageController;
   double _lastViewportFraction = 0;
   int _currentPage = 0;
+  bool _isHovered = false;
 
-  static const List<(int, _ProductGridLayoutConfig)> _breakpoints = [
-    (
-      0,
-      _ProductGridLayoutConfig(
-        // < 600: 1 страница
-        viewportFraction: 0.92,
-        heightFactor: 240,
-        cardPadding: 6,
-      ),
-    ),
-    (
-      600,
-      _ProductGridLayoutConfig(
-        // 600-1000: 2 страницы
-        viewportFraction: 0.48,
-        heightFactor: 250,
-        cardPadding: 10,
-      ),
-    ),
-    (
-      1000,
-      _ProductGridLayoutConfig(
-        // > 1000: 3 страницы
-        viewportFraction: 0.32,
-        heightFactor: 260,
-        cardPadding: 12,
-      ),
-    ),
-  ];
+  _ProductGridLayoutConfig _adaptiveConfig(double width) {
+    // Определяем целевую ширину одной карточки
+    // На мобилках (до 600) пусть будет ~300px, на планшетах (600+) ~320px
+    double idealCardWidth = width < 600 ? 300 : 320;
 
-  _ProductGridLayoutConfig _getConfig(double width) {
-    _ProductGridLayoutConfig config = _breakpoints.first.$2;
-    for (final (breakpoint, cfg) in _breakpoints) {
-      if (width >= breakpoint) {
-        config = cfg;
-      } else {
-        break;
-      }
+    // Рассчитывем сколько карточек влезет в экран
+    // Например, если экран 800px, а мы хотим карточки по 320px: 800 / 320 = 2.5 карточки
+    double count = width / idealCardWidth;
+
+    // Ограничиваем количество карточек
+    if (width < 600) {
+      count = count.clamp(1.1, 1.8); // На мобилке от 1.1 до 1.8 карточки
+    } else if (width < 950) {
+      count = count.clamp(2, 2.8); // На планшете от 2.1 до 2.8 карточки
+    } else {
+      count = 3.0; // На десктопе строго 3
     }
-    return config;
+
+    // Превращаем количество в viewportFraction
+    // Если count = 2.5, то fraction = 1 / 2.5 = 0.4
+    double finalFraction = 1 / count;
+
+    return _ProductGridLayoutConfig(
+      viewportFraction: finalFraction,
+      heightFactor: width < 600 ? 240 : (width < 1000 ? 250 : 260),
+      cardPadding: width < 600 ? 6 : (width < 1000 ? 10 : 12),
+    );
   }
 
   @override
@@ -113,68 +101,122 @@ class _ProductGridState extends State<ProductGrid> {
 
     final double maxContentWidth = Constants.sliderMaxContentWidth;
 
+    final viewportWidth = MediaQuery.sizeOf(context).width;
+    final contentWidth = viewportWidth.clamp(0.0, maxContentWidth);
+    // Считаем место под кнопки-стрелки (только десктоп)
+    final bool showArrows = contentWidth >= 1040;
+    final double arrowSpace = showArrows
+        ? ((viewportWidth - maxContentWidth) / 2).clamp(0.0, 60)
+        : 0.0;
+
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: maxContentWidth),
+        constraints: BoxConstraints(maxWidth: maxContentWidth + arrowSpace * 2),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final config = _getConfig(width);
+            final width = contentWidth.clamp(0.0, constraints.maxWidth);
+            final config = _adaptiveConfig(width);
             _updateController(config.viewportFraction);
+            final mobilePadding = width > 1000
+                ? EdgeInsets.only(left: 22 + arrowSpace)
+                : Constants.horizontalContentPadding;
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Заголовок и кнопка больше
-                ProductSectionHeader(
-                  title: widget.title,
-                  subtitle: widget.subtitle,
-                  padding: Constants.horizontalContentPadding.copyWith(
-                    bottom: 5,
-                  ),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CategoryFullListScreen(
-                        title: widget.title,
-                        products: widget.products,
+                Padding(
+                  padding: mobilePadding,
+                  child: ProductSectionHeader(
+                    title: widget.title,
+                    subtitle: widget.subtitle,
+                    padding: const EdgeInsets.only(bottom: 5),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryFullListScreen(
+                          title: widget.title,
+                          products: widget.products,
+                        ),
                       ),
                     ),
+                    showButton: true,
                   ),
-                  showButton: true,
                 ),
 
-                // Слайдер
-                SizedBox(
-                  height: config.heightFactor,
-                  child: PageView.builder(
-                    padEnds: false,
-                    clipBehavior: Clip.antiAlias,
-                    key: PageStorageKey('grid_${widget.title}'),
-                    controller: _pageController,
-                    onPageChanged: (index) => _currentPage = index,
-                    itemCount: (displayProducts.length / 3).ceil(),
-                    itemBuilder: (context, pageIndex) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          left: Constants.horizontalContentPadding.left,
+                // MouseRegion снаружи Stack — не блокирует кнопки внутри
+                MouseRegion(
+                  onEnter: (_) => setState(() => _isHovered = true),
+                  onExit: (_) => setState(() => _isHovered = false),
+                  child: SizedBox(
+                    height: config.heightFactor,
+                    child: Stack(
+                      children: [
+                        // PageView по центру — отступы arrowSpace оставляют место для кнопок
+                        Positioned(
+                          left: arrowSpace,
+                          right: arrowSpace,
+                          top: 0,
+                          bottom: 0,
+                          child: PageView.builder(
+                            padEnds: false,
+                            clipBehavior: Clip.antiAlias,
+                            key: PageStorageKey('grid_${widget.title}'),
+                            controller: _pageController,
+                            onPageChanged: (index) {
+                              setState(() {
+                                _currentPage = index;
+                              });
+                            },
+                            itemCount: (displayProducts.length / 3).ceil(),
+                            itemBuilder: (context, pageIndex) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  left: Constants.horizontalContentPadding.left,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: List.generate(3, (index) {
+                                    final productIndex = pageIndex * 3 + index;
+                                    return Expanded(
+                                      child:
+                                          productIndex < displayProducts.length
+                                          ? ProductGridCard(
+                                              product:
+                                                  displayProducts[productIndex],
+                                            )
+                                          : const SizedBox.shrink(),
+                                    );
+                                  }),
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: List.generate(3, (index) {
-                            final productIndex = pageIndex * 3 + index;
-                            // Оборачиваем в Expanded, чтобы каждая карточка занимала ровно 1/3 высоты
-                            return Expanded(
-                              child: productIndex < displayProducts.length
-                                  ? ProductGridCard(
-                                      product: displayProducts[productIndex],
-                                    )
-                                  : const SizedBox.shrink(),
-                            );
-                          }),
-                        ),
-                      );
-                    },
+                        // Кнопки внутри Stack — в пределах его границ, hit-test работает
+                        if (_isHovered && showArrows) ...[
+                          if (_currentPage > 0)
+                            ScrollButton(
+                              isLeft: true,
+                              offset: 20,
+                              onPressed: () => _pageController?.previousPage(
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.easeInOut,
+                              ),
+                            ),
+                          if (_currentPage <
+                              (displayProducts.length / 3).ceil() -
+                                  (1 / config.viewportFraction).ceil())
+                            ScrollButton(
+                              isLeft: false,
+                              offset: 0,
+                              onPressed: () => _pageController?.nextPage(
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.easeInOut,
+                              ),
+                            ),
+                        ],
+                      ],
+                    ),
                   ),
                 ),
               ],
