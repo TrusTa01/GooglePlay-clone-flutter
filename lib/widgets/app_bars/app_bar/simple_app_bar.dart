@@ -181,10 +181,11 @@ class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
       ),
       bottom: (widget.innerBoxIsScrolled)
         ? PreferredSize(
-            preferredSize: const Size.fromHeight(1),
+            preferredSize: const Size.fromHeight(2),
             child: Container(
-              color: const Color.fromRGBO(0, 0, 0, 0.1), // Цвет разделителя
-              height: 1,
+              width: double.infinity,
+              color: const Color.fromRGBO(0, 0, 0, 0.1), 
+              height: 2,
             ),
           )
         : null,

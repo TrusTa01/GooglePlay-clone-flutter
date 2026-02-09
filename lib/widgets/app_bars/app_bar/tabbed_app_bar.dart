@@ -99,10 +99,10 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverTabBarDelegate({required this.child});
 
   @override
-  double get minExtent => 49.0;
+  double get minExtent => 50.0;
 
   @override
-  double get maxExtent => 49.0;
+  double get maxExtent => 50.0;
 
   @override
   Widget build(
@@ -112,7 +112,20 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
   ) {
     return Material(
       color: AppBarConstants.defaultBackgroundColor,
-      child: child,
+      child: SizedBox(
+        height: 50,
+        child: Column(
+          children: [
+            SizedBox(height: 48, child: child),
+            // Разделитель на всю ширину экрана, вне ConstrainedBox
+            Container(
+              width: double.infinity,
+              height: 2,
+              color: const Color.fromRGBO(0, 0, 0, 0.1),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

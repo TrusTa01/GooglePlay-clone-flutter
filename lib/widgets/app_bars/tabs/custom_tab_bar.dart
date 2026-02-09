@@ -34,7 +34,8 @@ class _CustomTabBarState extends State<CustomTabBar> {
             isScrollable: shouldScroll,
             tabAlignment: shouldScroll ? TabAlignment.start : TabAlignment.fill,
             padding: Constants.horizontalContentPadding,
-                
+            dividerHeight: 0,
+            dividerColor: Colors.transparent,
             // Настройка анимации полоски (индикатора)
             indicatorSize: TabBarIndicatorSize.label, // По ширине текста
             indicator: UnderlineTabIndicator(
