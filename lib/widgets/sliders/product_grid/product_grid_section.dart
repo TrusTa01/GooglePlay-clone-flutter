@@ -51,7 +51,7 @@ class _ProductGridState extends State<ProductGrid> {
 
     // Ограничиваем количество карточек
     if (width < 600) {
-      count = count.clamp(1.1, 1.8); // На мобилке от 1.1 до 1.8 карточки
+      count = count.clamp(1.1, 1.2); // На мобилке от 1.1 до 1.2 карточки
     } else if (width < 950) {
       count = count.clamp(2, 2.8); // На планшете от 2.1 до 2.8 карточки
     } else {
@@ -120,6 +120,13 @@ class _ProductGridState extends State<ProductGrid> {
             final mobilePadding = width > 1000
                 ? EdgeInsets.only(left: 22 + arrowSpace)
                 : Constants.horizontalContentPadding;
+            final totalPages = (displayProducts.length / 3).ceil();
+            final visibleFullPages =
+                (1 / config.viewportFraction).floor();
+            final bufferPages =
+                (1 / config.viewportFraction).ceil() - visibleFullPages;
+            final lastItem =
+                (totalPages - visibleFullPages).clamp(0, totalPages);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,8 +174,17 @@ class _ProductGridState extends State<ProductGrid> {
                                 _currentPage = index;
                               });
                             },
-                            itemCount: (displayProducts.length / 3).ceil(),
+                            itemCount: totalPages + bufferPages,
                             itemBuilder: (context, pageIndex) {
+                              if (pageIndex >= totalPages) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    left: Constants
+                                        .horizontalContentPadding.left,
+                                  ),
+                                  child: const SizedBox.shrink(),
+                                );
+                              }
                               return Padding(
                                 padding: EdgeInsets.only(
                                   left: Constants.horizontalContentPadding.left,
@@ -203,9 +219,7 @@ class _ProductGridState extends State<ProductGrid> {
                                 curve: Curves.easeInOut,
                               ),
                             ),
-                          if (_currentPage <
-                              (displayProducts.length / 3).ceil() -
-                                  (1 / config.viewportFraction).ceil())
+                          if (_currentPage < lastItem)
                             ScrollButton(
                               isLeft: false,
                               offset: 0,
