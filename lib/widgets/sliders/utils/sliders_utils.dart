@@ -460,6 +460,8 @@ class ActionRow extends StatelessWidget {
 
     final String iconPath = 'assets/icons/star.png';
 
+    final screenWidth = MediaQuery.sizeOf(context).width;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -491,7 +493,7 @@ class ActionRow extends StatelessWidget {
                     const DotSeparator(),
                     AgeBadge(age: currentProduct.ageRating),
                     const SizedBox(width: 10),
-                    ProductInfoTag(text: formatter.rating, iconPath: iconPath),
+                    if (screenWidth > 320) ProductInfoTag(text: formatter.rating, iconPath: iconPath),
                   ],
                 ],
               ),
@@ -537,7 +539,7 @@ class ActionRow extends StatelessWidget {
                             ),
 
                         // 4. Цена (только если платная)
-                        if (currentProduct.isPaid)
+                        if (currentProduct.isPaid && screenWidth > 320)
                           ProductInfoTag(text: formatter.price),
                         if (currentProduct is Book && !currentProduct.isPaid)
                           ProductInfoTag(text: 'Бесплатно'),
