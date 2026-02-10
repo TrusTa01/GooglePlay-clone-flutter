@@ -61,7 +61,7 @@ class ProductCarousel extends StatelessWidget {
               subtitle: subtitle,
               padding: padding.copyWith(
                 top: 10,
-                bottom: 20,
+                bottom: 10,
               ),
               onTap: () => Navigator.push(
                 context,
