@@ -21,7 +21,7 @@ class ProductSectionHeader extends StatelessWidget {
     this.subtitle = '',
     required this.onTap,
     this.showButton = true,
-    required this.padding,
+    this.padding = EdgeInsets.zero,
     this.button,
     this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
   });
@@ -334,12 +334,20 @@ class ProductCardContent extends StatelessWidget {
   final Product product;
   final bool showPrice;
   final ProductDataFormatter formatter;
+  final double iconWidth;
+  final double iconHeight;
+  final int cacheWidth;
+  final int cacheHeight;
 
   const ProductCardContent({
     super.key,
     required this.product,
     required this.showPrice,
     required this.formatter,
+    this.iconWidth = 110,
+    this.iconHeight = 110,
+    this.cacheWidth = 300,
+    this.cacheHeight = 350,
   });
 
   @override
@@ -348,17 +356,7 @@ class ProductCardContent extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Если constraints не ограничены, используем фиксированные размеры
-        final bool hasConstraints = constraints.maxWidth != double.infinity;
-        final double iconWidth = hasConstraints ? constraints.maxWidth : 115;
-        // Для книг соотношение 2:3, для приложений 1:1
-        final double iconHeight = isBook ? iconWidth * 1.4 : iconWidth;
-
-        // Если есть ограничения по высоте - используем их
-        final bool hasHeightConstraints =
-            hasConstraints && constraints.maxHeight != double.infinity;
-
-        final column = Column(
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -376,7 +374,7 @@ class ProductCardContent extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             SizedBox(
-              width: hasConstraints ? null : 115,
+              width: 115,
               child: ProductTitle(
                 // Название
                 title: product.title,
@@ -394,19 +392,6 @@ class ProductCardContent extends StatelessWidget {
                   ),
           ],
         );
-
-        // Если есть ограничения - обрезаем overflow
-        if (hasHeightConstraints) {
-          return ClipRect(
-            child: SizedBox(
-              width: constraints.maxWidth,
-              height: constraints.maxHeight,
-              child: column,
-            ),
-          );
-        }
-
-        return column;
       },
     );
   }
@@ -493,7 +478,11 @@ class ActionRow extends StatelessWidget {
                     const DotSeparator(),
                     AgeBadge(age: currentProduct.ageRating),
                     const SizedBox(width: 10),
-                    if (screenWidth > 320) ProductInfoTag(text: formatter.rating, iconPath: iconPath),
+                    if (screenWidth > 320)
+                      ProductInfoTag(
+                        text: formatter.rating,
+                        iconPath: iconPath,
+                      ),
                   ],
                 ],
               ),

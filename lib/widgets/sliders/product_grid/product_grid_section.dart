@@ -103,11 +103,12 @@ class _ProductGridState extends State<ProductGrid> {
 
     final viewportWidth = MediaQuery.sizeOf(context).width;
     final contentWidth = viewportWidth.clamp(0.0, maxContentWidth);
-    // Считаем место под кнопки-стрелки (только десктоп)
-    final bool showArrows = contentWidth >= 1040;
-    final double arrowSpace = showArrows
-        ? ((viewportWidth - maxContentWidth) / 2).clamp(0.0, 60)
-        : 0.0;
+    // Считаем место под кнопки-стрелки
+
+    final double arrowSpace = ((viewportWidth - maxContentWidth) / 2).clamp(
+      0.0,
+      25,
+    );
 
     return Center(
       child: ConstrainedBox(
@@ -121,12 +122,13 @@ class _ProductGridState extends State<ProductGrid> {
                 ? EdgeInsets.only(left: 22 + arrowSpace)
                 : Constants.horizontalContentPadding;
             final totalPages = (displayProducts.length / 3).ceil();
-            final visibleFullPages =
-                (1 / config.viewportFraction).floor();
+            final visibleFullPages = (1 / config.viewportFraction).floor();
             final bufferPages =
                 (1 / config.viewportFraction).ceil() - visibleFullPages;
-            final lastItem =
-                (totalPages - visibleFullPages).clamp(0, totalPages);
+            final lastItem = (totalPages - visibleFullPages).clamp(
+              0,
+              totalPages,
+            );
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,6 +159,7 @@ class _ProductGridState extends State<ProductGrid> {
                   child: SizedBox(
                     height: config.heightFactor,
                     child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
                         // PageView по центру — отступы arrowSpace оставляют место для кнопок
                         Positioned(
@@ -179,8 +182,8 @@ class _ProductGridState extends State<ProductGrid> {
                               if (pageIndex >= totalPages) {
                                 return Padding(
                                   padding: EdgeInsets.only(
-                                    left: Constants
-                                        .horizontalContentPadding.left,
+                                    left:
+                                        Constants.horizontalContentPadding.left,
                                   ),
                                   child: const SizedBox.shrink(),
                                 );
@@ -209,11 +212,11 @@ class _ProductGridState extends State<ProductGrid> {
                           ),
                         ),
                         // Кнопки внутри Stack — в пределах его границ, hit-test работает
-                        if (_isHovered && showArrows) ...[
+                        if (_isHovered) ...[
                           if (_currentPage > 0)
                             ScrollButton(
                               isLeft: true,
-                              offset: 20,
+                              offset: contentWidth >= 1040 ? 20 : 25,
                               onPressed: () => _pageController?.previousPage(
                                 duration: const Duration(milliseconds: 400),
                                 curve: Curves.easeInOut,
@@ -222,7 +225,7 @@ class _ProductGridState extends State<ProductGrid> {
                           if (_currentPage < lastItem)
                             ScrollButton(
                               isLeft: false,
-                              offset: 0,
+                              offset: contentWidth >= 1040 ? -15 : 5,
                               onPressed: () => _pageController?.nextPage(
                                 duration: const Duration(milliseconds: 400),
                                 curve: Curves.easeInOut,

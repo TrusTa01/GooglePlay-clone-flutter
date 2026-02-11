@@ -6,12 +6,14 @@ class ScrollButton extends StatelessWidget {
   final bool isLeft;
   final VoidCallback onPressed;
   final double offset;
+  final AlignmentGeometry alignment;
 
   const ScrollButton({
     super.key,
     required this.isLeft,
     required this.onPressed,
     this.offset = 0.0,
+    this.alignment = Alignment.center,
   });
 
   @override
@@ -22,6 +24,7 @@ class ScrollButton extends StatelessWidget {
       top: 0,
       bottom: 0,
       child: Align(
+        alignment: alignment,
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
