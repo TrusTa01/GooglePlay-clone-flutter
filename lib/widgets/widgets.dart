@@ -42,7 +42,9 @@ export 'category_details_section.dart';
 
 export 'full_screen_image.dart';
 
-export 'popup_menu.dart';
+// Popup menu
+export 'popup_menu/product_popup_menu.dart';
+export 'popup_menu/popup_menu.dart';
 
 export 'custom_show_dialog.dart';
 export 'custom_expansion_tile.dart';

@@ -76,15 +76,12 @@ class CustomExpansionTileState extends State<CustomExpansionTile> {
         );
 
       case SupportItemType.infoText:
-        return InkWell(
-          onTap: item.onTap,
-          borderRadius: BorderRadius.circular(8),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              item.title ?? '',
-              style: const TextStyle(fontSize: 14, color: Colors.black),
-            ),
+        return Align(
+          alignment: Alignment.centerLeft,
+          child: SelectableText(
+            item.title ?? '',
+            style: const TextStyle(fontSize: 14, color: Colors.black),
+            cursorColor: Constants.googleBlue,
           ),
         );
     }
