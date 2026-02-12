@@ -67,6 +67,8 @@ class Game implements Product {
   final String privacyPolicyUrl;
   @override
   final String creatorDescription;
+  @override
+  final String url;
 
   // Информация о разработчике
   @override
@@ -119,6 +121,7 @@ class Game implements Product {
     required this.emailSupport,
     required this.privacyPolicyUrl,
     required this.creatorDescription,
+    required this.url,
     required this.developerCompany,
     required this.developerAddress,
     required this.developerCity,

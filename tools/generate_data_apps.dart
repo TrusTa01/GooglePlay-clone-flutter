@@ -705,6 +705,7 @@ void main() async {
       "permissions": selectedPermissions,
       "releaseDate": releaseDate.toIso8601String(),
       "lastUpdated": lastUpdated.toIso8601String(),
+      "url": "https://play.google.com/store/apps/details?id=$packageName",
       "websiteUrl": faker.internet.httpsUrl(),
       "emailSupport": faker.internet.email(),
       "privacyPolicyUrl": faker.internet.httpsUrl(),

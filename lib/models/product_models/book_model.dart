@@ -57,6 +57,8 @@ class Book implements Product {
   final bool sampleAvailable; // Есть бесплатный фрагмент
   final bool isAbridged; // Сокращенное издание
   final List<String> awards;
+  @override
+  final String url;
 
   Book({
     required this.type,
@@ -89,6 +91,7 @@ class Book implements Product {
     required this.releaseDate,
     required this.reviewsCount,
     required this.creatorDescription,
+    required this.url,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);

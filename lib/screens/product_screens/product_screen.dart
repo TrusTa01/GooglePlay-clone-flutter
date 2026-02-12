@@ -75,7 +75,9 @@ class _ProductPageContent extends StatelessWidget {
                   showLogo: false,
                   title: const Text(''),
                   titleLeading: null,
-                  actions: [ProductPopupMenu()],
+                  actions: [
+                    ProductPopupMenu(title: product.title, url: product.url),
+                  ],
                 ),
                 SliverPadding(
                   padding: Constants.horizontalContentPadding.copyWith(

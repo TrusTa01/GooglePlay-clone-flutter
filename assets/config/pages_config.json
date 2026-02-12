@@ -238,7 +238,8 @@
         "type": "carousel",
         "title": "Новые электронные книги",
         "dataMethod": "getEbooksByTag",
-        "dataParams": {"query": "Новинка"}
+        "dataParams": {"query": "Новинка"},
+        "needsTopPadding": false
       },
       {
         "type": "carousel",

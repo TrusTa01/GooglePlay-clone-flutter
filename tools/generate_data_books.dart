@@ -573,6 +573,7 @@ void main() async {
     final bookData = {
       "type": "book",
       "id": id,
+      "url": "https://play.google.com/store/books/details?id=$id",
       "title": generatedTitle,
       "creator": authorName,
       "creatorDescription": creatorDescription,

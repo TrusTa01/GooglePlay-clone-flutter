@@ -44,6 +44,8 @@ class App implements Product {
   @override
   final String creatorDescription;
   @override
+  final String url;
+  @override
   final String? eventText;
   @override
   final String? whatsNewText;
@@ -110,6 +112,7 @@ class App implements Product {
     required this.websiteUrl,
     required this.emailSupport,
     required this.creatorDescription,
+    required this.url,
     required this.developerCompany,
     required this.developerAddress,
     required this.developerCity,

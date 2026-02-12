@@ -14,6 +14,7 @@ abstract interface class Product {
   bool get isPaid;
   double? get price;
   String get creatorDescription;
+  String get url;
 
   // Общие поля для App и Game (через switch)
   List<String> get screenshots {

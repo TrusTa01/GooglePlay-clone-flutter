@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/widgets/widgets.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
+import 'package:google_play/core/utils/share_product.dart';
 
 /// Меню для экрана продукта (удобная обёртка над [CustomPopupMenu]).
 class ProductPopupMenu extends StatelessWidget {
-  const ProductPopupMenu({super.key});
+  final String title;
+  final String url;
+
+  const ProductPopupMenu({super.key, required this.title, required this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +18,7 @@ class ProductPopupMenu extends StatelessWidget {
           title: 'Поделится',
           icon: Icons.share_outlined,
           value: 'share',
-          onSelected: () {
-            // TODO: поделиться
-          },
+          onSelected: () => shareProduct(title, url),
         ),
         PopupMenuEntryItem<String>(
           title: 'Добавить в список желаний',
