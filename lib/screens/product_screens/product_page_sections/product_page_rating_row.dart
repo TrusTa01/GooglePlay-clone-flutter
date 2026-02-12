@@ -80,24 +80,13 @@ class ProductPageRatingRow extends StatelessWidget {
                     onTap: null,
                   )
                 : _RatingColumn(
-                    leading: AgeBadge(
-                      fontSize: 12,
-                      age: product is App
-                          ? (product as App).ageRating
-                          : (product as Game).ageRating,
-                    ),
-                    subText: product is App
-                        ? '${(product as App).ageRating}+'
-                        : '${(product as Game).ageRating}+',
+                    leading: AgeBadge(fontSize: 12, age: product.ageRating!),
+                    subText: '${(product).ageRating}+',
                     isTapping: true,
                     onTap: () => AlertDialogs.showAlertDialog(
                       context: context,
-                      title: product is App
-                          ? '${(product as App).ageRating}+'
-                          : '${(product as Game).ageRating}+',
-                      content: product is App
-                          ? (product as App).ageRatingReasons.join(', ')
-                          : (product as Game).ageRatingReasons.join(', '),
+                      title: '${product.ageRating}+',
+                      content: product.ageRatingReasons.join(', '),
                       detailsText: 'Подробнее...',
                       onDetails: () =>
                           launchMyUrl('https://support.google.com/googleplay/'),
