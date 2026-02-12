@@ -7,6 +7,7 @@ class CustomElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String defaultButtonText;
   final bool isOutlined;
+  final bool isActionRow;
 
   const CustomElevatedButton({
     super.key,
@@ -15,6 +16,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.onPressed,
     required this.defaultButtonText,
     this.isOutlined = false,
+    this.isActionRow = true,
   });
 
   @override
@@ -38,7 +40,7 @@ class CustomElevatedButton extends StatelessWidget {
       ),
       onPressed: onPressed ?? () {},
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(isActionRow ? 0 : 8),
         child: Text(
           isPaid ? price.toString() : defaultButtonText,
           style: TextStyle(fontWeight: Constants.defaultFontWeight, fontSize: 13),

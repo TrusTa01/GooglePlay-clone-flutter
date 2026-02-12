@@ -101,6 +101,7 @@ class ProductPageHeader extends StatelessWidget {
                 isPaid: product.isPaid,
                 price: formatter.price,
                 defaultButtonText: 'Установить',
+                isActionRow: false,
               ),
             ),
           ],
