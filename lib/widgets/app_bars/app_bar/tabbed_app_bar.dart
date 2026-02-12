@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../providers/tabs_provider.dart';
-import '../../widgets.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/providers/tabs_provider.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 // Функция для создания SliverTabbedAppBar
 // Возвращает список виджетов: верхняя часть скрывается, табы остаются закрепленными

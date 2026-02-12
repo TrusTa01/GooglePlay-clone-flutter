@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets/widgets.dart';
-import '/models/models.dart';
-import '/screens/screens.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class KidsAgeCategoryScreen extends StatelessWidget {
   final String ageLabel;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets.dart';
-import '/models/models.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class BannerItem extends StatelessWidget {
   final AppBanner banner;

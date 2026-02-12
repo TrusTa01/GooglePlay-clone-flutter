@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '/widgets/widgets.dart';
-import '/screens/category/product_categories_data.dart';
+import 'package:google_play/screens/category/product_categories_data.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class ModalFilter extends StatelessWidget {
   final String defaultTitle; // текст на кнопке фильтра, когда выбрано дефолтное значение из списка (options).

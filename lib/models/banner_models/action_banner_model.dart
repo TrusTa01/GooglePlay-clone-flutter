@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../models.dart';
-import '../../widgets/sliders/banners/banners_type.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/widgets/sliders/banners/banners_type.dart';
 
 part '../banner_models.g/action_banner_model.g.dart';
 

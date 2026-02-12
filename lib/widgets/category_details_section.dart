@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
-
-import 'widgets.dart';
-import '../../models/models.dart';
-import '../core/utils/formatters.dart';
+import 'package:google_play/core/utils/formatters.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class CategoryDetailsSection extends StatelessWidget {
   final List<Product> products;

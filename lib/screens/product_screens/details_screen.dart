@@ -1,13 +1,13 @@
 // ignore_for_file: unused_element_parameter
 
 import 'package:flutter/material.dart';
-
-import '../../models/models.dart';
-import '../../widgets/widgets.dart';
-import 'permissions_screen.dart';
-import 'utils/product_app_bar_leading.dart';
-import 'utils/product_ui_config.dart';
-import '../../core/utils/formatters.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/utils/formatters.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/screens/product_screens/permissions_screen.dart';
+import 'package:google_play/screens/product_screens/utils/product_app_bar_leading.dart';
+import 'package:google_play/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   final Product product;

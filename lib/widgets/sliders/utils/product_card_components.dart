@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/constants/global_constants.dart';
-import '../../../core/shimers/shimer_box.dart';
-import '../../../core/utils/formatters.dart';
-import '../../../models/models.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/shimers/shimer_box.dart';
+import 'package:google_play/core/utils/formatters.dart';
+import 'package:google_play/models/models.dart';
 
 class ProductCardThumbnail extends StatelessWidget {
   final BorderRadius borderRadius;

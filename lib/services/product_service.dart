@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import '/models/models.dart';
+import 'package:google_play/models/models.dart';
 
 class ProductService {
   final Map<String, Product> _allProductsById = {};

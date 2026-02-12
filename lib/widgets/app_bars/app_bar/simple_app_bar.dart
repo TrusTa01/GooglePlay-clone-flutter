@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 // Универсальный AppBar для использования в slivers (CustomScrollView)
 class SimpleSliverAppBar extends StatefulWidget {

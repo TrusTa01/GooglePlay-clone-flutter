@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '/widgets/widgets.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class ToggleFilter extends StatelessWidget {
   final String label;

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../../widgets/widgets.dart';
-import '../../../models/models.dart';
-import '../../screens.dart';
-import '../utils/product_ui_config.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class ProductPageDescriptionSection extends StatelessWidget {
   final Product product;

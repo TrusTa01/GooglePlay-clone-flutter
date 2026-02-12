@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/models.dart';
-import '../widgets/filters/filter_factory.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/widgets/filters/filter_factory.dart';
 
 // Сервис для запросов и фильтрации продуктов.
 // Все методы - чистые функции без состояния.

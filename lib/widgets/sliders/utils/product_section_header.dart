@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/constants/global_constants.dart';
-import '../../buttons/icon_button.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/widgets/buttons/icon_button.dart';
 
 class ProductSectionHeader extends StatelessWidget {
   final String title;

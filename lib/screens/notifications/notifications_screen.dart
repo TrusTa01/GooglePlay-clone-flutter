@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets/widgets.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});

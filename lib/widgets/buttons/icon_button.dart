@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/constants.dart';
 
 class CustomIconButton extends StatelessWidget {
   final double width;

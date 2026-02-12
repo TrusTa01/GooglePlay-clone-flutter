@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '/screens/screens.dart';
-import '../../widgets.dart';
-import '../../../models/models.dart';
-import 'utils/grid_layout_config.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/widgets/sliders/product_grid/utils/grid_layout_config.dart';
 
 class ProductGrid extends StatefulWidget {
   final String title;

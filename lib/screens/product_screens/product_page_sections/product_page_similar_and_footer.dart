@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../widgets/widgets.dart';
-import '../../../models/models.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class ProductPageSimilarAndFooter extends StatelessWidget {
   final Product product;

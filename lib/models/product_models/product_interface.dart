@@ -1,4 +1,4 @@
-import '../models.dart';
+import 'package:google_play/models/models.dart';
 
 abstract interface class Product {
   String get type;

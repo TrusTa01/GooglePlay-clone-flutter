@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../models/models.dart';
-import '../services/product_service.dart';
-import '../services/product_query_service.dart';
-import '../services/section_builder_service.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/services/product_query_service.dart';
+import 'package:google_play/services/product_service.dart';
+import 'package:google_play/services/section_builder_service.dart';
 
 class ProductsProvider extends ChangeNotifier {
   final ProductService _service = ProductService();

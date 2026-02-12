@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '/screens/screens.dart';
-import '../../widgets/widgets.dart';
-import '../../core/routes/routes.dart';
-import '../../providers/providers.dart';
+import 'package:google_play/core/routes/routes.dart';
+import 'package:google_play/providers/providers.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class AppsScreen extends StatefulWidget {
   const AppsScreen({super.key});

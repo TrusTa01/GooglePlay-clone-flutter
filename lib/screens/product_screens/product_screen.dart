@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../widgets/widgets.dart';
-import '../../models/models.dart';
-import '../../providers/products_provider.dart';
-import '../../services/product_query_service.dart';
-import '../../core/utils/formatters.dart';
-import 'utils/product_ui_config.dart';
-import 'product_screen_tags.dart';
-import 'product_page_sections/product_page_header.dart';
-import 'product_page_sections/product_page_description_section.dart';
-import 'product_page_sections/product_page_support_section.dart';
-import 'product_page_sections/product_page_similar_and_footer.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/utils/formatters.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/providers/products_provider.dart';
+import 'package:google_play/services/product_query_service.dart';
+import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/screens/product_screens/product_page_sections/product_page_sections.dart';
+import 'package:google_play/screens/product_screens/product_screen_tags.dart';
+import 'package:google_play/screens/product_screens/utils/product_ui_config.dart';
 
 // Экран страницы продукта (приложение, книга, игра).
 class ProductPageScreen extends StatelessWidget {

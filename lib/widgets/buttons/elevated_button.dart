@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../widgets/widgets.dart';
+import 'package:google_play/core/constants.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final bool isPaid;

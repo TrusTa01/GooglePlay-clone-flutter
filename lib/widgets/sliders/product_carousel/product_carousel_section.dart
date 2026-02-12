@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../../models/product_models/book_model.dart';
-import '../../../models/product_models/product_interface.dart';
-import '../../../screens/category/category_full_list_screen.dart';
-import '../../widgets.dart';
-import 'utils/carousel_layout.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/models/product_models/book_model.dart';
+import 'package:google_play/models/product_models/product_interface.dart';
+import 'package:google_play/screens/category/category_full_list_screen.dart';
+import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/widgets/sliders/product_carousel/utils/carousel_layout.dart';
 
 class ProductCarousel extends StatefulWidget {
   final String title;

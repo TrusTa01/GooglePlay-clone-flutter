@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '/models/models.dart';
+import 'package:google_play/models/models.dart';
 
 enum SupportItemType {
   link,        // Обычный элемент с иконкой (Сайт, Email, Конфиденциальность)

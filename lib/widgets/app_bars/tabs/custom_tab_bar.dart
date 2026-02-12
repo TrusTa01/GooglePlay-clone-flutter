@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets.dart';
+import 'package:google_play/core/constants.dart';
 
 class CustomTabBar extends StatefulWidget implements PreferredSizeWidget {
   final List<String> tabs;

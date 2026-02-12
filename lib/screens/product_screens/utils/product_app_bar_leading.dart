@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../models/models.dart';
-import '../../../widgets/widgets.dart';
-import 'product_ui_config.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 // Миниатюра продукта для использования в SimpleAppBar (titleLeading).
 class ProductAppBarLeading extends StatelessWidget {

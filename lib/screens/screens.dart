@@ -23,7 +23,6 @@ export 'charts_screens/top_charts_screen.dart';
 // Kids
 export 'kids_screen/kids_age_category_screen.dart';
 export 'kids_screen/kids_details_screen.dart';
-export '../widgets/sliders/banners/kids_hero_banner.dart';
 export 'kids_screen/kids_age_filter_selector.dart';
 
 // Events

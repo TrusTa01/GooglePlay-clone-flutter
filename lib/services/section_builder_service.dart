@@ -1,5 +1,5 @@
-import '../models/models.dart';
-import 'product_query_service.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/services/product_query_service.dart';
 
 // Сервис для построения секций страниц из конфигураций.
 // Преобразует PageConfig в список HomeSection для отображения в UI.

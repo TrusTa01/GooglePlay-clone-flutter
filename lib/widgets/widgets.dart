@@ -3,11 +3,6 @@ export 'app_bars/app_bar/simple_app_bar.dart';
 export 'app_bars/app_bar/tabbed_app_bar.dart';
 export 'app_bars/utils/app_bar_utils.dart';
 
-// Constants
-export '../core/constants/app_bar_constants.dart';
-export '../core/constants/global_constants.dart';
-export '../core/constants/navigation_bar_constants.dart';
-
 // Tabs
 export 'app_bars/tabs/custom_tab_bar.dart';
 
@@ -20,6 +15,7 @@ export 'navigation_bar/utils/navigation_bar_utils.dart';
 export 'sliders/banners/banners_type.dart';
 export 'sliders/banners/banner_item.dart';
 export 'sliders/banners/banner_section.dart';
+export 'sliders/banners/kids_hero_banner.dart';
 export 'sliders/banners/utils/banners_utils.dart';
 
 // Scroll widgets
@@ -41,11 +37,6 @@ export 'charts/top_charts_section.dart';
 export 'sliders/product_preview/product_preview_card.dart';
 export 'sliders/product_preview/game_preview_section.dart';
 export 'sliders/product_preview/utils/product_preview_utils.dart';
-
-// Shimers
-export '../core/shimers/product_slider_skeleton.dart';
-export '../core/shimers/shimer_box.dart';
-export '../core/shimers/game_preview_skeleton.dart';
 
 export 'category_details_section.dart';
 

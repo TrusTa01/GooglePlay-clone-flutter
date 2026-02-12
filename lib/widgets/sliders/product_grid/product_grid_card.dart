@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../screens/screens.dart';
-import '../../../models/models.dart';
-import '../../widgets.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class ProductGridCard extends StatelessWidget {
   const ProductGridCard({super.key, required this.product});

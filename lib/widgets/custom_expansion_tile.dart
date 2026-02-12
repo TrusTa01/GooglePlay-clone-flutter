@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../screens/product_screens/utils/product_support_data.dart';
-import 'widgets.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/screens/product_screens/utils/product_support_data.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class CustomExpansionTile extends StatefulWidget {
   final Widget title;

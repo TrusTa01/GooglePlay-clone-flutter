@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../core/constants/global_constants.dart';
-import '../../models/models.dart';
-import 'top_charts_card.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/widgets/charts/top_charts_card.dart';
 
 class TopChartsSection extends StatelessWidget {
   const TopChartsSection({super.key, required this.items});

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '/core/constants/global_constants.dart';
+import 'package:google_play/core/constants.dart';
 
 class CustomTextButton extends StatelessWidget {
   final VoidCallback? onTap;

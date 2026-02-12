@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../widgets.dart';
+import 'package:google_play/core/shimers/shimer_box.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class ProductScreenshotImage extends StatelessWidget {
   final String imageUrl;

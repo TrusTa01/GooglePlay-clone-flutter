@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../models.dart';
+import 'package:google_play/models/models.dart';
 
 part '../product_models.g/game_model.g.dart';
 

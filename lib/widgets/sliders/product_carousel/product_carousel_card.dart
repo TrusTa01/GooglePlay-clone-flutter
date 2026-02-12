@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../../screens/screens.dart';
-import '../../../models/product_models/product_interface.dart';
-import '../../widgets.dart';
-import '../../../core/utils/formatters.dart';
+import 'package:google_play/core/utils/formatters.dart';
+import 'package:google_play/models/product_models/product_interface.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class ProductCarouselCard extends StatelessWidget {
   final Product product;

@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'providers/tabs_provider.dart';
-import 'providers/filter_provider.dart';
-import './screens/screens.dart';
-import 'layouts/main_layout.dart';
-import '/providers/products_provider.dart';
-import '/core/routes/routes.dart';
+import 'package:google_play/core/routes/routes.dart';
+import 'package:google_play/layouts/main_layout.dart';
+import 'package:google_play/providers/filter_provider.dart';
+import 'package:google_play/providers/products_provider.dart';
+import 'package:google_play/providers/tabs_provider.dart';
+import 'package:google_play/screens/screens.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'firebase_options.dart';
 

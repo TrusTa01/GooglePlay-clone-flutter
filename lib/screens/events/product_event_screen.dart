@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '/models/models.dart';
-import '../../widgets/widgets.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class ProductEventScreen extends StatelessWidget {
   final SimpleBanner eventBanner;

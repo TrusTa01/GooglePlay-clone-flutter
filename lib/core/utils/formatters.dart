@@ -1,4 +1,4 @@
-import '/models/models.dart';
+import 'package:google_play/models/models.dart';
 
 class DataFormatter {
   static String formatDate(DateTime? date) {

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/constants/global_constants.dart';
-import '../../../core/utils/formatters.dart';
-import '../../../models/models.dart';
-import '../../../providers/products_provider.dart';
-import '../../buttons/elevated_button.dart';
-import 'product_card_components.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/utils/formatters.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/providers/products_provider.dart';
+import 'package:google_play/widgets/buttons/elevated_button.dart';
+import 'package:google_play/widgets/sliders/utils/product_card_components.dart';
 
 class ActionRow extends StatelessWidget {
   final dynamic product;

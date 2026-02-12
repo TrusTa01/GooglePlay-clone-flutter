@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../widgets/widgets.dart';
-import '../../models/models.dart';
-import '../../providers/products_provider.dart';
-import '../../services/product_query_service.dart';
-import '../screens.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/providers/products_provider.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/services/product_query_service.dart';
 
 class ProductTag extends StatelessWidget {
   final Product product;
