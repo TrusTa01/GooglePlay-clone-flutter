@@ -13,6 +13,8 @@ import 'package:google_play/screens/screens.dart';
 // import 'firebase_options.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  GoogleFonts.config.allowRuntimeFetching = false;
 //   await Firebase.initializeApp(
 //     options: DefaultFirebaseOptions.currentPlatform,
 // );

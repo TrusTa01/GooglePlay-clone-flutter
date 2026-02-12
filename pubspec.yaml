@@ -58,3 +58,6 @@ flutter:
   # data
   - assets/data/
   - assets/config/
+
+  #fonts
+  - assets/google_fonts/
