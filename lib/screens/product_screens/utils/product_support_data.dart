@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/models/models.dart';
+import 'package:google_play/core/utils/url_launcher.dart';
 
 enum SupportItemType {
-  link,        // Обычный элемент с иконкой (Сайт, Email, Конфиденциальность)
+  link, // Обычный элемент с иконкой (Сайт, Email, Конфиденциальность)
   sectionHeader, // Заголовок секции (О разработчике)
-  infoText,    // Простой текст без иконки (адрес, телефон и т.д.)
+  infoText, // Простой текст без иконки (адрес, телефон и т.д.)
 }
 
 class SupportItem {
@@ -22,7 +23,7 @@ class SupportItem {
     this.onTap,
   });
 
-  // Удобные конструкторы
+  // Конструкторы
   const SupportItem.link({
     required this.icon,
     required this.title,
@@ -30,19 +31,16 @@ class SupportItem {
     this.onTap,
   }) : type = SupportItemType.link;
 
-  const SupportItem.sectionHeader({
-    required this.title,
-  }) : type = SupportItemType.sectionHeader,
-       icon = null,
-       subtitle = null,
-       onTap = null;
+  const SupportItem.sectionHeader({required this.title})
+    : type = SupportItemType.sectionHeader,
+      icon = null,
+      subtitle = null,
+      onTap = null;
 
-  const SupportItem.infoText({
-    required this.title,
-    this.onTap,
-  }) : type = SupportItemType.infoText,
-       icon = null,
-       subtitle = null;
+  const SupportItem.infoText({required this.title, this.onTap})
+    : type = SupportItemType.infoText,
+      icon = null,
+      subtitle = null;
 }
 
 List<SupportItem> getSupportItems(Product product) {
@@ -50,18 +48,18 @@ List<SupportItem> getSupportItems(Product product) {
     SupportItem.link(
       icon: Icons.language,
       title: 'Сайт',
-      onTap: () {}, // TODO: url_launcher для product.websiteUrl
+      onTap: () => launchMyUrl(product.websiteUrl!),
     ),
     SupportItem.link(
       icon: Icons.email_outlined,
       title: 'Электронная почта',
       subtitle: product.emailSupport,
-      onTap: () {}, // TODO: mail to:
+      onTap: () => mailTo(email: product.emailSupport!),
     ),
     SupportItem.link(
       icon: Icons.shield_outlined,
       title: 'Конфиденциальность',
-      onTap: () {}, // TODO: url_launcher для product.privacyPolicyUrl
+      onTap: () => launchMyUrl(product.privacyPolicyUrl!),
     ),
     // Секция "О разработчике"
     SupportItem.sectionHeader(title: 'О разработчике'),

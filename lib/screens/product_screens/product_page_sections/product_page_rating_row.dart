@@ -3,6 +3,7 @@ import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/core/utils/url_launcher.dart';
 
 class ProductPageRatingRow extends StatelessWidget {
   final Product product;
@@ -98,7 +99,8 @@ class ProductPageRatingRow extends StatelessWidget {
                           ? (product as App).ageRatingReasons.join(', ')
                           : (product as Game).ageRatingReasons.join(', '),
                       detailsText: 'Подробнее...',
-                      onDetails: () {}, // TODO: url launcher
+                      onDetails: () =>
+                          launchMyUrl('https://support.google.com/googleplay/'),
                       confirmText: 'ОК',
                     ),
                   ),

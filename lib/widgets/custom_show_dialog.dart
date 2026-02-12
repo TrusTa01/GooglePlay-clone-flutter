@@ -29,6 +29,7 @@ class AlertDialogs {
         actions: [
           TextButton(
             onPressed: () {
+              onDetails();
               Navigator.pop(dialogContext);
             },
             child: Text(

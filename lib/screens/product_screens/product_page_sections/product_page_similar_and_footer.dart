@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/core/utils/url_launcher.dart';
 
 class ProductPageSimilarAndFooter extends StatelessWidget {
   final Product product;
@@ -36,7 +37,7 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
         CustomTextButton(
           title: 'Правила возврата платежей в Google Play',
           icon: Icons.arrow_back,
-          onTap: () {}, // TODO: url launcher
+          onTap: () => launchMyUrl('https://support.google.com/googleplay/'),
         ),
 
         const SizedBox(height: 20),

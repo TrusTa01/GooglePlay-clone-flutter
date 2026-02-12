@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/widgets/widgets.dart';
 
 class KidsDetailsScreen extends StatelessWidget {
@@ -111,7 +112,7 @@ class KidsDetailsScreen extends StatelessWidget {
             
                       _buildLinkButton(
                         'Подробнее об оценках преподавателей...',
-                        () {},
+                        () => launchMyUrl('https://support.google.com/googleplay/'),
                       ),
             
                       const SizedBox(height: 32),
@@ -119,7 +120,7 @@ class KidsDetailsScreen extends StatelessWidget {
                       _buildMainText(
                         'Приложения из Google Play (в том числе одобренные преподавателями) могут быть недоступны для учебных аккаунтов G Suite for Education. Совет для преподавателей: выясните у системного администратора, какие приложения и сервисы можно использовать в вашем учебном заведении. Узнайте больше о приложениях для учебных заведений на портале Chromebook App Hub.',
                       ),
-                      _buildLinkButton('Подробнее...', () {}),
+                      _buildLinkButton('Подробнее...', () => launchMyUrl('https://support.google.com/googleplay/')),
             
                       const SizedBox(height: 40),
                     ]),
@@ -204,7 +205,7 @@ class KidsDetailsScreen extends StatelessWidget {
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         child: Text(
-          text, // TODO: url launcher
+          text,
           style: const TextStyle(
             color: Constants.googleBlue,
             fontWeight: FontWeight.bold,
