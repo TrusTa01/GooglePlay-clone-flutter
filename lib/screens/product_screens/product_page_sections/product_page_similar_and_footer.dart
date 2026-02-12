@@ -23,8 +23,8 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
             title: product is Book
                 ? 'Похожие книги'
                 : product is Game
-                    ? 'Похожие игры'
-                    : 'Похожие приложения',
+                ? 'Похожие игры'
+                : 'Похожие приложения',
             products: similarProducts,
             maxItems: 10,
             leftPadding: 0,
@@ -32,19 +32,15 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
           ),
         ],
         const SizedBox(height: 25),
-        Row(
-          children: [
-            CustomTextButton(
-              title: 'Правила возврата платежей в Google Play',
-              icon: Icons.arrow_back,
-              onTap: () {}, // TODO: url launcher
-            ),
-          ],
+
+        CustomTextButton(
+          title: 'Правила возврата платежей в Google Play',
+          icon: Icons.arrow_back,
+          onTap: () {}, // TODO: url launcher
         ),
+
         const SizedBox(height: 20),
-        Row(
-          children: [const Text('Все цены указаны с учетом НДС.')],
-        ),
+        Row(children: [const Text('Все цены указаны с учетом НДС.')]),
       ],
     );
   }

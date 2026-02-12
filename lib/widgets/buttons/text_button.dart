@@ -44,27 +44,34 @@ class CustomTextButton extends StatelessWidget {
                 Icon(icon, size: iconSize),
                 const SizedBox(width: 10),
               ],
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title ?? '',
-                    style: TextStyle(
-                      fontSize: titleFontSize,
-                      fontWeight: titleFontWeight,
-                      color: titleColor,
-                    ),
-                  ),
-                  if (subtitle != null)
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     Text(
-                      subtitle!,
+                      title ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: subtitleFontSize,
-                        fontWeight: subtitleFontWeight,
-                        color: subtitleColor,
+                        fontSize: titleFontSize,
+                        fontWeight: titleFontWeight,
+                        color: titleColor,
                       ),
                     ),
-                ],
+                    if (subtitle != null)
+                      Text(
+                        subtitle!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: subtitleFontSize,
+                          fontWeight: subtitleFontWeight,
+                          color: subtitleColor,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ],
           ),

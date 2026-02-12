@@ -37,9 +37,12 @@ class CustomElevatedButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed ?? () {},
-      child: Text(
-        isPaid ? price.toString() : defaultButtonText,
-        style: TextStyle(fontWeight: Constants.defaultFontWeight, fontSize: 13),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          isPaid ? price.toString() : defaultButtonText,
+          style: TextStyle(fontWeight: Constants.defaultFontWeight, fontSize: 13),
+        ),
       ),
     );
   }

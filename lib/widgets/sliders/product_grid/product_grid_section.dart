@@ -78,7 +78,7 @@ class _ProductGridState extends State<ProductGrid> {
             final width = contentWidth.clamp(0.0, constraints.maxWidth);
             final config = productGridAdaptiveConfig(width);
             _updateController(config.viewportFraction);
-            final mobilePadding = width > 1000
+            final mobilePadding = width >= 1040
                 ? EdgeInsets.only(left: 22 + arrowSpace)
                 : Constants.horizontalContentPadding;
             final totalPages = (displayProducts.length / 3).ceil();

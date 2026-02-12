@@ -77,13 +77,11 @@ class _ProductPageContent extends StatelessWidget {
                   titleLeading: null,
                   actions: [ProductPopupMenu()],
                 ),
-            
                 SliverPadding(
                   padding: Constants.horizontalContentPadding.copyWith(
                     bottom: 10,
                     top: 10,
                   ),
-            
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
                       ProductPageHeader(

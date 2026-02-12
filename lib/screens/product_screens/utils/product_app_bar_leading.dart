@@ -14,7 +14,7 @@ class ProductAppBarLeading extends StatelessWidget {
     final utils = ProductUIConfig(product);
 
     return Padding(
-      padding: const EdgeInsets.only(right: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ProductCardThumbnail(
         borderRadius: utils.smallBorderRadius,
         iconUrl: product.iconUrl,
