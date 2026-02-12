@@ -163,6 +163,7 @@
       },
       {
         "type": "carousel",
+        "needsTopPadding": false,
         "title": "Рисование",
         "dataMethod": "getProductsByTagAndAge",
         "dataParams": {"query": "Рисование", "ageLabel": "$AGE_LABEL$"}

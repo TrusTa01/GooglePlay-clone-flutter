@@ -57,9 +57,11 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     if (isLoading) {
       return widget.isSliver
           ? SliverList.builder(
-              itemCount: widget.sections.length,
-              itemBuilder: (context, index) =>
-                  _buildSectionWrapper(index, widget.sections[index]),
+              itemCount: 5,
+              itemBuilder: (context, index) => const Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: ProductSliderSkeleton(),
+              ),
             )
           : ListView.builder(
               primary: false,
@@ -73,12 +75,10 @@ class _GenericTabScreenState extends State<GenericTabScreen>
 
     // Основной список секций
     if (widget.isSliver) {
-      return SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) =>
-              _buildSectionWrapper(index, widget.sections[index]),
-          childCount: widget.sections.length,
-        ),
+      return SliverList.builder(
+        itemCount: widget.sections.length,
+        itemBuilder: (context, index) =>
+            _buildSectionWrapper(index, widget.sections[index]),
       );
     }
 
