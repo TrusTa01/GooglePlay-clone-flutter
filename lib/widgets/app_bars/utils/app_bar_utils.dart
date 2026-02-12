@@ -49,6 +49,8 @@ class AppBarTitle extends StatelessWidget {
         padding: const EdgeInsets.only(left: 10),
         child: Text(
           title!,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w500,

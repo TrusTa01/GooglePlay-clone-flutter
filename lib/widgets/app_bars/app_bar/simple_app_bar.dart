@@ -119,11 +119,13 @@ class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
 
       if (titleColumnChildren.isNotEmpty) {
         titleRowChildren.add(
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: titleColumnChildren,
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: titleColumnChildren,
+            ),
           ),
         );
       }
@@ -180,15 +182,15 @@ class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
         ),
       ),
       bottom: (widget.innerBoxIsScrolled)
-        ? PreferredSize(
-            preferredSize: const Size.fromHeight(2),
-            child: Container(
-              width: double.infinity,
-              color: const Color.fromRGBO(0, 0, 0, 0.1), 
-              height: 2,
-            ),
-          )
-        : null,
+          ? PreferredSize(
+              preferredSize: const Size.fromHeight(2),
+              child: Container(
+                width: double.infinity,
+                color: const Color.fromRGBO(0, 0, 0, 0.1),
+                height: 2,
+              ),
+            )
+          : null,
       centerTitle: widget.isTransparent ? false : null,
       iconTheme: widget.isTransparent
           ? const IconThemeData(color: Colors.white)

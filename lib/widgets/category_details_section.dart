@@ -28,9 +28,9 @@ class CategoryDetailsSection extends StatelessWidget {
     }
 
     final bool isBook = products.first is Book;
-    final double minItemWidth = isBook ? 100 : 125;
+    final double minItemWidth = isBook ? 110 : 125;
     // Вычисляем aspectRatio
-    final double aspectRatio = isBook ? 0.5 : 0.6;
+    final double aspectRatio = isBook ? 0.48 : 0.6;
 
     if (isSliver) {
       return SliverLayoutBuilder(
@@ -41,13 +41,13 @@ class CategoryDetailsSection extends StatelessWidget {
               .clamp(2, 8);
 
           return SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
             sliver: SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
                 childAspectRatio: aspectRatio,
+                mainAxisSpacing: 10,
                 crossAxisSpacing: 15,
-                mainAxisSpacing: 20,
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) => _buildItem(products[index]),
@@ -67,12 +67,11 @@ class CategoryDetailsSection extends StatelessWidget {
         );
 
         return GridView.builder(
-          padding: const EdgeInsets.all(16),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
             childAspectRatio: aspectRatio,
-            crossAxisSpacing: 15,
             mainAxisSpacing: 20,
+            crossAxisSpacing: 15,
           ),
           itemCount: products.length,
           itemBuilder: (context, index) => _buildItem(products[index]),
@@ -84,11 +83,16 @@ class CategoryDetailsSection extends StatelessWidget {
   Widget _buildItem(Product product) {
     final showPrice = product.isPaid && product.price != null;
     final formatter = ProductDataFormatter(product);
+    final isBook = product is Book;
 
     return ProductCardContent(
       product: product,
       showPrice: showPrice,
       formatter: formatter,
+      iconWidth: isBook ? 110 : 125,
+      iconHeight: isBook ? 160 : 125,
+      cacheWidth: isBook ? 300 : 350,
+      cacheHeight: isBook ? 450 : 350,
     );
   }
 }

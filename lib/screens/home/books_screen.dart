@@ -35,9 +35,9 @@ class _BooksScreenState extends State<BooksScreen>
   }
 
   final List<Widget> _buildActionWidgets = [
-      const SizedBox(width: 25),
-      const CircleAvatar(radius: 18),
-    ];
+    const SizedBox(width: 25),
+    const CircleAvatar(radius: 18),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,48 +55,76 @@ class _BooksScreenState extends State<BooksScreen>
           child: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
-                  return buildSliverTabbedAppBar(
+                  final appBarSlivers = buildSliverTabbedAppBar(
                     context: context,
-                    showLogo: true,
+                    showLogo: false,
+                    hasSearch: true,
+                    searchHint: 'Поиск книг',
                     tabs: _tabs,
                     tabController: _tabController,
                     actions: _buildActionWidgets,
-                    forceElevated: false,
                   );
+                  return [
+                    // Шапка
+                    appBarSlivers[0],
+                    SliverOverlapAbsorber(
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context,
+                      ),
+                      // Табы
+                      sliver: appBarSlivers[1],
+                    ),
+                  ];
                 },
             body: TabBarView(
+              physics:
+                  const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
               controller: _tabController,
-              physics: const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-              children: [
-                // Таб 'Рекомендуем'
-                GenericTabScreen(
-                  sections: watchProvider.recommendedBooksSection,
-                  onLoad: () => readProvider.getRecomendations(),
-                ),
-                // Таб 'Топ продаж'
-                ChangeNotifierProvider(
-                  create: (_) =>
-                      FilterProvider.forBooks(selectedTopFilter: 'Бестселлеры'),
-                  child: const TopChartsScreen(type: FilterType.books),
-                ),
-                // Таб 'Новинки'
-                ChangeNotifierProvider(
-                  create: (_) => FilterProvider.forBooks(filterOnlyMode: true),
-                  child: const TopChartsScreen(type: FilterType.books),
-                ),
-                // Таб 'Жанры'
-                CategoriesTabScreen(
-                  categories: booksGenresData,
-                  products: watchProvider.books,
-                ),
-                // Таб 'Топ бесплатных'
-                ChangeNotifierProvider(
-                  create: (_) => FilterProvider.forBooks(
-                    selectedTopFilter: 'Топ бесплатных',
-                  ),
-                  child: const TopChartsScreen(type: FilterType.books),
-                ),
-              ],
+              children: _tabs.map((tabName) {
+                return Builder(
+                  builder: (context) {
+                    return CustomScrollView(
+                      key: PageStorageKey<String>(tabName),
+                      slivers: [
+                        SliverOverlapInjector(
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                context,
+                              ),
+                        ),
+                        if (tabName == 'Рекомендуем')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.recommendedBooksSection,
+                            onLoad: () => readProvider.getRecomendations(),
+                          )
+                        else if (tabName == 'Топ продаж')
+                          ...TopChartsScreen.buildSlivers(
+                            context,
+                            type: FilterType.books,
+                            showFilters: true,
+                          )
+                        else if (tabName == 'Новинки')
+                          ...TopChartsScreen.buildSlivers(
+                            context,
+                            type: FilterType.books,
+                            showFilters: true,
+                          )
+                        else if (tabName == 'Жанры')
+                          CategoriesTabScreen.asSliver(
+                            categories: booksGenresData,
+                            products: watchProvider.books,
+                          )
+                        else if (tabName == 'Топ бесплатных')
+                          ...TopChartsScreen.buildSlivers(
+                            context,
+                            type: FilterType.books,
+                            showFilters: true,
+                          ),
+                      ],
+                    );
+                  },
+                );
+              }).toList(),
             ),
           ),
         ),
