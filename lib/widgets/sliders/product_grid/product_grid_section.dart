@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '/screens/screens.dart';
 import '../../widgets.dart';
 import '../../../models/models.dart';
+import 'utils/grid_layout_config.dart';
 
 class ProductGrid extends StatefulWidget {
   final String title;
@@ -22,52 +23,11 @@ class ProductGrid extends StatefulWidget {
   State<ProductGrid> createState() => _ProductGridState();
 }
 
-class _ProductGridLayoutConfig {
-  final double viewportFraction;
-  final double heightFactor;
-  final double cardPadding;
-
-  const _ProductGridLayoutConfig({
-    required this.viewportFraction,
-    required this.heightFactor,
-    required this.cardPadding,
-  });
-}
-
 class _ProductGridState extends State<ProductGrid> {
   PageController? _pageController;
   double _lastViewportFraction = 0;
   int _currentPage = 0;
   bool _isHovered = false;
-
-  _ProductGridLayoutConfig _adaptiveConfig(double width) {
-    // Определяем целевую ширину одной карточки
-    // На мобилках (до 600) пусть будет ~300px, на планшетах (600+) ~320px
-    double idealCardWidth = width < 600 ? 300 : 320;
-
-    // Рассчитывем сколько карточек влезет в экран
-    // Например, если экран 800px, а мы хотим карточки по 320px: 800 / 320 = 2.5 карточки
-    double count = width / idealCardWidth;
-
-    // Ограничиваем количество карточек
-    if (width < 600) {
-      count = count.clamp(1.1, 1.2); // На мобилке от 1.1 до 1.2 карточки
-    } else if (width < 950) {
-      count = count.clamp(2, 2.8); // На планшете от 2.1 до 2.8 карточки
-    } else {
-      count = 3.0; // На десктопе строго 3
-    }
-
-    // Превращаем количество в viewportFraction
-    // Если count = 2.5, то fraction = 1 / 2.5 = 0.4
-    double finalFraction = 1 / count;
-
-    return _ProductGridLayoutConfig(
-      viewportFraction: finalFraction,
-      heightFactor: width < 600 ? 240 : (width < 1000 ? 250 : 260),
-      cardPadding: width < 600 ? 6 : (width < 1000 ? 10 : 12),
-    );
-  }
 
   @override
   void dispose() {
@@ -116,7 +76,7 @@ class _ProductGridState extends State<ProductGrid> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final width = contentWidth.clamp(0.0, constraints.maxWidth);
-            final config = _adaptiveConfig(width);
+            final config = productGridAdaptiveConfig(width);
             _updateController(config.viewportFraction);
             final mobilePadding = width > 1000
                 ? EdgeInsets.only(left: 22 + arrowSpace)

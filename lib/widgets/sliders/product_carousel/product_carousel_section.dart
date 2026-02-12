@@ -4,6 +4,7 @@ import '../../../models/product_models/book_model.dart';
 import '../../../models/product_models/product_interface.dart';
 import '../../../screens/category/category_full_list_screen.dart';
 import '../../widgets.dart';
+import 'utils/carousel_layout.dart';
 
 class ProductCarousel extends StatefulWidget {
   final String title;
@@ -11,7 +12,8 @@ class ProductCarousel extends StatefulWidget {
   final List<Product> products;
   final bool isBookCarousel;
   final int? maxItems;
-  final EdgeInsets? contentPadding;
+  final double leftPadding;
+  final bool needsRightPadding;
 
   const ProductCarousel({
     super.key,
@@ -20,7 +22,8 @@ class ProductCarousel extends StatefulWidget {
     required this.products,
     this.isBookCarousel = false,
     this.maxItems,
-    this.contentPadding,
+    this.leftPadding = 22,
+    this.needsRightPadding = true,
   });
 
   @override
@@ -47,21 +50,6 @@ class _ProductCarouselState extends State<ProductCarousel> {
     super.dispose();
   }
 
-  // Константы размеров карточек и отступа между ними
-  static const double _bookCardWidth = 120;
-  static const double _productCardMinWidth = 115;
-  static const double _cardSpacing = 11.3;
-
-  /// Количество видимых карточек по брейкпоинтам (3–8).
-  static int _visibleCountForWidth(double width) {
-    if (width >= Constants.sliderMaxContentWidth) return 8;
-    if (width >= 900) return 7;
-    if (width >= 768) return 6;
-    if (width >= 600) return 5;
-    if (width >= 480) return 4;
-    return 3;
-  }
-
   @override
   Widget build(BuildContext context) {
     if (widget.products.isEmpty) {
@@ -70,9 +58,7 @@ class _ProductCarouselState extends State<ProductCarousel> {
     }
 
     final bool isBook = widget.products.first is Book;
-
-    // Базовый минимальный размер карточки (карточки не уменьшаются ниже этого)
-    final double baseIconWidth = isBook ? _bookCardWidth : _productCardMinWidth;
+    final double baseIconWidth = isBook ? carouselBookCardWidth : carouselProductCardMinWidth;
     final int cacheWidth = isBook ? 300 : 216;
     final int cacheHeight = isBook ? 350 : 216;
 
@@ -98,34 +84,45 @@ class _ProductCarouselState extends State<ProductCarousel> {
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final double width = contentWidth.clamp(0.0, constraints.maxWidth);
+            // На странице продукта контент уже в ConstrainedBox(1040) — не сдвигаем карусель
+            final double effectiveArrowSpace =
+                constraints.maxWidth > maxContentWidth ? arrowSpace : 0.0;
 
             // Краевой отступ слева и справа — симметричная «зона»
             final double edgePad = Constants.horizontalContentPadding.left;
-            final double effectiveWidth = width - edgePad * 2;
+            // Полную ширину контента (1040) подставляем только когда контейнер "почти полный"
+            // (страница продукта с padding ≈ 996px). На маленьких экранах используем реальную ширину.
+            final double layoutWidth =
+                (constraints.maxWidth <= maxContentWidth &&
+                        constraints.maxWidth >= maxContentWidth - edgePad * 2)
+                    ? maxContentWidth
+                    : width;
+            final double effectiveWidth = layoutWidth - edgePad * 2;
 
-            // По брейкпоинтам — сколько карточек показываем
-            final int visibleCount = _visibleCountForWidth(width);
+            final int visibleCount = carouselVisibleCountForWidth(layoutWidth).clamp(
+              1,
+              displayProducts.length,
+            );
             final int lastItem = (displayProducts.length - visibleCount).clamp(
               0,
               displayProducts.length,
             );
-            // Слот на одну карточку: делим ширину поровну; карточка заполняет слот минус отступ
             final double slotWidth = effectiveWidth / visibleCount;
-            double cardWidth = (slotWidth - _cardSpacing).clamp(
+            double cardWidth = (slotWidth - carouselCardSpacing).clamp(
               baseIconWidth,
               double.infinity,
             );
-            // Доля ширины на одну карточку (карточка + отступ)
-            final double fraction = (cardWidth + _cardSpacing) / effectiveWidth;
+            final double fraction = (cardWidth + carouselCardSpacing) / effectiveWidth;
             _updateController(fraction.clamp(0.0, 1.0));
 
             final double iconWidth = cardWidth;
             final double iconHeight = isBook ? iconWidth * 1.5 : iconWidth;
             final double sliderHeight = iconHeight + 70;
 
-            final mobilePadding = width > 1000
-                ? EdgeInsets.only(left: 22 + arrowSpace)
-                : Constants.horizontalContentPadding;
+            final EdgeInsets mobilePadding = EdgeInsets.only(
+              left: widget.leftPadding + effectiveArrowSpace,
+              right: widget.needsRightPadding ? (layoutWidth >= 1040 ? 0 : 22) : 0,
+            );
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,12 +156,14 @@ class _ProductCarouselState extends State<ProductCarousel> {
                       clipBehavior: Clip.none,
                       children: [
                         Positioned(
-                          left: arrowSpace,
+                          left: effectiveArrowSpace,
                           right: 0,
                           top: 0,
                           bottom: 0,
                           child: Padding(
-                            padding: EdgeInsets.only(left: edgePad),
+                            padding: EdgeInsetsGeometry.only(
+                              left: widget.leftPadding,
+                            ),
                             child: SizedBox(
                               height: sliderHeight,
                               child: PageView.builder(
@@ -186,7 +185,7 @@ class _ProductCarouselState extends State<ProductCarousel> {
                                       index == displayProducts.length - 1;
                                   return Padding(
                                     padding: EdgeInsets.only(
-                                      right: isLast ? 0 : _cardSpacing,
+                                      right: isLast ? 0 : carouselCardSpacing,
                                     ),
                                     child: ProductCarouselCard(
                                       product: item,
@@ -206,10 +205,13 @@ class _ProductCarouselState extends State<ProductCarousel> {
                           if (_currentPage > 0)
                             ScrollButton(
                               isLeft: true,
-                              offset: contentWidth >= 1040 ? 20 : 10,
+                              offset: effectiveArrowSpace >= 1 ? 20 : 10,
                               alignment: const Alignment(0, -0.45),
                               onPressed: () => _pageController?.animateToPage(
-                                (_currentPage - visibleCount).clamp(0, displayProducts.length - 1),
+                                (_currentPage - visibleCount).clamp(
+                                  0,
+                                  displayProducts.length - 1,
+                                ),
                                 duration: const Duration(milliseconds: 800),
                                 curve: Curves.decelerate,
                               ),
@@ -217,10 +219,13 @@ class _ProductCarouselState extends State<ProductCarousel> {
                           if (_currentPage < lastItem)
                             ScrollButton(
                               isLeft: false,
-                              offset: contentWidth >= 1040 ? -20 : 5,
+                              offset: effectiveArrowSpace >= 1 ? -20 : 5,
                               alignment: const Alignment(0, -0.45),
                               onPressed: () => _pageController?.animateToPage(
-                                (_currentPage + visibleCount).clamp(0, lastItem),
+                                (_currentPage + visibleCount).clamp(
+                                  0,
+                                  lastItem,
+                                ),
                                 duration: const Duration(milliseconds: 800),
                                 curve: Curves.decelerate,
                               ),

@@ -7,6 +7,7 @@ import '/screens/screens.dart';
 import '/models/models.dart';
 import '/providers/products_provider.dart';
 import '../../widgets.dart';
+import 'utils/banner_layout_config.dart';
 
 class BannerSection extends StatefulWidget {
   final List<AppBanner> banners;
@@ -32,21 +33,6 @@ class BannerSection extends StatefulWidget {
   State<BannerSection> createState() => _BannerSectionState();
 }
 
-// Класс для хранения адаптивных параметров баннера
-class _BannerLayoutConfig {
-  final double viewportFraction;
-  final double heightFactor;
-  final double bannerPadding;
-  final double horizontalPadding;
-
-  const _BannerLayoutConfig({
-    required this.viewportFraction,
-    required this.heightFactor,
-    required this.bannerPadding,
-    required this.horizontalPadding,
-  });
-}
-
 class _BannerSectionState extends State<BannerSection>
     with AutomaticKeepAliveClientMixin {
   @override
@@ -57,133 +43,6 @@ class _BannerSectionState extends State<BannerSection>
   int _currentPage = 1;
   double _lastViewportFraction = 0;
   bool _isVisible = true;
-
-  // Breakpoints и их конфигурации PS: до 500 очень точные значения потому что невозможно сделать универсальный адаптив под такой виджет
-  static const List<(int, _BannerLayoutConfig)> _breakpoints = [
-    (
-      0,
-      _BannerLayoutConfig(
-        // < 400
-        viewportFraction: 0.88,
-        heightFactor: 3.5,
-        bannerPadding: 8,
-        horizontalPadding: 18,
-      ),
-    ),
-    (
-      350,
-      _BannerLayoutConfig(
-        // < 400
-        viewportFraction: 0.905,
-        heightFactor: 3.5,
-        bannerPadding: 8,
-        horizontalPadding: 18,
-      ),
-    ),
-    (
-      370,
-      _BannerLayoutConfig(
-        // < 400
-        viewportFraction: 0.915,
-        heightFactor: 3.5,
-        bannerPadding: 8,
-        horizontalPadding: 18,
-      ),
-    ),
-    (
-      400,
-      _BannerLayoutConfig(
-        // 400-500
-        viewportFraction: 0.925,
-        heightFactor: 3.2,
-        bannerPadding: 8,
-        horizontalPadding: 22,
-      ),
-    ),
-    (
-      431,
-      _BannerLayoutConfig(
-        // 400-500
-        viewportFraction: 0.925,
-        heightFactor: 3.2,
-        bannerPadding: 8,
-        horizontalPadding: 22,
-      ),
-    ),
-    (
-      485,
-      _BannerLayoutConfig(
-        // 400-500
-        viewportFraction: 0.915,
-        heightFactor: 3.2,
-        bannerPadding: 8,
-        horizontalPadding: 22,
-      ),
-    ),
-    (
-      500,
-      _BannerLayoutConfig(
-        // 500-600
-        viewportFraction: 0.7,
-        heightFactor: 3.1,
-        bannerPadding: 8,
-        horizontalPadding: 22,
-      ),
-    ),
-    (
-      600,
-      _BannerLayoutConfig(
-        // 600-800
-        viewportFraction: 0.6,
-        heightFactor: 2.8,
-        bannerPadding: 16,
-        horizontalPadding: 28,
-      ),
-    ),
-    (
-      700,
-      _BannerLayoutConfig(
-        // 700-800
-        viewportFraction: 0.5,
-        heightFactor: 3,
-        bannerPadding: 16,
-        horizontalPadding: 28,
-      ),
-    ),
-    (
-      800,
-      _BannerLayoutConfig(
-        // 800-1000
-        viewportFraction: 0.45,
-        heightFactor: 3.5,
-        bannerPadding: 20,
-        horizontalPadding: 36,
-      ),
-    ),
-    (
-      1000,
-      _BannerLayoutConfig(
-        // > 1000
-        viewportFraction: 0.4,
-        heightFactor: 3.5,
-        bannerPadding: 24,
-        horizontalPadding: 44,
-      ),
-    ),
-  ];
-
-  // Получить конфигурацию для текущей ширины
-  _BannerLayoutConfig _getConfig(double width) {
-    _BannerLayoutConfig config = _breakpoints.first.$2;
-    for (final (breakpoint, cfg) in _breakpoints) {
-      if (width >= breakpoint) {
-        config = cfg;
-      } else {
-        break;
-      }
-    }
-    return config;
-  }
 
   @override
   void initState() {
@@ -329,7 +188,7 @@ class _BannerSectionState extends State<BannerSection>
           child: LayoutBuilder(
             builder: (context, constraints) {
               final width = constraints.maxWidth;
-              final config = _getConfig(width);
+              final config = getBannerLayoutConfigForWidth(width);
               _updateController(config.viewportFraction);
 
               debugPrint(
