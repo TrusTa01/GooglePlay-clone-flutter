@@ -2,7 +2,6 @@ import 'package:google_play/core/constants.dart';
 
 const double carouselBookCardWidth = 115;
 const double carouselProductCardMinWidth = 115;
-const double carouselCardSpacing = 10.9;
 
 /// Количество видимых карточек по брейкпоинтам (3–8).
 int carouselVisibleCountForWidth(double width) {

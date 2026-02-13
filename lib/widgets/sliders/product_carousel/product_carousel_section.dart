@@ -58,7 +58,9 @@ class _ProductCarouselState extends State<ProductCarousel> {
     }
 
     final bool isBook = widget.products.first is Book;
-    final double baseIconWidth = isBook ? carouselBookCardWidth : carouselProductCardMinWidth;
+    final double baseIconWidth = isBook
+        ? carouselBookCardWidth
+        : carouselProductCardMinWidth;
     final int cacheWidth = isBook ? 300 : 216;
     final int cacheHeight = isBook ? 350 : 216;
 
@@ -94,25 +96,26 @@ class _ProductCarouselState extends State<ProductCarousel> {
             // (страница продукта с padding ≈ 996px). На маленьких экранах используем реальную ширину.
             final double layoutWidth =
                 (constraints.maxWidth <= maxContentWidth &&
-                        constraints.maxWidth >= maxContentWidth - edgePad * 2)
-                    ? maxContentWidth
-                    : width;
+                    constraints.maxWidth >= maxContentWidth - edgePad * 2)
+                ? maxContentWidth
+                : width;
             final double effectiveWidth = layoutWidth - edgePad * 2;
 
-            final int visibleCount = carouselVisibleCountForWidth(layoutWidth).clamp(
-              1,
-              displayProducts.length,
-            );
+            final int visibleCount = carouselVisibleCountForWidth(
+              layoutWidth,
+            ).clamp(1, displayProducts.length);
             final int lastItem = (displayProducts.length - visibleCount).clamp(
               0,
               displayProducts.length,
             );
+            final double carouselCardSpacing = width < 700 ? 5 : 11;
             final double slotWidth = effectiveWidth / visibleCount;
             double cardWidth = (slotWidth - carouselCardSpacing).clamp(
               baseIconWidth,
               double.infinity,
             );
-            final double fraction = (cardWidth + carouselCardSpacing) / effectiveWidth;
+            final double fraction =
+                (cardWidth + carouselCardSpacing) / effectiveWidth;
             _updateController(fraction.clamp(0.0, 1.0));
 
             final double iconWidth = cardWidth;
@@ -121,7 +124,9 @@ class _ProductCarouselState extends State<ProductCarousel> {
 
             final EdgeInsets mobilePadding = EdgeInsets.only(
               left: widget.leftPadding + effectiveArrowSpace,
-              right: widget.needsRightPadding ? (layoutWidth >= 1040 ? 0 : 22) : 0,
+              right: widget.needsRightPadding
+                  ? (layoutWidth >= 1040 ? 0 : 22)
+                  : 0,
             );
 
             return Column(

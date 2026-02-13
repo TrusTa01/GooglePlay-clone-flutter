@@ -33,7 +33,7 @@ class GooglePlay extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => TabsProvider()),
         ChangeNotifierProvider(create: (context) => FilterProvider()),
         ChangeNotifierProvider(create: (context) => ProductsProvider()),
-      ],
+      ], 
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Google Play',
