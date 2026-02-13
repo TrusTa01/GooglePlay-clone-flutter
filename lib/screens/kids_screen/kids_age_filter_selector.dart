@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '/providers/providers.dart';
-import '/widgets/widgets.dart';
+import 'package:google_play/providers/providers.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class KidsAgeFilterSelector extends StatelessWidget {
   final FilterType type;
@@ -18,7 +17,7 @@ class KidsAgeFilterSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<ProductsProvider>();
+    final provider = context.read<FilterProvider>();
 
     return FilterSets.getFilters(
       type,

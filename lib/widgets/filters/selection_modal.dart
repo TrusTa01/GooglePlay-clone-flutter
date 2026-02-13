@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/constants.dart';
 import 'package:google_play/screens/category/product_categories_data.dart';
-
-import '/widgets/widgets.dart';
 
 class SelectionModal {
   static Future<void> show({
     required BuildContext context,
-    required String title,
+    required String modalTitle,
     required List<ProductCategoriesData> options,
     required String activeOption,
     required Function(String) onSelect,
@@ -29,7 +28,7 @@ class SelectionModal {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, bottom: 20),
                   child: Text(
-                    title,
+                    modalTitle,
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -112,15 +111,18 @@ class SelectionModal {
       context: context,
       isScrollControlled: true,
       useRootNavigator: true,
+      isDismissible: true,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
       builder: (context) {
-        return FractionallySizedBox(
-          heightFactor: 0.95, // Высота 95% экрана
+        return SizedBox(
+          height: MediaQuery.of(context).size.height - 50,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+            padding: EdgeInsets.fromLTRB(
+              16,
+              MediaQuery.of(context).padding.top + 24,
+              16,
+              MediaQuery.of(context).padding.bottom + 24,
+            ),
             child: Column(
               children: [
                 Align(

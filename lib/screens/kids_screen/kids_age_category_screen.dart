@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '/models/models.dart';
-import '/screens/screens.dart';
+import 'package:google_play/core/constants.dart';
+import 'package:google_play/models/models.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class KidsAgeCategoryScreen extends StatelessWidget {
   final String ageLabel;
@@ -15,10 +17,24 @@ class KidsAgeCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(ageLabel),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: Constants.sliderMaxContentWidth,
+          ),
+          child: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SimpleSliverAppBar(
+                  showBackButton: true,
+                  title: AppBarTitle(title: ageLabel),
+                ),
+                GenericTabScreen.asSliver(sections: sections),
+              ],
+            ),
+          ),
+        ),
       ),
-      body: GenericTabScreen(sections: sections),
     );
   }
 }

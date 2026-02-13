@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'shimer_box.dart';
+import 'package:google_play/core/shimers/shimer_box.dart';
 
 class GamePreviewSkeleton extends StatelessWidget {
   const GamePreviewSkeleton({super.key});

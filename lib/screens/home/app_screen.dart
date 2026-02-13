@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../widgets/widgets.dart';
-import '../../providers/tabs_provider.dart';
-import '../../core/routes/routes.dart';
+import 'package:google_play/core/routes/routes.dart';
+import 'package:google_play/providers/providers.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class AppsScreen extends StatefulWidget {
   const AppsScreen({super.key});
@@ -29,47 +29,102 @@ class _AppsScreenState extends State<AppsScreen>
     super.dispose();
   }
 
+  List<Widget> _buildActionWidgets(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () => Navigator.of(
+          context,
+          rootNavigator: true,
+        ).pushNamed(AppRoutesName.notificationsScreen),
+        icon: const Icon(Icons.notifications_outlined),
+      ),
+      const SizedBox(width: 10),
+      const CircleAvatar(radius: 18),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    final watchProvider = context.watch<ProductsProvider>();
+    final readProvider = context.read<ProductsProvider>();
+
+    return ChangeNotifierProvider<TabsProvider>(
       create: (context) {
         final tabsProvider = TabsProvider();
         tabsProvider.setTabs(_tabs);
         return tabsProvider;
       },
       child: Scaffold(
-        appBar: AppBars(
-          type: AppBarType.tabbed,
-          showLogo: true,
-          actions: [
-            IconButton(
-              onPressed: () => Navigator.of(
-                context,
-                rootNavigator: true,
-              ).pushNamed(AppRoutesName.notificationsScreen,),
-              icon: Icon(Icons.notifications_outlined),
+        body: SafeArea(
+          bottom: false,
+          child: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+                  final appBarSlivers = buildSliverTabbedAppBar(
+                    context: context,
+                    showLogo: true,
+                    tabs: _tabs,
+                    tabController: _tabController,
+                    actions: _buildActionWidgets(context),
+                    forceElevated: false,
+                  );
+                  return [
+                    // Шапка
+                    appBarSlivers[0],
+                    SliverOverlapAbsorber(
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context,
+                      ),
+                      // Табы
+                      sliver: appBarSlivers[1],
+                    ),
+                  ];
+                },
+            body: TabBarView(
+              physics:
+                  const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+              controller: _tabController,
+              children: _tabs.map((tabName) {
+                return Builder(
+                  builder: (context) {
+                    return CustomScrollView(
+                      key: PageStorageKey<String>(tabName),
+                      slivers: [
+                        SliverOverlapInjector(
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                context,
+                              ),
+                        ),
+                        if (tabName == 'Рекомендуем')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.recommendedAppsSection,
+                            onLoad: () => readProvider.getRecomendations(),
+                          )
+                        else if (tabName == 'Лучшее')
+                          ...TopChartsScreen.buildSlivers(
+                            context,
+                            type: FilterType.apps,
+                            showFilters: true,
+                          )
+                        else if (tabName == 'Детям')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.kidsPaidSection,
+                          )
+                        else if (tabName == 'Категории')
+                          CategoriesTabScreen.asSliver(
+                            categories: appsCategoriesData,
+                            products: watchProvider.apps,
+                          ),
+                      ],
+                    );
+                  },
+                );
+              }).toList(),
             ),
-            const SizedBox(width: 10),
-            CircleAvatar(radius: 18),
-            const SizedBox(width: 20),
-          ],
-          tabs: _tabs,
-          tabController: _tabController,
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            _buildTabContent(''),
-            _buildTabContent(''),
-            _buildTabContent(''),
-            _buildTabContent(''),
-          ],
+          ),
         ),
       ),
     );
-  }
-
-  Widget _buildTabContent(String text) {
-    return Center(child: Text(text, style: const TextStyle(fontSize: 24)));
   }
 }

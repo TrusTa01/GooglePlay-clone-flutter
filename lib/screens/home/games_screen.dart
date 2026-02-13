@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '/screens/screens.dart';
-import '../../widgets/widgets.dart';
-import '../../core/routes/routes.dart';
-import '../../providers/providers.dart';
+import 'package:google_play/core/routes/routes.dart';
+import 'package:google_play/providers/providers.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class GamesScreen extends StatefulWidget {
   const GamesScreen({super.key});
@@ -28,46 +27,32 @@ class _GamesScreenState extends State<GamesScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
-    _tabController.addListener(_handleTabChange);
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     super.dispose();
   }
 
-  void _handleTabChange() {
-    setState(() {});
+  List<Widget> _buildActionWidgets(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () => Navigator.of(
+          context,
+          rootNavigator: true,
+        ).pushNamed(AppRoutesName.notificationsScreen),
+        icon: const Icon(Icons.notifications_outlined),
+      ),
+      const SizedBox(width: 10),
+      const CircleAvatar(radius: 18),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    final int currentIndex = _tabController.index;
-
     final watchProvider = context.watch<ProductsProvider>();
     final readProvider = context.read<ProductsProvider>();
-
-    final AppBarType appBarType = switch (currentIndex) {
-      0 || 1 || 2 || 3 || 4 => AppBarType.tabbed,
-      _ => AppBarType.tabbed,
-    };
-
-    final List<Widget> actionWidgets = [
-      if (appBarType == AppBarType.tabbed)
-        IconButton(
-          onPressed: () => Navigator.of(
-            context,
-            rootNavigator: true,
-          ).pushNamed(AppRoutesName.notificationsScreen),
-          icon: const Icon(Icons.notifications_outlined),
-        ),
-
-      const SizedBox(width: 10),
-      CircleAvatar(radius: 18),
-      const SizedBox(width: 25),
-    ];
 
     return ChangeNotifierProvider<TabsProvider>(
       create: (context) {
@@ -76,46 +61,76 @@ class _GamesScreenState extends State<GamesScreen>
         return tabsProvider;
       },
       child: Scaffold(
-        appBar: AppBars(
-          type: appBarType,
-          showLogo: appBarType == AppBarType.tabbed ? true : false,
-          actions: actionWidgets,
-
-          // // Для AppBarType.searchWithTabbs
-          // searchHint: appBarType == AppBarType.searchWithTabbs
-          //     ? 'Поиск приложений и игр'
-          //     : null,
-
-          // inputLeading: appBarType == AppBarType.searchWithTabbs
-          //     ? [const Icon(Icons.search)]
-          //     : null,
-
-          // inputActions: appBarType == AppBarType.searchWithTabbs
-          //     ? [const Icon(Icons.mic_none_outlined)]
-          //     : null,
-          tabs: _tabs,
-          tabController: _tabController,
-        ),
-
-        body: TabBarView(
-          controller: _tabController,
-          physics:
-              const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-          children: [
-            // Таб 'Рекомендуем'
-            GenericTabScreen(
-              sections: watchProvider.recommendedGamesSection,
-              onLoad: () => readProvider.getRecomendations(),
+        body: SafeArea(
+          bottom: true,
+          child: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+                  final appBarSlivers = buildSliverTabbedAppBar(
+                    context: context,
+                    tabs: _tabs,
+                    tabController: _tabController,
+                    actions: _buildActionWidgets(context),
+                  );
+                  return [
+                    // Шапка
+                    appBarSlivers[0],
+                    SliverOverlapAbsorber(
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context,
+                      ),
+                      // Табы
+                      sliver: appBarSlivers[1],
+                    ),
+                  ];
+                },
+            body: TabBarView(
+              physics:
+                  const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+              controller: _tabController,
+              children: _tabs.map((tabName) {
+                return Builder(
+                  builder: (context) {
+                    return CustomScrollView(
+                      key: PageStorageKey<String>(tabName),
+                      slivers: [
+                        SliverOverlapInjector(
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                context,
+                              ),
+                        ),
+                        if (tabName == 'Рекомендуем')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.recommendedGamesSection,
+                            onLoad: () => readProvider.getRecomendations(),
+                          )
+                        else if (tabName == 'Лучшее')
+                          ...TopChartsScreen.buildSlivers(
+                            context,
+                            type: FilterType.games,
+                            showFilters: true,
+                          )
+                        else if (tabName == 'Детям')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.kidsPaidSection,
+                          )
+                        else if (tabName == 'Платные')
+                          GenericTabScreen.asSliver(
+                            sections: watchProvider.paidGamesSection,
+                          )
+                        else if (tabName == 'Категории')
+                          CategoriesTabScreen.asSliver(
+                            categories: gamesCategoriesData,
+                            products: watchProvider.games,
+                          ),
+                      ],
+                    );
+                  },
+                );
+              }).toList(),
             ),
-            // Таб 'Лучшее'
-            const TopChartsPage(type: FilterType.games),
-            // Таб 'Детям'
-            GenericTabScreen(sections: watchProvider.kidsPaidSection),
-            // Таб 'Платные'
-            GenericTabScreen(sections: watchProvider.paidGamesSection),
-            // Таб 'Категории'
-            CategoriesTabScreen(categories: gamesCategoriesData),
-          ],
+          ),
         ),
       ),
     );

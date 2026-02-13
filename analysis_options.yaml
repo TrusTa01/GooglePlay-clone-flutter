@@ -5,3 +5,4 @@ linter:
   rules:
     avoid_print: true
     prefer_single_quotes: false
+    always_use_package_imports: true

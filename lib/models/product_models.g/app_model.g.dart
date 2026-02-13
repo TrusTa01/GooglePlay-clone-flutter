@@ -12,6 +12,7 @@ App _$AppFromJson(Map<String, dynamic> json) => App(
   title: json['title'] as String,
   creator: json['creator'] as String,
   rating: (json['rating'] as num).toDouble(),
+  shortDescription: json['shortDescription'] as String,
   description: json['description'] as String,
   iconUrl: json['iconUrl'] as String,
   isPaid: json['isPaid'] as bool,
@@ -34,11 +35,27 @@ App _$AppFromJson(Map<String, dynamic> json) => App(
       .map((e) => e as String)
       .toList(),
   ageRating: (json['ageRating'] as num).toInt(),
+  ageRatingReasons: (json['ageRatingReasons'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
   websiteUrl: json['websiteUrl'] as String,
   emailSupport: json['emailSupport'] as String,
+  creatorDescription: json['creatorDescription'] as String,
+  url: json['url'] as String,
+  developerCompany: json['developerCompany'] as String,
+  developerAddress: json['developerAddress'] as String,
+  developerCity: json['developerCity'] as String,
+  developerCountry: json['developerCountry'] as String,
+  developerPhone: json['developerPhone'] as String,
+  eventText: json['eventText'] as String?,
+  whatsNewText: json['whatsNewText'] as String?,
   price: (json['price'] as num?)?.toDouble(),
   containsPaidContent: json['containsPaidContent'] as bool,
+  appCategory: (json['appCategory'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  reviewsCount: (json['reviewsCount'] as num).toInt(),
 );
 
 Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
@@ -46,8 +63,10 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
   'id': instance.id,
   'title': instance.title,
   'creator': instance.creator,
+  'shortDescription': instance.shortDescription,
   'description': instance.description,
   'rating': instance.rating,
+  'reviewsCount': instance.reviewsCount,
   'releaseDate': instance.releaseDate.toIso8601String(),
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
@@ -55,6 +74,12 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
   'version': instance.version,
   'size': instance.size,
   'ageRating': instance.ageRating,
+  'ageRatingReasons': instance.ageRatingReasons,
+  'appCategory': instance.appCategory,
+  'creatorDescription': instance.creatorDescription,
+  'url': instance.url,
+  'eventText': instance.eventText,
+  'whatsNewText': instance.whatsNewText,
   'containsAds': instance.containsAds,
   'isEditorChoice': instance.isEditorChoice,
   'downloadCount': instance.downloadCount,
@@ -68,4 +93,9 @@ Map<String, dynamic> _$AppToJson(App instance) => <String, dynamic>{
   'privacyPolicyUrl': instance.privacyPolicyUrl,
   'websiteUrl': instance.websiteUrl,
   'emailSupport': instance.emailSupport,
+  'developerCompany': instance.developerCompany,
+  'developerAddress': instance.developerAddress,
+  'developerCity': instance.developerCity,
+  'developerCountry': instance.developerCountry,
+  'developerPhone': instance.developerPhone,
 };

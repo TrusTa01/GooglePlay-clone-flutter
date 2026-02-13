@@ -1,4 +1,4 @@
-import '/widgets/widgets.dart';
+import 'package:google_play/widgets/sliders/banners/banners_type.dart';
 
 abstract interface class AppBanner {
   String get id;

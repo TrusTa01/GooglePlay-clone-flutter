@@ -11,8 +11,11 @@ SimpleBanner _$SimpleBannerFromJson(Map<String, dynamic> json) => SimpleBanner(
   imageAssetPath: json['imageAssetPath'] as String,
   title: json['title'] as String,
   hasTopToolTip: json['hasTopToolTip'] as bool,
-  topToolTipText: json['topToolTip'] as String?,
+  topToolTipText: json['topToolTipText'] as String?,
   description: json['description'] as String?,
+  eventId: json['eventId'] as String?,
+  eventCategory: json['eventCategory'] as String?,
+  eventDescription: json['eventDescription'] as String?,
 );
 
 Map<String, dynamic> _$SimpleBannerToJson(SimpleBanner instance) =>
@@ -21,6 +24,9 @@ Map<String, dynamic> _$SimpleBannerToJson(SimpleBanner instance) =>
       'imageAssetPath': instance.imageAssetPath,
       'title': instance.title,
       'hasTopToolTip': instance.hasTopToolTip,
-      'topToolTip': instance.topToolTipText,
+      'topToolTipText': instance.topToolTipText,
       'description': instance.description,
+      'eventId': instance.eventId,
+      'eventCategory': instance.eventCategory,
+      'eventDescription': instance.eventDescription,
     };

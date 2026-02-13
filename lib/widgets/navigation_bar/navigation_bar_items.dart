@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../widgets.dart';
+import 'package:google_play/core/constants.dart';
 
 // Games
 List<NavigationDestination> destinations = [

@@ -12,6 +12,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   title: json['title'] as String,
   creator: json['creator'] as String,
   rating: (json['rating'] as num).toDouble(),
+  shortDescription: json['shortDescription'] as String,
   iconUrl: json['iconUrl'] as String,
   gameGenre: (json['gameGenre'] as List<dynamic>)
       .map((e) => e as String)
@@ -32,6 +33,7 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   description: json['description'] as String,
   version: json['version'] as String,
   eventText: json['eventText'] as String?,
+  whatsNewText: json['whatsNewText'] as String?,
   size: json['size'] as String,
   downloadCount: (json['downloadCount'] as num).toInt(),
   permissions: (json['permissions'] as List<dynamic>)
@@ -43,7 +45,17 @@ Game _$GameFromJson(Map<String, dynamic> json) => Game(
   emailSupport: json['emailSupport'] as String,
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
   creatorDescription: json['creatorDescription'] as String,
+  url: json['url'] as String,
+  developerCompany: json['developerCompany'] as String,
+  developerAddress: json['developerAddress'] as String,
+  developerCity: json['developerCity'] as String,
+  developerCountry: json['developerCountry'] as String,
+  developerPhone: json['developerPhone'] as String,
   ageRating: (json['ageRating'] as num).toInt(),
+  ageRatingReasons: (json['ageRatingReasons'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
+  reviewsCount: (json['reviewsCount'] as num).toInt(),
 );
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
@@ -51,8 +63,10 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'id': instance.id,
   'title': instance.title,
   'creator': instance.creator,
+  'shortDescription': instance.shortDescription,
   'description': instance.description,
   'rating': instance.rating,
+  'reviewsCount': instance.reviewsCount,
   'releaseDate': instance.releaseDate.toIso8601String(),
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
@@ -62,8 +76,10 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'version': instance.version,
   'size': instance.size,
   'eventText': instance.eventText,
+  'whatsNewText': instance.whatsNewText,
   'downloadCount': instance.downloadCount,
   'ageRating': instance.ageRating,
+  'ageRatingReasons': instance.ageRatingReasons,
   'permissions': instance.permissions,
   'lastUpdated': instance.lastUpdated.toIso8601String(),
   'gameGenre': instance.gameGenre,
@@ -73,6 +89,12 @@ Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
   'emailSupport': instance.emailSupport,
   'privacyPolicyUrl': instance.privacyPolicyUrl,
   'creatorDescription': instance.creatorDescription,
+  'url': instance.url,
+  'developerCompany': instance.developerCompany,
+  'developerAddress': instance.developerAddress,
+  'developerCity': instance.developerCity,
+  'developerCountry': instance.developerCountry,
+  'developerPhone': instance.developerPhone,
   'isOnline': instance.isOnline,
   'hasMultiplayer': instance.hasMultiplayer,
   'hasAchievements': instance.hasAchievements,

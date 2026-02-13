@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '/screens/screens.dart';
-import '../widgets/widgets.dart';
-import '../core/extensions/navigator_extensions.dart';
-import '../providers/products_provider.dart';
+import 'package:google_play/core/extensions/navigator_extensions.dart';
+import 'package:google_play/providers/products_provider.dart';
+import 'package:google_play/screens/screens.dart';
+import 'package:google_play/widgets/widgets.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
