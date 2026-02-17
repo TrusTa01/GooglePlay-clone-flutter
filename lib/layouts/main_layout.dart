@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_play/core/extensions/navigator_extensions.dart';
+import 'package:google_play/core/extensions/navigator_extension.dart';
+import 'package:google_play/core/extensions/indexed_stack_extension.dart';
 import 'package:google_play/providers/products_provider.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/widgets/widgets.dart';
@@ -15,11 +16,16 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   final ValueNotifier<int> _currentPageIndex = ValueNotifier<int>(0);
 
-  final List<GlobalKey<NavigatorState>> _navigatorKeys = [
-    GlobalKey<NavigatorState>(), // Games
-    GlobalKey<NavigatorState>(), // Apps
-    GlobalKey<NavigatorState>(), // Search
-    GlobalKey<NavigatorState>(), // Books
+  final List<GlobalKey<NavigatorState>> _navigatorKeys = List.generate(
+    4,
+    (_) => GlobalKey<NavigatorState>(),
+  );
+
+  final List<Widget> _screens = const [
+    GamesScreen(),
+    AppsScreen(),
+    SearchScreen(),
+    BooksScreen(),
   ];
 
   @override
@@ -57,12 +63,9 @@ class _MainLayoutState extends State<MainLayout> {
         return Scaffold(
           body: IndexedStack(
             index: currentIndex,
-            children: [
-              _navigatorKeys.createNavigator(0, const GamesScreen()),
-              _navigatorKeys.createNavigator(1, const AppsScreen()),
-              _navigatorKeys.createNavigator(2, const SearchScreen()),
-              _navigatorKeys.createNavigator(3, const BooksScreen()),
-            ],
+            children: _screens.mapIndexed(
+              (i, screen) => _navigatorKeys.createNavigator(i, screen),
+            ),
           ),
           bottomNavigationBar: CustomNavigationBar(
             currentPageIndex: currentIndex,
