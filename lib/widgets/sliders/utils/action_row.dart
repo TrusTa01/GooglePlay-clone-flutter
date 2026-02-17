@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/models/models.dart';
-import 'package:google_play/providers/products_provider.dart';
 import 'package:google_play/widgets/buttons/elevated_button.dart';
 import 'package:google_play/widgets/sliders/utils/product_card_components.dart';
 
@@ -37,19 +35,13 @@ class ActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentProduct =
-        product ??
-        (banner != null
-            ? context.read<ProductsProvider>().getProductById(banner!.productId)
-            : null);
+    if (product == null) return const SizedBox.shrink();
 
-    if (currentProduct == null) return const SizedBox.shrink();
-
-    final formatter = ProductDataFormatter(currentProduct);
+    final formatter = ProductDataFormatter(product);
 
     bool containsPaidContent = false;
-    if (currentProduct is Game || currentProduct is App) {
-      containsPaidContent = currentProduct.containsPaidContent;
+    if (product is Game || product is App) {
+      containsPaidContent = product.containsPaidContent;
     }
 
     final String iconPath = 'assets/icons/star.png';
@@ -60,7 +52,7 @@ class ActionRow extends StatelessWidget {
       children: [
         ProductCardThumbnail(
           borderRadius: borderRadius ?? BorderRadius.circular(12),
-          iconUrl: currentProduct.iconUrl,
+          iconUrl: product.iconUrl,
           iconWidth: iconWidth,
           iconHeight: iconHeight,
           cacheWidth: cacheWidth,
@@ -74,16 +66,16 @@ class ActionRow extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ProductTitle(
-                title: currentProduct.title,
+                title: product.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Row(
                 children: [
                   if (!hasThreeLines) ...[
-                    ProductCreatorText(creator: currentProduct.creator),
+                    ProductCreatorText(creator: product.creator),
                     const DotSeparator(),
-                    AgeBadge(age: currentProduct.ageRating),
+                    AgeBadge(age: product.ageRating),
                     const SizedBox(width: 10),
                     if (screenWidth > 320)
                       ProductInfoTag(
@@ -98,7 +90,7 @@ class ActionRow extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Expanded(child: ActionRowTags(product: currentProduct)),
+                        Expanded(child: ActionRowTags(product: product)),
                       ],
                     ),
                     const SizedBox(height: 3),
@@ -110,28 +102,28 @@ class ActionRow extends StatelessWidget {
                           iconColor: Constants.googleBlue,
                         ),
                         const SizedBox(width: 10),
-                        if (currentProduct is Book)
+                        if (product is Book)
                           ProductInfoTag(
-                            text: currentProduct.format,
+                            text: product.format,
                             hasBackground: true,
                           ),
-                        if (currentProduct is! Book)
+                        if (product is! Book)
                           ProductInfoTag(
                             text: formatter.technicalInfoFormatted,
                             hasBackground: false,
                           ),
                         const SizedBox(width: 10),
-                        if (currentProduct is Game || currentProduct is App)
-                          if (currentProduct.eventText != null &&
-                              !currentProduct.isPaid)
+                        if (product is Game || product is App)
+                          if (product.eventText != null &&
+                              !product.isPaid)
                             Flexible(
                               child: ProductInfoTag(
-                                text: currentProduct.eventText!,
+                                text: product.eventText!,
                               ),
                             ),
-                        if (currentProduct.isPaid && screenWidth > 320)
+                        if (product.isPaid && screenWidth > 320)
                           ProductInfoTag(text: formatter.price),
-                        if (currentProduct is Book && !currentProduct.isPaid)
+                        if (product is Book && !product.isPaid)
                           ProductInfoTag(text: 'Бесплатно'),
                       ],
                     ),
@@ -145,7 +137,7 @@ class ActionRow extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomElevatedButton(
-                isPaid: currentProduct.isPaid,
+                isPaid: product.isPaid,
                 price: formatter.price,
                 defaultButtonText: 'Установить',
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/widgets/lazy_tab_content.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/core/routes/routes.dart';
 import 'package:google_play/providers/providers.dart';
@@ -15,6 +16,8 @@ class GamesScreen extends StatefulWidget {
 class _GamesScreenState extends State<GamesScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+
+  // Порядок должен совпадать с ключами в games_config.json
   final List<String> _tabs = [
     'Рекомендуем',
     'Лучшее',
@@ -23,16 +26,53 @@ class _GamesScreenState extends State<GamesScreen>
     'Категории',
   ];
 
+  // Ключи для маппинга tab UI → config
+  final List<String> _tabKeys = [
+    'recommended',
+    'top_charts',
+    'kids',
+    'paid',
+    'categories',
+  ];
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController.addListener(_handleTabChange);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final gamesReadProvider = context.read<GamesProvider>();
+      final bannersReadProvider = context.read<BannersProvider>();
+
+      gamesReadProvider.loadGamesData(bannersReadProvider);
+
+      _loadCurrentTabSections();
+    });
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _handleTabChange() {
+    if (_tabController.indexIsChanging) {
+      _loadCurrentTabSections();
+    }
+    setState(() {});
+  }
+
+  void _loadCurrentTabSections() {
+    final currentTabKey = _tabKeys[_tabController.index];
+    final gamesReadProvider = context.read<GamesProvider>();
+    final bannersReadProvider = context.read<BannersProvider>();
+
+    if (!gamesReadProvider.isTabSectionsLoaded(currentTabKey)) {
+      gamesReadProvider.getSectionsForTab(currentTabKey, bannersReadProvider);
+    }
   }
 
   List<Widget> _buildActionWidgets(BuildContext context) {
@@ -51,8 +91,8 @@ class _GamesScreenState extends State<GamesScreen>
 
   @override
   Widget build(BuildContext context) {
-    final watchProvider = context.watch<ProductsProvider>();
-    final readProvider = context.read<ProductsProvider>();
+    final gamesWatchProvider = context.watch<GamesProvider>();
+    final bannersWatchProvider = context.watch<BannersProvider>();
 
     return ChangeNotifierProvider<TabsProvider>(
       create: (context) {
@@ -88,11 +128,13 @@ class _GamesScreenState extends State<GamesScreen>
               physics:
                   const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
               controller: _tabController,
-              children: _tabs.map((tabName) {
+              children: List.generate(_tabs.length, (index) {
+                final tabKey = _tabKeys[index];
+
                 return Builder(
                   builder: (context) {
                     return CustomScrollView(
-                      key: PageStorageKey<String>(tabName),
+                      key: PageStorageKey<String>(tabKey),
                       slivers: [
                         SliverOverlapInjector(
                           handle:
@@ -100,29 +142,23 @@ class _GamesScreenState extends State<GamesScreen>
                                 context,
                               ),
                         ),
-                        if (tabName == 'Рекомендуем')
-                          GenericTabScreen.asSliver(
-                            sections: watchProvider.recommendedGamesSection,
-                            onLoad: () => readProvider.getRecomendations(),
-                          )
-                        else if (tabName == 'Лучшее')
+                        if (tabKey == 'top_charts')
                           ...TopChartsScreen.buildSlivers(
                             context,
                             type: FilterType.games,
                             showFilters: true,
                           )
-                        else if (tabName == 'Детям')
-                          GenericTabScreen.asSliver(
-                            sections: watchProvider.kidsPaidSection,
-                          )
-                        else if (tabName == 'Платные')
-                          GenericTabScreen.asSliver(
-                            sections: watchProvider.paidGamesSection,
-                          )
-                        else if (tabName == 'Категории')
+                        else if (tabKey == 'categories')
                           CategoriesTabScreen.asSliver(
                             categories: gamesCategoriesData,
-                            products: watchProvider.games,
+                            products: gamesWatchProvider.games,
+                          )
+                        else
+                          LazyTabContent(
+                            tabKey: tabKey,
+                            provider: gamesWatchProvider,
+                            bannersProvider: bannersWatchProvider,
+                            isSliver: true,
                           ),
                       ],
                     );

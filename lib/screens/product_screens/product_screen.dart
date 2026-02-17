@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/models/models.dart';
-import 'package:google_play/providers/products_provider.dart';
+import 'package:google_play/providers/providers.dart';
 import 'package:google_play/services/product_query_service.dart';
 import 'package:google_play/widgets/widgets.dart';
 import 'package:google_play/screens/product_screens/product_page_sections/product_page_sections.dart';
@@ -28,9 +29,9 @@ class ProductPageScreen extends StatelessWidget {
     if (product != null) {
       return _ProductPageContent(product: product!);
     }
-    return Consumer<ProductsProvider>(
-      builder: (context, provider, _) {
-        final p = provider.getProductById(productId!);
+    return Consumer3<GamesProvider, AppsProvider, BooksProvider>(
+      builder: (context, _, _, _, _) {
+        final p = context.getProductById(productId!);
         if (p == null) {
           return Scaffold(
             appBar: AppBar(title: const Text('Страница продукта')),
@@ -54,7 +55,7 @@ class _ProductPageContent extends StatelessWidget {
     final utils = ProductUIConfig(product);
 
     // Получаем похожие продукты
-    final allProducts = context.watch<ProductsProvider>().allProducts;
+    final allProducts = context.allProducts;
     final queryService = ProductQueryService();
     final similarProducts = queryService.getSimilarProducts(
       allProducts,

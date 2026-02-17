@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/providers/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:google_play/core/routes/routes.dart';
 import 'package:google_play/layouts/main_layout.dart';
-import 'package:google_play/providers/filter_provider.dart';
-import 'package:google_play/providers/products_provider.dart';
-import 'package:google_play/providers/tabs_provider.dart';
 import 'package:google_play/screens/screens.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-// );
   runApp(GooglePlay());
 }
 
@@ -32,26 +25,30 @@ class GooglePlay extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => TabsProvider()),
         ChangeNotifierProvider(create: (context) => FilterProvider()),
-        ChangeNotifierProvider(create: (context) => ProductsProvider()),
-      ], 
+        ChangeNotifierProvider(create: (context) => GamesProvider()),
+        ChangeNotifierProvider(create: (context) => AppsProvider()),
+        ChangeNotifierProvider(create: (context) => BooksProvider()),
+        ChangeNotifierProvider(create: (context) => BannersProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Google Play',
         theme: baseTheme.copyWith(
           textTheme: GoogleFonts.nunitoTextTheme(baseTheme.textTheme),
-          primaryColor: const Color(0xFF0B57CE),
+          primaryColor: Constants.googleBlue,
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
             elevation: 0,
             systemOverlayStyle: SystemUiOverlayStyle.dark,
           ),
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0B57CE)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Constants.googleBlue),
         ),
         routes: {
-          AppRoutesName.notificationsScreen: (context) => const NotificationsScreen()
+          AppRoutesName.notificationsScreen: (context) =>
+              const NotificationsScreen(),
         },
-        home: const MainLayout(),   
+        home: const MainLayout(),
       ),
     );
   }

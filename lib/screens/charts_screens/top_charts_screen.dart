@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:provider/provider.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/services/product_query_service.dart';
 import 'package:google_play/widgets/widgets.dart';
@@ -29,11 +30,10 @@ class TopChartsScreen extends StatelessWidget {
     required FilterType type,
     required bool showFilters,
   }) {
-    final productsProvider = context.watch<ProductsProvider>();
     final filterProvider = context.watch<FilterProvider>();
     final queryService = ProductQueryService();
     final items = queryService.getFilteredProducts(
-      productsProvider.allProducts,
+      context.allProducts,
       type: type,
       selectedTopFilter: filterProvider.selectedTopFilter,
       selectedGameCategory: filterProvider.selectedGameCategory,

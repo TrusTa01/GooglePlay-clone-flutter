@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/models/models.dart';
-import 'package:google_play/providers/products_provider.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/widgets/widgets.dart';
 import 'package:google_play/widgets/sliders/banners/utils/banner_layout_config.dart';
@@ -139,8 +138,7 @@ class _BannerSectionState extends State<BannerSection>
 
       if (banner.eventId != null) {
         // Navigate to event screen with sections
-        final provider = context.read<ProductsProvider>();
-        final sections = provider.getEventSections(banner);
+        final sections = context.getEventSections(banner);
 
         debugPrint('Event sections count: ${sections.length}');
 

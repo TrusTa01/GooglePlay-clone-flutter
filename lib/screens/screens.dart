@@ -1,5 +1,5 @@
 // Home
-export 'home/app_screen.dart';
+export 'home/apps_screen.dart';
 export 'home/books_screen.dart';
 export 'home/games_screen.dart';
 export 'home/search_screen.dart';
@@ -17,7 +17,7 @@ export 'category/product_categories_data.dart';
 export 'category/category_full_list_screen.dart';
 export 'category/category_overview_screen.dart';
 
-// Charts 
+// Charts
 export 'charts_screens/top_charts_screen.dart';
 
 // Kids

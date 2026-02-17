@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/core/shimers/product_slider_skeleton.dart';
+
 import 'package:google_play/models/models.dart';
-import 'package:google_play/providers/products_provider.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/widgets/widgets.dart';
 
@@ -11,12 +10,14 @@ class GenericTabScreen extends StatefulWidget {
   final List<HomeSection> sections;
   final VoidCallback? onLoad;
   final bool isSliver;
+  final String? tabKey; // Для дебага
 
   const GenericTabScreen({
     super.key,
     required this.sections,
     this.onLoad,
     this.isSliver = false,
+    this.tabKey,
   });
 
   static Widget asSliver({
@@ -32,46 +33,13 @@ class GenericTabScreen extends StatefulWidget {
 
 class _GenericTabScreenState extends State<GenericTabScreen>
     with AutomaticKeepAliveClientMixin {
-  // Сохранение состояния табов при переключении
+  // Сохранение состояния прокрутки при переключении табов
   @override
   bool get wantKeepAlive => true;
 
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.onLoad != null) {
-        widget.onLoad!();
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
-    final watchProvider = context.watch<ProductsProvider>();
-    final bool isLoading = watchProvider.isLoading && widget.sections.isEmpty;
-
-    // Если данных нет и идет загрузка — показываем шиммеры
-    if (isLoading) {
-      return widget.isSliver
-          ? SliverList.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => const Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: ProductSliderSkeleton(),
-              ),
-            )
-          : ListView.builder(
-              primary: false,
-              itemCount: 5,
-              itemBuilder: (context, index) => const Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: ProductSliderSkeleton(),
-              ),
-            );
-    }
 
     // Основной список секций
     if (widget.isSliver) {
@@ -129,18 +97,21 @@ class _GenericTabScreenState extends State<GenericTabScreen>
           showButton: section.showButton,
           maxItems: 8,
         );
+        break;
       case SectionType.carousel:
         sectionWidget = ProductCarousel(
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
           products: productList,
         );
+        break;
       case SectionType.grid:
         sectionWidget = ProductGrid(
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
           products: productList,
         );
+        break;
       case SectionType.preview:
         sectionWidget = _KeepAliveSection(
           child: GamePreviewSection(
@@ -149,6 +120,7 @@ class _GenericTabScreenState extends State<GenericTabScreen>
             showButton: section.showButton,
           ),
         );
+        break;
       case SectionType.kidsHeroBanner:
         needsHorizontalPadding = false;
         sectionWidget = KidsHeroBanner(
@@ -164,12 +136,14 @@ class _GenericTabScreenState extends State<GenericTabScreen>
             );
           },
         );
+        break;
       case SectionType.ageFIlterSelector:
         sectionWidget = KidsAgeFilterSelector(
           type: FilterType.kidsAge,
           title: section.title ?? '',
           subtitle: section.subtitle ?? '',
         );
+        break;
     }
 
     if (needsHorizontalPadding) {
