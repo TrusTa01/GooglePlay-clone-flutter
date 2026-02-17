@@ -26,12 +26,14 @@ class ProductGrid extends StatefulWidget {
 class _ProductGridState extends State<ProductGrid> {
   PageController? _pageController;
   double _lastViewportFraction = 0;
-  int _currentPage = 0;
-  bool _isHovered = false;
+  final ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
+  final ValueNotifier<bool> _isHovered = ValueNotifier<bool>(false);
 
   @override
   void dispose() {
     _pageController?.dispose();
+    _currentPage.dispose();
+    _isHovered.dispose();
     super.dispose();
   }
 
@@ -41,7 +43,7 @@ class _ProductGridState extends State<ProductGrid> {
       _lastViewportFraction = viewportFraction;
       _pageController = PageController(
         viewportFraction: viewportFraction,
-        initialPage: _currentPage,
+        initialPage: _currentPage.value,
       );
     }
   }
@@ -114,8 +116,8 @@ class _ProductGridState extends State<ProductGrid> {
 
                 // MouseRegion снаружи Stack — не блокирует кнопки внутри
                 MouseRegion(
-                  onEnter: (_) => setState(() => _isHovered = true),
-                  onExit: (_) => setState(() => _isHovered = false),
+                  onEnter: (_) => _isHovered.value = true,
+                  onExit: (_) => _isHovered.value = false,
                   child: SizedBox(
                     height: config.heightFactor,
                     child: Stack(
@@ -132,11 +134,8 @@ class _ProductGridState extends State<ProductGrid> {
                             clipBehavior: Clip.antiAlias,
                             key: PageStorageKey('grid_${widget.title}'),
                             controller: _pageController,
-                            onPageChanged: (index) {
-                              setState(() {
-                                _currentPage = index;
-                              });
-                            },
+                            onPageChanged: (index) =>
+                                _currentPage.value = index,
                             itemCount: totalPages + bufferPages,
                             itemBuilder: (context, pageIndex) {
                               if (pageIndex >= totalPages) {
@@ -171,27 +170,51 @@ class _ProductGridState extends State<ProductGrid> {
                             },
                           ),
                         ),
-                        // Кнопки внутри Stack — в пределах его границ, hit-test работает
-                        if (_isHovered) ...[
-                          if (_currentPage > 0)
-                            ScrollButton(
-                              isLeft: true,
-                              offset: contentWidth >= 1040 ? 20 : 25,
-                              onPressed: () => _pageController?.previousPage(
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.easeInOut,
-                              ),
-                            ),
-                          if (_currentPage < lastItem)
-                            ScrollButton(
-                              isLeft: false,
-                              offset: contentWidth >= 1040 ? -15 : 5,
-                              onPressed: () => _pageController?.nextPage(
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.easeInOut,
-                              ),
-                            ),
-                        ],
+
+                        // Кнопки внутри Stack — в пределах его границ, hit-test работает.
+                        // Positioned.fill чтобы не участвовать в расчёте размера Stack (иначе Stack схлопывается).
+                        Positioned.fill(
+                          child: AnimatedBuilder(
+                            animation: Listenable.merge([
+                              _isHovered,
+                              _currentPage,
+                            ]),
+                            builder: (context, _) {
+                              if (!_isHovered.value) {
+                                return const SizedBox.shrink();
+                              }
+                              return Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  if (_currentPage.value > 0)
+                                    ScrollButton(
+                                      isLeft: true,
+                                      offset: contentWidth >= 1040 ? 20 : 25,
+                                      onPressed: () =>
+                                          _pageController?.previousPage(
+                                            duration: const Duration(
+                                              milliseconds: 400,
+                                            ),
+                                            curve: Curves.easeInOut,
+                                          ),
+                                    ),
+                                  if (_currentPage.value < lastItem)
+                                    ScrollButton(
+                                      isLeft: false,
+                                      offset: contentWidth >= 1040 ? -15 : 5,
+                                      onPressed: () =>
+                                          _pageController?.nextPage(
+                                            duration: const Duration(
+                                              milliseconds: 400,
+                                            ),
+                                            curve: Curves.easeInOut,
+                                          ),
+                                    ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
