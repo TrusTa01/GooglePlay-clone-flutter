@@ -33,20 +33,25 @@ class ProductCarousel extends StatefulWidget {
 class _ProductCarouselState extends State<ProductCarousel> {
   double _lastFraction = 0.0;
   PageController? _pageController;
-  bool _isHovered = false;
-  int _currentPage = 0;
+  final ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
+  final ValueNotifier<bool> _isHovered = ValueNotifier<bool>(false);
 
   void _updateController(double newFraction) {
     if (_pageController == null || _lastFraction != newFraction) {
       _pageController?.dispose();
       _lastFraction = newFraction;
-      _pageController = PageController(viewportFraction: newFraction);
+      _pageController = PageController(
+        viewportFraction: newFraction,
+        initialPage: _currentPage.value,
+      );
     }
   }
 
   @override
   void dispose() {
     _pageController?.dispose();
+    _currentPage.dispose();
+    _isHovered.dispose();
     super.dispose();
   }
 
@@ -153,8 +158,8 @@ class _ProductCarouselState extends State<ProductCarousel> {
                 ),
 
                 MouseRegion(
-                  onEnter: (_) => setState(() => _isHovered = true),
-                  onExit: (_) => setState(() => _isHovered = false),
+                  onEnter: (_) => _isHovered.value = true,
+                  onExit: (_) => _isHovered.value = false,
                   child: SizedBox(
                     height: sliderHeight,
                     child: Stack(
@@ -166,20 +171,15 @@ class _ProductCarouselState extends State<ProductCarousel> {
                           top: 0,
                           bottom: 0,
                           child: Padding(
-                            padding: EdgeInsetsGeometry.only(
-                              left: widget.leftPadding,
-                            ),
+                            padding: EdgeInsets.only(left: widget.leftPadding),
                             child: SizedBox(
                               height: sliderHeight,
                               child: PageView.builder(
                                 padEnds: false,
                                 clipBehavior: Clip.antiAlias,
                                 controller: _pageController,
-                                onPageChanged: (index) {
-                                  setState(() {
-                                    _currentPage = index;
-                                  });
-                                },
+                                onPageChanged: (index) =>
+                                    _currentPage.value = index,
                                 key: PageStorageKey('carousel_${widget.title}'),
                                 scrollDirection: Axis.horizontal,
                                 physics: const BouncingScrollPhysics(),
@@ -205,37 +205,64 @@ class _ProductCarouselState extends State<ProductCarousel> {
                             ),
                           ),
                         ),
-                        // Кнопки внутри Stack — в пределах его границ, hit-test работает
-                        if (_isHovered) ...[
-                          if (_currentPage > 0)
-                            ScrollButton(
-                              isLeft: true,
-                              offset: effectiveArrowSpace >= 1 ? 20 : 10,
-                              alignment: const Alignment(0, -0.45),
-                              onPressed: () => _pageController?.animateToPage(
-                                (_currentPage - visibleCount).clamp(
-                                  0,
-                                  displayProducts.length - 1,
-                                ),
-                                duration: const Duration(milliseconds: 800),
-                                curve: Curves.decelerate,
-                              ),
-                            ),
-                          if (_currentPage < lastItem)
-                            ScrollButton(
-                              isLeft: false,
-                              offset: effectiveArrowSpace >= 1 ? -20 : 5,
-                              alignment: const Alignment(0, -0.45),
-                              onPressed: () => _pageController?.animateToPage(
-                                (_currentPage + visibleCount).clamp(
-                                  0,
-                                  lastItem,
-                                ),
-                                duration: const Duration(milliseconds: 800),
-                                curve: Curves.decelerate,
-                              ),
-                            ),
-                        ],
+
+                        // Кнопки внутри Stack — в пределах его границ, hit-test работает.
+                        // Positioned.fill чтобы не участвовать в расчёте размера Stack (иначе Stack схлопывается).
+                        Positioned.fill(
+                          child: AnimatedBuilder(
+                            animation: Listenable.merge([
+                              _isHovered,
+                              _currentPage,
+                            ]),
+                            builder: (context, _) {
+                              if (!_isHovered.value) {
+                                return const SizedBox.shrink();
+                              }
+                              return Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  if (_currentPage.value > 0)
+                                    ScrollButton(
+                                      isLeft: true,
+                                      offset: effectiveArrowSpace >= 1
+                                          ? 20
+                                          : 10,
+                                      alignment: const Alignment(0, -0.45),
+                                      onPressed: () =>
+                                          _pageController?.animateToPage(
+                                            (_currentPage.value - visibleCount)
+                                                .clamp(
+                                                  0,
+                                                  displayProducts.length - 1,
+                                                ),
+                                            duration: const Duration(
+                                              milliseconds: 800,
+                                            ),
+                                            curve: Curves.decelerate,
+                                          ),
+                                    ),
+                                  if (_currentPage.value < lastItem)
+                                    ScrollButton(
+                                      isLeft: false,
+                                      offset: effectiveArrowSpace >= 1
+                                          ? -20
+                                          : 5,
+                                      alignment: const Alignment(0, -0.45),
+                                      onPressed: () =>
+                                          _pageController?.animateToPage(
+                                            (_currentPage.value + visibleCount)
+                                                .clamp(0, lastItem),
+                                            duration: const Duration(
+                                              milliseconds: 800,
+                                            ),
+                                            curve: Curves.decelerate,
+                                          ),
+                                    ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
