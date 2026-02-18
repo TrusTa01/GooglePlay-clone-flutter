@@ -14,7 +14,7 @@ class ProductService {
       final List<Product> products = await Isolate.run(() {
         final List<dynamic> jsonList = json.decode(jsonString);
         return jsonList.map((json) => Product.fromJson(json)).toList();
-      });
+      }, debugName: 'Isolate: $fileName');
       // Добавляем всё, что загрузили, в общую карту
       for (var product in products) {
         _allProductsById[product.id] = product;
@@ -35,7 +35,7 @@ class ProductService {
       final result = await Isolate.run(() {
         final List<dynamic> jsonList = json.decode(jsonString);
         return jsonList.map((json) => BannerMapper.fromJson(json)).toList();
-      });
+      }, debugName: 'Banners Isolate');
 
       return result;
     } catch (e, stacktrace) {
@@ -53,7 +53,7 @@ class ProductService {
       final result = await Isolate.run(() {
         final Map<String, dynamic> json = jsonDecode(jsonString);
         return TabsConfig.fromJson(json);
-      });
+      }, debugName: 'Tabs Isolate: $fileName');
 
       return result;
     } catch (e, stacktrace) {

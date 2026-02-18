@@ -36,10 +36,10 @@ class _AppsScreenState extends State<AppsScreen>
     _tabController.addListener(_handleTabChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final appsReadProvider = context.read<GamesProvider>();
+      final appsReadProvider = context.read<AppsProvider>();
       final bannersReadProvider = context.read<BannersProvider>();
 
-      appsReadProvider.loadGamesData(bannersReadProvider);
+      appsReadProvider.loadAppsData(bannersReadProvider);
 
       _loadCurrentTabSections();
     });
@@ -140,7 +140,7 @@ class _AppsScreenState extends State<AppsScreen>
                         ),
 
                         if (tabKey == 'top_charts')
-                          ...TopChartsScreen.buildSlivers(
+                          ...TopChartsScreen.asSliver(
                             context,
                             type: FilterType.apps,
                             showFilters: true,

@@ -143,7 +143,7 @@ class _GamesScreenState extends State<GamesScreen>
                               ),
                         ),
                         if (tabKey == 'top_charts')
-                          ...TopChartsScreen.buildSlivers(
+                          ...TopChartsScreen.asSliver(
                             context,
                             type: FilterType.games,
                             showFilters: true,

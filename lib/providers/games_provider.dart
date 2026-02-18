@@ -38,12 +38,12 @@ class GamesProvider extends ChangeNotifier implements TabSectionsProvider {
   String? get error => _error;
   bool get isDataLoaded => _isGamesLoaded && _isConfigLoaded;
 
-  /// Отложенный notifyListeners, чтобы не вызывать перестроение во время build.
+  /// Отложенный notifyListeners, чтобы не вызывать перестроение во время build
   void _notifyAfterBuild() {
     WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
   }
 
-  // ГЛАВНЫЙ МЕТОД: Загрузка данных и конфига
+  // Главный метод: Загрузка данных и конфига
   Future<void> loadGamesData(BannersProvider bannersProvider) async {
     // Предотвращаем повторную загрузку
     if (_isGamesLoaded || _isLoading) return;
@@ -86,7 +86,7 @@ class GamesProvider extends ChangeNotifier implements TabSectionsProvider {
     _recommendations = sorted.take(7).toList();
   }
 
-  // ЛЕНИВАЯ ЗАГРУЗКА СЕКЦИЙ ДЛЯ SUB-TAB (интерфейс TabSectionsProvider)
+  // Ленивая загрузка для саб-табов (интерфейс TabSectionsProvider)
   @override
   Future<List<HomeSection>> getSectionsForTab(
     String tabKey, [
@@ -100,7 +100,7 @@ class GamesProvider extends ChangeNotifier implements TabSectionsProvider {
 
     // Если уже идет загрузка для этого таба - ждем
     if (_tabSectionsLoading[tabKey] == true) {
-      // Можно добавить Completer для ожидания
+      // TODO: добавить Completer для ожидания
       return [];
     }
 

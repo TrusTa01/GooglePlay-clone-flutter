@@ -1,7 +1,7 @@
 import 'package:google_play/models/models.dart';
 import 'package:google_play/services/product_query_service.dart';
 
-/// Преобразует метку возраста («До 5 лет», «От 6 до 8 лет» и т.д.) в диапазон [minAge, maxAge].
+/// Преобразует метку возраста (До 5 лет, От 6 до 8 лет и т.д.) в диапазон [minAge], [maxAge].
 Map<String, int> _getAgeRangeFromLabel(String ageLabel) {
   switch (ageLabel) {
     case 'До 5 лет':

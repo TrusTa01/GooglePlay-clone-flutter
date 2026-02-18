@@ -15,7 +15,6 @@ class MainLayout extends StatefulWidget {
 
 class _MainLayoutState extends State<MainLayout> {
   final ValueNotifier<int> _currentPageIndex = ValueNotifier<int>(0);
-  final _previousPageIndex = 0; // Отслеживание предыдущей вкладки
 
   final List<GlobalKey<NavigatorState>> _navigatorKeys = List.generate(
     4,
@@ -45,11 +44,11 @@ class _MainLayoutState extends State<MainLayout> {
 
   // Переключение вкладки
   void _switchTab(int index) {
-    if (_shouldResetFilters(_previousPageIndex, index)) {
+    final fromIndex = _currentPageIndex.value;
+    if (_shouldResetFilters(fromIndex, index)) {
       context.read<FilterProvider>().resetForTabIndex(index);
     }
     _currentPageIndex.value = index;
-
     setState(() {});
   }
 

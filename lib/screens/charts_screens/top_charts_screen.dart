@@ -20,12 +20,12 @@ class TopChartsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      slivers: buildSlivers(context, type: type, showFilters: showFilters),
+      slivers: asSliver(context, type: type, showFilters: showFilters),
     );
   }
 
   /// Сливеры чартов для встраивания в другой [CustomScrollView] (например, в [CategoryOverviewScreen]).
-  static List<Widget> buildSlivers(
+  static List<Widget> asSliver(
     BuildContext context, {
     required FilterType type,
     required bool showFilters,

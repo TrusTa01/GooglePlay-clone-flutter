@@ -133,13 +133,13 @@ class _BooksScreenState extends State<BooksScreen>
                         ),
 
                         if (tabKey == 'top_sales')
-                          ...TopChartsScreen.buildSlivers(
+                          ...TopChartsScreen.asSliver(
                             context,
                             type: FilterType.books,
                             showFilters: true,
                           )
                         else if (tabKey == 'new_realeases')
-                          ...TopChartsScreen.buildSlivers(
+                          ...TopChartsScreen.asSliver(
                             context,
                             type: FilterType.books,
                             showFilters: true,
@@ -150,7 +150,7 @@ class _BooksScreenState extends State<BooksScreen>
                             products: booksWatchProvider.books,
                           )
                         else if (tabKey == 'top_free')
-                          ...TopChartsScreen.buildSlivers(
+                          ...TopChartsScreen.asSliver(
                             context,
                             type: FilterType.books,
                             showFilters: true,

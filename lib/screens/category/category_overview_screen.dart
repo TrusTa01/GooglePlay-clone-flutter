@@ -46,7 +46,7 @@ class CategoryOverviewScreen extends StatelessWidget {
                     onLeadingPressed: () => Navigator.pop(context),
                     title: AppBarTitle(title: title),
                   ),
-                  ...TopChartsScreen.buildSlivers(
+                  ...TopChartsScreen.asSliver(
                     context,
                     type: filterType,
                     showFilters: false,
