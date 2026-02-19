@@ -1,4 +1,5 @@
 import 'package:google_play/models/models.dart';
+import 'package:google_play/services/product_index.dart';
 import 'package:google_play/services/product_query_service.dart';
 
 /// Преобразует метку возраста (До 5 лет, От 6 до 8 лет и т.д.) в диапазон [minAge], [maxAge].
@@ -19,14 +20,15 @@ Map<String, int> _getAgeRangeFromLabel(String ageLabel) {
 }
 
 // Сервис для построения секций страниц из конфигураций (SectionConfig → HomeSection).
+// Использует [ProductIndex] для запросов O(1) вместо O(n) сканов.
 class SectionBuilderService {
-  final List<Product> allProducts;
+  final ProductIndex productIndex;
   final List<AppBanner> allBanners;
   final List<Product> recommendations;
   final ProductQueryService queryService;
 
   SectionBuilderService({
-    required this.allProducts,
+    required this.productIndex,
     required this.allBanners,
     required this.recommendations,
     required this.queryService,
@@ -92,14 +94,14 @@ class SectionBuilderService {
         return queryService.getAppRecommendations(recommendations);
 
       case 'getGamesByCategory':
-        return queryService.getGamesByCategory(
-          allProducts,
+        return queryService.getGamesByCategoryFromIndex(
+          productIndex,
           params?['genre'] ?? '',
         );
 
       case 'getBooksByCategory':
-        return queryService.getBooksByCategory(
-          allProducts,
+        return queryService.getBooksByCategoryFromIndex(
+          productIndex,
           params?['genre'] ?? '',
         );
 
@@ -114,33 +116,36 @@ class SectionBuilderService {
 
       case 'getPaidGamesByGenre':
         return queryService
-            .getPaidGamesByGenre(allProducts, params?['genre'] ?? '')
+            .getPaidGamesByGenreFromIndex(productIndex, params?['genre'] ?? '')
             .take(1)
             .toList();
 
       case 'getAllPaidProductsTake':
-        return queryService.getAllPaidProductsTake(
-          allProducts,
+        return queryService.getAllPaidProductsTakeFromIndex(
+          productIndex,
           params?['count'] ?? 10,
         );
 
       case 'getAllPaidProductsUnderPrice':
-        return queryService.getAllPaidProductsUnderPrice(
-          allProducts,
+        return queryService.getAllPaidProductsUnderPriceFromIndex(
+          productIndex,
           params?['price'] ?? 150,
         );
 
       case 'getProductsByTag':
-        return queryService.getProductsByTag(
-          allProducts,
+        return queryService.getProductsByTagFromIndex(
+          productIndex,
           params?['query'] ?? '',
         );
 
       case 'getEbooksByTag':
-        return queryService.getEbooksByTag(allProducts, params?['query'] ?? '');
+        return queryService.getEbooksByTagFromIndex(
+          productIndex,
+          params?['query'] ?? '',
+        );
 
       case 'getOfflineGames':
-        return queryService.getOfflineGames(allProducts);
+        return queryService.getOfflineGamesFromIndex(productIndex);
 
       case 'getKidsAgeRecommendations':
         return queryService.getKidsAgeRecommendations(
@@ -150,23 +155,23 @@ class SectionBuilderService {
 
       case 'getKidsAgeRecommendationsByAgeRange':
         final ageLabel = params?['ageLabel'] ?? '';
-        return queryService.getKidsAgeRecommendationsByAgeRange(
-          recommendations,
+        return queryService.getKidsAgeRecommendationsByAgeRangeFromIndex(
+          productIndex,
           ageLabel,
           _getAgeRangeFromLabel,
         );
 
       case 'getProductsByTagAndAge':
-        return queryService.getProductsByTagAndAge(
-          allProducts,
+        return queryService.getProductsByTagAndAgeFromIndex(
+          productIndex,
           params?['query'] ?? '',
           params?['ageLabel'] ?? '',
           _getAgeRangeFromLabel,
         );
 
       case 'getGamesByCategoryAndAge':
-        return queryService.getGamesByCategoryAndAge(
-          allProducts,
+        return queryService.getGamesByCategoryAndAgeFromIndex(
+          productIndex,
           params?['genre'] ?? '',
           params?['ageLabel'] ?? '',
           _getAgeRangeFromLabel,

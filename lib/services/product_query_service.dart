@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/models/models.dart';
+import 'package:google_play/services/product_index.dart';
 import 'package:google_play/widgets/filters/filter_factory.dart';
 
 // Сервис для запросов и фильтрации продуктов.
 // Все методы - чистые функции без состояния.
 class ProductQueryService {
-
   // Маппинг составных жанров фильтра на отдельные жанры в книгах
   static List<String> _getBookGenresForFilter(String filterGenre) {
     final normalized = filterGenre.trim().toLowerCase();
-    
+
     // Составные жанры, которые нужно разбить на отдельные
     switch (normalized) {
       case 'фантастика и фэнтези':
@@ -32,8 +32,10 @@ class ProductQueryService {
   // Проверка, соответствует ли книга жанру (с учетом составных жанров)
   static bool _bookMatchesGenre(Book book, String filterGenre) {
     final genresToMatch = _getBookGenresForFilter(filterGenre);
-    final normalizedGenresToMatch = genresToMatch.map((g) => g.trim().toLowerCase()).toList();
-    
+    final normalizedGenresToMatch = genresToMatch
+        .map((g) => g.trim().toLowerCase())
+        .toList();
+
     return book.genres.any((bookGenre) {
       final normalizedBookGenre = bookGenre.trim().toLowerCase();
       return normalizedGenresToMatch.contains(normalizedBookGenre);
@@ -63,6 +65,15 @@ class ProductQueryService {
     }).toList();
   }
 
+  /// По индексу: точное совпадение ключа O(1), иначе один скан по allProducts.
+  List<Product> getProductsByTagFromIndex(ProductIndex index, String query) {
+    final key = query.trim().toLowerCase();
+    if (index.productsByTag.containsKey(key)) {
+      return List<Product>.from(index.productsByTag[key]!);
+    }
+    return getProductsByTag(index.allProducts, query);
+  }
+
   // Универсальный поиск по тегу, жанру или названию
   List<Product> getProductsByTag(List<Product> allProducts, String query) {
     final q = query.toLowerCase();
@@ -76,22 +87,32 @@ class ProductQueryService {
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inGenres || inTags;
       }
-      
+
       // Если это приложение, проверяем теги
       if (p is App) {
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inTags;
       }
-      
+
       // Если это книга, проверяем жанры и теги
       if (p is Book) {
         final inGenres = p.genres.any((g) => g.toLowerCase().contains(q));
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inGenres || inTags;
       }
-      
+
       return false;
     }).toList();
+  }
+
+  /// По индексу: точное совпадение по ключу, иначе один скан по книгам.
+  List<Product> getEbooksByTagFromIndex(ProductIndex index, String query) {
+    final key = query.trim().toLowerCase();
+    if (index.ebooksByTag.containsKey(key)) {
+      return index.ebooksByTag[key]!.cast<Product>();
+    }
+    final books = index.allProducts.whereType<Book>().toList();
+    return getEbooksByTag(books.cast<Product>(), query);
   }
 
   // Поиск только электронных книг (без аудиокниг) по тегу
@@ -101,12 +122,25 @@ class ProductQueryService {
       if (p is! Book) return false;
       // Фильтруем только ePub книги (не аудиокниги)
       if (!p.isEbook) return false;
-      
+
       // Проверяем жанры и теги
       final inGenres = p.genres.any((g) => g.toLowerCase().contains(q));
       final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
       return inGenres || inTags;
     }).toList();
+  }
+
+  /// По индексу: продукты из возрастного бакета, отфильтрованные по тегу.
+  List<Product> getProductsByTagAndAgeFromIndex(
+    ProductIndex index,
+    String query,
+    String ageLabel,
+    Map<String, int> Function(String) getAgeRange,
+  ) {
+    final maxAge = getAgeRange(ageLabel)['maxAge']!;
+    final bucketKey = _bucketKeyFromAgeRange(maxAge);
+    final byAge = index.byAgeBucket[bucketKey] ?? [];
+    return getProductsByTag(byAge, query);
   }
 
   // Поиск по тегу с фильтрацией по возрасту
@@ -119,7 +153,7 @@ class ProductQueryService {
     final ageRange = getAgeRange(ageLabel);
     final minAge = ageRange['minAge']!;
     final maxAge = ageRange['maxAge']!;
-    
+
     final q = query.toLowerCase();
     return allProducts.where((p) {
       // Проверка возраста
@@ -140,13 +174,13 @@ class ProductQueryService {
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inGenres || inTags;
       }
-      
+
       // Если это приложение, проверяем теги
       if (p is App) {
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inTags;
       }
-      
+
       return false;
     }).toList();
   }
@@ -162,55 +196,67 @@ class ProductQueryService {
   }) {
     // Получаем теги и категории текущего продукта
     final currentTags = currentProduct.tags.map((t) => t.toLowerCase()).toSet();
-    
+
     Set<String> currentCategories = {};
     if (currentProduct is Game) {
-      currentCategories = currentProduct.gameGenre.map((g) => g.toLowerCase()).toSet();
+      currentCategories = currentProduct.gameGenre
+          .map((g) => g.toLowerCase())
+          .toSet();
     } else if (currentProduct is App) {
-      currentCategories = currentProduct.appCategory.map((c) => c.toLowerCase()).toSet();
+      currentCategories = currentProduct.appCategory
+          .map((c) => c.toLowerCase())
+          .toSet();
     } else if (currentProduct is Book) {
-      currentCategories = currentProduct.genres.map((g) => g.toLowerCase()).toSet();
+      currentCategories = currentProduct.genres
+          .map((g) => g.toLowerCase())
+          .toSet();
     }
-    
+
     // Объединяем теги и категории для поиска
     final allCurrentKeywords = {...currentTags, ...currentCategories};
-    
+
     if (allCurrentKeywords.isEmpty) {
       return [];
     }
-    
+
     // Фильтруем продукты того же типа и считаем совпадения
     final similarProducts = <Product, int>{};
-    
+
     for (final product in allProducts) {
       // Пропускаем текущий продукт
       if (product.id == currentProduct.id) continue;
-      
+
       // Проверяем что тип совпадает
       if (product.runtimeType != currentProduct.runtimeType) continue;
-      
+
       // Получаем теги и категории продукта
       final productTags = product.tags.map((t) => t.toLowerCase()).toSet();
-      
+
       Set<String> productCategories = {};
       if (product is Game) {
-        productCategories = product.gameGenre.map((g) => g.toLowerCase()).toSet();
+        productCategories = product.gameGenre
+            .map((g) => g.toLowerCase())
+            .toSet();
       } else if (product is App) {
-        productCategories = product.appCategory.map((c) => c.toLowerCase()).toSet();
+        productCategories = product.appCategory
+            .map((c) => c.toLowerCase())
+            .toSet();
       } else if (product is Book) {
         productCategories = product.genres.map((g) => g.toLowerCase()).toSet();
       }
-      
+
       final allProductKeywords = {...productTags, ...productCategories};
-      
+
       // Считаем количество совпадений
-      final matchCount = allCurrentKeywords.intersection(allProductKeywords).length;
-      
+      final matchCount = allCurrentKeywords
+          .intersection(allProductKeywords)
+          .length;
+
       if (matchCount > 0) {
         similarProducts[product] = matchCount;
       }
     }
-    
+
     // Сортируем по количеству совпадений (по убыванию), затем по рейтингу
     final sortedProducts = similarProducts.entries.toList()
       ..sort((a, b) {
@@ -218,7 +264,7 @@ class ProductQueryService {
         if (matchComparison != 0) return matchComparison;
         return b.key.rating.compareTo(a.key.rating);
       });
-    
+
     return sortedProducts.take(maxResults).map((e) => e.key).toList();
   }
 
@@ -233,6 +279,12 @@ class ProductQueryService {
     }).toList();
   }
 
+  /// По индексу: O(1).
+  List<Product> getGamesByCategoryFromIndex(ProductIndex index, String genre) {
+    final key = genre.trim().toLowerCase();
+    return (index.gamesByGenre[key] ?? []).cast<Product>();
+  }
+
   // Получить книги по категории (жанру)
   List<Product> getBooksByCategory(List<Product> allProducts, String genre) {
     return allProducts.where((product) {
@@ -241,6 +293,21 @@ class ProductQueryService {
       }
       return false;
     }).toList();
+  }
+
+  /// По индексу: составные жанры объединяются, O(число ключей).
+  List<Product> getBooksByCategoryFromIndex(ProductIndex index, String genre) {
+    final keys = _getBookGenresForFilter(
+      genre,
+    ).map((g) => g.trim().toLowerCase()).toSet();
+    final seen = <String>{};
+    final result = <Product>[];
+    for (final key in keys) {
+      for (final book in index.booksByGenre[key] ?? []) {
+        if (seen.add(book.id)) result.add(book);
+      }
+    }
+    return result;
   }
 
   // Получить игры по категории с фильтрацией по возрасту
@@ -253,13 +320,37 @@ class ProductQueryService {
     final ageRange = getAgeRange(ageLabel);
     final minAge = ageRange['minAge']!;
     final maxAge = ageRange['maxAge']!;
-    
+
     return allProducts.whereType<Game>().where((game) {
       final genreMatches = game.gameGenre.any(
         (g) => g.trim().toLowerCase() == genre.trim().toLowerCase(),
       );
       final ageMatches = game.ageRating >= minAge && game.ageRating <= maxAge;
       return genreMatches && ageMatches;
+    }).toList();
+  }
+
+  static String _bucketKeyFromAgeRange(int maxAge) {
+    if (maxAge <= 5) return '0-5';
+    if (maxAge <= 8) return '6-8';
+    if (maxAge <= 12) return '9-12';
+    return '13+';
+  }
+
+  /// По индексу: игры по жанру из индекса, фильтр по возрастному бакету.
+  List<Product> getGamesByCategoryAndAgeFromIndex(
+    ProductIndex index,
+    String genre,
+    String ageLabel,
+    Map<String, int> Function(String) getAgeRange,
+  ) {
+    final ageRange = getAgeRange(ageLabel);
+    final maxAge = ageRange['maxAge']!;
+    final bucketKey = _bucketKeyFromAgeRange(maxAge);
+    final byAge = index.byAgeBucket[bucketKey] ?? [];
+    final genreKey = genre.trim().toLowerCase();
+    return byAge.whereType<Game>().where((game) {
+      return game.gameGenre.any((g) => g.trim().toLowerCase() == genreKey);
     }).toList();
   }
 
@@ -272,13 +363,15 @@ class ProductQueryService {
     final normalizedCategory = category.trim().toLowerCase();
     return allProducts.where((p) {
       if (isGame) {
-        return p is Game && p.gameGenre.any(
-          (g) => g.trim().toLowerCase() == normalizedCategory,
-        );
+        return p is Game &&
+            p.gameGenre.any(
+              (g) => g.trim().toLowerCase() == normalizedCategory,
+            );
       }
-      return p is App && p.appCategory.any(
-        (c) => c.trim().toLowerCase() == normalizedCategory,
-      );
+      return p is App &&
+          p.appCategory.any(
+            (c) => c.trim().toLowerCase() == normalizedCategory,
+          );
     }).toList();
   }
 
@@ -286,7 +379,10 @@ class ProductQueryService {
 
   // Получить игры по возрастному рейтингу
   List<Product> getGamesByAge(List<Product> allProducts, int maxAge) {
-    return allProducts.whereType<Game>().where((g) => g.ageRating <= maxAge).toList();
+    return allProducts
+        .whereType<Game>()
+        .where((g) => g.ageRating <= maxAge)
+        .toList();
   }
 
   // Получить продукты по возрастному диапазону (для Kids Tab)
@@ -310,7 +406,10 @@ class ProductQueryService {
     List<Product> recommendations,
     int age,
   ) {
-    return recommendations.whereType<Game>().where((g) => g.ageRating <= age).toList();
+    return recommendations
+        .whereType<Game>()
+        .where((g) => g.ageRating <= age)
+        .toList();
   }
 
   // -------------------------Фильтрация рекомендаций по типу-----------------------
@@ -344,7 +443,7 @@ class ProductQueryService {
     final ageRange = getAgeRange(ageLabel);
     final minAge = ageRange['minAge']!;
     final maxAge = ageRange['maxAge']!;
-    
+
     return recommendations.where((p) {
       if (p is Game) {
         return p.ageRating >= minAge && p.ageRating <= maxAge;
@@ -353,6 +452,17 @@ class ProductQueryService {
       }
       return false;
     }).toList();
+  }
+
+  /// По индексу: O(1) по бакету рекомендаций.
+  List<Product> getKidsAgeRecommendationsByAgeRangeFromIndex(
+    ProductIndex index,
+    String ageLabel,
+    Map<String, int> Function(String) getAgeRange,
+  ) {
+    final maxAge = getAgeRange(ageLabel)['maxAge']!;
+    final bucketKey = _bucketKeyFromAgeRange(maxAge);
+    return index.recommendationsByAgeBucket[bucketKey] ?? [];
   }
 
   // -------------------------По цене и статусу-----------------------
@@ -364,21 +474,58 @@ class ProductQueryService {
     }).toList();
   }
 
+  /// По индексу: игры по жанру, только платные.
+  List<Product> getPaidGamesByGenreFromIndex(ProductIndex index, String genre) {
+    final key = genre.trim().toLowerCase();
+    final games = index.gamesByGenre[key] ?? [];
+    return games.where((g) => g.isPaid).cast<Product>().toList();
+  }
+
   // Получить платные продукты с ограничением количества
   List<Product> getAllPaidProductsTake(List<Product> allProducts, int count) {
-    final allPaid = allProducts.whereType<Game>().where((g) => g.isPaid).toList();
+    final allPaid = allProducts
+        .whereType<Game>()
+        .where((g) => g.isPaid)
+        .toList();
     return allPaid.take(count).toList();
   }
 
+  /// По индексу: O(1).
+  List<Product> getAllPaidProductsTakeFromIndex(ProductIndex index, int count) {
+    return index.paidGames.take(count).cast<Product>().toList();
+  }
+
   // Получить платные продукты дешевле указанной цены
-  List<Product> getAllPaidProductsUnderPrice(List<Product> allProducts, int price) {
-    final allPaid = allProducts.whereType<Game>().where((g) => g.isPaid).toList();
+  List<Product> getAllPaidProductsUnderPrice(
+    List<Product> allProducts,
+    int price,
+  ) {
+    final allPaid = allProducts
+        .whereType<Game>()
+        .where((g) => g.isPaid)
+        .toList();
     return allPaid.where((g) => (g.price ?? 0) < price).toList();
+  }
+
+  /// По индексу.
+  List<Product> getAllPaidProductsUnderPriceFromIndex(
+    ProductIndex index,
+    int price,
+  ) {
+    return index.paidGames
+        .where((g) => (g.price ?? 0) < price)
+        .cast<Product>()
+        .toList();
   }
 
   // Получить игры, которые работают без интернета
   List<Product> getOfflineGames(List<Product> allProducts) {
     return allProducts.whereType<Game>().where((g) => !g.isOnline).toList();
+  }
+
+  /// По индексу: O(1).
+  List<Product> getOfflineGamesFromIndex(ProductIndex index) {
+    return index.offlineGames.cast<Product>();
   }
 
   // -------------------------Фильтрация-----------------------
@@ -428,11 +575,15 @@ class ProductQueryService {
         // Сортировка по рейтингу по убыванию
         result.sort((a, b) => b.rating.compareTo(a.rating));
       } else {
-        debugPrint('Фильтр "$selectedTopFilter" не применен: ${result.length} книг');
+        debugPrint(
+          'Фильтр "$selectedTopFilter" не применен: ${result.length} книг',
+        );
       }
     } else {
       // Режим «только этот фильтр» — показываем все по выбранному чипу (напр. новинки)
-      debugPrint('Режим «только этот фильтр» — показываем все: ${result.length}');
+      debugPrint(
+        'Режим «только этот фильтр» — показываем все: ${result.length}',
+      );
     }
 
     // Фильтр по категориям
@@ -445,10 +596,9 @@ class ProductQueryService {
       currentCategory = selectedBookCategory;
     }
 
-    if (currentCategory != 'Все категории' && 
-        currentCategory != 'Все') {
+    if (currentCategory != 'Все категории' && currentCategory != 'Все') {
       final normalizedCategory = currentCategory.trim().toLowerCase();
-      
+
       result = result.where((p) {
         if (p is Game) {
           return p.gameGenre.any(
@@ -459,9 +609,7 @@ class ProductQueryService {
           final matches = p.appCategory.any(
             (c) => c.trim().toLowerCase() == normalizedCategory,
           );
-          if (matches) {
-        
-          }
+          if (matches) {}
           return matches;
         }
         if (p is Book) {
@@ -469,7 +617,7 @@ class ProductQueryService {
         }
         return false;
       }).toList();
-      
+
       // Проверка на пустую категорию после фильтрации
       if (result.isEmpty) {
         debugPrint('Категория пуста! Проверьте совпадение названий.');
@@ -493,22 +641,22 @@ class ProductQueryService {
             // Проверяем наличие жанра "Для детей" (точное или частичное совпадение)
             final hasChildrenGenre = p.genres.any((g) {
               final normalizedGenre = g.trim().toLowerCase();
-              return normalizedGenre == 'для детей' || 
-                     normalizedGenre.contains('для детей');
+              return normalizedGenre == 'для детей' ||
+                  normalizedGenre.contains('для детей');
             });
             // Проверяем теги на наличие детских тегов
             final hasChildrenTag = p.tags.any((t) {
               final normalizedTag = t.trim().toLowerCase();
-              return normalizedTag.contains('детск') || 
-                     normalizedTag.contains('детская') ||
-                     normalizedTag.contains('для детей');
+              return normalizedTag.contains('детск') ||
+                  normalizedTag.contains('детская') ||
+                  normalizedTag.contains('для детей');
             });
-            
+
             final isChildrenBook = hasChildrenGenre || hasChildrenTag;
-            
+
             // Для детских категорий показываем только детские книги
-            if (selectedAgeFilter == 'До 5 лет' || 
-                selectedAgeFilter == 'От 6 до 8 лет' || 
+            if (selectedAgeFilter == 'До 5 лет' ||
+                selectedAgeFilter == 'От 6 до 8 лет' ||
                 selectedAgeFilter == 'От 9 до 12 лет') {
               return isChildrenBook;
             }
@@ -519,34 +667,45 @@ class ProductQueryService {
           }
           return true;
         }).toList();
-        debugPrint('5. После фильтра по возрасту "$selectedAgeFilter": $beforeAge → ${result.length} книг');
+        debugPrint(
+          '5. После фильтра по возрасту "$selectedAgeFilter": $beforeAge → ${result.length} книг',
+        );
       }
 
       // Фильтр по рейтингу
-      if (selectedRatingFilter != null && selectedRatingFilter != 'Все' && getMinRatingFromFilter != null) {
+      if (selectedRatingFilter != null &&
+          selectedRatingFilter != 'Все' &&
+          getMinRatingFromFilter != null) {
         final beforeRating = result.length;
         final minRating = getMinRatingFromFilter(selectedRatingFilter);
         if (minRating != null) {
           result = result.where((p) => p.rating >= minRating).toList();
-          debugPrint('6. После фильтра по рейтингу "$selectedRatingFilter" (>=$minRating): $beforeRating → ${result.length} книг');
+          debugPrint(
+            '6. После фильтра по рейтингу "$selectedRatingFilter" (>=$minRating): $beforeRating → ${result.length} книг',
+          );
         }
       }
 
       // Фильтр по языку
       if (selectedLanguageFilter != null && selectedLanguageFilter != 'Все') {
         final beforeLang = result.length;
-        final normalizedLanguageFilter = selectedLanguageFilter.trim().toLowerCase();
+        final normalizedLanguageFilter = selectedLanguageFilter
+            .trim()
+            .toLowerCase();
         result = result.where((p) {
           if (p is Book) {
             return p.language.trim().toLowerCase() == normalizedLanguageFilter;
           }
           return false;
         }).toList();
-        debugPrint('7. После фильтра по языку "$selectedLanguageFilter": $beforeLang → ${result.length} книг');
+        debugPrint(
+          '7. После фильтра по языку "$selectedLanguageFilter": $beforeLang → ${result.length} книг',
+        );
       }
 
       // Фильтр по сокращенному изданию
-      if (selectedAbridgedVersionFilter != null && selectedAbridgedVersionFilter != 'Все') {
+      if (selectedAbridgedVersionFilter != null &&
+          selectedAbridgedVersionFilter != 'Все') {
         final beforeAbr = result.length;
         result = result.where((p) {
           if (p is Book) {
@@ -558,9 +717,11 @@ class ProductQueryService {
           }
           return true;
         }).toList();
-        debugPrint('8. После фильтра по изданию "$selectedAbridgedVersionFilter": $beforeAbr → ${result.length} книг');
+        debugPrint(
+          '8. После фильтра по изданию "$selectedAbridgedVersionFilter": $beforeAbr → ${result.length} книг',
+        );
       }
-      
+
       debugPrint('=== Итого: ${result.length} книг ===');
     }
 

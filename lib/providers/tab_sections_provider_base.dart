@@ -4,6 +4,7 @@ import 'package:google_play/models/config_models/tabs_config.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/services/section_builder_service.dart';
 import 'package:google_play/services/product_query_service.dart';
+import 'package:google_play/services/product_index.dart';
 import 'package:google_play/providers/banners_provider.dart';
 import 'package:google_play/providers/tab_sections_provider.dart';
 
@@ -20,6 +21,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
   List<T> _products = [];
   TabsConfig? _config;
   List<T> _recommendations = [];
+  ProductIndex? _productIndex;
   bool _isProductsLoaded = false;
   bool _isConfigLoaded = false;
   bool _isLoading = false;
@@ -46,6 +48,10 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     _products = products;
     _config = tabsConfig;
     _calculateRecommendations();
+    _productIndex = ProductIndex.build(
+      products.cast<Product>(),
+      _recommendations.cast<Product>(),
+    );
     _isProductsLoaded = true;
     _isConfigLoaded = true;
   }
@@ -115,7 +121,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
       }
 
       final sectionBuilder = SectionBuilderService(
-        allProducts: _products.cast<Product>(),
+        productIndex: _productIndex!,
         allBanners: bannersForSections(bannersProvider),
         recommendations: _recommendations.cast<Product>(),
         queryService: _queryService,
@@ -177,7 +183,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     }).toList();
 
     final sectionBuilder = SectionBuilderService(
-      allProducts: _products.cast<Product>(),
+      productIndex: _productIndex!,
       allBanners: bannersForSections(bannersProvider),
       recommendations: _recommendations.cast<Product>(),
       queryService: _queryService,
@@ -217,6 +223,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     _products = [];
     _recommendations = [];
     _config = null;
+    _productIndex = null;
     _tabSections.clear();
     _tabCompleters.clear();
     _tabSectionsLoading.clear();
