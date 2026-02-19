@@ -1,136 +1,45 @@
-import 'package:flutter/material.dart';
 import 'package:google_play/models/config_models/tabs_config.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/services/product_service.dart';
-import 'package:google_play/services/section_builder_service.dart';
-import 'package:google_play/services/product_query_service.dart';
 import 'package:google_play/providers/banners_provider.dart';
-import 'package:google_play/providers/tab_sections_provider.dart';
+import 'package:google_play/providers/tab_sections_provider_base.dart';
 
-class AppsProvider extends ChangeNotifier implements TabSectionsProvider {
+class AppsProvider extends TabSectionsProviderBase<App> {
   final ProductService _service = ProductService();
-  final ProductQueryService _queryService = ProductQueryService();
 
-  List<App> _apps = [];
-  TabsConfig? _config;
-  bool _isAppsLoaded = false;
-  bool _isConfigLoaded = false;
-  bool _isLoading = false;
-  String? _error;
-
-  final Map<String, List<HomeSection>> _tabSections = {};
-  final Map<String, bool> _tabSectionsLoading = {};
-
-  List<App> _recommendations = [];
-
-  // Геттеры
-  List<App> get apps => _apps;
-  List<App> get recommendations => _recommendations;
-  bool get isLoading => _isLoading;
   @override
-  String? get error => _error;
-  bool get isDataLoaded => _isAppsLoaded && _isConfigLoaded;
+  String get productsFileName => 'apps.json';
 
-  void _notifyAfterBuild() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
-  }
+  @override
+  String get configFileName => 'apps_config.json';
 
-  Future<void> loadAppsData(BannersProvider bannersProvider) async {
-    if (_isAppsLoaded || _isLoading) return;
+  List<App> get apps => products;
 
-    _isLoading = true;
-    _error = null;
-    _notifyAfterBuild();
+  @override
+  Future<void> loadData([BannersProvider? bannersProvider]) async {
+    if (isDataLoaded || isLoading) return;
+    final banners = bannersProvider;
+
+    setLoading(true);
+    setError(null);
+    notifyLoadingStarted();
 
     try {
       final results = await Future.wait([
-        _service.loadProducts('apps.json'),
-        _service.loadTabsConfig('apps_config.json'),
-        bannersProvider.loadBanners(), // Переиспользуем баннеры
+        _service.loadProducts(productsFileName),
+        _service.loadTabsConfig(configFileName),
+        banners?.loadBanners() ?? Future.value(),
       ]);
 
-      _apps = (results[0] as List<Product>).whereType<App>().toList();
-
-      _config = results[1] as TabsConfig;
-
-      _calculateRecommendations();
-
-      _isAppsLoaded = true;
-      _isConfigLoaded = true;
+      final appsList =
+          (results[0] as List<Product>).whereType<App>().toList();
+      final config = results[1] as TabsConfig;
+      setData(appsList, config);
     } catch (e) {
-      _error = 'Ошибка загрузки приложений: $e';
-    }
-  }
-
-  void _calculateRecommendations() {
-    final sorted = List<App>.from(_apps);
-    sorted.sort((a, b) => b.rating.compareTo(a.rating));
-    _recommendations = sorted.take(7).toList();
-  }
-
-  @override
-  Future<List<HomeSection>> getSectionsForTab(
-    String tabKey, [
-    BannersProvider? bannersProvider,
-  ]) async {
-    final banners = bannersProvider!;
-    if (_tabSections.containsKey(tabKey)) {
-      return _tabSections[tabKey]!;
-    }
-
-    if (!isDataLoaded) {
-      await loadAppsData(banners);
-    }
-
-    if (_config == null) return [];
-
-    _tabSectionsLoading[tabKey] = true;
-    _notifyAfterBuild();
-
-    try {
-      final tabConfig = _config!.tabs[tabKey];
-      if (tabConfig == null) return [];
-
-      final sectionBuilder = SectionBuilderService(
-        allProducts: _apps.cast<Product>(),
-        allBanners: banners.banners,
-        recommendations: _recommendations.cast<Product>(),
-        queryService: _queryService,
-      );
-
-      final sections = sectionBuilder.buildSectionsFromConfig(
-        tabConfig.sections,
-      );
-      _tabSections[tabKey] = sections;
-      return sections;
-    } catch (e) {
-      debugPrint('Error: $e');
-      return [];
+      setError('Ошибка загрузки приложений: $e');
     } finally {
-      _tabSectionsLoading[tabKey] = false;
+      setLoading(false);
       notifyListeners();
     }
-  }
-
-  Product? getProductById(String id) {
-    try {
-      return _apps.firstWhere((a) => a.id == id);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  bool isTabSectionsLoaded(String tabKey) => _tabSections.containsKey(tabKey);
-  @override
-  bool isTabSectionsLoading(String tabKey) =>
-      _tabSectionsLoading[tabKey] == true;
-
-  void unload() {
-    _apps.clear();
-    _recommendations.clear();
-    _tabSections.clear();
-    _isAppsLoaded = false;
-    _isConfigLoaded = false;
-    notifyListeners();
   }
 }

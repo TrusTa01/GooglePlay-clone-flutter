@@ -49,7 +49,6 @@ class _MainLayoutState extends State<MainLayout> {
       context.read<FilterProvider>().resetForTabIndex(index);
     }
     _currentPageIndex.value = index;
-    setState(() {});
   }
 
   bool _shouldResetFilters(int fromIndex, int toIndex) {

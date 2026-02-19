@@ -45,7 +45,7 @@ class _GamesScreenState extends State<GamesScreen>
       final gamesReadProvider = context.read<GamesProvider>();
       final bannersReadProvider = context.read<BannersProvider>();
 
-      gamesReadProvider.loadGamesData(bannersReadProvider);
+      gamesReadProvider.loadData(bannersReadProvider);
 
       _loadCurrentTabSections();
     });

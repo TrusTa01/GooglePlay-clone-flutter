@@ -39,7 +39,7 @@ class _AppsScreenState extends State<AppsScreen>
       final appsReadProvider = context.read<AppsProvider>();
       final bannersReadProvider = context.read<BannersProvider>();
 
-      appsReadProvider.loadAppsData(bannersReadProvider);
+      appsReadProvider.loadData(bannersReadProvider);
 
       _loadCurrentTabSections();
     });

@@ -25,10 +25,15 @@ class GooglePlay extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => TabsProvider()),
         ChangeNotifierProvider(create: (context) => FilterProvider()),
-        ChangeNotifierProvider(create: (context) => GamesProvider()),
+        ChangeNotifierProvider(create: (_) => BannersProvider()..loadBanners()),
+        ChangeNotifierProvider(
+          create: (ctx) {
+            final banners = ctx.read<BannersProvider>();
+            return GamesProvider()..loadData(banners);
+          },
+        ),
         ChangeNotifierProvider(create: (context) => AppsProvider()),
         ChangeNotifierProvider(create: (context) => BooksProvider()),
-        ChangeNotifierProvider(create: (context) => BannersProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -43,7 +43,7 @@ class _BooksScreenState extends State<BooksScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final booksReadProvider = context.read<BooksProvider>();
 
-      booksReadProvider.loadBooksData();
+      booksReadProvider.loadData();
 
       _loadCurrentTabSections();
     });
