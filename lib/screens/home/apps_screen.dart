@@ -56,7 +56,6 @@ class _AppsScreenState extends State<AppsScreen>
     if (_tabController.indexIsChanging) {
       _loadCurrentTabSections();
     }
-    setState(() {});
   }
 
   void _loadCurrentTabSections() {
@@ -120,48 +119,52 @@ class _AppsScreenState extends State<AppsScreen>
                     ),
                   ];
                 },
-            body: TabBarView(
-              physics:
-                  const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-              controller: _tabController,
-              children: List.generate(_tabs.length, (index) {
-                final tabKey = _tabKeys[index];
+            body: AnimatedBuilder(
+              animation: _tabController,
+              child: TabBarView(
+                physics:
+                    const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+                controller: _tabController,
+                children: List.generate(_tabs.length, (index) {
+                  final tabKey = _tabKeys[index];
 
-                return Builder(
-                  builder: (context) {
-                    return CustomScrollView(
-                      key: PageStorageKey<String>(tabKey),
-                      slivers: [
-                        SliverOverlapInjector(
-                          handle:
-                              NestedScrollView.sliverOverlapAbsorberHandleFor(
-                                context,
-                              ),
-                        ),
-
-                        if (tabKey == 'top_charts')
-                          ...TopChartsScreen.asSliver(
-                            context,
-                            type: FilterType.apps,
-                            showFilters: true,
-                          )
-                        else if (tabKey == 'categories')
-                          CategoriesTabScreen.asSliver(
-                            categories: appsCategoriesData,
-                            products: appsWatchProvider.apps,
-                          )
-                        else
-                          LazyTabContent(
-                            tabKey: tabKey,
-                            provider: appsWatchProvider,
-                            bannersProvider: bannersWatchProvider,
-                            isSliver: true,
+                  return Builder(
+                    builder: (context) {
+                      return CustomScrollView(
+                        key: PageStorageKey<String>(tabKey),
+                        slivers: [
+                          SliverOverlapInjector(
+                            handle:
+                                NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                  context,
+                                ),
                           ),
-                      ],
-                    );
-                  },
-                );
-              }).toList(),
+
+                          if (tabKey == 'top_charts')
+                            ...TopChartsScreen.asSliver(
+                              context,
+                              type: FilterType.apps,
+                              showFilters: true,
+                            )
+                          else if (tabKey == 'categories')
+                            CategoriesTabScreen.asSliver(
+                              categories: appsCategoriesData,
+                              products: appsWatchProvider.apps,
+                            )
+                          else
+                            LazyTabContent(
+                              tabKey: tabKey,
+                              provider: appsWatchProvider,
+                              bannersProvider: bannersWatchProvider,
+                              isSliver: true,
+                            ),
+                        ],
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              builder: (context, child) => child!,
             ),
           ),
         ),

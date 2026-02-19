@@ -60,7 +60,6 @@ class _BooksScreenState extends State<BooksScreen>
     if (_tabController.indexIsChanging) {
       _loadCurrentTabSections();
     }
-    setState(() {});
   }
 
   void _loadCurrentTabSections() {
@@ -113,59 +112,63 @@ class _BooksScreenState extends State<BooksScreen>
                     ),
                   ];
                 },
-            body: TabBarView(
-              physics:
-                  const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
-              controller: _tabController,
-              children: List.generate(_tabs.length, (index) {
-                final tabKey = _tabKeys[index];
+            body: AnimatedBuilder(
+              animation: _tabController,
+              child: TabBarView(
+                physics:
+                    const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
+                controller: _tabController,
+                children: List.generate(_tabs.length, (index) {
+                  final tabKey = _tabKeys[index];
 
-                return Builder(
-                  builder: (context) {
-                    return CustomScrollView(
-                      key: PageStorageKey<String>(tabKey),
-                      slivers: [
-                        SliverOverlapInjector(
-                          handle:
-                              NestedScrollView.sliverOverlapAbsorberHandleFor(
-                                context,
-                              ),
-                        ),
-
-                        if (tabKey == 'top_sales')
-                          ...TopChartsScreen.asSliver(
-                            context,
-                            type: FilterType.books,
-                            showFilters: true,
-                          )
-                        else if (tabKey == 'new_realeases')
-                          ...TopChartsScreen.asSliver(
-                            context,
-                            type: FilterType.books,
-                            showFilters: true,
-                          )
-                        else if (tabKey == 'genres')
-                          CategoriesTabScreen.asSliver(
-                            categories: booksGenresData,
-                            products: booksWatchProvider.books,
-                          )
-                        else if (tabKey == 'top_free')
-                          ...TopChartsScreen.asSliver(
-                            context,
-                            type: FilterType.books,
-                            showFilters: true,
-                          )
-                        else
-                          LazyTabContent(
-                            tabKey: tabKey,
-                            provider: booksWatchProvider,
-                            isSliver: true,
+                  return Builder(
+                    builder: (context) {
+                      return CustomScrollView(
+                        key: PageStorageKey<String>(tabKey),
+                        slivers: [
+                          SliverOverlapInjector(
+                            handle:
+                                NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                  context,
+                                ),
                           ),
-                      ],
-                    );
-                  },
-                );
-              }).toList(),
+
+                          if (tabKey == 'top_sales')
+                            ...TopChartsScreen.asSliver(
+                              context,
+                              type: FilterType.books,
+                              showFilters: true,
+                            )
+                          else if (tabKey == 'new_realeases')
+                            ...TopChartsScreen.asSliver(
+                              context,
+                              type: FilterType.books,
+                              showFilters: true,
+                            )
+                          else if (tabKey == 'genres')
+                            CategoriesTabScreen.asSliver(
+                              categories: booksGenresData,
+                              products: booksWatchProvider.books,
+                            )
+                          else if (tabKey == 'top_free')
+                            ...TopChartsScreen.asSliver(
+                              context,
+                              type: FilterType.books,
+                              showFilters: true,
+                            )
+                          else
+                            LazyTabContent(
+                              tabKey: tabKey,
+                              provider: booksWatchProvider,
+                              isSliver: true,
+                            ),
+                        ],
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              builder: (context, child) => child!,
             ),
           ),
         ),
