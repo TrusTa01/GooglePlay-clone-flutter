@@ -7,9 +7,10 @@ import 'package:google_play/screens/screens.dart';
 
 /// Виджет ленивой загрузки контента для sub-tab.
 /// Запрашивает секции у провайдера по [tabKey], показывает шиммер / ошибку / контент через [GenericTabScreen]
-/// [provider] — любой провайдер секций: [GamesProvider], [AppsProvider] или [BooksProvider]
-/// [bannersProvider] — для игр и приложений передаётся, для книг можно null
-class LazyTabContent extends StatelessWidget {
+/// [provider] - любой провайдер секций: [GamesProvider], [AppsProvider] или [BooksProvider]
+/// [bannersProvider] - для игр и приложений передаётся, для книг можно null
+/// Future хранится в state, чтобы при notifyListeners не пересоздавать Future и не перезапускать FutureBuilder
+class LazyTabContent extends StatefulWidget {
   final String tabKey;
   final TabSectionsProvider provider;
   final BannersProvider? bannersProvider;
@@ -24,18 +25,31 @@ class LazyTabContent extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    // Один вызов для всех типов провайдеров (игры/приложения/книги)
-    final future = provider.getSectionsForTab(tabKey, bannersProvider);
+  State<LazyTabContent> createState() => _LazyTabContentState();
+}
 
+class _LazyTabContentState extends State<LazyTabContent> {
+  late final Future<List<HomeSection>> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = widget.provider.getSectionsForTab(
+      widget.tabKey,
+      widget.bannersProvider,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder<List<HomeSection>>(
-      future: future,
+      future: _future,
       builder: (context, snapshot) {
         final sections = snapshot.data ?? [];
 
         // Пока идёт загрузка секций — шиммер
-        if (provider.isTabSectionsLoading(tabKey)) {
-          return isSliver
+        if (widget.provider.isTabSectionsLoading(widget.tabKey)) {
+          return widget.isSliver
               ? SliverList.builder(
                   itemCount: 5,
                   itemBuilder: (context, index) => const Padding(
@@ -54,16 +68,16 @@ class LazyTabContent extends StatelessWidget {
         }
 
         // Ошибка загрузки данных
-        if (provider.error != null) {
-          final errorWidget = ErrorScreen(message: provider.error!);
-          return isSliver
+        if (widget.provider.error != null) {
+          final errorWidget = ErrorScreen(message: widget.provider.error!);
+          return widget.isSliver
               ? SliverFillRemaining(child: errorWidget)
               : errorWidget;
         }
 
         // Есть данные — рисуем секции через GenericTabScreen
         if (snapshot.hasData && sections.isNotEmpty) {
-          return isSliver
+          return widget.isSliver
               ? GenericTabScreen.asSliver(sections: sections)
               : GenericTabScreen(sections: sections, isSliver: false);
         }
@@ -72,7 +86,7 @@ class LazyTabContent extends StatelessWidget {
         const emptyWidget = Center(
           child: CircularProgressIndicator(color: Constants.googleBlue),
         );
-        return isSliver
+        return widget.isSliver
             ? const SliverFillRemaining(child: emptyWidget)
             : emptyWidget;
       },
