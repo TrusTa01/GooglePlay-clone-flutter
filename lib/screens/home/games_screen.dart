@@ -17,6 +17,10 @@ class _GamesScreenState extends State<GamesScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
+  // Список посещенных табов
+  // 0 уже посещен, так как это стартовый таб
+  final ValueNotifier<Set<int>> _visitedIndexes = ValueNotifier<Set<int>>({0});
+
   // Порядок должен совпадать с ключами в games_config.json
   final List<String> _tabs = [
     'Рекомендуем',
@@ -55,10 +59,15 @@ class _GamesScreenState extends State<GamesScreen>
   void dispose() {
     _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
+    _visitedIndexes.dispose();
     super.dispose();
   }
 
   void _handleTabChange() {
+    if (!_visitedIndexes.value.contains(_tabController.index)) {
+      _visitedIndexes.value = {..._visitedIndexes.value, _tabController.index};
+    }
+
     if (_tabController.indexIsChanging) {
       _loadCurrentTabSections();
     }
@@ -123,9 +132,9 @@ class _GamesScreenState extends State<GamesScreen>
                     ),
                   ];
                 },
-            body: AnimatedBuilder(
-              animation: _tabController,
-              child: TabBarView(
+            body: ValueListenableBuilder<Set<int>>(
+              valueListenable: _visitedIndexes,
+              builder: (context, visited, _) => TabBarView(
                 physics:
                     const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
                 controller: _tabController,
@@ -134,6 +143,9 @@ class _GamesScreenState extends State<GamesScreen>
 
                   return Builder(
                     builder: (context) {
+                      if (!visited.contains(index)) {
+                        return const SizedBox.shrink();
+                      }
                       return CustomScrollView(
                         key: PageStorageKey<String>(tabKey),
                         slivers: [
@@ -167,7 +179,6 @@ class _GamesScreenState extends State<GamesScreen>
                   );
                 }).toList(),
               ),
-              builder: (context, child) => child!,
             ),
           ),
         ),

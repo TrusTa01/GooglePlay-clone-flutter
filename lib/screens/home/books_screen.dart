@@ -16,6 +16,10 @@ class _BooksScreenState extends State<BooksScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
+  // Список посещенных табов
+  // 0 уже посещен, так как это стартовый таб
+  final ValueNotifier<Set<int>> _visitedIndexes = ValueNotifier<Set<int>>({0});
+
   // Порядок должен совпадать с ключами в games_config.json
   final List<String> _tabs = [
     'Рекомендуем',
@@ -53,10 +57,15 @@ class _BooksScreenState extends State<BooksScreen>
   void dispose() {
     _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
+    _visitedIndexes.dispose();
     super.dispose();
   }
 
   void _handleTabChange() {
+    if (!_visitedIndexes.value.contains(_tabController.index)) {
+      _visitedIndexes.value = {..._visitedIndexes.value, _tabController.index};
+    }
+
     if (_tabController.indexIsChanging) {
       _loadCurrentTabSections();
     }
@@ -112,9 +121,9 @@ class _BooksScreenState extends State<BooksScreen>
                     ),
                   ];
                 },
-            body: AnimatedBuilder(
-              animation: _tabController,
-              child: TabBarView(
+            body: ValueListenableBuilder(
+              valueListenable: _visitedIndexes,
+              builder: (context, visited, _) => TabBarView(
                 physics:
                     const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
                 controller: _tabController,
@@ -123,6 +132,9 @@ class _BooksScreenState extends State<BooksScreen>
 
                   return Builder(
                     builder: (context) {
+                      if (!visited.contains(index)) {
+                        return const SizedBox.shrink();
+                      }
                       return CustomScrollView(
                         key: PageStorageKey<String>(tabKey),
                         slivers: [
@@ -139,7 +151,7 @@ class _BooksScreenState extends State<BooksScreen>
                               type: FilterType.books,
                               showFilters: true,
                             )
-                          else if (tabKey == 'new_realeases')
+                          else if (tabKey == 'new_releases')
                             ...TopChartsScreen.asSliver(
                               context,
                               type: FilterType.books,
@@ -168,7 +180,6 @@ class _BooksScreenState extends State<BooksScreen>
                   );
                 }).toList(),
               ),
-              builder: (context, child) => child!,
             ),
           ),
         ),
