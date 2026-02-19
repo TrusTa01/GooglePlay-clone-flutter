@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/models/product_models/app_model.dart';
 import 'package:google_play/widgets/lazy_tab_content.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/core/routes/routes.dart';
@@ -93,8 +94,9 @@ class _AppsScreenState extends State<AppsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final appsWatchProvider = context.watch<AppsProvider>();
-    final bannersWatchProvider = context.watch<BannersProvider>();
+    final appsReadProvider = context.read<AppsProvider>();
+    final bannersReadProvider = context.read<BannersProvider>();
+    final apps = context.select<AppsProvider, List<App>>((p) => p.apps);
 
     return ChangeNotifierProvider<TabsProvider>(
       create: (context) {
@@ -161,13 +163,13 @@ class _AppsScreenState extends State<AppsScreen>
                           else if (tabKey == 'categories')
                             CategoriesTabScreen.asSliver(
                               categories: appsCategoriesData,
-                              products: appsWatchProvider.apps,
+                              products: apps,
                             )
                           else
                             LazyTabContent(
                               tabKey: tabKey,
-                              provider: appsWatchProvider,
-                              bannersProvider: bannersWatchProvider,
+                              provider: appsReadProvider,
+                              bannersProvider: bannersReadProvider,
                               isSliver: true,
                             ),
                         ],

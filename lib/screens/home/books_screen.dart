@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/models/product_models/book_model.dart';
 import 'package:google_play/widgets/lazy_tab_content.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/providers/providers.dart';
@@ -87,7 +88,8 @@ class _BooksScreenState extends State<BooksScreen>
 
   @override
   Widget build(BuildContext context) {
-    final booksWatchProvider = context.watch<BooksProvider>();
+    final booksReadProvider = context.read<BooksProvider>();
+    final books = context.select<BooksProvider, List<Book>>((p) => p.books);
 
     return ChangeNotifierProvider(
       create: (context) {
@@ -160,7 +162,7 @@ class _BooksScreenState extends State<BooksScreen>
                           else if (tabKey == 'genres')
                             CategoriesTabScreen.asSliver(
                               categories: booksGenresData,
-                              products: booksWatchProvider.books,
+                              products: books,
                             )
                           else if (tabKey == 'top_free')
                             ...TopChartsScreen.asSliver(
@@ -171,7 +173,7 @@ class _BooksScreenState extends State<BooksScreen>
                           else
                             LazyTabContent(
                               tabKey: tabKey,
-                              provider: booksWatchProvider,
+                              provider: booksReadProvider,
                               isSliver: true,
                             ),
                         ],
