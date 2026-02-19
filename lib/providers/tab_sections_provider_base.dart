@@ -96,6 +96,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     final completer = Completer<List<HomeSection>>();
     _tabCompleters[tabKey] = completer;
     _tabSectionsLoading[tabKey] = true;
+    _notifyAfterBuild(); // Шиммер с первого кадра
 
     if (!isDataLoaded) {
       await loadData(bannersProvider);

@@ -46,14 +46,8 @@ class _GamesScreenState extends State<GamesScreen>
     _tabController = TabController(length: _tabs.length, vsync: this);
     _tabController.addListener(_handleTabChange);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final gamesReadProvider = context.read<GamesProvider>();
-      final bannersReadProvider = context.read<BannersProvider>();
-
-      gamesReadProvider.loadData(bannersReadProvider);
-
-      _loadCurrentTabSections();
-    });
+    // Games загружаются в main.dart при создании провайдера
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadCurrentTabSections());
   }
 
   @override
