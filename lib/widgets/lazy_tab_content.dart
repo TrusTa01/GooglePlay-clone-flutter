@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/shimers/product_slider_skeleton.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/providers/providers.dart';
@@ -83,9 +82,7 @@ class _LazyTabContentState extends State<LazyTabContent> {
         }
 
         // Пустой результат или нет данных
-        const emptyWidget = Center(
-          child: CircularProgressIndicator(color: Constants.googleBlue),
-        );
+        const emptyWidget = Center(child: Text('Данных нет'));
         return widget.isSliver
             ? const SliverFillRemaining(child: emptyWidget)
             : emptyWidget;

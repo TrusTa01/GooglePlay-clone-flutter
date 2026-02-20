@@ -15,6 +15,11 @@ class MainLayout extends StatefulWidget {
 
 class _MainLayoutState extends State<MainLayout> {
   final ValueNotifier<int> _currentPageIndex = ValueNotifier<int>(0);
+  // Список посещенных экранов
+  // 0 уже посещен, игры по дефолту
+  final ValueNotifier<Set<int>> _visitedPagesIndexes = ValueNotifier<Set<int>>({
+    0,
+  });
 
   final List<GlobalKey<NavigatorState>> _navigatorKeys = List.generate(
     4,
@@ -31,12 +36,15 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   void dispose() {
     _currentPageIndex.dispose();
+    _visitedPagesIndexes.dispose();
     super.dispose();
   }
 
   // Обработчик выбора вкладки
-  void _handleTabSelection(int index) =>
-      index == _currentPageIndex.value ? _popToRoot(index) : _switchTab(index);
+  void _handleTabSelection(int index) {
+    index == _currentPageIndex.value ? _popToRoot(index) : _switchTab(index);
+    _visitedPagesIndexes.value = {..._visitedPagesIndexes.value, index};
+  }
 
   // Переключение на другую вкладку
   void _popToRoot(int index) =>
@@ -49,6 +57,7 @@ class _MainLayoutState extends State<MainLayout> {
       context.read<FilterProvider>().resetForTabIndex(index);
     }
     _currentPageIndex.value = index;
+    _visitedPagesIndexes.value = {..._visitedPagesIndexes.value, index};
   }
 
   bool _shouldResetFilters(int fromIndex, int toIndex) {
@@ -68,18 +77,20 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<int>(
-      valueListenable: _currentPageIndex,
-      builder: (context, currentIndex, _) {
+    return AnimatedBuilder(
+      animation: Listenable.merge([_currentPageIndex, _visitedPagesIndexes]),
+      builder: (context, _) {
         return Scaffold(
           body: IndexedStack(
-            index: currentIndex,
+            index: _currentPageIndex.value,
             children: _screens.mapIndexed(
-              (i, screen) => _navigatorKeys.createNavigator(i, screen),
+              (i, screen) => _visitedPagesIndexes.value.contains(i)
+                  ? _navigatorKeys.createNavigator(i, screen)
+                  : const SizedBox.shrink(),
             ),
           ),
           bottomNavigationBar: CustomNavigationBar(
-            currentPageIndex: currentIndex,
+            currentPageIndex: _currentPageIndex.value,
             onDestinationSelected: _handleTabSelection,
           ),
         );
