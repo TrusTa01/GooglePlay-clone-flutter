@@ -28,4 +28,14 @@ abstract class Constants {
   static const double sliderCardMargin = 12;
   static const int sliderMaxVisibleItems = 8;
   static const double sliderMaxContentWidth = 1040;
+
+  // Простой способ вертикального отступа между блоками
+  static const divider15 = SizedBox(height: 15);
+  static const divider20 = SizedBox(height: 20);
+  static const divider25 = SizedBox(height: 25);
+
+  // Простой способ вертикального отступа между блоками (сливерная версия)
+  static const sliverDivider15 = SliverToBoxAdapter(child: SizedBox(height: 15));
+  static const sliverDivider20 = SliverToBoxAdapter(child: SizedBox(height: 20));
+  static const sliverDivider25 = SliverToBoxAdapter(child: SizedBox(height: 25));
 }

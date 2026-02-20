@@ -84,37 +84,51 @@ class _ProductPageContent extends StatelessWidget {
                     bottom: 10,
                     top: 10,
                   ),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate([
-                      ProductPageHeader(
-                        product: product,
-                        formatter: formatter,
-                        utils: utils,
+                  sliver: SliverMainAxisGroup(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: ProductPageHeader(
+                          product: product,
+                          formatter: formatter,
+                          utils: utils,
+                        ),
                       ),
-                      const SizedBox(height: 25),
-                      ProductPageDescriptionSection(
-                        product: product,
-                        utils: utils,
+                      Constants.sliverDivider25,
+
+                      SliverToBoxAdapter(
+                        child: ProductPageDescriptionSection(
+                          product: product,
+                          utils: utils,
+                        ),
                       ),
-                      const SizedBox(height: 25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(child: ProductTags(product: product)),
-                        ],
+                      Constants.sliverDivider25,
+
+                      SliverToBoxAdapter(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(child: ProductTags(product: product)),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 25),
-                      ProductPageSupportSection(product: product),
-                      const SizedBox(height: 15),
-                      ProductPageSimilarAndFooter(
-                        product: product,
-                        similarProducts: similarProducts,
+                      Constants.sliverDivider25,
+
+                      SliverToBoxAdapter(
+                        child: ProductPageSupportSection(product: product),
                       ),
-                    ]),
+                      Constants.sliverDivider15,
+
+                      SliverToBoxAdapter(
+                        child: ProductPageSimilarAndFooter(
+                          product: product,
+                          similarProducts: similarProducts,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SliverToBoxAdapter(child: const SizedBox(height: 20)),
+                Constants.sliverDivider20,
               ],
             ),
           ),
