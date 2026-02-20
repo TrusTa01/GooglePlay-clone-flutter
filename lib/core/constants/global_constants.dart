@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class Constants {
+class Constants {
   // Основной цвет
   static const Color googleBlue = Color(0xFF0B57CE);
 
@@ -29,7 +29,17 @@ abstract class Constants {
   static const int sliderMaxVisibleItems = 8;
   static const double sliderMaxContentWidth = 1040;
 
-  /// Индекс вкладки нижней навигации при старте приложения.
-  /// 0 = Игры, 1 = Приложения, 2 = Поиск, 3 = Книги.
+  // Индекс вкладки нижней навигации при старте приложения
+  // 0 = Игры, 1 = Приложения, 2 = Поиск, 3 = Книги
   static const int defaultBottomNavIndex = 0;
+
+  // Простой способ вертикального отступа между блоками
+  static const divider15 = SizedBox(height: 15);
+  static const divider20 = SizedBox(height: 20);
+  static const divider25 = SizedBox(height: 25);
+
+  // Простой способ вертикального отступа между блоками (сливерная версия)
+  static const sliverDivider15 = SliverToBoxAdapter(child: SizedBox(height: 15));
+  static const sliverDivider20 = SliverToBoxAdapter(child: SizedBox(height: 20));
+  static const sliverDivider25 = SliverToBoxAdapter(child: SizedBox(height: 25));
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class AppBarConstants {
+class AppBarConstants {
   // Пути и базовые настройки
   static const defaultLogoAssetPath = 'assets/images/google_play_logo.png';
   static const defaultElevation = 0.0;
@@ -22,7 +22,7 @@ abstract class AppBarConstants {
   static const tabBarHeight = 120.0;
 
   // Стили
-  /// SearchAppBar
+  // SearchAppBar
   static final searchAppBarBoxDecoration = BoxDecoration(
     color: AppBarConstants.seachInput,
     borderRadius: BorderRadius.circular(30),
