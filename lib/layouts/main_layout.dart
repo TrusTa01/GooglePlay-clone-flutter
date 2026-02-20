@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/providers/filter_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/core/extensions/navigator_extension.dart';
@@ -14,11 +15,11 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  final ValueNotifier<int> _currentPageIndex = ValueNotifier<int>(0);
-  // Список посещенных экранов
-  // 0 уже посещен, игры по дефолту
+  final ValueNotifier<int> _currentPageIndex =
+      ValueNotifier<int>(Constants.defaultBottomNavIndex);
+  // Список посещенных экранов: только дефолтная вкладка создаётся при старте
   final ValueNotifier<Set<int>> _visitedPagesIndexes = ValueNotifier<Set<int>>({
-    0,
+    Constants.defaultBottomNavIndex,
   });
 
   final List<GlobalKey<NavigatorState>> _navigatorKeys = List.generate(

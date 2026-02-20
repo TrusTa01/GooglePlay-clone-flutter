@@ -28,4 +28,8 @@ abstract class Constants {
   static const double sliderCardMargin = 12;
   static const int sliderMaxVisibleItems = 8;
   static const double sliderMaxContentWidth = 1040;
+
+  /// Индекс вкладки нижней навигации при старте приложения.
+  /// 0 = Игры, 1 = Приложения, 2 = Поиск, 3 = Книги.
+  static const int defaultBottomNavIndex = 0;
 }
