@@ -19,6 +19,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
   late final ProductQueryService _queryService;
 
   List<T> _products = [];
+  Map<String, T> _productsById = {};
   TabsConfig? _config;
   List<T> _recommendations = [];
   ProductIndex? _productIndex;
@@ -46,6 +47,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
   /// Вызывается из [loadData] после загрузки — задаёт продукты и конфиг, считает рекомендации.
   void setData(List<T> products, TabsConfig tabsConfig) {
     _products = products;
+    _productsById = {for (final p in _products) p.id: p};
     _config = tabsConfig;
     _calculateRecommendations();
     _productIndex = ProductIndex.build(
@@ -212,16 +214,11 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
   bool isTabSectionsLoading(String tabKey) =>
       _tabSectionsLoading[tabKey] == true;
 
-  Product? getProductById(String id) {
-    try {
-      return _products.firstWhere((p) => p.id == id);
-    } catch (_) {
-      return null;
-    }
-  }
+  Product? getProductById(String id) => _productsById[id];
 
   void unload() {
     _products = [];
+    _productsById = {};
     _recommendations = [];
     _config = null;
     _productIndex = null;
