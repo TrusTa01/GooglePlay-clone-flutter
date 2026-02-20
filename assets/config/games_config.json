@@ -1,0 +1,191 @@
+{
+  "tabs": {
+    "recommended": {
+      "tabKey": "recommended",
+      "displayName": "Рекомендуем",
+      "sections": [
+        {
+          "type": "banners",
+          "title": "",
+          "showButton": false,
+          "dataMethod": "getBannersByPrefix",
+          "dataParams": { "prefix": "g_" }
+        },
+        {
+          "type": "carousel",
+          "title": "Специально для вас",
+          "dataMethod": "getGameRecommendations"
+        },
+        {
+          "type": "grid",
+          "title": "Играют все",
+          "needsTopPadding": false,
+          "subtitle": "Попробуйте и вы!",
+          "dataMethod": "getGamesByCategory",
+          "dataParams": { "genre": "Экшен" }
+        },
+        {
+          "type": "banners",
+          "title": "",
+          "showButton": false,
+          "dataMethod": "getBannersByPrefix",
+          "dataParams": { "prefix": "g_" }
+        },
+        {
+          "type": "grid",
+          "title": "Экшен-игры",
+          "dataMethod": "getGamesByCategory",
+          "dataParams": { "genre": "Экшен" }
+        },
+        {
+          "type": "grid",
+          "title": "Настольные игры",
+          "dataMethod": "getGamesByCategory",
+          "dataParams": { "genre": "Настольные" }
+        },
+        {
+          "type": "carousel",
+          "title": "Файтинги",
+          "dataMethod": "getGamesByCategory",
+          "dataParams": { "genre": "Файтинг" }
+        }
+      ]
+    },
+    "paid": {
+      "tabKey": "paid",
+      "displayName": "Платные",
+      "sections": [
+        {
+          "type": "preview",
+          "title": "Необычные головоломки",
+          "showButton": true,
+          "dataMethod": "getPaidGamesByGenre",
+          "dataParams": { "genre": "Головоломки" }
+        },
+        {
+          "type": "carousel",
+          "title": "Сыграйте перед покупкой",
+          "subtitle": "Пробуйте сейчас, платите позже",
+          "dataMethod": "getAllPaidProductsTake",
+          "dataParams": { "count": 10 }
+        },
+        {
+          "type": "carousel",
+          "title": "Игры по низким ценам",
+          "dataMethod": "getAllPaidProductsUnderPrice",
+          "dataParams": { "price": 150 }
+        },
+        {
+          "type": "banners",
+          "title": "",
+          "showButton": false,
+          "dataMethod": "getBannersByPrefix",
+          "dataParams": { "prefix": "g_" }
+        },
+        {
+          "type": "carousel",
+          "title": "Лучшие инди игры",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Инди" }
+        },
+        {
+          "type": "carousel",
+          "title": "Офлайн-игры",
+          "dataMethod": "getOfflineGames"
+        }
+      ]
+    },
+    "kids": {
+      "tabKey": "kids",
+      "displayName": "Для детей",
+      "sections": [
+        {
+          "type": "kidsHeroBanner",
+          "needsTopPadding": false,
+          "title": "",
+          "subtitle": "",
+          "imageAssetPath": "assets/images/kids_tab/kids_tab_image.webp"
+        },
+        {
+          "type": "ageFilterSelector",
+          "title": "Выберите возраст",
+          "needsTopPadding": false
+        },
+        {
+          "type": "carousel",
+          "title": "Новинки и обновления",
+          "dataMethod": "getKidsAgeRecommendationsByAgeRange",
+          "dataParams": { "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "title": "Математические игры",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Математика" }
+        },
+        {
+          "type": "carousel",
+          "title": "Рисование",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Рисование" }
+        },
+        {
+          "type": "carousel",
+          "title": "Для всей семьи",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Для всей семьи" }
+        },
+        {
+          "type": "carousel",
+          "title": "Обучающие игры",
+          "dataMethod": "getGamesByCategory",
+          "dataParams": { "genre": "Обучающие" }
+        }
+      ]
+    },
+    "kidsCategory": {
+      "tabKey": "kidsCategory",
+      "displayName": "Для детей по возрасту",
+      "sections": [
+        {
+          "type": "kidsHeroBanner",
+          "needsTopPadding": false,
+          "title": "",
+          "subtitle": "",
+          "imageAssetPath": "assets/images/kids_tab/kids_tab_image.webp"
+        },
+        {
+          "type": "carousel",
+          "title": "Новинки и обновления",
+          "dataMethod": "getKidsAgeRecommendationsByAgeRange",
+          "dataParams": { "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "title": "Математические игры",
+          "dataMethod": "getProductsByTagAndAge",
+          "dataParams": { "query": "Математика", "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "needsTopPadding": false,
+          "title": "Рисование",
+          "dataMethod": "getProductsByTagAndAge",
+          "dataParams": { "query": "Рисование", "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "title": "Для всей семьи",
+          "dataMethod": "getProductsByTagAndAge",
+          "dataParams": { "query": "Для всей семьи", "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "title": "Обучающие игры",
+          "dataMethod": "getGamesByCategoryAndAge",
+          "dataParams": { "genre": "Обучающие", "ageLabel": "$AGE_LABEL$" }
+        }
+      ]
+    }
+  }
+}

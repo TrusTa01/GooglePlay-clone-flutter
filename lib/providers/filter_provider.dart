@@ -153,4 +153,46 @@ class FilterProvider extends ChangeNotifier {
         return null; // 'Все' - без фильтрации по рейтингу
     }
   }
+
+  void resetForGames() {
+    _selectedGameCategory = 'Все категории';
+    _selectedTopFilter = 'Топ бесплатных';
+    _isFilterOnlyMode = false;
+    notifyListeners();
+  }
+
+  void resetForApps() {
+    _selectedAppCategory = 'Все категории';
+    _selectedTopFilter = 'Топ бесплатных';
+    _isFilterOnlyMode = false;
+    notifyListeners();
+  }
+
+  void resetForBooks() {
+    _selectedBookGenre = 'Все';
+    _selectedTopFilter = 'Топ бесплатных';
+    _selectedAgeFilter = 'Все';
+    _selectedRatingFilter = 'Все';
+    _selectedLanguageFilter = 'Все';
+    _selectedAbridgetVersionFilter = 'Все';
+    _isFilterOnlyMode = false;
+    notifyListeners();
+  }
+  
+  // Универсальный метод сброса по индексу вкладки
+  void resetForTabIndex(int tabIndex) {
+    switch (tabIndex) {
+      case 0: // Games
+        resetForGames();
+        break;
+      case 1: // Apps
+        resetForApps();
+        break;
+      case 3: // Books (индекс 3 т.к. Search на индексе 2)
+        resetForBooks();
+        break;
+      default:
+        break;
+    }
+  }
 }

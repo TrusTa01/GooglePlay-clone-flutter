@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/screens/screens.dart';
-import 'package:google_play/services/product_query_service.dart';
-import 'package:google_play/services/section_builder_service.dart';
 import 'package:google_play/widgets/widgets.dart';
 
 enum FilterType { games, apps, books, kidsAge }
@@ -95,32 +93,30 @@ class FilterSets {
 
       case FilterType.kidsAge:
         activeFilters = filterProvider.selectedKidsFilters
-            .map((age) => Builder(
-                  builder: (context) {
-                    final productsProvider = context.read<ProductsProvider>();
-                    final sectionBuilder = SectionBuilderService(
-                      allProducts: productsProvider.allProducts,
-                      allBanners: productsProvider.allBanners,
-                      recommendations: productsProvider.recommendations,
-                      pageConfigs: productsProvider.pageConfigs,
-                      queryService: ProductQueryService(),
-                    );
-                    final sections = sectionBuilder.buildKidsCategoryPage(age);
-                    
-                    return ToggleFilter(
-                      label: age,
-                      isSelected: false,
-                      onSelected: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => KidsAgeCategoryScreen(
-                            ageLabel: age,
-                            sections: sections,
-                          ),
+            .map(
+              (age) => Builder(
+                builder: (context) {
+                  final sections = context
+                      .read<GamesProvider>()
+                      .getSectionsForKidsAge(
+                        age,
+                        context.read<BannersProvider>(),
+                      );
+                  return ToggleFilter(
+                    label: age,
+                    isSelected: false,
+                    onSelected: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => KidsAgeCategoryScreen(
+                          ageLabel: age,
+                          sections: sections,
                         ),
                       ),
-                    );
-                  },
-                ))
+                    ),
+                  );
+                },
+              ),
+            )
             .toList();
         break;
 

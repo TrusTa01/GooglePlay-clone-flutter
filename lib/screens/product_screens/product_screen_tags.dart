@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/models/models.dart';
-import 'package:google_play/providers/products_provider.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/services/product_query_service.dart';
 
@@ -58,9 +57,7 @@ class ProductTags extends StatelessWidget {
               product: product,
               tag: tag,
               onTap: () {
-                final allProducts = context
-                    .read<ProductsProvider>()
-                    .allProducts;
+                final allProducts = context.allProducts;
                 final queryService = ProductQueryService();
                 final filteredProducts = queryService.getProductsByTag(
                   allProducts,

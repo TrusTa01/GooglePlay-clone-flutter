@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/widgets/widgets.dart';
 
@@ -50,7 +51,10 @@ class BannerItem extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               if (isAction)
-                ActionRow(banner: banner as ActionBanner, showButton: true),
+                ActionRow(
+                  product: context.getProductById((banner as ActionBanner).productId),
+                  showButton: true,
+                ),
             ],
           ),
         ),

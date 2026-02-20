@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class NavBarConstants {
+class NavBarConstants {
   // Background
   static const navBarBackgroungColor = Color(0xFFF0F4F9);
 

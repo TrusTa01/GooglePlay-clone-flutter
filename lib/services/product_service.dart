@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:google_play/models/config_models/tabs_config.dart';
 import 'package:google_play/models/models.dart';
 
 class ProductService {
@@ -13,7 +14,7 @@ class ProductService {
       final List<Product> products = await Isolate.run(() {
         final List<dynamic> jsonList = json.decode(jsonString);
         return jsonList.map((json) => Product.fromJson(json)).toList();
-      });
+      }, debugName: 'Isolate: $fileName');
       // Добавляем всё, что загрузили, в общую карту
       for (var product in products) {
         _allProductsById[product.id] = product;
@@ -34,7 +35,7 @@ class ProductService {
       final result = await Isolate.run(() {
         final List<dynamic> jsonList = json.decode(jsonString);
         return jsonList.map((json) => BannerMapper.fromJson(json)).toList();
-      });
+      }, debugName: 'Banners Isolate');
 
       return result;
     } catch (e, stacktrace) {
@@ -44,18 +45,15 @@ class ProductService {
     }
   }
 
-  // Метод-поиск, передаем id из баннера, а сервис возвращает продукт или null
-  Product? getProductById(String id) => _allProductsById[id];
-
-  Future<List<PageConfig>> loadPageConfigs() async {
+  Future<TabsConfig> loadTabsConfig(String fileName) async {
     try {
-      final jsonString = await rootBundle.loadString(
-        'assets/config/pages_config.json',
-      );
+      final jsonString = await rootBundle.loadString('assets/config/$fileName');
+
+      // Парсим в изоляте для больших конфигов
       final result = await Isolate.run(() {
-        final List<dynamic> jsonList = json.decode(jsonString);
-        return jsonList.map((json) => PageConfig.fromJson(json)).toList();
-      });
+        final Map<String, dynamic> json = jsonDecode(jsonString);
+        return TabsConfig.fromJson(json);
+      }, debugName: 'Tabs Isolate: $fileName');
 
       return result;
     } catch (e, stacktrace) {

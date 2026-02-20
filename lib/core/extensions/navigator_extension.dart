@@ -5,9 +5,7 @@ extension NavigatorListExtension on List<GlobalKey<NavigatorState>> {
     return Navigator(
       key: this[index],
       onGenerateRoute: (settings) {
-        return MaterialPageRoute(
-          builder: (context) => initialScreen,
-        );
+        return MaterialPageRoute(builder: (context) => initialScreen);
       },
     );
   }

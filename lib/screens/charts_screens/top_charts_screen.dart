@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:provider/provider.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/services/product_query_service.dart';
 import 'package:google_play/widgets/widgets.dart';
@@ -19,21 +20,20 @@ class TopChartsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      slivers: buildSlivers(context, type: type, showFilters: showFilters),
+      slivers: asSliver(context, type: type, showFilters: showFilters),
     );
   }
 
   /// Сливеры чартов для встраивания в другой [CustomScrollView] (например, в [CategoryOverviewScreen]).
-  static List<Widget> buildSlivers(
+  static List<Widget> asSliver(
     BuildContext context, {
     required FilterType type,
     required bool showFilters,
   }) {
-    final productsProvider = context.watch<ProductsProvider>();
     final filterProvider = context.watch<FilterProvider>();
     final queryService = ProductQueryService();
     final items = queryService.getFilteredProducts(
-      productsProvider.allProducts,
+      context.allProducts,
       type: type,
       selectedTopFilter: filterProvider.selectedTopFilter,
       selectedGameCategory: filterProvider.selectedGameCategory,

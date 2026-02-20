@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/models/product_models/book_model.dart';
+import 'package:google_play/models/product_models/app_model.dart';
 import 'package:google_play/widgets/lazy_tab_content.dart';
 import 'package:provider/provider.dart';
+import 'package:google_play/core/routes/routes.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/widgets/widgets.dart';
 
-class BooksScreen extends StatefulWidget {
-  const BooksScreen({super.key});
+class AppsScreen extends StatefulWidget {
+  const AppsScreen({super.key});
 
   @override
-  State<BooksScreen> createState() => _BooksScreenState();
+  State<AppsScreen> createState() => _AppsScreenState();
 }
 
-class _BooksScreenState extends State<BooksScreen>
+class _AppsScreenState extends State<AppsScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
@@ -22,21 +23,15 @@ class _BooksScreenState extends State<BooksScreen>
   final ValueNotifier<Set<int>> _visitedIndexes = ValueNotifier<Set<int>>({0});
 
   // Порядок должен совпадать с ключами в games_config.json
-  final List<String> _tabs = [
-    'Рекомендуем',
-    'Топ продаж',
-    'Новинки',
-    'Жанры',
-    'Топ бесплатных',
-  ];
+  final List<String> _tabs = ['Рекомендуем', 'Лучшее', 'Детям', 'Категории'];
 
   // Ключи для маппинга tab UI → config
   final List<String> _tabKeys = [
     'recommended',
-    'top_sales',
-    'new_releases',
-    'genres',
-    'top_free',
+    'top_charts',
+    'kids',
+    'paid',
+    'categories',
   ];
 
   @override
@@ -46,9 +41,10 @@ class _BooksScreenState extends State<BooksScreen>
     _tabController.addListener(_handleTabChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final booksReadProvider = context.read<BooksProvider>();
+      final appsReadProvider = context.read<AppsProvider>();
+      final bannersReadProvider = context.read<BannersProvider>();
 
-      booksReadProvider.loadData();
+      appsReadProvider.loadData(bannersReadProvider);
 
       _loadCurrentTabSections();
     });
@@ -74,24 +70,35 @@ class _BooksScreenState extends State<BooksScreen>
 
   void _loadCurrentTabSections() {
     final currentTabKey = _tabKeys[_tabController.index];
-    final booksReadProvider = context.read<BooksProvider>();
+    final appsReadProvider = context.read<AppsProvider>();
+    final bannersReadProvider = context.read<BannersProvider>();
 
-    if (!booksReadProvider.isTabSectionsLoaded(currentTabKey)) {
-      booksReadProvider.getSectionsForTab(currentTabKey);
+    if (!appsReadProvider.isTabSectionsLoaded(currentTabKey)) {
+      appsReadProvider.getSectionsForTab(currentTabKey, bannersReadProvider);
     }
   }
 
-  final List<Widget> _buildActionWidgets = [
-    const SizedBox(width: 25),
-    const CircleAvatar(radius: 18),
-  ];
+  List<Widget> _buildActionWidgets(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () => Navigator.of(
+          context,
+          rootNavigator: true,
+        ).pushNamed(AppRoutesName.notificationsScreen),
+        icon: const Icon(Icons.notifications_outlined),
+      ),
+      const SizedBox(width: 10),
+      const CircleAvatar(radius: 18),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
-    final booksReadProvider = context.read<BooksProvider>();
-    final books = context.select<BooksProvider, List<Book>>((p) => p.books);
+    final appsReadProvider = context.read<AppsProvider>();
+    final bannersReadProvider = context.read<BannersProvider>();
+    final apps = context.select<AppsProvider, List<App>>((p) => p.apps);
 
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider<TabsProvider>(
       create: (context) {
         final tabsProvider = TabsProvider();
         tabsProvider.setTabs(_tabs);
@@ -99,17 +106,17 @@ class _BooksScreenState extends State<BooksScreen>
       },
       child: Scaffold(
         body: SafeArea(
+          bottom: false,
           child: NestedScrollView(
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
                   final appBarSlivers = buildSliverTabbedAppBar(
                     context: context,
-                    showLogo: false,
-                    hasSearch: true,
-                    searchHint: 'Поиск книг',
+                    showLogo: true,
                     tabs: _tabs,
                     tabController: _tabController,
-                    actions: _buildActionWidgets,
+                    actions: _buildActionWidgets(context),
+                    forceElevated: false,
                   );
                   return [
                     // Шапка
@@ -123,7 +130,7 @@ class _BooksScreenState extends State<BooksScreen>
                     ),
                   ];
                 },
-            body: ValueListenableBuilder(
+            body: ValueListenableBuilder<Set<int>>(
               valueListenable: _visitedIndexes,
               builder: (context, visited, _) => TabBarView(
                 physics:
@@ -147,33 +154,22 @@ class _BooksScreenState extends State<BooksScreen>
                                 ),
                           ),
 
-                          if (tabKey == 'top_sales')
+                          if (tabKey == 'top_charts')
                             ...TopChartsScreen.asSliver(
                               context,
-                              type: FilterType.books,
+                              type: FilterType.apps,
                               showFilters: true,
                             )
-                          else if (tabKey == 'new_releases')
-                            ...TopChartsScreen.asSliver(
-                              context,
-                              type: FilterType.books,
-                              showFilters: true,
-                            )
-                          else if (tabKey == 'genres')
+                          else if (tabKey == 'categories')
                             CategoriesTabScreen.asSliver(
-                              categories: booksGenresData,
-                              products: books,
-                            )
-                          else if (tabKey == 'top_free')
-                            ...TopChartsScreen.asSliver(
-                              context,
-                              type: FilterType.books,
-                              showFilters: true,
+                              categories: appsCategoriesData,
+                              products: apps,
                             )
                           else
                             LazyTabContent(
                               tabKey: tabKey,
-                              provider: booksReadProvider,
+                              provider: appsReadProvider,
+                              bannersProvider: bannersReadProvider,
                               isSliver: true,
                             ),
                         ],

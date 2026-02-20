@@ -1,0 +1,139 @@
+{
+  "tabs": {
+    "recommended": {
+      "tabKey": "recommended",
+      "displayName": "Рекомендуем",
+      "sections": [
+        {
+          "type": "carousel",
+          "title": "Рекомендуем",
+          "dataMethod": "getAppRecommendations",
+          "needsTopPadding": false
+        },
+        {
+          "type": "grid",
+          "title": "Работа",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Работа" }
+        },
+        {
+          "type": "banners",
+          "title": "",
+          "showButton": false,
+          "dataMethod": "getBannersByPrefix",
+          "dataParams": { "prefix": "a_" }
+        },
+        {
+          "type": "grid",
+          "title": "Составление списков",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Списки" }
+        },
+        {
+          "type": "grid",
+          "title": "Инструменты и утилиты",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Утилиты" }
+        },
+        {
+          "type": "grid",
+          "title": "Развлечения",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Развлечения" }
+        }
+      ]
+    },
+    "kids": {
+      "tabKey": "kids",
+      "displayName": "Для детей",
+      "sections": [
+        {
+          "type": "kidsHeroBanner",
+          "needsTopPadding": false,
+          "title": "",
+          "subtitle": "",
+          "imageAssetPath": "assets/images/kids_tab/kids_tab_image.webp"
+        },
+        {
+          "type": "ageFilterSelector",
+          "title": "Выберите возраст",
+          "needsTopPadding": false
+        },
+        {
+          "type": "carousel",
+          "title": "Новинки и обновления",
+          "dataMethod": "getKidsAgeRecommendationsByAgeRange",
+          "dataParams": { "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "title": "Обучающие приложения",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Обучающие" }
+        },
+        {
+          "type": "carousel",
+          "title": "Рисование",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Рисование" }
+        },
+        {
+          "type": "carousel",
+          "title": "Для всей семьи",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Для всей семьи" }
+        },
+        {
+          "type": "carousel",
+          "title": "Развивающие приложения",
+          "dataMethod": "getProductsByTag",
+          "dataParams": { "query": "Развитие" }
+        }
+      ]
+    },
+    "kidsCategory": {
+      "tabKey": "kidsCategory",
+      "displayName": "Для детей по возрасту",
+      "sections": [
+        {
+          "type": "kidsHeroBanner",
+          "needsTopPadding": false,
+          "title": "",
+          "subtitle": "",
+          "imageAssetPath": "assets/images/kids_tab/kids_tab_image.webp"
+        },
+        {
+          "type": "carousel",
+          "title": "Новинки и обновления",
+          "dataMethod": "getKidsAgeRecommendationsByAgeRange",
+          "dataParams": { "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "title": "Обучающие приложения",
+          "dataMethod": "getProductsByTagAndAge",
+          "dataParams": { "query": "Обучающие", "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "needsTopPadding": false,
+          "title": "Рисование",
+          "dataMethod": "getProductsByTagAndAge",
+          "dataParams": { "query": "Рисование", "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "title": "Для всей семьи",
+          "dataMethod": "getProductsByTagAndAge",
+          "dataParams": { "query": "Для всей семьи", "ageLabel": "$AGE_LABEL$" }
+        },
+        {
+          "type": "carousel",
+          "title": "Развивающие приложения",
+          "dataMethod": "getProductsByTagAndAge",
+          "dataParams": { "query": "Развитие", "ageLabel": "$AGE_LABEL$" }
+        }
+      ]
+    }
+  }
+}
