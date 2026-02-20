@@ -17,6 +17,7 @@ class GamesScreen extends StatefulWidget {
 class _GamesScreenState extends State<GamesScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  late final TabsProvider _tabsProvider;
 
   // Список посещенных табов
   // 0 уже посещен, так как это стартовый таб
@@ -43,6 +44,8 @@ class _GamesScreenState extends State<GamesScreen>
   @override
   void initState() {
     super.initState();
+    _tabsProvider = TabsProvider();
+    _tabsProvider.setTabs(_tabs);
     _tabController = TabController(length: _tabs.length, vsync: this);
     _tabController.addListener(_handleTabChange);
 
@@ -59,6 +62,7 @@ class _GamesScreenState extends State<GamesScreen>
     _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     _visitedIndexes.dispose();
+    _tabsProvider.dispose();
     super.dispose();
   }
 
@@ -102,12 +106,8 @@ class _GamesScreenState extends State<GamesScreen>
     final bannersReadProvider = context.read<BannersProvider>();
     final games = context.select<GamesProvider, List<Game>>((p) => p.games);
 
-    return ChangeNotifierProvider<TabsProvider>(
-      create: (context) {
-        final tabsProvider = TabsProvider();
-        tabsProvider.setTabs(_tabs);
-        return tabsProvider;
-      },
+    return ChangeNotifierProvider<TabsProvider>.value(
+      value: _tabsProvider,
       child: Scaffold(
         body: SafeArea(
           bottom: true,

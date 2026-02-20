@@ -16,6 +16,7 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  late final TabsProvider _tabsProvider;
 
   // Список посещенных табов
   // 0 уже посещен, так как это стартовый таб
@@ -43,6 +44,8 @@ class _BooksScreenState extends State<BooksScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabsProvider = TabsProvider();
+    _tabsProvider.setTabs(_tabs);
     _tabController.addListener(_handleTabChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -59,6 +62,7 @@ class _BooksScreenState extends State<BooksScreen>
     _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     _visitedIndexes.dispose();
+    _tabsProvider.dispose();
     super.dispose();
   }
 
@@ -91,12 +95,8 @@ class _BooksScreenState extends State<BooksScreen>
     final booksReadProvider = context.read<BooksProvider>();
     final books = context.select<BooksProvider, List<Book>>((p) => p.books);
 
-    return ChangeNotifierProvider(
-      create: (context) {
-        final tabsProvider = TabsProvider();
-        tabsProvider.setTabs(_tabs);
-        return tabsProvider;
-      },
+    return ChangeNotifierProvider<TabsProvider>.value(
+      value: _tabsProvider,
       child: Scaffold(
         body: SafeArea(
           child: NestedScrollView(

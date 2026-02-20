@@ -17,6 +17,7 @@ class AppsScreen extends StatefulWidget {
 class _AppsScreenState extends State<AppsScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  late final TabsProvider _tabsProvider;
 
   // Список посещенных табов
   // 0 уже посещен, так как это стартовый таб
@@ -37,6 +38,8 @@ class _AppsScreenState extends State<AppsScreen>
   @override
   void initState() {
     super.initState();
+    _tabsProvider = TabsProvider();
+    _tabsProvider.setTabs(_tabs);
     _tabController = TabController(length: _tabs.length, vsync: this);
     _tabController.addListener(_handleTabChange);
 
@@ -55,6 +58,7 @@ class _AppsScreenState extends State<AppsScreen>
     _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     _visitedIndexes.dispose();
+    _tabsProvider.dispose();
     super.dispose();
   }
 
@@ -98,12 +102,8 @@ class _AppsScreenState extends State<AppsScreen>
     final bannersReadProvider = context.read<BannersProvider>();
     final apps = context.select<AppsProvider, List<App>>((p) => p.apps);
 
-    return ChangeNotifierProvider<TabsProvider>(
-      create: (context) {
-        final tabsProvider = TabsProvider();
-        tabsProvider.setTabs(_tabs);
-        return tabsProvider;
-      },
+    return ChangeNotifierProvider<TabsProvider>.value(
+      value: _tabsProvider,
       child: Scaffold(
         body: SafeArea(
           bottom: false,
