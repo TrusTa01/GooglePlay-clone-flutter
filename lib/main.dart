@@ -29,6 +29,19 @@ class GooglePlay extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => GamesProvider()),
         ChangeNotifierProvider(create: (context) => AppsProvider()),
         ChangeNotifierProvider(create: (context) => BooksProvider()),
+        ChangeNotifierProxyProvider3<
+          GamesProvider,
+          AppsProvider,
+          BooksProvider,
+          AggregatedProductsProvider
+        >(
+          create: (_) => AggregatedProductsProvider(),
+          update: (context, games, apps, books, previous) {
+            final aggregated = previous ?? AggregatedProductsProvider();
+            aggregated.update(games, apps, books);
+            return aggregated;
+          },
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

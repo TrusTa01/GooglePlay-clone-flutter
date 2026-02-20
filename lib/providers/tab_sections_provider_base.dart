@@ -8,8 +8,8 @@ import 'package:google_play/services/product_index.dart';
 import 'package:google_play/providers/banners_provider.dart';
 import 'package:google_play/providers/tab_sections_provider.dart';
 
-/// Общая логика для провайдеров с табами и секциями (Games, Apps, Books).
-/// Рекомендации: топ-7 по рейтингу. Секции строятся из конфига через [SectionBuilderService].
+/// Общая логика для провайдеров с табами и секциями ([Games], [Apps], [Books])
+/// Рекомендации: топ-7 по рейтингу. Секции строятся из конфига через [SectionBuilderService]
 abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     implements TabSectionsProvider {
   TabSectionsProviderBase() {
@@ -40,11 +40,11 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
   String? get error => _error;
   bool get isDataLoaded => _isProductsLoaded && _isConfigLoaded;
 
-  /// Имена файлов данных и конфига. Переопределяются в наследниках.
+  // Имена файлов данных и конфига. Переопределяются в наследниках
   String get productsFileName;
   String get configFileName;
 
-  /// Вызывается из [loadData] после загрузки — задаёт продукты и конфиг, считает рекомендации.
+  /// Вызывается из [loadData] после загрузки - задаёт продукты и конфиг, считает рекомендации
   void setData(List<T> products, TabsConfig tabsConfig) {
     _products = products;
     _productsById = {for (final p in _products) p.id: p};
@@ -65,20 +65,20 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
   void _notifyAfterBuild() =>
       WidgetsBinding.instance.addPostFrameCallback((_) => notifyListeners());
 
-  /// Вызвать в начале [loadData] в наследнике, чтобы UI обновился после build.
+  /// Вызвать в начале [loadData] в наследнике, чтобы UI обновился после build
   void notifyLoadingStarted() => _notifyAfterBuild();
 
-  /// Рекомендации: топ-7 по рейтингу. Общая логика для всех типов продуктов.
+  // Рекомендации: топ-7 по рейтингу. Общая логика для всех типов продуктов
   void _calculateRecommendations() {
     final sorted = List<T>.from(_products)
       ..sort((a, b) => b.rating.compareTo(a.rating));
     _recommendations = sorted.take(7).toList();
   }
 
-  /// Загрузка данных. Наследник должен загрузить продукты и конфиг и вызвать [setData].
+  /// Загрузка данных. Наследник должен загрузить продукты и конфиг и вызвать [setData]
   Future<void> loadData([BannersProvider? bannersProvider]);
 
-  /// Баннеры для построения секций. По умолчанию из [bannersProvider] или пусто.
+  /// Баннеры для построения секций. По умолчанию из [bannersProvider] или пусто
   List<AppBanner> bannersForSections(BannersProvider? bannersProvider) =>
       bannersProvider?.banners ?? [];
 
@@ -153,8 +153,8 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     }
   }
 
-  /// Секции для таба с подстановкой плейсхолдера (например «Для детей по возрасту»).
-  /// Подставляет [ageLabel] вместо [placeholder] в dataParams и строит секции.
+  // Секции для таба с подстановкой плейсхолдера, например, для детей по возрасту
+  /// Подставляет [ageLabel] вместо [placeholder] в dataParams и строит секции
   List<HomeSection> getSectionsWithParamSubstitution(
     String tabKey,
     String placeholder,
@@ -194,7 +194,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     return sectionBuilder.buildSectionsFromConfig(sectionsWithAge);
   }
 
-  /// Секции для экрана «Для детей по возрасту»: таб kidsCategory с подставленным [ageLabel].
+  /// Секции для экрана для детей по возрасту: таб kidsCategory с подставленным [ageLabel]
   @override
   List<HomeSection> getSectionsForKidsAge(
     String ageLabel,
