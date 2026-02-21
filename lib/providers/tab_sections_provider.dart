@@ -3,7 +3,7 @@ import 'package:google_play/providers/banners_provider.dart';
 
 // Общий интерфейс для провайдеров, которые отдают секции по ключу sub-tab
 /// Реализуют [GamesProvider], [AppsProvider], [BooksProvider] - один виджет [LazyTabContent] работает со всеми
-abstract interface class TabSectionsProvider {
+abstract class TabSectionsProvider {
   /// Загружает или возвращает из кэша секции для вкладки [tabKey]
   // [bannersProvider] - для игр и приложений обязателен, для книг не используется.
   Future<List<HomeSection>> getSectionsForTab(

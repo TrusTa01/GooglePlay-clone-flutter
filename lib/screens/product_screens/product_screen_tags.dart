@@ -4,6 +4,7 @@ import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/services/product_query_service.dart';
+import 'package:provider/provider.dart';
 
 class ProductTag extends StatelessWidget {
   final Product product;
@@ -58,7 +59,7 @@ class ProductTags extends StatelessWidget {
               tag: tag,
               onTap: () {
                 final allProducts = context.allProducts;
-                final queryService = ProductQueryService();
+                final queryService = context.read<ProductQueryService>();
                 final filteredProducts = queryService.getProductsByTag(
                   allProducts,
                   tag,

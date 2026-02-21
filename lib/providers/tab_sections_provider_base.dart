@@ -12,11 +12,10 @@ import 'package:google_play/providers/tab_sections_provider.dart';
 /// Рекомендации: топ-7 по рейтингу. Секции строятся из конфига через [SectionBuilderService]
 abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     implements TabSectionsProvider {
-  TabSectionsProviderBase() {
-    _queryService = ProductQueryService();
-  }
+  final ProductQueryService _queryService;
 
-  late final ProductQueryService _queryService;
+  TabSectionsProviderBase({required ProductQueryService queryService})
+    : _queryService = queryService;
 
   List<T> _products = [];
   Map<String, T> _productsById = {};

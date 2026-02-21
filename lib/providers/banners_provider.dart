@@ -38,14 +38,4 @@ class BannersProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  // Фильтрация баннеров по префиксу
-  List<AppBanner> getBannersByPrefix(String prefix) {
-    return _banners.where((b) {
-      if (b is ActionBanner) {
-        return b.productId.startsWith(prefix);
-      }
-      return true;
-    }).toList();
-  }
 }

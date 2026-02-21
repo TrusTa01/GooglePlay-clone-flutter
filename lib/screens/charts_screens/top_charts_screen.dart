@@ -33,7 +33,7 @@ class TopChartsScreen extends StatelessWidget {
     required bool showFilters,
   }) {
     final filterProvider = context.watch<FilterProvider>();
-    final queryService = ProductQueryService();
+    final queryService = context.read<ProductQueryService>();
     final items = queryService.getFilteredProducts(
       context.productsForCharts(type),
       type: type,

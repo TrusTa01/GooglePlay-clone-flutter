@@ -28,7 +28,7 @@ class _SearchScreenState extends State<SearchScreen>
       //   ],
       //   onSearchChanged: (value) {},
       // ),
-      body: Center(child: Text('Здесь будет поиск')),
+      body: Center(child: Text('Здесь будет поиск')), // TODO: Поиск
     );
   }
 }

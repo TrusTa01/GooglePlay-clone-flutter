@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/providers/providers.dart';
+import 'package:google_play/services/product_query_service.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_play/core/routes/routes.dart';
@@ -23,12 +24,13 @@ class GooglePlay extends StatelessWidget {
 
     return MultiProvider(
       providers: [
+        Provider(create: (_) => ProductQueryService()),
         ChangeNotifierProvider(create: (context) => TabsProvider()),
         ChangeNotifierProvider(create: (context) => FilterProvider()),
         ChangeNotifierProvider(create: (context) => BannersProvider()),
-        ChangeNotifierProvider(create: (context) => GamesProvider()),
-        ChangeNotifierProvider(create: (context) => AppsProvider()),
-        ChangeNotifierProvider(create: (context) => BooksProvider()),
+        ChangeNotifierProvider(create: (context) => GamesProvider(queryService: context.read<ProductQueryService>())),
+        ChangeNotifierProvider(create: (context) => AppsProvider(queryService: context.read<ProductQueryService>())),
+        ChangeNotifierProvider(create: (context) => BooksProvider(queryService: context.read<ProductQueryService>())),
         ChangeNotifierProxyProvider3<
           GamesProvider,
           AppsProvider,

@@ -7,6 +7,8 @@ import 'package:google_play/providers/tab_sections_provider_base.dart';
 class BooksProvider extends TabSectionsProviderBase<Book> {
   final ProductService _service = ProductService();
 
+  BooksProvider({required super.queryService});
+
   @override
   String get productsFileName => 'books.json';
 
@@ -29,8 +31,9 @@ class BooksProvider extends TabSectionsProviderBase<Book> {
         _service.loadTabsConfig(configFileName),
       ]);
 
-      final booksList =
-          (results[0] as List<Product>).whereType<Book>().toList();
+      final booksList = (results[0] as List<Product>)
+          .whereType<Book>()
+          .toList();
       final config = results[1] as TabsConfig;
       setData(booksList, config);
     } catch (e) {

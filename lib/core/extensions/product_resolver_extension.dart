@@ -4,10 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/providers/providers.dart';
 
-// Общий резолвер продукта по id и доступ к объединённому списку продуктов.
-/// Используется везде, где раньше был [ProductsProvider] ([getProductById], [allProducts]).
+/// Общий резолвер [Product] по [id] и доступ к объединённому списку продуктов
 extension ProductResolverExtension on BuildContext {
-  /// Ищет продукт по [id] в Games -> Apps -> Books. Возвращает первый найденный
+  /// Ищет продукт по [id] в [Games] -> [Apps] -> [Books]. Возвращает первый найденный
   Product? getProductById(String id) {
     final game = read<GamesProvider>().getProductById(id);
     if (game != null) return game;
@@ -16,14 +15,14 @@ extension ProductResolverExtension on BuildContext {
     return read<BooksProvider>().getProductById(id);
   }
 
-  /// Все продукты из трёх провайдеров ([games] + [apps] + [books])
+  /// Все продукты из трёх провайдеров ([Games] + [Apps] + [Books])
   List<Product> get allProducts =>
       read<AggregatedProductsProvider>().allProducts;
 
   /// Все баннеры из [BannersProvider]
   List<AppBanner> get allBanners => read<BannersProvider>().banners;
 
-  /// Объединённые рекомендации ([games] + [apps] + [books]) для сервисов, которым нужен один список
+  /// Объединённые рекомендации ([Aames] + [Apps] + [Books]) для сервисов, которым нужен один список
   List<Product> get recommendations =>
       read<AggregatedProductsProvider>().recommendations;
 

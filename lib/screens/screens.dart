@@ -31,5 +31,7 @@ export 'events/product_event_screen.dart';
 // Product
 export 'product_screens/details_screen.dart';
 export 'product_screens/product_screen.dart';
+export 'product_screens/product_screen_tags.dart';
+export 'product_screens/product_page_sections/product_page_sections.dart';
 export 'product_screens/permissions_screen.dart';
 export 'product_screens/about_author_screen.dart';
