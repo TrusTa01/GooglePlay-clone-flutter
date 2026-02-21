@@ -28,9 +28,18 @@ class GooglePlay extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => TabsProvider()),
         ChangeNotifierProvider(create: (context) => FilterProvider()),
         ChangeNotifierProvider(create: (context) => BannersProvider()),
-        ChangeNotifierProvider(create: (context) => GamesProvider(queryService: context.read<ProductQueryService>())),
-        ChangeNotifierProvider(create: (context) => AppsProvider(queryService: context.read<ProductQueryService>())),
-        ChangeNotifierProvider(create: (context) => BooksProvider(queryService: context.read<ProductQueryService>())),
+        ChangeNotifierProvider(
+          create: (context) =>
+              GamesProvider(queryService: context.read<ProductQueryService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              AppsProvider(queryService: context.read<ProductQueryService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              BooksProvider(queryService: context.read<ProductQueryService>()),
+        ),
         ChangeNotifierProxyProvider3<
           GamesProvider,
           AppsProvider,

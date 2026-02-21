@@ -22,7 +22,7 @@ extension ProductResolverExtension on BuildContext {
   /// Все баннеры из [BannersProvider]
   List<AppBanner> get allBanners => read<BannersProvider>().banners;
 
-  /// Объединённые рекомендации ([Aames] + [Apps] + [Books]) для сервисов, которым нужен один список
+  /// Объединённые рекомендации ([Games] + [Apps] + [Books]) для сервисов, которым нужен один список
   List<Product> get recommendations =>
       read<AggregatedProductsProvider>().recommendations;
 
