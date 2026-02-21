@@ -5,7 +5,9 @@ import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/services/product_query_service.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/widgets/filters/filter_factory.dart'
+    show FilterType, FilterSets;
+import 'package:google_play/widgets/widgets.dart' show TopChartsCard;
 
 class TopChartsScreen extends StatelessWidget {
   final FilterType type;
@@ -33,7 +35,7 @@ class TopChartsScreen extends StatelessWidget {
     final filterProvider = context.watch<FilterProvider>();
     final queryService = ProductQueryService();
     final items = queryService.getFilteredProducts(
-      context.allProducts,
+      context.productsForCharts(type),
       type: type,
       selectedTopFilter: filterProvider.selectedTopFilter,
       selectedGameCategory: filterProvider.selectedGameCategory,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/models/models.dart';
 import 'package:google_play/providers/providers.dart';
@@ -28,4 +29,16 @@ extension ProductResolverExtension on BuildContext {
 
   /// Секции для экрана события по [banner]. В новой архитектуре без PageConfig пока пусто
   List<HomeSection> getEventSections(SimpleBanner banner) => [];
+
+  // Метод, возвращающий список продуктов по типу фильтра, чтобы не дублировать логику
+  /// и не тянуть в [TopCharts] лишние зависимости
+  List<Product> productsForCharts(FilterType type) => switch (type) {
+    FilterType.games => read<GamesProvider>().games.cast<Product>(),
+    FilterType.apps => read<AppsProvider>().apps.cast<Product>(),
+    FilterType.books => read<BooksProvider>().books.cast<Product>(),
+    FilterType.kidsAge => [
+      ...read<GamesProvider>().games.cast<Product>(),
+      ...read<AppsProvider>().apps.cast<Product>(),
+    ],
+  };
 }
