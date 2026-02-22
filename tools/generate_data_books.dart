@@ -432,7 +432,7 @@ void main() async {
   // Основной цикл генерации
   // Для равномерного распределения по жанрам и языкам используем циклические индексы
   int genreIndex = 0;
-  
+
   for (int i = 1; i <= 300; i++) {
     // Генерируем ID с префиксом 'b' (book)
     final String id = 'b_$i';
@@ -471,11 +471,11 @@ void main() async {
     // Каждая книга получает 1-2 жанра, причем первый жанр распределяется циклически
     final int genreCount = faker.randomGenerator.integer(2, min: 1);
     final List<String> selectedGenres = [];
-    
+
     // Первый жанр - циклическое распределение для гарантии равномерности
     selectedGenres.add(genres[genreIndex % genres.length]);
     genreIndex++;
-    
+
     // Второй жанр (если нужен) - случайный, но не должен совпадать с первым
     if (genreCount > 1) {
       String secondGenre;
@@ -490,16 +490,13 @@ void main() async {
     final List<String> selectedTags = (List<String>.from(
       bookTags,
     )..shuffle()).take(tagCount).toList();
-    
+
     // Для детских книг добавляем специальный тег, чтобы фильтр по возрасту работал
     final bool isChildrenBook = selectedGenres.contains('Для детей');
-    if (isChildrenBook && !selectedTags.any((t) => t.toLowerCase().contains('детск'))) {
+    if (isChildrenBook &&
+        !selectedTags.any((t) => t.toLowerCase().contains('детск'))) {
       selectedTags.add('Детская литература');
     }
-
-    // ISBN генерация (российский формат)
-    final String isbn =
-        '978-5-${random.nextInt(900) + 100}-${random.nextInt(90000) + 10000}-${random.nextInt(10)}';
 
     // Количество страниц
     final int pageCount = random.nextInt(800) + 100;
@@ -565,10 +562,12 @@ void main() async {
     // Описание автора (от 3 предложений до нескольких абзацев)
     final int paragraphCount = random.nextInt(4) + 1; // 1-4 абзаца
     final List<String> paragraphs = List.generate(paragraphCount, (index) {
-      final int sentenceCount = random.nextInt(5) + 3; // 3-7 предложений в абзаце
+      final int sentenceCount =
+          random.nextInt(5) + 3; // 3-7 предложений в абзаце
       return faker.lorem.sentences(sentenceCount).join(' ');
     });
-    final String creatorDescription = '$authorName — ${paragraphs.join('\n\n')}';
+    final String creatorDescription =
+        '$authorName — ${paragraphs.join('\n\n')}';
 
     final bookData = {
       "type": "book",
@@ -583,10 +582,12 @@ void main() async {
       "isPaid": isPaid,
       "price": price,
       "shortDescription": faker.lorem.sentences(2).join(' '),
-      "description": List.generate(6, (_) => faker.lorem.sentences(5).join(' ')).join('\n\n'),
+      "description": List.generate(
+        6,
+        (_) => faker.lorem.sentences(5).join(' '),
+      ).join('\n\n'),
       "releaseDate": releaseDate.toIso8601String(),
       "publisher": publisher,
-      "isbn": isbn,
       "pageCount": pageCount,
       "language": language,
       "format": format,
