@@ -156,91 +156,92 @@ void main() async {
   ];
 
   final genres = [
-    'Все категории',
-    'Аркады',
-    'Викторины',
-    'Головоломки',
-    'Гонки',
-    'Казино',
-    'Казуальные',
-    'Карточные',
-    'Музыкальные',
-    'Настольные',
-    'Обучающие',
-    'Приключения',
-    'Ролевые',
-    'Симуляторы',
-    'Словесные',
-    'Спортивные',
-    'Стратегии',
-    'Экшен',
-    'Файтинг',
-    'Образование',
+    'arcade',
+    'trivia',
+    'puzzle',
+    'racing',
+    'casino',
+    'casual',
+    'card',
+    'music',
+    'board',
+    'educational',
+    'adventure',
+    'rpg',
+    'simulation',
+    'word',
+    'sports',
+    'strategy',
+    'action',
+    'fighting',
+    'indie',
+    'shooter',
+    'horror',
   ];
 
   final gameTags = [
-    'Выживание',
-    'Фэнтези',
-    'Средневековье',
-    'Кооператив',
-    'Открытый мир',
-    'Инди',
-    'Многопользовательская',
-    'Сюжетная',
-    'Киберпанк',
-    'Зомби',
-    'Научная фантастика',
-    'Рогалик',
-    '2D',
-    '3D',
-    'Пиксельная графика',
-    'Ретро',
-    'Хоррор',
-    'Хардкор',
-    'Казуальная',
-    'Бесплатная',
-    'Платная',
-    'Крафтинг',
-    'Пошаговая',
-    'В реальном времени',
-    'Экономика',
-    'Строительство',
-    'Война',
-    'Исследование',
-    'Аниме',
-    'Steampunk',
-    'VR',
-    'PvP',
-    'PvE',
-    'Кинематографичная',
-    'Сложная',
-    'Расслабляющая',
-    'Процедурная генерация',
-    'Кроссплатформенность',
-    'Реалистичная',
-    'Стилизованная',
-    'Абстрактная',
-    'Минимализм',
-    'Постапокалипсис',
-    'Киберспорт',
-    'Офлайн',
-    'Низкие цены',
+    'survival',
+    'fantasy',
+    'medieval',
+    'co-op',
+    'open_world',
+    'indie',
+    'multiplayer',
+    'story_rich',
+    'cyberpunk',
+    'zombie',
+    'sci-fi',
+    'roguelike',
+    '2d',
+    '3d',
+    'pixel_art',
+    'retro',
+    'horror',
+    'hardcore',
+    'casual',
+    'free',
+    'paid',
+    'crafting',
+    'turn_based',
+    'real_time',
+    'economy',
+    'building',
+    'war',
+    'exploration',
+    'anime',
+    'steampunk',
+    'vr',
+    'pvp',
+    'pve',
+    'cinematic',
+    'challenging',
+    'relaxing',
+    'procedural',
+    'crossplatform',
+    'realistic',
+    'stylized',
+    'abstract',
+    'minimalist',
+    'post_apocalyptic',
+    'esports',
+    'offline',
+    'low_price',
   ];
 
   // Теги для детских игр
   final kidsTags = [
-    'Математика',
-    'Рисование',
-    'Алфавит',
-    'Буквы',
-    'Цифры',
-    'Языки',
-    'Здоровье',
-    'Логика',
-    'Творчество',
-    'Сказки',
-    'Мультфильмы',
-    'Для всей семьи',
+    'math',
+    'drawing',
+    'alphabet',
+    'letters',
+    'numbers',
+    'languages',
+    'health',
+    'logic',
+    'creativity',
+    'fairy_tales',
+    'cartoons',
+    'family',
   ];
 
   final icons = [
@@ -538,6 +539,20 @@ void main() async {
     'Запуск при загрузке',
   ];
 
+  // Жанры, которые чаще выпадают у детских игр
+  final kidsGenres = [
+    'casual',
+    'educational',
+    'puzzle',
+    'arcade',
+    'music',
+    'word',
+    'trivia',
+    'board',
+    'simulation',
+    'adventure',
+  ];
+
   // Основной цикл генерации
   for (int i = 1; i <= 1000; i++) {
     // Генерируем ID с префиксом 'g' (game)
@@ -568,12 +583,28 @@ void main() async {
       return variations[random.nextInt(variations.length)];
     }
 
+    // Возрастной рейтинг определяется раньше, чтобы влиять на жанры
+    final int ageRating = faker.randomGenerator.element(ageRatings);
+    final bool isKidsFriendly = ageRating <= 7;
+
     // Логика жанров (от 1 до 3)
+    // Для детских игр: 70% шанс взять жанр из kidsGenres
     int genreCount = faker.randomGenerator.integer(4, min: 1);
-    List<String> selectedGenres =
-        (genres.where((g) => g != 'Все категории').toList()..shuffle())
-            .take(genreCount)
-            .toList();
+    List<String> selectedGenres;
+    if (isKidsFriendly) {
+      final allGenresForKids = [
+        ...kidsGenres,
+        ...kidsGenres, // дублируем для повышения вероятности
+        ...genres.where((g) => g != 'Все категории'),
+      ]..shuffle();
+      selectedGenres = allGenresForKids.toSet().toList()
+          .take(genreCount)
+          .toList();
+    } else {
+      selectedGenres = (List<String>.from(genres)..shuffle())
+          .take(genreCount)
+          .toList();
+    }
 
     final String creatorName =
         '${faker.person.firstName()} ${faker.person.lastName()}';
@@ -639,16 +670,14 @@ void main() async {
     // Теги (от 3 до 7)
     final int tagCount = random.nextInt(5) + 3;
     List<String> selectedTags;
-    
-    // Для детских игр (возраст 3 или 7, или жанр "Обучающие") добавляем детские теги
-    final int ageRating = faker.randomGenerator.element(ageRatings);
-    final bool isKidsGame = ageRating <= 7 || selectedGenres.contains('Обучающие');
-    
+
+    // Для детских игр добавляем детские теги + жанр "Обучающие" тоже считается детским
+    final bool isKidsGame = isKidsFriendly || selectedGenres.contains('educational');
+
     if (isKidsGame) {
-      // Для детских игр берем 2-3 детских тега и 2-4 обычных
-      final int kidsTagCount = random.nextInt(1) + 2; // 1-2
+      final int kidsTagCount = random.nextInt(2) + 2; // 2-3
       final int regularTagCount = random.nextInt(2) + 2; // 2-3
-      
+
       selectedTags = [
         ...(List<String>.from(kidsTags)..shuffle()).take(kidsTagCount),
         ...(List<String>.from(gameTags)..shuffle()).take(regularTagCount),
@@ -698,8 +727,9 @@ void main() async {
       "creatorDescription": faker.lorem.sentences(2).join(' '),
       "whatsNewText": faker.lorem.sentences(3).join(' '),
       "ageRating": ageRating,
+      "isKidsFriendly": isKidsFriendly,
       "ageRatingReasons": selectedAgeRatingReasons,
-      "gameGenre": selectedGenres,
+      "categories": selectedGenres,
       "screenshots": selectedScreenshots,
       "tags": selectedTags,
       "isOnline": faker.randomGenerator.boolean(),

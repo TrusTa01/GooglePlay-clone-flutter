@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/providers/providers.dart';
 
 /// Общий резолвер продукта по id и доступ к объединённому списку продуктов.

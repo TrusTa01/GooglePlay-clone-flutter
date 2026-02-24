@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/models/product_models/game_model.dart';
+import 'package:google_play/data/models/product_dtos/game_dto.dart';
 import 'package:google_play/widgets/lazy_tab_content.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/core/routes/routes.dart';

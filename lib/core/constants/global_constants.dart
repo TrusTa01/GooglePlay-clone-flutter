@@ -39,7 +39,15 @@ class Constants {
   static const divider25 = SizedBox(height: 25);
 
   // Простой способ вертикального отступа между блоками (сливерная версия)
-  static const sliverDivider15 = SliverToBoxAdapter(child: SizedBox(height: 15));
-  static const sliverDivider20 = SliverToBoxAdapter(child: SizedBox(height: 20));
-  static const sliverDivider25 = SliverToBoxAdapter(child: SizedBox(height: 25));
+  static const sliverDivider15 = SliverToBoxAdapter(
+    child: SizedBox(height: 15),
+  );
+  static const sliverDivider20 = SliverToBoxAdapter(
+    child: SizedBox(height: 20),
+  );
+  static const sliverDivider25 = SliverToBoxAdapter(
+    child: SizedBox(height: 25),
+  );
+
+  static const baseDataPath = 'assets/data/';
 }

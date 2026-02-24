@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/screens/product_screens/permissions_screen.dart';
 import 'package:google_play/screens/product_screens/utils/product_app_bar_leading.dart';
 import 'package:google_play/screens/product_screens/utils/product_ui_config.dart';
@@ -217,7 +217,7 @@ class DetailsScreen extends StatelessWidget {
                           ),
                           _InfoRow(
                             label: 'Жанры',
-                            value: (product as Book).genres.join(', '),
+                            value: (product as Book).categories.join(', '),
                           ),
                         ]),
                     ]),

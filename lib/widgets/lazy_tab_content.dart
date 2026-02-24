@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/shimers/product_slider_skeleton.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/screens/screens.dart';
 

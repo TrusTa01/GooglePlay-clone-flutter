@@ -1,1 +1,0 @@
-enum BannerType { simple, action }

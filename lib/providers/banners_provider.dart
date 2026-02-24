@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/services/product_service.dart';
 
 class BannersProvider extends ChangeNotifier {

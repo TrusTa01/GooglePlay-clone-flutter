@@ -635,6 +635,10 @@ void main() async {
       appTags,
     )..shuffle()).take(tagCount).toList();
 
+    // Возрастной рейтинг и детский контент (как в играх)
+    final int ageRating = faker.randomGenerator.element(ageRatings);
+    final bool isKidsFriendly = ageRating <= 7;
+
     // Категории (от 1 до 3)
     final int categoryCount = random.nextInt(3) + 1;
     final List<String> selectedCategories = (List<String>.from(
@@ -712,11 +716,12 @@ void main() async {
       "creatorDescription": faker.lorem.sentences(2).join(' '),
       "whatsNewText": faker.lorem.sentences(3).join(' '),
       "eventText": generateEventText(random),
-      "ageRating": faker.randomGenerator.element(ageRatings),
+      "ageRating": ageRating,
+      "isKidsFriendly": isKidsFriendly,
       "ageRatingReasons": selectedAgeRatingReasons,
       "screenshots": selectedScreenshots,
       "tags": selectedTags,
-      "appCategory": selectedCategories,
+      "categories": selectedCategories,
       "packageName": packageName,
       "supportedLanguages": supportedLanguages,
       "isEditorChoice": isEditorChoice,

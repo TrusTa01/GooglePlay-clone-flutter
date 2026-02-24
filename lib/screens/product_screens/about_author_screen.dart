@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 
 class AboutAuthorScreen extends StatelessWidget {
   final Product product;

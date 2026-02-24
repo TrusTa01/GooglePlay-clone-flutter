@@ -1,0 +1,5 @@
+{
+  "availableGamesTabs": ["recommended", "kids", "paid"],
+  "availableAppsTabs": ["recommended", "kids"],
+  "availableBooksTabs": ["recommended"]
+}

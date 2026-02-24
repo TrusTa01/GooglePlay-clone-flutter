@@ -1,4 +1,4 @@
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/providers/banners_provider.dart';
 
 /// Общий интерфейс для провайдеров, которые отдают секции по ключу sub-tab.

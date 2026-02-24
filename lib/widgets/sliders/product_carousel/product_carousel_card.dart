@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/models/product_models/product_interface.dart';
+import 'package:google_play/data/models/product_models/product_interface.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/widgets/widgets.dart';
 

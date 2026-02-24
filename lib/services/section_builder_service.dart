@@ -1,4 +1,4 @@
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/services/product_index.dart';
 import 'package:google_play/services/product_query_service.dart';
 

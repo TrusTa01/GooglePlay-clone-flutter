@@ -592,7 +592,7 @@ void main() async {
       "language": language,
       "format": format,
       "publicationDate": publicationDate.toIso8601String(),
-      "genres": selectedGenres,
+      "categories": selectedGenres,
       "tags": selectedTags,
       "hasAudioVersion": hasAudioVersion,
       "audioDuration": audioDuration,

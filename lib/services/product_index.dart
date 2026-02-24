@@ -1,4 +1,4 @@
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 
 /// Ключи возрастных бакетов для индекса (совпадают с лейблами из конфигов).
 const List<String> _ageBucketKeys = ['0-5', '6-8', '9-12', '13+'];
@@ -64,13 +64,13 @@ class ProductIndex {
 
     for (final p in products) {
       if (p is Game) {
-        for (final g in p.gameGenre) {
+        for (final g in p.categories) {
           addToMap(gamesByGenre, norm(g), p);
         }
         for (final t in p.tags) {
           addToMap(productsByTag, norm(t), p);
         }
-        for (final g in p.gameGenre) {
+        for (final g in p.categories) {
           addToMap(productsByTag, norm(g), p);
         }
         addToMap(byAgeBucket, _ageBucketKey(p.ageRating), p);
@@ -82,17 +82,17 @@ class ProductIndex {
         }
         addToMap(byAgeBucket, _ageBucketKey(p.ageRating), p);
       } else if (p is Book) {
-        for (final g in p.genres) {
+        for (final g in p.categories) {
           addToMap(booksByGenre, norm(g), p);
         }
         for (final t in p.tags) {
           addToMap(productsByTag, norm(t), p);
         }
-        for (final g in p.genres) {
+        for (final g in p.categories) {
           addToMap(productsByTag, norm(g), p);
         }
         if (p.isEbook) {
-          for (final g in p.genres) {
+          for (final g in p.categories) {
             addToMap(ebooksByTag, norm(g), p);
           }
           for (final t in p.tags) {

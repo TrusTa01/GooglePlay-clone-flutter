@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 
 class EventHeroBanner extends StatelessWidget {
   final SimpleBanner banner;

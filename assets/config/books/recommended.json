@@ -1,0 +1,429 @@
+{
+  "recommended": {
+    "tabKey": "recommended",
+    "displayName": "books_recommended_tab_display_name",
+    "sections": [
+      {
+        "type": "carousel",
+        "titleKey": "books_bestseller_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "collection",
+          "filter_value": "bestseller"
+        },
+        "id": "recommended_bestseller_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_new_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "collection",
+          "filter_value": "new_release"
+        },
+        "id": "recommended_new_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_fantasy_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "fantasy"
+        },
+        "id": "recommended_fantasy_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_business_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "business"
+        },
+        "id": "recommended_business_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_romance_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "romance"
+        },
+        "id": "recommended_romance_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_self_help_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "self_help"
+        },
+        "id": "recommended_self_help_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_thriller_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "thriller"
+        },
+        "id": "recommended_thriller_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_science_fiction_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "science_fiction"
+        },
+        "id": "recommended_science_fiction_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_mystery_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "mystery"
+        },
+        "id": "recommended_mystery_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_history_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "history"
+        },
+        "id": "recommended_history_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_biography_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "biography"
+        },
+        "id": "recommended_biography_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_children_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "children"
+        },
+        "id": "recommended_children_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_science_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "science"
+        },
+        "id": "recommended_science_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_horror_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "horror"
+        },
+        "id": "recommended_horror_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_poetry_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "poetry"
+        },
+        "id": "recommended_poetry_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_cooking_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "cooking"
+        },
+        "id": "recommended_cooking_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_travel_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "travel"
+        },
+        "id": "recommended_travel_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_psychology_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "psychology"
+        },
+        "id": "recommended_psychology_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_comics_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "comics"
+        },
+        "id": "recommended_comics_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_health_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "health"
+        },
+        "id": "recommended_health_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_top_rated_title",
+        "subtitleKey": "books_top_rated_subtitle",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "collection",
+          "filter_value": "top_rated"
+        },
+        "id": "recommended_top_rated_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_free_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "free"
+        },
+        "id": "recommended_free_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_art_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "art"
+        },
+        "id": "recommended_art_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_philosophy_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "philosophy"
+        },
+        "id": "recommended_philosophy_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_sports_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "sports"
+        },
+        "id": "recommended_sports_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_technology_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "technology"
+        },
+        "id": "recommended_technology_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_religion_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "religion"
+        },
+        "id": "recommended_religion_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_nature_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "nature"
+        },
+        "id": "recommended_nature_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_education_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "education"
+        },
+        "id": "recommended_education_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_law_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "law"
+        },
+        "id": "recommended_law_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_economics_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "economics"
+        },
+        "id": "recommended_economics_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_politics_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "politics"
+        },
+        "id": "recommended_politics_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_architecture_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "architecture"
+        },
+        "id": "recommended_architecture_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_music_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "music"
+        },
+        "id": "recommended_music_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_parenting_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "parenting"
+        },
+        "id": "recommended_parenting_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_memoir_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "memoir"
+        },
+        "id": "recommended_memoir_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_graphic_novel_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "graphic_novel"
+        },
+        "id": "recommended_graphic_novel_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_short_stories_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "short_stories"
+        },
+        "id": "recommended_short_stories_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_award_winning_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "award_winning"
+        },
+        "id": "recommended_award_winning_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_classic_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "classic"
+        },
+        "id": "recommended_classic_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "books_translated_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "translated"
+        },
+        "id": "recommended_translated_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "books_series_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "series"
+        },
+        "id": "recommended_series_carousel"
+      }
+    ]
+  }
+}

@@ -1,0 +1,505 @@
+{
+  "recommended": {
+    "tabKey": "recommended",
+    "displayName": "games_recommended_tab_display_name",
+    "sections": [
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_1"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "for_you_title",
+        "dataSource": "recommendations",
+        "id": "recommended_for_you_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "home_grid_everyone_plays_title",
+        "subtitleKey": "home_grid_everyone_plays_subtitle",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "collection",
+          "filter_value": "popular"
+        },
+        "id": "recommended_home_grid_everyone_plays_grid"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_2"
+      },
+      {
+        "type": "grid",
+        "titleKey": "action_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "action"
+        },
+        "id": "recommended_action_grid"
+      },
+      {
+        "type": "grid",
+        "titleKey": "board_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "board"
+        },
+        "id": "recommended_board_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "fighting_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "fighting"
+        },
+        "id": "recommended_fighting_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "racing_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "racing"
+        },
+        "id": "recommended_racing_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "strategy_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "strategy"
+        },
+        "id": "recommended_strategy_carousel"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_3"
+      },
+      {
+        "type": "grid",
+        "titleKey": "puzzle_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "puzzle"
+        },
+        "id": "recommended_puzzle_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "rpg_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "rpg"
+        },
+        "id": "recommended_rpg_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "sports_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "sports"
+        },
+        "id": "recommended_sports_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "simulation_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "simulation"
+        },
+        "id": "recommended_simulation_carousel"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_4"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "adventure_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "adventure"
+        },
+        "id": "recommended_adventure_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "arcade_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "arcade"
+        },
+        "id": "recommended_arcade_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "casual_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "casual"
+        },
+        "id": "recommended_casual_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "shooter_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "shooter"
+        },
+        "id": "recommended_shooter_grid"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_5"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "horror_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "horror"
+        },
+        "id": "recommended_horror_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "new_releases_title",
+        "subtitleKey": "new_releases_subtitle",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "collection",
+          "filter_value": "new_releases"
+        },
+        "id": "recommended_new_releases_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "top_rated_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "collection",
+          "filter_value": "top_rated"
+        },
+        "id": "recommended_top_rated_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "offline_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "offline"
+        },
+        "id": "recommended_offline_carousel"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_6"
+      },
+      {
+        "type": "grid",
+        "titleKey": "multiplayer_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "multiplayer"
+        },
+        "id": "recommended_multiplayer_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "indie_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "category",
+          "filter_value": "indie"
+        },
+        "id": "recommended_indie_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "survival_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "survival"
+        },
+        "id": "recommended_survival_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "fantasy_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "fantasy"
+        },
+        "id": "recommended_fantasy_carousel"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_7"
+      },
+      {
+        "type": "grid",
+        "titleKey": "open_world_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "open_world"
+        },
+        "id": "recommended_open_world_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "co_op_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "co-op"
+        },
+        "id": "recommended_co_op_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "story_rich_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "story_rich"
+        },
+        "id": "recommended_story_rich_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "retro_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "retro"
+        },
+        "id": "recommended_retro_grid"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_8"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "anime_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "anime"
+        },
+        "id": "recommended_anime_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "pixel_art_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "pixel_art"
+        },
+        "id": "recommended_pixel_art_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "pvp_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "pvp"
+        },
+        "id": "recommended_pvp_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "pve_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "pve"
+        },
+        "id": "recommended_pve_carousel"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_9"
+      },
+      {
+        "type": "grid",
+        "titleKey": "roguelike_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "roguelike"
+        },
+        "id": "recommended_roguelike_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "crafting_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "crafting"
+        },
+        "id": "recommended_crafting_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "relaxing_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "relaxing"
+        },
+        "id": "recommended_relaxing_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "cyberpunk_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "cyberpunk"
+        },
+        "id": "recommended_cyberpunk_grid"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_10"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "turn_based_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "turn_based"
+        },
+        "id": "recommended_turn_based_carousel"
+      },
+      {
+        "type": "grid",
+        "titleKey": "building_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "building"
+        },
+        "id": "recommended_building_grid"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "vr_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "vr"
+        },
+        "id": "recommended_vr_carousel"
+      },
+      {
+        "type": "carousel",
+        "titleKey": "steampunk_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "steampunk"
+        },
+        "id": "recommended_steampunk_carousel"
+      },
+      {
+        "type": "banners",
+        "dataSource": "banners",
+        "dataParams": {
+          "filter_type": "prefix",
+          "filter_value": "g_"
+        },
+        "id": "recommended_banners_11"
+      },
+      {
+        "type": "grid",
+        "titleKey": "post_apocalyptic_games_title",
+        "dataSource": "products_list",
+        "dataParams": {
+          "filter_type": "tag",
+          "filter_value": "post_apocalyptic"
+        },
+        "id": "recommended_post_apocalyptic_grid"
+      }
+    ]
+  }
+}

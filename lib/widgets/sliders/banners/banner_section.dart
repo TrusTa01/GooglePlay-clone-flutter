@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/product_resolver_extension.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/widgets/widgets.dart';
 import 'package:google_play/widgets/sliders/banners/utils/banner_layout_config.dart';

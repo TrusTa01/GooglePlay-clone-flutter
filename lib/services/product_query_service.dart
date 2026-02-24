@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/services/product_index.dart';
 import 'package:google_play/widgets/filters/filter_factory.dart';
 
@@ -36,7 +36,7 @@ class ProductQueryService {
         .map((g) => g.trim().toLowerCase())
         .toList();
 
-    return book.genres.any((bookGenre) {
+    return book.categories.any((bookGenre) {
       final normalizedBookGenre = bookGenre.trim().toLowerCase();
       return normalizedGenresToMatch.contains(normalizedBookGenre);
     });
@@ -83,7 +83,7 @@ class ProductQueryService {
 
       // Если это игра, проверяем жанры и теги
       if (p is Game) {
-        final inGenres = p.gameGenre.any((g) => g.toLowerCase().contains(q));
+        final inGenres = p.categories.any((g) => g.toLowerCase().contains(q));
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inGenres || inTags;
       }
@@ -96,7 +96,7 @@ class ProductQueryService {
 
       // Если это книга, проверяем жанры и теги
       if (p is Book) {
-        final inGenres = p.genres.any((g) => g.toLowerCase().contains(q));
+        final inGenres = p.categories.any((g) => g.toLowerCase().contains(q));
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inGenres || inTags;
       }
@@ -124,7 +124,7 @@ class ProductQueryService {
       if (!p.isEbook) return false;
 
       // Проверяем жанры и теги
-      final inGenres = p.genres.any((g) => g.toLowerCase().contains(q));
+      final inGenres = p.categories.any((g) => g.toLowerCase().contains(q));
       final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
       return inGenres || inTags;
     }).toList();
@@ -170,7 +170,7 @@ class ProductQueryService {
 
       // Если это игра, проверяем жанры и теги
       if (p is Game) {
-        final inGenres = p.gameGenre.any((g) => g.toLowerCase().contains(q));
+        final inGenres = p.categories.any((g) => g.toLowerCase().contains(q));
         final inTags = p.tags.any((t) => t.toLowerCase().contains(q));
         return inGenres || inTags;
       }
@@ -199,15 +199,15 @@ class ProductQueryService {
 
     Set<String> currentCategories = {};
     if (currentProduct is Game) {
-      currentCategories = currentProduct.gameGenre
+      currentCategories = currentProduct.categories
           .map((g) => g.toLowerCase())
           .toSet();
     } else if (currentProduct is App) {
-      currentCategories = currentProduct.appCategory
+      currentCategories = currentProduct.categories
           .map((c) => c.toLowerCase())
           .toSet();
     } else if (currentProduct is Book) {
-      currentCategories = currentProduct.genres
+      currentCategories = currentProduct.categories
           .map((g) => g.toLowerCase())
           .toSet();
     }
@@ -234,15 +234,15 @@ class ProductQueryService {
 
       Set<String> productCategories = {};
       if (product is Game) {
-        productCategories = product.gameGenre
+        productCategories = product.categories
             .map((g) => g.toLowerCase())
             .toSet();
       } else if (product is App) {
-        productCategories = product.appCategory
+        productCategories = product.categories
             .map((c) => c.toLowerCase())
             .toSet();
       } else if (product is Book) {
-        productCategories = product.genres.map((g) => g.toLowerCase()).toSet();
+        productCategories = product.categories.map((g) => g.toLowerCase()).toSet();
       }
 
       final allProductKeywords = {...productTags, ...productCategories};
@@ -273,7 +273,7 @@ class ProductQueryService {
   // Получить игры по категории (жанру)
   List<Product> getGamesByCategory(List<Product> allProducts, String genre) {
     return allProducts.whereType<Game>().where((game) {
-      return game.gameGenre.any(
+      return game.categories.any(
         (g) => g.trim().toLowerCase() == genre.trim().toLowerCase(),
       );
     }).toList();
@@ -322,7 +322,7 @@ class ProductQueryService {
     final maxAge = ageRange['maxAge']!;
 
     return allProducts.whereType<Game>().where((game) {
-      final genreMatches = game.gameGenre.any(
+      final genreMatches = game.categories.any(
         (g) => g.trim().toLowerCase() == genre.trim().toLowerCase(),
       );
       final ageMatches = game.ageRating >= minAge && game.ageRating <= maxAge;
@@ -350,7 +350,7 @@ class ProductQueryService {
     final byAge = index.byAgeBucket[bucketKey] ?? [];
     final genreKey = genre.trim().toLowerCase();
     return byAge.whereType<Game>().where((game) {
-      return game.gameGenre.any((g) => g.trim().toLowerCase() == genreKey);
+      return game.categories.any((g) => g.trim().toLowerCase() == genreKey);
     }).toList();
   }
 
@@ -364,12 +364,12 @@ class ProductQueryService {
     return allProducts.where((p) {
       if (isGame) {
         return p is Game &&
-            p.gameGenre.any(
+            p.categories.any(
               (g) => g.trim().toLowerCase() == normalizedCategory,
             );
       }
       return p is App &&
-          p.appCategory.any(
+          p.categories.any(
             (c) => c.trim().toLowerCase() == normalizedCategory,
           );
     }).toList();
@@ -470,7 +470,7 @@ class ProductQueryService {
   // Получить платные игры конкретного жанра
   List<Product> getPaidGamesByGenre(List<Product> allProducts, String genre) {
     return allProducts.whereType<Game>().where((g) {
-      return g.isPaid && g.gameGenre.contains(genre);
+      return g.isPaid && g.categories.contains(genre);
     }).toList();
   }
 
@@ -601,12 +601,12 @@ class ProductQueryService {
 
       result = result.where((p) {
         if (p is Game) {
-          return p.gameGenre.any(
+          return p.categories.any(
             (g) => g.trim().toLowerCase() == normalizedCategory,
           );
         }
         if (p is App) {
-          final matches = p.appCategory.any(
+          final matches = p.categories.any(
             (c) => c.trim().toLowerCase() == normalizedCategory,
           );
           if (matches) {}
@@ -639,7 +639,7 @@ class ProductQueryService {
         result = result.where((p) {
           if (p is Book) {
             // Проверяем наличие жанра "Для детей" (точное или частичное совпадение)
-            final hasChildrenGenre = p.genres.any((g) {
+            final hasChildrenGenre = p.categories.any((g) {
               final normalizedGenre = g.trim().toLowerCase();
               return normalizedGenre == 'для детей' ||
                   normalizedGenre.contains('для детей');

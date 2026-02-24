@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_play/models/config_models/tabs_config.dart';
-import 'package:google_play/models/models.dart';
+import 'package:google_play/data/models/config_models/tabs_config.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/services/section_builder_service.dart';
 import 'package:google_play/services/product_query_service.dart';
 import 'package:google_play/services/product_index.dart';
@@ -12,12 +12,6 @@ import 'package:google_play/providers/tab_sections_provider.dart';
 /// Рекомендации: топ-7 по рейтингу. Секции строятся из конфига через [SectionBuilderService].
 abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
     implements TabSectionsProvider {
-  TabSectionsProviderBase() {
-    _queryService = ProductQueryService();
-  }
-
-  late final ProductQueryService _queryService;
-
   List<T> _products = [];
   TabsConfig? _config;
   List<T> _recommendations = [];
@@ -27,9 +21,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
   bool _isLoading = false;
   String? _error;
 
-  final Map<String, List<HomeSection>> _tabSections = {};
   final Map<String, bool> _tabSectionsLoading = {};
-  final Map<String, Completer<List<HomeSection>>> _tabCompleters = {};
 
   List<T> get products => _products;
   List<T> get recommendations => _recommendations;
@@ -47,7 +39,7 @@ abstract class TabSectionsProviderBase<T extends Product> extends ChangeNotifier
   void setData(List<T> products, TabsConfig tabsConfig) {
     _products = products;
     _config = tabsConfig;
-    _calculateRecommendations();
+
     _productIndex = ProductIndex.build(
       products.cast<Product>(),
       _recommendations.cast<Product>(),

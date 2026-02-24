@@ -14,7 +14,7 @@ final class BookEntity extends ProductEntity {
   final bool sampleAvailable; // Есть бесплатный фрагмент
   final bool isAbridged; // Сокращенное издание
   final DateTime publicationDate; // Дата публикации
-  final List<String> genres; // ["Фэнтези", "Приключения"]
+  final List<String> categories; // ["Фэнтези", "Приключения"]
 
   BookEntity({
     required super.type,
@@ -45,7 +45,7 @@ final class BookEntity extends ProductEntity {
     required this.sampleAvailable,
     required this.isAbridged,
     required this.publicationDate,
-    required this.genres,
+    required this.categories,
   });
 
   @override
