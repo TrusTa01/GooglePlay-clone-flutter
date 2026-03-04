@@ -12,4 +12,10 @@ abstract interface class IProductRepository {
 
   // Получает похожие продукты
   Future<List<ProductEntity>> getSimilarProducts(ProductEntity product);
+
+  Future<List<ProductEntity>> getProductsBySource({
+    required String source,
+    Map<String, dynamic>? params,
+    required String categoryType,
+  });
 }

@@ -1,6 +1,7 @@
-abstract class ProductEntity {
+import 'package:google_play/domain/entities/base_entity.dart';
+
+abstract class ProductEntity extends Entity {
   final String type; // app, game, book
-  final String id;
   final String title;
   final String creator; // Автор / разработчик
   final String shortDescription;
@@ -17,8 +18,8 @@ abstract class ProductEntity {
   String get technicalInfo; // Размер (MB), кол-во страниц и т.д.
 
   const ProductEntity({
+    required super.id,
     required this.type,
-    required this.id,
     required this.title,
     required this.creator,
     required this.shortDescription,

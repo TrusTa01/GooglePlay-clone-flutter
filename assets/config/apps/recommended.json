@@ -1,19 +1,19 @@
 {
   "recommended": {
-    "tabKey": "recommended",
-    "displayName": "apps_recommended_tab_display_name",
+    "tab_key": "recommended",
+    "display_name": "apps_recommended_tab_display_name",
     "sections": [
       {
         "type": "carousel",
-        "titleKey": "for_you_title",
-        "dataSource": "recommendations",
+        "title_key": "for_you_title",
+        "data_source": "recommendations",
         "id": "recommended_for_you_carousel"
       },
       {
         "type": "grid",
-        "titleKey": "apps_work_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_work_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "work"
         },
@@ -21,8 +21,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -30,9 +30,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_lists_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_lists_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "lists"
         },
@@ -40,9 +40,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_utilities_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_utilities_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "utilities"
         },
@@ -50,9 +50,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_entertainment_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_entertainment_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "entertainment"
         },
@@ -60,9 +60,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_new_releases_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_new_releases_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "collection",
           "filter_value": "new_release"
         },
@@ -70,8 +70,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -79,9 +79,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_social_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_social_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "social"
         },
@@ -89,9 +89,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_top_rated_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_top_rated_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "collection",
           "filter_value": "top_rated"
         },
@@ -99,9 +99,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_education_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_education_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "education"
         },
@@ -109,9 +109,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_finance_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_finance_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "finance"
         },
@@ -119,8 +119,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -128,9 +128,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_health_fitness_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_health_fitness_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "health_fitness"
         },
@@ -138,9 +138,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_music_audio_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_music_audio_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "music_audio"
         },
@@ -148,9 +148,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_photography_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_photography_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "photography"
         },
@@ -158,9 +158,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_travel_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_travel_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "travel"
         },
@@ -168,8 +168,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -177,9 +177,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_news_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_news_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "news"
         },
@@ -187,9 +187,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_shopping_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_shopping_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "shopping"
         },
@@ -197,9 +197,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_navigation_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_navigation_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "navigation"
         },
@@ -207,9 +207,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_video_players_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_video_players_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "video_players"
         },
@@ -217,8 +217,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -226,9 +226,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_food_drink_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_food_drink_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "food_drink"
         },
@@ -236,10 +236,10 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_popular_title",
-        "subtitleKey": "apps_popular_subtitle",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_popular_title",
+        "subtitle_key": "apps_popular_subtitle",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "collection",
           "filter_value": "popular"
         },
@@ -247,9 +247,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_communication_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_communication_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "communication"
         },
@@ -257,9 +257,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_productivity_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_productivity_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "productivity"
         },
@@ -267,8 +267,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -276,9 +276,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_weather_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_weather_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "weather"
         },
@@ -286,9 +286,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_security_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_security_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "security"
         },
@@ -296,9 +296,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_books_reference_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_books_reference_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "books_reference"
         },
@@ -306,9 +306,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_dating_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_dating_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "dating"
         },
@@ -316,8 +316,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -325,9 +325,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_medical_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_medical_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "medical"
         },
@@ -335,9 +335,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_business_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_business_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "business"
         },
@@ -345,9 +345,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_sports_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_sports_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "sports"
         },
@@ -355,9 +355,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_art_design_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_art_design_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "art_design"
         },
@@ -365,8 +365,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -374,9 +374,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_auto_vehicles_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_auto_vehicles_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "auto_vehicles"
         },
@@ -384,9 +384,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_house_home_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_house_home_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "house_home"
         },
@@ -394,9 +394,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_parenting_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_parenting_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "parenting"
         },
@@ -404,9 +404,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_events_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_events_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "events"
         },
@@ -414,8 +414,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -423,9 +423,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_free_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_free_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "free"
         },
@@ -433,9 +433,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_offline_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_offline_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "offline"
         },
@@ -443,9 +443,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_work_tools_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_work_tools_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "work"
         },
@@ -453,9 +453,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_dark_mode_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_dark_mode_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "dark_mode"
         },
@@ -463,8 +463,8 @@
       },
       {
         "type": "banners",
-        "dataSource": "banners",
-        "dataParams": {
+        "data_source": "banners",
+        "data_params": {
           "filter_type": "prefix",
           "filter_value": "a_"
         },
@@ -472,9 +472,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "apps_widgets_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_widgets_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "widgets"
         },
@@ -482,9 +482,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "apps_no_ads_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "apps_no_ads_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "no_ads"
         },

@@ -1,15 +1,16 @@
+import 'package:google_play/domain/entities/base_entity.dart';
+
 enum BannerType { simple, action }
 
-abstract class BannerEntity {
-  final String id;
+abstract class BannerEntity extends Entity {
   final BannerType type;
   final String imageAssetPath;
   final String title;
   final String? topToolTipText;
   final String description;
 
-  BannerEntity({
-    required this.id,
+  const BannerEntity({
+    required super.id,
     required this.type,
     required this.imageAssetPath,
     required this.title,

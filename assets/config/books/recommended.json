@@ -1,13 +1,13 @@
 {
   "recommended": {
-    "tabKey": "recommended",
-    "displayName": "books_recommended_tab_display_name",
+    "tab_key": "recommended",
+    "display_name": "books_recommended_tab_display_name",
     "sections": [
       {
         "type": "carousel",
-        "titleKey": "books_bestseller_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_bestseller_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "collection",
           "filter_value": "bestseller"
         },
@@ -15,9 +15,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_new_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_new_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "collection",
           "filter_value": "new_release"
         },
@@ -25,9 +25,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_fantasy_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_fantasy_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "fantasy"
         },
@@ -35,9 +35,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_business_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_business_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "business"
         },
@@ -45,9 +45,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_romance_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_romance_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "romance"
         },
@@ -55,9 +55,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_self_help_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_self_help_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "self_help"
         },
@@ -65,9 +65,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_thriller_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_thriller_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "thriller"
         },
@@ -75,9 +75,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_science_fiction_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_science_fiction_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "science_fiction"
         },
@@ -85,9 +85,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_mystery_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_mystery_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "mystery"
         },
@@ -95,9 +95,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_history_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_history_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "history"
         },
@@ -105,9 +105,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_biography_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_biography_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "biography"
         },
@@ -115,9 +115,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_children_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_children_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "children"
         },
@@ -125,9 +125,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_science_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_science_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "science"
         },
@@ -135,9 +135,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_horror_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_horror_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "horror"
         },
@@ -145,9 +145,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_poetry_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_poetry_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "poetry"
         },
@@ -155,9 +155,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_cooking_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_cooking_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "cooking"
         },
@@ -165,9 +165,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_travel_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_travel_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "travel"
         },
@@ -175,9 +175,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_psychology_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_psychology_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "psychology"
         },
@@ -185,9 +185,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_comics_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_comics_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "comics"
         },
@@ -195,9 +195,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_health_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_health_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "health"
         },
@@ -205,10 +205,10 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_top_rated_title",
-        "subtitleKey": "books_top_rated_subtitle",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_top_rated_title",
+        "subtitle_key": "books_top_rated_subtitle",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "collection",
           "filter_value": "top_rated"
         },
@@ -216,9 +216,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_free_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_free_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "free"
         },
@@ -226,9 +226,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_art_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_art_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "art"
         },
@@ -236,9 +236,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_philosophy_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_philosophy_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "philosophy"
         },
@@ -246,9 +246,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_sports_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_sports_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "sports"
         },
@@ -256,9 +256,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_technology_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_technology_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "technology"
         },
@@ -266,9 +266,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_religion_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_religion_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "religion"
         },
@@ -276,9 +276,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_nature_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_nature_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "nature"
         },
@@ -286,9 +286,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_education_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_education_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "education"
         },
@@ -296,9 +296,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_law_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_law_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "law"
         },
@@ -306,9 +306,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_economics_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_economics_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "economics"
         },
@@ -316,9 +316,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_politics_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_politics_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "politics"
         },
@@ -326,9 +326,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_architecture_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_architecture_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "architecture"
         },
@@ -336,9 +336,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_music_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_music_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "music"
         },
@@ -346,9 +346,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_parenting_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_parenting_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "parenting"
         },
@@ -356,9 +356,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_memoir_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_memoir_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "memoir"
         },
@@ -366,9 +366,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_graphic_novel_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_graphic_novel_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "category",
           "filter_value": "graphic_novel"
         },
@@ -376,9 +376,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_short_stories_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_short_stories_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "short_stories"
         },
@@ -386,9 +386,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_award_winning_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_award_winning_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "award_winning"
         },
@@ -396,9 +396,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_classic_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_classic_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "classic"
         },
@@ -406,9 +406,9 @@
       },
       {
         "type": "grid",
-        "titleKey": "books_translated_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_translated_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "translated"
         },
@@ -416,9 +416,9 @@
       },
       {
         "type": "carousel",
-        "titleKey": "books_series_title",
-        "dataSource": "products_list",
-        "dataParams": {
+        "title_key": "books_series_title",
+        "data_source": "products_list",
+        "data_params": {
           "filter_type": "tag",
           "filter_value": "series"
         },

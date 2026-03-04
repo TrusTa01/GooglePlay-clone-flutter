@@ -1,0 +1,590 @@
+{
+  "kidsAge12": {
+    "tab_key": "kidsAge12",
+    "display_name": "kids_age_12_tab_display_name",
+    "sections": [
+      {
+        "type": "kidsHeroBanner",
+        "title_key": "kids_hero_banner_title",
+        "subtitle_key": "kids_hero_banner_subtitle",
+        "image_asset_path": "assets/images/kids_tab/kids_tab_image.webp",
+        "id": "kidsAge12_hero_banner"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_new_and_updated_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "sort": "last_updated"
+        },
+        "id": "kidsAge12_new_and_updated_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_popular_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "sort": "popular"
+        },
+        "id": "kidsAge12_popular_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_educational_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "educational"
+        },
+        "id": "kidsAge12_educational_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_puzzle_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "puzzle"
+        },
+        "id": "kidsAge12_puzzle_carousel"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_1"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_arcade_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "arcade"
+        },
+        "id": "kidsAge12_arcade_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_strategy_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "strategy"
+        },
+        "id": "kidsAge12_strategy_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_adventure_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "adventure"
+        },
+        "id": "kidsAge12_adventure_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_simulation_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "simulation"
+        },
+        "id": "kidsAge12_simulation_carousel"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_2"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_casual_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "casual"
+        },
+        "id": "kidsAge12_casual_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_board_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "board"
+        },
+        "id": "kidsAge12_board_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_music_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "music"
+        },
+        "id": "kidsAge12_music_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_trivia_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "trivia"
+        },
+        "id": "kidsAge12_trivia_grid"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_3"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_word_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "category",
+          "filter_value_2": "word"
+        },
+        "id": "kidsAge12_word_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_rpg_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "category": "rpg"
+        },
+        "id": "kidsAge12_rpg_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_family_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "family"
+        },
+        "id": "kidsAge12_family_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_math_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "math"
+        },
+        "id": "kidsAge12_math_carousel"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_4"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_fairy_tales_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "fairy_tales"
+        },
+        "id": "kidsAge12_fairy_tales_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_logic_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "logic"
+        },
+        "id": "kidsAge12_logic_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_co_op_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "co-op"
+        },
+        "id": "kidsAge12_co_op_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_multiplayer_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "tag": "multiplayer"
+        },
+        "id": "kidsAge12_multiplayer_carousel"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_5"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_offline_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "offline"
+        },
+        "id": "kidsAge12_offline_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_story_rich_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "story_rich"
+        },
+        "id": "kidsAge12_story_rich_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_exploration_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "exploration"
+        },
+        "id": "kidsAge12_exploration_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_building_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "building"
+        },
+        "id": "kidsAge12_building_grid"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_6"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_2d_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "2d"
+        },
+        "id": "kidsAge12_2d_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_3d_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "3d"
+        },
+        "id": "kidsAge12_3d_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_pixel_art_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "pixel_art"
+        },
+        "id": "kidsAge12_pixel_art_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_retro_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "tag": "retro"
+        },
+        "id": "kidsAge12_retro_carousel"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_7"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_free_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "free"
+        },
+        "id": "kidsAge12_free_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_creativity_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "creativity"
+        },
+        "id": "kidsAge12_creativity_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_drawing_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "drawing"
+        },
+        "id": "kidsAge12_drawing_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_languages_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "languages"
+        },
+        "id": "kidsAge12_languages_carousel"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_8"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_relaxing_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "relaxing"
+        },
+        "id": "kidsAge12_relaxing_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_stylized_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "stylized"
+        },
+        "id": "kidsAge12_stylized_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_crossplatform_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "crossplatform"
+        },
+        "id": "kidsAge12_crossplatform_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_health_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "health"
+        },
+        "id": "kidsAge12_health_grid"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_9"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_top_rated_title",
+        "subtitle_key": "kids_top_rated_subtitle",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "sort": "top_rated"
+        },
+        "id": "kidsAge12_top_rated_grid"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_new_releases_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "collection",
+          "filter_value": "new_release",
+          "age_limit": 12
+        },
+        "id": "kidsAge12_new_releases_carousel"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_minimalist_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "minimalist"
+        },
+        "id": "kidsAge12_minimalist_carousel"
+      },
+      {
+        "type": "grid",
+        "title_key": "kids_turn_based_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "tag": "turn_based"
+        },
+        "id": "kidsAge12_turn_based_grid"
+      },
+      {
+        "type": "banners",
+        "data_source": "banners",
+        "data_params": {
+          "filter_type": "prefix",
+          "filter_value": "kids_"
+        },
+        "id": "kidsAge12_banners_10"
+      },
+      {
+        "type": "carousel",
+        "title_key": "kids_procedural_title",
+        "data_source": "products_list",
+        "data_params": {
+          "filter_type": "age_limit",
+          "filter_value": 12,
+          "filter_type_2": "tag",
+          "filter_value_2": "procedural"
+        },
+        "id": "kidsAge12_procedural_carousel"
+      }
+    ]
+  }
+}

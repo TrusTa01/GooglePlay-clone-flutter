@@ -68,4 +68,14 @@ class JsonProductRepository implements IProductRepository {
       throw Exception('Unknown DTO type');
     }).toList();
   }
+
+  @override
+  Future<List<ProductEntity>> getProductsBySource({
+    required String source,
+    Map<String, dynamic>? params,
+    required String categoryType,
+  }) {
+    // TODO: implement getProductsBySource
+    throw UnimplementedError();
+  }
 }
