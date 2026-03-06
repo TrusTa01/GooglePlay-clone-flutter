@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/screens/product_screens/utils/product_support_data.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
-class CustomExpansionTile extends StatefulWidget {
+class CustomExpansionTile extends HookWidget {
   final Widget title;
   final List<SupportItem> items;
 
@@ -14,35 +15,29 @@ class CustomExpansionTile extends StatefulWidget {
   });
 
   @override
-  CustomExpansionTileState createState() => CustomExpansionTileState();
-}
-
-class CustomExpansionTileState extends State<CustomExpansionTile> {
-  final ExpansibleController _controller = ExpansibleController();
-  bool customIcon = false;
-
-  @override
   Widget build(BuildContext context) {
+    final customIcon = useState<bool>(false);
+    final controller = useMemoized(() => ExpansibleController(), []);
+    useEffect(() => controller.dispose);
+
     return ExpansionTile(
-      controller: _controller,
+      controller: controller,
       shape: Border(),
       tilePadding: EdgeInsets.zero,
-      title: widget.title,
+      title: title,
       trailing: CustomIconButton(
         onTap: () {
-          if (customIcon) {
-            _controller.collapse();
+          if (customIcon.value) {
+            controller.collapse();
           } else {
-            _controller.expand();
+            controller.expand();
           }
         },
-        icon: customIcon ? Icons.expand_less : Icons.expand_more,
+        icon: customIcon.value ? Icons.expand_less : Icons.expand_more,
         iconSize: 22,
       ),
-      children: widget.items.map((item) => _buildItem(item)).toList(),
-      onExpansionChanged: (bool expanded) {
-        setState(() => customIcon = expanded);
-      },
+      children: items.map((item) => _buildItem(item)).toList(),
+      onExpansionChanged: (bool expanded) => customIcon.value = expanded,
     );
   }
 

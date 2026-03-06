@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/shimers/product_slider_skeleton.dart';
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/providers/providers.dart';
 import 'package:google_play/screens/screens.dart';
 
+// TODO: Перейти на хуки
+// TODO: Единый источник правды
 /// Виджет ленивой загрузки контента для sub-tab.
 /// Запрашивает секции у провайдера по [tabKey], показывает шиммер / ошибку / контент через [GenericTabScreen]
 /// [provider] - любой провайдер секций: [GamesProvider], [AppsProvider] или [BooksProvider]
@@ -65,7 +66,6 @@ class _LazyTabContentState extends State<LazyTabContent> {
                   ),
                 );
         }
-
         // Ошибка загрузки данных
         if (widget.provider.error != null) {
           final errorWidget = ErrorScreen(message: widget.provider.error!);

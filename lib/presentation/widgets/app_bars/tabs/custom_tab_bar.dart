@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 
-class CustomTabBar extends StatefulWidget implements PreferredSizeWidget {
+class CustomTabBar extends StatelessWidget implements PreferredSizeWidget {
   final List<String> tabs;
   final TabController controller;
 
@@ -11,18 +11,13 @@ class CustomTabBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(48);
 
   @override
-  State<CustomTabBar> createState() => _CustomTabBarState();
-}
-
-class _CustomTabBarState extends State<CustomTabBar> {
-  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         // Уменьшаем ширину контента на размер отступов (22 слева + 22 справа = 44)
         final double availableWidth = constraints.maxWidth - 44;
         final double estimatedTabWidth = 100;
-        final double totalTabsWidth = widget.tabs.length * estimatedTabWidth;
+        final double totalTabsWidth = tabs.length * estimatedTabWidth;
         final bool shouldScroll = totalTabsWidth > availableWidth;
 
         return Container(
@@ -30,7 +25,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
           height: 48,
           color: AppBarConstants.defaultBackgroundColor,
           child: TabBar(
-            controller: widget.controller,
+            controller: controller,
             isScrollable: shouldScroll,
             tabAlignment: shouldScroll ? TabAlignment.start : TabAlignment.fill,
             padding: Constants.horizontalContentPadding,
@@ -66,7 +61,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
             labelPadding: const EdgeInsets.only(right: 28),
 
             // Сами табы
-            tabs: widget.tabs.map((String text) {
+            tabs: tabs.map((String text) {
               return Tab(
                 height: 48,
                 child: Padding(

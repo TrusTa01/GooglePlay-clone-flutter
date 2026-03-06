@@ -3,7 +3,7 @@ import 'package:google_play/core/constants.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 // Универсальный AppBar для использования в slivers (CustomScrollView)
-class SimpleSliverAppBar extends StatefulWidget {
+class SimpleSliverAppBar extends StatelessWidget {
   // Основные параметры
   final Widget? title;
   final Widget? subtitle;
@@ -55,53 +55,48 @@ class SimpleSliverAppBar extends StatefulWidget {
   });
 
   @override
-  State<SimpleSliverAppBar> createState() => _SimpleSliverAppBarState();
-}
-
-class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
-  @override
   Widget build(BuildContext context) {
     // Определяем backgroundColor
-    final backgroundColor = widget.isTransparent
+    final backgroundColor = isTransparent
         ? Colors.transparent
-        : (widget.backgroundColor ?? AppBarConstants.defaultBackgroundColor);
+        : (this.backgroundColor ?? AppBarConstants.defaultBackgroundColor);
 
     // Определяем leading
     Widget? leading;
-    if (widget.isTransparent) {
+    if (isTransparent) {
       leading = AppBarLeading(
-        showBackButton: widget.showBackButton,
-        leadingIcon: widget.leadingIcon,
-        onLeadingPressed: widget.onLeadingPressed,
+        showBackButton: showBackButton,
+        leadingIcon: leadingIcon,
+        onLeadingPressed: onLeadingPressed,
       );
-    } else if (widget.showLogo && !widget.hasSearch) {
+    } else if (showLogo && !hasSearch) {
       leading = AppBarLogo(
         translate: const Offset(6, 0),
       ); // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
-    } else if (widget.showBackButton || widget.leadingIcon != null) {
+    } else if (showBackButton || leadingIcon != null) {
       leading = AppBarLeading(
-        leadingIcon: widget.leadingIcon,
-        onLeadingPressed: widget.onLeadingPressed,
-        showBackButton: widget.showBackButton,
+        leadingIcon: leadingIcon,
+        onLeadingPressed: onLeadingPressed,
+        showBackButton: showBackButton,
       );
     }
 
     // Определяем title
     Widget? title;
-    if (widget.hasSearch) {
+    if (hasSearch) {
       title = AppBarSearchContainer(
-        inputLeading: widget.inputLeading,
-        searchHint: widget.searchHint ?? '',
-        inputActions: widget.inputActions,
+        inputLeading: inputLeading,
+        searchHint: searchHint ?? '',
+        inputActions: inputActions,
       );
     } else {
       final List<Widget> titleRowChildren = [];
 
       // Добавляем иконку в начало заголовка (titleLeading или Logo)
-      if (widget.titleLeading != null) {
-        titleRowChildren.add(widget.titleLeading!);
+      if (titleLeading != null) {
+        titleRowChildren.add(titleLeading!);
         titleRowChildren.add(const SizedBox(width: 8));
-      } else if (!widget.isTransparent && widget.showLogo) {
+      } else if (!isTransparent && showLogo) {
         titleRowChildren.add(
           const AppBarLogo(translate: Offset(6, 0)),
         ); // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
@@ -110,11 +105,11 @@ class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
 
       // Добавляем колонку с заголовком и подзаголовком
       final List<Widget> titleColumnChildren = [];
-      if (widget.title != null) {
-        titleColumnChildren.add(widget.title!);
+      if (this.title != null) {
+        titleColumnChildren.add(title!);
       }
-      if (widget.subtitle != null) {
-        titleColumnChildren.add(widget.subtitle!);
+      if (subtitle != null) {
+        titleColumnChildren.add(subtitle!);
       }
 
       if (titleColumnChildren.isNotEmpty) {
@@ -147,7 +142,7 @@ class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
             children: [
               if (leading != null) leading,
               if (title != null) Expanded(child: title) else const Spacer(),
-              ...?widget.actions,
+              ...?actions,
             ],
           ),
         ),
@@ -181,7 +176,7 @@ class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
           ),
         ),
       ),
-      bottom: (widget.innerBoxIsScrolled)
+      bottom: (innerBoxIsScrolled)
           ? PreferredSize(
               preferredSize: const Size.fromHeight(2),
               child: Container(
@@ -191,14 +186,14 @@ class _SimpleSliverAppBarState extends State<SimpleSliverAppBar> {
               ),
             )
           : null,
-      centerTitle: widget.isTransparent ? false : null,
-      iconTheme: widget.isTransparent
+      centerTitle: isTransparent ? false : null,
+      iconTheme: isTransparent
           ? const IconThemeData(color: Colors.white)
           : null,
     );
 
     // Разделитель при forceShowDivider рисуется в контенте экрана (под шапкой),
-    // чтобы не использовать SliverMainAxisGroup и избежать unbounded layout.
+    // чтобы не использовать SliverMainAxisGroup и избежать unbounded layout
     return sliverAppBar;
   }
 }
