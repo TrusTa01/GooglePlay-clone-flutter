@@ -8,13 +8,14 @@ abstract class ProductEntity extends Entity {
   final String description;
   final DateTime releaseDate;
   final double rating;
-  final int? reviewsCount; // Количество отзывов
+  final int reviewsCount; // Количество отзывов
   final String iconUrl;
   final bool isPaid;
   final double? price;
   final String creatorDescription; // Описание автора / разработчика
   final String url;
   final List<String> tags;
+  final List<String> categories;
   String get technicalInfo; // Размер (MB), кол-во страниц и т.д.
 
   const ProductEntity({
@@ -33,5 +34,6 @@ abstract class ProductEntity extends Entity {
     required this.creatorDescription,
     required this.url,
     required this.tags,
+    required this.categories,
   });
 }

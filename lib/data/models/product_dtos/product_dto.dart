@@ -44,7 +44,8 @@ sealed class ProductDto with _$ProductDto {
     required String developerCity,
     required String developerCountry,
     required String developerPhone,
-    required List<String> categories,
+    // ignore: invalid_annotation_target
+    @JsonKey(name: 'gameGenre') required List<String> categories,
     String? minAndroidVersion,
     String? installsRange,
   }) = GameDto;
@@ -88,7 +89,8 @@ sealed class ProductDto with _$ProductDto {
     required String developerCity,
     required String developerCountry,
     required String developerPhone,
-    required List<String> categories,
+    // ignore: invalid_annotation_target
+    @JsonKey(name: 'appCategory') required List<String> categories,
     String? minAndroidVersion,
     String? installsRange,
   }) = AppDto;

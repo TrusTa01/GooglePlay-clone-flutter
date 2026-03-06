@@ -17,6 +17,7 @@ final class GameEntity extends SoftwareEntity {
     required super.creatorDescription,
     required super.url,
     required super.tags,
+    required super.categories,
     required super.screenshots,
     required super.size,
     required super.version,

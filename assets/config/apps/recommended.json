@@ -14,8 +14,14 @@
         "title_key": "apps_work_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "work"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "work"
+              }
+            ]
+          }
         },
         "id": "recommended_work_grid"
       },
@@ -23,8 +29,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_1"
       },
@@ -33,8 +45,14 @@
         "title_key": "apps_lists_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "lists"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "lists"
+              }
+            ]
+          }
         },
         "id": "recommended_lists_grid"
       },
@@ -43,8 +61,14 @@
         "title_key": "apps_utilities_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "utilities"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "utilities"
+              }
+            ]
+          }
         },
         "id": "recommended_utilities_grid"
       },
@@ -53,8 +77,14 @@
         "title_key": "apps_entertainment_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "entertainment"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "entertainment"
+              }
+            ]
+          }
         },
         "id": "recommended_entertainment_grid"
       },
@@ -63,8 +93,14 @@
         "title_key": "apps_new_releases_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "collection",
-          "filter_value": "new_release"
+          "extras": {
+            "filters": [
+              {
+                "type": "collection",
+                "value": "new_release"
+              }
+            ]
+          }
         },
         "id": "recommended_new_releases_carousel"
       },
@@ -72,8 +108,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_2"
       },
@@ -82,8 +124,14 @@
         "title_key": "apps_social_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "social"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "social"
+              }
+            ]
+          }
         },
         "id": "recommended_social_grid"
       },
@@ -92,8 +140,14 @@
         "title_key": "apps_top_rated_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "collection",
-          "filter_value": "top_rated"
+          "extras": {
+            "filters": [
+              {
+                "type": "collection",
+                "value": "top_rated"
+              }
+            ]
+          }
         },
         "id": "recommended_top_rated_carousel"
       },
@@ -102,8 +156,14 @@
         "title_key": "apps_education_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "education"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "education"
+              }
+            ]
+          }
         },
         "id": "recommended_education_grid"
       },
@@ -112,8 +172,14 @@
         "title_key": "apps_finance_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "finance"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "finance"
+              }
+            ]
+          }
         },
         "id": "recommended_finance_carousel"
       },
@@ -121,8 +187,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_3"
       },
@@ -131,8 +203,14 @@
         "title_key": "apps_health_fitness_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "health_fitness"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "health_fitness"
+              }
+            ]
+          }
         },
         "id": "recommended_health_fitness_grid"
       },
@@ -141,8 +219,14 @@
         "title_key": "apps_music_audio_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "music_audio"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "music_audio"
+              }
+            ]
+          }
         },
         "id": "recommended_music_audio_carousel"
       },
@@ -151,8 +235,14 @@
         "title_key": "apps_photography_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "photography"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "photography"
+              }
+            ]
+          }
         },
         "id": "recommended_photography_grid"
       },
@@ -161,8 +251,14 @@
         "title_key": "apps_travel_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "travel"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "travel"
+              }
+            ]
+          }
         },
         "id": "recommended_travel_carousel"
       },
@@ -170,8 +266,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_4"
       },
@@ -180,8 +282,14 @@
         "title_key": "apps_news_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "news"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "news"
+              }
+            ]
+          }
         },
         "id": "recommended_news_grid"
       },
@@ -190,8 +298,14 @@
         "title_key": "apps_shopping_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "shopping"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "shopping"
+              }
+            ]
+          }
         },
         "id": "recommended_shopping_carousel"
       },
@@ -200,8 +314,14 @@
         "title_key": "apps_navigation_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "navigation"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "navigation"
+              }
+            ]
+          }
         },
         "id": "recommended_navigation_grid"
       },
@@ -210,8 +330,14 @@
         "title_key": "apps_video_players_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "video_players"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "video_players"
+              }
+            ]
+          }
         },
         "id": "recommended_video_players_carousel"
       },
@@ -219,8 +345,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_5"
       },
@@ -229,8 +361,14 @@
         "title_key": "apps_food_drink_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "food_drink"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "food_drink"
+              }
+            ]
+          }
         },
         "id": "recommended_food_drink_grid"
       },
@@ -240,8 +378,14 @@
         "subtitle_key": "apps_popular_subtitle",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "collection",
-          "filter_value": "popular"
+          "extras": {
+            "filters": [
+              {
+                "type": "collection",
+                "value": "popular"
+              }
+            ]
+          }
         },
         "id": "recommended_popular_carousel"
       },
@@ -250,8 +394,14 @@
         "title_key": "apps_communication_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "communication"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "communication"
+              }
+            ]
+          }
         },
         "id": "recommended_communication_grid"
       },
@@ -260,8 +410,14 @@
         "title_key": "apps_productivity_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "productivity"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "productivity"
+              }
+            ]
+          }
         },
         "id": "recommended_productivity_carousel"
       },
@@ -269,8 +425,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_6"
       },
@@ -279,8 +441,14 @@
         "title_key": "apps_weather_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "weather"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "weather"
+              }
+            ]
+          }
         },
         "id": "recommended_weather_grid"
       },
@@ -289,8 +457,14 @@
         "title_key": "apps_security_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "security"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "security"
+              }
+            ]
+          }
         },
         "id": "recommended_security_carousel"
       },
@@ -299,8 +473,14 @@
         "title_key": "apps_books_reference_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "books_reference"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "books_reference"
+              }
+            ]
+          }
         },
         "id": "recommended_reference_carousel"
       },
@@ -309,8 +489,14 @@
         "title_key": "apps_dating_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "dating"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "dating"
+              }
+            ]
+          }
         },
         "id": "recommended_dating_grid"
       },
@@ -318,8 +504,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_7"
       },
@@ -328,8 +520,14 @@
         "title_key": "apps_medical_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "medical"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "medical"
+              }
+            ]
+          }
         },
         "id": "recommended_medical_carousel"
       },
@@ -338,8 +536,14 @@
         "title_key": "apps_business_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "business"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "business"
+              }
+            ]
+          }
         },
         "id": "recommended_business_grid"
       },
@@ -348,8 +552,14 @@
         "title_key": "apps_sports_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "sports"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "sports"
+              }
+            ]
+          }
         },
         "id": "recommended_sports_carousel"
       },
@@ -358,8 +568,14 @@
         "title_key": "apps_art_design_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "art_design"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "art_design"
+              }
+            ]
+          }
         },
         "id": "recommended_art_design_carousel"
       },
@@ -367,8 +583,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_8"
       },
@@ -377,8 +599,14 @@
         "title_key": "apps_auto_vehicles_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "auto_vehicles"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "auto_vehicles"
+              }
+            ]
+          }
         },
         "id": "recommended_auto_vehicles_grid"
       },
@@ -387,8 +615,14 @@
         "title_key": "apps_house_home_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "house_home"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "house_home"
+              }
+            ]
+          }
         },
         "id": "recommended_house_home_carousel"
       },
@@ -397,8 +631,14 @@
         "title_key": "apps_parenting_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "parenting"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "parenting"
+              }
+            ]
+          }
         },
         "id": "recommended_parenting_carousel"
       },
@@ -407,8 +647,14 @@
         "title_key": "apps_events_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "events"
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "events"
+              }
+            ]
+          }
         },
         "id": "recommended_events_grid"
       },
@@ -416,8 +662,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_9"
       },
@@ -426,8 +678,14 @@
         "title_key": "apps_free_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "free"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "free"
+              }
+            ]
+          }
         },
         "id": "recommended_free_carousel"
       },
@@ -436,8 +694,14 @@
         "title_key": "apps_offline_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "offline"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "offline"
+              }
+            ]
+          }
         },
         "id": "recommended_offline_grid"
       },
@@ -446,8 +710,14 @@
         "title_key": "apps_work_tools_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "work"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "work"
+              }
+            ]
+          }
         },
         "id": "recommended_work_tools_carousel"
       },
@@ -456,8 +726,14 @@
         "title_key": "apps_dark_mode_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "dark_mode"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "dark_mode"
+              }
+            ]
+          }
         },
         "id": "recommended_dark_mode_carousel"
       },
@@ -465,8 +741,14 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "a_"
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "a_"
+              }
+            ]
+          }
         },
         "id": "recommended_banners_10"
       },
@@ -475,8 +757,14 @@
         "title_key": "apps_widgets_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "widgets"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "widgets"
+              }
+            ]
+          }
         },
         "id": "recommended_widgets_grid"
       },
@@ -485,8 +773,14 @@
         "title_key": "apps_no_ads_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "no_ads"
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "no_ads"
+              }
+            ]
+          }
         },
         "id": "recommended_no_ads_carousel"
       }

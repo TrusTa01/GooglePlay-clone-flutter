@@ -23,6 +23,7 @@ abstract class SoftwareEntity extends ProductEntity {
     required super.creatorDescription,
     required super.url,
     required super.tags,
+    required super.categories,
     required this.screenshots,
     required this.size,
     required this.version,

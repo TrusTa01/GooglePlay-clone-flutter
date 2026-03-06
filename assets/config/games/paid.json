@@ -8,10 +8,18 @@
         "title_key": "games_unusual_puzzle_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "puzzle",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "puzzle"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_unusual_puzzle_preview"
       },
@@ -20,10 +28,18 @@
         "title_key": "low_price_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "collection",
-          "filter_value": "low_price",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "collection",
+                "value": "low_price"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_low_price_carousel"
       },
@@ -31,10 +47,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_1"
       },
@@ -43,10 +67,18 @@
         "title_key": "best_indie_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "indie",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "indie"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_best_indie_carousel"
       },
@@ -55,10 +87,18 @@
         "title_key": "games_offline_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "offline",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "offline"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_offline_carousel"
       },
@@ -67,10 +107,18 @@
         "title_key": "paid_action_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "action",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "action"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_action_grid"
       },
@@ -79,10 +127,18 @@
         "title_key": "paid_rpg_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "rpg",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "rpg"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_rpg_carousel"
       },
@@ -90,10 +146,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_2"
       },
@@ -102,10 +166,18 @@
         "title_key": "paid_strategy_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "strategy",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "strategy"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_strategy_grid"
       },
@@ -114,10 +186,18 @@
         "title_key": "paid_adventure_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "adventure",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "adventure"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_adventure_carousel"
       },
@@ -126,10 +206,18 @@
         "title_key": "paid_simulation_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "simulation",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "simulation"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_simulation_grid"
       },
@@ -137,10 +225,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_3"
       },
@@ -149,10 +245,18 @@
         "title_key": "paid_racing_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "racing",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "racing"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_racing_carousel"
       },
@@ -161,10 +265,18 @@
         "title_key": "paid_top_rated_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "collection",
-          "filter_value": "top_rated",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "collection",
+                "value": "top_rated"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_top_rated_preview"
       },
@@ -173,10 +285,18 @@
         "title_key": "paid_horror_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "horror",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "horror"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_horror_carousel"
       },
@@ -185,10 +305,18 @@
         "title_key": "paid_board_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "board",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "board"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_board_grid"
       },
@@ -196,10 +324,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_4"
       },
@@ -208,10 +344,18 @@
         "title_key": "paid_sports_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "sports",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "sports"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_sports_carousel"
       },
@@ -220,10 +364,18 @@
         "title_key": "paid_shooter_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "shooter",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "shooter"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_shooter_grid"
       },
@@ -232,10 +384,18 @@
         "title_key": "paid_casual_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "casual",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "casual"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_casual_carousel"
       },
@@ -244,10 +404,18 @@
         "title_key": "paid_arcade_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "arcade",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "arcade"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_arcade_carousel"
       },
@@ -255,10 +423,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_5"
       },
@@ -268,10 +444,18 @@
         "subtitle_key": "paid_new_releases_subtitle",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "collection",
-          "filter_value": "new_releases",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "collection",
+                "value": "new_releases"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_new_releases_grid"
       },
@@ -280,10 +464,18 @@
         "title_key": "paid_multiplayer_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "multiplayer",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "multiplayer"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_multiplayer_carousel"
       },
@@ -292,10 +484,18 @@
         "title_key": "paid_fighting_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "category",
-          "filter_value": "fighting",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "category",
+                "value": "fighting"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_fighting_carousel"
       },
@@ -304,10 +504,18 @@
         "title_key": "paid_survival_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "survival",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "survival"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_survival_grid"
       },
@@ -316,10 +524,18 @@
         "title_key": "paid_open_world_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "open_world",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "open_world"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_open_world_carousel"
       },
@@ -327,10 +543,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_6"
       },
@@ -339,10 +563,18 @@
         "title_key": "paid_story_rich_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "story_rich",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "story_rich"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_story_rich_carousel"
       },
@@ -351,10 +583,18 @@
         "title_key": "paid_roguelike_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "roguelike",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "roguelike"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_roguelike_grid"
       },
@@ -363,10 +603,18 @@
         "title_key": "paid_retro_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "retro",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "retro"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_retro_carousel"
       },
@@ -375,10 +623,18 @@
         "title_key": "paid_pixel_art_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "pixel_art",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "pixel_art"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_pixel_art_carousel"
       },
@@ -386,10 +642,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_7"
       },
@@ -398,10 +662,18 @@
         "title_key": "paid_crafting_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "crafting",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "crafting"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_crafting_grid"
       },
@@ -410,10 +682,18 @@
         "title_key": "paid_turn_based_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "turn_based",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "turn_based"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_turn_based_carousel"
       },
@@ -422,10 +702,18 @@
         "title_key": "paid_fantasy_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "fantasy",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "fantasy"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_fantasy_carousel"
       },
@@ -434,10 +722,18 @@
         "title_key": "paid_co_op_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "co-op",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "co-op"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_co_op_grid"
       },
@@ -445,10 +741,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_8"
       },
@@ -457,10 +761,18 @@
         "title_key": "paid_anime_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "anime",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "anime"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_anime_carousel"
       },
@@ -469,10 +781,18 @@
         "title_key": "paid_steampunk_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "steampunk",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "steampunk"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_steampunk_grid"
       },
@@ -481,10 +801,18 @@
         "title_key": "paid_cyberpunk_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "cyberpunk",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "cyberpunk"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_cyberpunk_carousel"
       },
@@ -493,10 +821,18 @@
         "title_key": "paid_relaxing_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "relaxing",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "relaxing"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_relaxing_carousel"
       },
@@ -504,10 +840,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_9"
       },
@@ -516,10 +860,18 @@
         "title_key": "paid_building_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "building",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "building"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_building_grid"
       },
@@ -528,10 +880,18 @@
         "title_key": "paid_post_apocalyptic_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "post_apocalyptic",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "post_apocalyptic"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_post_apocalyptic_carousel"
       },
@@ -540,10 +900,18 @@
         "title_key": "paid_vr_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "vr",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "vr"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_vr_carousel"
       },
@@ -552,10 +920,18 @@
         "title_key": "paid_exploration_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "exploration",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "exploration"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_exploration_grid"
       },
@@ -563,10 +939,18 @@
         "type": "banners",
         "data_source": "banners",
         "data_params": {
-          "filter_type": "prefix",
-          "filter_value": "g_",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "prefix",
+                "value": "g_"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_banners_10"
       },
@@ -575,10 +959,18 @@
         "title_key": "paid_pvp_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "pvp",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "pvp"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_pvp_carousel"
       },
@@ -587,10 +979,18 @@
         "title_key": "paid_esports_games_title",
         "data_source": "products_list",
         "data_params": {
-          "filter_type": "tag",
-          "filter_value": "esports",
-          "filter_type_2": "is_paid",
-          "filter_value_2": true
+          "extras": {
+            "filters": [
+              {
+                "type": "tag",
+                "value": "esports"
+              },
+              {
+                "type": "is_paid",
+                "value": true
+              }
+            ]
+          }
         },
         "id": "paid_esports_grid"
       }

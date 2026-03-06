@@ -1,4 +1,5 @@
 import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/domain/entities/products/product_filter.dart';
 
 // Интерфейс для работы с продуктами
 /// Контракт, который слой [Data] обязан будет реализовать
@@ -13,9 +14,9 @@ abstract interface class IProductRepository {
   // Получает похожие продукты
   Future<List<ProductEntity>> getSimilarProducts(ProductEntity product);
 
-  Future<List<ProductEntity>> getProductsBySource({
-    required String source,
-    Map<String, dynamic>? params,
+  // Получить продукты по фильтрам
+  Future<List<ProductEntity>> getProductsByFilters({
+    required List<ProductFilter> filters,
     required String categoryType,
   });
 }

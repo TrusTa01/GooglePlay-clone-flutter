@@ -1,6 +1,7 @@
 import 'package:google_play/data/datasources/local/product_local_datasource.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/domain/entities/products/product_filter.dart';
 import 'package:google_play/domain/repositories/product_repository.dart';
 import 'package:google_play/data/mappers/mappers.dart';
 
@@ -70,12 +71,50 @@ class JsonProductRepository implements IProductRepository {
   }
 
   @override
-  Future<List<ProductEntity>> getProductsBySource({
-    required String source,
-    Map<String, dynamic>? params,
+  Future<List<ProductEntity>> getProductsByFilters({
+    required List<ProductFilter> filters,
     required String categoryType,
-  }) {
-    // TODO: implement getProductsBySource
-    throw UnimplementedError();
+  }) async {
+    final allProducts = await getProducts(type: categoryType);
+
+    return allProducts.where((product) {
+      return filters.every((filter) {
+        return switch (filter) {
+          CategoryFilter(genre: var c) => product.categories.any(
+            (category) => category.toLowerCase() == c.toLowerCase(),
+          ),
+          CollectionFilter(collectionName: var name) => _collectionFilter(
+            product,
+            name,
+          ),
+          TagFilter(tag: var t) => product.tags.any(
+            (tag) => tag.toLowerCase() == t.toLowerCase(),
+          ),
+          IsPaidFilter(isPaid: var p) => product.isPaid == p,
+          RecommendedFilter() =>
+            product.rating >= 4.7 && product.reviewsCount >= 5000000,
+          UnknownFilter() => true,
+        };
+      });
+    }).toList();
+  }
+
+  bool _collectionFilter(ProductEntity product, String collectionName) =>
+      switch (collectionName) {
+        'top_rated' => product.rating >= 4.6,
+        'new_releases' || 'new_release' => _isNewRelease(product),
+        'popular' => product.rating >= 4.5 && product.reviewsCount >= 200000,
+        'low_price' =>
+          product.isPaid &&
+              product.price != null &&
+              product.price! > 0 &&
+              product.price! < 4.0,
+        'bestseller' => product.rating >= 4.5,
+        _ => true,
+      };
+
+  bool _isNewRelease(ProductEntity product) {
+    const threshold = Duration(days: 90);
+    return DateTime.now().difference(product.releaseDate) <= threshold;
   }
 }

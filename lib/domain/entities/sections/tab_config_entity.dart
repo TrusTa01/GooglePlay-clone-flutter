@@ -1,15 +1,18 @@
+import 'package:google_play/domain/entities/sections/section_data_source.dart';
+import 'package:google_play/domain/entities/sections/section_layout_kind.dart';
+
 class SectionEntity {
   final String id;
-  final String type;
+  final SectionLayoutKind layout;
   final String? titleKey;
   final String? subtitleKey;
-  final String? dataSource;
+  final SectionDataSource? dataSource;
   final String? imageAssetPath;
   final DataParamsEntity? dataParamsEntity;
 
   const SectionEntity({
     required this.id,
-    required this.type,
+    required this.layout,
     this.titleKey,
     this.subtitleKey,
     this.dataSource,

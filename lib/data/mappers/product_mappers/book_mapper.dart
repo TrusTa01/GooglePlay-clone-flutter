@@ -1,5 +1,5 @@
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/domain/entities/books/book_entity.dart';
+import 'package:google_play/domain/entities/products/book_entity.dart';
 
 extension BookMapper on BookDto {
   BookEntity toEntity() {
@@ -19,6 +19,7 @@ extension BookMapper on BookDto {
       creatorDescription: creatorDescription,
       url: url,
       tags: tags,
+      categories: categories,
       pageCount: pageCount.toString(),
       publisher: publisher,
       language: language,
@@ -28,7 +29,6 @@ extension BookMapper on BookDto {
       sampleAvailable: sampleAvailable,
       isAbridged: isAbridged,
       publicationDate: publicationDate,
-      categories: categories,
     );
   }
 }

@@ -217,7 +217,7 @@ class DetailsScreen extends StatelessWidget {
                           ),
                           _InfoRow(
                             label: 'Жанры',
-                            value: (product as Book).categories.join(', '),
+                            value: (product as Book).genres.join(', '),
                           ),
                         ]),
                     ]),

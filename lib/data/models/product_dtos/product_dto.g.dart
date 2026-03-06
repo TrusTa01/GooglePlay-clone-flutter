@@ -50,7 +50,7 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   developerCity: json['developerCity'] as String,
   developerCountry: json['developerCountry'] as String,
   developerPhone: json['developerPhone'] as String,
-  categories: (json['categories'] as List<dynamic>)
+  categories: (json['gameGenre'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
   minAndroidVersion: json['minAndroidVersion'] as String?,
@@ -95,7 +95,7 @@ Map<String, dynamic> _$GameDtoToJson(GameDto instance) => <String, dynamic>{
   'developerCity': instance.developerCity,
   'developerCountry': instance.developerCountry,
   'developerPhone': instance.developerPhone,
-  'categories': instance.categories,
+  'gameGenre': instance.categories,
   'minAndroidVersion': instance.minAndroidVersion,
   'installsRange': instance.installsRange,
 };
@@ -144,7 +144,7 @@ AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
   developerCity: json['developerCity'] as String,
   developerCountry: json['developerCountry'] as String,
   developerPhone: json['developerPhone'] as String,
-  categories: (json['categories'] as List<dynamic>)
+  categories: (json['appCategory'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
   minAndroidVersion: json['minAndroidVersion'] as String?,
@@ -189,7 +189,7 @@ Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
   'developerCity': instance.developerCity,
   'developerCountry': instance.developerCountry,
   'developerPhone': instance.developerPhone,
-  'categories': instance.categories,
+  'appCategory': instance.categories,
   'minAndroidVersion': instance.minAndroidVersion,
   'installsRange': instance.installsRange,
 };

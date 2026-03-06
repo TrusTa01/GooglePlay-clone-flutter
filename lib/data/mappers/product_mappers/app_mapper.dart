@@ -19,6 +19,7 @@ extension AppMapper on AppDto {
       creatorDescription: creatorDescription,
       url: url,
       tags: tags,
+      categories: categories,
       screenshots: screenshots,
       size: size,
       version: version,
