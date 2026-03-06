@@ -36,6 +36,7 @@ class TopChartsSection extends StatelessWidget {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return TopChartsCard(
+                    key: ValueKey(items[index].id),
                     product: items[index],
                     rank: index + 1,
                   );

@@ -28,9 +28,9 @@ class ProductPreviewSection extends StatelessWidget {
   Widget build(BuildContext context) {
     if (item.isEmpty) {
       debugPrint('Ошибка: products.isEmpty (game preview section)');
-      return isSliver 
-        ? const SliverToBoxAdapter(child: SizedBox.shrink()) 
-        : const SizedBox.shrink();
+      return isSliver
+          ? const SliverToBoxAdapter(child: SizedBox.shrink())
+          : const SizedBox.shrink();
     }
 
     if (isSliver) {
@@ -39,8 +39,10 @@ class ProductPreviewSection extends StatelessWidget {
         sliver: SliverList.separated(
           separatorBuilder: (context, index) => const SizedBox(height: 35),
           itemCount: item.length,
-          itemBuilder: (context, index) =>
-              ProductPreviewCard(product: item[index]),
+          itemBuilder: (context, index) => ProductPreviewCard(
+            key: ValueKey(item[index].id),
+            product: item[index],
+          ),
         ),
       );
     }
@@ -50,11 +52,16 @@ class ProductPreviewSection extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
         child: ListView.separated(
           shrinkWrap: nestedInScrollView,
-          physics: nestedInScrollView ? const NeverScrollableScrollPhysics() : null,
+          physics: nestedInScrollView
+              ? const NeverScrollableScrollPhysics()
+              : null,
           padding: const EdgeInsets.only(left: 22),
           separatorBuilder: (context, index) => const SizedBox(height: 35),
           itemCount: item.length,
-          itemBuilder: (context, index) => ProductPreviewCard(product: item[index]),
+          itemBuilder: (context, index) => ProductPreviewCard(
+            key: ValueKey(item[index].id),
+            product: item[index],
+          ),
         ),
       ),
     );

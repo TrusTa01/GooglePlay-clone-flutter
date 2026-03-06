@@ -154,6 +154,7 @@ class ProductCarousel extends HookWidget {
                                   right: isLast ? 0 : carouselCardSpacing,
                                 ),
                                 child: ProductCarouselCard(
+                                  key: ValueKey(item.id),
                                   product: item,
                                   iconWidth: iconWidth,
                                   iconHeight: iconHeight,

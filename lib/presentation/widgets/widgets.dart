@@ -34,7 +34,7 @@ export 'charts/top_charts_section.dart';
 
 // Game preview widget
 export 'sliders/product_preview/product_preview_card.dart';
-export 'sliders/product_preview/game_preview_section.dart';
+export 'sliders/product_preview/product_preview_section.dart';
 export 'sliders/product_preview/utils/product_preview_utils.dart';
 
 export 'category_details_section.dart';

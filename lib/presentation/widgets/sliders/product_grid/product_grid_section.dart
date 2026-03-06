@@ -128,6 +128,7 @@ class ProductGrid extends HookWidget {
                                 return Expanded(
                                   child: productIndex < displayProducts.length
                                       ? ProductGridCard(
+                                        key: ValueKey(displayProducts[productIndex].id),
                                           product:
                                               displayProducts[productIndex],
                                         )

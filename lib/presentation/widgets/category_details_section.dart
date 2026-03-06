@@ -50,7 +50,10 @@ class CategoryDetailsSection extends StatelessWidget {
                 crossAxisSpacing: 15,
               ),
               delegate: SliverChildBuilderDelegate(
-                (context, index) => _buildItem(products[index]),
+                (context, index) => KeyedSubtree(
+                  key: ValueKey(products[index].id),
+                  child: _buildItem(products[index]),
+                ),
                 childCount: products.length,
               ),
             ),
@@ -74,7 +77,10 @@ class CategoryDetailsSection extends StatelessWidget {
             crossAxisSpacing: 15,
           ),
           itemCount: products.length,
-          itemBuilder: (context, index) => _buildItem(products[index]),
+          itemBuilder: (context, index) => KeyedSubtree(
+            key: products[index].id,
+            child: _buildItem(products[index]),
+          ),
         );
       },
     );

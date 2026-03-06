@@ -134,6 +134,7 @@ class BannerSection extends HookWidget {
                       itemBuilder: (context, index) {
                         final banner = banners[index];
                         return BannerItem(
+                          key: ValueKey(banner.id),
                           banner: banner,
                           type: type,
                           horizontalPadding: config.bannerPadding,
