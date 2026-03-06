@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:google_play/core/constants.dart';
 
@@ -8,7 +9,7 @@ import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dar
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
-class GenericTabScreen extends StatefulWidget {
+class GenericTabScreen extends HookWidget {
   final List<HomeSection> sections;
   final VoidCallback? onLoad;
   final bool isSliver;
@@ -30,42 +31,32 @@ class GenericTabScreen extends StatefulWidget {
   }
 
   @override
-  State<GenericTabScreen> createState() => _GenericTabScreenState();
-}
-
-class _GenericTabScreenState extends State<GenericTabScreen>
-    with AutomaticKeepAliveClientMixin {
-  // Сохранение состояния прокрутки при переключении табов
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // Сохранение состояния прокрутки при переключении табов
+    useAutomaticKeepAlive();
 
     // Основной список секций
-    if (widget.isSliver) {
+    if (isSliver) {
       return SliverList.builder(
-        itemCount: widget.sections.length,
+        itemCount: sections.length,
         itemBuilder: (context, index) =>
-            _buildSectionWrapper(index, widget.sections[index]),
+            _buildSectionWrapper(index, sections[index]),
       );
     }
 
     return ListView.builder(
       primary: false,
-      itemCount: widget.sections.length,
+      itemCount: sections.length,
       itemBuilder: (context, index) =>
-          _buildSectionWrapper(index, widget.sections[index]),
+          _buildSectionWrapper(index, sections[index]),
     );
   }
 
   Widget _buildSectionWrapper(int index, HomeSection section) {
-    final section = widget.sections[index];
+    final section = sections[index];
 
     final prevIsAgeFilter =
-        index > 0 &&
-        widget.sections[index - 1].type == SectionType.ageFIlterSelector;
+        index > 0 && sections[index - 1].type == SectionType.ageFIlterSelector;
     final topPadding = section.needsTopPadding && !prevIsAgeFilter ? 15.0 : 0.0;
     return Padding(
       padding: EdgeInsets.only(top: topPadding),
@@ -96,27 +87,5 @@ class _GenericTabScreenState extends State<GenericTabScreen>
       ),
       _ => const SizedBox.shrink(),
     };
-  }
-}
-
-// Обёртка, чтобы секция не пересоздавалась при скролле
-class _KeepAliveSection extends StatefulWidget {
-  final Widget child;
-
-  const _KeepAliveSection({required this.child});
-
-  @override
-  State<_KeepAliveSection> createState() => _KeepAliveSectionState();
-}
-
-class _KeepAliveSectionState extends State<_KeepAliveSection>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return widget.child;
   }
 }
