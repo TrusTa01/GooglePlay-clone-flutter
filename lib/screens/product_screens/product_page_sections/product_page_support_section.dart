@@ -3,7 +3,7 @@ import 'package:google_play/core/constants.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/screens/screens.dart';
 import 'package:google_play/screens/product_screens/utils/product_support_data.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageSupportSection extends StatelessWidget {
   final Product product;

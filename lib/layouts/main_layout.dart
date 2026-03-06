@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:google_play/core/extensions/navigator_extension.dart';
 import 'package:google_play/core/extensions/indexed_stack_extension.dart';
 import 'package:google_play/screens/screens.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});

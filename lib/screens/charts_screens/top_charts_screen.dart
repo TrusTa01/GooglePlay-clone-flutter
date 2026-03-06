@@ -5,7 +5,7 @@ import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/services/product_query_service.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 
 class TopChartsScreen extends StatelessWidget {
   final FilterType type;

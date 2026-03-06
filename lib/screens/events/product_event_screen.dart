@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductEventScreen extends StatelessWidget {
   final SimpleBanner eventBanner;

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/screens/screens.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 
 class CategoryOverviewScreen extends StatelessWidget {
   final String title;

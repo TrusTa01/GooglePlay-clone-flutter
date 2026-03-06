@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 
 import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:google_play/screens/screens.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 
 class GenericTabScreen extends StatefulWidget {
   final List<HomeSection> sections;
@@ -71,88 +73,29 @@ class _GenericTabScreenState extends State<GenericTabScreen>
     );
   }
 
-  Widget _buildSection(HomeSection section) {
-    final rawProducts = section.products ?? [];
-    final productList = rawProducts.whereType<Product>().toList();
+  Widget _buildSection(ResolvedSection section) {
+    // if (section.type != SectionType.kidsHeroBanner &&
+    //     section.type != SectionType.ageFIlterSelector &&
+    //     rawProducts.isEmpty) {
+    //   debugPrint(
+    //     'Error: section.products.isEmpty. Section ${section.title} is empty and skipped (generic_tab_screen.dart)',
+    //   );
+    //   return const SizedBox.shrink();
+    // }
 
-    if (section.type != SectionType.kidsHeroBanner &&
-        section.type != SectionType.ageFIlterSelector &&
-        rawProducts.isEmpty) {
-      debugPrint(
-        'Error: section.products.isEmpty. Section ${section.title} is empty and skipped (generic_tab_screen.dart)',
-      );
-      return const SizedBox.shrink();
-    }
-
-    Widget sectionWidget;
-    bool needsHorizontalPadding = false;
-
-    switch (section.type) {
-      case SectionType.banners:
-        needsHorizontalPadding = false;
-        sectionWidget = BannerSection(
-          banners: rawProducts.whereType<AppBanner>().toList(),
-          title: section.title ?? '',
-          subtitle: section.subtitle ?? '',
-          showButton: section.showButton,
-          maxItems: 8,
-        );
-        break;
-      case SectionType.carousel:
-        sectionWidget = ProductCarousel(
-          title: section.title ?? '',
-          subtitle: section.subtitle ?? '',
-          products: productList,
-        );
-        break;
-      case SectionType.grid:
-        sectionWidget = ProductGrid(
-          title: section.title ?? '',
-          subtitle: section.subtitle ?? '',
-          products: productList,
-        );
-        break;
-      case SectionType.preview:
-        sectionWidget = _KeepAliveSection(
-          child: GamePreviewSection(
-            game: rawProducts.whereType<Game>().toList(),
-            nestedInScrollView: true,
-            showButton: section.showButton,
-          ),
-        );
-        break;
-      case SectionType.kidsHeroBanner:
-        needsHorizontalPadding = false;
-        sectionWidget = KidsHeroBanner(
-          title: section.title ?? '',
-          subtitle: section.subtitle ?? '',
-          imageAssetPath: section.imageAssetPath ?? '',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const KidsDetailsScreen(),
-              ),
-            );
-          },
-        );
-        break;
-      case SectionType.ageFIlterSelector:
-        sectionWidget = KidsAgeFilterSelector(
-          type: FilterType.kidsAge,
-          title: section.title ?? '',
-          subtitle: section.subtitle ?? '',
-        );
-        break;
-    }
-
-    if (needsHorizontalPadding) {
-      return Padding(
-        padding: Constants.horizontalContentPadding,
-        child: sectionWidget,
-      );
-    }
-    return sectionWidget;
+    return switch (section.config.layout) {
+      SectionLayoutKind.carousel => ProductCarousel(
+        title: section.config.titleKey,
+        items: section.items as List<ProductEntity>,
+      ),
+      SectionLayoutKind.grid => ProductGrid(
+        items: section.items as List<ProductEntity>,
+      ),
+      SectionLayoutKind.banners => BannerSection(
+        banners: section.items as List<BannerEntity>,
+      ),
+      _ => const SizedBox.shrink(),
+    };
   }
 }
 

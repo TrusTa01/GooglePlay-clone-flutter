@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 
 class ProductPageRatingRow extends StatelessWidget {

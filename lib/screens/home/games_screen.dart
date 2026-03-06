@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/data/models/product_dtos/game_dto.dart';
-import 'package:google_play/widgets/lazy_tab_content.dart';
+import 'package:google_play/presentation/widgets/lazy_tab_content.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/core/routes/routes.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/screens/screens.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 
 class GamesScreen extends StatefulWidget {
   const GamesScreen({super.key});

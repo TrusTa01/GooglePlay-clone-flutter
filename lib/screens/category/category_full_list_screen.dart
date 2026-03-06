@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/widgets/widgets.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 
 class CategoryFullListScreen extends StatelessWidget {
   final String title;
@@ -33,8 +33,8 @@ class CategoryFullListScreen extends StatelessWidget {
                   title: AppBarTitle(title: title),
                 ),
                 isGame
-                    ? GamePreviewSection.asSliver(
-                        game: products.whereType<Game>().toList(),
+                    ? ProductPreviewSection.asSliver(
+                        item: products.whereType<Game>().toList(),
                       )
                     : CategoryDetailsSection.asSliver(products: products),
               ],
