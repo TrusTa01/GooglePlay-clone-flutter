@@ -4,6 +4,7 @@
     "display_name": "games_recommended_tab_display_name",
     "sections": [
       {
+        "id": "recommended_banners_1",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -15,16 +16,16 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_1"
+        }
       },
       {
+        "id": "recommended_for_you_carousel",
         "type": "carousel",
         "title_key": "for_you_title",
-        "data_source": "recommendations",
-        "id": "recommended_for_you_carousel"
+        "data_source": "recommendations"
       },
       {
+        "id": "recommended_home_grid_everyone_plays_grid",
         "type": "grid",
         "title_key": "home_grid_everyone_plays_title",
         "subtitle_key": "home_grid_everyone_plays_subtitle",
@@ -38,10 +39,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_home_grid_everyone_plays_grid"
+        }
       },
       {
+        "id": "recommended_banners_2",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -53,10 +54,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_2"
+        }
       },
       {
+        "id": "recommended_action_grid",
         "type": "grid",
         "title_key": "action_games_title",
         "data_source": "products_list",
@@ -69,10 +70,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_action_grid"
+        }
       },
       {
+        "id": "recommended_board_grid",
         "type": "grid",
         "title_key": "board_games_title",
         "data_source": "products_list",
@@ -85,10 +86,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_board_grid"
+        }
       },
       {
+        "id": "recommended_fighting_carousel",
         "type": "carousel",
         "title_key": "fighting_games_title",
         "data_source": "products_list",
@@ -101,10 +102,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_fighting_carousel"
+        }
       },
       {
+        "id": "recommended_racing_grid",
         "type": "grid",
         "title_key": "racing_games_title",
         "data_source": "products_list",
@@ -117,10 +118,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_racing_grid"
+        }
       },
       {
+        "id": "recommended_strategy_carousel",
         "type": "carousel",
         "title_key": "strategy_games_title",
         "data_source": "products_list",
@@ -133,10 +134,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_strategy_carousel"
+        }
       },
       {
+        "id": "recommended_banners_3",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -148,10 +149,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_3"
+        }
       },
       {
+        "id": "recommended_puzzle_grid",
         "type": "grid",
         "title_key": "puzzle_games_title",
         "data_source": "products_list",
@@ -164,10 +165,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_puzzle_grid"
+        }
       },
       {
+        "id": "recommended_rpg_carousel",
         "type": "carousel",
         "title_key": "rpg_games_title",
         "data_source": "products_list",
@@ -180,10 +181,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_rpg_carousel"
+        }
       },
       {
+        "id": "recommended_sports_grid",
         "type": "grid",
         "title_key": "sports_games_title",
         "data_source": "products_list",
@@ -196,10 +197,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_sports_grid"
+        }
       },
       {
+        "id": "recommended_simulation_carousel",
         "type": "carousel",
         "title_key": "simulation_games_title",
         "data_source": "products_list",
@@ -212,10 +213,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_simulation_carousel"
+        }
       },
       {
+        "id": "recommended_banners_4",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -227,10 +228,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_4"
+        }
       },
       {
+        "id": "recommended_adventure_carousel",
         "type": "carousel",
         "title_key": "adventure_games_title",
         "data_source": "products_list",
@@ -243,10 +244,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_adventure_carousel"
+        }
       },
       {
+        "id": "recommended_arcade_grid",
         "type": "grid",
         "title_key": "arcade_games_title",
         "data_source": "products_list",
@@ -259,10 +260,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_arcade_grid"
+        }
       },
       {
+        "id": "recommended_casual_carousel",
         "type": "carousel",
         "title_key": "casual_games_title",
         "data_source": "products_list",
@@ -275,10 +276,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_casual_carousel"
+        }
       },
       {
+        "id": "recommended_shooter_grid",
         "type": "grid",
         "title_key": "shooter_games_title",
         "data_source": "products_list",
@@ -291,10 +292,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_shooter_grid"
+        }
       },
       {
+        "id": "recommended_banners_5",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -306,10 +307,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_5"
+        }
       },
       {
+        "id": "recommended_horror_carousel",
         "type": "carousel",
         "title_key": "horror_games_title",
         "data_source": "products_list",
@@ -322,10 +323,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_horror_carousel"
+        }
       },
       {
+        "id": "recommended_new_releases_grid",
         "type": "grid",
         "title_key": "new_releases_title",
         "subtitle_key": "new_releases_subtitle",
@@ -339,10 +340,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_new_releases_grid"
+        }
       },
       {
+        "id": "recommended_top_rated_carousel",
         "type": "carousel",
         "title_key": "top_rated_games_title",
         "data_source": "products_list",
@@ -355,10 +356,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_top_rated_carousel"
+        }
       },
       {
+        "id": "recommended_offline_carousel",
         "type": "carousel",
         "title_key": "offline_games_title",
         "data_source": "products_list",
@@ -371,10 +372,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_offline_carousel"
+        }
       },
       {
+        "id": "recommended_banners_6",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -386,10 +387,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_6"
+        }
       },
       {
+        "id": "recommended_multiplayer_grid",
         "type": "grid",
         "title_key": "multiplayer_games_title",
         "data_source": "products_list",
@@ -402,10 +403,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_multiplayer_grid"
+        }
       },
       {
+        "id": "recommended_indie_carousel",
         "type": "carousel",
         "title_key": "indie_games_title",
         "data_source": "products_list",
@@ -418,10 +419,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_indie_carousel"
+        }
       },
       {
+        "id": "recommended_survival_grid",
         "type": "grid",
         "title_key": "survival_games_title",
         "data_source": "products_list",
@@ -434,10 +435,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_survival_grid"
+        }
       },
       {
+        "id": "recommended_fantasy_carousel",
         "type": "carousel",
         "title_key": "fantasy_games_title",
         "data_source": "products_list",
@@ -450,10 +451,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_fantasy_carousel"
+        }
       },
       {
+        "id": "recommended_banners_7",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -465,10 +466,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_7"
+        }
       },
       {
+        "id": "recommended_open_world_grid",
         "type": "grid",
         "title_key": "open_world_games_title",
         "data_source": "products_list",
@@ -481,10 +482,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_open_world_grid"
+        }
       },
       {
+        "id": "recommended_co_op_carousel",
         "type": "carousel",
         "title_key": "co_op_games_title",
         "data_source": "products_list",
@@ -497,10 +498,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_co_op_carousel"
+        }
       },
       {
+        "id": "recommended_story_rich_carousel",
         "type": "carousel",
         "title_key": "story_rich_games_title",
         "data_source": "products_list",
@@ -513,10 +514,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_story_rich_carousel"
+        }
       },
       {
+        "id": "recommended_retro_grid",
         "type": "grid",
         "title_key": "retro_games_title",
         "data_source": "products_list",
@@ -529,10 +530,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_retro_grid"
+        }
       },
       {
+        "id": "recommended_banners_8",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -544,10 +545,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_8"
+        }
       },
       {
+        "id": "recommended_anime_carousel",
         "type": "carousel",
         "title_key": "anime_games_title",
         "data_source": "products_list",
@@ -560,10 +561,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_anime_carousel"
+        }
       },
       {
+        "id": "recommended_pixel_art_grid",
         "type": "grid",
         "title_key": "pixel_art_games_title",
         "data_source": "products_list",
@@ -576,10 +577,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_pixel_art_grid"
+        }
       },
       {
+        "id": "recommended_pvp_carousel",
         "type": "carousel",
         "title_key": "pvp_games_title",
         "data_source": "products_list",
@@ -592,10 +593,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_pvp_carousel"
+        }
       },
       {
+        "id": "recommended_pve_carousel",
         "type": "carousel",
         "title_key": "pve_games_title",
         "data_source": "products_list",
@@ -608,10 +609,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_pve_carousel"
+        }
       },
       {
+        "id": "recommended_banners_9",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -623,10 +624,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_9"
+        }
       },
       {
+        "id": "recommended_roguelike_grid",
         "type": "grid",
         "title_key": "roguelike_games_title",
         "data_source": "products_list",
@@ -639,10 +640,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_roguelike_grid"
+        }
       },
       {
+        "id": "recommended_crafting_carousel",
         "type": "carousel",
         "title_key": "crafting_games_title",
         "data_source": "products_list",
@@ -655,10 +656,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_crafting_carousel"
+        }
       },
       {
+        "id": "recommended_relaxing_carousel",
         "type": "carousel",
         "title_key": "relaxing_games_title",
         "data_source": "products_list",
@@ -671,10 +672,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_relaxing_carousel"
+        }
       },
       {
+        "id": "recommended_cyberpunk_grid",
         "type": "grid",
         "title_key": "cyberpunk_games_title",
         "data_source": "products_list",
@@ -687,10 +688,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_cyberpunk_grid"
+        }
       },
       {
+        "id": "recommended_banners_10",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -702,10 +703,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_10"
+        }
       },
       {
+        "id": "recommended_turn_based_carousel",
         "type": "carousel",
         "title_key": "turn_based_games_title",
         "data_source": "products_list",
@@ -718,10 +719,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_turn_based_carousel"
+        }
       },
       {
+        "id": "recommended_building_grid",
         "type": "grid",
         "title_key": "building_games_title",
         "data_source": "products_list",
@@ -734,10 +735,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_building_grid"
+        }
       },
       {
+        "id": "recommended_vr_carousel",
         "type": "carousel",
         "title_key": "vr_games_title",
         "data_source": "products_list",
@@ -750,10 +751,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_vr_carousel"
+        }
       },
       {
+        "id": "recommended_steampunk_carousel",
         "type": "carousel",
         "title_key": "steampunk_games_title",
         "data_source": "products_list",
@@ -766,10 +767,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_steampunk_carousel"
+        }
       },
       {
+        "id": "recommended_banners_11",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -781,10 +782,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_banners_11"
+        }
       },
       {
+        "id": "recommended_post_apocalyptic_grid",
         "type": "grid",
         "title_key": "post_apocalyptic_games_title",
         "data_source": "products_list",
@@ -797,8 +798,7 @@
               }
             ]
           }
-        },
-        "id": "recommended_post_apocalyptic_grid"
+        }
       }
     ]
   }

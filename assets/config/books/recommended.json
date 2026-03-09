@@ -4,6 +4,7 @@
     "display_name": "books_recommended_tab_display_name",
     "sections": [
       {
+        "id": "recommended_bestseller_carousel",
         "type": "carousel",
         "title_key": "books_bestseller_title",
         "data_source": "products_list",
@@ -16,10 +17,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_bestseller_carousel"
+        }
       },
       {
+        "id": "recommended_new_carousel",
         "type": "carousel",
         "title_key": "books_new_title",
         "data_source": "products_list",
@@ -32,10 +33,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_new_carousel"
+        }
       },
       {
+        "id": "recommended_fantasy_carousel",
         "type": "carousel",
         "title_key": "books_fantasy_title",
         "data_source": "products_list",
@@ -48,10 +49,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_fantasy_carousel"
+        }
       },
       {
+        "id": "recommended_business_carousel",
         "type": "carousel",
         "title_key": "books_business_title",
         "data_source": "products_list",
@@ -64,10 +65,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_business_carousel"
+        }
       },
       {
+        "id": "recommended_romance_carousel",
         "type": "carousel",
         "title_key": "books_romance_title",
         "data_source": "products_list",
@@ -80,10 +81,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_romance_carousel"
+        }
       },
       {
+        "id": "recommended_self_help_carousel",
         "type": "carousel",
         "title_key": "books_self_help_title",
         "data_source": "products_list",
@@ -96,10 +97,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_self_help_carousel"
+        }
       },
       {
+        "id": "recommended_thriller_carousel",
         "type": "carousel",
         "title_key": "books_thriller_title",
         "data_source": "products_list",
@@ -112,10 +113,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_thriller_carousel"
+        }
       },
       {
+        "id": "recommended_science_fiction_grid",
         "type": "grid",
         "title_key": "books_science_fiction_title",
         "data_source": "products_list",
@@ -128,10 +129,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_science_fiction_grid"
+        }
       },
       {
+        "id": "recommended_mystery_carousel",
         "type": "carousel",
         "title_key": "books_mystery_title",
         "data_source": "products_list",
@@ -144,10 +145,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_mystery_carousel"
+        }
       },
       {
+        "id": "recommended_history_grid",
         "type": "grid",
         "title_key": "books_history_title",
         "data_source": "products_list",
@@ -160,10 +161,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_history_grid"
+        }
       },
       {
+        "id": "recommended_biography_carousel",
         "type": "carousel",
         "title_key": "books_biography_title",
         "data_source": "products_list",
@@ -176,10 +177,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_biography_carousel"
+        }
       },
       {
+        "id": "recommended_children_carousel",
         "type": "carousel",
         "title_key": "books_children_title",
         "data_source": "products_list",
@@ -192,10 +193,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_children_carousel"
+        }
       },
       {
+        "id": "recommended_science_grid",
         "type": "grid",
         "title_key": "books_science_title",
         "data_source": "products_list",
@@ -208,10 +209,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_science_grid"
+        }
       },
       {
+        "id": "recommended_horror_carousel",
         "type": "carousel",
         "title_key": "books_horror_title",
         "data_source": "products_list",
@@ -224,10 +225,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_horror_carousel"
+        }
       },
       {
+        "id": "recommended_poetry_grid",
         "type": "grid",
         "title_key": "books_poetry_title",
         "data_source": "products_list",
@@ -240,10 +241,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_poetry_grid"
+        }
       },
       {
+        "id": "recommended_cooking_carousel",
         "type": "carousel",
         "title_key": "books_cooking_title",
         "data_source": "products_list",
@@ -256,10 +257,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_cooking_carousel"
+        }
       },
       {
+        "id": "recommended_travel_carousel",
         "type": "carousel",
         "title_key": "books_travel_title",
         "data_source": "products_list",
@@ -272,10 +273,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_travel_carousel"
+        }
       },
       {
+        "id": "recommended_psychology_grid",
         "type": "grid",
         "title_key": "books_psychology_title",
         "data_source": "products_list",
@@ -288,10 +289,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_psychology_grid"
+        }
       },
       {
+        "id": "recommended_comics_carousel",
         "type": "carousel",
         "title_key": "books_comics_title",
         "data_source": "products_list",
@@ -304,10 +305,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_comics_carousel"
+        }
       },
       {
+        "id": "recommended_health_carousel",
         "type": "carousel",
         "title_key": "books_health_title",
         "data_source": "products_list",
@@ -320,10 +321,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_health_carousel"
+        }
       },
       {
+        "id": "recommended_top_rated_grid",
         "type": "grid",
         "title_key": "books_top_rated_title",
         "subtitle_key": "books_top_rated_subtitle",
@@ -337,10 +338,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_top_rated_grid"
+        }
       },
       {
+        "id": "recommended_free_carousel",
         "type": "carousel",
         "title_key": "books_free_title",
         "data_source": "products_list",
@@ -353,10 +354,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_free_carousel"
+        }
       },
       {
+        "id": "recommended_art_carousel",
         "type": "carousel",
         "title_key": "books_art_title",
         "data_source": "products_list",
@@ -369,10 +370,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_art_carousel"
+        }
       },
       {
+        "id": "recommended_philosophy_grid",
         "type": "grid",
         "title_key": "books_philosophy_title",
         "data_source": "products_list",
@@ -385,10 +386,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_philosophy_grid"
+        }
       },
       {
+        "id": "recommended_sports_carousel",
         "type": "carousel",
         "title_key": "books_sports_title",
         "data_source": "products_list",
@@ -401,10 +402,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_sports_carousel"
+        }
       },
       {
+        "id": "recommended_technology_carousel",
         "type": "carousel",
         "title_key": "books_technology_title",
         "data_source": "products_list",
@@ -417,10 +418,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_technology_carousel"
+        }
       },
       {
+        "id": "recommended_religion_grid",
         "type": "grid",
         "title_key": "books_religion_title",
         "data_source": "products_list",
@@ -433,10 +434,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_religion_grid"
+        }
       },
       {
+        "id": "recommended_nature_carousel",
         "type": "carousel",
         "title_key": "books_nature_title",
         "data_source": "products_list",
@@ -449,10 +450,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_nature_carousel"
+        }
       },
       {
+        "id": "recommended_education_carousel",
         "type": "carousel",
         "title_key": "books_education_title",
         "data_source": "products_list",
@@ -465,10 +466,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_education_carousel"
+        }
       },
       {
+        "id": "recommended_law_grid",
         "type": "grid",
         "title_key": "books_law_title",
         "data_source": "products_list",
@@ -481,10 +482,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_law_grid"
+        }
       },
       {
+        "id": "recommended_economics_carousel",
         "type": "carousel",
         "title_key": "books_economics_title",
         "data_source": "products_list",
@@ -497,10 +498,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_economics_carousel"
+        }
       },
       {
+        "id": "recommended_politics_carousel",
         "type": "carousel",
         "title_key": "books_politics_title",
         "data_source": "products_list",
@@ -513,10 +514,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_politics_carousel"
+        }
       },
       {
+        "id": "recommended_architecture_grid",
         "type": "grid",
         "title_key": "books_architecture_title",
         "data_source": "products_list",
@@ -529,10 +530,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_architecture_grid"
+        }
       },
       {
+        "id": "recommended_music_carousel",
         "type": "carousel",
         "title_key": "books_music_title",
         "data_source": "products_list",
@@ -545,10 +546,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_music_carousel"
+        }
       },
       {
+        "id": "recommended_parenting_grid",
         "type": "grid",
         "title_key": "books_parenting_title",
         "data_source": "products_list",
@@ -561,10 +562,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_parenting_grid"
+        }
       },
       {
+        "id": "recommended_memoir_carousel",
         "type": "carousel",
         "title_key": "books_memoir_title",
         "data_source": "products_list",
@@ -577,10 +578,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_memoir_carousel"
+        }
       },
       {
+        "id": "recommended_graphic_novel_carousel",
         "type": "carousel",
         "title_key": "books_graphic_novel_title",
         "data_source": "products_list",
@@ -593,10 +594,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_graphic_novel_carousel"
+        }
       },
       {
+        "id": "recommended_short_stories_grid",
         "type": "grid",
         "title_key": "books_short_stories_title",
         "data_source": "products_list",
@@ -609,10 +610,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_short_stories_grid"
+        }
       },
       {
+        "id": "recommended_award_winning_carousel",
         "type": "carousel",
         "title_key": "books_award_winning_title",
         "data_source": "products_list",
@@ -625,10 +626,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_award_winning_carousel"
+        }
       },
       {
+        "id": "recommended_classic_carousel",
         "type": "carousel",
         "title_key": "books_classic_title",
         "data_source": "products_list",
@@ -641,10 +642,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_classic_carousel"
+        }
       },
       {
+        "id": "recommended_translated_grid",
         "type": "grid",
         "title_key": "books_translated_title",
         "data_source": "products_list",
@@ -657,10 +658,10 @@
               }
             ]
           }
-        },
-        "id": "recommended_translated_grid"
+        }
       },
       {
+        "id": "recommended_series_carousel",
         "type": "carousel",
         "title_key": "books_series_title",
         "data_source": "products_list",
@@ -673,8 +674,7 @@
               }
             ]
           }
-        },
-        "id": "recommended_series_carousel"
+        }
       }
     ]
   }

@@ -4,6 +4,7 @@
     "display_name": "games_paid_tab_display_name",
     "sections": [
       {
+        "id": "paid_unusual_puzzle_preview",
         "type": "preview",
         "title_key": "games_unusual_puzzle_title",
         "data_source": "products_list",
@@ -20,10 +21,10 @@
               }
             ]
           }
-        },
-        "id": "paid_unusual_puzzle_preview"
+        }
       },
       {
+        "id": "paid_low_price_carousel",
         "type": "carousel",
         "title_key": "low_price_games_title",
         "data_source": "products_list",
@@ -40,10 +41,10 @@
               }
             ]
           }
-        },
-        "id": "paid_low_price_carousel"
+        }
       },
       {
+        "id": "paid_banners_1",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -59,10 +60,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_1"
+        }
       },
       {
+        "id": "paid_best_indie_carousel",
         "type": "carousel",
         "title_key": "best_indie_games_title",
         "data_source": "products_list",
@@ -79,10 +80,10 @@
               }
             ]
           }
-        },
-        "id": "paid_best_indie_carousel"
+        }
       },
       {
+        "id": "paid_offline_carousel",
         "type": "carousel",
         "title_key": "games_offline_title",
         "data_source": "products_list",
@@ -99,10 +100,10 @@
               }
             ]
           }
-        },
-        "id": "paid_offline_carousel"
+        }
       },
       {
+        "id": "paid_action_grid",
         "type": "grid",
         "title_key": "paid_action_games_title",
         "data_source": "products_list",
@@ -119,10 +120,10 @@
               }
             ]
           }
-        },
-        "id": "paid_action_grid"
+        }
       },
       {
+        "id": "paid_rpg_carousel",
         "type": "carousel",
         "title_key": "paid_rpg_games_title",
         "data_source": "products_list",
@@ -139,10 +140,10 @@
               }
             ]
           }
-        },
-        "id": "paid_rpg_carousel"
+        }
       },
       {
+        "id": "paid_banners_2",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -158,10 +159,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_2"
+        }
       },
       {
+        "id": "paid_strategy_grid",
         "type": "grid",
         "title_key": "paid_strategy_games_title",
         "data_source": "products_list",
@@ -178,10 +179,10 @@
               }
             ]
           }
-        },
-        "id": "paid_strategy_grid"
+        }
       },
       {
+        "id": "paid_adventure_carousel",
         "type": "carousel",
         "title_key": "paid_adventure_games_title",
         "data_source": "products_list",
@@ -198,10 +199,10 @@
               }
             ]
           }
-        },
-        "id": "paid_adventure_carousel"
+        }
       },
       {
+        "id": "paid_simulation_grid",
         "type": "grid",
         "title_key": "paid_simulation_games_title",
         "data_source": "products_list",
@@ -218,10 +219,10 @@
               }
             ]
           }
-        },
-        "id": "paid_simulation_grid"
+        }
       },
       {
+        "id": "paid_banners_3",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -237,10 +238,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_3"
+        }
       },
       {
+        "id": "paid_racing_carousel",
         "type": "carousel",
         "title_key": "paid_racing_games_title",
         "data_source": "products_list",
@@ -257,10 +258,10 @@
               }
             ]
           }
-        },
-        "id": "paid_racing_carousel"
+        }
       },
       {
+        "id": "paid_top_rated_preview",
         "type": "preview",
         "title_key": "paid_top_rated_games_title",
         "data_source": "products_list",
@@ -277,10 +278,10 @@
               }
             ]
           }
-        },
-        "id": "paid_top_rated_preview"
+        }
       },
       {
+        "id": "paid_horror_carousel",
         "type": "carousel",
         "title_key": "paid_horror_games_title",
         "data_source": "products_list",
@@ -297,10 +298,10 @@
               }
             ]
           }
-        },
-        "id": "paid_horror_carousel"
+        }
       },
       {
+        "id": "paid_board_grid",
         "type": "grid",
         "title_key": "paid_board_games_title",
         "data_source": "products_list",
@@ -317,10 +318,10 @@
               }
             ]
           }
-        },
-        "id": "paid_board_grid"
+        }
       },
       {
+        "id": "paid_banners_4",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -336,10 +337,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_4"
+        }
       },
       {
+        "id": "paid_sports_carousel",
         "type": "carousel",
         "title_key": "paid_sports_games_title",
         "data_source": "products_list",
@@ -356,10 +357,10 @@
               }
             ]
           }
-        },
-        "id": "paid_sports_carousel"
+        }
       },
       {
+        "id": "paid_shooter_grid",
         "type": "grid",
         "title_key": "paid_shooter_games_title",
         "data_source": "products_list",
@@ -376,10 +377,10 @@
               }
             ]
           }
-        },
-        "id": "paid_shooter_grid"
+        }
       },
       {
+        "id": "paid_casual_carousel",
         "type": "carousel",
         "title_key": "paid_casual_games_title",
         "data_source": "products_list",
@@ -396,10 +397,10 @@
               }
             ]
           }
-        },
-        "id": "paid_casual_carousel"
+        }
       },
       {
+        "id": "paid_arcade_carousel",
         "type": "carousel",
         "title_key": "paid_arcade_games_title",
         "data_source": "products_list",
@@ -416,10 +417,10 @@
               }
             ]
           }
-        },
-        "id": "paid_arcade_carousel"
+        }
       },
       {
+        "id": "paid_banners_5",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -435,10 +436,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_5"
+        }
       },
       {
+        "id": "paid_new_releases_grid",
         "type": "grid",
         "title_key": "paid_new_releases_title",
         "subtitle_key": "paid_new_releases_subtitle",
@@ -456,10 +457,10 @@
               }
             ]
           }
-        },
-        "id": "paid_new_releases_grid"
+        }
       },
       {
+        "id": "paid_multiplayer_carousel",
         "type": "carousel",
         "title_key": "paid_multiplayer_games_title",
         "data_source": "products_list",
@@ -476,10 +477,10 @@
               }
             ]
           }
-        },
-        "id": "paid_multiplayer_carousel"
+        }
       },
       {
+        "id": "paid_fighting_carousel",
         "type": "carousel",
         "title_key": "paid_fighting_games_title",
         "data_source": "products_list",
@@ -496,10 +497,10 @@
               }
             ]
           }
-        },
-        "id": "paid_fighting_carousel"
+        }
       },
       {
+        "id": "paid_survival_grid",
         "type": "grid",
         "title_key": "paid_survival_games_title",
         "data_source": "products_list",
@@ -516,10 +517,10 @@
               }
             ]
           }
-        },
-        "id": "paid_survival_grid"
+        }
       },
       {
+        "id": "paid_open_world_carousel",
         "type": "carousel",
         "title_key": "paid_open_world_games_title",
         "data_source": "products_list",
@@ -536,10 +537,10 @@
               }
             ]
           }
-        },
-        "id": "paid_open_world_carousel"
+        }
       },
       {
+        "id": "paid_banners_6",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -555,10 +556,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_6"
+        }
       },
       {
+        "id": "paid_story_rich_carousel",
         "type": "carousel",
         "title_key": "paid_story_rich_games_title",
         "data_source": "products_list",
@@ -575,10 +576,10 @@
               }
             ]
           }
-        },
-        "id": "paid_story_rich_carousel"
+        }
       },
       {
+        "id": "paid_roguelike_grid",
         "type": "grid",
         "title_key": "paid_roguelike_games_title",
         "data_source": "products_list",
@@ -595,10 +596,10 @@
               }
             ]
           }
-        },
-        "id": "paid_roguelike_grid"
+        }
       },
       {
+        "id": "paid_retro_carousel",
         "type": "carousel",
         "title_key": "paid_retro_games_title",
         "data_source": "products_list",
@@ -615,10 +616,10 @@
               }
             ]
           }
-        },
-        "id": "paid_retro_carousel"
+        }
       },
       {
+        "id": "paid_pixel_art_carousel",
         "type": "carousel",
         "title_key": "paid_pixel_art_games_title",
         "data_source": "products_list",
@@ -635,10 +636,10 @@
               }
             ]
           }
-        },
-        "id": "paid_pixel_art_carousel"
+        }
       },
       {
+        "id": "paid_banners_7",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -654,10 +655,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_7"
+        }
       },
       {
+        "id": "paid_crafting_grid",
         "type": "grid",
         "title_key": "paid_crafting_games_title",
         "data_source": "products_list",
@@ -674,10 +675,10 @@
               }
             ]
           }
-        },
-        "id": "paid_crafting_grid"
+        }
       },
       {
+        "id": "paid_turn_based_carousel",
         "type": "carousel",
         "title_key": "paid_turn_based_games_title",
         "data_source": "products_list",
@@ -694,10 +695,10 @@
               }
             ]
           }
-        },
-        "id": "paid_turn_based_carousel"
+        }
       },
       {
+        "id": "paid_fantasy_carousel",
         "type": "carousel",
         "title_key": "paid_fantasy_games_title",
         "data_source": "products_list",
@@ -714,10 +715,10 @@
               }
             ]
           }
-        },
-        "id": "paid_fantasy_carousel"
+        }
       },
       {
+        "id": "paid_co_op_grid",
         "type": "grid",
         "title_key": "paid_co_op_games_title",
         "data_source": "products_list",
@@ -734,10 +735,10 @@
               }
             ]
           }
-        },
-        "id": "paid_co_op_grid"
+        }
       },
       {
+        "id": "paid_banners_8",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -753,10 +754,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_8"
+        }
       },
       {
+        "id": "paid_anime_carousel",
         "type": "carousel",
         "title_key": "paid_anime_games_title",
         "data_source": "products_list",
@@ -773,10 +774,10 @@
               }
             ]
           }
-        },
-        "id": "paid_anime_carousel"
+        }
       },
       {
+        "id": "paid_steampunk_grid",
         "type": "grid",
         "title_key": "paid_steampunk_games_title",
         "data_source": "products_list",
@@ -793,10 +794,10 @@
               }
             ]
           }
-        },
-        "id": "paid_steampunk_grid"
+        }
       },
       {
+        "id": "paid_cyberpunk_carousel",
         "type": "carousel",
         "title_key": "paid_cyberpunk_games_title",
         "data_source": "products_list",
@@ -813,10 +814,10 @@
               }
             ]
           }
-        },
-        "id": "paid_cyberpunk_carousel"
+        }
       },
       {
+        "id": "paid_relaxing_carousel",
         "type": "carousel",
         "title_key": "paid_relaxing_games_title",
         "data_source": "products_list",
@@ -833,10 +834,10 @@
               }
             ]
           }
-        },
-        "id": "paid_relaxing_carousel"
+        }
       },
       {
+        "id": "paid_banners_9",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -852,10 +853,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_9"
+        }
       },
       {
+        "id": "paid_building_grid",
         "type": "grid",
         "title_key": "paid_building_games_title",
         "data_source": "products_list",
@@ -872,10 +873,10 @@
               }
             ]
           }
-        },
-        "id": "paid_building_grid"
+        }
       },
       {
+        "id": "paid_post_apocalyptic_carousel",
         "type": "carousel",
         "title_key": "paid_post_apocalyptic_games_title",
         "data_source": "products_list",
@@ -892,10 +893,10 @@
               }
             ]
           }
-        },
-        "id": "paid_post_apocalyptic_carousel"
+        }
       },
       {
+        "id": "paid_vr_carousel",
         "type": "carousel",
         "title_key": "paid_vr_games_title",
         "data_source": "products_list",
@@ -912,10 +913,10 @@
               }
             ]
           }
-        },
-        "id": "paid_vr_carousel"
+        }
       },
       {
+        "id": "paid_exploration_grid",
         "type": "grid",
         "title_key": "paid_exploration_games_title",
         "data_source": "products_list",
@@ -932,10 +933,10 @@
               }
             ]
           }
-        },
-        "id": "paid_exploration_grid"
+        }
       },
       {
+        "id": "paid_banners_10",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -951,10 +952,10 @@
               }
             ]
           }
-        },
-        "id": "paid_banners_10"
+        }
       },
       {
+        "id": "paid_pvp_carousel",
         "type": "carousel",
         "title_key": "paid_pvp_games_title",
         "data_source": "products_list",
@@ -971,10 +972,10 @@
               }
             ]
           }
-        },
-        "id": "paid_pvp_carousel"
+        }
       },
       {
+        "id": "paid_esports_grid",
         "type": "grid",
         "title_key": "paid_esports_games_title",
         "data_source": "products_list",
@@ -991,8 +992,7 @@
               }
             ]
           }
-        },
-        "id": "paid_esports_grid"
+        }
       }
     ]
   }

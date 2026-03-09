@@ -4,13 +4,14 @@
     "display_name": "kids_age_12_tab_display_name",
     "sections": [
       {
+        "id": "kidsAge12_hero_banner",
         "type": "kids_hero_banner",
         "title_key": "kids_hero_banner_title",
         "subtitle_key": "kids_hero_banner_subtitle",
-        "image_asset_path": "assets/images/kids_tab/kids_tab_image.webp",
-        "id": "kidsAge12_hero_banner"
+        "image_asset_path": "assets/images/kids_tab/kids_tab_image.webp"
       },
       {
+        "id": "kidsAge12_new_and_updated_carousel",
         "type": "carousel",
         "title_key": "kids_new_and_updated_title",
         "data_source": "products_list",
@@ -24,10 +25,10 @@
             ]
           },
           "sort": "last_updated"
-        },
-        "id": "kidsAge12_new_and_updated_carousel"
+        }
       },
       {
+        "id": "kidsAge12_popular_carousel",
         "type": "carousel",
         "title_key": "kids_popular_title",
         "data_source": "products_list",
@@ -41,10 +42,10 @@
             ]
           },
           "sort": "popular"
-        },
-        "id": "kidsAge12_popular_carousel"
+        }
       },
       {
+        "id": "kidsAge12_educational_grid",
         "type": "grid",
         "title_key": "kids_educational_title",
         "data_source": "products_list",
@@ -61,10 +62,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_educational_grid"
+        }
       },
       {
+        "id": "kidsAge12_puzzle_carousel",
         "type": "carousel",
         "title_key": "kids_puzzle_title",
         "data_source": "products_list",
@@ -81,10 +82,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_puzzle_carousel"
+        }
       },
       {
+        "id": "kidsAge12_banners_1",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -96,10 +97,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_1"
+        }
       },
       {
+        "id": "kidsAge12_arcade_carousel",
         "type": "carousel",
         "title_key": "kids_arcade_title",
         "data_source": "products_list",
@@ -116,10 +117,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_arcade_carousel"
+        }
       },
       {
+        "id": "kidsAge12_strategy_grid",
         "type": "grid",
         "title_key": "kids_strategy_title",
         "data_source": "products_list",
@@ -136,10 +137,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_strategy_grid"
+        }
       },
       {
+        "id": "kidsAge12_adventure_carousel",
         "type": "carousel",
         "title_key": "kids_adventure_title",
         "data_source": "products_list",
@@ -156,10 +157,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_adventure_carousel"
+        }
       },
       {
+        "id": "kidsAge12_simulation_carousel",
         "type": "carousel",
         "title_key": "kids_simulation_title",
         "data_source": "products_list",
@@ -176,10 +177,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_simulation_carousel"
+        }
       },
       {
+        "id": "kidsAge12_banners_2",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -191,10 +192,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_2"
+        }
       },
       {
+        "id": "kidsAge12_casual_grid",
         "type": "grid",
         "title_key": "kids_casual_title",
         "data_source": "products_list",
@@ -211,10 +212,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_casual_grid"
+        }
       },
       {
+        "id": "kidsAge12_board_carousel",
         "type": "carousel",
         "title_key": "kids_board_title",
         "data_source": "products_list",
@@ -231,10 +232,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_board_carousel"
+        }
       },
       {
+        "id": "kidsAge12_music_carousel",
         "type": "carousel",
         "title_key": "kids_music_title",
         "data_source": "products_list",
@@ -251,10 +252,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_music_carousel"
+        }
       },
       {
+        "id": "kidsAge12_trivia_grid",
         "type": "grid",
         "title_key": "kids_trivia_title",
         "data_source": "products_list",
@@ -271,10 +272,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_trivia_grid"
+        }
       },
       {
+        "id": "kidsAge12_banners_3",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -286,10 +287,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_3"
+        }
       },
       {
+        "id": "kidsAge12_word_carousel",
         "type": "carousel",
         "title_key": "kids_word_title",
         "data_source": "products_list",
@@ -306,10 +307,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_word_carousel"
+        }
       },
       {
+        "id": "kidsAge12_rpg_carousel",
         "type": "carousel",
         "title_key": "kids_rpg_title",
         "data_source": "products_list",
@@ -326,10 +327,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_rpg_carousel"
+        }
       },
       {
+        "id": "kidsAge12_family_grid",
         "type": "grid",
         "title_key": "kids_family_title",
         "data_source": "products_list",
@@ -346,10 +347,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_family_grid"
+        }
       },
       {
+        "id": "kidsAge12_math_carousel",
         "type": "carousel",
         "title_key": "kids_math_title",
         "data_source": "products_list",
@@ -366,10 +367,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_math_carousel"
+        }
       },
       {
+        "id": "kidsAge12_banners_4",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -381,10 +382,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_4"
+        }
       },
       {
+        "id": "kidsAge12_fairy_tales_carousel",
         "type": "carousel",
         "title_key": "kids_fairy_tales_title",
         "data_source": "products_list",
@@ -401,10 +402,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_fairy_tales_carousel"
+        }
       },
       {
+        "id": "kidsAge12_logic_grid",
         "type": "grid",
         "title_key": "kids_logic_title",
         "data_source": "products_list",
@@ -421,10 +422,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_logic_grid"
+        }
       },
       {
+        "id": "kidsAge12_co_op_carousel",
         "type": "carousel",
         "title_key": "kids_co_op_title",
         "data_source": "products_list",
@@ -441,10 +442,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_co_op_carousel"
+        }
       },
       {
+        "id": "kidsAge12_multiplayer_carousel",
         "type": "carousel",
         "title_key": "kids_multiplayer_title",
         "data_source": "products_list",
@@ -461,10 +462,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_multiplayer_carousel"
+        }
       },
       {
+        "id": "kidsAge12_banners_5",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -476,10 +477,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_5"
+        }
       },
       {
+        "id": "kidsAge12_offline_grid",
         "type": "grid",
         "title_key": "kids_offline_title",
         "data_source": "products_list",
@@ -496,10 +497,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_offline_grid"
+        }
       },
       {
+        "id": "kidsAge12_story_rich_carousel",
         "type": "carousel",
         "title_key": "kids_story_rich_title",
         "data_source": "products_list",
@@ -516,10 +517,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_story_rich_carousel"
+        }
       },
       {
+        "id": "kidsAge12_exploration_carousel",
         "type": "carousel",
         "title_key": "kids_exploration_title",
         "data_source": "products_list",
@@ -536,10 +537,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_exploration_carousel"
+        }
       },
       {
+        "id": "kidsAge12_building_grid",
         "type": "grid",
         "title_key": "kids_building_title",
         "data_source": "products_list",
@@ -556,10 +557,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_building_grid"
+        }
       },
       {
+        "id": "kidsAge12_banners_6",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -571,10 +572,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_6"
+        }
       },
       {
+        "id": "kidsAge12_2d_carousel",
         "type": "carousel",
         "title_key": "kids_2d_title",
         "data_source": "products_list",
@@ -591,10 +592,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_2d_carousel"
+        }
       },
       {
+        "id": "kidsAge12_3d_carousel",
         "type": "carousel",
         "title_key": "kids_3d_title",
         "data_source": "products_list",
@@ -611,10 +612,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_3d_carousel"
+        }
       },
       {
+        "id": "kidsAge12_pixel_art_grid",
         "type": "grid",
         "title_key": "kids_pixel_art_title",
         "data_source": "products_list",
@@ -631,10 +632,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_pixel_art_grid"
+        }
       },
       {
+        "id": "kidsAge12_retro_carousel",
         "type": "carousel",
         "title_key": "kids_retro_title",
         "data_source": "products_list",
@@ -651,10 +652,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_retro_carousel"
+        }
       },
       {
+        "id": "kidsAge12_banners_7",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -666,10 +667,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_7"
+        }
       },
       {
+        "id": "kidsAge12_free_carousel",
         "type": "carousel",
         "title_key": "kids_free_title",
         "data_source": "products_list",
@@ -686,10 +687,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_free_carousel"
+        }
       },
       {
+        "id": "kidsAge12_creativity_grid",
         "type": "grid",
         "title_key": "kids_creativity_title",
         "data_source": "products_list",
@@ -706,10 +707,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_creativity_grid"
+        }
       },
       {
+        "id": "kidsAge12_drawing_carousel",
         "type": "carousel",
         "title_key": "kids_drawing_title",
         "data_source": "products_list",
@@ -726,10 +727,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_drawing_carousel"
+        }
       },
       {
+        "id": "kidsAge12_languages_carousel",
         "type": "carousel",
         "title_key": "kids_languages_title",
         "data_source": "products_list",
@@ -746,10 +747,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_languages_carousel"
+        }
       },
       {
+        "id": "kidsAge12_banners_8",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -761,10 +762,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_8"
+        }
       },
       {
+        "id": "kidsAge12_relaxing_grid",
         "type": "grid",
         "title_key": "kids_relaxing_title",
         "data_source": "products_list",
@@ -781,10 +782,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_relaxing_grid"
+        }
       },
       {
+        "id": "kidsAge12_stylized_carousel",
         "type": "carousel",
         "title_key": "kids_stylized_title",
         "data_source": "products_list",
@@ -801,10 +802,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_stylized_carousel"
+        }
       },
       {
+        "id": "kidsAge12_crossplatform_carousel",
         "type": "carousel",
         "title_key": "kids_crossplatform_title",
         "data_source": "products_list",
@@ -821,10 +822,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_crossplatform_carousel"
+        }
       },
       {
+        "id": "kidsAge12_health_grid",
         "type": "grid",
         "title_key": "kids_health_title",
         "data_source": "products_list",
@@ -841,10 +842,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_health_grid"
+        }
       },
       {
+        "id": "kidsAge12_banners_9",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -856,10 +857,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_9"
+        }
       },
       {
+        "id": "kidsAge12_top_rated_grid",
         "type": "grid",
         "title_key": "kids_top_rated_title",
         "subtitle_key": "kids_top_rated_subtitle",
@@ -874,10 +875,10 @@
             ]
           },
           "sort": "top_rated"
-        },
-        "id": "kidsAge12_top_rated_grid"
+        }
       },
       {
+        "id": "kidsAge12_new_releases_carousel",
         "type": "carousel",
         "title_key": "kids_new_releases_title",
         "data_source": "products_list",
@@ -894,10 +895,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_new_releases_carousel"
+        }
       },
       {
+        "id": "kidsAge12_minimalist_carousel",
         "type": "carousel",
         "title_key": "kids_minimalist_title",
         "data_source": "products_list",
@@ -914,10 +915,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_minimalist_carousel"
+        }
       },
       {
+        "id": "kidsAge12_turn_based_grid",
         "type": "grid",
         "title_key": "kids_turn_based_title",
         "data_source": "products_list",
@@ -934,10 +935,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_turn_based_grid"
+        }
       },
       {
+        "id": "kidsAge12_banners_10",
         "type": "banners",
         "data_source": "banners",
         "data_params": {
@@ -949,10 +950,10 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_banners_10"
+        }
       },
       {
+        "id": "kidsAge12_procedural_carousel",
         "type": "carousel",
         "title_key": "kids_procedural_title",
         "data_source": "products_list",
@@ -969,8 +970,7 @@
               }
             ]
           }
-        },
-        "id": "kidsAge12_procedural_carousel"
+        }
       }
     ]
   }
