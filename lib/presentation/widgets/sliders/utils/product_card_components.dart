@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/core/shimers/shimer_box.dart';
+import 'package:google_play/core/shimmers/shimmer_box.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/data/models/dtos.dart';
 

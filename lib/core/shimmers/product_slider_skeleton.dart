@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/shimers/shimer_box.dart';
+import 'package:google_play/core/shimmers/shimmer_box.dart';
 
 class ProductSliderSkeleton extends StatelessWidget {
   const ProductSliderSkeleton({super.key});
