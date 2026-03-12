@@ -7,9 +7,9 @@ import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/providers/providers.dart';
 import 'package:google_play/services/product_query_service.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
-import 'package:google_play/screens/product_screens/product_page_sections/product_page_sections.dart';
-import 'package:google_play/screens/product_screens/product_screen_tags.dart';
-import 'package:google_play/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/presentation/screens/product_screens/product_page_sections/product_page_sections.dart';
+import 'package:google_play/presentation/screens/product_screens/product_screen_tags.dart';
+import 'package:google_play/presentation/screens/product_screens/utils/product_ui_config.dart';
 
 // Экран страницы продукта (приложение, книга, игра).
 class ProductPageScreen extends StatelessWidget {

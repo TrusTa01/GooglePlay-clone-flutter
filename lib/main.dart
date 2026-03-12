@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_play/layouts/main_layout.dart';
+import 'package:google_play/presentation/layouts/main_layout.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
-  runApp(GooglePlay());
+  runApp(const ProviderScope(child: GooglePlay()));
 }
 
 class GooglePlay extends StatelessWidget {

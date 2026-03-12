@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/screens/product_screens/product_page_sections/product_page_rating_row.dart';
-import 'package:google_play/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/presentation/screens/product_screens/product_page_sections/product_page_rating_row.dart';
+import 'package:google_play/presentation/screens/product_screens/utils/product_ui_config.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageHeader extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/screens/product_screens/utils/product_app_bar_leading.dart';
+import 'package:google_play/presentation/screens/product_screens/utils/product_app_bar_leading.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class PermissionsScreen extends StatelessWidget {

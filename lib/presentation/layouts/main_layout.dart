@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/constants/global_constants.dart';
-import 'package:google_play/providers/filter_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:google_play/presentation/viewmodels/filter_provider.dart';
 import 'package:google_play/core/extensions/navigator_extension.dart';
 import 'package:google_play/core/extensions/indexed_stack_extension.dart';
-import 'package:google_play/screens/screens.dart';
+import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MainLayout extends HookWidget {
+class MainLayout extends HookConsumerWidget {
   const MainLayout({super.key});
 
   final List<Widget> _screens = const [
@@ -19,7 +19,7 @@ class MainLayout extends HookWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentPageIndex = useState(Constants.defaultBottomNavIndex);
     // Список посещенных экранов: только дефолтная вкладка создаётся при старте
     final visitedPagesIndexes = useState<Set<int>>({

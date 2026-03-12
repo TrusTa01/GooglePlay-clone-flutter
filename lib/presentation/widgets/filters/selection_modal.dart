@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/screens/category/product_categories_data.dart';
+import 'package:google_play/presentation/screens/category/product_categories_data.dart';
 
 class SelectionModal {
   static Future<void> show({

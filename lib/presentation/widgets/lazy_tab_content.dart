@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/shimmers/product_slider_skeleton.dart';
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/screens/screens.dart';
+import 'package:google_play/presentation/screens/screens.dart';
 
 // TODO: Перейти на хуки
 // TODO: Единый источник правды

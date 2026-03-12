@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/providers/tabs_provider.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 // Функция для создания SliverTabbedAppBar
 // Возвращает список виджетов: верхняя часть скрывается, табы остаются закрепленными
 // Используется в NestedScrollView для экранов с прокруткой и табами
 List<Widget> buildSliverTabbedAppBar({
-  required BuildContext context,
   required List<String> tabs,
   required TabController tabController,
   List<Widget>? actions,
@@ -21,9 +18,6 @@ List<Widget> buildSliverTabbedAppBar({
   List<Widget>? inputActions,
   ValueChanged<String>? onSearchChanged,
 }) {
-  // Используем tabsProvider для получения табов
-  final tabsProvider = Provider.of<TabsProvider>(context, listen: false);
-  final tabsList = tabsProvider.tabs.isNotEmpty ? tabsProvider.tabs : tabs;
 
   return [
     // Верхняя часть AppBar - плавно сворачивается/разворачивается при прокрутке
@@ -45,7 +39,9 @@ List<Widget> buildSliverTabbedAppBar({
         alignment: Alignment.centerLeft,
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
+            constraints: const BoxConstraints(
+              maxWidth: Constants.sliderMaxContentWidth,
+            ),
             // LayoutBuilder: паддинг от доступной ширины контента (а не от экрана)
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -56,7 +52,10 @@ List<Widget> buildSliverTabbedAppBar({
                   padding: padding,
                   child: Row(
                     children: [
-                      if (showLogo) const AppBarLogo(translate: Offset(5, 0)), // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
+                      if (showLogo)
+                        const AppBarLogo(
+                          translate: Offset(5, 0),
+                        ), // Костыль, потому что логотип больше чем кажется. Убрать если заменить на нормальный логотип
                       if (hasSearch)
                         Expanded(
                           child: AppBarSearchContainer(
@@ -83,8 +82,10 @@ List<Widget> buildSliverTabbedAppBar({
       delegate: _SliverTabBarDelegate(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
-            child: CustomTabBar(tabs: tabsList, controller: tabController),
+            constraints: const BoxConstraints(
+              maxWidth: Constants.sliderMaxContentWidth,
+            ),
+            child: CustomTabBar(tabs: tabs, controller: tabController),
           ),
         ),
       ),

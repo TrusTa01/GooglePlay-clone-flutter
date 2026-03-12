@@ -6,7 +6,7 @@ import 'package:google_play/core/constants.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
-import 'package:google_play/screens/screens.dart';
+import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class GenericTabScreen extends HookWidget {

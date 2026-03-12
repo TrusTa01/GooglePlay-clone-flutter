@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/screens/category/product_categories_data.dart';
+import 'package:google_play/presentation/screens/category/product_categories_data.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ModalFilter extends StatelessWidget {
