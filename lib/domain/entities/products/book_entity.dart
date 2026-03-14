@@ -28,6 +28,8 @@ final class BookEntity extends ProductEntity {
     required super.iconUrl,
     required super.isPaid,
     required super.price,
+    super.currencyCode = 'USD',
+    super.discountPrice,
     required super.creatorDescription,
     required super.url,
     required super.tags,

@@ -619,10 +619,19 @@ void main() async {
       price = wholeAmount.toDouble();
     }
 
+    final String currencyCode =
+        faker.randomGenerator.element(['USD', 'EUR', 'RUB']);
+    double? discountPrice;
+    if (isPaid && price != null && faker.randomGenerator.integer(100) < 25) {
+      final double discountPercent = 0.6 + random.nextDouble() * 0.35;
+      discountPrice = (price * discountPercent).roundToDouble();
+    }
+
     // Логика иконок
     final String localIcon = faker.randomGenerator.element(icons);
 
     // Логика скриншотов
+    
     List<String> selectedScreenshots = [];
 
     // Шанс 50/50: либо только вертикальные, либо сначала горизонтальные
@@ -706,6 +715,8 @@ void main() async {
       "iconUrl": localIcon,
       "isPaid": isPaid,
       "price": price,
+      "currencyCode": currencyCode,
+      "discountPrice": discountPrice,
       "containsAds": faker.randomGenerator.boolean(),
       "containsPaidContent": faker.randomGenerator.boolean(),
       "shortDescription": faker.lorem.sentences(2).join(' '),
@@ -729,7 +740,7 @@ void main() async {
       "ageRating": ageRating,
       "isKidsFriendly": isKidsFriendly,
       "ageRatingReasons": selectedAgeRatingReasons,
-      "categories": selectedGenres,
+      "gameGenre": selectedGenres,
       "screenshots": selectedScreenshots,
       "tags": selectedTags,
       "isOnline": faker.randomGenerator.boolean(),

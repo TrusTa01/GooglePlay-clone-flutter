@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/core/utils/formatters.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/domain/entities/banners/action_banner_entity.dart';
 import 'package:google_play/domain/entities/base_entity.dart';
 import 'package:google_play/presentation/widgets/buttons/elevated_button.dart';
@@ -38,7 +38,7 @@ class ActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (product == null) return const SizedBox.shrink();
 
-    final formatter = ProductDataFormatter(product);
+    final formatter = ProductDataFormatter(context, product);
 
     bool containsPaidContent = false;
     if (product is Game || product is App) {
@@ -125,7 +125,7 @@ class ActionRow extends StatelessWidget {
                         if (product.isPaid && screenWidth > 320)
                           ProductInfoTag(text: formatter.price),
                         if (product is Book && !product.isPaid)
-                          ProductInfoTag(text: 'Бесплатно'),
+                          ProductInfoTag(text: context.l10n.tagFree),
                       ],
                     ),
                   ],
@@ -140,14 +140,14 @@ class ActionRow extends StatelessWidget {
               CustomElevatedButton(
                 isPaid: product.isPaid,
                 price: formatter.price,
-                defaultButtonText: 'Установить',
+                defaultButtonText: context.l10n.buttonInstall,
               ),
               if (containsPaidContent)
-                const Padding(
-                  padding: EdgeInsets.only(top: 4),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
                   child: Text(
-                    'Есть платный контент',
-                    style: TextStyle(fontSize: 8, color: Colors.black),
+                    context.l10n.tagContainsPaidContent,
+                    style: const TextStyle(fontSize: 8, color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -180,7 +180,7 @@ class ActionRowButton extends StatelessWidget {
         CustomElevatedButton(
           isPaid: isPaid,
           price: price,
-          defaultButtonText: 'Установить',
+          defaultButtonText: defaultButtonText,
         ),
         if (containsPaidContent)
           const Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
@@ -8,7 +9,7 @@ class KidsDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Center(
@@ -25,8 +26,6 @@ class KidsDetailsScreen extends StatelessWidget {
                   showLogo: false,
                   onLeadingPressed: () => Navigator.pop(context),
                 ),
-            
-                // Первая большая картинка
                 SliverToBoxAdapter(
                   child: Image.asset(
                     'assets/images/kids_tab/kids_details_image1.webp',
@@ -35,14 +34,13 @@ class KidsDetailsScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-            
                 SliverPadding(
                   padding: const EdgeInsets.all(22),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
                       Center(
                         child: Text(
-                          'Детям - всё лучшее',
+                          context.l10n.kidsHeroTitle,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 26,
@@ -52,9 +50,8 @@ class KidsDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 16),
-            
                       Text(
-                        'Все приложения на вкладке для детей - как обучающие, так и развлекательные - получили одобрение преподавателей и отмечены специаным знаком.',
+                        context.l10n.kidsHeroSubtitle,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
@@ -63,8 +60,6 @@ class KidsDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 24),
-            
-                      // Вторая картинка
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.asset(
@@ -73,27 +68,16 @@ class KidsDetailsScreen extends StatelessWidget {
                           fit: BoxFit.contain,
                         ),
                       ),
-            
                       const SizedBox(height: 32),
-                      _buildSectionTitle('Для учебы и не только'),
-                      _buildMainText(
-                        'Вместе с учителями, специалистами в области образования и специалистами по работе с мультимедийными технологиями мы выбираем лучшие приложения для детей в Google Play. Эксперты оценивают приложения и одобряют только те из них, которые:',
-                      ),
-            
+                      _buildSectionTitle(context.l10n.kidsSectionLearning),
+                      _buildMainText(context.l10n.kidsSectionLearningText),
                       const SizedBox(height: 10),
-                      _buildBulletPoint('дарят позитивные эмоции и вдохновение;'),
-                      _buildBulletPoint(
-                        'соответствуют указанной возрастной группе;',
-                      ),
-                      _buildBulletPoint('тщательно продуманы.'),
-            
+                      _buildBulletPoint(context.l10n.kidsBullet1),
+                      _buildBulletPoint(context.l10n.kidsBullet2),
+                      _buildBulletPoint(context.l10n.kidsBullet3),
                       const SizedBox(height: 32),
-                      _buildSectionTitle('Наши ведущие консультанты:'),
-                      _buildMainText(
-                        'Джо Блатт, Гарвардская высшая школа педагогических наук;\n'
-                        'доктор Сандра Калверт, Джорджтаунский университет.',
-                      ),
-            
+                      _buildSectionTitle(context.l10n.kidsConsultants),
+                      _buildMainText(context.l10n.kidsConsultantsList),
                       const SizedBox(height: 32),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
@@ -103,25 +87,24 @@ class KidsDetailsScreen extends StatelessWidget {
                           fit: BoxFit.contain,
                         ),
                       ),
-            
                       const SizedBox(height: 32),
-                      _buildSectionTitle('Значок "Одобрено преподавателями"'),
-                      _buildMainText(
-                        'Если приложению присвоен значок "Одобрено преподавателями", вы увидите его в верхней части страницы сведений. Ниже вы найдете отзывы преподавателей и экспертов. Из них вы сможете узнать, к примеру, способствует ли приложение развитию воображения и любознательности.',
-                      ),
-            
+                      _buildSectionTitle(context.l10n.kidsBadgeTitle),
+                      _buildMainText(context.l10n.kidsBadgeDescription),
                       _buildLinkButton(
-                        'Подробнее об оценках преподавателей...',
-                        () => launchMyUrl('https://support.google.com/googleplay/'),
+                        context.l10n.detailsMore,
+                        () => launchMyUrl(
+                          'https://support.google.com/googleplay/',
+                        ),
                       ),
-            
                       const SizedBox(height: 32),
-                      _buildSectionTitle('Сервисы и приложения для учащихся'),
-                      _buildMainText(
-                        'Приложения из Google Play (в том числе одобренные преподавателями) могут быть недоступны для учебных аккаунтов G Suite for Education. Совет для преподавателей: выясните у системного администратора, какие приложения и сервисы можно использовать в вашем учебном заведении. Узнайте больше о приложениях для учебных заведений на портале Chromebook App Hub.',
+                      _buildSectionTitle(context.l10n.kidsServicesTitle),
+                      _buildMainText(context.l10n.kidsServicesDescription),
+                      _buildLinkButton(
+                        context.l10n.detailsMore,
+                        () => launchMyUrl(
+                          'https://support.google.com/googleplay/',
+                        ),
                       ),
-                      _buildLinkButton('Подробнее...', () => launchMyUrl('https://support.google.com/googleplay/')),
-            
                       const SizedBox(height: 40),
                     ]),
                   ),

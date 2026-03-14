@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
-import 'package:google_play/core/utils/url_launcher.dart';
 
 class ProductPageSimilarAndFooter extends StatelessWidget {
   final Product product;
@@ -22,10 +23,10 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
         if (similarProducts.isNotEmpty) ...[
           ProductCarousel(
             title: product is Book
-                ? 'Похожие книги'
+                ? context.l10n.similarBooks
                 : product is Game
-                ? 'Похожие игры'
-                : 'Похожие приложения',
+                    ? context.l10n.similarGames
+                    : context.l10n.similarApps,
             products: similarProducts,
             maxItems: 10,
             leftPadding: 0,
@@ -33,15 +34,17 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
           ),
         ],
         const SizedBox(height: 25),
-
         CustomTextButton(
-          title: 'Правила возврата платежей в Google Play',
+          title: context.l10n.refundPolicy,
           icon: Icons.arrow_back,
           onTap: () => launchMyUrl('https://support.google.com/googleplay/'),
         ),
-
         const SizedBox(height: 20),
-        Row(children: [const Text('Все цены указаны с учетом НДС.')]),
+        Row(
+          children: [
+            Text(context.l10n.pricesIncludeVat),
+          ],
+        ),
       ],
     );
   }

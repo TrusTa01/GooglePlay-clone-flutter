@@ -19,3 +19,14 @@ final homeViewModelProvider =
         getTabSectionsUseCase: getTabSectionsUseCase,
       );
     });
+
+/// Конфиг стора (типа игр/приложений/книг), основанный на внешнем списке табов.
+final storeScreenConfigProvider =
+    FutureProvider.family<StoreScreenConfig, StoreType>((ref, storeType) async {
+  final getAvailableTabsUseCase = ref.watch(getAvailableTabsUseCaseProvider);
+
+  final tabKeys = await getAvailableTabsUseCase(storeType: storeType);
+  final tabs = buildStoreTabs(tabKeys);
+
+  return StoreScreenConfig(type: storeType, tabs: tabs);
+});

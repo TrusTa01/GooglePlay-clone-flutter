@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/formatters.dart';
+import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/domain/entities/products/book_entity.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
-import 'package:google_play/core/utils/url_launcher.dart';
 
 class ProductPageRatingRow extends StatelessWidget {
   final ProductEntity product;
@@ -27,17 +28,16 @@ class ProductPageRatingRow extends StatelessWidget {
           Expanded(
             child: _RatingColumn(
               text: Text(product.rating.toStringAsFixed(1)),
-              subText: '${formatter.reviewsCount} отзывов',
+              subText: '${formatter.reviewsCount} ${context.l10n.reviewsCountLabel}',
               isReview: true,
               isTapping: true,
               onTap: () => AlertDialogs.showAlertDialog(
                 context: context,
-                title: 'Как рассчитываются оценки',
-                content:
-                    'Оценки основаны на недавних отзывах от жителей вашего региона, использующих такой же тип устройства, как и вы.\n\nОтзывы оставляют пользователи с подтвержденными аккаунтами Google на основе своего опыта работы с приложением.',
-                detailsText: 'Подробнее...',
+                title: context.l10n.ratingHowCalculated,
+                content: context.l10n.ratingDisclaimer,
+                detailsText: context.l10n.detailsMore,
                 onDetails: () {}, // TODO: на страницу с отзывами
-                confirmText: 'ОК',
+                confirmText: context.l10n.dialogOk,
               ),
             ),
           ),
@@ -54,14 +54,14 @@ class ProductPageRatingRow extends StatelessWidget {
                         ? const Icon(Icons.book_outlined, size: 20)
                         : const Icon(Icons.audio_file_outlined, size: 20),
                     subText: (product as BookEntity).isEbook
-                        ? 'Электронная книга'
-                        : 'Аудиокнига',
+                        ? context.l10n.formatEbook
+                        : context.l10n.formatAudiobook,
                     isTapping: false,
                     onTap: null,
                   )
                 : _RatingColumn(
                     text: Text(formatter.downloadCount),
-                    subText: 'Скачивания',
+                    subText: context.l10n.downloads,
                     isTapping: false,
                     onTap: null,
                   ),
@@ -76,7 +76,7 @@ class ProductPageRatingRow extends StatelessWidget {
             child: product is BookEntity
                 ? _RatingColumn(
                     text: Text(formatter.technicalInfoValue),
-                    subText: 'стр.',
+                    subText: context.l10n.pagesShort,
                     isTapping: false,
                     onTap: null,
                   )
@@ -88,10 +88,10 @@ class ProductPageRatingRow extends StatelessWidget {
                       context: context,
                       title: '${product.ageRating}+',
                       content: product.ageRatingReasons.join(', '),
-                      detailsText: 'Подробнее...',
+                      detailsText: context.l10n.detailsMore,
                       onDetails: () =>
                           launchMyUrl('https://support.google.com/googleplay/'),
-                      confirmText: 'ОК',
+                      confirmText: context.l10n.dialogOk,
                     ),
                   ),
           ),

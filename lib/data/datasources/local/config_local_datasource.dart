@@ -53,7 +53,9 @@ class ConfigLocalDatasource {
 
     if (_indexCache.containsKey(cacheKey)) return _indexCache[cacheKey]!;
 
-    final path = '$_basePath/$folder/index.json';
+    // Для списков доступных табов используем конфиги из assets/config,
+    // а не из baseDataPath (assets/data).
+    final path = 'assets/config/$folder/index.json';
 
     try {
       final jsonString = await rootBundle.loadString(path);

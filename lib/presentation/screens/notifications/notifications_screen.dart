@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -7,6 +8,8 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -14,7 +17,7 @@ class NotificationsScreen extends StatelessWidget {
             SimpleSliverAppBar(
               showBackButton: true,
               onLeadingPressed: () => Navigator.pop(context),
-              title: AppBarTitle(title: 'Уведомления и предложения'),
+              title: AppBarTitle(title: l10n.notificationsTitle),
             ),
             SliverFillRemaining(
               hasScrollBody: false,
@@ -29,7 +32,7 @@ class NotificationsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Ничего нет',
+                      l10n.notificationsEmptyTitle,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: Constants.defaultFontWeight,
@@ -37,9 +40,9 @@ class NotificationsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Здесь будут появляться уведомления о вашем\n аккаунте Google Play.',
+                      l10n.notificationsEmptyDescription,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),

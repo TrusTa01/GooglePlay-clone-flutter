@@ -1,0 +1,745 @@
+{
+  "@@locale": "en",
+  "appTitle": "Google Play",
+  "@appTitle": {
+    "description": "App title in app bar and system"
+  },
+  "navGames": "Games",
+  "@navGames": {
+    "description": "Bottom nav: Games tab"
+  },
+  "navApps": "Apps",
+  "@navApps": {
+    "description": "Bottom nav: Apps tab"
+  },
+  "navSearch": "Search",
+  "@navSearch": {
+    "description": "Bottom nav: Search tab"
+  },
+  "navBooks": "Books",
+  "@navBooks": {
+    "description": "Bottom nav: Books tab"
+  },
+  "tabRecommended": "For you",
+  "@tabRecommended": {
+    "description": "Store tab: recommended / for you"
+  },
+  "tabTopCharts": "Top charts",
+  "@tabTopCharts": {
+    "description": "Store tab: top charts"
+  },
+  "tabKids": "Kids",
+  "@tabKids": {
+    "description": "Store tab: kids"
+  },
+  "tabPaid": "Paid",
+  "@tabPaid": {
+    "description": "Store tab: paid"
+  },
+  "tabCategories": "Categories",
+  "@tabCategories": {
+    "description": "Store tab: categories"
+  },
+  "buttonInstall": "Install",
+  "@buttonInstall": {
+    "description": "Primary install button on product card"
+  },
+  "buttonFragment": "Sample",
+  "@buttonFragment": {
+    "description": "Sample/fragment button for books"
+  },
+  "tagFree": "Free",
+  "@tagFree": {
+    "description": "Free price tag on product"
+  },
+  "tagContainsPaidContent": "In-app purchases",
+  "@tagContainsPaidContent": {
+    "description": "Label for products with in-app purchases"
+  },
+  "emptyNoData": "No data",
+  "@emptyNoData": {
+    "description": "Empty state when no content"
+  },
+  "searchBooksHint": "Search books",
+  "@searchBooksHint": {
+    "description": "Search field placeholder in books store"
+  },
+  "for_you_title": "For you",
+  "apps_work_title": "Work",
+  "apps_new_releases_title": "New releases",
+  "aboutGame": "About this game",
+  "@aboutGame": {
+    "description": "Section title: about game"
+  },
+  "aboutApp": "About this app",
+  "@aboutApp": {
+    "description": "Section title: about app"
+  },
+  "aboutBook": "About this book",
+  "@aboutBook": {
+    "description": "Section title: about book"
+  },
+  "aboutProduct": "About this product",
+  "@aboutProduct": {
+    "description": "Section title: about product (generic)"
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description section title"
+  },
+  "aboutBookType": "About this {bookType} book",
+  "@aboutBookType": {
+    "description": "Section title for book type (audio/electronic)",
+    "placeholders": {
+      "bookType": {}
+    }
+  },
+  "bookTypeAudio": "audio",
+  "@bookTypeAudio": {
+    "description": "Book type: audio"
+  },
+  "bookTypeElectronic": "electronic",
+  "@bookTypeElectronic": {
+    "description": "Book type: electronic"
+  },
+  "aboutAuthor": "About the author",
+  "@aboutAuthor": {
+    "description": "Link/section: about author"
+  },
+  "appSupport": "App support",
+  "@appSupport": {
+    "description": "Section: app support"
+  },
+  "similarGames": "Similar games",
+  "@similarGames": {
+    "description": "Carousel title: similar games"
+  },
+  "similarApps": "Similar apps",
+  "@similarApps": {
+    "description": "Carousel title: similar apps"
+  },
+  "similarBooks": "Similar books",
+  "@similarBooks": {
+    "description": "Carousel title: similar books"
+  },
+  "refundPolicy": "Google Play refund policy",
+  "@refundPolicy": {
+    "description": "Refund policy link text"
+  },
+  "pricesIncludeVat": "All prices include VAT.",
+  "@pricesIncludeVat": {
+    "description": "VAT disclaimer in footer"
+  },
+  "permissionsTitle": "App permissions",
+  "@permissionsTitle": {
+    "description": "Permissions screen subtitle"
+  },
+  "permissionsForVersion": "Possible permissions for version {version}",
+  "@permissionsForVersion": {
+    "description": "Permissions list header with version",
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "supportWebsite": "Website",
+  "@supportWebsite": {
+    "description": "Support item: website"
+  },
+  "supportEmail": "Email",
+  "@supportEmail": {
+    "description": "Support item: email"
+  },
+  "supportPrivacy": "Privacy",
+  "@supportPrivacy": {
+    "description": "Support item: privacy"
+  },
+  "supportAboutDeveloper": "About the developer",
+  "@supportAboutDeveloper": {
+    "description": "Support section: about developer"
+  },
+  "ratingHowCalculated": "How ratings are calculated",
+  "@ratingHowCalculated": {
+    "description": "Rating info dialog title"
+  },
+  "ratingDisclaimer": "Ratings are based on recent reviews from users in your region using the same type of device. Reviews are from users with verified Google accounts based on their experience with the app.",
+  "@ratingDisclaimer": {
+    "description": "Rating explanation text"
+  },
+  "detailsMore": "Learn more",
+  "@detailsMore": {
+    "description": "Learn more / details link"
+  },
+  "dialogOk": "OK",
+  "@dialogOk": {
+    "description": "Dialog OK button"
+  },
+  "formatEbook": "E-book",
+  "@formatEbook": {
+    "description": "Format label: e-book"
+  },
+  "formatAudiobook": "Audiobook",
+  "@formatAudiobook": {
+    "description": "Format label: audiobook"
+  },
+  "downloads": "Downloads",
+  "@downloads": {
+    "description": "Downloads count label"
+  },
+  "pagesShort": "p.",
+  "@pagesShort": {
+    "description": "Pages abbreviation"
+  },
+  "detailsInfo": "Info",
+  "@detailsInfo": {
+    "description": "Details tab/section: info"
+  },
+  "whatsNew": "What's new",
+  "@whatsNew": {
+    "description": "What's new section title"
+  },
+  "noInformation": "No information",
+  "@noInformation": {
+    "description": "No info placeholder"
+  },
+  "more": "More",
+  "@more": {
+    "description": "More / expand label"
+  },
+  "hasAds": "Contains ads",
+  "@hasAds": {
+    "description": "Contains ads label"
+  },
+  "adsDisclaimer": "The developer shows ads in this app.",
+  "@adsDisclaimer": {
+    "description": "Ads disclaimer text"
+  },
+  "achievements": "Achievements",
+  "@achievements": {
+    "description": "Achievements section title"
+  },
+  "achievementsDescription": "You will earn achievements for completing goals.",
+  "@achievementsDescription": {
+    "description": "Achievements description"
+  },
+  "labelVersion": "Version",
+  "@labelVersion": {
+    "description": "Detail row: version"
+  },
+  "labelLastUpdate": "Last update",
+  "@labelLastUpdate": {
+    "description": "Detail row: last update"
+  },
+  "labelDownloads": "Downloads",
+  "@labelDownloads": {
+    "description": "Detail row: downloads"
+  },
+  "labelSize": "Size",
+  "@labelSize": {
+    "description": "Detail row: size"
+  },
+  "labelDeveloper": "Developer",
+  "@labelDeveloper": {
+    "description": "Detail row: developer"
+  },
+  "labelReleaseDate": "Release date",
+  "@labelReleaseDate": {
+    "description": "Detail row: release date"
+  },
+  "labelPermissions": "App permissions",
+  "@labelPermissions": {
+    "description": "Detail row: permissions"
+  },
+  "labelMore": "More",
+  "@labelMore": {
+    "description": "Detail row: more"
+  },
+  "labelAuthor": "Author",
+  "@labelAuthor": {
+    "description": "Detail row: author"
+  },
+  "labelPublisher": "Publisher",
+  "@labelPublisher": {
+    "description": "Detail row: publisher"
+  },
+  "labelPublishDate": "Publication date",
+  "@labelPublishDate": {
+    "description": "Detail row: publication date"
+  },
+  "labelPages": "Pages",
+  "@labelPages": {
+    "description": "Detail row: pages"
+  },
+  "labelLanguage": "Language",
+  "@labelLanguage": {
+    "description": "Detail row: language"
+  },
+  "labelFormat": "Format",
+  "@labelFormat": {
+    "description": "Detail row: format"
+  },
+  "labelGenres": "Genres",
+  "@labelGenres": {
+    "description": "Detail row: genres"
+  },
+  "menuShare": "Share",
+  "@menuShare": {
+    "description": "Product menu: share"
+  },
+  "menuWishlist": "Add to wishlist",
+  "@menuWishlist": {
+    "description": "Product menu: add to wishlist"
+  },
+  "menuReport": "Report a problem",
+  "@menuReport": {
+    "description": "Product menu: report"
+  },
+  "shareMessage": "Check this out on Google Play:\n\n{title}\n\n{url}",
+  "@shareMessage": {
+    "description": "Share text template with product title and url",
+    "placeholders": {
+      "title": {},
+      "url": {}
+    }
+  },
+  "filterCategories": "Categories",
+  "@filterCategories": {
+    "description": "Filter label: categories"
+  },
+  "filterTopFree": "Top free",
+  "@filterTopFree": {
+    "description": "Filter: top free"
+  },
+  "filterTopCharts": "Top charts",
+  "@filterTopCharts": {
+    "description": "Filter: top charts"
+  },
+  "filterGenre": "Genre",
+  "@filterGenre": {
+    "description": "Filter: genre"
+  },
+  "filterAge": "Age",
+  "@filterAge": {
+    "description": "Filter: age"
+  },
+  "filterByRating": "By rating",
+  "@filterByRating": {
+    "description": "Filter: by rating"
+  },
+  "filterLanguage": "Language",
+  "@filterLanguage": {
+    "description": "Filter: language"
+  },
+  "filterAbridged": "Abridged edition",
+  "@filterAbridged": {
+    "description": "Filter: abridged edition"
+  },
+  "productPageTitle": "Product",
+  "@productPageTitle": {
+    "description": "Product page app bar fallback"
+  },
+  "productNotFound": "Product not found",
+  "@productNotFound": {
+    "description": "Product not found error"
+  },
+  "categoryAll": "All categories",
+  "@categoryAll": {
+    "description": "Category: all categories"
+  },
+  "categoryGamesArcade": "Arcade",
+  "@categoryGamesArcade": {
+    "description": "Games category"
+  },
+  "categoryGamesTrivia": "Trivia",
+  "@categoryGamesTrivia": {
+    "description": "Games category"
+  },
+  "categoryGamesPuzzle": "Puzzle",
+  "@categoryGamesPuzzle": {
+    "description": "Games category"
+  },
+  "categoryGamesRacing": "Racing",
+  "@categoryGamesRacing": {
+    "description": "Games category"
+  },
+  "categoryGamesCasino": "Casino",
+  "@categoryGamesCasino": {
+    "description": "Games category"
+  },
+  "categoryGamesCasual": "Casual",
+  "@categoryGamesCasual": {
+    "description": "Games category"
+  },
+  "categoryGamesCard": "Card",
+  "@categoryGamesCard": {
+    "description": "Games category"
+  },
+  "categoryGamesMusic": "Music",
+  "@categoryGamesMusic": {
+    "description": "Games category"
+  },
+  "categoryGamesBoard": "Board",
+  "@categoryGamesBoard": {
+    "description": "Games category"
+  },
+  "categoryGamesEducational": "Educational",
+  "@categoryGamesEducational": {
+    "description": "Games category"
+  },
+  "categoryGamesAdventure": "Adventure",
+  "@categoryGamesAdventure": {
+    "description": "Games category"
+  },
+  "categoryGamesRolePlaying": "Role playing",
+  "@categoryGamesRolePlaying": {
+    "description": "Games category"
+  },
+  "categoryGamesSimulation": "Simulation",
+  "@categoryGamesSimulation": {
+    "description": "Games category"
+  },
+  "categoryGamesWord": "Word",
+  "@categoryGamesWord": {
+    "description": "Games category"
+  },
+  "categoryGamesSports": "Sports",
+  "@categoryGamesSports": {
+    "description": "Games category"
+  },
+  "categoryGamesStrategy": "Strategy",
+  "@categoryGamesStrategy": {
+    "description": "Games category"
+  },
+  "categoryGamesAction": "Action",
+  "@categoryGamesAction": {
+    "description": "Games category"
+  },
+  "categoryAppsCars": "Auto & vehicles",
+  "@categoryAppsCars": {
+    "description": "Apps category"
+  },
+  "categoryAppsBusiness": "Business",
+  "@categoryAppsBusiness": {
+    "description": "Apps category"
+  },
+  "categoryAppsVideo": "Video players & editors",
+  "@categoryAppsVideo": {
+    "description": "Apps category"
+  },
+  "categoryAppsFood": "Food & drink",
+  "@categoryAppsFood": {
+    "description": "Apps category"
+  },
+  "categoryAppsHouse": "House & home",
+  "@categoryAppsHouse": {
+    "description": "Apps category"
+  },
+  "categoryAppsHealth": "Health & fitness",
+  "@categoryAppsHealth": {
+    "description": "Apps category"
+  },
+  "categoryAppsDating": "Dating",
+  "@categoryAppsDating": {
+    "description": "Apps category"
+  },
+  "categoryAppsTools": "Tools",
+  "@categoryAppsTools": {
+    "description": "Apps category"
+  },
+  "categoryAppsArt": "Art & design",
+  "@categoryAppsArt": {
+    "description": "Apps category"
+  },
+  "categoryAppsMaps": "Maps & navigation",
+  "@categoryAppsMaps": {
+    "description": "Apps category"
+  },
+  "categoryAppsBooks": "Books & reference",
+  "@categoryAppsBooks": {
+    "description": "Apps category"
+  },
+  "categoryAppsComics": "Comics",
+  "@categoryAppsComics": {
+    "description": "Apps category"
+  },
+  "categoryAppsBeauty": "Beauty",
+  "@categoryAppsBeauty": {
+    "description": "Apps category"
+  },
+  "categoryAppsParenting": "Parenting",
+  "@categoryAppsParenting": {
+    "description": "Apps category"
+  },
+  "categoryAppsMedical": "Medical",
+  "@categoryAppsMedical": {
+    "description": "Apps category"
+  },
+  "categoryAppsEvents": "Events",
+  "@categoryAppsEvents": {
+    "description": "Apps category"
+  },
+  "categoryAppsMusicAudio": "Music & audio",
+  "@categoryAppsMusicAudio": {
+    "description": "Apps category"
+  },
+  "categoryAppsNews": "News & magazines",
+  "@categoryAppsNews": {
+    "description": "Apps category"
+  },
+  "categoryAppsEducation": "Education",
+  "@categoryAppsEducation": {
+    "description": "Apps category"
+  },
+  "categoryAppsPersonalization": "Personalization",
+  "@categoryAppsPersonalization": {
+    "description": "Apps category"
+  },
+  "categoryAppsWeather": "Weather",
+  "@categoryAppsWeather": {
+    "description": "Apps category"
+  },
+  "categoryAppsShopping": "Shopping",
+  "@categoryAppsShopping": {
+    "description": "Apps category"
+  },
+  "categoryAppsWatch": "Watch apps",
+  "@categoryAppsWatch": {
+    "description": "Apps category"
+  },
+  "categoryAppsTravel": "Travel",
+  "@categoryAppsTravel": {
+    "description": "Apps category"
+  },
+  "categoryAppsWork": "Work",
+  "@categoryAppsWork": {
+    "description": "Apps category"
+  },
+  "categoryAppsEntertainment": "Entertainment",
+  "@categoryAppsEntertainment": {
+    "description": "Apps category"
+  },
+  "categoryAppsOther": "Other",
+  "@categoryAppsOther": {
+    "description": "Apps category"
+  },
+  "categoryAppsCommunication": "Communication",
+  "@categoryAppsCommunication": {
+    "description": "Apps category"
+  },
+  "categoryAppsSocial": "Social",
+  "@categoryAppsSocial": {
+    "description": "Apps category"
+  },
+  "categoryAppsSports": "Sports",
+  "@categoryAppsSports": {
+    "description": "Apps category"
+  },
+  "categoryAppsLifestyle": "Lifestyle",
+  "@categoryAppsLifestyle": {
+    "description": "Apps category"
+  },
+  "categoryAppsFinance": "Finance",
+  "@categoryAppsFinance": {
+    "description": "Apps category"
+  },
+  "categoryAppsPhoto": "Photography",
+  "@categoryAppsPhoto": {
+    "description": "Apps category"
+  },
+  "categoryAppsWatchFaces": "Watch faces",
+  "@categoryAppsWatchFaces": {
+    "description": "Apps category"
+  },
+  "categoryBooksAll": "All",
+  "@categoryBooksAll": {
+    "description": "Books genre: all"
+  },
+  "categoryBooksBusiness": "Business & investing",
+  "@categoryBooksBusiness": {
+    "description": "Books genre"
+  },
+  "categoryBooksBiography": "Biography & memoir",
+  "@categoryBooksBiography": {
+    "description": "Books genre"
+  },
+  "categoryBooksDetective": "Detective & thriller",
+  "@categoryBooksDetective": {
+    "description": "Books genre"
+  },
+  "categoryBooksChildren": "Children",
+  "@categoryBooksChildren": {
+    "description": "Books genre"
+  },
+  "categoryBooksMindBody": "Mind, body & spirit",
+  "@categoryBooksMindBody": {
+    "description": "Books genre"
+  },
+  "categoryBooksHealthSports": "Health & sports",
+  "@categoryBooksHealthSports": {
+    "description": "Books genre"
+  },
+  "categoryBooksHistory": "History",
+  "@categoryBooksHistory": {
+    "description": "Books genre"
+  },
+  "categoryBooksComputers": "Computers & technology",
+  "@categoryBooksComputers": {
+    "description": "Books genre"
+  },
+  "categoryBooksCooking": "Cooking & home",
+  "@categoryBooksCooking": {
+    "description": "Books genre"
+  },
+  "categoryBooksRomance": "Romance",
+  "@categoryBooksRomance": {
+    "description": "Books genre"
+  },
+  "categoryBooksSelfHelp": "Self-help",
+  "@categoryBooksSelfHelp": {
+    "description": "Books genre"
+  },
+  "categoryBooksFantasy": "Sci-fi & fantasy",
+  "@categoryBooksFantasy": {
+    "description": "Books genre"
+  },
+  "categoryBooksFiction": "Fiction",
+  "@categoryBooksFiction": {
+    "description": "Books genre"
+  },
+  "filterTopFreeOption": "Top free",
+  "@filterTopFreeOption": {
+    "description": "Filter option: top free"
+  },
+  "filterBestsellers": "Bestsellers",
+  "@filterBestsellers": {
+    "description": "Filter option: bestsellers"
+  },
+  "filterTopPaid": "Top paid",
+  "@filterTopPaid": {
+    "description": "Filter option: top paid"
+  },
+  "filterAll": "All",
+  "@filterAll": {
+    "description": "Filter option: all"
+  },
+  "ageUnder5": "Ages 5 and under",
+  "@ageUnder5": {
+    "description": "Age filter option"
+  },
+  "age6to8": "Ages 6–8",
+  "@age6to8": {
+    "description": "Age filter option"
+  },
+  "age9to12": "Ages 9–12",
+  "@age9to12": {
+    "description": "Age filter option"
+  },
+  "age13plus": "Ages 13+",
+  "@age13plus": {
+    "description": "Age filter option"
+  },
+  "ratingAll": "All",
+  "@ratingAll": {
+    "description": "Rating filter: all"
+  },
+  "rating45Up": "4.5★ & up",
+  "@rating45Up": {
+    "description": "Rating filter option"
+  },
+  "rating40Up": "4.0★ & up",
+  "@rating40Up": {
+    "description": "Rating filter option"
+  },
+  "versionAbridged": "Abridged",
+  "@versionAbridged": {
+    "description": "Abridged version option"
+  },
+  "versionFull": "Full version",
+  "@versionFull": {
+    "description": "Full version option"
+  },
+  "kidsHeroTitle": "Kids – the best for families",
+  "@kidsHeroTitle": {
+    "description": "Kids screen hero title"
+  },
+  "kidsHeroSubtitle": "All apps in the Kids tab – both educational and fun – are approved by teachers and marked with a special badge.",
+  "@kidsHeroSubtitle": {
+    "description": "Kids screen hero subtitle"
+  },
+  "kidsSectionLearning": "For learning and more",
+  "@kidsSectionLearning": {
+    "description": "Kids section title"
+  },
+  "kidsSectionLearningText": "Together with teachers, education specialists, and media specialists we select the best kids’ apps on Google Play. Experts rate apps and approve only those that:",
+  "@kidsSectionLearningText": {
+    "description": "Kids section intro text"
+  },
+  "kidsBullet1": "deliver positive experiences and inspiration;",
+  "@kidsBullet1": {
+    "description": "Kids criteria bullet 1"
+  },
+  "kidsBullet2": "match the age group;",
+  "@kidsBullet2": {
+    "description": "Kids criteria bullet 2"
+  },
+  "kidsBullet3": "are well designed.",
+  "@kidsBullet3": {
+    "description": "Kids criteria bullet 3"
+  },
+  "kidsConsultants": "Our lead advisors:",
+  "@kidsConsultants": {
+    "description": "Kids consultants section title"
+  },
+  "kidsConsultantsList": "Joe Blatt, Harvard Graduate School of Education;\nDr. Sandra Calvert, Georgetown University.",
+  "@kidsConsultantsList": {
+    "description": "Kids consultants names"
+  },
+  "kidsBadgeTitle": "Teacher approved badge",
+  "@kidsBadgeTitle": {
+    "description": "Teacher approved badge title"
+  },
+  "notificationsTitle": "Notifications and offers",
+  "@notificationsTitle": {
+    "description": "Notifications screen title"
+  },
+  "notificationsEmptyTitle": "Nothing here",
+  "@notificationsEmptyTitle": {
+    "description": "Notifications empty state title"
+  },
+  "notificationsEmptyDescription": "Notifications about your Google Play account will appear here.",
+  "@notificationsEmptyDescription": {
+    "description": "Notifications empty state description"
+  },
+  "kidsBadgeDescription": "If an app has the \"Teacher approved\" badge, you will see it at the top of the details page. Below you will find reviews from teachers and experts. From them you can learn, for example, whether the app helps develop imagination and curiosity.",
+  "@kidsBadgeDescription": {
+    "description": "Kids badge detailed description"
+  },
+  "kidsServicesTitle": "Services and apps for students",
+  "@kidsServicesTitle": {
+    "description": "Kids services section title"
+  },
+  "kidsServicesDescription": "Apps from Google Play (including teacher-approved ones) may not be available for G Suite for Education school accounts. Tip for teachers: ask your system administrator which apps and services can be used at your institution. Learn more about school apps on the Chromebook App Hub portal.",
+  "@kidsServicesDescription": {
+    "description": "Kids services section description"
+  },
+
+  "unitMb": "MB",
+  "@unitMb": {
+    "description": "Megabytes unit for app/game size"
+  },
+  "unitMillion": "M",
+  "@unitMillion": {
+    "description": "Short label for millions (e.g. 5.2 M)"
+  },
+  "unitThousand": "K",
+  "@unitThousand": {
+    "description": "Short label for thousands (e.g. 1.5 K)"
+  },
+  "reviewsCountLabel": "reviews",
+  "@reviewsCountLabel": {
+    "description": "Label for reviews count (e.g. 5.2 M reviews)"
+  },
+  "detailsSectionExtra": "More info",
+  "@detailsSectionExtra": {
+    "description": "Details screen section title: more / additional"
+  }
+}

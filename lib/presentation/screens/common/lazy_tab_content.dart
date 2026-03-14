@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/shimmers/product_slider_skeleton.dart';
 import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:google_play/presentation/screens/screens.dart';
@@ -21,7 +22,7 @@ class LazyTabContent extends StatelessWidget {
       error: (error, stack) => _buildError(error),
       data: (sections) {
         if (sections.isEmpty) {
-          return _buildEmpty();
+          return _buildEmpty(context);
         }
         return _buildData(sections);
       },
@@ -59,10 +60,10 @@ class LazyTabContent extends StatelessWidget {
         : GenericTabScreen(sections: sections, isSliver: false);
   }
 
-  Widget _buildEmpty() {
-    const emptyWidget = Center(child: Text('Данных нет'));
+  Widget _buildEmpty(BuildContext context) {
+    final emptyWidget = Center(child: Text(context.l10n.emptyNoData));
     return isSliver
-        ? const SliverFillRemaining(child: emptyWidget)
+        ? SliverFillRemaining(child: emptyWidget)
         : emptyWidget;
   }
 }

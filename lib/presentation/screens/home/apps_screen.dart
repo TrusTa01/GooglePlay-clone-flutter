@@ -9,7 +9,6 @@ class AppsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreTabScreen(
       storeType: StoreType.apps,
-      config: appsStoreScreenConfig,
     );
   }
 }

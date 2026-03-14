@@ -9,7 +9,6 @@ class GamesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreTabScreen(
       storeType: StoreType.games,
-      config: gamesStoreScreenConfig,
     );
   }
 }

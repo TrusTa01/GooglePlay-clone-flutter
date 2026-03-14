@@ -51,7 +51,7 @@ class _ProductPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = ProductDataFormatter(product);
+    final formatter = ProductDataFormatter(context, product);
     final utils = ProductUIConfig(product);
 
     // Получаем похожие продукты

@@ -21,5 +21,12 @@ class JsonConfigRepository implements IConfigRepository {
   }
 
   @override
-  Future<List<String>> getAvaibleTabs(String folder) => getAvaibleTabs(folder);
+  Future<List<String>> getAvaibleTabs(String indexKey) {
+    // Читаем список доступных табов из assets/config/shared/index.json
+    // через ConfigLocalDatasource.
+    return _dataSource.getAvailableTabs(
+      folder: 'shared',
+      indexKey: indexKey,
+    );
+  }
 }

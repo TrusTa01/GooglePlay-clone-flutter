@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/presentation/layouts/main_layout.dart';
+import 'package:google_play/presentation/viewmodels/locale_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
@@ -11,16 +15,25 @@ void main() {
   runApp(const ProviderScope(child: GooglePlay()));
 }
 
-class GooglePlay extends StatelessWidget {
+class GooglePlay extends ConsumerWidget {
   const GooglePlay({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final baseTheme = ThemeData.light();
+    final currentLocale = ref.watch(localeProvider);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Google Play',
+      onGenerateTitle: (context) => context.l10n.appTitle,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: currentLocale,
       theme: baseTheme.copyWith(
         textTheme: GoogleFonts.nunitoTextTheme(baseTheme.textTheme),
         primaryColor: Constants.googleBlue,

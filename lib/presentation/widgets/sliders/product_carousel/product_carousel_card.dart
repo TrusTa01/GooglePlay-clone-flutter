@@ -23,7 +23,7 @@ class ProductCarouselCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = ProductDataFormatter(product);
+    final formatter = ProductDataFormatter(context, product);
 
     return Container(
       margin: const EdgeInsets.only(right: 0),

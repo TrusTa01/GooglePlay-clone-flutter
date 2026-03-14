@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/presentation/widgets/sliders/product_grid/utils/grid_layout_config.dart';
 
 class ProductGrid extends HookWidget {
   final String title;
   final String subtitle;
-  final List<ProductEntity> items;
+  final List<Product> items;
   final int? maxItems;
   final VoidCallback onProductTap;
   final VoidCallback? onSeeAllTap;

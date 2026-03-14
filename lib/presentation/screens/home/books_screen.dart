@@ -9,7 +9,6 @@ class BooksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreTabScreen(
       storeType: StoreType.books,
-      config: booksStoreScreenConfig,
     );
   }
 }

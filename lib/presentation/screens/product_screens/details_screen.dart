@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/product_screens/permissions_screen.dart';
@@ -22,7 +23,7 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productFormatter = ProductDataFormatter(product);
+    final productFormatter = ProductDataFormatter(context, product);
     final utils = ProductUIConfig(product);
 
     return Scaffold(
@@ -46,7 +47,7 @@ class DetailsScreen extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    'Сведения',
+                    context.l10n.detailsInfo,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   onLeadingPressed: () => Navigator.pop(context),
@@ -80,8 +81,8 @@ class DetailsScreen extends StatelessWidget {
                       // Что нового
                       if (product is! Book) ...[
                         Row(
-                          children: const [
-                            Text('Что нового', style: TextStyle(fontSize: 16)),
+                          children: [
+                            Text(context.l10n.whatsNew, style: const TextStyle(fontSize: 16)),
                             SizedBox(width: 10),
                             Text(
                               '●',
@@ -94,15 +95,15 @@ class DetailsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          product.whatsNewText ?? 'Нет информации',
-                          style: TextStyle(fontSize: 14),
+                          product.whatsNewText ?? context.l10n.noInformation,
+                          style: const TextStyle(fontSize: 14),
                         ),
                         const Divider(),
             
                         // Дополнительно
-                        const Text(
-                          'Дополнительно',
-                          style: TextStyle(fontSize: 16),
+                        Text(
+                          context.l10n.detailsSectionExtra,
+                          style: const TextStyle(fontSize: 16),
                         ),
                         const SizedBox(height: 20),
                         _DetailRow(
@@ -117,7 +118,7 @@ class DetailsScreen extends StatelessWidget {
                           subtitle: product is App
                               ? (product as App).ageRatingReasons.join(', ')
                               : (product as Game).ageRatingReasons.join(', '),
-                          actionText: 'Подробнее...',
+                          actionText: context.l10n.detailsMore,
                           onActionPressed: () {},
                         ),
             
@@ -125,9 +126,9 @@ class DetailsScreen extends StatelessWidget {
                           const SizedBox(height: 20),
                           _DetailRow(
                             icon: Icon(Icons.ad_units),
-                            title: 'Есть реклама',
-                            subtitle: 'Рекламу размещает разработчик приложения.',
-                            actionText: 'Подробнее...',
+                            title: context.l10n.hasAds,
+                            subtitle: context.l10n.adsDisclaimer,
+                            actionText: context.l10n.detailsMore,
                           ),
                         ],
                         if (product is Game &&
@@ -135,9 +136,8 @@ class DetailsScreen extends StatelessWidget {
                           const SizedBox(height: 20),
                           _DetailRow(
                             icon: Icon(Icons.emoji_events),
-                            title: 'Достижения',
-                            subtitle:
-                                'За выполнения целей вам будут присваиваться достижения',
+                            title: context.l10n.achievements,
+                            subtitle: context.l10n.achievementsDescription,
                           ),
                         ],
                         const Divider(),
@@ -151,32 +151,32 @@ class DetailsScreen extends StatelessWidget {
                       if (product is App || product is Game)
                         ..._withSpacing([
                           _InfoRow(
-                            label: 'Версия',
+                            label: context.l10n.labelVersion,
                             value: product.version.toString(),
                           ),
                           _InfoRow(
-                            label: 'Последнее обновление',
+                            label: context.l10n.labelLastUpdate,
                             value: productFormatter.lastUpdatedFormatted,
                           ),
                           _InfoRow(
-                            label: 'Кол-во скачиваний',
+                            label: context.l10n.labelDownloads,
                             value: productFormatter.downloadCountFull,
                           ),
                           _InfoRow(
-                            label: 'Размер файла',
+                            label: context.l10n.labelSize,
                             value: productFormatter.technicalInfoFormatted,
                           ),
                           _InfoRow(
-                            label: 'Разработчик',
+                            label: context.l10n.labelDeveloper,
                             value: product.creator.toString(),
                           ),
                           _InfoRow(
-                            label: 'Дата выпуска',
+                            label: context.l10n.labelReleaseDate,
                             value: productFormatter.releaseDateFormatted,
                           ),
                           _InfoRow(
-                            label: 'Разрешения для приложения',
-                            value: 'Еще',
+                            label: context.l10n.labelPermissions,
+                            value: context.l10n.labelMore,
                             hasTextButton: true,
                             onTextButtonPressed: () => Navigator.push(
                               context,
@@ -191,32 +191,32 @@ class DetailsScreen extends StatelessWidget {
                       if (product is Book)
                         ..._withSpacing([
                           _InfoRow(
-                            label: 'Автор',
+                            label: context.l10n.labelAuthor,
                             value: product.creator.toString(),
                           ),
                           _InfoRow(
-                            label: 'Издатель',
+                            label: context.l10n.labelPublisher,
                             value: product.creator.toString(),
                           ),
                           _InfoRow(
-                            label: 'Дата публикации',
+                            label: context.l10n.labelPublishDate,
                             value: productFormatter.releaseDateFormatted
                                 .toString(),
                           ),
                           _InfoRow(
-                            label: 'Количество страниц',
+                            label: context.l10n.labelPages,
                             value: (product as Book).pageCount.toString(),
                           ),
                           _InfoRow(
-                            label: 'Язык',
+                            label: context.l10n.labelLanguage,
                             value: (product as Book).language.toString(),
                           ),
                           _InfoRow(
-                            label: 'Формат',
+                            label: context.l10n.labelFormat,
                             value: (product as Book).format.toString(),
                           ),
                           _InfoRow(
-                            label: 'Жанры',
+                            label: context.l10n.labelGenres,
                             value: (product as Book).genres.join(', '),
                           ),
                         ]),

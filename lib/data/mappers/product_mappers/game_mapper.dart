@@ -16,6 +16,8 @@ extension GameMapper on GameDto {
       iconUrl: iconUrl,
       isPaid: isPaid,
       price: price,
+      currencyCode: currencyCode,
+      discountPrice: discountPrice,
       creatorDescription: creatorDescription,
       url: url,
       tags: tags,

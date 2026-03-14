@@ -1,6 +1,6 @@
 final class StoreTabConfig {
-  final String label; // 'Рекомендуем'
-  final String key; // 'recommended'
+  final String label; // ключ для l10n, например 'tabRecommended'
+  final String key; // таб-ключ, например 'recommended'
   final bool isTopCharts; // нужно ли показывать TopChartsScreen
   final bool isCategoriesTab; // нужно ли показывать CategoriesTabScreen/genres
   final bool usesBanners; // нужно ли прокидывать BannersProvider
@@ -23,23 +23,40 @@ final class StoreScreenConfig {
   const StoreScreenConfig({required this.type, required this.tabs});
 }
 
-const gamesStoreScreenConfig = StoreScreenConfig(
-  type: StoreType.games,
-  tabs: [
-    StoreTabConfig(label: 'Рекомендуем', key: 'recomminded', usesBanners: true),
-    StoreTabConfig(label: 'Лучшее', key: 'top_charts', isTopCharts: true),
-    StoreTabConfig(label: 'Детям', key: 'kids', usesBanners: true),
-    StoreTabConfig(label: 'Платные', key: 'paid'),
-    StoreTabConfig(label: 'Категории', key: 'categories', isCategoriesTab: true),
-  ],
-);
+/// Единый справочник метаданных табов стора
+/// Сами ключи табов и их порядок для каждого стора
+/// приходят из внешнего `index.json`, а здесь остаются
+/// только флаги поведения и ключи для локализации
+const Map<String, StoreTabConfig> kStoreTabsMetadata = {
+  'recommended': StoreTabConfig(
+    label: 'tabRecommended',
+    key: 'recommended',
+    usesBanners: true,
+  ),
+  'top_charts': StoreTabConfig(
+    label: 'tabTopCharts',
+    key: 'top_charts',
+    isTopCharts: true,
+  ),
+  'kids': StoreTabConfig(
+    label: 'tabKids',
+    key: 'kids',
+    usesBanners: true,
+  ),
+  'paid': StoreTabConfig(
+    label: 'tabPaid',
+    key: 'paid',
+  ),
+  'categories': StoreTabConfig(
+    label: 'tabCategories',
+    key: 'categories',
+    isCategoriesTab: true,
+  ),
+};
 
-const appsStoreScreenConfig = StoreScreenConfig(
-  type: StoreType.apps, 
-  tabs: [],
-);
-
-const booksStoreScreenConfig = StoreScreenConfig(
-  type: StoreType.books,
-  tabs: [],
-);
+List<StoreTabConfig> buildStoreTabs(List<String> tabKeys) {
+  return tabKeys
+      .map((key) => kStoreTabsMetadata[key])
+      .whereType<StoreTabConfig>()
+      .toList();
+}

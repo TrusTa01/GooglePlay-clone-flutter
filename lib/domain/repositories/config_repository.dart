@@ -6,5 +6,9 @@ abstract interface class IConfigRepository {
     required String tabKey,
   });
 
-  Future<List<String>> getAvaibleTabs(String folder);
+  /// Список доступных табов для конкретного типа стора.
+  ///
+  /// Ожидает ключи вида `availableGamesTabs`, `availableAppsTabs`,
+  /// `availableBooksTabs` и т.п. (см. assets/config/shared/index.json).
+  Future<List<String>> getAvaibleTabs(String indexKey);
 }

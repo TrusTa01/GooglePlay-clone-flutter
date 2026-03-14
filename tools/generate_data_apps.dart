@@ -598,6 +598,14 @@ void main() async {
       price = wholeAmount.toDouble();
     }
 
+    final String currencyCode =
+        faker.randomGenerator.element(['USD', 'EUR', 'RUB']);
+    double? discountPrice;
+    if (isPaid && price != null && faker.randomGenerator.integer(100) < 25) {
+      final double discountPercent = 0.6 + random.nextDouble() * 0.35;
+      discountPrice = (price * discountPercent).roundToDouble();
+    }
+
     // Логика иконок
     final String localIcon = faker.randomGenerator.element(icons);
 
@@ -696,6 +704,8 @@ void main() async {
       "iconUrl": localIcon,
       "isPaid": isPaid,
       "price": price,
+      "currencyCode": currencyCode,
+      "discountPrice": discountPrice,
       "containsAds": faker.randomGenerator.boolean(),
       "containsPaidContent": faker.randomGenerator.boolean(),
       "shortDescription": faker.lorem.sentences(2).join(' '),
@@ -721,7 +731,7 @@ void main() async {
       "ageRatingReasons": selectedAgeRatingReasons,
       "screenshots": selectedScreenshots,
       "tags": selectedTags,
-      "categories": selectedCategories,
+      "appCategory": selectedCategories,
       "packageName": packageName,
       "supportedLanguages": supportedLanguages,
       "isEditorChoice": isEditorChoice,

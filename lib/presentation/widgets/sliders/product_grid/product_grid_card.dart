@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductGridCard extends StatelessWidget {
-  final ProductEntity product;
+  final Product product;
   final VoidCallback onProductTap;
 
   const ProductGridCard({

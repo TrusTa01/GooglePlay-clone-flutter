@@ -53,7 +53,7 @@ class CategoryDetailsSection extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (context, index) => KeyedSubtree(
                   key: ValueKey(products[index].id),
-                  child: _buildItem(products[index]),
+                  child: _buildItem(products[index], context),
                 ),
                 childCount: products.length,
               ),
@@ -80,16 +80,16 @@ class CategoryDetailsSection extends StatelessWidget {
           itemCount: products.length,
           itemBuilder: (context, index) => KeyedSubtree(
             key: ValueKey(products[index].id),
-            child: _buildItem(products[index]),
+            child: _buildItem(products[index], context),
           ),
         );
       },
     );
   }
 
-  Widget _buildItem(ProductEntity product) {
+  Widget _buildItem(ProductEntity product, BuildContext context) {
     final showPrice = product.isPaid && product.price != null;
-    final formatter = ProductDataFormatter(product);
+    final formatter = ProductDataFormatter(context, product);
     final isBook = product is BookEntity;
 
     return ProductCardContent(

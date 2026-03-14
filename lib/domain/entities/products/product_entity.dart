@@ -12,6 +12,8 @@ abstract class ProductEntity extends Entity {
   final String iconUrl;
   final bool isPaid;
   final double? price;
+  final String currencyCode;
+  final double? discountPrice;
   final String creatorDescription; // Описание автора / разработчика
   final String url;
   final List<String> tags;
@@ -31,6 +33,8 @@ abstract class ProductEntity extends Entity {
     required this.iconUrl,
     required this.isPaid,
     required this.price,
+    this.currencyCode = 'USD',
+    this.discountPrice,
     required this.creatorDescription,
     required this.url,
     required this.tags,
