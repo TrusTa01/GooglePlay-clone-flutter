@@ -1,5 +1,5 @@
 name: google_play
-description: "Making a Google Play clone."
+description: "Making a Google Play clone"
 
 publish_to: "none"
 
@@ -29,8 +29,12 @@ dependencies:
   # data
   http: ^1.6.0
   json_annotation: ^4.9.0
-  freezed_annotation: 3.1.0
+  freezed_annotation: ^3.1.0
   faker: ^2.2.0
+  # localization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +49,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   assets:
     # images
