@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
 import 'package:google_play/core/constants.dart';
-
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class GenericTabScreen extends HookWidget {
-  final List<HomeSection> sections;
+  final List<SectionEntity> sections;
   final VoidCallback? onLoad;
   final bool isSliver;
   final String? tabKey; // Для дебага
@@ -24,7 +23,7 @@ class GenericTabScreen extends HookWidget {
   });
 
   static Widget asSliver({
-    required List<HomeSection> sections,
+    required List<SectionEntity> sections,
     VoidCallback? onLoad,
   }) {
     return GenericTabScreen(sections: sections, onLoad: onLoad, isSliver: true);
@@ -52,7 +51,7 @@ class GenericTabScreen extends HookWidget {
     );
   }
 
-  Widget _buildSectionWrapper(int index, HomeSection section) {
+  Widget _buildSectionWrapper(int index, SectionEntity section) {
     final section = sections[index];
 
     final prevIsAgeFilter =

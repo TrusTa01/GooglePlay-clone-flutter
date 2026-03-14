@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/domain/entities/products/app_entity.dart';
+import 'package:google_play/domain/entities/products/book_entity.dart';
+import 'package:google_play/domain/entities/products/game_entity.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
 
 class ProductUIConfig {
-  final Product product;
+  final ProductEntity product;
 
   ProductUIConfig(this.product);
 
-  bool get isBook => product is Book;
+  bool get isBook => product is BookEntity;
 
-  String? get bookType => product is Book
-      ? (product as Book).isEbook
-            ? 'электронной'
-            : 'аудио'
-      : null;
+  String? get bookType {
+    if (product is! BookEntity) return null;
+    final format = (product as BookEntity).format.toLowerCase();
+    return format.contains('аудио') ? 'аудио' : 'электронной';
+  }
 
   String get titleText => isBook ? 'Об $bookType книге' : 'Описание';
-  String get aboutTitleText => switch (product) {
-    Game() => 'Об игре',
-    App() => 'Об приложении',
-    Book() => 'Об книге',
-    _ => 'Об продукте',
-  };
+
+  String get aboutTitleText {
+    if (product is GameEntity) return 'Об игре';
+    if (product is AppEntity) return 'Об приложении';
+    if (product is BookEntity) return 'Об книге';
+    return 'Об продукте';
+  }
 
   // Размеры для основной страницы продукта
   double get iconWidth => isBook ? 80 : 60;

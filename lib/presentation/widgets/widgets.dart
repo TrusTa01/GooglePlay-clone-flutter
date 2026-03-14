@@ -2,6 +2,7 @@
 export 'app_bars/app_bar/simple_app_bar.dart';
 export 'app_bars/app_bar/tabbed_app_bar.dart';
 export 'app_bars/utils/app_bar_utils.dart';
+export 'app_bars/utils/store_app_bar_utils.dart';
 
 // Tabs
 export 'app_bars/tabs/custom_tab_bar.dart';

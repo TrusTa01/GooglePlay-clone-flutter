@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/presentation/widgets/sliders/product_grid/utils/grid_layout_config.dart';
 
 class ProductGrid extends HookWidget {
   final String title;
   final String subtitle;
-  final List<Product> items;
+  final List<ProductEntity> items;
   final int? maxItems;
+  final VoidCallback onProductTap;
+  final VoidCallback? onSeeAllTap;
 
   const ProductGrid({
     super.key,
@@ -17,6 +19,8 @@ class ProductGrid extends HookWidget {
     this.subtitle = '',
     required this.items,
     this.maxItems,
+    required this.onProductTap,
+    this.onSeeAllTap,
   });
 
   @override
@@ -74,15 +78,9 @@ class ProductGrid extends HookWidget {
               child: ProductSectionHeader(
                 title: title,
                 subtitle: subtitle,
-                padding: const EdgeInsets.only(bottom: 5),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        CategoryFullListScreen(title: title, products: items),
-                  ),
-                ),
                 showButton: true,
+                padding: const EdgeInsets.only(bottom: 5),
+                onTap: onSeeAllTap ?? () {},
               ),
             ),
 
@@ -128,9 +126,12 @@ class ProductGrid extends HookWidget {
                                 return Expanded(
                                   child: productIndex < displayProducts.length
                                       ? ProductGridCard(
-                                        key: ValueKey(displayProducts[productIndex].id),
+                                          key: ValueKey(
+                                            displayProducts[productIndex].id,
+                                          ),
                                           product:
                                               displayProducts[productIndex],
+                                          onProductTap: onProductTap,
                                         )
                                       : const SizedBox.shrink(),
                                 );

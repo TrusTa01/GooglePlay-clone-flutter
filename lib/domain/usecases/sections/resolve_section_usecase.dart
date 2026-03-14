@@ -3,6 +3,13 @@ import 'package:google_play/domain/entities/sections/section_data_source.dart';
 import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:google_play/domain/repositories/banner_repository.dart';
 import 'package:google_play/domain/repositories/product_repository.dart';
+import 'package:google_play/presentation/viewmodels/home/store_tab_config.dart';
+
+typedef GetTabSectionsUseCase =
+    Future<List<SectionEntity>> Function({
+      required StoreType storeType,
+      required String tabKey,
+    });
 
 class ResolvedSection {
   final SectionEntity config;

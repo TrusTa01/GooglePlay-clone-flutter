@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductGridCard extends StatelessWidget {
-  const ProductGridCard({super.key, required this.product});
+  final ProductEntity product;
+  final VoidCallback onProductTap;
 
-  final Product product;
+  const ProductGridCard({
+    super.key,
+    required this.product,
+    required this.onProductTap,
+  });
 
   bool get showPrice => product.isPaid && product.price != null;
 
@@ -14,14 +18,7 @@ class ProductGridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductPageScreen(product: product),
-          ),
-        );
-      },
+      onTap: onProductTap,
       child: ActionRow(
         product: product,
         showButton: false,

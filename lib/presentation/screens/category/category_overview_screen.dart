@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:google_play/domain/entities/products/app_entity.dart';
+import 'package:google_play/domain/entities/products/book_entity.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/providers/providers.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class CategoryOverviewScreen extends StatelessWidget {
   final String title;
-  final List<Product> products;
+  final List<ProductEntity> products;
 
   const CategoryOverviewScreen({
     super.key,
@@ -17,8 +18,8 @@ class CategoryOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isBooks = products.isNotEmpty && products.first is Book;
-    final isApps = products.isNotEmpty && products.first is App;
+    final isBooks = products.isNotEmpty && products.first is BookEntity;
+    final isApps = products.isNotEmpty && products.first is AppEntity;
 
     final FilterType filterType = isBooks
         ? FilterType.books

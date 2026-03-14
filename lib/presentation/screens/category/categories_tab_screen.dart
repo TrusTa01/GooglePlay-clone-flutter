@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 
 class CategoriesTabScreen extends StatelessWidget {

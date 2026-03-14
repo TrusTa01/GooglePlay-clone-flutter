@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/domain/entities/banners/action_banner_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class BannerItem extends StatelessWidget {
@@ -20,7 +21,7 @@ class BannerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Проверяем, какой это тип баннера, чтобы понять, рисовать ли нижнюю плашку (ActionRow)
-    final bool isAction = banner is ActionBanner;
+    final bool isAction = banner is ActionBannerEntity;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -52,7 +53,7 @@ class BannerItem extends StatelessWidget {
               const SizedBox(height: 10),
               if (isAction)
                 ActionRow(
-                  product: context.getProductById((banner as ActionBanner).productId),
+                  product: context.getProductById((banner as ActionBannerEntity).productId),
                   showButton: true,
                 ),
             ],

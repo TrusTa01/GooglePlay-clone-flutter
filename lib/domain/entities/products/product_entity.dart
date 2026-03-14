@@ -37,3 +37,5 @@ abstract class ProductEntity extends Entity {
     required this.categories,
   });
 }
+
+enum ProductKind { game, app, book }

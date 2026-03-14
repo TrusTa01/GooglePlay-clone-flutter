@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
 
 enum SupportItemType {
   link, // Обычный элемент с иконкой (Сайт, Email, Конфиденциальность)
@@ -43,7 +44,7 @@ class SupportItem {
       subtitle = null;
 }
 
-List<SupportItem> getSupportItems(Product product) {
+List<SupportItem> getSupportItems(ProductEntity product) {
   return [
     SupportItem.link(
       icon: Icons.language,

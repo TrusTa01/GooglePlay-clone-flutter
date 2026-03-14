@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/domain/entities/banners/action_banner_entity.dart';
+import 'package:google_play/domain/entities/base_entity.dart';
 import 'package:google_play/presentation/widgets/buttons/elevated_button.dart';
 import 'package:google_play/presentation/widgets/sliders/utils/product_card_components.dart';
 
 class ActionRow extends StatelessWidget {
-  final dynamic product;
-  final ActionBanner? banner;
+  final Entity? product;
+  final ActionBannerEntity? banner;
   final bool hasThreeLines;
   final bool showButton;
   final String? eventText;

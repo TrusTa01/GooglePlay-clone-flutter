@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:google_play/providers/providers.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class KidsAgeFilterSelector extends StatelessWidget {

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/domain/entities/products/book_entity.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class CategoryDetailsSection extends StatelessWidget {
-  final List<Product> products;
+  final List<ProductEntity> products;
   final bool isSliver;
 
   const CategoryDetailsSection({
@@ -14,7 +15,7 @@ class CategoryDetailsSection extends StatelessWidget {
     this.isSliver = false,
   });
 
-  static Widget asSliver({required List<Product> products}) {
+  static Widget asSliver({required List<ProductEntity> products}) {
     return CategoryDetailsSection(products: products, isSliver: true);
   }
 
@@ -27,7 +28,7 @@ class CategoryDetailsSection extends StatelessWidget {
           : const SizedBox.shrink();
     }
 
-    final bool isBook = products.first is Book;
+    final bool isBook = products.first is BookEntity;
     final double minItemWidth = isBook ? 110 : 125;
     // Вычисляем aspectRatio
     final double aspectRatio = isBook ? 0.48 : 0.6;
@@ -78,7 +79,7 @@ class CategoryDetailsSection extends StatelessWidget {
           ),
           itemCount: products.length,
           itemBuilder: (context, index) => KeyedSubtree(
-            key: products[index].id,
+            key: ValueKey(products[index].id),
             child: _buildItem(products[index]),
           ),
         );
@@ -86,10 +87,10 @@ class CategoryDetailsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(Product product) {
+  Widget _buildItem(ProductEntity product) {
     final showPrice = product.isPaid && product.price != null;
     final formatter = ProductDataFormatter(product);
-    final isBook = product is Book;
+    final isBook = product is BookEntity;
 
     return ProductCardContent(
       product: product,

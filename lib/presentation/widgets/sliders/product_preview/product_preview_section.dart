@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/domain/entities/products/software_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPreviewSection extends StatelessWidget {
-  final List<Product> item;
+  final List<SoftwareEntity> item;
   final bool nestedInScrollView;
   final bool showButton;
   final bool isSliver;
@@ -16,7 +17,7 @@ class ProductPreviewSection extends StatelessWidget {
     this.isSliver = false,
   });
 
-  static Widget asSliver({required List<Product> item}) {
+  static Widget asSliver({required List<SoftwareEntity> item}) {
     return ProductPreviewSection(
       item: item,
       nestedInScrollView: false,
@@ -39,9 +40,9 @@ class ProductPreviewSection extends StatelessWidget {
         sliver: SliverList.separated(
           separatorBuilder: (context, index) => const SizedBox(height: 35),
           itemCount: item.length,
-          itemBuilder: (context, index) => ProductPreviewCard(
+          itemBuilder: (context, index) => softwareProductPreviewCard(
             key: ValueKey(item[index].id),
-            product: item[index],
+            softwareProduct: item[index],
           ),
         ),
       );
@@ -58,9 +59,9 @@ class ProductPreviewSection extends StatelessWidget {
           padding: const EdgeInsets.only(left: 22),
           separatorBuilder: (context, index) => const SizedBox(height: 35),
           itemCount: item.length,
-          itemBuilder: (context, index) => ProductPreviewCard(
+          itemBuilder: (context, index) => softwareProductPreviewCard(
             key: ValueKey(item[index].id),
-            product: item[index],
+            softwareProduct: item[index],
           ),
         ),
       ),

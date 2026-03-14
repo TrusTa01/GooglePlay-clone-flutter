@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:google_play/providers/providers.dart';
 import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/presentation/viewmodels/filter_provider.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 enum FilterType { games, apps, books, kidsAge }

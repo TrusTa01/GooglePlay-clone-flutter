@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/domain/entities/products/book_entity.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 
 class ProductPageRatingRow extends StatelessWidget {
-  final Product product;
+  final ProductEntity product;
   final ProductDataFormatter formatter;
 
   const ProductPageRatingRow({
@@ -47,12 +48,12 @@ class ProductPageRatingRow extends StatelessWidget {
             width: 10,
           ),
           Expanded(
-            child: product is Book
+            child: product is BookEntity
                 ? _RatingColumn(
-                    text: (product as Book).isEbook
+                    text: (product as BookEntity).isEbook
                         ? const Icon(Icons.book_outlined, size: 20)
                         : const Icon(Icons.audio_file_outlined, size: 20),
-                    subText: (product as Book).isEbook
+                    subText: (product as BookEntity).isEbook
                         ? 'Электронная книга'
                         : 'Аудиокнига',
                     isTapping: false,
@@ -72,7 +73,7 @@ class ProductPageRatingRow extends StatelessWidget {
             width: 10,
           ),
           Expanded(
-            child: product is Book
+            child: product is BookEntity
                 ? _RatingColumn(
                     text: Text(formatter.technicalInfoValue),
                     subText: 'стр.',
