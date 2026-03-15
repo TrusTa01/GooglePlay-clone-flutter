@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/extensions/product_resolver_extension.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/data/models/dtos.dart';
@@ -33,9 +34,10 @@ class ProductPageScreen extends StatelessWidget {
       builder: (context, _, _, _, _) {
         final p = context.getProductById(productId!);
         if (p == null) {
+          final l10n = context.l10n;
           return Scaffold(
-            appBar: AppBar(title: const Text('Страница продукта')),
-            body: const Center(child: Text('Продукт не найден')),
+            appBar: AppBar(title: Text(l10n.productPageTitle)),
+            body: Center(child: Text(l10n.productNotFound)),
           );
         }
         return _ProductPageContent(product: p);

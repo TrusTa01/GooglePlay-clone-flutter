@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
 class FilterProvider extends ChangeNotifier {
-  // Фильтры для разных категорий
-  String _selectedGameCategory = 'Все категории';
-  String _selectedAppCategory = 'Все категории';
-  String _selectedBookGenre = 'Все';
-  String _selectedTopFilter = 'Топ бесплатных';
-  final String _selectedRecentFilter = 'Новое';
-  String _selectedAgeFilter = 'Все';
-  String _selectedRatingFilter = 'Все';
-  String _selectedLanguageFilter = 'Все';
-  String _selectedAbridgetVersionFilter = 'Все';
+  // Filter values are l10n keys (e.g. categoryAll, filterTopFreeOption); selection/comparison by key.
+  String _selectedGameCategory = 'categoryAll';
+  String _selectedAppCategory = 'categoryAll';
+  String _selectedBookGenre = 'categoryBooksAll';
+  String _selectedTopFilter = 'filterTopFreeOption';
+  final String _selectedRecentFilter = 'filterRecent';
+  String _selectedAgeFilter = 'filterAll';
+  String _selectedRatingFilter = 'ratingAll';
+  String _selectedLanguageFilter = 'filterAll';
+  String _selectedAbridgetVersionFilter = 'filterAll';
   final List<String> _selectedKidsFilters = [
-    'До 5 лет',
-    'От 6 до 8 лет',
-    'От 9 до 12 лет',
+    'ageUnder5',
+    'age6to8',
+    'age9to12',
+    'age13plus',
   ];
   /// Режим «только этот фильтр»: когда true, учитывается только выбранный
   /// ToggleFilter (например «Новое»), остальные топ-фильтры не применяются.
@@ -112,26 +113,24 @@ class FilterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Вспомогательный метод для конвертации возрастных меток (для игр/приложений)
+  /// [ageLabel] is l10n key: ageUnder5, age6to8, age9to12, age13plus.
   Map<String, int> getAgeRangeFromLabel(String ageLabel) {
     int minAge = 0;
     int maxAge = 999;
-
     switch (ageLabel) {
-      case 'До 5 лет':
+      case 'ageUnder5':
         minAge = 0;
         maxAge = 5;
         break;
-      case 'От 6 до 8 лет':
+      case 'age6to8':
         minAge = 6;
         maxAge = 8;
         break;
-      case 'От 9 до 12 лет':
+      case 'age9to12':
         minAge = 9;
         maxAge = 12;
         break;
-      case 'От 13 лет':
-      case '13+ лет':
+      case 'age13plus':
         minAge = 13;
         maxAge = 999;
         break;
@@ -142,39 +141,39 @@ class FilterProvider extends ChangeNotifier {
     return {'minAge': minAge, 'maxAge': maxAge};
   }
 
-  // Вспомогательный метод для получения минимального рейтинга из фильтра
+  /// [ratingFilter] is l10n key: rating45Up, rating40Up; ratingAll or unknown => null.
   double? getMinRatingFromFilter(String ratingFilter) {
     switch (ratingFilter) {
-      case '4,5★ и выше':
+      case 'rating45Up':
         return 4.5;
-      case '4,0★ и выше':
+      case 'rating40Up':
         return 4.0;
       default:
-        return null; // 'Все' - без фильтрации по рейтингу
+        return null;
     }
   }
 
   void resetForGames() {
-    _selectedGameCategory = 'Все категории';
-    _selectedTopFilter = 'Топ бесплатных';
+    _selectedGameCategory = 'categoryAll';
+    _selectedTopFilter = 'filterTopFreeOption';
     _isFilterOnlyMode = false;
     notifyListeners();
   }
 
   void resetForApps() {
-    _selectedAppCategory = 'Все категории';
-    _selectedTopFilter = 'Топ бесплатных';
+    _selectedAppCategory = 'categoryAll';
+    _selectedTopFilter = 'filterTopFreeOption';
     _isFilterOnlyMode = false;
     notifyListeners();
   }
 
   void resetForBooks() {
-    _selectedBookGenre = 'Все';
-    _selectedTopFilter = 'Топ бесплатных';
-    _selectedAgeFilter = 'Все';
-    _selectedRatingFilter = 'Все';
-    _selectedLanguageFilter = 'Все';
-    _selectedAbridgetVersionFilter = 'Все';
+    _selectedBookGenre = 'categoryBooksAll';
+    _selectedTopFilter = 'filterTopFreeOption';
+    _selectedAgeFilter = 'filterAll';
+    _selectedRatingFilter = 'ratingAll';
+    _selectedLanguageFilter = 'filterAll';
+    _selectedAbridgetVersionFilter = 'filterAll';
     _isFilterOnlyMode = false;
     notifyListeners();
   }

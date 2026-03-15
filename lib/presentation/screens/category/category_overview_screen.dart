@@ -8,11 +8,14 @@ import 'package:google_play/presentation/widgets/widgets.dart';
 
 class CategoryOverviewScreen extends StatelessWidget {
   final String title;
+  /// L10n key or raw value for the selected category (used for filter state).
+  final String categoryKey;
   final List<ProductEntity> products;
 
   const CategoryOverviewScreen({
     super.key,
     required this.title,
+    required this.categoryKey,
     required this.products,
   });
 
@@ -28,10 +31,10 @@ class CategoryOverviewScreen extends StatelessWidget {
         : FilterType.games;
 
     final FilterProvider filterProvider = isBooks
-        ? FilterProvider.forCategoryOverview(initialBookGenre: title)
+        ? FilterProvider.forCategoryOverview(initialBookGenre: categoryKey)
         : isApps
-        ? FilterProvider.forCategoryOverview(initialAppCategory: title)
-        : FilterProvider.forCategoryOverview(initialGameCategory: title);
+        ? FilterProvider.forCategoryOverview(initialAppCategory: categoryKey)
+        : FilterProvider.forCategoryOverview(initialGameCategory: categoryKey);
 
     return Scaffold(
       body: ChangeNotifierProvider<FilterProvider>(

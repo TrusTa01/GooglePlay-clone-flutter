@@ -63,7 +63,7 @@ class TopChartsScreen extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 5, bottom: 15),
-                child: FilterSets.getFilters(type, filterProvider),
+                child: FilterSets.getFilters(context, type, filterProvider),
               ),
             ),
           ),

@@ -1207,6 +1207,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'More info'**
   String get detailsSectionExtra;
+
+  /// Error when store tabs fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load tabs: {error}'**
+  String failedToLoadTabs(Object error);
+
+  /// Filter label: recent / new
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get filterRecent;
 }
 
 class _AppLocalizationsDelegate

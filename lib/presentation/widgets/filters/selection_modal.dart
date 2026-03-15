@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/presentation/screens/category/product_categories_data.dart';
 
 class SelectionModal {
@@ -17,7 +19,8 @@ class SelectionModal {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (context) {
+      builder: (modalContext) {
+        final l10n = modalContext.l10n;
         return Padding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 50),
           child: Column(
@@ -46,7 +49,10 @@ class SelectionModal {
                   child: Column(
                     children: List.generate(options.length, (index) {
                       final option = options[index];
-                      final isSelected = option.title == activeOption;
+                      final isSelected = option.value == activeOption;
+                      final displayTitle = option.titleL10nKey != null
+                          ? lookupL10n(l10n, option.titleL10nKey!)
+                          : (option.title ?? '');
 
                       return Column(
                         children: [
@@ -56,8 +62,8 @@ class SelectionModal {
                                 : Colors.transparent,
                             child: ListTile(
                               onTap: () {
-                                onSelect(option.title);
-                                Navigator.pop(context);
+                                onSelect(option.value);
+                                Navigator.pop(modalContext);
                               },
                               trailing: isSelected
                                   ? const Icon(
@@ -67,7 +73,7 @@ class SelectionModal {
                                     )
                                   : null,
                               title: Text(
-                                option.title,
+                                displayTitle,
                                 style: TextStyle(
                                   color: isSelected
                                       ? NavBarConstants.navBarSelectedLabelColor
@@ -113,15 +119,16 @@ class SelectionModal {
       useRootNavigator: true,
       isDismissible: true,
       backgroundColor: Colors.white,
-      builder: (context) {
+      builder: (modalContext) {
+        final l10n = modalContext.l10n;
         return SizedBox(
-          height: MediaQuery.of(context).size.height - 50,
+          height: MediaQuery.of(modalContext).size.height - 50,
           child: Padding(
             padding: EdgeInsets.fromLTRB(
               16,
-              MediaQuery.of(context).padding.top + 24,
+              MediaQuery.of(modalContext).padding.top + 24,
               16,
-              MediaQuery.of(context).padding.bottom + 24,
+              MediaQuery.of(modalContext).padding.bottom + 24,
             ),
             child: Column(
               children: [
@@ -140,7 +147,7 @@ class SelectionModal {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.pop(modalContext),
                           icon: const Icon(Icons.close),
                         ),
                       ],
@@ -149,7 +156,7 @@ class SelectionModal {
                 ),
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 20), // Отступ снизу экрана
+                    margin: const EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.grey.shade300),
@@ -159,14 +166,17 @@ class SelectionModal {
                       child: ListView.separated(
                         padding: EdgeInsets.zero,
                         itemCount: options.length,
-                        separatorBuilder: (context, index) => Divider(
+                        separatorBuilder: (_, __) => Divider(
                           height: 1,
                           thickness: 1,
                           color: Colors.grey.shade300,
                         ),
-                        itemBuilder: (context, index) {
+                        itemBuilder: (_, index) {
                           final category = options[index];
-                          final isSelected = category.title == activeOption;
+                          final isSelected = category.value == activeOption;
+                          final displayTitle = category.titleL10nKey != null
+                              ? lookupL10n(l10n, category.titleL10nKey!)
+                              : (category.title ?? '');
 
                           return Material(
                             color: isSelected
@@ -174,8 +184,8 @@ class SelectionModal {
                                 : Colors.transparent,
                             child: ListTile(
                               onTap: () {
-                                onSelect(category.title);
-                                Navigator.pop(context);
+                                onSelect(category.value);
+                                Navigator.pop(modalContext);
                               },
                               leading: Icon(
                                 category.icon,
@@ -184,7 +194,7 @@ class SelectionModal {
                                     : Colors.grey.shade700,
                               ),
                               title: Text(
-                                category.title,
+                                displayTitle,
                                 style: TextStyle(
                                   color: isSelected
                                       ? NavBarConstants.navBarSelectedLabelColor

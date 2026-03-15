@@ -203,5 +203,7 @@
   "unitMillion": "млн",
   "unitThousand": "тыс",
   "reviewsCountLabel": "отзывов",
-  "detailsSectionExtra": "Дополнительно"
+  "detailsSectionExtra": "Дополнительно",
+  "failedToLoadTabs": "Не удалось загрузить вкладки: {error}",
+  "filterRecent": "Новое"
 }

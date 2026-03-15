@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
+import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';
 
 enum SupportItemType {
@@ -44,26 +45,26 @@ class SupportItem {
       subtitle = null;
 }
 
-List<SupportItem> getSupportItems(ProductEntity product) {
+List<SupportItem> getSupportItems(BuildContext context, ProductEntity product) {
+  final l10n = context.l10n;
   return [
     SupportItem.link(
       icon: Icons.language,
-      title: 'Сайт',
+      title: l10n.supportWebsite,
       onTap: () => launchMyUrl(product.websiteUrl!),
     ),
     SupportItem.link(
       icon: Icons.email_outlined,
-      title: 'Электронная почта',
+      title: l10n.supportEmail,
       subtitle: product.emailSupport,
       onTap: () => mailTo(email: product.emailSupport!),
     ),
     SupportItem.link(
       icon: Icons.shield_outlined,
-      title: 'Конфиденциальность',
+      title: l10n.supportPrivacy,
       onTap: () => launchMyUrl(product.privacyPolicyUrl!),
     ),
-    // Секция "О разработчике"
-    SupportItem.sectionHeader(title: 'О разработчике'),
+    SupportItem.sectionHeader(title: l10n.supportAboutDeveloper),
     if (product.developerCompany != null)
       SupportItem.infoText(title: product.developerCompany!),
     if (product.emailSupport != null)

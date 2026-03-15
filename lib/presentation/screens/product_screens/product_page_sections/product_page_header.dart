@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/product_screens/product_page_sections/product_page_rating_row.dart';
@@ -72,7 +73,7 @@ class ProductPageHeader extends StatelessWidget {
                     ),
                   ] else if (product.isPaid)
                     Text(
-                      'Есть платный контент',
+                      context.l10n.tagContainsPaidContent,
                       style: const TextStyle(fontSize: 10),
                     ),
                 ],
@@ -89,7 +90,7 @@ class ProductPageHeader extends StatelessWidget {
             if (product is Book && (product as Book).hasAudioVersion) ...[
               Expanded(
                 child: CustomElevatedButton(
-                  defaultButtonText: 'Фрагмент',
+                  defaultButtonText: context.l10n.buttonFragment,
                   isPaid: false,
                   isOutlined: true,
                 ),
@@ -100,7 +101,7 @@ class ProductPageHeader extends StatelessWidget {
               child: CustomElevatedButton(
                 isPaid: product.isPaid,
                 price: formatter.price,
-                defaultButtonText: 'Установить',
+                defaultButtonText: context.l10n.buttonInstall,
                 isActionRow: false,
               ),
             ),

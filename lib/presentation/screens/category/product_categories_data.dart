@@ -1,115 +1,122 @@
 import 'package:flutter/material.dart';
 
 class ProductCategoriesData {
-  final String title;
+  /// L10n key for localized display (e.g. categoryGamesArcade). Use for selection value when set.
+  final String? titleL10nKey;
+  /// Raw title when no l10n key (e.g. language names: "Čeština"). Use for display and selection when set.
+  final String? title;
   final IconData? icon;
   final Color color;
 
   const ProductCategoriesData({
-    required this.title,
+    this.titleL10nKey,
+    this.title,
     this.icon,
     this.color = Colors.black,
   });
+
+  /// Value used for selection and comparison (key or raw title).
+  String get value => titleL10nKey ?? title ?? '';
 }
 
 final List<ProductCategoriesData> gamesCategoriesData = const [
-  ProductCategoriesData(title: 'Все категории', icon: Icons.category_outlined),
-  ProductCategoriesData(title: 'Аркады', icon: Icons.videogame_asset_outlined),
-  ProductCategoriesData(title: 'Викторины', icon: Icons.quiz_outlined),
-  ProductCategoriesData(title: 'Головоломки', icon: Icons.extension_outlined),
-  ProductCategoriesData(title: 'Гонки', icon: Icons.directions_car_filled_outlined),
-  ProductCategoriesData(title: 'Казино', icon: Icons.casino_outlined),
-  ProductCategoriesData(title: 'Казуальные', icon: Icons.ads_click_outlined),
-  ProductCategoriesData(title: 'Карточные', icon: Icons.style_outlined),
-  ProductCategoriesData(title: 'Музыкальные', icon: Icons.music_note_outlined),
-  ProductCategoriesData(title: 'Настольные', icon: Icons.table_rows_outlined),
-  ProductCategoriesData(title: 'Обучающие', icon: Icons.school_outlined),
-  ProductCategoriesData(title: 'Приключения', icon: Icons.landscape_outlined),
-  ProductCategoriesData(title: 'Ролевые', icon: Icons.theater_comedy_outlined),
-  ProductCategoriesData(title: 'Симуляторы', icon: Icons.airplanemode_active_outlined),
-  ProductCategoriesData(title: 'Словесные', icon: Icons.text_fields_outlined),
-  ProductCategoriesData(title: 'Спортивные', icon: Icons.sports_soccer_outlined),
-  ProductCategoriesData(title: 'Стратегии', icon: Icons.grid_view_outlined),
-  ProductCategoriesData(title: 'Экшен', icon: Icons.bolt_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAll', icon: Icons.category_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesArcade', icon: Icons.videogame_asset_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesTrivia', icon: Icons.quiz_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesPuzzle', icon: Icons.extension_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesRacing', icon: Icons.directions_car_filled_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesCasino', icon: Icons.casino_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesCasual', icon: Icons.ads_click_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesCard', icon: Icons.style_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesMusic', icon: Icons.music_note_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesBoard', icon: Icons.table_rows_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesEducational', icon: Icons.school_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesAdventure', icon: Icons.landscape_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesRolePlaying', icon: Icons.theater_comedy_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesSimulation', icon: Icons.airplanemode_active_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesWord', icon: Icons.text_fields_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesSports', icon: Icons.sports_soccer_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesStrategy', icon: Icons.grid_view_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryGamesAction', icon: Icons.bolt_outlined),
 ];
 
 final List<ProductCategoriesData> appsCategoriesData = const [
-  ProductCategoriesData(title: 'Все категории', icon: Icons.category_outlined),
-  ProductCategoriesData(title: 'Автомобили и транспорт', icon: Icons.directions_bus_outlined),
-  ProductCategoriesData(title: 'Бизнес', icon: Icons.business_center_outlined),
-  ProductCategoriesData(title: 'Виеоплееры и редакторы', icon: Icons.video_camera_back_outlined),
-  ProductCategoriesData(title: 'Еда и напитки', icon: Icons.restaurant_outlined),
-  ProductCategoriesData(title: 'Жилье и дом', icon: Icons.home_work_outlined),
-  ProductCategoriesData(title: 'Здоровье и фитнес', icon: Icons.fitness_center_outlined),
-  ProductCategoriesData(title: 'Знакомства', icon: Icons.favorite_border_outlined),
-  ProductCategoriesData(title: 'Инструменты', icon: Icons.build_outlined),
-  ProductCategoriesData(title: 'Исскуство и дизайн', icon: Icons.palette_outlined),
-  ProductCategoriesData(title: 'Карты и навигации', icon: Icons.map_outlined),
-  ProductCategoriesData(title: 'Книги и справочники', icon: Icons.menu_book_outlined),
-  ProductCategoriesData(title: 'Комиксы', icon: Icons.auto_stories_outlined),
-  ProductCategoriesData(title: 'Красота', icon: Icons.face_retouching_natural_outlined),
-  ProductCategoriesData(title: 'Материнство и детство', icon: Icons.family_restroom_outlined),
-  ProductCategoriesData(title: 'Медицина', icon: Icons.medical_services_outlined),
-  ProductCategoriesData(title: 'Мероприятия', icon: Icons.event_available_outlined),
-  ProductCategoriesData(title: 'Музыка и аудио', icon: Icons.audiotrack_outlined),
-  ProductCategoriesData(title: 'Новости и журналы', icon: Icons.newspaper_outlined),
-  ProductCategoriesData(title: 'Образование', icon: Icons.history_edu_outlined),
-  ProductCategoriesData(title: 'Персонализация', icon: Icons.wallpaper_outlined),
-  ProductCategoriesData(title: 'Погода', icon: Icons.wb_sunny_outlined),
-  ProductCategoriesData(title: 'Покупки', icon: Icons.shopping_bag_outlined),
-  ProductCategoriesData(title: 'Приложения для часов', icon: Icons.watch_outlined),
-  ProductCategoriesData(title: 'Путешествия', icon: Icons.flight_takeoff_outlined),
-  ProductCategoriesData(title: 'Работа', icon: Icons.work_outline),
-  ProductCategoriesData(title: 'Развлечения', icon: Icons.movie_filter_outlined),
-  ProductCategoriesData(title: 'Разное', icon: Icons.category_outlined),
-  ProductCategoriesData(title: 'Связь', icon: Icons.chat_bubble_outline),
-  ProductCategoriesData(title: 'Социальные', icon: Icons.people_outline),
-  ProductCategoriesData(title: 'Спорт', icon: Icons.sports_basketball_outlined),
-  ProductCategoriesData(title: 'Стиль жизни', icon: Icons.self_improvement_outlined),
-  ProductCategoriesData(title: 'Финансы', icon: Icons.account_balance_wallet_outlined),
-  ProductCategoriesData(title: 'Фотография', icon: Icons.photo_camera_outlined),
-  ProductCategoriesData(title: 'Циферблаты', icon: Icons.watch_later_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAll', icon: Icons.category_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsCars', icon: Icons.directions_bus_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsBusiness', icon: Icons.business_center_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsVideo', icon: Icons.video_camera_back_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsFood', icon: Icons.restaurant_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsHouse', icon: Icons.home_work_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsHealth', icon: Icons.fitness_center_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsDating', icon: Icons.favorite_border_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsTools', icon: Icons.build_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsArt', icon: Icons.palette_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsMaps', icon: Icons.map_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsBooks', icon: Icons.menu_book_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsComics', icon: Icons.auto_stories_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsBeauty', icon: Icons.face_retouching_natural_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsParenting', icon: Icons.family_restroom_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsMedical', icon: Icons.medical_services_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsEvents', icon: Icons.event_available_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsMusicAudio', icon: Icons.audiotrack_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsNews', icon: Icons.newspaper_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsEducation', icon: Icons.history_edu_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsPersonalization', icon: Icons.wallpaper_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsWeather', icon: Icons.wb_sunny_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsShopping', icon: Icons.shopping_bag_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsWatch', icon: Icons.watch_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsTravel', icon: Icons.flight_takeoff_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsWork', icon: Icons.work_outline),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsEntertainment', icon: Icons.movie_filter_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsOther', icon: Icons.category_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsCommunication', icon: Icons.chat_bubble_outline),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsSocial', icon: Icons.people_outline),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsSports', icon: Icons.sports_basketball_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsLifestyle', icon: Icons.self_improvement_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsFinance', icon: Icons.account_balance_wallet_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsPhoto', icon: Icons.photo_camera_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryAppsWatchFaces', icon: Icons.watch_later_outlined),
 ];
 
 final List<ProductCategoriesData> booksGenresData = const [
-  ProductCategoriesData(title: 'Все', icon: Icons.category_outlined),
-  ProductCategoriesData(title: 'Бизнес и инвестиции', icon: Icons.trending_up_outlined),
-  ProductCategoriesData(title: 'Биографии и мемуары', icon: Icons.person_search_outlined),
-  ProductCategoriesData(title: 'Детективы и триллеры', icon: Icons.fingerprint_outlined),
-  ProductCategoriesData(title: 'Для детей', icon: Icons.toys_outlined),
-  ProductCategoriesData(title: 'Для души и тела', icon: Icons.spa_outlined),
-  ProductCategoriesData(title: 'Здоровье и спорт', icon: Icons.monitor_weight_outlined),
-  ProductCategoriesData(title: 'История', icon: Icons.castle_outlined),
-  ProductCategoriesData(title: 'Компьютеры и технологии', icon: Icons.terminal_outlined),
-  ProductCategoriesData(title: 'Кулинария и домашнее хозяйство', icon: Icons.soup_kitchen_outlined),
-  ProductCategoriesData(title: 'Любовные романы', icon: Icons.volunteer_activism_outlined),
-  ProductCategoriesData(title: 'Саморазвитие', icon: Icons.psychology_outlined),
-  ProductCategoriesData(title: 'Фантастика и фэнтези', icon: Icons.auto_fix_high_outlined),
-  ProductCategoriesData(title: 'Художественная литература', icon: Icons.edit_note_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksAll', icon: Icons.category_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksBusiness', icon: Icons.trending_up_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksBiography', icon: Icons.person_search_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksDetective', icon: Icons.fingerprint_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksChildren', icon: Icons.toys_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksMindBody', icon: Icons.spa_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksHealthSports', icon: Icons.monitor_weight_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksHistory', icon: Icons.castle_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksComputers', icon: Icons.terminal_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksCooking', icon: Icons.soup_kitchen_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksRomance', icon: Icons.volunteer_activism_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksSelfHelp', icon: Icons.psychology_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksFantasy', icon: Icons.auto_fix_high_outlined),
+  ProductCategoriesData(titleL10nKey: 'categoryBooksFiction', icon: Icons.edit_note_outlined),
 ];
 
- final List<ProductCategoriesData> topFilterOptions = const [
-  ProductCategoriesData(title: 'Топ бесплатных'),
-  ProductCategoriesData(title: 'Бестселлеры'),
-  ProductCategoriesData(title: 'Топ платных'),
+final List<ProductCategoriesData> topFilterOptions = const [
+  ProductCategoriesData(titleL10nKey: 'filterTopFreeOption'),
+  ProductCategoriesData(titleL10nKey: 'filterBestsellers'),
+  ProductCategoriesData(titleL10nKey: 'filterTopPaid'),
 ];
 
 final List<ProductCategoriesData> ageFilterData = const [
-  ProductCategoriesData(title: 'Все'),
-  ProductCategoriesData(title: 'До 5 лет'),
-  ProductCategoriesData(title: 'От 6 до 8 лет'),
-  ProductCategoriesData(title: 'От 9 до 12 лет'),
-  ProductCategoriesData(title: 'От 13 лет'),
+  ProductCategoriesData(titleL10nKey: 'filterAll'),
+  ProductCategoriesData(titleL10nKey: 'ageUnder5'),
+  ProductCategoriesData(titleL10nKey: 'age6to8'),
+  ProductCategoriesData(titleL10nKey: 'age9to12'),
+  ProductCategoriesData(titleL10nKey: 'age13plus'),
 ];
 
 final List<ProductCategoriesData> byRating = const [
-  ProductCategoriesData(title: 'Все'),
-  ProductCategoriesData(title: '4,5★ и выше'),
-  ProductCategoriesData(title: '4,0★ и выше'),
+  ProductCategoriesData(titleL10nKey: 'ratingAll'),
+  ProductCategoriesData(titleL10nKey: 'rating45Up'),
+  ProductCategoriesData(titleL10nKey: 'rating40Up'),
 ];
 
 final List<ProductCategoriesData> languagesData = const [
-  ProductCategoriesData(title: 'Все'),
+  ProductCategoriesData(titleL10nKey: 'filterAll'),
   ProductCategoriesData(title: 'Čeština'),
   ProductCategoriesData(title: 'Dansk'),
   ProductCategoriesData(title: 'Deutsch'),
@@ -146,7 +153,7 @@ final List<ProductCategoriesData> languagesData = const [
 ];
 
 final List<ProductCategoriesData> abridgetVersion = const [
-  ProductCategoriesData(title: 'Все'),
-  ProductCategoriesData(title: 'Сокращенная версия'),
-  ProductCategoriesData(title: 'Полная версия'),
+  ProductCategoriesData(titleL10nKey: 'filterAll'),
+  ProductCategoriesData(titleL10nKey: 'versionAbridged'),
+  ProductCategoriesData(titleL10nKey: 'versionFull'),
 ];

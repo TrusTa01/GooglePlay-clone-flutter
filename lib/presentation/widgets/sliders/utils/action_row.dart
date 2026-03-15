@@ -183,11 +183,11 @@ class ActionRowButton extends StatelessWidget {
           defaultButtonText: defaultButtonText,
         ),
         if (containsPaidContent)
-          const Padding(
-            padding: EdgeInsets.only(top: 4),
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
             child: Text(
-              'Есть платный контент',
-              style: TextStyle(fontSize: 8, color: Colors.black),
+              context.l10n.tagContainsPaidContent,
+              style: const TextStyle(fontSize: 8, color: Colors.black),
               textAlign: TextAlign.center,
             ),
           ),

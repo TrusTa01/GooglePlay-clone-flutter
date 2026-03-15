@@ -576,4 +576,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get detailsSectionExtra => 'More info';
+
+  @override
+  String failedToLoadTabs(Object error) {
+    return 'Failed to load tabs: $error';
+  }
+
+  @override
+  String get filterRecent => 'Recent';
 }

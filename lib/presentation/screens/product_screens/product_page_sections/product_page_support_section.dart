@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/screens/product_screens/utils/product_support_data.dart';
@@ -21,7 +22,7 @@ class ProductPageSupportSection extends StatelessWidget {
       children: [
         if (product is Book) ...[
           ProductSectionHeader(
-            title: 'Об авторе',
+            title: context.l10n.aboutAuthor,
             padding: EdgeInsets.zero,
             subtitle: product.creator,
             onTap: () => Navigator.push(
@@ -35,9 +36,9 @@ class ProductPageSupportSection extends StatelessWidget {
         ],
         if (product is App || product is Game) ...[
           CustomExpansionTile(
-            items: getSupportItems(product),
+            items: getSupportItems(context, product),
             title: Text(
-              'Поддержка приложения',
+              context.l10n.appSupport,
               style: TextStyle(
                 fontWeight: Constants.defaultFontWeight,
                 fontSize: 18,

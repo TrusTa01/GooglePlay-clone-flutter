@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/product_screens/utils/product_app_bar_leading.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
@@ -33,9 +34,9 @@ class PermissionsScreen extends StatelessWidget {
                       fontWeight: Constants.defaultFontWeight,
                     ),
                   ),
-                  subtitle: const Text(
-                    'Разрешения для приложения',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  subtitle: Text(
+                    context.l10n.permissionsTitle,
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   onLeadingPressed: () => Navigator.pop(context),
                 ),
@@ -45,7 +46,7 @@ class PermissionsScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(22, 20, 22, 10),
                   sliver: SliverToBoxAdapter(
                     child: Text(
-                      'Возможные разрешения для версии ${product.version}',
+                      context.l10n.permissionsForVersion(product.version),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

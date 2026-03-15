@@ -741,5 +741,16 @@
   "detailsSectionExtra": "More info",
   "@detailsSectionExtra": {
     "description": "Details screen section title: more / additional"
+  },
+  "failedToLoadTabs": "Failed to load tabs: {error}",
+  "@failedToLoadTabs": {
+    "description": "Error when store tabs fail to load",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "filterRecent": "Recent",
+  "@filterRecent": {
+    "description": "Filter label: recent / new"
   }
 }

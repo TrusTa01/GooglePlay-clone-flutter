@@ -18,6 +18,7 @@ class KidsAgeFilterSelector extends StatelessWidget {
     final provider = context.read<FilterProvider>();
 
     return FilterSets.getFilters(
+      context,
       type,
       provider,
       sectionTitle: title,

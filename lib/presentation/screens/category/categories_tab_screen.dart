@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 
@@ -101,6 +103,10 @@ class CategoriesTabScreen extends StatelessWidget {
     BuildContext context,
     ProductCategoriesData category,
   ) {
+    final l10n = context.l10n;
+    final displayTitle = category.titleL10nKey != null
+        ? lookupL10n(l10n, category.titleL10nKey!)
+        : (category.title ?? '');
     return Padding(
       padding: Constants.horizontalContentPadding,
       child: Material(
@@ -112,7 +118,8 @@ class CategoriesTabScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => CategoryOverviewScreen(
-                  title: category.title,
+                  title: displayTitle,
+                  categoryKey: category.value,
                   products: products,
                 ),
               ),
@@ -139,7 +146,7 @@ class CategoriesTabScreen extends StatelessWidget {
                 const SizedBox(width: 15),
                 Expanded(
                   child: Text(
-                    category.title,
+                    displayTitle,
                     style: const TextStyle(
                       fontWeight: Constants.defaultFontWeight,
                       fontSize: 15,

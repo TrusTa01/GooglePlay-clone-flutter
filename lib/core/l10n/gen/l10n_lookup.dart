@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT EDIT.
 // Run: dart run tools/generate_l10n_lookup.dart
 
-import 'app_localizations.dart';
+import 'package:google_play/core/l10n/gen/app_localizations.dart';
 
 /// Возвращает локализованную строку по ключу из конфига (например title_key секции).
 /// Если ключа нет в .arb, возвращает сам ключ.
@@ -10,7 +10,6 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'aboutApp': return l10n.aboutApp;
     case 'aboutAuthor': return l10n.aboutAuthor;
     case 'aboutBook': return l10n.aboutBook;
-    case 'aboutBookType': return l10n.aboutBookType;
     case 'aboutGame': return l10n.aboutGame;
     case 'aboutProduct': return l10n.aboutProduct;
     case 'achievements': return l10n.achievements;
@@ -22,8 +21,6 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'ageUnder5': return l10n.ageUnder5;
     case 'appSupport': return l10n.appSupport;
     case 'appTitle': return l10n.appTitle;
-    case 'apps_new_releases_title': return l10n.appsNewReleasesTitle;
-    case 'apps_work_title': return l10n.appsWorkTitle;
     case 'bookTypeAudio': return l10n.bookTypeAudio;
     case 'bookTypeElectronic': return l10n.bookTypeElectronic;
     case 'buttonFragment': return l10n.buttonFragment;
@@ -101,6 +98,7 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'dialogOk': return l10n.dialogOk;
     case 'downloads': return l10n.downloads;
     case 'emptyNoData': return l10n.emptyNoData;
+    case 'filterRecent': return l10n.filterRecent;
     case 'filterAbridged': return l10n.filterAbridged;
     case 'filterAge': return l10n.filterAge;
     case 'filterAll': return l10n.filterAll;
@@ -113,7 +111,6 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'filterTopFree': return l10n.filterTopFree;
     case 'filterTopFreeOption': return l10n.filterTopFreeOption;
     case 'filterTopPaid': return l10n.filterTopPaid;
-    case 'for_you_title': return l10n.forYouTitle;
     case 'formatAudiobook': return l10n.formatAudiobook;
     case 'formatEbook': return l10n.formatEbook;
     case 'hasAds': return l10n.hasAds;
@@ -158,7 +155,6 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'notificationsEmptyTitle': return l10n.notificationsEmptyTitle;
     case 'notificationsTitle': return l10n.notificationsTitle;
     case 'pagesShort': return l10n.pagesShort;
-    case 'permissionsForVersion': return l10n.permissionsForVersion;
     case 'permissionsTitle': return l10n.permissionsTitle;
     case 'pricesIncludeVat': return l10n.pricesIncludeVat;
     case 'productNotFound': return l10n.productNotFound;
@@ -171,7 +167,6 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'refundPolicy': return l10n.refundPolicy;
     case 'reviewsCountLabel': return l10n.reviewsCountLabel;
     case 'searchBooksHint': return l10n.searchBooksHint;
-    case 'shareMessage': return l10n.shareMessage;
     case 'similarApps': return l10n.similarApps;
     case 'similarBooks': return l10n.similarBooks;
     case 'similarGames': return l10n.similarGames;

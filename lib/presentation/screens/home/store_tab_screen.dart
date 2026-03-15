@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/presentation/screens/screens.dart';
@@ -21,8 +22,9 @@ class StoreTabScreen extends HookConsumerWidget {
     return configAsync.when(
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (e, _) =>
-          Scaffold(body: Center(child: Text('Failed to load tabs: $e'))),
+      error: (e, _) => Scaffold(
+          body: Center(
+              child: Text(context.l10n.failedToLoadTabs(e)))),
       data: (config) {
         final visitedIndexes = useState<Set<int>>({0});
         final tabs = config.tabs.map((t) => t.label).toList();

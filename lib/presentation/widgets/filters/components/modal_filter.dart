@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/presentation/screens/category/product_categories_data.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ModalFilter extends StatelessWidget {
-  final String defaultTitle; // текст на кнопке фильтра, когда выбрано дефолтное значение из списка (options).
-                            // Это короткое/общее название фильтра.
-                            // Например: выбранно дефолтное значение в спике (модалке) - Все категории, значит дефолтное значение на фильтре - defaultValue
-
+  /// Localized short label when the default (first) option is selected.
+  final String defaultTitle;
   final List<ProductCategoriesData> options;
+  /// Current selection: l10n key or raw value (e.g. for languages).
   final String currentSelection;
   final Function(String) onSelected;
   final String modalTitle;
   final bool isFullScreen;
-  final bool highlightDefault; // если true, то дефолтное значение будет подсвечиваться как активное
+  final bool highlightDefault;
 
   const ModalFilter({
     super.key,
@@ -27,13 +28,14 @@ class ModalFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Первая опция из списка автоматически считается дефолтной
-    final defaultValue = options.isNotEmpty ? options.first.title : '';
+    final defaultValue = options.isNotEmpty ? options.first.value : '';
     final isDefault = currentSelection == defaultValue;
+    final l10n = context.l10n;
+    final label = isDefault ? defaultTitle : lookupL10n(l10n, currentSelection);
 
     return CustomFilterChip(
       hasOptions: true,
-      label: isDefault ? defaultTitle : currentSelection,
+      label: label,
       isSelected: highlightDefault ? true : !isDefault,
       onSelected: !isFullScreen
           ? () => SelectionModal.show(

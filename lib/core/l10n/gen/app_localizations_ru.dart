@@ -576,4 +576,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get detailsSectionExtra => 'Дополнительно';
+
+  @override
+  String failedToLoadTabs(Object error) {
+    return 'Не удалось загрузить вкладки: $error';
+  }
+
+  @override
+  String get filterRecent => 'Новое';
 }
