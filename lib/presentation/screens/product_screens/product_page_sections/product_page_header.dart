@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
+import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageHeader extends StatelessWidget {

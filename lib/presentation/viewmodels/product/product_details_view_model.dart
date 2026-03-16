@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';
-import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
-import 'package:google_play/presentation/viewmodels/product/product_details_state_mapper.dart';
+import 'package:google_play/presentation/viewmodels/product/product_state.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_mappers/product_state_mapper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// ViewModel страницы продукта (детали, хедер, поддержка)
-/// Состояние строится из [ProductEntity] через [ProductDetailsStateMapper];
+/// Состояние строится из [ProductEntity] через [ProductDetailsStateMapper]
 /// виджеты читают только [state], без проверок типа и кастов
 class ProductDetailsViewModel extends StateNotifier<ProductDetailsState> {
   final ProductDetailsStateMapper _mapper;
 
   ProductDetailsViewModel({ProductDetailsStateMapper? mapper})
-      : _mapper = mapper ?? const ProductDetailsStateMapper(),
-        super(const ProductDetailsState());
+    : _mapper = mapper ?? const ProductDetailsStateMapper(),
+      super(const ProductDetailsState());
 
   /// Обновляет состояние по сущности продукта и текущей локали
   /// Вызывается из экрана, когда есть [product] и [BuildContext] (для l10n и locale)
@@ -26,7 +26,5 @@ class ProductDetailsViewModel extends StateNotifier<ProductDetailsState> {
   }
 
   // Сбрасывает состояние
-  void clear() {
-    state = const ProductDetailsState();
-  }
+  void clear() => state = const ProductDetailsState();
 }

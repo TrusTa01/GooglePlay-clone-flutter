@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/shimmers/shimmer_box.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/product_card_ui_model.dart';
 
 class ProductCardThumbnail extends StatelessWidget {
   final double borderRadius;
@@ -164,13 +165,13 @@ class DotSeparator extends StatelessWidget {
 }
 
 class ActionRowTags extends StatelessWidget {
-  final Product product;
-  const ActionRowTags({super.key, required this.product});
+  final List<String> tags;
+
+  const ActionRowTags({super.key, required this.tags});
 
   @override
   Widget build(BuildContext context) {
-    List<String> items = product.tags;
-    String displayString = items.take(3).join(' • ');
+    String displayString = tags.take(3).join(' • ');
     return Text(
       displayString,
       maxLines: 1,
@@ -245,20 +246,9 @@ class ProductInfoTag extends StatelessWidget {
 }
 
 class ProductCardContent extends StatelessWidget {
-  final Product product;
-  final double iconWidth;
-  final double iconHeight;
-  final int cacheWidth;
-  final int cacheHeight;
+  final ProductCardUiModel model;
 
-  const ProductCardContent({
-    super.key,
-    required this.product,
-    this.iconWidth = 110,
-    this.iconHeight = 110,
-    this.cacheWidth = 300,
-    this.cacheHeight = 350,
-  });
+  const ProductCardContent({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -267,28 +257,24 @@ class ProductCardContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ProductCardThumbnail(
-          borderRadius: isBook
-              ? BorderRadius.circular(6)
-              : BorderRadius.circular(20),
-          iconUrl: product.iconUrl,
-          iconWidth: iconWidth,
-          iconHeight: iconHeight,
-          cacheWidth: cacheWidth,
-          cacheHeight: cacheHeight,
-          fit: isBook ? BoxFit.fill : BoxFit.cover,
+          borderRadius: model.borderRadius,
+          iconUrl: model.iconUrl,
+          iconWidth: model.iconWidth,
+          iconHeight: model.iconHeight,
+          cacheWidth: model.cacheWidth,
+          cacheHeight: model.cacheHeight,
+          fit: model.thumbnailFit,
         ),
         const SizedBox(height: 6),
         SizedBox(
-          width: iconWidth,
-          child: ProductTitle(title: product.title, maxLines: 2, fontSize: 12),
+          width: model.iconWidth,
+          child: ProductTitle(title: model.title, maxLines: 2, fontSize: 12),
         ),
         const SizedBox(height: 4),
-        product.isPaid
-            ? ProductInfoTag(text: formatter.price)
-            : ProductInfoTag(
-                text: formatter.rating,
-                iconPath: 'assets/icons/star.png',
-              ),
+        ProductInfoTag(
+          text: model.mainTagText,
+          iconPath: model.mainTagIconPath,
+        ),
       ],
     );
   }

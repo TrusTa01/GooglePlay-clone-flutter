@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
-import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
+import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageRatingRow extends StatelessWidget {
@@ -25,7 +25,7 @@ class ProductPageRatingRow extends StatelessWidget {
         children: [
           Expanded(
             child: _RatingColumn(
-              text: Text(state.rating.toStringAsFixed(1)),
+              text: Text(state.rating.toStringAsFixed(1)), // TODO: готовая строка из state
               subText:
                   '${state.reviewsCount} ${context.l10n.reviewsCountLabel}',
               isReview: true,

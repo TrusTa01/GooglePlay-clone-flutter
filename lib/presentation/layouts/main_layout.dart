@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/constants/global_constants.dart';
-import 'package:google_play/presentation/viewmodels/filter_provider.dart';
+import 'package:google_play/presentation/viewmodels/providers/filter_provider.dart';
 import 'package:google_play/core/extensions/navigator_extension.dart';
 import 'package:google_play/core/extensions/indexed_stack_extension.dart';
 import 'package:google_play/presentation/screens/screens.dart';

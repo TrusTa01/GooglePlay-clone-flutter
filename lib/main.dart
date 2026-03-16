@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/presentation/layouts/main_layout.dart';
-import 'package:google_play/presentation/viewmodels/locale_provider.dart';
+import 'package:google_play/presentation/viewmodels/providers/locale_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {

@@ -6,7 +6,7 @@ import 'package:google_play/domain/entities/products/game_entity.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/domain/entities/products/software_entity.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
+import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 
 /// Собирает [ProductDetailsState] из [ProductEntity]
 /// Вся логика ветвления по типу продукта (book/app/game) сосредоточена здесь

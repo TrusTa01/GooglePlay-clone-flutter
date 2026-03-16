@@ -3,7 +3,7 @@ import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/presentation/screens/category/product_categories_data.dart';
 import 'package:google_play/presentation/screens/kids_screen/kids_age_category_screen.dart';
-import 'package:google_play/presentation/viewmodels/filter_provider.dart';
+import 'package:google_play/presentation/viewmodels/providers/filter_provider.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 enum FilterType { games, apps, books, kidsAge }

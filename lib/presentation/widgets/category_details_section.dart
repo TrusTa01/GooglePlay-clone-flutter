@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
-import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/domain/entities/products/book_entity.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/category_item_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class CategoryDetailsSection extends StatelessWidget {
-  final List<ProductEntity> products;
+  final List<CategoryItemUiModel> items;
   final bool isSliver;
 
   const CategoryDetailsSection({
     super.key,
-    required this.products,
+    required this.items,
     this.isSliver = false,
   });
 
-  static Widget asSliver({required List<ProductEntity> products}) {
-    return CategoryDetailsSection(products: products, isSliver: true);
+  static Widget asSliver({required List<CategoryItemUiModel> items}) {
+    return CategoryDetailsSection(items: items, isSliver: true);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (products.isEmpty) {
-      debugPrint('Ошибка: products.isEmpty (category details section)');
+    if (items.isEmpty) {
+      debugPrint('Ошибка: items.isEmpty (category details section)');
       return isSliver
           ? const SliverToBoxAdapter(child: SizedBox.shrink())
           : const SizedBox.shrink();
     }
 
-    final bool isBook = products.first is BookEntity;
+    final bool isBook = items.first.isBook;
     final double minItemWidth = isBook ? 110 : 125;
-    // Вычисляем aspectRatio
     final double aspectRatio = isBook ? 0.48 : 0.6;
 
     if (isSliver) {
@@ -50,13 +47,13 @@ class CategoryDetailsSection extends StatelessWidget {
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 15,
               ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => KeyedSubtree(
-                  key: ValueKey(products[index].id),
-                  child: _buildItem(products[index], context),
-                ),
-                childCount: products.length,
-              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final item = items[index];
+                return KeyedSubtree(
+                  key: ValueKey(item.id),
+                  child: _buildItem(item),
+                );
+              }, childCount: items.length),
             ),
           );
         },
@@ -77,29 +74,20 @@ class CategoryDetailsSection extends StatelessWidget {
             mainAxisSpacing: 20,
             crossAxisSpacing: 15,
           ),
-          itemCount: products.length,
-          itemBuilder: (context, index) => KeyedSubtree(
-            key: ValueKey(products[index].id),
-            child: _buildItem(products[index], context),
-          ),
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return KeyedSubtree(
+              key: ValueKey(item.id),
+              child: _buildItem(item),
+            );
+          },
         );
       },
     );
   }
 
-  Widget _buildItem(ProductEntity product, BuildContext context) {
-    final showPrice = product.isPaid && product.price != null;
-    final formatter = ProductDataFormatter(context, product);
-    final isBook = product is BookEntity;
-
-    return ProductCardContent(
-      product: product,
-      showPrice: showPrice,
-      formatter: formatter,
-      iconWidth: isBook ? 110 : 125,
-      iconHeight: isBook ? 160 : 125,
-      cacheWidth: isBook ? 300 : 350,
-      cacheHeight: isBook ? 450 : 350,
-    );
+  Widget _buildItem(CategoryItemUiModel item) {
+    return ProductCardContent(model: item.card);
   }
 }
