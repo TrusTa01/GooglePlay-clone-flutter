@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/shimmers/shimmer_box.dart';
-import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/data/models/dtos.dart';
 
 class ProductCardThumbnail extends StatelessWidget {
-  final BorderRadius borderRadius;
+  final double borderRadius;
   final String iconUrl;
   final double iconWidth;
   final double iconHeight;
@@ -28,7 +26,7 @@ class ProductCardThumbnail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: borderRadius,
+        borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.08),
@@ -43,7 +41,7 @@ class ProductCardThumbnail extends StatelessWidget {
         ),
       ),
       child: ClipRRect(
-        borderRadius: borderRadius,
+        borderRadius: BorderRadius.circular(borderRadius),
         child: Image.asset(
           iconUrl,
           width: iconWidth,
@@ -136,7 +134,7 @@ class ProductCreatorText extends StatelessWidget {
 }
 
 class AgeBadge extends StatelessWidget {
-  final int age;
+  final String age;
   final double fontSize;
 
   const AgeBadge({super.key, required this.age, this.fontSize = 7});
@@ -149,7 +147,7 @@ class AgeBadge extends StatelessWidget {
         border: Border.all(color: Colors.black, width: 0.8),
       ),
       child: Text(
-        '$age+',
+        age,
         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w900),
       ),
     );
@@ -248,8 +246,6 @@ class ProductInfoTag extends StatelessWidget {
 
 class ProductCardContent extends StatelessWidget {
   final Product product;
-  final bool showPrice;
-  final ProductDataFormatter formatter;
   final double iconWidth;
   final double iconHeight;
   final int cacheWidth;
@@ -258,8 +254,6 @@ class ProductCardContent extends StatelessWidget {
   const ProductCardContent({
     super.key,
     required this.product,
-    required this.showPrice,
-    required this.formatter,
     this.iconWidth = 110,
     this.iconHeight = 110,
     this.cacheWidth = 300,
@@ -268,43 +262,34 @@ class ProductCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isBook = product is Book;
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ProductCardThumbnail(
-              borderRadius: isBook
-                  ? BorderRadius.circular(6)
-                  : BorderRadius.circular(20),
-              iconUrl: product.iconUrl,
-              iconWidth: iconWidth,
-              iconHeight: iconHeight,
-              cacheWidth: cacheWidth,
-              cacheHeight: cacheHeight,
-              fit: isBook ? BoxFit.fill : BoxFit.cover,
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              width: iconWidth,
-              child: ProductTitle(
-                title: product.title,
-                maxLines: 2,
-                fontSize: 12,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ProductCardThumbnail(
+          borderRadius: isBook
+              ? BorderRadius.circular(6)
+              : BorderRadius.circular(20),
+          iconUrl: product.iconUrl,
+          iconWidth: iconWidth,
+          iconHeight: iconHeight,
+          cacheWidth: cacheWidth,
+          cacheHeight: cacheHeight,
+          fit: isBook ? BoxFit.fill : BoxFit.cover,
+        ),
+        const SizedBox(height: 6),
+        SizedBox(
+          width: iconWidth,
+          child: ProductTitle(title: product.title, maxLines: 2, fontSize: 12),
+        ),
+        const SizedBox(height: 4),
+        product.isPaid
+            ? ProductInfoTag(text: formatter.price)
+            : ProductInfoTag(
+                text: formatter.rating,
+                iconPath: 'assets/icons/star.png',
               ),
-            ),
-            const SizedBox(height: 4),
-            showPrice
-                ? ProductInfoTag(text: formatter.price)
-                : ProductInfoTag(
-                    text: formatter.rating,
-                    iconPath: 'assets/icons/star.png',
-                  ),
-          ],
-        );
-      },
+      ],
     );
   }
 }

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/screens.dart';
-import 'package:google_play/presentation/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageDescriptionSection extends StatelessWidget {
-  final Product product;
-  final ProductUIConfig utils;
+  final ProductDetailsState state;
 
   const ProductPageDescriptionSection({
     super.key,
-    required this.product,
-    required this.utils,
+    required this.state,
   });
 
   @override
@@ -21,12 +18,13 @@ class ProductPageDescriptionSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ProductSectionHeader(
-          title: utils.titleText,
+          title: state.descriptionSectionTitle,
           padding: EdgeInsets.zero,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailsScreen(product: product),
+              builder: (context) =>
+                  DetailsScreen(state: state),
             ),
           ),
         ),
@@ -35,7 +33,7 @@ class ProductPageDescriptionSection extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                product.shortDescription,
+                state.shortDescription,
                 style: const TextStyle(fontSize: 14),
               ),
             ),

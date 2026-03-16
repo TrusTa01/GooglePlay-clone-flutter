@@ -8,8 +8,8 @@ part of 'section_dto.dart';
 
 _TabConfigDto _$TabConfigDtoFromJson(Map<String, dynamic> json) =>
     _TabConfigDto(
-      tabKey: json['tabKey'] as String,
-      displayName: json['displayName'] as String,
+      tabKey: json['tab_key'] as String,
+      displayName: json['display_name'] as String,
       sections: (json['sections'] as List<dynamic>)
           .map((e) => SectionDto.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -17,44 +17,44 @@ _TabConfigDto _$TabConfigDtoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TabConfigDtoToJson(_TabConfigDto instance) =>
     <String, dynamic>{
-      'tabKey': instance.tabKey,
-      'displayName': instance.displayName,
+      'tab_key': instance.tabKey,
+      'display_name': instance.displayName,
       'sections': instance.sections,
     };
 
 _SectionDto _$SectionDtoFromJson(Map<String, dynamic> json) => _SectionDto(
   id: json['id'] as String,
   type: json['type'] as String,
-  titleKey: json['titleKey'] as String?,
-  subtitleKey: json['subtitleKey'] as String?,
-  dataSource: json['dataSource'] as String?,
-  imageAssetPath: json['imageAssetPath'] as String,
-  dataParamsDto: json['dataParamsDto'] == null
+  titleKey: json['title_key'] as String?,
+  subtitleKey: json['subtitle_key'] as String?,
+  dataSource: json['data_source'] as String?,
+  imageAssetPath: json['imagea_asset_path'] as String,
+  dataParamsDto: json['data_params_dto'] == null
       ? null
-      : DataParamsDto.fromJson(json['dataParamsDto'] as Map<String, dynamic>),
+      : DataParamsDto.fromJson(json['data_params_dto'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$SectionDtoToJson(_SectionDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'type': instance.type,
-      'titleKey': instance.titleKey,
-      'subtitleKey': instance.subtitleKey,
-      'dataSource': instance.dataSource,
-      'imageAssetPath': instance.imageAssetPath,
-      'dataParamsDto': instance.dataParamsDto,
+      'title_key': instance.titleKey,
+      'subtitle_key': instance.subtitleKey,
+      'data_source': instance.dataSource,
+      'imagea_asset_path': instance.imageAssetPath,
+      'data_params_dto': instance.dataParamsDto,
     };
 
 _DataParamsDto _$DataParamsDtoFromJson(Map<String, dynamic> json) =>
     _DataParamsDto(
-      filterType: json['filterType'] as String?,
-      filterValue: json['filterValue'],
+      filterType: json['filter_type'] as String?,
+      filterValue: json['title_value'],
       extras: json['extras'] as Map<String, dynamic>? ?? const {},
     );
 
 Map<String, dynamic> _$DataParamsDtoToJson(_DataParamsDto instance) =>
     <String, dynamic>{
-      'filterType': instance.filterType,
-      'filterValue': instance.filterValue,
+      'filter_type': instance.filterType,
+      'title_value': instance.filterValue,
       'extras': instance.extras,
     };

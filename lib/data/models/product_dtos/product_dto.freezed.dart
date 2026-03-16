@@ -42,7 +42,8 @@ ProductDto _$ProductDtoFromJson(
 /// @nodoc
 mixin _$ProductDto {
 
- String get type; String get id; String get title; String get creator; String get shortDescription; String get description; double get rating; int get reviewsCount; DateTime get releaseDate; String get iconUrl; bool get isPaid; double? get price; String get currencyCode; double? get discountPrice; List<String> get tags; String get creatorDescription; String get url;
+ // ignore: duplicate_ignore
+ String get type; String get id; String get title; String get creator; String get shortDescription; String get description; double get rating; int get reviewsCount; DateTime get releaseDate; String get iconUrl; bool get isPaid; double? get price; String get currencyCode; double? get discountPrice; List<String> get tags; String get creatorDescription; String get url;// ignore: invalid_annotation_target
 @JsonKey(name: 'gameGenre')@JsonKey(name: 'appCategory') List<String> get categories;
 /// Create a copy of ProductDto
 /// with the given fields replaced by the non-null parameter values.

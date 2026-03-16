@@ -1,19 +1,15 @@
-// ignore_for_file: unused_element_parameter
-
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/product_screens/permissions_screen.dart';
 import 'package:google_play/presentation/screens/product_screens/utils/product_app_bar_leading.dart';
-import 'package:google_play/presentation/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final Product product;
+  final ProductDetailsState state;
 
-  const DetailsScreen({super.key, required this.product});
+  const DetailsScreen({super.key, required this.state});
 
   List<Widget> _withSpacing(List<Widget> widgets, {double spacing = 25}) {
     if (widgets.isEmpty) return [];
@@ -23,9 +19,6 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productFormatter = ProductDataFormatter(context, product);
-    final utils = ProductUIConfig(product);
-
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -38,9 +31,9 @@ class DetailsScreen extends StatelessWidget {
                 SimpleSliverAppBar(
                   showBackButton: true,
                   showLogo: false,
-                  titleLeading: ProductAppBarLeading(product: product),
+                  titleLeading: ProductAppBarLeading(state: state),
                   title: Text(
-                    product.title,
+                    state.title,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: Constants.defaultFontWeight,
@@ -52,7 +45,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   onLeadingPressed: () => Navigator.pop(context),
                 ),
-            
+
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 10,
@@ -61,28 +54,34 @@ class DetailsScreen extends StatelessWidget {
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
                       // Заголовок
-                      Text(utils.titleText, style: const TextStyle(fontSize: 16)),
+                      Text(
+                        state.descriptionSectionTitle,
+                        style: const TextStyle(fontSize: 16),
+                      ),
                       const SizedBox(height: 10),
-            
+
                       // Краткое описание
                       Text(
-                        product.shortDescription,
+                        state.shortDescription,
                         style: const TextStyle(fontSize: 14),
                       ),
                       const SizedBox(height: 10),
-            
+
                       // Полное описание
                       Text(
-                        product.description,
+                        state.description,
                         style: const TextStyle(fontSize: 14),
                       ),
                       const Divider(),
-            
+
                       // Что нового
-                      if (product is! Book) ...[
+                      if (state.showWhatsNewSection) ...[
                         Row(
                           children: [
-                            Text(context.l10n.whatsNew, style: const TextStyle(fontSize: 16)),
+                            Text(
+                              context.l10n.whatsNew,
+                              style: const TextStyle(fontSize: 16),
+                            ),
                             SizedBox(width: 10),
                             Text(
                               '●',
@@ -95,131 +94,76 @@ class DetailsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          product.whatsNewText ?? context.l10n.noInformation,
+                          state.whatsNewText ?? context.l10n.noInformation,
                           style: const TextStyle(fontSize: 14),
                         ),
                         const Divider(),
-            
+
                         // Дополнительно
                         Text(
                           context.l10n.detailsSectionExtra,
                           style: const TextStyle(fontSize: 16),
                         ),
                         const SizedBox(height: 20),
+
                         _DetailRow(
-                          icon: AgeBadge(
-                            age: product is App
-                                ? (product as App).ageRating
-                                : (product as Game).ageRating,
-                            fontSize: 20,
-                          ),
-                          title:
-                              '${product is App ? (product as App).ageRating : (product as Game).ageRating}+',
-                          subtitle: product is App
-                              ? (product as App).ageRatingReasons.join(', ')
-                              : (product as Game).ageRatingReasons.join(', '),
+                          title: state.ageRating ?? '',
+                          icon: AgeBadge(age: state.ageRating!, fontSize: 20),
+                          subtitle: state.ageRatingReasons,
                           actionText: context.l10n.detailsMore,
-                          onActionPressed: () {},
+                          onActionPressed:
+                              () {}, // TODO: открыть тот же линк, что и в rating_row,
                         ),
-            
-                        if (product.containsAds) ...[
+
+                        if (state.showAds) ...[
                           const SizedBox(height: 20),
                           _DetailRow(
-                            icon: Icon(Icons.ad_units),
+                            icon: const Icon(Icons.ad_units),
                             title: context.l10n.hasAds,
                             subtitle: context.l10n.adsDisclaimer,
                             actionText: context.l10n.detailsMore,
                           ),
                         ],
-                        if (product is Game &&
-                            (product as Game).hasAchievements) ...[
+
+                        if (state.showAchievements) ...[
                           const SizedBox(height: 20),
                           _DetailRow(
-                            icon: Icon(Icons.emoji_events),
+                            icon: const Icon(Icons.emoji_events),
                             title: context.l10n.achievements,
                             subtitle: context.l10n.achievementsDescription,
                           ),
                         ],
+
                         const Divider(),
                       ],
+
                       Text(
-                        utils.aboutTitleText,
+                        state.aboutSectionTitle,
                         style: const TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 20),
-            
-                      if (product is App || product is Game)
-                        ..._withSpacing([
-                          _InfoRow(
-                            label: context.l10n.labelVersion,
-                            value: product.version.toString(),
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelLastUpdate,
-                            value: productFormatter.lastUpdatedFormatted,
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelDownloads,
-                            value: productFormatter.downloadCountFull,
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelSize,
-                            value: productFormatter.technicalInfoFormatted,
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelDeveloper,
-                            value: product.creator.toString(),
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelReleaseDate,
-                            value: productFormatter.releaseDateFormatted,
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelPermissions,
-                            value: context.l10n.labelMore,
-                            hasTextButton: true,
-                            onTextButtonPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PermissionsScreen(product: product),
-                              ),
-                            ),
-                          ),
-                        ]),
-            
-                      if (product is Book)
-                        ..._withSpacing([
-                          _InfoRow(
-                            label: context.l10n.labelAuthor,
-                            value: product.creator.toString(),
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelPublisher,
-                            value: product.creator.toString(),
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelPublishDate,
-                            value: productFormatter.releaseDateFormatted
-                                .toString(),
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelPages,
-                            value: (product as Book).pageCount.toString(),
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelLanguage,
-                            value: (product as Book).language.toString(),
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelFormat,
-                            value: (product as Book).format.toString(),
-                          ),
-                          _InfoRow(
-                            label: context.l10n.labelGenres,
-                            value: (product as Book).genres.join(', '),
-                          ),
-                        ]),
+
+                      ..._withSpacing(
+                        state.infoRows.map((row) {
+                          return _InfoRow(
+                            label: row.label,
+                            value: row.value,
+                            hasTextButton: row.hasTextButton,
+                            onTextButtonPressed: row.hasTextButton
+                                ? () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => PermissionsScreen(
+                                          state: state,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                : null,
+                          );
+                        }).toList(),
+                      ),
                     ]),
                   ),
                 ),
@@ -301,6 +245,7 @@ class _InfoRow extends StatelessWidget {
   const _InfoRow({
     required this.label,
     required this.value,
+    // ignore: unused_element_parameter
     this.textAlign = TextAlign.end,
     this.hasTextButton = false,
     this.onTextButtonPressed,

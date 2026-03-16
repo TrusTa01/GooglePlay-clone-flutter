@@ -27,6 +27,19 @@ extension AppMapper on AppDto {
       version: version,
       downloadCount: downloadCount,
       containsAds: containsAds,
+      whatsNewText: whatsNewText,
+      lastUpdated: lastUpdated,
+      ageRating: ageRating,
+      ageRatingReasons: ageRatingReasons,
+      permissions: permissions,
+      websiteUrl: websiteUrl,
+      emailSupport: emailSupport,
+      privacyPolicyUrl: privacyPolicyUrl,
+      developerCompany: developerCompany,
+      developerAddress: developerAddress,
+      developerCity: developerCity,
+      developerCountry: developerCountry,
+      developerPhone: developerPhone,
     );
   }
 }

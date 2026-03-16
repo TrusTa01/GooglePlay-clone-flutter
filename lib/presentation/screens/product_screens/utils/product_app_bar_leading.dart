@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/presentation/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
-// Миниатюра продукта для использования в SimpleAppBar (titleLeading).
+// Миниатюра продукта для использования в SimpleAppBar (titleLeading)
 class ProductAppBarLeading extends StatelessWidget {
-  final Product product;
+  final ProductDetailsState state;
 
-  const ProductAppBarLeading({super.key, required this.product});
+  const ProductAppBarLeading({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    final utils = ProductUIConfig(product);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ProductCardThumbnail(
-        borderRadius: utils.smallBorderRadius,
-        iconUrl: product.iconUrl,
-        iconWidth: utils.smallIconWidth,
-        iconHeight: utils.smallIconHeight,
-        cacheWidth: utils.smallCacheWidth,
-        cacheHeight: utils.smallCacheHeight,
-        fit: utils.isBook ? BoxFit.fill : BoxFit.cover,
+        borderRadius: state.smallBorderRadius,
+        iconUrl: state.iconUrl,
+        iconWidth: state.smallIconWidth,
+        iconHeight: state.smallIconHeight,
+        cacheWidth: state.smallCacheWidth,
+        cacheHeight: state.smallCacheHeight,
+        fit: state.thumbnailFit,
       ),
     );
   }

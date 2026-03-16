@@ -1,68 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:google_play/domain/entities/products/book_entity.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/core/extensions/product_resolver_extension.dart';
-import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/providers/providers.dart';
-import 'package:google_play/services/product_query_service.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
+import 'package:google_play/presentation/viewmodels/product/product_details_view_model.dart';
+import 'package:google_play/presentation/viewmodels/product/product_providers.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/presentation/screens/product_screens/product_page_sections/product_page_sections.dart';
 import 'package:google_play/presentation/screens/product_screens/product_screen_tags.dart';
-import 'package:google_play/presentation/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/presentation/screens/screens.dart';
 
-// Экран страницы продукта (приложение, книга, игра).
-class ProductPageScreen extends StatelessWidget {
-  // Готовый продукт. Если передан, productId не используется.
-  final Product? product;
-  // Id продукта для загрузки из провайдера. Используется, если product == null.
-  final String? productId;
+/// Экран страницы продукта (приложение, книга, игра)
+class ProductPageScreen extends ConsumerWidget {
+  final ProductEntity product;
 
-  const ProductPageScreen({super.key, this.product, this.productId})
-    : assert(
-        product != null || productId != null,
-        'Нужно передать product или productId',
-      );
+  const ProductPageScreen({super.key, required this.product});
 
   @override
-  Widget build(BuildContext context) {
-    if (product != null) {
-      return _ProductPageContent(product: product!);
-    }
-    return Consumer3<GamesProvider, AppsProvider, BooksProvider>(
-      builder: (context, _, _, _, _) {
-        final p = context.getProductById(productId!);
-        if (p == null) {
-          final l10n = context.l10n;
-          return Scaffold(
-            appBar: AppBar(title: Text(l10n.productPageTitle)),
-            body: Center(child: Text(l10n.productNotFound)),
-          );
-        }
-        return _ProductPageContent(product: p);
-      },
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _ProductPageContent(product: product);
   }
 }
 
-class _ProductPageContent extends StatelessWidget {
-  final Product product;
+class _ProductPageContent extends ConsumerWidget {
+  final ProductEntity product;
 
   const _ProductPageContent({required this.product});
 
   @override
-  Widget build(BuildContext context) {
-    final formatter = ProductDataFormatter(context, product);
-    final utils = ProductUIConfig(product);
-
-    // Получаем похожие продукты
-    final allProducts = context.allProducts;
-    final queryService = ProductQueryService();
-    final similarProducts = queryService.getSimilarProducts(
-      allProducts,
-      product,
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Читаем текущее состояние деталей продукта
+    final ProductDetailsState state = ref.watch(
+      productDetailsViewModelProvider,
     );
+
+    final productDetailsViewModel = ref.read<ProductDetailsViewModel>(
+      productDetailsViewModelProvider.notifier,
+    );
+    final l10n = context.l10n;
+    final locale = Localizations.localeOf(context);
+
+    if (state.productId != product.id) {
+      productDetailsViewModel.updateFromProduct(product, l10n, locale);
+    }
 
     return Scaffold(
       body: Center(
@@ -76,7 +58,9 @@ class _ProductPageContent extends StatelessWidget {
                 SimpleSliverAppBar(
                   showBackButton: true,
                   showLogo: false,
-                  title: const Text(''),
+                  title: Text(
+                    state.title.isNotEmpty ? state.title : product.title,
+                  ),
                   titleLeading: null,
                   actions: [
                     ProductPopupMenu(title: product.title, url: product.url),
@@ -90,42 +74,60 @@ class _ProductPageContent extends StatelessWidget {
                   sliver: SliverMainAxisGroup(
                     slivers: [
                       SliverToBoxAdapter(
-                        child: ProductPageHeader(
-                          product: product,
-                          formatter: formatter,
-                          utils: utils,
-                        ),
+                        child: ProductPageHeader(state: state),
                       ),
                       Constants.sliverDivider25,
 
                       SliverToBoxAdapter(
-                        child: ProductPageDescriptionSection(
-                          product: product,
-                          utils: utils,
-                        ),
+                        child: ProductPageDescriptionSection(state: state),
                       ),
                       Constants.sliverDivider25,
 
-                      SliverToBoxAdapter(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(child: ProductTags(product: product)),
-                          ],
+                      if (state.showTags)
+                        SliverToBoxAdapter(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: ProductTags(
+                                  tags: state.tags,
+                                  onTap: () {
+                                    // TODO: queryService.getProductsByTag
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                       Constants.sliverDivider25,
 
                       SliverToBoxAdapter(
-                        child: ProductPageSupportSection(product: product),
+                        child: ProductPageSupportSection(
+                          state: state,
+                          onAboutAuthorTap:
+                              state.supportSectionType == SupportSectionType.aboutAuthor &&
+                                      product is BookEntity
+                                  ? () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AboutAuthorScreen(
+                                            book: product as BookEntity,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  : null,
+                        ),
                       ),
                       Constants.sliverDivider15,
 
                       SliverToBoxAdapter(
                         child: ProductPageSimilarAndFooter(
                           product: product,
-                          similarProducts: similarProducts,
+                          similarProducts: const [],
+                          link: 'https://support.google.com/',
                         ),
                       ),
                     ],

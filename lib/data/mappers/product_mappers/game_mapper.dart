@@ -27,6 +27,20 @@ extension GameMapper on GameDto {
       version: version,
       downloadCount: downloadCount,
       containsAds: containsAds,
+      whatsNewText: whatsNewText,
+      lastUpdated: lastUpdated,
+      ageRating: ageRating,
+      ageRatingReasons: ageRatingReasons,
+      permissions: permissions,
+      websiteUrl: websiteUrl,
+      emailSupport: emailSupport,
+      privacyPolicyUrl: privacyPolicyUrl,
+      developerCompany: developerCompany,
+      developerAddress: developerAddress,
+      developerCity: developerCity,
+      developerCountry: developerCountry,
+      developerPhone: developerPhone,
+      hasAchievements: false, // TODO: add to GameDto when available
     );
   }
 }

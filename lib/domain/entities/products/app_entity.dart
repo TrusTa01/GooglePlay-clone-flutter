@@ -25,5 +25,18 @@ final class AppEntity extends SoftwareEntity {
     required super.version,
     required super.downloadCount,
     required super.containsAds,
+    required super.whatsNewText,
+    required super.lastUpdated,
+    required super.ageRating,
+    required super.ageRatingReasons,
+    required super.permissions,
+    required super.websiteUrl,
+    required super.emailSupport,
+    required super.privacyPolicyUrl,
+    required super.developerCompany,
+    required super.developerAddress,
+    required super.developerCity,
+    required super.developerCountry,
+    required super.developerPhone,
   });
 }

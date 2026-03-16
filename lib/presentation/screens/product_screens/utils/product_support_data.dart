@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/domain/entities/products/software_entity.dart';
 
 enum SupportItemType {
   link, // Обычный элемент с иконкой (Сайт, Email, Конфиденциальность)
@@ -45,37 +44,34 @@ class SupportItem {
       subtitle = null;
 }
 
-List<SupportItem> getSupportItems(BuildContext context, ProductEntity product) {
+List<SupportItem> getSupportItems(
+  BuildContext context,
+  SoftwareEntity product,
+) {
   final l10n = context.l10n;
   return [
     SupportItem.link(
       icon: Icons.language,
       title: l10n.supportWebsite,
-      onTap: () => launchMyUrl(product.websiteUrl!),
+      onTap: () => launchMyUrl(product.websiteUrl),
     ),
     SupportItem.link(
       icon: Icons.email_outlined,
       title: l10n.supportEmail,
       subtitle: product.emailSupport,
-      onTap: () => mailTo(email: product.emailSupport!),
+      onTap: () => mailTo(email: product.emailSupport),
     ),
     SupportItem.link(
       icon: Icons.shield_outlined,
       title: l10n.supportPrivacy,
-      onTap: () => launchMyUrl(product.privacyPolicyUrl!),
+      onTap: () => launchMyUrl(product.privacyPolicyUrl),
     ),
     SupportItem.sectionHeader(title: l10n.supportAboutDeveloper),
-    if (product.developerCompany != null)
-      SupportItem.infoText(title: product.developerCompany!),
-    if (product.emailSupport != null)
-      SupportItem.infoText(title: product.emailSupport!),
-    if (product.developerAddress != null)
-      SupportItem.infoText(title: product.developerAddress!),
-    if (product.developerCity != null)
-      SupportItem.infoText(title: product.developerCity!),
-    if (product.developerCountry != null)
-      SupportItem.infoText(title: product.developerCountry!),
-    if (product.developerPhone != null)
-      SupportItem.infoText(title: product.developerPhone!),
+    SupportItem.infoText(title: product.developerCompany),
+    SupportItem.infoText(title: product.emailSupport),
+    SupportItem.infoText(title: product.developerAddress),
+    SupportItem.infoText(title: product.developerCity),
+    SupportItem.infoText(title: product.developerCountry),
+    SupportItem.infoText(title: product.developerPhone),
   ];
 }

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
-import 'package:google_play/domain/entities/products/book_entity.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageRatingRow extends StatelessWidget {
-  final ProductEntity product;
-  final ProductDataFormatter formatter;
+  final ProductDetailsState state;
+  final String link;
 
   const ProductPageRatingRow({
     super.key,
-    required this.product,
-    required this.formatter,
+    required this.state,
+    required this.link,
   });
 
   @override
@@ -27,8 +25,9 @@ class ProductPageRatingRow extends StatelessWidget {
         children: [
           Expanded(
             child: _RatingColumn(
-              text: Text(product.rating.toStringAsFixed(1)),
-              subText: '${formatter.reviewsCount} ${context.l10n.reviewsCountLabel}',
+              text: Text(state.rating.toStringAsFixed(1)),
+              subText:
+                  '${state.reviewsCount} ${context.l10n.reviewsCountLabel}',
               isReview: true,
               isTapping: true,
               onTap: () => AlertDialogs.showAlertDialog(
@@ -48,20 +47,19 @@ class ProductPageRatingRow extends StatelessWidget {
             width: 10,
           ),
           Expanded(
-            child: product is BookEntity
+            child: state.isBook
                 ? _RatingColumn(
-                    text: (product as BookEntity).isEbook
-                        ? const Icon(Icons.book_outlined, size: 20)
-                        : const Icon(Icons.audio_file_outlined, size: 20),
-                    subText: (product as BookEntity).isEbook
-                        ? context.l10n.formatEbook
-                        : context.l10n.formatAudiobook,
+                    text: Text(state.middleValueText),
+                    subText: state.middleLabelText,
                     isTapping: false,
                     onTap: null,
+                    leading: state.isBook
+                        ? const Icon(Icons.book_outlined, size: 20)
+                        : const Icon(Icons.audio_file_outlined, size: 20),
                   )
                 : _RatingColumn(
-                    text: Text(formatter.downloadCount),
-                    subText: context.l10n.downloads,
+                    text: Text(state.middleValueText),
+                    subText: state.middleLabelText,
                     isTapping: false,
                     onTap: null,
                   ),
@@ -73,24 +71,23 @@ class ProductPageRatingRow extends StatelessWidget {
             width: 10,
           ),
           Expanded(
-            child: product is BookEntity
+            child: state.isBook
                 ? _RatingColumn(
-                    text: Text(formatter.technicalInfoValue),
+                    text: Text(state.technicalInfo),
                     subText: context.l10n.pagesShort,
                     isTapping: false,
                     onTap: null,
                   )
                 : _RatingColumn(
-                    leading: AgeBadge(fontSize: 12, age: product.ageRating!),
-                    subText: '${(product).ageRating}+',
+                    leading: AgeBadge(fontSize: 12, age: state.ageRating!),
+                    subText: state.ageRating!,
                     isTapping: true,
                     onTap: () => AlertDialogs.showAlertDialog(
                       context: context,
-                      title: '${product.ageRating}+',
-                      content: product.ageRatingReasons.join(', '),
+                      title: state.ageRating!,
+                      content: state.ageRatingReasons!,
                       detailsText: context.l10n.detailsMore,
-                      onDetails: () =>
-                          launchMyUrl('https://support.google.com/googleplay/'),
+                      onDetails: () => launchMyUrl(link),
                       confirmText: context.l10n.dialogOk,
                     ),
                   ),

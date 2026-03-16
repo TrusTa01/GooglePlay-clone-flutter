@@ -52,6 +52,9 @@ final class BookEntity extends ProductEntity {
   /// Жанры книги (то же, что [ProductEntity.categories]; алиас для ясности в контексте книг)
   List<String> get genres => categories;
 
+  /// Электронная книга (не аудио).
+  bool get isEbook => !format.toLowerCase().contains('аудио');
+
   @override
   String get technicalInfo => pageCount;
 }

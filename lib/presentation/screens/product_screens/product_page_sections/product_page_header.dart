@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/presentation/screens/product_screens/product_page_sections/product_page_rating_row.dart';
-import 'package:google_play/presentation/screens/product_screens/utils/product_ui_config.dart';
+import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageHeader extends StatelessWidget {
-  final Product product;
-  final ProductDataFormatter formatter;
-  final ProductUIConfig utils;
+  final ProductDetailsState state;
 
-  const ProductPageHeader({
-    super.key,
-    required this.product,
-    required this.formatter,
-    required this.utils,
-  });
+  const ProductPageHeader({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +21,13 @@ class ProductPageHeader extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ProductCardThumbnail(
-              borderRadius: utils.borderRadius,
-              iconUrl: product.iconUrl,
-              iconWidth: utils.iconWidth,
-              iconHeight: utils.iconHeight,
-              cacheWidth: utils.cacheWidth,
-              cacheHeight: utils.cacheHeight,
-              fit: utils.isBook ? BoxFit.fill : BoxFit.cover,
+              borderRadius: state.borderRadius,
+              iconUrl: state.iconUrl,
+              iconWidth: state.iconWidth,
+              iconHeight: state.iconHeight,
+              cacheWidth: state.cacheWidth,
+              cacheHeight: state.cacheHeight,
+              fit: state.thumbnailFit,
             ),
             const SizedBox(width: 25),
             Expanded(
@@ -46,7 +36,7 @@ class ProductPageHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.title,
+                    state.title,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: Constants.defaultFontWeight,
@@ -55,7 +45,7 @@ class ProductPageHeader extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    product.creator,
+                    state.creator,
                     style: const TextStyle(
                       fontSize: 14,
                       color: Constants.googleBlue,
@@ -63,15 +53,15 @@ class ProductPageHeader extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  if (product is Book) ...[
+                  if (state.showPublisher && state.publisher != null) ...[
                     const SizedBox(height: 10),
                     Text(
-                      (product as Book).publisher,
+                      state.publisher!,
                       style: const TextStyle(fontSize: 12),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ] else if (product.isPaid)
+                  ] else if (state.showPaidBadge)
                     Text(
                       context.l10n.tagContainsPaidContent,
                       style: const TextStyle(fontSize: 10),
@@ -82,37 +72,6 @@ class ProductPageHeader extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 25),
-        ProductPageRatingRow(product: product, formatter: formatter),
-        const SizedBox(height: 25),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            if (product is Book && (product as Book).hasAudioVersion) ...[
-              Expanded(
-                child: CustomElevatedButton(
-                  defaultButtonText: context.l10n.buttonFragment,
-                  isPaid: false,
-                  isOutlined: true,
-                ),
-              ),
-              const SizedBox(width: 10),
-            ],
-            Expanded(
-              child: CustomElevatedButton(
-                isPaid: product.isPaid,
-                price: formatter.price,
-                defaultButtonText: context.l10n.buttonInstall,
-                isActionRow: false,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 15),
-        if (product is App || product is Game)
-          ProductPreviewCard(
-            product: product,
-            showActionRow: false,
-          ),
       ],
     );
   }

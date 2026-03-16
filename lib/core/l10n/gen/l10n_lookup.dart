@@ -3,8 +3,6 @@
 
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 
-/// Возвращает локализованную строку по ключу из конфига (например title_key секции).
-/// Если ключа нет в .arb, возвращает сам ключ.
 String lookupL10n(AppLocalizations l10n, String key) {
   switch (key) {
     case 'aboutApp': return l10n.aboutApp;

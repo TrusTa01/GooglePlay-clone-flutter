@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
-import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
+// TODO: заменить тип у similar products
 class ProductPageSimilarAndFooter extends StatelessWidget {
-  final Product product;
-  final List<Product> similarProducts;
+  final ProductEntity product;
+  final List<ProductEntity> similarProducts;
+  final String link;
 
   const ProductPageSimilarAndFooter({
     super.key,
     required this.product,
     required this.similarProducts,
+    required this.link,
   });
 
   @override
@@ -22,12 +25,8 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
       children: [
         if (similarProducts.isNotEmpty) ...[
           ProductCarousel(
-            title: product is Book
-                ? context.l10n.similarBooks
-                : product is Game
-                    ? context.l10n.similarGames
-                    : context.l10n.similarApps,
-            products: similarProducts,
+            title: product.title,
+            items: similarProducts,
             maxItems: 10,
             leftPadding: 0,
             needsRightPadding: false,
@@ -37,14 +36,10 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
         CustomTextButton(
           title: context.l10n.refundPolicy,
           icon: Icons.arrow_back,
-          onTap: () => launchMyUrl('https://support.google.com/googleplay/'),
+          onTap: () => launchMyUrl(link),
         ),
         const SizedBox(height: 20),
-        Row(
-          children: [
-            Text(context.l10n.pricesIncludeVat),
-          ],
-        ),
+        Row(children: [Text(context.l10n.pricesIncludeVat)]),
       ],
     );
   }

@@ -1,11 +1,24 @@
 import 'package:google_play/domain/entities/products/product_entity.dart';
 
 abstract class SoftwareEntity extends ProductEntity {
-  final List<String> screenshots; // URL скриншотов
-  final String size; // Размер в MB
-  final String version; // Версия приложения / игры
-  final int downloadCount; // Количество загрузок
-  final bool containsAds; // Содержит рекламу
+  final List<String> screenshots;
+  final String size;
+  final String version;
+  final int downloadCount;
+  final bool containsAds;
+  final String whatsNewText;
+  final DateTime lastUpdated;
+  final int ageRating;
+  final List<String> ageRatingReasons;
+  final List<String> permissions;
+  final String websiteUrl;
+  final String emailSupport;
+  final String privacyPolicyUrl;
+  final String developerCompany;
+  final String developerAddress;
+  final String developerCity;
+  final String developerCountry;
+  final String developerPhone;
 
   const SoftwareEntity({
     required super.type,
@@ -31,6 +44,19 @@ abstract class SoftwareEntity extends ProductEntity {
     required this.version,
     required this.downloadCount,
     required this.containsAds,
+    required this.whatsNewText,
+    required this.lastUpdated,
+    required this.ageRating,
+    required this.ageRatingReasons,
+    required this.permissions,
+    required this.websiteUrl,
+    required this.emailSupport,
+    required this.privacyPolicyUrl,
+    required this.developerCompany,
+    required this.developerAddress,
+    required this.developerCity,
+    required this.developerCountry,
+    required this.developerPhone,
   });
 
   @override

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/data/models/dtos.dart';
 import 'package:google_play/presentation/screens/product_screens/utils/product_app_bar_leading.dart';
+import 'package:google_play/presentation/viewmodels/product/product_details_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class PermissionsScreen extends StatelessWidget {
-  final Product product;
+  final ProductDetailsState state;
 
-  const PermissionsScreen({super.key, required this.product});
+  const PermissionsScreen({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +26,9 @@ class PermissionsScreen extends StatelessWidget {
                 SimpleSliverAppBar(
                   showBackButton: true,
                   showLogo: false,
-                  titleLeading: ProductAppBarLeading(product: product),
+                  titleLeading: ProductAppBarLeading(state: state),
                   title: Text(
-                    product.title,
+                    state.title,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: Constants.defaultFontWeight,
@@ -40,13 +40,13 @@ class PermissionsScreen extends StatelessWidget {
                   ),
                   onLeadingPressed: () => Navigator.pop(context),
                 ),
-            
+
                 // Заголовок списка
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(22, 20, 22, 10),
                   sliver: SliverToBoxAdapter(
                     child: Text(
-                      context.l10n.permissionsForVersion(product.version),
+                      context.l10n.permissionsForVersion(state.version),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -54,14 +54,16 @@ class PermissionsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-            
+
                 // Сам список разрешений
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 22),
                   sliver: SliverList.builder(
-                    itemCount: product.permissions.length,
+                    itemCount: state.permissions.length,
                     itemBuilder: (context, index) {
-                      return _BulletItem(permission: product.permissions[index]);
+                      return _BulletItem(
+                        permission: state.permissions[index],
+                      );
                     },
                   ),
                 ),

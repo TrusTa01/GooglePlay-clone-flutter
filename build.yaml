@@ -1,0 +1,16 @@
+targets:
+  $default:
+    sources:
+      include:
+        - lib/**
+
+    builders:
+      json_serializable:
+        generate_for:
+          include:
+            - lib/data/**
+
+      source_gen:combining_builder:
+        generate_for:
+          include:
+            - lib/data/**

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TabConfigDto {
 
- String get tabKey; String get displayName; List<SectionDto> get sections;
+@JsonKey(name: 'tab_key') String get tabKey;@JsonKey(name: 'display_name') String get displayName; List<SectionDto> get sections;
 /// Create a copy of TabConfigDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $TabConfigDtoCopyWith<$Res>  {
   factory $TabConfigDtoCopyWith(TabConfigDto value, $Res Function(TabConfigDto) _then) = _$TabConfigDtoCopyWithImpl;
 @useResult
 $Res call({
- String tabKey, String displayName, List<SectionDto> sections
+@JsonKey(name: 'tab_key') String tabKey,@JsonKey(name: 'display_name') String displayName, List<SectionDto> sections
 });
 
 
@@ -155,7 +155,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String tabKey,  String displayName,  List<SectionDto> sections)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'display_name')  String displayName,  List<SectionDto> sections)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TabConfigDto() when $default != null:
 return $default(_that.tabKey,_that.displayName,_that.sections);case _:
@@ -176,7 +176,7 @@ return $default(_that.tabKey,_that.displayName,_that.sections);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String tabKey,  String displayName,  List<SectionDto> sections)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'display_name')  String displayName,  List<SectionDto> sections)  $default,) {final _that = this;
 switch (_that) {
 case _TabConfigDto():
 return $default(_that.tabKey,_that.displayName,_that.sections);case _:
@@ -196,7 +196,7 @@ return $default(_that.tabKey,_that.displayName,_that.sections);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String tabKey,  String displayName,  List<SectionDto> sections)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'display_name')  String displayName,  List<SectionDto> sections)?  $default,) {final _that = this;
 switch (_that) {
 case _TabConfigDto() when $default != null:
 return $default(_that.tabKey,_that.displayName,_that.sections);case _:
@@ -211,11 +211,11 @@ return $default(_that.tabKey,_that.displayName,_that.sections);case _:
 @JsonSerializable()
 
 class _TabConfigDto implements TabConfigDto {
-  const _TabConfigDto({required this.tabKey, required this.displayName, required final  List<SectionDto> sections}): _sections = sections;
+  const _TabConfigDto({@JsonKey(name: 'tab_key') required this.tabKey, @JsonKey(name: 'display_name') required this.displayName, required final  List<SectionDto> sections}): _sections = sections;
   factory _TabConfigDto.fromJson(Map<String, dynamic> json) => _$TabConfigDtoFromJson(json);
 
-@override final  String tabKey;
-@override final  String displayName;
+@override@JsonKey(name: 'tab_key') final  String tabKey;
+@override@JsonKey(name: 'display_name') final  String displayName;
  final  List<SectionDto> _sections;
 @override List<SectionDto> get sections {
   if (_sections is EqualUnmodifiableListView) return _sections;
@@ -257,7 +257,7 @@ abstract mixin class _$TabConfigDtoCopyWith<$Res> implements $TabConfigDtoCopyWi
   factory _$TabConfigDtoCopyWith(_TabConfigDto value, $Res Function(_TabConfigDto) _then) = __$TabConfigDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String tabKey, String displayName, List<SectionDto> sections
+@JsonKey(name: 'tab_key') String tabKey,@JsonKey(name: 'display_name') String displayName, List<SectionDto> sections
 });
 
 
@@ -290,7 +290,7 @@ as List<SectionDto>,
 /// @nodoc
 mixin _$SectionDto {
 
- String get id; String get type; String? get titleKey; String? get subtitleKey; String? get dataSource; String get imageAssetPath; DataParamsDto? get dataParamsDto;
+ String get id; String get type;@JsonKey(name: 'title_key') String? get titleKey;@JsonKey(name: 'subtitle_key') String? get subtitleKey;@JsonKey(name: 'data_source') String? get dataSource;@JsonKey(name: 'imagea_asset_path') String get imageAssetPath;@JsonKey(name: 'data_params_dto') DataParamsDto? get dataParamsDto;
 /// Create a copy of SectionDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -323,7 +323,7 @@ abstract mixin class $SectionDtoCopyWith<$Res>  {
   factory $SectionDtoCopyWith(SectionDto value, $Res Function(SectionDto) _then) = _$SectionDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String type, String? titleKey, String? subtitleKey, String? dataSource, String imageAssetPath, DataParamsDto? dataParamsDto
+ String id, String type,@JsonKey(name: 'title_key') String? titleKey,@JsonKey(name: 'subtitle_key') String? subtitleKey,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'imagea_asset_path') String imageAssetPath,@JsonKey(name: 'data_params_dto') DataParamsDto? dataParamsDto
 });
 
 
@@ -446,7 +446,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String type,  String? titleKey,  String? subtitleKey,  String? dataSource,  String imageAssetPath,  DataParamsDto? dataParamsDto)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String type, @JsonKey(name: 'title_key')  String? titleKey, @JsonKey(name: 'subtitle_key')  String? subtitleKey, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'imagea_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SectionDto() when $default != null:
 return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
@@ -467,7 +467,7 @@ return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataS
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String type,  String? titleKey,  String? subtitleKey,  String? dataSource,  String imageAssetPath,  DataParamsDto? dataParamsDto)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String type, @JsonKey(name: 'title_key')  String? titleKey, @JsonKey(name: 'subtitle_key')  String? subtitleKey, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'imagea_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)  $default,) {final _that = this;
 switch (_that) {
 case _SectionDto():
 return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
@@ -487,7 +487,7 @@ return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataS
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String type,  String? titleKey,  String? subtitleKey,  String? dataSource,  String imageAssetPath,  DataParamsDto? dataParamsDto)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String type, @JsonKey(name: 'title_key')  String? titleKey, @JsonKey(name: 'subtitle_key')  String? subtitleKey, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'imagea_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)?  $default,) {final _that = this;
 switch (_that) {
 case _SectionDto() when $default != null:
 return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
@@ -502,16 +502,16 @@ return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataS
 @JsonSerializable()
 
 class _SectionDto implements SectionDto {
-  const _SectionDto({required this.id, required this.type, this.titleKey, this.subtitleKey, this.dataSource, required this.imageAssetPath, required this.dataParamsDto});
+  const _SectionDto({required this.id, required this.type, @JsonKey(name: 'title_key') this.titleKey, @JsonKey(name: 'subtitle_key') this.subtitleKey, @JsonKey(name: 'data_source') this.dataSource, @JsonKey(name: 'imagea_asset_path') required this.imageAssetPath, @JsonKey(name: 'data_params_dto') required this.dataParamsDto});
   factory _SectionDto.fromJson(Map<String, dynamic> json) => _$SectionDtoFromJson(json);
 
 @override final  String id;
 @override final  String type;
-@override final  String? titleKey;
-@override final  String? subtitleKey;
-@override final  String? dataSource;
-@override final  String imageAssetPath;
-@override final  DataParamsDto? dataParamsDto;
+@override@JsonKey(name: 'title_key') final  String? titleKey;
+@override@JsonKey(name: 'subtitle_key') final  String? subtitleKey;
+@override@JsonKey(name: 'data_source') final  String? dataSource;
+@override@JsonKey(name: 'imagea_asset_path') final  String imageAssetPath;
+@override@JsonKey(name: 'data_params_dto') final  DataParamsDto? dataParamsDto;
 
 /// Create a copy of SectionDto
 /// with the given fields replaced by the non-null parameter values.
@@ -546,7 +546,7 @@ abstract mixin class _$SectionDtoCopyWith<$Res> implements $SectionDtoCopyWith<$
   factory _$SectionDtoCopyWith(_SectionDto value, $Res Function(_SectionDto) _then) = __$SectionDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String type, String? titleKey, String? subtitleKey, String? dataSource, String imageAssetPath, DataParamsDto? dataParamsDto
+ String id, String type,@JsonKey(name: 'title_key') String? titleKey,@JsonKey(name: 'subtitle_key') String? subtitleKey,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'imagea_asset_path') String imageAssetPath,@JsonKey(name: 'data_params_dto') DataParamsDto? dataParamsDto
 });
 
 
@@ -595,7 +595,7 @@ $DataParamsDtoCopyWith<$Res>? get dataParamsDto {
 /// @nodoc
 mixin _$DataParamsDto {
 
- String? get filterType; dynamic get filterValue; Map<String, dynamic> get extras;
+@JsonKey(name: 'filter_type') String? get filterType;@JsonKey(name: 'title_value') dynamic get filterValue; Map<String, dynamic> get extras;
 /// Create a copy of DataParamsDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -628,7 +628,7 @@ abstract mixin class $DataParamsDtoCopyWith<$Res>  {
   factory $DataParamsDtoCopyWith(DataParamsDto value, $Res Function(DataParamsDto) _then) = _$DataParamsDtoCopyWithImpl;
 @useResult
 $Res call({
- String? filterType, dynamic filterValue, Map<String, dynamic> extras
+@JsonKey(name: 'filter_type') String? filterType,@JsonKey(name: 'title_value') dynamic filterValue, Map<String, dynamic> extras
 });
 
 
@@ -735,7 +735,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? filterType,  dynamic filterValue,  Map<String, dynamic> extras)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'filter_type')  String? filterType, @JsonKey(name: 'title_value')  dynamic filterValue,  Map<String, dynamic> extras)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DataParamsDto() when $default != null:
 return $default(_that.filterType,_that.filterValue,_that.extras);case _:
@@ -756,7 +756,7 @@ return $default(_that.filterType,_that.filterValue,_that.extras);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? filterType,  dynamic filterValue,  Map<String, dynamic> extras)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'filter_type')  String? filterType, @JsonKey(name: 'title_value')  dynamic filterValue,  Map<String, dynamic> extras)  $default,) {final _that = this;
 switch (_that) {
 case _DataParamsDto():
 return $default(_that.filterType,_that.filterValue,_that.extras);case _:
@@ -776,7 +776,7 @@ return $default(_that.filterType,_that.filterValue,_that.extras);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? filterType,  dynamic filterValue,  Map<String, dynamic> extras)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'filter_type')  String? filterType, @JsonKey(name: 'title_value')  dynamic filterValue,  Map<String, dynamic> extras)?  $default,) {final _that = this;
 switch (_that) {
 case _DataParamsDto() when $default != null:
 return $default(_that.filterType,_that.filterValue,_that.extras);case _:
@@ -791,11 +791,11 @@ return $default(_that.filterType,_that.filterValue,_that.extras);case _:
 @JsonSerializable()
 
 class _DataParamsDto implements DataParamsDto {
-  const _DataParamsDto({this.filterType, this.filterValue, final  Map<String, dynamic> extras = const {}}): _extras = extras;
+  const _DataParamsDto({@JsonKey(name: 'filter_type') this.filterType, @JsonKey(name: 'title_value') this.filterValue, final  Map<String, dynamic> extras = const {}}): _extras = extras;
   factory _DataParamsDto.fromJson(Map<String, dynamic> json) => _$DataParamsDtoFromJson(json);
 
-@override final  String? filterType;
-@override final  dynamic filterValue;
+@override@JsonKey(name: 'filter_type') final  String? filterType;
+@override@JsonKey(name: 'title_value') final  dynamic filterValue;
  final  Map<String, dynamic> _extras;
 @override@JsonKey() Map<String, dynamic> get extras {
   if (_extras is EqualUnmodifiableMapView) return _extras;
@@ -837,7 +837,7 @@ abstract mixin class _$DataParamsDtoCopyWith<$Res> implements $DataParamsDtoCopy
   factory _$DataParamsDtoCopyWith(_DataParamsDto value, $Res Function(_DataParamsDto) _then) = __$DataParamsDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String? filterType, dynamic filterValue, Map<String, dynamic> extras
+@JsonKey(name: 'filter_type') String? filterType,@JsonKey(name: 'title_value') dynamic filterValue, Map<String, dynamic> extras
 });
 
 
