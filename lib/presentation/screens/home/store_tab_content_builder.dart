@@ -50,6 +50,6 @@ List<Widget> buildStoreTabSlivers({
         products: products,
       ),
     ],
-    _ => [LazyTabContent(sectionState: sectionState, isSliver: true)],
+    _ => [LazyTabContent(sectionState: sectionsState, isSliver: true)],
   };
 }

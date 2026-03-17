@@ -1,32 +1,38 @@
+import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:google_play/domain/usecases/products/load_products_usecase.dart';
 import 'package:google_play/domain/usecases/sections/get_tab_sections_usecase.dart';
 import 'package:google_play/presentation/viewmodels/home/home_state.dart';
 import 'package:google_play/presentation/viewmodels/home/store_tab_config.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class HomeViewModel extends StateNotifier<HomeState> {
-  final StoreType storeType;
-  final LoadProductsUseCase loadProductsUseCase;
-  final GetTabSectionsUseCase getTabSectionsUseCase;
+part 'home_view_model.g.dart';
 
-  HomeViewModel({
-    required this.storeType,
-    required this.loadProductsUseCase,
-    required this.getTabSectionsUseCase,
-  }) : super(const HomeState());
+@riverpod
+class HomeViewModel extends _$HomeViewModel {
+  late final LoadProductsUseCase _loadProductsUseCase = ref.watch(
+    loadProductsUseCaseProvider,
+  );
+  late final GetTabSectionsUseCase _getTabSectionsUseCase = ref.watch(
+    getTabSectionsUseCaseProvider,
+  );
+
+  @override
+  HomeState build(StoreType storeType) {
+    return const HomeState();
+  }
 
   Future<void> loadProducts() async {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      final type = switch (storeType) {
+      final apiType = switch (storeType) {
         StoreType.apps => 'app',
         StoreType.games => 'game',
         StoreType.books => 'book',
       };
 
-      final products = await loadProductsUseCase(type: type);
+      final products = await _loadProductsUseCase(type: apiType);
       state = state.copyWith(isLoading: false, products: products);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e);
@@ -45,7 +51,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     );
 
     try {
-      final sections = await getTabSectionsUseCase(
+      final sections = await _getTabSectionsUseCase(
         storeType: storeType,
         tabKey: tabKey,
       );

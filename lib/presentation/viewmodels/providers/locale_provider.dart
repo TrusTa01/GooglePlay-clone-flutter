@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-// TODO: добавить SharedPreferences, чтобы язык не слетал после перезагрузки
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class LocaleNotifier extends Notifier<Locale?> {
+part 'locale_provider.g.dart';
+
+// TODO: добавить SharedPreferences, чтобы язык не слетал после перезагрузки
+@riverpod
+class LocaleNotifier extends _$LocaleNotifier {
   @override
   Locale? build() => null;
 
@@ -11,7 +14,3 @@ class LocaleNotifier extends Notifier<Locale?> {
 
   void clearLoclae() => state = null;
 }
-
-final localeProvider = NotifierProvider<LocaleNotifier, Locale?>(
-  () => LocaleNotifier(),
-);

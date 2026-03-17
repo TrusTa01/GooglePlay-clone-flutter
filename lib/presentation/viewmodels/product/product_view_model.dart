@@ -4,12 +4,12 @@ import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/domain/usecases/products/get_product_by_id_usecase.dart';
 import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_mappers/product_state_mapper.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-/// ViewModel страницы продукта (детали, хедер, поддержка)
-/// Состояние строится из use case `GetProductByIdUseCase`
-/// Виджеты читают только [state], без проверок типа и кастов
-class ProductViewModel extends Notifier<ProductState> {
+part 'product_view_model.g.dart';
+
+@riverpod
+class ProductViewModel extends _$ProductViewModel {
   late final GetProductByIdUseCase _getProductByIdUseCase;
 
   ProductViewModel() {
@@ -19,11 +19,7 @@ class ProductViewModel extends Notifier<ProductState> {
   @override
   ProductState build() => const ProductState(isLoading: true);
 
-  Future<void> loadById(
-    String id,
-    AppLocalizations l10n,
-    Locale locale,
-  ) async {
+  Future<void> loadById(String id, AppLocalizations l10n, Locale locale) async {
     state = state.copyWith(isLoading: true, productId: id, errorMessage: null);
 
     final product = await _getProductByIdUseCase(id);

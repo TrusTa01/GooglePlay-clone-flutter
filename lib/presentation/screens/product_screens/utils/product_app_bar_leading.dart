@@ -4,7 +4,7 @@ import 'package:google_play/presentation/widgets/widgets.dart';
 
 // Миниатюра продукта для использования в SimpleAppBar (titleLeading)
 class ProductAppBarLeading extends StatelessWidget {
-  final ProductDetailsState state;
+  final ProductState state;
 
   const ProductAppBarLeading({super.key, required this.state});
 

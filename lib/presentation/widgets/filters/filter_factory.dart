@@ -3,33 +3,37 @@ import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/presentation/screens/category/product_categories_data.dart';
 import 'package:google_play/presentation/screens/kids_screen/kids_age_category_screen.dart';
-import 'package:google_play/presentation/viewmodels/providers/filter_provider.dart';
+import 'package:google_play/presentation/viewmodels/filters/filter_provider.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum FilterType { games, apps, books, kidsAge }
 
 class FilterSets {
   static Widget getFilters(
     BuildContext context,
-    FilterType type,
-    FilterProvider filterProvider, {
+    WidgetRef ref,
+    FilterType type, {
     String sectionTitle = '',
     String subtitle = '',
   }) {
+    final state = ref.watch(filterProvider);
+    final notifier = ref.read(filterProvider.notifier);
+
     final l10n = context.l10n;
     List<Widget> activeFilters = [];
 
     switch (type) {
       case FilterType.games:
-        if (filterProvider.isCategoryOverviewMode) {
+        if (state.isCategoryOverviewMode) {
           activeFilters = [
             ModalFilter(
               isFullScreen: true,
               modalTitle: l10n.filterCategories,
               defaultTitle: l10n.filterCategories,
               options: gamesCategoriesData,
-              currentSelection: filterProvider.selectedGameCategory,
-              onSelected: (val) => filterProvider.updateGameCategory(val),
+              currentSelection: state.selectedGameCategory,
+              onSelected: (val) => notifier.updateGameCategory(val),
             ),
           ];
         } else {
@@ -38,9 +42,9 @@ class FilterSets {
               isFullScreen: false,
               defaultTitle: l10n.filterTopFreeOption,
               modalTitle: l10n.filterTopCharts,
-              currentSelection: filterProvider.selectedTopFilter,
+              currentSelection: state.selectedTopFilter,
               options: topFilterOptions,
-              onSelected: (val) => filterProvider.setTopFilter(val),
+              onSelected: (val) => notifier.setTopFilter(val),
               highlightDefault: true,
             ),
             ModalFilter(
@@ -48,28 +52,28 @@ class FilterSets {
               modalTitle: l10n.filterCategories,
               defaultTitle: l10n.filterCategories,
               options: gamesCategoriesData,
-              currentSelection: filterProvider.selectedGameCategory,
-              onSelected: (val) => filterProvider.updateGameCategory(val),
+              currentSelection: state.selectedGameCategory,
+              onSelected: (val) => notifier.updateGameCategory(val),
             ),
             ToggleFilter(
-              label: lookupL10n(l10n, filterProvider.selectedRecentFilter),
-              isSelected: filterProvider.isFilterOnlyMode,
-              onSelected: filterProvider.toggleFilterOnly,
+              label: lookupL10n(l10n, state.selectedRecentFilter),
+              isSelected: state.isFilterOnlyMode,
+              onSelected: notifier.toggleFilterOnly,
             ),
           ];
         }
         break;
 
       case FilterType.apps:
-        if (filterProvider.isCategoryOverviewMode) {
+        if (state.isCategoryOverviewMode) {
           activeFilters = [
             ModalFilter(
               isFullScreen: true,
               modalTitle: l10n.filterCategories,
               defaultTitle: l10n.filterCategories,
               options: appsCategoriesData,
-              currentSelection: filterProvider.selectedAppCategory,
-              onSelected: (val) => filterProvider.updateAppCategory(val),
+              currentSelection: state.selectedAppCategory,
+              onSelected: (val) => notifier.updateAppCategory(val),
             ),
           ];
         } else {
@@ -78,9 +82,9 @@ class FilterSets {
               isFullScreen: false,
               defaultTitle: l10n.filterTopFreeOption,
               modalTitle: l10n.filterTopCharts,
-              currentSelection: filterProvider.selectedTopFilter,
+              currentSelection: state.selectedTopFilter,
               options: topFilterOptions,
-              onSelected: (val) => filterProvider.setTopFilter(val),
+              onSelected: (val) => notifier.setTopFilter(val),
               highlightDefault: true,
             ),
             ModalFilter(
@@ -88,15 +92,15 @@ class FilterSets {
               modalTitle: l10n.filterCategories,
               defaultTitle: l10n.filterCategories,
               options: appsCategoriesData,
-              currentSelection: filterProvider.selectedAppCategory,
-              onSelected: (val) => filterProvider.updateAppCategory(val),
+              currentSelection: state.selectedAppCategory,
+              onSelected: (val) => notifier.updateAppCategory(val),
             ),
           ];
         }
         break;
 
       case FilterType.kidsAge:
-        activeFilters = filterProvider.selectedKidsFilters
+        activeFilters = state.selectedKidsFilters
             .map(
               (ageKey) => Builder(
                 builder: (ctx) {
@@ -120,15 +124,15 @@ class FilterSets {
         break;
 
       case FilterType.books:
-        if (filterProvider.isCategoryOverviewMode) {
+        if (state.isCategoryOverviewMode) {
           activeFilters = [
             ModalFilter(
               isFullScreen: true,
               modalTitle: l10n.filterGenre,
               defaultTitle: l10n.filterGenre,
               options: booksGenresData,
-              currentSelection: filterProvider.selectedBookGenre,
-              onSelected: (val) => filterProvider.updateBookGenre(val),
+              currentSelection: state.selectedBookGenre,
+              onSelected: (val) => notifier.updateBookGenre(val),
             ),
           ];
         } else {
@@ -138,40 +142,40 @@ class FilterSets {
               modalTitle: l10n.filterGenre,
               defaultTitle: l10n.filterGenre,
               options: booksGenresData,
-              currentSelection: filterProvider.selectedBookGenre,
-              onSelected: (val) => filterProvider.updateBookGenre(val),
+              currentSelection: state.selectedBookGenre,
+              onSelected: (val) => notifier.updateBookGenre(val),
             ),
             ModalFilter(
               isFullScreen: false,
               defaultTitle: l10n.filterAge,
               modalTitle: l10n.filterAge,
               options: ageFilterData,
-              currentSelection: filterProvider.selectedAgeFilter,
-              onSelected: (val) => filterProvider.setAgeFilter(val),
+              currentSelection: state.selectedAgeFilter,
+              onSelected: (val) => notifier.setAgeFilter(val),
             ),
             ModalFilter(
               isFullScreen: false,
               defaultTitle: l10n.filterByRating,
               modalTitle: l10n.filterByRating,
               options: byRating,
-              currentSelection: filterProvider.selectedRatingFilter,
-              onSelected: (val) => filterProvider.setRatingFilter(val),
+              currentSelection: state.selectedRatingFilter,
+              onSelected: (val) => notifier.setRatingFilter(val),
             ),
             ModalFilter(
               isFullScreen: true,
               modalTitle: l10n.filterLanguage,
               defaultTitle: l10n.filterLanguage,
               options: languagesData,
-              currentSelection: filterProvider.selectedLanguageFilter,
-              onSelected: (val) => filterProvider.setLanguageFilter(val),
+              currentSelection: state.selectedLanguageFilter,
+              onSelected: (val) => notifier.setLanguageFilter(val),
             ),
             ModalFilter(
               isFullScreen: false,
               defaultTitle: l10n.filterAbridged,
               modalTitle: l10n.filterAbridged,
               options: abridgetVersion,
-              currentSelection: filterProvider.selectedAbridgetVersionFilter,
-              onSelected: (val) => filterProvider.setAbridgedVersionFilter(val),
+              currentSelection: state.selectedAbridgetVersionFilter,
+              onSelected: (val) => notifier.setAbridgedVersionFilter(val),
             ),
           ];
         }

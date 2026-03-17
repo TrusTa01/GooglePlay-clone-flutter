@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_mappers/about_author_mapper.dart';
+import 'package:google_play/presentation/viewmodels/providers/product_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/viewmodels/product/product_view_model.dart';
-import 'package:google_play/presentation/viewmodels/providers/product_providers.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 
@@ -31,8 +31,9 @@ class _ProductPageContent extends ConsumerWidget {
     // Читаем текущее состояние деталей продукта
     final ProductState state = ref.watch(productViewModelProvider);
 
-    final productViewModel =
-        ref.read<ProductViewModel>(productViewModelProvider.notifier);
+    final productViewModel = ref.read<ProductViewModel>(
+      productViewModelProvider.notifier,
+    );
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context);
 
@@ -123,6 +124,7 @@ class _ProductPageContent extends ConsumerWidget {
                       // TODO: Принимать не product, перейти на usecase
                       SliverToBoxAdapter(
                         child: ProductPageSimilarAndFooter(
+                          onProductTap: (value) {},
                           sectionTitle: state.title,
                           similarProducts:
                               const [], // TODO: queryService.getSimilarProducts

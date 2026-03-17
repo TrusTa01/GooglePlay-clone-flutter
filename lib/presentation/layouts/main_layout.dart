@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/constants/global_constants.dart';
-import 'package:google_play/presentation/viewmodels/providers/filter_provider.dart';
 import 'package:google_play/core/extensions/navigator_extension.dart';
 import 'package:google_play/core/extensions/indexed_stack_extension.dart';
 import 'package:google_play/presentation/screens/screens.dart';
@@ -31,31 +30,12 @@ class MainLayout extends HookConsumerWidget {
       [],
     );
 
-    bool shouldResetFilters(int fromIndex, int toIndex) {
-      // Не сбрасываем если останемся на той же вкладке
-      if (fromIndex == toIndex) return false;
-
-      // Сбрасываем при переходе между любыми главными вкладками
-      // Games (0) <-> Apps (1) <-> Books (3)
-      // Search (2) Не имеет фильтров, игнорируем
-      final contentTabs = [0, 1, 3]; // Games, Apps, Books
-
-      final fromIsContent = contentTabs.contains(fromIndex);
-      final toIsContent = contentTabs.contains(toIndex);
-
-      return fromIsContent && toIsContent;
-    }
-
     // Переключение на другую вкладку
     void popToRoot(int index) =>
         navigatorKeys[index].currentState?.popUntil((route) => route.isFirst);
 
     // Переключение вкладки
     void switchTab(int index) {
-      final fromIndex = currentPageIndex.value;
-      if (shouldResetFilters(fromIndex, index)) {
-        context.read<FilterProvider>().resetForTabIndex(index);
-      }
       currentPageIndex.value = index;
       visitedPagesIndexes.value = {...visitedPagesIndexes.value, index};
     }

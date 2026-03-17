@@ -8,7 +8,7 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
   final String sectionTitle;
   final List<ProductCardUiModel> similarProducts;
   final String link;
-  final VoidCallback onProductTap;
+  final ValueChanged onProductTap;
 
   const ProductPageSimilarAndFooter({
     super.key,
