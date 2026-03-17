@@ -35,3 +35,5 @@ export 'product_screens/details_screen.dart';
 export 'product_screens/product_screen.dart';
 export 'product_screens/permissions_screen.dart';
 export 'product_screens/about_author_screen.dart';
+export 'package:google_play/presentation/screens/product_screens/product_screen_tags.dart';
+export 'package:google_play/presentation/screens/product_screens/product_page_sections/product_page_sections.dart';

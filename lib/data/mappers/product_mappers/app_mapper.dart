@@ -27,6 +27,8 @@ extension AppMapper on AppDto {
       version: version,
       downloadCount: downloadCount,
       containsAds: containsAds,
+      containsPaidContent: containsPaidContent,
+      eventText: eventText,
       whatsNewText: whatsNewText,
       lastUpdated: lastUpdated,
       ageRating: ageRating,

@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/domain/entities/products/book_entity.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/about_author_ui_model.dart';
 
-class AboutAuthorScreen extends ConsumerWidget {
-  final BookEntity book;
-  
-  const AboutAuthorScreen({super.key, required this.book});
+class AboutAuthorScreen extends StatelessWidget {
+  final AboutAuthorUiModel model;
+
+  const AboutAuthorScreen({super.key, required this.model});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(book.creator),
-      ),
+      appBar: AppBar(title: Text(model.authorName)),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 22),
-        child: Column(
-          children: [
-            Text(book.creatorDescription),
-          ],
-        ),
+        child: Column(children: [Text(model.authorDescription)]),
       ),
     );
   }

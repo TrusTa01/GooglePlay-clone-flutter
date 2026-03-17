@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'product_details_state.freezed.dart';
+part 'product_state.freezed.dart';
 
 // Одна строка блока 'Подробнее'
 class InfoRowData {
@@ -48,8 +48,8 @@ enum SupportSectionType {
 }
 
 @freezed
-abstract class ProductDetailsState with _$ProductDetailsState {
-  const factory ProductDetailsState({
+abstract class ProductState with _$ProductState {
+  const factory ProductState({
     @Default(false) bool isLoading,
     String? errorMessage,
 
@@ -59,6 +59,7 @@ abstract class ProductDetailsState with _$ProductDetailsState {
     // Базовая информация
     @Default('') String title,
     @Default('') String creator,
+    String? creatorDescription,
     @Default('') String iconUrl,
     @Default('') String shortDescription,
     @Default('') String description,
@@ -69,6 +70,7 @@ abstract class ProductDetailsState with _$ProductDetailsState {
     @Default('') String technicalInfo,
     @Default('') String technicalInfoFormatted,
     @Default(false) bool isPaid,
+    String? eventText,
     @Default('') String version,
     @Default(<String>[]) List<String> permissions,
 
@@ -114,6 +116,7 @@ abstract class ProductDetailsState with _$ProductDetailsState {
     String? ageRatingReasons,
     @Default(false) bool showAds,
     @Default(false) bool showAchievements,
+    @Default(false) bool containsPaidContent,
 
     // Теги (для приложений/игр)
     @Default([]) List<String> tags,

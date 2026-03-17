@@ -1,0 +1,23 @@
+import 'package:google_play/domain/entities/banners/action_banner_entity.dart';
+import 'package:google_play/domain/entities/banners/banner_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/banner_item_ui_model.dart';
+
+class BannerItemMapper {
+  const BannerItemMapper();
+
+  BannerItemUiModel fromEntity(
+    BannerEntity banner, {
+    ActionRowUiModel? actionRow,
+  }) {
+    return BannerItemUiModel(
+      id: banner.id,
+      imageAssetPath: banner.imageAssetPath,
+      title: banner.title,
+      topTooltipText: banner.topToolTipText,
+      description: banner.description,
+      productId: banner is ActionBannerEntity ? banner.productId : null,
+      actionRow: actionRow,
+    );
+  }
+}

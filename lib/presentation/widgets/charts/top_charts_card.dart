@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class TopChartsCard extends StatelessWidget {
-  const TopChartsCard({super.key, required this.product, required this.rank});
-
-  final Product product;
+  final ActionRowUiModel model;
+  final bool showButton;
   final int rank;
+  final VoidCallback? onTap;
+
+  const TopChartsCard({
+    super.key,
+    required this.model,
+    required this.rank,
+    required this.showButton,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final isBook = product is Book;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
 
@@ -29,29 +35,10 @@ class TopChartsCard extends StatelessWidget {
           const SizedBox(width: 15),
           Expanded(
             child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ProductPageScreen(productId: product.id),
-                  ),
-                );
-              },
+              onTap: onTap,
+              // TODO: go_router => ProductPageScreen
               borderRadius: BorderRadius.circular(12),
-              child: ActionRow(
-                product: product,
-                hasThreeLines: true,
-                showButton: false,
-                iconWidth: isBook ? 60 : 65,
-                iconHeight: isBook ? 90 : 65,
-                cacheWidth: isBook ? 180 : 190,
-                cacheHeight: isBook ? 270 : 190,
-                borderRadius: isBook
-                    ? BorderRadius.circular(6)
-                    : BorderRadius.circular(12),
-                fit: isBook ? BoxFit.fill : BoxFit.cover,
-              ),
+              child: ActionRow(model: model, showButton: showButton),
             ),
           ),
         ],

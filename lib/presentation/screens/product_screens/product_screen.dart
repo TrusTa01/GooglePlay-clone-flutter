@@ -1,49 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/domain/entities/products/book_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_mappers/about_author_mapper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
 import 'package:google_play/presentation/viewmodels/product/product_state.dart';
-import 'package:google_play/presentation/viewmodels/product/product_details_view_model.dart';
+import 'package:google_play/presentation/viewmodels/product/product_view_model.dart';
 import 'package:google_play/presentation/viewmodels/providers/product_providers.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
-import 'package:google_play/presentation/screens/product_screens/product_page_sections/product_page_sections.dart';
-import 'package:google_play/presentation/screens/product_screens/product_screen_tags.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 
 /// Экран страницы продукта (приложение, книга, игра)
 class ProductPageScreen extends ConsumerWidget {
-  final ProductEntity product;
+  final String productId;
 
-  const ProductPageScreen({super.key, required this.product});
+  const ProductPageScreen({super.key, required this.productId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return _ProductPageContent(product: product);
+    return _ProductPageContent(productId: productId);
   }
 }
 
 class _ProductPageContent extends ConsumerWidget {
-  final ProductEntity product;
+  final String productId;
 
-  const _ProductPageContent({required this.product});
+  const _ProductPageContent({required this.productId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Читаем текущее состояние деталей продукта
-    final ProductDetailsState state = ref.watch(
-      productDetailsViewModelProvider,
-    );
+    final ProductState state = ref.watch(productViewModelProvider);
 
-    final productDetailsViewModel = ref.read<ProductDetailsViewModel>(
-      productDetailsViewModelProvider.notifier,
-    );
+    final productViewModel =
+        ref.read<ProductViewModel>(productViewModelProvider.notifier);
     final l10n = context.l10n;
     final locale = Localizations.localeOf(context);
 
-    if (state.productId != product.id) {
-      productDetailsViewModel.updateFromProduct(product, l10n, locale);
+    if (state.productId != productId && !state.isLoading) {
+      productViewModel.loadById(productId, l10n, locale);
     }
 
     return Scaffold(
@@ -58,12 +52,10 @@ class _ProductPageContent extends ConsumerWidget {
                 SimpleSliverAppBar(
                   showBackButton: true,
                   showLogo: false,
-                  title: Text(
-                    state.title.isNotEmpty ? state.title : product.title,
-                  ),
+                  title: Text(state.title),
                   titleLeading: null,
                   actions: [
-                    ProductPopupMenu(title: product.title, url: product.url),
+                    ProductPopupMenu(title: state.title, url: state.url),
                   ],
                 ),
                 SliverPadding(
@@ -106,27 +98,34 @@ class _ProductPageContent extends ConsumerWidget {
                         child: ProductPageSupportSection(
                           state: state,
                           onAboutAuthorTap:
-                              state.supportSectionType == SupportSectionType.aboutAuthor &&
-                                      product is BookEntity
-                                  ? () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => AboutAuthorScreen(
-                                            book: product as BookEntity,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  : null,
+                              state.supportSectionType ==
+                                  SupportSectionType.aboutAuthor
+                              ? ()
+                                // TODO: в уровне навигации => openAboutAuthor(state.productId)
+                                {
+                                  final aboutAuthorMapper = AboutAuthorMapper();
+                                  final model = aboutAuthorMapper.fromState(
+                                    state,
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AboutAuthorScreen(model: model),
+                                    ),
+                                  );
+                                }
+                              : null,
                         ),
                       ),
                       Constants.sliverDivider15,
 
+                      // TODO: Принимать не product, перейти на usecase
                       SliverToBoxAdapter(
                         child: ProductPageSimilarAndFooter(
-                          product: product,
-                          similarProducts: const [],
+                          sectionTitle: state.title,
+                          similarProducts:
+                              const [], // TODO: queryService.getSimilarProducts
                           link: 'https://support.google.com/',
                         ),
                       ),

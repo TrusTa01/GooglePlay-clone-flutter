@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/data/models/dtos.dart';
+import 'package:google_play/presentation/screens/product_screens/product_screen.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
 import 'package:google_play/presentation/widgets/charts/top_charts_card.dart';
 
 class TopChartsSection extends StatelessWidget {
-  const TopChartsSection({super.key, required this.items});
+  final List<ActionRowUiModel> items;
 
-  final List<Product> items;
+  const TopChartsSection({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: Constants.sliderMaxContentWidth,
-        ),
+        constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
         child: LayoutBuilder(
           builder: (context, constraints) {
             const double minItemWidth = 350;
@@ -37,8 +36,18 @@ class TopChartsSection extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return TopChartsCard(
                     key: ValueKey(items[index].id),
-                    product: items[index],
+                    showButton: true,
+                    model: items[index],
                     rank: index + 1,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              ProductPageScreen(productId: items[index].id),
+                        ),
+                      );
+                    },
                   );
                 },
               ),

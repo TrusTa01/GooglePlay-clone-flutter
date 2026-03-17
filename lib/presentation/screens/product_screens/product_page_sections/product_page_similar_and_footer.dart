@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/product_card_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
-// TODO: заменить тип у similar products
 class ProductPageSimilarAndFooter extends StatelessWidget {
-  final ProductEntity product;
-  final List<ProductEntity> similarProducts;
+  final String sectionTitle;
+  final List<ProductCardUiModel> similarProducts;
   final String link;
+  final VoidCallback onProductTap;
 
   const ProductPageSimilarAndFooter({
     super.key,
-    required this.product,
+    required this.sectionTitle,
     required this.similarProducts,
     required this.link,
+    required this.onProductTap,
   });
 
   @override
@@ -25,11 +26,12 @@ class ProductPageSimilarAndFooter extends StatelessWidget {
       children: [
         if (similarProducts.isNotEmpty) ...[
           ProductCarousel(
-            title: product.title,
+            title: sectionTitle,
             items: similarProducts,
             maxItems: 10,
             leftPadding: 0,
             needsRightPadding: false,
+            onProductTap: onProductTap,
           ),
         ],
         const SizedBox(height: 25),

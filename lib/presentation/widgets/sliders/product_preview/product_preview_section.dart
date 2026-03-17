@@ -1,34 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/domain/entities/products/software_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPreviewSection extends StatelessWidget {
-  final List<SoftwareEntity> item;
+  final List<String> productIds;
+  final Map<String, List<String>> screenshotsByProductId;
+  final Map<String, ActionRowUiModel> actionRowsByProductId;
   final bool nestedInScrollView;
   final bool showButton;
   final bool isSliver;
+  final ValueChanged<String>? onProductTap;
 
   const ProductPreviewSection({
     super.key,
-    required this.item,
+    required this.productIds,
+    required this.screenshotsByProductId,
+    required this.actionRowsByProductId,
     this.nestedInScrollView = false,
     this.showButton = false,
     this.isSliver = false,
+    this.onProductTap,
   });
 
-  static Widget asSliver({required List<SoftwareEntity> item}) {
+  static Widget asSliver({
+    required List<String> productIds,
+    required Map<String, List<String>> screenshotsByProductId,
+    required Map<String, ActionRowUiModel> actionRowsByProductId,
+    ValueChanged<String>? onProductTap,
+  }) {
     return ProductPreviewSection(
-      item: item,
+      productIds: productIds,
+      screenshotsByProductId: screenshotsByProductId,
+      actionRowsByProductId: actionRowsByProductId,
       nestedInScrollView: false,
       isSliver: true,
+      onProductTap: onProductTap,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (item.isEmpty) {
-      debugPrint('Ошибка: products.isEmpty (game preview section)');
+    if (productIds.isEmpty) {
+      debugPrint('Ошибка: productIds.isEmpty (game preview section)');
       return isSliver
           ? const SliverToBoxAdapter(child: SizedBox.shrink())
           : const SizedBox.shrink();
@@ -39,11 +53,22 @@ class ProductPreviewSection extends StatelessWidget {
         padding: const EdgeInsets.only(left: 22),
         sliver: SliverList.separated(
           separatorBuilder: (context, index) => const SizedBox(height: 35),
-          itemCount: item.length,
-          itemBuilder: (context, index) => softwareProductPreviewCard(
-            key: ValueKey(item[index].id),
-            softwareProduct: item[index],
-          ),
+          itemCount: productIds.length,
+          itemBuilder: (context, index) {
+            final productId = productIds[index];
+            final screenshots = screenshotsByProductId[productId] ?? const [];
+            final actionRow = actionRowsByProductId[productId];
+
+            return ProductPreviewCard(
+              key: ValueKey(productId),
+              productId: productId,
+              screenshots: screenshots,
+              actionRow: actionRow,
+              onTap: onProductTap != null
+                  ? () => onProductTap!(productId)
+                  : null,
+            );
+          },
         ),
       );
     }
@@ -58,11 +83,22 @@ class ProductPreviewSection extends StatelessWidget {
               : null,
           padding: const EdgeInsets.only(left: 22),
           separatorBuilder: (context, index) => const SizedBox(height: 35),
-          itemCount: item.length,
-          itemBuilder: (context, index) => softwareProductPreviewCard(
-            key: ValueKey(item[index].id),
-            softwareProduct: item[index],
-          ),
+          itemCount: productIds.length,
+          itemBuilder: (context, index) {
+            final productId = productIds[index];
+            final screenshots = screenshotsByProductId[productId] ?? const [];
+            final actionRow = actionRowsByProductId[productId];
+
+            return ProductPreviewCard(
+              key: ValueKey(productId),
+              productId: productId,
+              screenshots: screenshots,
+              actionRow: actionRow,
+              onTap: onProductTap != null
+                  ? () => onProductTap!(productId)
+                  : null,
+            );
+          },
         ),
       ),
     );

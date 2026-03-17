@@ -3,30 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/core/extensions/product_resolver_extension.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/banner_item_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/presentation/widgets/sliders/banners/utils/banner_layout_config.dart';
 
 class BannerSection extends HookWidget {
-  final List<AppBanner> banners;
-  final BannerType type;
+  final List<BannerItemUiModel> banners;
   final double heightFactor;
   final String title;
   final String subtitle;
   final bool showButton;
   final int? maxItems;
+  final ValueChanged<BannerItemUiModel>? onBannerTap;
 
   const BannerSection({
     super.key,
     required this.banners,
-    this.type = BannerType.simple,
     this.heightFactor = 3.5,
     required this.title,
     this.subtitle = '',
     required this.showButton,
     this.maxItems,
+    this.onBannerTap,
   });
 
   @override
@@ -126,7 +124,7 @@ class BannerSection extends HookWidget {
                   child: SizedBox(
                     height: screenHeight / config.heightFactor,
                     child: PageView.builder(
-                      key: ValueKey('banner_$type${config.viewportFraction}'),
+                      key: ValueKey('banner_${config.viewportFraction}'),
                       onPageChanged: (index) => currentPage.value = index,
                       scrollDirection: Axis.horizontal,
                       controller: controller,
@@ -135,10 +133,11 @@ class BannerSection extends HookWidget {
                         final banner = banners[index];
                         return BannerItem(
                           key: ValueKey(banner.id),
-                          banner: banner,
-                          type: type,
+                          model: banner,
                           horizontalPadding: config.bannerPadding,
-                          onTap: () {},
+                          onTap: onBannerTap != null
+                              ? () => onBannerTap!(banner)
+                              : null,
                         );
                       },
                     ),

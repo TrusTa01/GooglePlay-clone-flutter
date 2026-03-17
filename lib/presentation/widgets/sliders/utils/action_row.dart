@@ -1,50 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/domain/entities/banners/action_banner_entity.dart';
-import 'package:google_play/domain/entities/base_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
 import 'package:google_play/presentation/widgets/buttons/elevated_button.dart';
 import 'package:google_play/presentation/widgets/sliders/utils/product_card_components.dart';
 
 class ActionRow extends StatelessWidget {
-  final Entity? product;
-  final ActionBannerEntity? banner;
-  final bool hasThreeLines;
+  final ActionRowUiModel model;
   final bool showButton;
-  final String? eventText;
-  final double iconWidth;
-  final double iconHeight;
-  final int cacheWidth;
-  final int cacheHeight;
-  final BorderRadius? borderRadius;
-  final BoxFit? fit;
 
-  const ActionRow({
-    super.key,
-    this.product,
-    this.banner,
-    this.iconWidth = 45,
-    this.iconHeight = 45,
-    this.cacheWidth = 150,
-    this.cacheHeight = 150,
-    this.eventText,
-    this.showButton = true,
-    this.hasThreeLines = false,
-    this.borderRadius,
-    this.fit,
-  });
+  const ActionRow({super.key, required this.model, required this.showButton});
 
   @override
   Widget build(BuildContext context) {
-    if (product == null) return const SizedBox.shrink();
-
-    final formatter = ProductDataFormatter(context, product);
-
-    bool containsPaidContent = false;
-    if (product is Game || product is App) {
-      containsPaidContent = product.containsPaidContent;
-    }
-
     final String iconPath = 'assets/icons/star.png';
     final screenWidth = MediaQuery.sizeOf(context).width;
 
@@ -52,13 +20,13 @@ class ActionRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ProductCardThumbnail(
-          borderRadius: borderRadius ?? BorderRadius.circular(12),
-          iconUrl: product.iconUrl,
-          iconWidth: iconWidth,
-          iconHeight: iconHeight,
-          cacheWidth: cacheWidth,
-          cacheHeight: cacheHeight,
-          fit: fit ?? BoxFit.cover,
+          borderRadius: model.thumbnailBorderRadius,
+          iconUrl: model.thumbnailUrl,
+          iconWidth: model.thumbnailWidth,
+          iconHeight: model.thumbnailHeight,
+          cacheWidth: model.thumbnailCacheWidth,
+          cacheHeight: model.thumbnailCacheHeight,
+          fit: model.thumbnailFit,
         ),
         const SizedBox(width: 10),
         Flexible(
@@ -67,64 +35,58 @@ class ActionRow extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ProductTitle(
-                title: product.title,
+                title: model.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Row(
                 children: [
-                  if (!hasThreeLines) ...[
-                    ProductCreatorText(creator: product.creator),
-                    const DotSeparator(),
-                    AgeBadge(age: product.ageRating),
-                    const SizedBox(width: 10),
-                    if (screenWidth > 320)
-                      ProductInfoTag(
-                        text: formatter.rating,
-                        iconPath: iconPath,
-                      ),
-                  ],
+                  if (!model.showThreeLines)
+                    ProductCreatorText(creator: model.creator),
+                  const DotSeparator(),
+                  AgeBadge(age: model.ageLabel),
+                  const SizedBox(width: 10),
+                  if (screenWidth > 320)
+                    ProductInfoTag(text: model.ratingText, iconPath: iconPath),
                 ],
               ),
-              if (hasThreeLines)
+              if (model.showThreeLines)
                 Column(
                   children: [
                     Row(
                       children: [
-                        Expanded(child: ActionRowTags(product: product)),
+                        Expanded(child: ActionRowTags(tags: model.tags)),
                       ],
                     ),
                     const SizedBox(height: 3),
                     Row(
                       children: [
                         ProductInfoTag(
-                          text: formatter.rating,
+                          text: model.ratingText,
                           iconPath: iconPath,
                           iconColor: Constants.googleBlue,
                         ),
                         const SizedBox(width: 10),
-                        if (product is Book)
+                        if (model.isBook && model.technicalInfoText != null)
                           ProductInfoTag(
-                            text: product.format,
+                            text: model.technicalInfoText!,
                             hasBackground: true,
                           ),
-                        if (product is! Book)
+                        if (!model.isBook && model.technicalInfoText != null)
                           ProductInfoTag(
-                            text: formatter.technicalInfoFormatted,
+                            text: model.technicalInfoText!,
                             hasBackground: false,
                           ),
                         const SizedBox(width: 10),
-                        if (product is Game || product is App)
-                          if (product.eventText != null &&
-                              !product.isPaid)
-                            Flexible(
-                              child: ProductInfoTag(
-                                text: product.eventText!,
-                              ),
-                            ),
-                        if (product.isPaid && screenWidth > 320)
-                          ProductInfoTag(text: formatter.price),
-                        if (product is Book && !product.isPaid)
+                        if (model.eventText != null && !model.isPaid)
+                          Flexible(
+                            child: ProductInfoTag(text: model.eventText!),
+                          ),
+                        if (model.isPaid &&
+                            screenWidth > 320 &&
+                            model.priceText != null)
+                          ProductInfoTag(text: model.priceText!),
+                        if (model.isBook && !model.isPaid)
                           ProductInfoTag(text: context.l10n.tagFree),
                       ],
                     ),
@@ -134,24 +96,11 @@ class ActionRow extends StatelessWidget {
           ),
         ),
         if (showButton)
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CustomElevatedButton(
-                isPaid: product.isPaid,
-                price: formatter.price,
-                defaultButtonText: context.l10n.buttonInstall,
-              ),
-              if (containsPaidContent)
-                Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    context.l10n.tagContainsPaidContent,
-                    style: const TextStyle(fontSize: 8, color: Colors.black),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-            ],
+          ActionRowButton(
+            isPaid: model.isPaid,
+            price: model.priceText ?? '',
+            defaultButtonText: context.l10n.buttonInstall,
+            containsPaidContent: model.containsPaidContent,
           ),
       ],
     );

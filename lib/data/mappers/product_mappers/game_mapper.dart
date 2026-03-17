@@ -27,6 +27,8 @@ extension GameMapper on GameDto {
       version: version,
       downloadCount: downloadCount,
       containsAds: containsAds,
+      containsPaidContent: containsPaidContent,
+      eventText: eventText,
       whatsNewText: whatsNewText,
       lastUpdated: lastUpdated,
       ageRating: ageRating,

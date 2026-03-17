@@ -7,7 +7,7 @@ import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageSupportSection extends StatelessWidget {
-  final ProductDetailsState state;
+  final ProductState state;
   final VoidCallback? onAboutAuthorTap;
 
   const ProductPageSupportSection({

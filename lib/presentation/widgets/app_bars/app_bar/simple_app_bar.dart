@@ -140,7 +140,7 @@ class SimpleSliverAppBar extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              if (leading != null) leading,
+              ?leading,
               if (title != null) Expanded(child: title) else const Spacer(),
               ...?actions,
             ],

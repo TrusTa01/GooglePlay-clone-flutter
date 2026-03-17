@@ -6,7 +6,7 @@ import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageRatingRow extends StatelessWidget {
-  final ProductDetailsState state;
+  final ProductState state;
   final String link;
 
   const ProductPageRatingRow({

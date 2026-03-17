@@ -5,7 +5,7 @@ import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageHeader extends StatelessWidget {
-  final ProductDetailsState state;
+  final ProductState state;
 
   const ProductPageHeader({super.key, required this.state});
 

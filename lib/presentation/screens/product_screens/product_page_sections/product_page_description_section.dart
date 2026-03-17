@@ -4,7 +4,7 @@ import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageDescriptionSection extends StatelessWidget {
-  final ProductDetailsState state;
+  final ProductState state;
 
   const ProductPageDescriptionSection({
     super.key,

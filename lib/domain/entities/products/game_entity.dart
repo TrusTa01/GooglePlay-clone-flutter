@@ -27,6 +27,8 @@ final class GameEntity extends SoftwareEntity {
     required super.version,
     required super.downloadCount,
     required super.containsAds,
+    required super.containsPaidContent,
+    super.eventText,
     required super.whatsNewText,
     required super.lastUpdated,
     required super.ageRating,

@@ -8,12 +8,12 @@ import 'package:google_play/domain/entities/products/software_entity.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 
-/// Собирает [ProductDetailsState] из [ProductEntity]
+/// Собирает [ProductState] из [ProductEntity]
 /// Вся логика ветвления по типу продукта (book/app/game) сосредоточена здесь
-class ProductDetailsStateMapper {
-  const ProductDetailsStateMapper();
+class ProductStateMapper {
+  const ProductStateMapper();
 
-  ProductDetailsState fromEntity(
+  ProductState fromEntity(
     ProductEntity product,
     AppLocalizations l10n,
     Locale locale,
@@ -109,6 +109,13 @@ class ProductDetailsStateMapper {
     final showAds = software?.containsAds ?? false;
     final showAchievements = game?.hasAchievements ?? false;
 
+    // Paid content & promo event (для ActionRow / баннеров)
+    final containsPaidContent = software?.containsPaidContent ?? false;
+    final eventText = software?.eventText;
+
+    // Описание автора (для книг)
+    final creatorDescription = book?.creatorDescription;
+
     // Permissions & Tags
     final version = software?.version ?? '';
     final permissions = software?.permissions ?? const <String>[];
@@ -126,10 +133,11 @@ class ProductDetailsStateMapper {
       software,
     );
 
-    return ProductDetailsState(
+    return ProductState(
       productId: product.id,
       title: product.title,
       creator: product.creator,
+      creatorDescription: creatorDescription,
       iconUrl: product.iconUrl,
       shortDescription: product.shortDescription,
       description: product.description,
@@ -140,6 +148,7 @@ class ProductDetailsStateMapper {
       technicalInfo: product.technicalInfo,
       technicalInfoFormatted: technicalInfoFormatted,
       isPaid: product.isPaid,
+      eventText: eventText,
       version: version,
       permissions: permissions,
       ratingLabelText: ratingLabelText,
@@ -173,6 +182,7 @@ class ProductDetailsStateMapper {
       ageRatingReasons: ageRatingReasonsStr,
       showAds: showAds,
       showAchievements: showAchievements,
+      containsPaidContent: containsPaidContent,
       tags: tags,
       showTags: showTags,
       infoRows: infoRows,

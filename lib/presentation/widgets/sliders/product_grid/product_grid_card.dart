@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductGridCard extends StatelessWidget {
-  final Product product;
+  final ActionRowUiModel model;
   final VoidCallback onProductTap;
 
   const ProductGridCard({
     super.key,
-    required this.product,
+    required this.model,
     required this.onProductTap,
   });
-
-  bool get showPrice => product.isPaid && product.price != null;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: onProductTap,
-      child: ActionRow(
-        product: product,
-        showButton: false,
-        iconWidth: 65,
-        iconHeight: 65,
-        cacheWidth: 190,
-        cacheHeight: 190,
-        hasThreeLines: true,
-      ),
+      child: ActionRow(model: model, showButton: false),
     );
   }
 }

@@ -1,54 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/utils/formatters.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/product_card_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductCarouselCard extends StatelessWidget {
-  final Product product;
-  final double iconWidth;
-  final double iconHeight;
-  final int cacheWidth;
-  final int cacheHeight;
+  final ProductCardUiModel model;
+  final VoidCallback onTap;
 
   const ProductCarouselCard({
     super.key,
-    required this.product,
-    this.iconWidth = 110,
-    this.iconHeight = 110,
-    this.cacheWidth = 300,
-    this.cacheHeight = 350,
+    required this.model,
+    required this.onTap,
   });
-
-  bool get showPrice => product.isPaid && product.price != null;
 
   @override
   Widget build(BuildContext context) {
-    final formatter = ProductDataFormatter(context, product);
-
     return Container(
       margin: const EdgeInsets.only(right: 0),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductPageScreen(product: product),
-              ),
-            );
-          },
+          onTap: onTap,
           onLongPress: () {},
-          child: ProductCardContent(
-            product: product,
-            showPrice: showPrice,
-            formatter: formatter,
-            iconWidth: iconWidth,
-            iconHeight: iconHeight,
-            cacheWidth: cacheWidth,
-            cacheHeight: cacheHeight,
-          ),
+          child: ProductCardContent(model: model),
         ),
       ),
     );

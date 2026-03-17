@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPreviewCard extends StatelessWidget {
-  final Product product;
-  final bool showActionRow;
+  final String productId;
+  final List<String> screenshots;
+  final ActionRowUiModel? actionRow;
+  final VoidCallback? onTap;
 
   const ProductPreviewCard({
     super.key,
-    required this.product,
-    this.showActionRow = true,
+    required this.productId,
+    required this.screenshots,
+    this.actionRow,
+    this.onTap,
   });
 
   @override
@@ -23,35 +26,26 @@ class ProductPreviewCard extends StatelessWidget {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            itemCount: product.screenshots.length,
+            itemCount: screenshots.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: ProductScreenshotImage(
-                  imageUrl: product.screenshots[index],
-                  productId: product.id,
+                  imageUrl: screenshots[index],
+                  productId: productId,
                   index: index,
                 ),
               );
             },
           ),
         ),
-        if (showActionRow) ...[
+        if (actionRow != null) ...[
           const SizedBox(height: 10),
           Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ProductPageScreen(product: product),
-                  ),
-                );
-              },
-              child: ActionRow(
-                product: product,
-                showButton: false,
-              ),
+              onTap: onTap,
+              child: ActionRow(model: actionRow!, showButton: false),
             ),
           ),
         ],

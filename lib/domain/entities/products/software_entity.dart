@@ -6,6 +6,8 @@ abstract class SoftwareEntity extends ProductEntity {
   final String version;
   final int downloadCount;
   final bool containsAds;
+  final bool containsPaidContent;
+  final String? eventText;
   final String whatsNewText;
   final DateTime lastUpdated;
   final int ageRating;
@@ -44,6 +46,8 @@ abstract class SoftwareEntity extends ProductEntity {
     required this.version,
     required this.downloadCount,
     required this.containsAds,
+    required this.containsPaidContent,
+    this.eventText,
     required this.whatsNewText,
     required this.lastUpdated,
     required this.ageRating,

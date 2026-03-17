@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/extensions/product_resolver_extension.dart';
-import 'package:google_play/data/models/dtos.dart';
-import 'package:google_play/domain/entities/banners/action_banner_entity.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/banner_item_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class BannerItem extends StatelessWidget {
-  final AppBanner banner;
-  final BannerType type;
+  final BannerItemUiModel model;
   final VoidCallback? onTap;
   final double horizontalPadding;
 
   const BannerItem({
     super.key,
-    required this.banner,
+    required this.model,
     this.onTap,
-    required this.type,
     this.horizontalPadding = 6,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Проверяем, какой это тип баннера, чтобы понять, рисовать ли нижнюю плашку (ActionRow)
-    final bool isAction = banner is ActionBannerEntity;
+    final hasActionRow = model.actionRow != null;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -39,23 +34,20 @@ class BannerItem extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    BannerImage(assetPath: banner.imageAssetPath),
-                    if (banner.topToolTipText != null) ...[
-                      BannerToolTip(text: banner.topToolTipText!),
+                    BannerImage(assetPath: model.imageAssetPath),
+                    if (model.topTooltipText != null) ...[
+                      BannerToolTip(text: model.topTooltipText!),
                     ],
                     BannerTextContent(
-                      title: banner.title,
-                      description: banner.description,
+                      title: model.title,
+                      description: model.description,
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 10),
-              if (isAction)
-                ActionRow(
-                  product: context.getProductById((banner as ActionBannerEntity).productId),
-                  showButton: true,
-                ),
+              if (hasActionRow && model.actionRow != null)
+                ActionRow(model: model.actionRow!, showButton: true),
             ],
           ),
         ),

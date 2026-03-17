@@ -2,9 +2,10 @@ import 'package:google_play/data/datasources/local/config_local_datasource.dart'
 import 'package:google_play/data/datasources/local/product_local_datasource.dart';
 import 'package:google_play/data/repositories/json_config_repository.dart';
 import 'package:google_play/data/repositories/json_product_repository.dart';
+import 'package:google_play/domain/usecases/products/get_product_by_id_usecase.dart';
 import 'package:google_play/domain/usecases/products/load_products_usecase.dart';
-import 'package:google_play/domain/usecases/sections/get_tab_sections_usecase.dart';
 import 'package:google_play/domain/usecases/sections/get_available_tabs_usecase.dart';
+import 'package:google_play/domain/usecases/sections/get_tab_sections_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Datasources
@@ -30,6 +31,12 @@ final loadProductsUseCaseProvider =
     Provider<LoadProductsUseCase>((ref) {
   final repo = ref.watch(productRepositoryProvider);
   return LoadProductsUseCaseImpl(repo);
+});
+
+final getProductByIdUseCaseProvider =
+    Provider<GetProductByIdUseCase>((ref) {
+  final repo = ref.watch(productRepositoryProvider);
+  return GetProductByIdUseCaseImpl(repo);
 });
 
 final getTabSectionsUseCaseProvider =

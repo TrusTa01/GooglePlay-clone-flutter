@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/presentation/screens/category/category_full_list_screen.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/product_card_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/presentation/widgets/sliders/product_carousel/utils/carousel_layout.dart';
 
 class ProductCarousel extends HookWidget {
   final String title;
   final String subtitle;
-  final List<Product> items;
+  final List<ProductCardUiModel> items;
   final bool isBookCarousel;
   final int? maxItems;
   final double leftPadding;
   final bool needsRightPadding;
+  final ValueChanged<ProductCardUiModel> onProductTap;
 
   const ProductCarousel({
     super.key,
@@ -23,6 +24,7 @@ class ProductCarousel extends HookWidget {
     this.maxItems,
     this.leftPadding = 22,
     this.needsRightPadding = true,
+    required this.onProductTap,
   });
 
   @override
@@ -37,7 +39,7 @@ class ProductCarousel extends HookWidget {
     final contentWidth = viewportWidth.clamp(0.0, maxContentWidth);
 
     // Определяем типы данных
-    final bool isBook = items.first is Book;
+    final bool isBook = isBookCarousel;
     final double baseIconWidth = isBook
         ? carouselBookCardWidth
         : carouselProductCardMinWidth;
@@ -88,17 +90,13 @@ class ProductCarousel extends HookWidget {
       0,
       displayProducts.length,
     );
-    final int cacheWidth = isBook ? 300 : 216;
-    final int cacheHeight = isBook ? 350 : 216;
-    final double iconWidth = cardWidth;
-
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: maxContentWidth + arrowSpace * 2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Заголовок и кнопка больше
+            // Заголовок и кнопка "Ещё"
             Padding(
               padding: EdgeInsets.only(
                 left: leftPadding + arrowSpace,
@@ -108,13 +106,7 @@ class ProductCarousel extends HookWidget {
                 title: title,
                 subtitle: subtitle,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        CategoryFullListScreen(title: title, products: items),
-                  ),
-                ),
+                onTap: () {},
                 showButton: true,
               ),
             ),
@@ -155,11 +147,8 @@ class ProductCarousel extends HookWidget {
                                 ),
                                 child: ProductCarouselCard(
                                   key: ValueKey(item.id),
-                                  product: item,
-                                  iconWidth: iconWidth,
-                                  iconHeight: iconHeight,
-                                  cacheWidth: cacheWidth,
-                                  cacheHeight: cacheHeight,
+                                  model: item,
+                                  onTap: () => onProductTap(item),
                                 ),
                               );
                             },

@@ -6,7 +6,7 @@ class LocaleNotifier extends Notifier<Locale?> {
   @override
   Locale? build() => null;
 
-  // TODO: добавишь сохранение в память
+  // TODO: добавить сохранение в память
   void setLocale(Locale locale) => state = locale;
 
   void clearLoclae() => state = null;
