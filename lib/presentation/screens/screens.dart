@@ -20,20 +20,20 @@ export 'category/category_full_list_screen.dart';
 export 'category/category_overview_screen.dart';
 
 // Charts
-export 'charts_screens/top_charts_screen.dart';
+export 'charts/top_charts_screen.dart';
 
 // Kids
-export 'kids_screen/kids_age_category_screen.dart';
-export 'kids_screen/kids_details_screen.dart';
-export 'kids_screen/kids_age_filter_selector.dart';
+export 'kids/kids_age_category_screen.dart';
+export 'kids/kids_details_screen.dart';
+export 'kids/kids_age_filter_selector.dart';
 
 // Events
 export 'events/product_event_screen.dart';
 
 // Product
-export 'product_screens/details_screen.dart';
-export 'product_screens/product_screen.dart';
-export 'product_screens/permissions_screen.dart';
-export 'product_screens/about_author_screen.dart';
-export 'package:google_play/presentation/screens/product_screens/product_screen_tags.dart';
-export 'package:google_play/presentation/screens/product_screens/product_page_sections/product_page_sections.dart';
+export 'product/details_screen.dart';
+export 'product/product_screen.dart';
+export 'product/permissions_screen.dart';
+export 'product/about_author_screen.dart';
+export 'package:google_play/presentation/screens/product/product_screen_tags.dart';
+export 'package:google_play/presentation/screens/product/product_page_sections/product_page_sections.dart';

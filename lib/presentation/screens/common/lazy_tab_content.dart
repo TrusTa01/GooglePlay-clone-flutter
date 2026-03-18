@@ -49,6 +49,7 @@ class LazyTabContent extends StatelessWidget {
     );
   }
 
+  // TODO: error widget
   Widget _buildError(Object error) {
     final errorWidget = ErrorScreen(message: error.toString());
     return isSliver ? SliverFillRemaining(child: errorWidget) : errorWidget;
@@ -56,14 +57,13 @@ class LazyTabContent extends StatelessWidget {
 
   Widget _buildData(List<SectionEntity> sections) {
     return isSliver
-        ? GenericTabScreen.asSliver(sections: sections)
-        : GenericTabScreen(sections: sections, isSliver: false);
+        ? SectionWidgetBuilder.asSliver(sections: sections)
+        : SectionWidgetBuilder(sections: sections, isSliver: false);
   }
 
+  // TODO: empty widget
   Widget _buildEmpty(BuildContext context) {
     final emptyWidget = Center(child: Text(context.l10n.emptyNoData));
-    return isSliver
-        ? SliverFillRemaining(child: emptyWidget)
-        : emptyWidget;
+    return isSliver ? SliverFillRemaining(child: emptyWidget) : emptyWidget;
   }
 }

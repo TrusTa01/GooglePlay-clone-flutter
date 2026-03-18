@@ -1,5 +1,23 @@
 {
-  "availableGamesTabs": ["recommended", "kids", "paid"],
-  "availableAppsTabs": ["recommended", "kids"],
-  "availableBooksTabs": ["recommended"]
+  "availableGamesTabs": [
+    { "key": "recommended", "label": "recommended_tab_label", "type": "basic" },
+    { "key": "best", "label": "best_tab_label", "type": "charts" },
+    { "key": "kids", "label": "kids_tab_label", "type": "basic" },
+    { "key": "paid", "label": "paid_tab_label", "type": "basic" },
+    { "key": "categories", "label": "categories_tab_label", "type": "categories" }
+  ],
+
+  "availableAppsTabs": [
+    { "key": "recommended", "label": "recommended_tab_label", "type": "basic" },
+    { "key": "best", "label": "best_tab_label", "type": "charts" },
+    { "key": "kids", "label": "kids_tab_label", "type": "basic" },
+    { "key": "categories", "label": "categories_tab_label", "type": "categories" }
+  ],
+  "availableBooksTabs": [
+    { "key": "recommended", "label": "recommended_tab_label", "type": "basic" },
+    { "key": "topSales", "label": "top_sales_tab_label", "type": "charts" },
+    { "key": "newReleases", "label": "new_releases_tab_label", "type": "charts" },
+    { "key": "genres", "label": "genres_tab_label", "type": "charts" },
+    { "key": "topFree", "label": "top_free_tab_label", "type": "charts" }
+  ]
 }

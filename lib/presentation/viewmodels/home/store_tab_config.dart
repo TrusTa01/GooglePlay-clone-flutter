@@ -25,7 +25,7 @@ final class StoreScreenConfig {
 
 /// Единый справочник метаданных табов стора
 /// Сами ключи табов и их порядок для каждого стора
-/// приходят из внешнего `index.json`, а здесь остаются
+/// приходят из внешнего index.json, а здесь остаются
 /// только флаги поведения и ключи для локализации
 const Map<String, StoreTabConfig> kStoreTabsMetadata = {
   'recommended': StoreTabConfig(

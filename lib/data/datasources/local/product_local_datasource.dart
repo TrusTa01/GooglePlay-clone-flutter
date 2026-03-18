@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:flutter/foundation.dart' show debugPrint;
+import 'package:flutter/foundation.dart' show debugPrint, FlutterError;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/data/models/dtos.dart';
@@ -9,48 +9,115 @@ import 'package:google_play/data/models/dtos.dart';
 class ProductLocalDatasource {
   static const _basePath = Constants.baseDataPath;
   // Кэш
-  final Map<String, dynamic> _productsCache = {};
-  final Map<String, dynamic> _allDtosById = {};
+  final Map<String, List<ProductDto>> _productsCache = {};
+  final Map<String, List<BannerDto>> _bannersCache = {};
 
-  Future<List<dynamic>> loadProducts({required String fileName}) async {
-    // TODO :Типизация и обработка ошибок
+  // Общий реестр продуктов по ID (для быстрого поиска)
+  final Map<String, ProductDto> _allProductsById = {};
+
+  // Загрузка продуктов
+  Future<List<ProductDto>> loadProducts({required String fileName}) async {
+    return _loadList<ProductDto>(
+      fileName: fileName,
+      cache: _productsCache,
+      fromMap: (map) => ProductDto.fromJson(map),
+      onItemsLoaded: (items) {
+        for (var p in items) {
+          _allProductsById[p.id] = p;
+        }
+      },
+    );
+  }
+
+  // Загрузка баннеров
+  Future<List<BannerDto>> loadBanners({required String fileName}) async {
+    return _loadList<BannerDto>(
+      fileName: fileName,
+      cache: _bannersCache,
+      fromMap: (map) => BannerDto.fromJson(map),
+    );
+  }
+
+  Future<List<T>> _loadList<T>({
+    required String fileName,
+    required Map<String, List<T>> cache,
+    required T Function(Map<String, dynamic>) fromMap,
+    void Function(List<T>)? onItemsLoaded,
+  }) async {
     final path = '$_basePath/$fileName';
-    final jsonString = await rootBundle.loadString(path);
-    final cacheKey = '${path}Key';
 
-    if (_productsCache.containsKey(cacheKey)) return _productsCache[cacheKey]!;
+    if (cache.containsKey(path)) return cache[path]!;
 
     try {
-      final List<dynamic> products = await Isolate.run(() {
-        final List<dynamic> jsonList = jsonDecode(jsonString);
-
-        return jsonList.map((item) => ProductDto.fromJson(item)).toList();
-      }, debugName: 'Isolate: $fileName');
-      // Кеш вне изолята - в противном случае запись не произойдет
-      for (var dto in products) {
-        final String id = (dto as dynamic).id;
-        _allDtosById[id] = dto;
+      final String jsonString;
+      try {
+        jsonString = await rootBundle.loadString(path);
+      } on FlutterError catch (e) {
+        _logError('FileSystem', e);
+        throw Exception('Data error: File $fileName not found in assets');
       }
 
-      _productsCache[cacheKey] = products;
+      final List<T> result = await Isolate.run(() {
+        final List<dynamic> jsonList = jsonDecode(jsonString);
 
-      return products;
-    } catch (e, stacktrace) {
-      debugPrint('Debug error: $e');
-      debugPrint('stacktrace: $stacktrace');
-      throw Exception('Failed to load page configs : $e');
+        return jsonList
+            .map((item) => fromMap(item as Map<String, dynamic>))
+            .toList();
+      }, debugName: 'Isolate: $fileName');
+
+      onItemsLoaded?.call(result);
+      cache[path] = result;
+      return result;
+    } on FormatException catch (e) {
+      _logError('Format', e.message);
+      rethrow;
+    } catch (e, stack) {
+      _logError('Unknown', e, stack);
+      throw Exception('Critical error loading $fileName: $e');
     }
   }
 
-  // Метод для репозитория, чтобы найти конкретный DTO
-  dynamic getDtoById(String id) => _allDtosById[id];
+  void _logError(String label, dynamic e, [StackTrace? stack]) {
+    debugPrint('[$label]: $e');
+    if (stack != null) debugPrint('$stack');
+  }
 
-  // Метод для репозитория, получить кеш
-  List<dynamic> getAllCachedDtos() => _allDtosById.values.toList();
+  // Методы доступа для репозитория
+  T? getProductById<T>(String id) {
+    if (T == ProductDto) return _allProductsById as T?;
+
+    if (T == BannerDto) {
+      for (final bannerList in _bannersCache.values) {
+        final found = bannerList.cast<BannerDto?>().firstWhere(
+          (b) => b?.id == id,
+          orElse: () => null,
+        );
+        if (found != null) return found as T;
+      }
+    }
+    return null;
+  }
+
+  // Получить все закэшированные объекты определенного типа
+  List<T> getAllCachedDtos<T>() {
+    if (T == ProductDto) return _allProductsById.values.cast<T>().toList();
+
+    if (T == BannerDto) {
+      return _bannersCache.values
+          .expand(
+            (list) => list,
+          ) // Схлопываем List<List<BannerDto>> в List<BannerDto>
+          .cast<T>()
+          .toList();
+    }
+
+    return [];
+  }
 
   // Удобный метод для очистки памяти
   void clearCache() {
     _productsCache.clear();
-    _allDtosById.clear();
+    _bannersCache.clear();
+    _allProductsById.clear();
   }
 }

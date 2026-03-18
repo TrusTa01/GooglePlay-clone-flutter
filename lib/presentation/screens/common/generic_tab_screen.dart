@@ -10,13 +10,13 @@ import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dar
 import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
-class GenericTabScreen extends HookWidget {
+class SectionWidgetBuilder extends HookWidget {
   final List<SectionEntity> sections;
   final VoidCallback? onLoad;
   final bool isSliver;
-  final String? tabKey; // Для дебага
+  final String? tabKey;
 
-  const GenericTabScreen({
+  const SectionWidgetBuilder({
     super.key,
     required this.sections,
     this.onLoad,
@@ -28,7 +28,7 @@ class GenericTabScreen extends HookWidget {
     required List<SectionEntity> sections,
     VoidCallback? onLoad,
   }) {
-    return GenericTabScreen(sections: sections, onLoad: onLoad, isSliver: true);
+    return SectionWidgetBuilder(sections: sections, onLoad: onLoad, isSliver: true);
   }
 
   @override

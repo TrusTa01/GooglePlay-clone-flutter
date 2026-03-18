@@ -1,76 +1,106 @@
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:flutter/foundation.dart' show debugPrint;
+import 'package:flutter/foundation.dart' show debugPrint, FlutterError;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/data/models/section_dtos/available_sections_dto.dart';
+import 'package:google_play/data/models/section_dtos/section_dto.dart';
 
 class ConfigLocalDatasource {
-  static const _basePath = Constants.baseDataPath;
+  static const _basePath = Constants.baseConfigPath;
   // Кэш для полных конфигов табов
-  final Map<String, dynamic> _tabsCache = {};
+  final Map<String, TabConfigDto> _tabsCache = {};
 
   // Кэш для списков доступных табов (индексов)
-  final Map<String, List<String>> _indexCache = {};
+  final Map<String, List<AvailableSectionsDto>> _indexCache = {};
 
-  Future<Map<String, dynamic>> loadTabsConfig({
-    // TODO :Типизация и обработка ошибок
+  Future<TabConfigDto> loadTabsConfig({
     required String folder,
     required String tabKey,
   }) async {
     final cacheKey = '$folder/${tabKey}Key';
-    if (_tabsCache.containsKey(cacheKey)) return _tabsCache[cacheKey]!;
+    if (_tabsCache.containsKey(cacheKey)) {
+      return _tabsCache[cacheKey]!;
+    }
 
     final path = '$_basePath/$folder/$tabKey.json';
 
     try {
-      final jsonString = await rootBundle.loadString(path);
+      final String jsonString;
+      try {
+        jsonString = await rootBundle.loadString(path);
+      } on FlutterError catch (e) {
+        _logError('FileSystem', e);
+        throw Exception('Config error: File $path not found in assets');
+      }
+
       // Парсим в изоляте для больших конфигов
-      final Map<String, dynamic> result = await Isolate.run(() {
+      final TabConfigDto result = await Isolate.run(() {
         final Map<String, dynamic> json = jsonDecode(jsonString);
         final tabData = json[tabKey] as Map<String, dynamic>?;
-        if (tabData == null) throw Exception('Key $tabKey not found');
+        if (tabData == null) throw FormatException('Key $tabKey not found');
 
-        return tabData;
+        return TabConfigDto.fromJson(tabData);
       }, debugName: 'Tabs Isolate: $tabKey');
 
       // Кеш вне изолята - в противном случае запись не произойдет
       _tabsCache[cacheKey] = result;
 
       return result;
+    } on FormatException catch (e) {
+      _logError('Format', e.message);
+      rethrow;
     } catch (e, stacktrace) {
-      debugPrint('Debug error: $e');
-      debugPrint('stacktrace: $stacktrace');
-      throw Exception('Failed to load page configs : $e');
+      _logError('Parsing error', e, stacktrace);
+      throw Exception('Ошибка загрузки вкладки $tabKey: $e');
     }
   }
 
-  Future<List<String>> getAvailableTabs({
+  Future<List<AvailableSectionsDto>> getAvailableTabs({
     required String folder,
     required String indexKey,
   }) async {
     final cacheKey = '$folder/$indexKey';
 
-    if (_indexCache.containsKey(cacheKey)) return _indexCache[cacheKey]!;
+    if (_indexCache.containsKey(cacheKey)) {
+      return _indexCache[cacheKey]!;
+    }
 
-    // Для списков доступных табов используем конфиги из assets/config,
-    // а не из baseDataPath (assets/data).
-    final path = 'assets/config/$folder/index.json';
+    final path = '$_basePath/$folder/index.json';
 
     try {
-      final jsonString = await rootBundle.loadString(path);
-      final Map<String, dynamic> json = jsonDecode(jsonString);
-      final List<dynamic> tabs = json[indexKey] ?? [];
-      final result = tabs.map((e) => e.toString()).toList();
+      final String jsonString;
+      try {
+        jsonString = await rootBundle.loadString(path);
+      } on FlutterError catch (e) {
+        _logError('FileSystem', e);
+        throw Exception('Config error: File $path not found in assets');
+      }
+
+      final Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+      final List<dynamic> rawTabs = jsonMap[indexKey] ?? [];
+
+      final List<AvailableSectionsDto> result = rawTabs
+          .map((e) => AvailableSectionsDto.fromJson(e as Map<String, dynamic>))
+          .toList();
 
       // Запись в кэш
       _indexCache[cacheKey] = result;
       return result;
+    } on FormatException catch (e) {
+      _logError('Format', e.message);
+      rethrow;
     } catch (e, stacktrace) {
-      debugPrint('Debug error: $e');
-      debugPrint('stacktrace: $stacktrace');
-      throw Exception('Failed to load page configs : $e');
+      _logError('Index error', e, stacktrace);
+      throw Exception('Не удалось загрузить индекс вкладок : $e');
     }
+  }
+
+  void _logError(String label, dynamic e, [StackTrace? stack]) {
+    debugPrint('[$label]: $e');
+    if (stack != null) debugPrint('$stack');
   }
 
   // Удобный метод для очистки памяти

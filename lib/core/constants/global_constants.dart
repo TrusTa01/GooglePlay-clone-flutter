@@ -50,4 +50,5 @@ class Constants {
   );
 
   static const baseDataPath = 'assets/data/';
+  static const baseConfigPath = 'assets/config/';
 }

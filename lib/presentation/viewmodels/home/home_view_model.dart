@@ -18,9 +18,7 @@ class HomeViewModel extends _$HomeViewModel {
   );
 
   @override
-  HomeState build(StoreType storeType) {
-    return const HomeState();
-  }
+  HomeState build(StoreType storeType) => const HomeState();
 
   Future<void> loadProducts() async {
     state = state.copyWith(isLoading: true, error: null);

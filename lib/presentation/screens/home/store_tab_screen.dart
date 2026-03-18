@@ -4,8 +4,9 @@ import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/presentation/viewmodels/configs/store_screen_config_provider.dart';
+import 'package:google_play/presentation/viewmodels/home/home_view_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
-import 'package:google_play/presentation/viewmodels/home/home_providers.dart';
 import 'package:google_play/presentation/viewmodels/home/store_tab_config.dart';
 
 class StoreTabScreen extends HookConsumerWidget {
@@ -19,12 +20,12 @@ class StoreTabScreen extends HookConsumerWidget {
 
     final configAsync = ref.watch(storeScreenConfigProvider(storeType));
 
+    // TODO: error/empty widget
     return configAsync.when(
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (e, _) => Scaffold(
-          body: Center(
-              child: Text(context.l10n.failedToLoadTabs(e)))),
+      error: (e, _) =>
+          Scaffold(body: Center(child: Text(context.l10n.failedToLoadTabs(e)))),
       data: (config) {
         final visitedIndexes = useState<Set<int>>({0});
         final tabs = config.tabs.map((t) => t.label).toList();
@@ -73,17 +74,17 @@ class StoreTabScreen extends HookConsumerWidget {
             child: NestedScrollView(
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
-                final appBarSlivers = buildStoreAppBar(
-                  context: context,
-                  type: storeType,
-                  tabLabelKeys: tabLabels,
-                  tabController: tabController,
-                  tabs: tabs,
-                  actionWidgets: buildStoreActionWidgets(
-                    type: storeType,
-                    context: context,
-                  ),
-                );
+                    final appBarSlivers = buildStoreAppBar(
+                      context: context,
+                      type: storeType,
+                      tabLabelKeys: tabLabels,
+                      tabController: tabController,
+                      tabs: tabs,
+                      actionWidgets: buildStoreActionWidgets(
+                        type: storeType,
+                        context: context,
+                      ),
+                    );
                     return [
                       // Шапка
                       appBarSlivers[0],

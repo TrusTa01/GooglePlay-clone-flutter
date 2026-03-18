@@ -32,7 +32,7 @@ class JsonProductRepository implements IProductRepository {
 
   @override
   Future<ProductEntity?> getProductById(String id) async {
-    final dto = await _dataSource.getDtoById(id);
+    final dto = _dataSource.getProductById<ProductDto>(id);
     // TODO: Реализовать проверку инициализации кэша
     // Если кэш пуст, вызвать загрузку соответствующих файлов перед поиском
     if (dto == null) return null;
@@ -47,7 +47,7 @@ class JsonProductRepository implements IProductRepository {
   @override
   Future<List<ProductEntity>> getSimilarProducts(ProductEntity product) async {
     // Получаем все загруженные продукты из DataSource
-    final allDtos = _dataSource.getAllCachedDtos();
+    final allDtos = _dataSource.getAllCachedDtos<ProductDto>();
 
     // TODO: Логика поиска похожих
     final similarDtos = allDtos

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
-import 'package:google_play/presentation/screens/product_screens/utils/product_support_data.dart';
+import 'package:google_play/presentation/screens/product/utils/product_support_data.dart';
 import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
