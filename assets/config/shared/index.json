@@ -1,19 +1,18 @@
 {
-  "availableGamesTabs": [
+  "available_games_tabs": [
     { "key": "recommended", "label": "recommended_tab_label", "type": "basic" },
     { "key": "best", "label": "best_tab_label", "type": "charts" },
     { "key": "kids", "label": "kids_tab_label", "type": "basic" },
     { "key": "paid", "label": "paid_tab_label", "type": "basic" },
     { "key": "categories", "label": "categories_tab_label", "type": "categories" }
   ],
-
-  "availableAppsTabs": [
+  "available_apps_tabs": [
     { "key": "recommended", "label": "recommended_tab_label", "type": "basic" },
     { "key": "best", "label": "best_tab_label", "type": "charts" },
     { "key": "kids", "label": "kids_tab_label", "type": "basic" },
     { "key": "categories", "label": "categories_tab_label", "type": "categories" }
   ],
-  "availableBooksTabs": [
+  "available_books_tabs": [
     { "key": "recommended", "label": "recommended_tab_label", "type": "basic" },
     { "key": "topSales", "label": "top_sales_tab_label", "type": "charts" },
     { "key": "newReleases", "label": "new_releases_tab_label", "type": "charts" },

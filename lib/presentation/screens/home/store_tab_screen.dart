@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/presentation/viewmodels/configs/store_screen_config_provider.dart';
 import 'package:google_play/presentation/viewmodels/home/home_view_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
@@ -63,10 +61,6 @@ class StoreTabScreen extends HookConsumerWidget {
 
           return null;
         }, const []);
-
-        final state = ref.watch(homeViewModelProvider(storeType));
-        final products = state.products;
-
         final tabLabels = config.tabs.map((t) => t.label).toList();
 
         return Scaffold(
@@ -104,9 +98,6 @@ class StoreTabScreen extends HookConsumerWidget {
                 children: List.generate(tabs.length, (index) {
                   final tabConfig = config.tabs[index];
                   final tabKey = tabConfig.key;
-                  final sectionsState =
-                      state.sectionsByTab[tabKey] ??
-                      const AsyncValue<List<SectionEntity>>.data([]);
 
                   return Builder(
                     builder: (context) {
@@ -123,13 +114,8 @@ class StoreTabScreen extends HookConsumerWidget {
                                   context,
                                 ),
                           ),
+
                           // Контент
-                          ...buildStoreTabSlivers(
-                            context: context,
-                            tabKey: tabKey,
-                            products: products,
-                            sectionsState: sectionsState,
-                          ),
                         ],
                       );
                     },

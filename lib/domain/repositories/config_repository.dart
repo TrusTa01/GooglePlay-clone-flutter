@@ -1,3 +1,5 @@
+
+import 'package:google_play/domain/entities/sections/available_sections_entity.dart';
 import 'package:google_play/domain/entities/sections/section_entity.dart';
 
 abstract interface class IConfigRepository {
@@ -6,9 +8,5 @@ abstract interface class IConfigRepository {
     required String tabKey,
   });
 
-  /// Список доступных табов для конкретного типа стора.
-  ///
-  /// Ожидает ключи вида `availableGamesTabs`, `availableAppsTabs`,
-  /// `availableBooksTabs` и т.п. (см. assets/config/shared/index.json).
-  Future<List<String>> getAvaibleTabs(String indexKey);
+  Future<List<AvailableSectionsEntity>> getAvaibleTabs(String indexKey);
 }

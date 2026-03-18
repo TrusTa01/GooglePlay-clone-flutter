@@ -3,7 +3,6 @@ export 'home/apps_screen.dart';
 export 'home/books_screen.dart';
 export 'home/games_screen.dart';
 export 'home/search_screen.dart';
-export 'home/store_tab_content_builder.dart';
 export 'home/store_tab_screen.dart';
 
 // Notifications
@@ -11,7 +10,7 @@ export 'notifications/notifications_screen.dart';
 
 // Commnon
 export 'common/error_screen.dart';
-export 'common/generic_tab_screen.dart';
+export 'common/section_widget_builder.dart';
 
 // Category
 export 'category/categories_tab_screen.dart';
