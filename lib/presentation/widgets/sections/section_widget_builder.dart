@@ -31,7 +31,6 @@ class SectionWidgetBuilder extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // Сохранение состояния прокрутки при переключении табов
-    // TODO: [logic] useAutomaticKeepAlive не работает сам по себе. Чтобы он держал состояние в списке, нужно обернуть каждую секцию в специальный виджет
     useAutomaticKeepAlive();
 
     Widget itemBuilder(BuildContext context, int index) {

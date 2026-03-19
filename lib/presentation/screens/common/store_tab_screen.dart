@@ -8,6 +8,7 @@ import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/presentation/viewmodels/home/home_view_model.dart';
 import 'package:google_play/presentation/viewmodels/tabs/store_tabs_provider.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:google_play/presentation/screens/common/error_screen.dart';
 
 class StoreTabScreen extends HookConsumerWidget {
   final StoreType storeType;
@@ -23,10 +24,13 @@ class StoreTabScreen extends HookConsumerWidget {
     final homeState = ref.watch(homeViewModelProvider(storeType));
 
     return tabsAsync.when(
-      loading: () =>
-          const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (e, _) =>
-          Scaffold(body: Center(child: Text(context.l10n.failedToLoadTabs(e)))),
+      loading: () => const Scaffold(body: AppLoadingIndicator()),
+      error: (e, _) => Scaffold(
+        body: ErrorScreen(
+          message: context.l10n.failedToLoadTabs(e),
+          onRetry: () => ref.invalidate(storeTabsProvider(storeType)),
+        ),
+      ),
       data: (tabsData) {
         if (tabsData.isEmpty) return const SizedBox.shrink();
 

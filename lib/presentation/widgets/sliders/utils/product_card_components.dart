@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 import 'package:google_play/core/shimmers/shimmer_box.dart';
+import 'package:google_play/presentation/widgets/error/asset_not_found_placeholder.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_models/product_card_ui_model.dart';
 
 class ProductCardThumbnail extends StatelessWidget {
@@ -64,11 +65,10 @@ class ProductCardThumbnail extends StatelessWidget {
   }
 
   Widget _buildErrorPlaceholder() {
-    return Container(
+    return AssetNotFoundPlaceholder(
       width: iconWidth,
       height: iconHeight,
-      color: Colors.grey[200],
-      child: Icon(Icons.broken_image, color: Colors.grey, size: 30),
+      borderRadius: borderRadius,
     );
   }
 }

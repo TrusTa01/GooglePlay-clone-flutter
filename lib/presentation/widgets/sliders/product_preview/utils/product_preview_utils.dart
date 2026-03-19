@@ -74,11 +74,11 @@ class ProductScreenshotImage extends StatelessWidget {
                         borderRadius: borderRadius,
                       );
               },
-              errorBuilder: (context, error, stackTrace) => Container(
+              errorBuilder: (context, error, stackTrace) =>
+                  AssetNotFoundPlaceholder(
                 width: currentWidth,
                 height: height,
-                color: Colors.grey[300],
-                child: const Icon(Icons.broken_image, color: Colors.grey),
+                borderRadius: borderRadius,
               ),
             ),
           ),

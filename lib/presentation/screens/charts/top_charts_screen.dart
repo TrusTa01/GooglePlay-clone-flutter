@@ -28,7 +28,7 @@ class TopChartsScreen extends StatelessWidget {
     required FilterType type,
     required bool showFilters,
   }) {
-    // TODO(db): заменить на данные из БД/репозитория
+    // TODO: [db] заменить на данные из БД/репозитория
     final List<ActionRowUiModel> items = const [];
 
     return [

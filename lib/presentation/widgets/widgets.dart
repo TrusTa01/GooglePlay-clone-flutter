@@ -48,6 +48,8 @@ export 'popup_menu/popup_menu.dart';
 
 export 'custom_show_dialog.dart';
 export 'custom_expansion_tile.dart';
+export 'error/asset_not_found_placeholder.dart';
+export 'error/app_loading_indicator.dart';
 
 // Buttons
 export 'buttons/elevated_button.dart';

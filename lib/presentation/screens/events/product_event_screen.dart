@@ -3,6 +3,7 @@ import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/domain/entities/banners/simple_banner_entity.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:google_play/presentation/screens/product/product_screen.dart';
+import 'package:google_play/presentation/screens/common/error_screen.dart';
 import 'package:google_play/presentation/viewmodels/events/product_event_state.dart';
 import 'package:google_play/presentation/viewmodels/events/product_event_view_model.dart';
 import 'package:google_play/presentation/viewmodels/events/ui_models/event_section_ui_model.dart';
@@ -22,23 +23,22 @@ class ProductEventScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(
-      productEventViewModelProvider(
-        ProductEventArgs(
-          eventBanner: eventBanner,
-          sections: sections,
-          l10n: context.l10n,
-          locale: Localizations.localeOf(context),
-        ),
-      ),
+    final args = ProductEventArgs(
+      eventBanner: eventBanner,
+      sections: sections,
+      l10n: context.l10n,
+      locale: Localizations.localeOf(context),
     );
+    final state = ref.watch(productEventViewModelProvider(args));
 
     return Scaffold(
-      // TODO: [ui] error/empty widget
       body: SafeArea(
         child: switch ((state.isLoading, state.error != null)) {
-          (true, _) => const Center(child: CircularProgressIndicator()),
-          (_, true) => Center(child: Text(state.error.toString())),
+          (true, _) => const AppLoadingIndicator(),
+          (_, true) => ErrorScreen(
+            message: context.l10n.productNotFound,
+            onRetry: () => ref.invalidate(productEventViewModelProvider(args)),
+          ),
           _ => _buildContent(context, state),
         },
       ),

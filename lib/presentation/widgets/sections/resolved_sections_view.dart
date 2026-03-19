@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/shimmers/product_slider_skeleton.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ResolvedSectionsView extends StatelessWidget {
@@ -44,10 +43,11 @@ class ResolvedSectionsView extends StatelessWidget {
           );
   }
 
-  // TODO: [ui] error widget
   Widget _buildError(Object error) {
-    final errorWidget = ErrorScreen(message: error.toString());
-    return isSliver ? SliverFillRemaining(child: errorWidget) : errorWidget;
+    debugPrint('[ResolvedSectionsView] skip sections: $error');
+    return isSliver
+        ? const SliverToBoxAdapter(child: SizedBox.shrink())
+        : const SizedBox.shrink();
   }
 
   Widget _buildData(List<ResolvedSection> sections) {
@@ -63,9 +63,7 @@ class ResolvedSectionsView extends StatelessWidget {
           );
   }
 
-  // TODO: [ui] empty widget
-  Widget _buildEmpty(BuildContext context) {
-    final emptyWidget = Center(child: Text(context.l10n.emptyNoData));
-    return isSliver ? SliverFillRemaining(child: emptyWidget) : emptyWidget;
-  }
+  Widget _buildEmpty(BuildContext context) => isSliver
+      ? const SliverToBoxAdapter(child: SizedBox.shrink())
+      : const SizedBox.shrink();
 }

@@ -42,10 +42,10 @@ class ProductPreviewSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (productIds.isEmpty) {
-      debugPrint('Ошибка: productIds.isEmpty (game preview section)');
+      debugPrint('[ProductPreviewSection] skip section: productIds.isEmpty');
       return isSliver
           ? const SliverToBoxAdapter(child: SizedBox.shrink())
-          : const SizedBox.shrink(); // TODO: [ui] error widget
+          : const SizedBox.shrink();
     }
 
     if (isSliver) {

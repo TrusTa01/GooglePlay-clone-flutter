@@ -49,7 +49,7 @@ class JsonProductRepository implements IProductRepository {
     // Получаем все загруженные продукты из DataSource
     final allDtos = _dataSource.getAllCachedDtos<ProductDto>();
 
-    // TODO: [filter] Логика поиска похожих
+    // TODO: [db] Логика поиска похожих
     final similarDtos = allDtos
         .where((dto) {
           // Не возвращаем тот же самый продукт

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
+import 'package:google_play/presentation/widgets/error/asset_not_found_placeholder.dart';
 
 class BannerImage extends StatelessWidget {
   final String assetPath;
@@ -29,9 +30,11 @@ class BannerImage extends StatelessWidget {
           cacheWidth: 800,
           cacheHeight: 800,
           fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) => const SizedBox(
+          errorBuilder: (context, error, stackTrace) =>
+              const AssetNotFoundPlaceholder(
+            width: double.infinity,
             height: 180,
-            child: Icon(Icons.broken_image, color: Colors.grey),
+            borderRadius: 10,
           ),
         ),
       ),

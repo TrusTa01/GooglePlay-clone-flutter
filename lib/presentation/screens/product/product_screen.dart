@@ -125,7 +125,7 @@ class _ProductPageContent extends ConsumerWidget {
                           onProductTap: (value) {},
                           sectionTitle: state.title,
                           similarProducts:
-                              const [], // TODO: [filter] queryService.getSimilarProducts
+                              const [], // TODO: [db] queryService.getSimilarProducts
                           link: 'https://support.google.com/',
                         ),
                       ),
