@@ -1,8 +1,8 @@
 import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/domain/usecases/products/load_products_usecase.dart';
-import 'package:google_play/domain/usecases/sections/get_tab_sections_usecase.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
+import 'package:google_play/domain/usecases/tabs/get_tab_sections_usecase.dart';
 import 'package:google_play/presentation/viewmodels/home/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -50,7 +50,7 @@ class HomeViewModel extends _$HomeViewModel {
         storeType: storeType,
         tabKey: tabKey,
       );
-      
+
       final resolvedSections = await Future.wait(
         sections.map((s) => _resolveSectionUsecase(s, storeType.categoryKey)),
       );

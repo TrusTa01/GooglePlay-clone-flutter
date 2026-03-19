@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'available_sections_dto.dart';
+part of 'available_tabs_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,7 +13,7 @@ part of 'available_sections_dto.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AvailableSectionsDto {
+mixin _$AvailableTabsDto {
 
  String get key; String get label; String get type;
 
@@ -21,7 +21,7 @@ mixin _$AvailableSectionsDto {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AvailableSectionsDto&&(identical(other.key, key) || other.key == key)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AvailableTabsDto&&(identical(other.key, key) || other.key == key)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,7 +30,7 @@ int get hashCode => Object.hash(runtimeType,key,label,type);
 
 @override
 String toString() {
-  return 'AvailableSectionsDto(key: $key, label: $label, type: $type)';
+  return 'AvailableTabsDto(key: $key, label: $label, type: $type)';
 }
 
 
@@ -39,8 +39,8 @@ String toString() {
 
 
 
-/// Adds pattern-matching-related methods to [AvailableSectionsDto].
-extension AvailableSectionsDtoPatterns on AvailableSectionsDto {
+/// Adds pattern-matching-related methods to [AvailableTabsDto].
+extension AvailableTabsDtoPatterns on AvailableTabsDto {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -53,10 +53,10 @@ extension AvailableSectionsDtoPatterns on AvailableSectionsDto {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AvailableSectionsDto value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AvailableTabsDto value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _AvailableSectionsDto() when $default != null:
+case _AvailableTabsDto() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -75,10 +75,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AvailableSectionsDto value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AvailableTabsDto value)  $default,){
 final _that = this;
 switch (_that) {
-case _AvailableSectionsDto():
+case _AvailableTabsDto():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -96,10 +96,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AvailableSectionsDto value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AvailableTabsDto value)?  $default,){
 final _that = this;
 switch (_that) {
-case _AvailableSectionsDto() when $default != null:
+case _AvailableTabsDto() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -119,7 +119,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String key,  String label,  String type)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _AvailableSectionsDto() when $default != null:
+case _AvailableTabsDto() when $default != null:
 return $default(_that.key,_that.label,_that.type);case _:
   return orElse();
 
@@ -140,7 +140,7 @@ return $default(_that.key,_that.label,_that.type);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String key,  String label,  String type)  $default,) {final _that = this;
 switch (_that) {
-case _AvailableSectionsDto():
+case _AvailableTabsDto():
 return $default(_that.key,_that.label,_that.type);case _:
   throw StateError('Unexpected subclass');
 
@@ -160,7 +160,7 @@ return $default(_that.key,_that.label,_that.type);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String key,  String label,  String type)?  $default,) {final _that = this;
 switch (_that) {
-case _AvailableSectionsDto() when $default != null:
+case _AvailableTabsDto() when $default != null:
 return $default(_that.key,_that.label,_that.type);case _:
   return null;
 
@@ -172,9 +172,9 @@ return $default(_that.key,_that.label,_that.type);case _:
 /// @nodoc
 @JsonSerializable(createToJson: false)
 
-class _AvailableSectionsDto implements AvailableSectionsDto {
-  const _AvailableSectionsDto({required this.key, required this.label, required this.type});
-  factory _AvailableSectionsDto.fromJson(Map<String, dynamic> json) => _$AvailableSectionsDtoFromJson(json);
+class _AvailableTabsDto implements AvailableTabsDto {
+  const _AvailableTabsDto({required this.key, required this.label, required this.type});
+  factory _AvailableTabsDto.fromJson(Map<String, dynamic> json) => _$AvailableTabsDtoFromJson(json);
 
 @override final  String key;
 @override final  String label;
@@ -185,7 +185,7 @@ class _AvailableSectionsDto implements AvailableSectionsDto {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AvailableSectionsDto&&(identical(other.key, key) || other.key == key)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AvailableTabsDto&&(identical(other.key, key) || other.key == key)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -194,7 +194,7 @@ int get hashCode => Object.hash(runtimeType,key,label,type);
 
 @override
 String toString() {
-  return 'AvailableSectionsDto(key: $key, label: $label, type: $type)';
+  return 'AvailableTabsDto(key: $key, label: $label, type: $type)';
 }
 
 

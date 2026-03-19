@@ -5,8 +5,8 @@ import 'package:google_play/presentation/widgets/sections/resolved_sections_view
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/presentation/viewmodels/configs/store_screen_config_provider.dart';
 import 'package:google_play/presentation/viewmodels/home/home_view_model.dart';
+import 'package:google_play/presentation/viewmodels/tabs/store_tabs_provider.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class StoreTabScreen extends HookConsumerWidget {
@@ -18,36 +18,32 @@ class StoreTabScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vsync = useSingleTickerProvider();
 
-    final configAsync = ref.watch(storeScreenConfigProvider(storeType));
+    final tabsAsync = ref.watch(storeTabsProvider(storeType));
+    final homeProvider = ref.read(homeViewModelProvider(storeType).notifier);
+    final homeState = ref.watch(homeViewModelProvider(storeType));
 
-    // TODO: [ui] error/empty widget
-    return configAsync.when(
+    return tabsAsync.when(
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
       error: (e, _) =>
           Scaffold(body: Center(child: Text(context.l10n.failedToLoadTabs(e)))),
-      data: (config) {
+      data: (tabsData) {
+        if (tabsData.isEmpty) return const SizedBox.shrink();
+
         final visitedIndexes = useState<Set<int>>({0});
-        final tabs = config.tabs.map((t) => t.label).toList();
+        final tabs = tabsData.map((t) => t.label).toList();
 
         final tabController = useTabController(
-          initialLength: config.tabs.length,
+          initialLength: tabsData.length,
           vsync: vsync,
         );
 
-        final homeProvider = ref.read(
-          homeViewModelProvider(storeType).notifier,
-        );
-        final homeState = ref.watch(homeViewModelProvider(storeType));
-
         useEffect(() {
-          final tabsConfig = config.tabs;
-
           void listener() {
             if (tabController.indexIsChanging) return;
 
             final index = tabController.index;
-            final tabKey = tabsConfig[index].key;
+            final tabKey = tabsData[index].key;
 
             if (!visitedIndexes.value.contains(index)) {
               visitedIndexes.value = {...visitedIndexes.value, index};
@@ -58,13 +54,14 @@ class StoreTabScreen extends HookConsumerWidget {
 
           tabController.addListener(listener);
 
-          final initialTabKey = tabsConfig[0].key;
-          homeProvider.loadTabSections(initialTabKey);
+          // Загружаем первый таб и продукты
+          homeProvider.loadTabSections(tabsData[0].key);
           homeProvider.loadProducts();
 
-          return null;
-        }, const []);
-        final tabLabels = config.tabs.map((t) => t.label).toList();
+          return () => tabController.removeListener(listener);
+        }, [tabsData]);
+
+        final tabLabels = tabsData.map((t) => t.label).toList();
 
         return Scaffold(
           body: SafeArea(
@@ -99,7 +96,7 @@ class StoreTabScreen extends HookConsumerWidget {
                     const NeverScrollableScrollPhysics(), // Не переключать табы свайпом
                 controller: tabController,
                 children: List.generate(tabs.length, (index) {
-                  final tabConfig = config.tabs[index];
+                  final tabConfig = tabsData[index];
                   final tabKey = tabConfig.key;
                   final sectionState =
                       homeState.sectionsByTab[tabKey] ??

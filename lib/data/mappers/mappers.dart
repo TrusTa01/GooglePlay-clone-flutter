@@ -12,4 +12,4 @@ export 'banner_mappers/banner_mapper.dart';
 export 'config_mappers/data_params_mapper.dart';
 export 'config_mappers/section_mapper.dart';
 export 'config_mappers/tab_config_mapper.dart';
-export 'config_mappers/available_sections_mapper.dart';
+export 'tabs_mappers/available_sections_mapper.dart';

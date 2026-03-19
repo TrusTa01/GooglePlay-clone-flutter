@@ -9,8 +9,8 @@ import 'package:google_play/domain/repositories/product_repository.dart';
 import 'package:google_play/domain/usecases/products/get_product_by_id_usecase.dart';
 import 'package:google_play/domain/usecases/products/load_products_usecase.dart';
 import 'package:google_play/domain/usecases/events/build_event_screen_usecase.dart';
-import 'package:google_play/domain/usecases/sections/get_available_tabs_usecase.dart';
-import 'package:google_play/domain/usecases/sections/get_tab_sections_usecase.dart';
+import 'package:google_play/domain/usecases/tabs/get_available_tabs_usecase.dart';
+import 'package:google_play/domain/usecases/tabs/get_tab_sections_usecase.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

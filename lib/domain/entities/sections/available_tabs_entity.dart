@@ -1,9 +1,9 @@
-final class AvailableSectionsEntity {
+final class AvailableTabsEntity {
   final String key;
   final String label;
   final String type;
 
-  AvailableSectionsEntity({
+  AvailableTabsEntity({
     required this.key,
     required this.label,
     required this.type,

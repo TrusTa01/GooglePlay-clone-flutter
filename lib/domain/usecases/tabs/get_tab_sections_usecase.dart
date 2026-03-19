@@ -3,7 +3,7 @@ import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/domain/repositories/config_repository.dart';
 
-/// Use case для получения списка секций конкретного таба стора.
+/// Use case для получения списка секций конкретного таба стора
 abstract interface class GetTabSectionsUseCase {
   Future<List<SectionEntity>> call({
     required StoreType storeType,

@@ -4,7 +4,7 @@ import 'dart:isolate';
 import 'package:flutter/foundation.dart' show debugPrint, FlutterError;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_play/core/constants/global_constants.dart';
-import 'package:google_play/data/models/section_dtos/available_sections_dto.dart';
+import 'package:google_play/data/models/tabs_dtos/available_tabs_dto.dart';
 import 'package:google_play/data/models/section_dtos/section_dto.dart';
 
 class ConfigLocalDatasource {
@@ -13,7 +13,7 @@ class ConfigLocalDatasource {
   final Map<String, TabConfigDto> _tabsCache = {};
 
   // Кэш для списков доступных табов (индексов)
-  final Map<String, List<AvailableSectionsDto>> _indexCache = {};
+  final Map<String, List<AvailableTabsDto>> _indexCache = {};
 
   Future<TabConfigDto> loadTabsConfig({
     required String folder,
@@ -57,7 +57,7 @@ class ConfigLocalDatasource {
     }
   }
 
-  Future<List<AvailableSectionsDto>> getAvailableTabs({
+  Future<List<AvailableTabsDto>> getAvailableTabs({
     required String folder,
     required String indexKey,
   }) async {
@@ -82,8 +82,8 @@ class ConfigLocalDatasource {
 
       final List<dynamic> rawTabs = jsonMap[indexKey] ?? [];
 
-      final List<AvailableSectionsDto> result = rawTabs
-          .map((e) => AvailableSectionsDto.fromJson(e as Map<String, dynamic>))
+      final List<AvailableTabsDto> result = rawTabs
+          .map((e) => AvailableTabsDto.fromJson(e as Map<String, dynamic>))
           .toList();
 
       // Запись в кэш

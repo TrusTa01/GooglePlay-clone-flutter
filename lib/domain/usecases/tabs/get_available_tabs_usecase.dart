@@ -1,4 +1,4 @@
-import 'package:google_play/domain/entities/sections/available_sections_entity.dart';
+import 'package:google_play/domain/entities/sections/available_tabs_entity.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/domain/repositories/config_repository.dart';
 
@@ -13,7 +13,7 @@ extension StoreTypeAvailableTabsKey on StoreType {
 /// Use case для получения списка доступных табов конкретного стора
 /// (игры / приложения / книги) из внешнего конфига.
 abstract interface class GetAvailableTabsUseCase {
-  Future<List<AvailableSectionsEntity>> call({required StoreType storeType});
+  Future<List<AvailableTabsEntity>> call({required StoreType storeType});
 }
 
 final class GetAvailableTabsUseCaseImpl implements GetAvailableTabsUseCase {
@@ -22,7 +22,7 @@ final class GetAvailableTabsUseCaseImpl implements GetAvailableTabsUseCase {
   const GetAvailableTabsUseCaseImpl(this._configRepository);
 
   @override
-  Future<List<AvailableSectionsEntity>> call({
+  Future<List<AvailableTabsEntity>> call({
     required StoreType storeType,
   }) async {
     try {

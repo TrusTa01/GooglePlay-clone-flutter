@@ -58,7 +58,7 @@ final class HomeViewModelProvider
   }
 }
 
-String _$homeViewModelHash() => r'072210eacfb252c0aebe1cc43b2e88dcadafc3f6';
+String _$homeViewModelHash() => r'a7f5d2a3bc04a6983c5f27692185d04b61ef0f97';
 
 final class HomeViewModelFamily extends $Family
     with

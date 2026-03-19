@@ -1,5 +1,5 @@
 
-import 'package:google_play/domain/entities/sections/available_sections_entity.dart';
+import 'package:google_play/domain/entities/sections/available_tabs_entity.dart';
 import 'package:google_play/domain/entities/sections/section_entity.dart';
 
 abstract interface class IConfigRepository {
@@ -8,5 +8,5 @@ abstract interface class IConfigRepository {
     required String tabKey,
   });
 
-  Future<List<AvailableSectionsEntity>> getAvaibleTabs(String indexKey);
+  Future<List<AvailableTabsEntity>> getAvaibleTabs(String indexKey);
 }
