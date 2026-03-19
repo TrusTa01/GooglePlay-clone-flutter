@@ -28,7 +28,7 @@ final class GetAvailableTabsUseCaseImpl implements GetAvailableTabsUseCase {
     try {
       return await _configRepository.getAvaibleTabs(storeType.availableTabsKey);
     } catch (e) {
-      // TODO: В случае ошибки не падаем, а возвращаем минимальный дефолтный набор табов
+      // TODO: [default] В случае ошибки не падаем, а возвращаем минимальный дефолтный набор табов
       return const [];
     }
   }

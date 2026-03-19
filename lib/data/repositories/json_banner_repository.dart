@@ -21,7 +21,7 @@ class JsonBannerRepository implements IBannerRepository {
   @override
   Future<BannerEntity?> getBannerById({required String id}) async {
     final dto = _dataSource.getProductById<BannerDto>(id);
-    // TODO: Реализовать проверку инициализации кэша
+    // TODO: [cache] Реализовать проверку инициализации кэша
     // Если кэш пуст, вызвать загрузку соответствующих файлов перед поиском
     if (dto == null) return null;
 

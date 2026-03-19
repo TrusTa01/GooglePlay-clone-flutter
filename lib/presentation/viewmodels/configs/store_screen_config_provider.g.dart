@@ -66,7 +66,7 @@ final class StoreScreenConfigProvider
   }
 }
 
-String _$storeScreenConfigHash() => r'a9d68928c385ae4d0f61d9d6ad57e68ba55f067b';
+String _$storeScreenConfigHash() => r'90d0c07d644775683e8abdb1dac1febe5e5243a9';
 
 final class StoreScreenConfigFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<StoreScreenConfig>, StoreType> {

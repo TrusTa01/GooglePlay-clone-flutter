@@ -1,5 +1,5 @@
 import 'package:google_play/domain/entities/products/product_entity.dart';
-import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
+import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeState {
@@ -7,7 +7,7 @@ class HomeState {
   final Object? error;
   final List<ProductEntity> products;
   final String selectedCategoryId;
-  final Map<String, AsyncValue<List<SectionEntity>>> sectionsByTab;
+  final Map<String, AsyncValue<List<ResolvedSection>>> sectionsByTab;
 
   const HomeState({
     this.isLoading = false,
@@ -22,7 +22,7 @@ class HomeState {
     Object? error,
     List<ProductEntity>? products,
     String? selectedCategoryId,
-    Map<String, AsyncValue<List<SectionEntity>>>? sectionsByTab,
+    Map<String, AsyncValue<List<ResolvedSection>>>? sectionsByTab,
   }) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,

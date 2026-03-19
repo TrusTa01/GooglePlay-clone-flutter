@@ -1,7 +1,7 @@
 import 'package:google_play/di/usecase_providers.dart';
-import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:google_play/domain/usecases/products/load_products_usecase.dart';
 import 'package:google_play/domain/usecases/sections/get_tab_sections_usecase.dart';
+import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:google_play/presentation/viewmodels/home/home_state.dart';
 import 'package:google_play/presentation/viewmodels/home/store_tab_config.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,6 +15,9 @@ class HomeViewModel extends _$HomeViewModel {
   );
   late final GetTabSectionsUseCase _getTabSectionsUseCase = ref.watch(
     getTabSectionsUseCaseProvider,
+  );
+  late final ResolveSectionUsecase _resolveSectionUsecase = ref.watch(
+    resolveSectionUseCaseProvider,
   );
 
   @override
@@ -44,7 +47,7 @@ class HomeViewModel extends _$HomeViewModel {
     state = state.copyWith(
       sectionsByTab: {
         ...state.sectionsByTab,
-        tabKey: const AsyncValue<List<SectionEntity>>.loading(),
+        tabKey: const AsyncValue<List<ResolvedSection>>.loading(),
       },
     );
 
@@ -54,17 +57,27 @@ class HomeViewModel extends _$HomeViewModel {
         tabKey: tabKey,
       );
 
+      final categoryType = switch (storeType) {
+        StoreType.apps => 'app',
+        StoreType.games => 'game',
+        StoreType.books => 'book',
+      };
+
+      final resolvedSections = await Future.wait(
+        sections.map((s) => _resolveSectionUsecase(s, categoryType)),
+      );
+
       state = state.copyWith(
         sectionsByTab: {
           ...state.sectionsByTab,
-          tabKey: AsyncValue<List<SectionEntity>>.data(sections),
+          tabKey: AsyncValue<List<ResolvedSection>>.data(resolvedSections),
         },
       );
     } catch (e, st) {
       state = state.copyWith(
         sectionsByTab: {
           ...state.sectionsByTab,
-          tabKey: AsyncValue<List<SectionEntity>>.error(e, st),
+          tabKey: AsyncValue<List<ResolvedSection>>.error(e, st),
         },
       );
     }

@@ -14,7 +14,7 @@ class CustomFilterChip extends StatelessWidget {
     required this.onSelected,
     this.isSelected = false,
   });
-
+  // TODO: [ui] вынести цвета в общие константы
   @override
   Widget build(BuildContext context) {
     return FilterChip(
@@ -46,8 +46,8 @@ class CustomFilterChip extends StatelessWidget {
         fontWeight: Constants.defaultFontWeight,
       ),
       side: BorderSide(
-      color: isSelected ? Colors.transparent : Colors.grey.shade400,
-    ), 
+        color: isSelected ? Colors.transparent : Colors.grey.shade400,
+      ),
       visualDensity: VisualDensity.comfortable,
       onSelected: (_) => onSelected(),
     );

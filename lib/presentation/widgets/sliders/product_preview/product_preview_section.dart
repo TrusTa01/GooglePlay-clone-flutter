@@ -45,7 +45,7 @@ class ProductPreviewSection extends StatelessWidget {
       debugPrint('Ошибка: productIds.isEmpty (game preview section)');
       return isSliver
           ? const SliverToBoxAdapter(child: SizedBox.shrink())
-          : const SizedBox.shrink();
+          : const SizedBox.shrink(); // TODO: [ui] error widget
     }
 
     if (isSliver) {

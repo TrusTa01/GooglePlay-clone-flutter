@@ -14,6 +14,7 @@ class ProductCarousel extends HookWidget {
   final double leftPadding;
   final bool needsRightPadding;
   final ValueChanged<ProductCardUiModel> onProductTap;
+  final VoidCallback? onSeeAllTap;
 
   const ProductCarousel({
     super.key,
@@ -25,6 +26,7 @@ class ProductCarousel extends HookWidget {
     this.leftPadding = 22,
     this.needsRightPadding = true,
     required this.onProductTap,
+    this.onSeeAllTap,
   });
 
   @override
@@ -106,7 +108,7 @@ class ProductCarousel extends HookWidget {
                 title: title,
                 subtitle: subtitle,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                onTap: () {},
+                onTap: onSeeAllTap ?? () {},
                 showButton: true,
               ),
             ),

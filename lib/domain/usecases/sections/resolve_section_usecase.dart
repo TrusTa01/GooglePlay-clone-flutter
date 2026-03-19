@@ -3,13 +3,6 @@ import 'package:google_play/domain/entities/sections/section_data_source.dart';
 import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
 import 'package:google_play/domain/repositories/banner_repository.dart';
 import 'package:google_play/domain/repositories/product_repository.dart';
-import 'package:google_play/presentation/viewmodels/home/store_tab_config.dart';
-
-typedef GetTabSectionsUseCase =
-    Future<List<SectionEntity>> Function({
-      required StoreType storeType,
-      required String tabKey,
-    });
 
 class ResolvedSection {
   final SectionEntity config;
@@ -21,10 +14,12 @@ class ResolvedSection {
 class ResolveSectionUsecase {
   final IProductRepository _productRepo;
   final IBannerRepository _bannerRepo;
+  final SectionEntity config;
 
   const ResolveSectionUsecase({
     required IProductRepository productRepo,
     required IBannerRepository bannerRepo,
+    required this.config,
   }) : _productRepo = productRepo,
        _bannerRepo = bannerRepo;
 
@@ -32,7 +27,7 @@ class ResolveSectionUsecase {
     SectionEntity section,
     String categoryType,
   ) async {
-    List<Entity> items = [];
+    List<Entity> items = const [];
 
     final source = section.dataSource;
 

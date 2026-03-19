@@ -12,7 +12,6 @@ class BannerSection extends HookWidget {
   final double heightFactor;
   final String title;
   final String subtitle;
-  final bool showButton;
   final int? maxItems;
   final ValueChanged<BannerItemUiModel>? onBannerTap;
 
@@ -22,7 +21,6 @@ class BannerSection extends HookWidget {
     this.heightFactor = 3.5,
     required this.title,
     this.subtitle = '',
-    required this.showButton,
     this.maxItems,
     this.onBannerTap,
   });

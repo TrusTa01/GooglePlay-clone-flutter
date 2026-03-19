@@ -36,7 +36,6 @@ class TopChartsCard extends StatelessWidget {
           Expanded(
             child: InkWell(
               onTap: onTap,
-              // TODO: go_router => ProductPageScreen
               borderRadius: BorderRadius.circular(12),
               child: ActionRow(model: model, showButton: showButton),
             ),

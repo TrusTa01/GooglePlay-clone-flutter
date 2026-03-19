@@ -42,7 +42,7 @@ extension GameMapper on GameDto {
       developerCity: developerCity,
       developerCountry: developerCountry,
       developerPhone: developerPhone,
-      hasAchievements: false, // TODO: add to GameDto when available
+      hasAchievements: false, // TODO: [fields] add to GameDto when available
     );
   }
 }

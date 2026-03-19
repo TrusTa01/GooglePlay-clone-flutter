@@ -53,7 +53,7 @@ class SelectionModal {
                       final displayTitle = option.titleL10nKey != null
                           ? lookupL10n(l10n, option.titleL10nKey!)
                           : (option.title ?? '');
-
+                      // TODO: [ui] вынести цвета в общие константы
                       return Column(
                         children: [
                           Material(

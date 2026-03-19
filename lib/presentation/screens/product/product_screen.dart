@@ -85,7 +85,7 @@ class _ProductPageContent extends ConsumerWidget {
                                 child: ProductTags(
                                   tags: state.tags,
                                   onTap: () {
-                                    // TODO: queryService.getProductsByTag
+                                    // TODO: [filter] queryService.getProductsByTag
                                   },
                                 ),
                               ),
@@ -101,7 +101,7 @@ class _ProductPageContent extends ConsumerWidget {
                               state.supportSectionType ==
                                   SupportSectionType.aboutAuthor
                               ? ()
-                                // TODO: в уровне навигации => openAboutAuthor(state.productId)
+                                // TODO: [link] в уровне навигации => openAboutAuthor(state.productId)
                                 {
                                   final aboutAuthorMapper = AboutAuthorMapper();
                                   final model = aboutAuthorMapper.fromState(
@@ -120,13 +120,12 @@ class _ProductPageContent extends ConsumerWidget {
                       ),
                       Constants.sliverDivider15,
 
-                      // TODO: Принимать не product, перейти на usecase
                       SliverToBoxAdapter(
                         child: ProductPageSimilarAndFooter(
                           onProductTap: (value) {},
                           sectionTitle: state.title,
                           similarProducts:
-                              const [], // TODO: queryService.getSimilarProducts
+                              const [], // TODO: [filter] queryService.getSimilarProducts
                           link: 'https://support.google.com/',
                         ),
                       ),

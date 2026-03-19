@@ -2,6 +2,8 @@ import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_models/product_card_ui_model.dart';
 
 class ProductCardMapper {
+  const ProductCardMapper();
+  
   /// Маппинг параметров карточки
   ProductCardUiModel mapToProductCardUi(ProductState state) {
     final bool showPrice = state.isPaid && state.price.isNotEmpty;

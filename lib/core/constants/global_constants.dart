@@ -30,7 +30,7 @@ class Constants {
   static const double sliderMaxContentWidth = 1040;
 
   // Индекс вкладки нижней навигации при старте приложения
-  // 0 = Игры, 1 = Приложения, 2 = Поиск, 3 = Книги
+  // 0 = игры, 1 = приложения, 2 = поиск, 3 = книги
   static const int defaultBottomNavIndex = 0;
 
   // Простой способ вертикального отступа между блоками

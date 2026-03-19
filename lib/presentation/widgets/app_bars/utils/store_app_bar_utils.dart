@@ -14,7 +14,7 @@ List<Widget> buildStoreActionWidgets({
         onPressed: () => Navigator.of(
           context,
           rootNavigator: true,
-        ).push(MaterialPageRoute(builder: (context) => NotificationsScreen())),
+        ).push(MaterialPageRoute(builder: (context) => NotificationsScreen())), // TODO: [ui] На смену языка
         icon: const Icon(Icons.notifications_outlined),
       ),
       const SizedBox(width: 10),
@@ -35,7 +35,8 @@ List<Widget> buildStoreAppBar({
   required List<String> tabs,
   required List<Widget> actionWidgets,
 }) {
-  // Разрешаем ключи табов в локализованные строки.
+  // Разрешаем ключи табов в локализованные строки
+  // TODO: [logic] добавить для всех остальных 
   List<String> resolveTabLabels() {
     final l10n = context.l10n;
     return tabLabelKeys.map((key) {

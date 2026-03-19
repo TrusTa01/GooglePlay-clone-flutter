@@ -5,7 +5,7 @@ import 'package:google_play/domain/entities/products/product_filter.dart';
 /// Контракт, который слой [Data] обязан будет реализовать
 abstract interface class IProductRepository {
   // Получаем список всех продуктов
-  // TODO: Пагинация
+  // TODO: [base] Пагинация
   Future<List<ProductEntity>> getProducts({required String type});
 
   /// Получаем конкретный продукт по [ID]

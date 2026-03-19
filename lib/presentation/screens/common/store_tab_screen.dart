@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_play/presentation/widgets/sections/resolved_sections_view.dart';
+import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/presentation/viewmodels/configs/store_screen_config_provider.dart';
@@ -18,7 +20,7 @@ class StoreTabScreen extends HookConsumerWidget {
 
     final configAsync = ref.watch(storeScreenConfigProvider(storeType));
 
-    // TODO: error/empty widget
+    // TODO: [ui] error/empty widget
     return configAsync.when(
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
@@ -36,6 +38,7 @@ class StoreTabScreen extends HookConsumerWidget {
         final homeProvider = ref.read(
           homeViewModelProvider(storeType).notifier,
         );
+        final homeState = ref.watch(homeViewModelProvider(storeType));
 
         useEffect(() {
           final tabsConfig = config.tabs;
@@ -98,6 +101,9 @@ class StoreTabScreen extends HookConsumerWidget {
                 children: List.generate(tabs.length, (index) {
                   final tabConfig = config.tabs[index];
                   final tabKey = tabConfig.key;
+                  final sectionState =
+                      homeState.sectionsByTab[tabKey] ??
+                      const AsyncValue<List<ResolvedSection>>.loading();
 
                   return Builder(
                     builder: (context) {
@@ -114,8 +120,12 @@ class StoreTabScreen extends HookConsumerWidget {
                                   context,
                                 ),
                           ),
-
                           // Контент
+                          ResolvedSectionsView(
+                            sectionState: sectionState,
+                            isSliver: true,
+                            storageId: '${storeType.name}_$tabKey',
+                          ),
                         ],
                       );
                     },

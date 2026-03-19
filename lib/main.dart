@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_play/core/constants/global_constants.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/presentation/layouts/main_layout.dart';
@@ -12,6 +13,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
+  debugRepaintRainbowEnabled = true;
   runApp(const ProviderScope(child: GooglePlay()));
 }
 

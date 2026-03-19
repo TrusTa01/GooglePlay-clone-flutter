@@ -112,7 +112,7 @@ class DetailsScreen extends StatelessWidget {
                           subtitle: state.ageRatingReasons,
                           actionText: context.l10n.detailsMore,
                           onActionPressed:
-                              () {}, // TODO: открыть тот же линк, что и в rating_row,
+                              () {}, // TODO: [link] открыть тот же линк, что и в rating_row,
                         ),
 
                         if (state.showAds) ...[

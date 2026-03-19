@@ -11,7 +11,7 @@ Future<StoreScreenConfig> storeScreenConfig(
 ) async {
   final useCase = ref.watch(getAvailableTabsUseCaseProvider);
 
-  final tabKeys = await useCase(storeType: storeType);
-  final tabs = buildStoreTabs(tabKeys);
+  final availableTabs = await useCase(storeType: storeType);
+  final tabs = buildStoreTabs(availableTabs.map((e) => e.key).toList());
   return StoreScreenConfig(type: storeType, tabs: tabs);
 }
