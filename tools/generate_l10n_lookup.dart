@@ -4,28 +4,29 @@
 // (например "for_you_title") получать готовый локализованный текст из .arb.
 //
 // Запуск: dart run tools/generate_l10n_lookup.dart
-// Запускайте после flutter gen-l10n, чтобы в .arb уже были все ключи.
-//
-// В .arb добавляйте ключи в том же виде, в каком они приходят из конфига
-// (snake_case). gen-l10n создаст геттер в camelCase (for_you_title -> forYouTitle).
+// Запускайте после flutter gen-l10n, чтобы в app_localizations.dart уже были
+// актуальные сигнатуры.
 
-import 'dart:convert';
 import 'dart:io';
 
 void main() async {
-  final arbPath = 'lib/core/l10n/app_en.arb';
+  final appL10nPath = 'lib/core/l10n/gen/app_localizations.dart';
   final outPath = 'lib/core/l10n/gen/l10n_lookup.dart';
 
-  final file = File(arbPath);
+  final file = File(appL10nPath);
   if (!file.existsSync()) {
-    print('Error: $arbPath not found');
+    print('Error: $appL10nPath not found');
     exit(1);
   }
 
-  final map = jsonDecode(await file.readAsString()) as Map<String, dynamic>;
-  final keys = map.keys
-      .where((k) => !k.startsWith('@'))
-      .where((k) => k != '@@locale')
+  final content = await file.readAsString();
+  final getterRegex = RegExp(r'^\s*String get ([A-Za-z0-9_]+);', multiLine: true);
+  final keys = getterRegex
+      .allMatches(content)
+      .map((m) => m.group(1)!)
+      // Только реальные l10n ключи; служебные геттеры исключаем.
+      .where((k) => k != 'localeName')
+      .toSet()
       .toList()
     ..sort();
 
@@ -41,8 +42,7 @@ void main() async {
   buffer.writeln('  switch (key) {');
 
   for (final key in keys) {
-    final getterName = key.contains('_') ? _snakeToCamel(key) : _firstCharLower(key);
-    buffer.writeln("    case '$key': return l10n.$getterName;");
+    buffer.writeln("    case '$key': return l10n.$key;");
   }
 
   buffer.writeln('    default: return key;');
@@ -51,22 +51,4 @@ void main() async {
 
   await File(outPath).writeAsString(buffer.toString());
   print('Wrote $outPath (${keys.length} keys).');
-}
-
-/// snake_case -> camelCase (for_you_title -> forYouTitle).
-String _snakeToCamel(String s) {
-  final parts = s.split('_');
-  if (parts.isEmpty) return s;
-  final first = parts.first.toLowerCase();
-  final rest = parts.skip(1).map((p) {
-    if (p.isEmpty) return p;
-    return p[0].toUpperCase() + p.substring(1).toLowerCase();
-  });
-  return first + rest.join();
-}
-
-/// Первая буква в нижний регистр (AppTitle -> appTitle). Остальное не трогаем — в .arb уже camelCase.
-String _firstCharLower(String s) {
-  if (s.isEmpty) return s;
-  return s[0].toLowerCase() + s.substring(1);
 }

@@ -1219,6 +1219,1296 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recent'**
   String get filterRecent;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Action Games'**
+  String get action_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure Games'**
+  String get adventure_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Anime Games'**
+  String get anime_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Art Design'**
+  String get apps_art_design_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Auto Vehicles'**
+  String get apps_auto_vehicles_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Books Reference'**
+  String get apps_books_reference_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Business'**
+  String get apps_business_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Communication'**
+  String get apps_communication_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Dark Mode'**
+  String get apps_dark_mode_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Dating'**
+  String get apps_dating_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Education'**
+  String get apps_education_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Entertainment'**
+  String get apps_entertainment_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Events'**
+  String get apps_events_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Finance'**
+  String get apps_finance_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Food Drink'**
+  String get apps_food_drink_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Free'**
+  String get apps_free_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Health Fitness'**
+  String get apps_health_fitness_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps House Home'**
+  String get apps_house_home_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Lists'**
+  String get apps_lists_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Medical'**
+  String get apps_medical_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Music Audio'**
+  String get apps_music_audio_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Navigation'**
+  String get apps_navigation_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps News'**
+  String get apps_news_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps No Ads'**
+  String get apps_no_ads_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Offline'**
+  String get apps_offline_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Parenting'**
+  String get apps_parenting_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Photography'**
+  String get apps_photography_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Popular'**
+  String get apps_popular_subtitle;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Popular'**
+  String get apps_popular_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Productivity'**
+  String get apps_productivity_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Security'**
+  String get apps_security_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Shopping'**
+  String get apps_shopping_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Social'**
+  String get apps_social_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Sports'**
+  String get apps_sports_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Top Rated'**
+  String get apps_top_rated_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Travel'**
+  String get apps_travel_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Utilities'**
+  String get apps_utilities_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Video Players'**
+  String get apps_video_players_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Weather'**
+  String get apps_weather_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Widgets'**
+  String get apps_widgets_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Apps Work Tools'**
+  String get apps_work_tools_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Arcade Games'**
+  String get arcade_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Best Indie Games'**
+  String get best_indie_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Board Games'**
+  String get board_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Architecture'**
+  String get books_architecture_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Art'**
+  String get books_art_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Award Winning'**
+  String get books_award_winning_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Bestseller'**
+  String get books_bestseller_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Biography'**
+  String get books_biography_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Business'**
+  String get books_business_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Children'**
+  String get books_children_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Classic'**
+  String get books_classic_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Comics'**
+  String get books_comics_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Cooking'**
+  String get books_cooking_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Economics'**
+  String get books_economics_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Education'**
+  String get books_education_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Fantasy'**
+  String get books_fantasy_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Free'**
+  String get books_free_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Graphic Novel'**
+  String get books_graphic_novel_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Health'**
+  String get books_health_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books History'**
+  String get books_history_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Horror'**
+  String get books_horror_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Law'**
+  String get books_law_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Memoir'**
+  String get books_memoir_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Music'**
+  String get books_music_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Mystery'**
+  String get books_mystery_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Nature'**
+  String get books_nature_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books New'**
+  String get books_new_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Parenting'**
+  String get books_parenting_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Philosophy'**
+  String get books_philosophy_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Poetry'**
+  String get books_poetry_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Politics'**
+  String get books_politics_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Psychology'**
+  String get books_psychology_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Religion'**
+  String get books_religion_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Romance'**
+  String get books_romance_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Science Fiction'**
+  String get books_science_fiction_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Science'**
+  String get books_science_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Self Help'**
+  String get books_self_help_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Series'**
+  String get books_series_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Short Stories'**
+  String get books_short_stories_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Sports'**
+  String get books_sports_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Technology'**
+  String get books_technology_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Thriller'**
+  String get books_thriller_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Top Rated'**
+  String get books_top_rated_subtitle;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Top Rated'**
+  String get books_top_rated_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Translated'**
+  String get books_translated_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Books Travel'**
+  String get books_travel_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Building Games'**
+  String get building_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Casual Games'**
+  String get casual_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Co Op Games'**
+  String get co_op_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Crafting Games'**
+  String get crafting_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Cyberpunk Games'**
+  String get cyberpunk_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Fantasy Games'**
+  String get fantasy_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Fighting Games'**
+  String get fighting_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Games Offline'**
+  String get games_offline_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Games Unusual Puzzle'**
+  String get games_unusual_puzzle_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Home Grid Everyone Plays'**
+  String get home_grid_everyone_plays_subtitle;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Home Grid Everyone Plays'**
+  String get home_grid_everyone_plays_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Horror Games'**
+  String get horror_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Indie Games'**
+  String get indie_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids 2d'**
+  String get kids_2d_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids 3d'**
+  String get kids_3d_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Abstract'**
+  String get kids_abstract_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Adventure'**
+  String get kids_adventure_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Age 12'**
+  String get kids_age_12_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Age 3'**
+  String get kids_age_3_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Age 6'**
+  String get kids_age_6_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Alphabet'**
+  String get kids_alphabet_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Arcade'**
+  String get kids_arcade_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Board'**
+  String get kids_board_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Building'**
+  String get kids_building_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Cartoons'**
+  String get kids_cartoons_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Casual'**
+  String get kids_casual_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Co Op'**
+  String get kids_co_op_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Creativity'**
+  String get kids_creativity_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Crossplatform'**
+  String get kids_crossplatform_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Drawing'**
+  String get kids_drawing_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Educational'**
+  String get kids_educational_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Exploration'**
+  String get kids_exploration_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Fairy Tales'**
+  String get kids_fairy_tales_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Family'**
+  String get kids_family_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Free'**
+  String get kids_free_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Health'**
+  String get kids_health_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Hero Banner'**
+  String get kids_hero_banner_subtitle;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Hero Banner'**
+  String get kids_hero_banner_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Languages'**
+  String get kids_languages_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Letters'**
+  String get kids_letters_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Logic'**
+  String get kids_logic_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Math'**
+  String get kids_math_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Minimalist'**
+  String get kids_minimalist_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Multiplayer'**
+  String get kids_multiplayer_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Music'**
+  String get kids_music_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids New And Updated'**
+  String get kids_new_and_updated_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids New Releases'**
+  String get kids_new_releases_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Numbers'**
+  String get kids_numbers_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Offline'**
+  String get kids_offline_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Pixel Art'**
+  String get kids_pixel_art_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Popular'**
+  String get kids_popular_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Procedural'**
+  String get kids_procedural_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Puzzle'**
+  String get kids_puzzle_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Relaxing'**
+  String get kids_relaxing_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Retro'**
+  String get kids_retro_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Rpg'**
+  String get kids_rpg_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Simulation'**
+  String get kids_simulation_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Story Rich'**
+  String get kids_story_rich_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Strategy'**
+  String get kids_strategy_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Stylized'**
+  String get kids_stylized_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Top Rated'**
+  String get kids_top_rated_subtitle;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Top Rated'**
+  String get kids_top_rated_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Trivia'**
+  String get kids_trivia_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Turn Based'**
+  String get kids_turn_based_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Kids Word'**
+  String get kids_word_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Low Price Games'**
+  String get low_price_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Multiplayer Games'**
+  String get multiplayer_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'New Releases'**
+  String get new_releases_subtitle;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'New Releases'**
+  String get new_releases_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Games'**
+  String get offline_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Open World Games'**
+  String get open_world_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Action Games'**
+  String get paid_action_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Adventure Games'**
+  String get paid_adventure_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Anime Games'**
+  String get paid_anime_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Arcade Games'**
+  String get paid_arcade_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Board Games'**
+  String get paid_board_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Building Games'**
+  String get paid_building_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Casual Games'**
+  String get paid_casual_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Co Op Games'**
+  String get paid_co_op_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Crafting Games'**
+  String get paid_crafting_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Cyberpunk Games'**
+  String get paid_cyberpunk_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Esports Games'**
+  String get paid_esports_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Exploration Games'**
+  String get paid_exploration_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Fantasy Games'**
+  String get paid_fantasy_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Fighting Games'**
+  String get paid_fighting_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Horror Games'**
+  String get paid_horror_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Multiplayer Games'**
+  String get paid_multiplayer_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid New Releases'**
+  String get paid_new_releases_subtitle;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid New Releases'**
+  String get paid_new_releases_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Open World Games'**
+  String get paid_open_world_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Pixel Art Games'**
+  String get paid_pixel_art_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Post Apocalyptic Games'**
+  String get paid_post_apocalyptic_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Pvp Games'**
+  String get paid_pvp_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Racing Games'**
+  String get paid_racing_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Relaxing Games'**
+  String get paid_relaxing_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Retro Games'**
+  String get paid_retro_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Roguelike Games'**
+  String get paid_roguelike_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Rpg Games'**
+  String get paid_rpg_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Shooter Games'**
+  String get paid_shooter_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Simulation Games'**
+  String get paid_simulation_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Sports Games'**
+  String get paid_sports_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Steampunk Games'**
+  String get paid_steampunk_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Story Rich Games'**
+  String get paid_story_rich_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Strategy Games'**
+  String get paid_strategy_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Survival Games'**
+  String get paid_survival_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Top Rated Games'**
+  String get paid_top_rated_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Turn Based Games'**
+  String get paid_turn_based_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Paid Vr Games'**
+  String get paid_vr_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Pixel Art Games'**
+  String get pixel_art_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Post Apocalyptic Games'**
+  String get post_apocalyptic_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzle Games'**
+  String get puzzle_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Pve Games'**
+  String get pve_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Pvp Games'**
+  String get pvp_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Racing Games'**
+  String get racing_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Relaxing Games'**
+  String get relaxing_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Retro Games'**
+  String get retro_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Roguelike Games'**
+  String get roguelike_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Rpg Games'**
+  String get rpg_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Shooter Games'**
+  String get shooter_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Simulation Games'**
+  String get simulation_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Sports Games'**
+  String get sports_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Steampunk Games'**
+  String get steampunk_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Story Rich Games'**
+  String get story_rich_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Strategy Games'**
+  String get strategy_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Survival Games'**
+  String get survival_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Top Rated Games'**
+  String get top_rated_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Turn Based Games'**
+  String get turn_based_games_title;
+
+  /// Section title/subtitle from config key
+  ///
+  /// In en, this message translates to:
+  /// **'Vr Games'**
+  String get vr_games_title;
 }
 
 class _AppLocalizationsDelegate

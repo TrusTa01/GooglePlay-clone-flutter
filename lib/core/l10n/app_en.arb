@@ -721,7 +721,6 @@
   "@kidsServicesDescription": {
     "description": "Kids services section description"
   },
-
   "unitMb": "MB",
   "@unitMb": {
     "description": "Megabytes unit for app/game size"
@@ -752,5 +751,865 @@
   "filterRecent": "Recent",
   "@filterRecent": {
     "description": "Filter label: recent / new"
+  },
+  "action_games_title": "Action Games",
+  "@action_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "adventure_games_title": "Adventure Games",
+  "@adventure_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "anime_games_title": "Anime Games",
+  "@anime_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_art_design_title": "Apps Art Design",
+  "@apps_art_design_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_auto_vehicles_title": "Apps Auto Vehicles",
+  "@apps_auto_vehicles_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_books_reference_title": "Apps Books Reference",
+  "@apps_books_reference_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_business_title": "Apps Business",
+  "@apps_business_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_communication_title": "Apps Communication",
+  "@apps_communication_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_dark_mode_title": "Apps Dark Mode",
+  "@apps_dark_mode_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_dating_title": "Apps Dating",
+  "@apps_dating_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_education_title": "Apps Education",
+  "@apps_education_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_entertainment_title": "Apps Entertainment",
+  "@apps_entertainment_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_events_title": "Apps Events",
+  "@apps_events_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_finance_title": "Apps Finance",
+  "@apps_finance_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_food_drink_title": "Apps Food Drink",
+  "@apps_food_drink_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_free_title": "Apps Free",
+  "@apps_free_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_health_fitness_title": "Apps Health Fitness",
+  "@apps_health_fitness_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_house_home_title": "Apps House Home",
+  "@apps_house_home_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_lists_title": "Apps Lists",
+  "@apps_lists_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_medical_title": "Apps Medical",
+  "@apps_medical_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_music_audio_title": "Apps Music Audio",
+  "@apps_music_audio_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_navigation_title": "Apps Navigation",
+  "@apps_navigation_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_news_title": "Apps News",
+  "@apps_news_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_no_ads_title": "Apps No Ads",
+  "@apps_no_ads_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_offline_title": "Apps Offline",
+  "@apps_offline_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_parenting_title": "Apps Parenting",
+  "@apps_parenting_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_photography_title": "Apps Photography",
+  "@apps_photography_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_popular_subtitle": "Apps Popular",
+  "@apps_popular_subtitle": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_popular_title": "Apps Popular",
+  "@apps_popular_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_productivity_title": "Apps Productivity",
+  "@apps_productivity_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_security_title": "Apps Security",
+  "@apps_security_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_shopping_title": "Apps Shopping",
+  "@apps_shopping_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_social_title": "Apps Social",
+  "@apps_social_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_sports_title": "Apps Sports",
+  "@apps_sports_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_top_rated_title": "Apps Top Rated",
+  "@apps_top_rated_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_travel_title": "Apps Travel",
+  "@apps_travel_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_utilities_title": "Apps Utilities",
+  "@apps_utilities_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_video_players_title": "Apps Video Players",
+  "@apps_video_players_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_weather_title": "Apps Weather",
+  "@apps_weather_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_widgets_title": "Apps Widgets",
+  "@apps_widgets_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "apps_work_tools_title": "Apps Work Tools",
+  "@apps_work_tools_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "arcade_games_title": "Arcade Games",
+  "@arcade_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "best_indie_games_title": "Best Indie Games",
+  "@best_indie_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "board_games_title": "Board Games",
+  "@board_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_architecture_title": "Books Architecture",
+  "@books_architecture_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_art_title": "Books Art",
+  "@books_art_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_award_winning_title": "Books Award Winning",
+  "@books_award_winning_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_bestseller_title": "Books Bestseller",
+  "@books_bestseller_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_biography_title": "Books Biography",
+  "@books_biography_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_business_title": "Books Business",
+  "@books_business_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_children_title": "Books Children",
+  "@books_children_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_classic_title": "Books Classic",
+  "@books_classic_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_comics_title": "Books Comics",
+  "@books_comics_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_cooking_title": "Books Cooking",
+  "@books_cooking_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_economics_title": "Books Economics",
+  "@books_economics_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_education_title": "Books Education",
+  "@books_education_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_fantasy_title": "Books Fantasy",
+  "@books_fantasy_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_free_title": "Books Free",
+  "@books_free_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_graphic_novel_title": "Books Graphic Novel",
+  "@books_graphic_novel_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_health_title": "Books Health",
+  "@books_health_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_history_title": "Books History",
+  "@books_history_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_horror_title": "Books Horror",
+  "@books_horror_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_law_title": "Books Law",
+  "@books_law_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_memoir_title": "Books Memoir",
+  "@books_memoir_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_music_title": "Books Music",
+  "@books_music_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_mystery_title": "Books Mystery",
+  "@books_mystery_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_nature_title": "Books Nature",
+  "@books_nature_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_new_title": "Books New",
+  "@books_new_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_parenting_title": "Books Parenting",
+  "@books_parenting_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_philosophy_title": "Books Philosophy",
+  "@books_philosophy_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_poetry_title": "Books Poetry",
+  "@books_poetry_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_politics_title": "Books Politics",
+  "@books_politics_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_psychology_title": "Books Psychology",
+  "@books_psychology_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_religion_title": "Books Religion",
+  "@books_religion_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_romance_title": "Books Romance",
+  "@books_romance_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_science_fiction_title": "Books Science Fiction",
+  "@books_science_fiction_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_science_title": "Books Science",
+  "@books_science_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_self_help_title": "Books Self Help",
+  "@books_self_help_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_series_title": "Books Series",
+  "@books_series_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_short_stories_title": "Books Short Stories",
+  "@books_short_stories_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_sports_title": "Books Sports",
+  "@books_sports_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_technology_title": "Books Technology",
+  "@books_technology_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_thriller_title": "Books Thriller",
+  "@books_thriller_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_top_rated_subtitle": "Books Top Rated",
+  "@books_top_rated_subtitle": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_top_rated_title": "Books Top Rated",
+  "@books_top_rated_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_translated_title": "Books Translated",
+  "@books_translated_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "books_travel_title": "Books Travel",
+  "@books_travel_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "building_games_title": "Building Games",
+  "@building_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "casual_games_title": "Casual Games",
+  "@casual_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "co_op_games_title": "Co Op Games",
+  "@co_op_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "crafting_games_title": "Crafting Games",
+  "@crafting_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "cyberpunk_games_title": "Cyberpunk Games",
+  "@cyberpunk_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "fantasy_games_title": "Fantasy Games",
+  "@fantasy_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "fighting_games_title": "Fighting Games",
+  "@fighting_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "games_offline_title": "Games Offline",
+  "@games_offline_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "games_unusual_puzzle_title": "Games Unusual Puzzle",
+  "@games_unusual_puzzle_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "home_grid_everyone_plays_subtitle": "Home Grid Everyone Plays",
+  "@home_grid_everyone_plays_subtitle": {
+    "description": "Section title/subtitle from config key"
+  },
+  "home_grid_everyone_plays_title": "Home Grid Everyone Plays",
+  "@home_grid_everyone_plays_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "horror_games_title": "Horror Games",
+  "@horror_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "indie_games_title": "Indie Games",
+  "@indie_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_2d_title": "Kids 2d",
+  "@kids_2d_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_3d_title": "Kids 3d",
+  "@kids_3d_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_abstract_title": "Kids Abstract",
+  "@kids_abstract_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_adventure_title": "Kids Adventure",
+  "@kids_adventure_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_age_12_title": "Kids Age 12",
+  "@kids_age_12_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_age_3_title": "Kids Age 3",
+  "@kids_age_3_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_age_6_title": "Kids Age 6",
+  "@kids_age_6_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_alphabet_title": "Kids Alphabet",
+  "@kids_alphabet_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_arcade_title": "Kids Arcade",
+  "@kids_arcade_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_board_title": "Kids Board",
+  "@kids_board_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_building_title": "Kids Building",
+  "@kids_building_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_cartoons_title": "Kids Cartoons",
+  "@kids_cartoons_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_casual_title": "Kids Casual",
+  "@kids_casual_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_co_op_title": "Kids Co Op",
+  "@kids_co_op_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_creativity_title": "Kids Creativity",
+  "@kids_creativity_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_crossplatform_title": "Kids Crossplatform",
+  "@kids_crossplatform_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_drawing_title": "Kids Drawing",
+  "@kids_drawing_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_educational_title": "Kids Educational",
+  "@kids_educational_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_exploration_title": "Kids Exploration",
+  "@kids_exploration_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_fairy_tales_title": "Kids Fairy Tales",
+  "@kids_fairy_tales_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_family_title": "Kids Family",
+  "@kids_family_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_free_title": "Kids Free",
+  "@kids_free_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_health_title": "Kids Health",
+  "@kids_health_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_hero_banner_subtitle": "Kids Hero Banner",
+  "@kids_hero_banner_subtitle": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_hero_banner_title": "Kids Hero Banner",
+  "@kids_hero_banner_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_languages_title": "Kids Languages",
+  "@kids_languages_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_letters_title": "Kids Letters",
+  "@kids_letters_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_logic_title": "Kids Logic",
+  "@kids_logic_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_math_title": "Kids Math",
+  "@kids_math_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_minimalist_title": "Kids Minimalist",
+  "@kids_minimalist_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_multiplayer_title": "Kids Multiplayer",
+  "@kids_multiplayer_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_music_title": "Kids Music",
+  "@kids_music_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_new_and_updated_title": "Kids New And Updated",
+  "@kids_new_and_updated_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_new_releases_title": "Kids New Releases",
+  "@kids_new_releases_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_numbers_title": "Kids Numbers",
+  "@kids_numbers_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_offline_title": "Kids Offline",
+  "@kids_offline_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_pixel_art_title": "Kids Pixel Art",
+  "@kids_pixel_art_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_popular_title": "Kids Popular",
+  "@kids_popular_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_procedural_title": "Kids Procedural",
+  "@kids_procedural_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_puzzle_title": "Kids Puzzle",
+  "@kids_puzzle_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_relaxing_title": "Kids Relaxing",
+  "@kids_relaxing_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_retro_title": "Kids Retro",
+  "@kids_retro_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_rpg_title": "Kids Rpg",
+  "@kids_rpg_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_simulation_title": "Kids Simulation",
+  "@kids_simulation_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_story_rich_title": "Kids Story Rich",
+  "@kids_story_rich_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_strategy_title": "Kids Strategy",
+  "@kids_strategy_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_stylized_title": "Kids Stylized",
+  "@kids_stylized_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_top_rated_subtitle": "Kids Top Rated",
+  "@kids_top_rated_subtitle": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_top_rated_title": "Kids Top Rated",
+  "@kids_top_rated_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_trivia_title": "Kids Trivia",
+  "@kids_trivia_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_turn_based_title": "Kids Turn Based",
+  "@kids_turn_based_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "kids_word_title": "Kids Word",
+  "@kids_word_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "low_price_games_title": "Low Price Games",
+  "@low_price_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "multiplayer_games_title": "Multiplayer Games",
+  "@multiplayer_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "new_releases_subtitle": "New Releases",
+  "@new_releases_subtitle": {
+    "description": "Section title/subtitle from config key"
+  },
+  "new_releases_title": "New Releases",
+  "@new_releases_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "offline_games_title": "Offline Games",
+  "@offline_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "open_world_games_title": "Open World Games",
+  "@open_world_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_action_games_title": "Paid Action Games",
+  "@paid_action_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_adventure_games_title": "Paid Adventure Games",
+  "@paid_adventure_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_anime_games_title": "Paid Anime Games",
+  "@paid_anime_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_arcade_games_title": "Paid Arcade Games",
+  "@paid_arcade_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_board_games_title": "Paid Board Games",
+  "@paid_board_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_building_games_title": "Paid Building Games",
+  "@paid_building_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_casual_games_title": "Paid Casual Games",
+  "@paid_casual_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_co_op_games_title": "Paid Co Op Games",
+  "@paid_co_op_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_crafting_games_title": "Paid Crafting Games",
+  "@paid_crafting_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_cyberpunk_games_title": "Paid Cyberpunk Games",
+  "@paid_cyberpunk_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_esports_games_title": "Paid Esports Games",
+  "@paid_esports_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_exploration_games_title": "Paid Exploration Games",
+  "@paid_exploration_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_fantasy_games_title": "Paid Fantasy Games",
+  "@paid_fantasy_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_fighting_games_title": "Paid Fighting Games",
+  "@paid_fighting_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_horror_games_title": "Paid Horror Games",
+  "@paid_horror_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_multiplayer_games_title": "Paid Multiplayer Games",
+  "@paid_multiplayer_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_new_releases_subtitle": "Paid New Releases",
+  "@paid_new_releases_subtitle": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_new_releases_title": "Paid New Releases",
+  "@paid_new_releases_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_open_world_games_title": "Paid Open World Games",
+  "@paid_open_world_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_pixel_art_games_title": "Paid Pixel Art Games",
+  "@paid_pixel_art_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_post_apocalyptic_games_title": "Paid Post Apocalyptic Games",
+  "@paid_post_apocalyptic_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_pvp_games_title": "Paid Pvp Games",
+  "@paid_pvp_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_racing_games_title": "Paid Racing Games",
+  "@paid_racing_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_relaxing_games_title": "Paid Relaxing Games",
+  "@paid_relaxing_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_retro_games_title": "Paid Retro Games",
+  "@paid_retro_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_roguelike_games_title": "Paid Roguelike Games",
+  "@paid_roguelike_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_rpg_games_title": "Paid Rpg Games",
+  "@paid_rpg_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_shooter_games_title": "Paid Shooter Games",
+  "@paid_shooter_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_simulation_games_title": "Paid Simulation Games",
+  "@paid_simulation_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_sports_games_title": "Paid Sports Games",
+  "@paid_sports_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_steampunk_games_title": "Paid Steampunk Games",
+  "@paid_steampunk_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_story_rich_games_title": "Paid Story Rich Games",
+  "@paid_story_rich_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_strategy_games_title": "Paid Strategy Games",
+  "@paid_strategy_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_survival_games_title": "Paid Survival Games",
+  "@paid_survival_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_top_rated_games_title": "Paid Top Rated Games",
+  "@paid_top_rated_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_turn_based_games_title": "Paid Turn Based Games",
+  "@paid_turn_based_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "paid_vr_games_title": "Paid Vr Games",
+  "@paid_vr_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "pixel_art_games_title": "Pixel Art Games",
+  "@pixel_art_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "post_apocalyptic_games_title": "Post Apocalyptic Games",
+  "@post_apocalyptic_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "puzzle_games_title": "Puzzle Games",
+  "@puzzle_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "pve_games_title": "Pve Games",
+  "@pve_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "pvp_games_title": "Pvp Games",
+  "@pvp_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "racing_games_title": "Racing Games",
+  "@racing_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "relaxing_games_title": "Relaxing Games",
+  "@relaxing_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "retro_games_title": "Retro Games",
+  "@retro_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "roguelike_games_title": "Roguelike Games",
+  "@roguelike_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "rpg_games_title": "Rpg Games",
+  "@rpg_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "shooter_games_title": "Shooter Games",
+  "@shooter_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "simulation_games_title": "Simulation Games",
+  "@simulation_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "sports_games_title": "Sports Games",
+  "@sports_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "steampunk_games_title": "Steampunk Games",
+  "@steampunk_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "story_rich_games_title": "Story Rich Games",
+  "@story_rich_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "strategy_games_title": "Strategy Games",
+  "@strategy_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "survival_games_title": "Survival Games",
+  "@survival_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "top_rated_games_title": "Top Rated Games",
+  "@top_rated_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "turn_based_games_title": "Turn Based Games",
+  "@turn_based_games_title": {
+    "description": "Section title/subtitle from config key"
+  },
+  "vr_games_title": "Vr Games",
+  "@vr_games_title": {
+    "description": "Section title/subtitle from config key"
   }
 }
