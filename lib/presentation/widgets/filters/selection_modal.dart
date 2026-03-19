@@ -53,12 +53,11 @@ class SelectionModal {
                       final displayTitle = option.titleL10nKey != null
                           ? lookupL10n(l10n, option.titleL10nKey!)
                           : (option.title ?? '');
-                      // TODO: [ui] вынести цвета в общие константы
                       return Column(
                         children: [
                           Material(
                             color: isSelected
-                                ? NavBarConstants.navBarIndicatorColor
+                                ? Constants.uiSelectionBackgroundColor
                                 : Colors.transparent,
                             child: ListTile(
                               onTap: () {
@@ -68,15 +67,14 @@ class SelectionModal {
                               trailing: isSelected
                                   ? const Icon(
                                       Icons.check,
-                                      color: NavBarConstants
-                                          .navBarSelectedIconColor,
+                                      color: Constants.uiSelectedIconColor,
                                     )
                                   : null,
                               title: Text(
                                 displayTitle,
                                 style: TextStyle(
                                   color: isSelected
-                                      ? NavBarConstants.navBarSelectedLabelColor
+                                      ? Constants.uiSelectedLabelColor
                                       : Colors.black,
                                   fontWeight: isSelected
                                       ? FontWeight.bold
@@ -180,7 +178,7 @@ class SelectionModal {
 
                           return Material(
                             color: isSelected
-                                ? NavBarConstants.navBarIndicatorColor
+                                ? Constants.uiSelectionBackgroundColor
                                 : Colors.transparent,
                             child: ListTile(
                               onTap: () {
@@ -190,14 +188,14 @@ class SelectionModal {
                               leading: Icon(
                                 category.icon,
                                 color: isSelected
-                                    ? NavBarConstants.navBarSelectedIconColor
+                                    ? Constants.uiSelectedIconColor
                                     : Colors.grey.shade700,
                               ),
                               title: Text(
                                 displayTitle,
                                 style: TextStyle(
                                   color: isSelected
-                                      ? NavBarConstants.navBarSelectedLabelColor
+                                      ? Constants.uiSelectedLabelColor
                                       : Colors.black,
                                   fontWeight: isSelected
                                       ? FontWeight.bold
@@ -207,8 +205,7 @@ class SelectionModal {
                               trailing: isSelected
                                   ? const Icon(
                                       Icons.check,
-                                      color: NavBarConstants
-                                          .navBarSelectedIconColor,
+                                      color: Constants.uiSelectedIconColor,
                                     )
                                   : null,
                             ),

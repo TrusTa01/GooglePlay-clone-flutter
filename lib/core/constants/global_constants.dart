@@ -51,4 +51,10 @@ class Constants {
 
   static const baseDataPath = 'assets/data/';
   static const baseConfigPath = 'assets/config/';
+
+  // Общая палитра выбора
+  static const Color uiUnselectedColor = Color(0xFF4D4F4E);
+  static const Color uiSelectedLabelColor = Color(0xFF2076A7);
+  static const Color uiSelectedIconColor = Color(0xFF004A75);
+  static const Color uiSelectionBackgroundColor = Color(0xFFC3E7FF);
 }

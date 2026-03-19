@@ -6,13 +6,13 @@ List<NavigationDestination> buildNavDestinations(BuildContext context) => [
       NavigationDestination(
         icon: Image.asset(
           'assets/icons/nav_bar_icons/gamepad_outlined.png',
-          color: NavBarConstants.navBarUnselectedLabelColor,
+          color: Constants.uiUnselectedColor,
           width: 20,
           height: 20,
         ),
         selectedIcon: Image.asset(
           'assets/icons/nav_bar_icons/gamepad.png',
-          color: NavBarConstants.navBarSelectedIconColor,
+          color: Constants.uiSelectedIconColor,
           width: 20,
           height: 20,
         ),
@@ -21,13 +21,13 @@ List<NavigationDestination> buildNavDestinations(BuildContext context) => [
       NavigationDestination(
         icon: Image.asset(
           'assets/icons/nav_bar_icons/app_outlined.png',
-          color: NavBarConstants.navBarUnselectedLabelColor,
+          color: Constants.uiUnselectedColor,
           width: 16,
           height: 16,
         ),
         selectedIcon: Image.asset(
           'assets/icons/nav_bar_icons/app.png',
-          color: NavBarConstants.navBarSelectedIconColor,
+          color: Constants.uiSelectedIconColor,
           width: 16,
           height: 16,
         ),
@@ -36,22 +36,22 @@ List<NavigationDestination> buildNavDestinations(BuildContext context) => [
       NavigationDestination(
         icon: Icon(
           Icons.search,
-          color: NavBarConstants.navBarUnselectedLabelColor,
+          color: Constants.uiUnselectedColor,
         ),
         selectedIcon: Icon(
           Icons.search,
-          color: NavBarConstants.navBarSelectedIconColor,
+          color: Constants.uiSelectedIconColor,
         ),
         label: context.l10n.navSearch,
       ),
       NavigationDestination(
         icon: Icon(
           Icons.book_outlined,
-          color: NavBarConstants.navBarUnselectedLabelColor,
+          color: Constants.uiUnselectedColor,
         ),
         selectedIcon: Icon(
           Icons.book,
-          color: NavBarConstants.navBarSelectedIconColor,
+          color: Constants.uiSelectedIconColor,
         ),
         label: context.l10n.navBooks,
       ),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
 
 const TextStyle unselectedLabelStyle = TextStyle(
-  color: NavBarConstants.navBarUnselectedLabelColor,
+  color: Constants.uiUnselectedColor,
   fontSize: 12.0,
   fontWeight: Constants.defaultFontWeight,
 );
 
 const TextStyle selectedLabelStyle = TextStyle(
-  color: NavBarConstants.navBarSelectedLabelColor,
+  color: Constants.uiSelectedLabelColor,
   fontSize: 12.0,
   fontWeight: Constants.defaultFontWeight,
 );

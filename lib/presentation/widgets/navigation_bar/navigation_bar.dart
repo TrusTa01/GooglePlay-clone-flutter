@@ -36,7 +36,7 @@ class CustomNavigationBar extends StatelessWidget {
                     height: 65,
                     labelBehavior:
                         NavigationDestinationLabelBehavior.alwaysShow,
-                    indicatorColor: NavBarConstants.navBarIndicatorColor,
+                    indicatorColor: Constants.uiSelectionBackgroundColor,
                     selectedIndex: currentPageIndex,
                     onDestinationSelected: onDestinationSelected,
                     backgroundColor: Colors.transparent,

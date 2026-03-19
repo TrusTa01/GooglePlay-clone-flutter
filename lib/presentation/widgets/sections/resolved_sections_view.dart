@@ -16,24 +16,29 @@ class ResolvedSectionsView extends StatelessWidget {
     required this.storageId,
   });
 
-  // TODO: [ui] вынести хелперы в stateless виджеты
   @override
   Widget build(BuildContext context) {
     return sectionState.when(
-      loading: () => _buildLoading(),
-      error: (error, stack) => _buildError(error),
-      data: (sections) =>
-          sections.isEmpty ? _buildEmpty(context) : _buildData(sections),
+      loading: () => _BuildLoading(isSliver: isSliver),
+      error: (error, stack) => _BuildError(error: error, isSliver: isSliver),
+      data: (sections) => sections.isEmpty
+          ? _BuildEmpty(isSliver: isSliver)
+          : _BuildData(
+              sections: sections,
+              isSliver: isSliver,
+              storageId: storageId,
+            ),
     );
   }
+}
 
-  Widget _buildLoading() {
-    // Общий строитель карточек
-    Widget itemBuilder(BuildContext context, int index) => const Padding(
-      padding: EdgeInsets.only(bottom: 10),
-      child: ProductSliderSkeleton(),
-    );
+class _BuildLoading extends StatelessWidget {
+  final bool isSliver;
 
+  const _BuildLoading({this.isSliver = false});
+
+  @override
+  Widget build(BuildContext context) {
     return isSliver
         ? SliverList.builder(itemCount: 5, itemBuilder: itemBuilder)
         : ListView.builder(
@@ -43,14 +48,40 @@ class ResolvedSectionsView extends StatelessWidget {
           );
   }
 
-  Widget _buildError(Object error) {
+  Widget itemBuilder(BuildContext context, int index) => const Padding(
+    padding: EdgeInsets.only(bottom: 10),
+    child: ProductSliderSkeleton(),
+  );
+}
+
+class _BuildError extends StatelessWidget {
+  final Object error;
+  final bool isSliver;
+
+  const _BuildError({required this.error, this.isSliver = false});
+
+  @override
+  Widget build(BuildContext context) {
     debugPrint('[ResolvedSectionsView] skip sections: $error');
     return isSliver
         ? const SliverToBoxAdapter(child: SizedBox.shrink())
         : const SizedBox.shrink();
   }
+}
 
-  Widget _buildData(List<ResolvedSection> sections) {
+class _BuildData extends StatelessWidget {
+  final List<ResolvedSection> sections;
+  final bool isSliver;
+  final String storageId;
+
+  const _BuildData({
+    required this.sections,
+    required this.storageId,
+    this.isSliver = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return isSliver
         ? SectionWidgetBuilder.asSliver(
             sections: sections,
@@ -62,8 +93,17 @@ class ResolvedSectionsView extends StatelessWidget {
             storageId: storageId,
           );
   }
+}
 
-  Widget _buildEmpty(BuildContext context) => isSliver
-      ? const SliverToBoxAdapter(child: SizedBox.shrink())
-      : const SizedBox.shrink();
+class _BuildEmpty extends StatelessWidget {
+  final bool isSliver;
+
+  const _BuildEmpty({this.isSliver = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return isSliver
+        ? const SliverToBoxAdapter(child: SizedBox.shrink())
+        : const SizedBox.shrink();
+  }
 }

@@ -14,7 +14,6 @@ class CustomFilterChip extends StatelessWidget {
     required this.onSelected,
     this.isSelected = false,
   });
-  // TODO: [ui] вынести цвета в общие константы
   @override
   Widget build(BuildContext context) {
     return FilterChip(
@@ -27,21 +26,21 @@ class CustomFilterChip extends StatelessWidget {
               Icons.arrow_drop_down,
               size: 20,
               color: isSelected
-                  ? NavBarConstants.navBarSelectedIconColor
+                  ? Constants.uiSelectedIconColor
                   : Colors.black,
             ),
         ],
       ),
       showCheckmark: isSelected,
       selected: isSelected,
-      selectedColor: NavBarConstants.navBarIndicatorColor,
+      selectedColor: Constants.uiSelectionBackgroundColor,
       backgroundColor: isSelected
-          ? NavBarConstants.navBarIndicatorColor
+          ? Constants.uiSelectionBackgroundColor
           : Colors.white,
-      checkmarkColor: NavBarConstants.navBarSelectedIconColor,
+      checkmarkColor: Constants.uiSelectedIconColor,
       labelStyle: TextStyle(
         color: isSelected
-            ? NavBarConstants.navBarSelectedIconColor
+            ? Constants.uiSelectedIconColor
             : Colors.black,
         fontWeight: Constants.defaultFontWeight,
       ),
