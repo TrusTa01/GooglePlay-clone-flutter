@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/presentation/screens/screens.dart';
+import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class KidsAgeCategoryScreen extends StatelessWidget {
   final String ageLabel;
-  final List<HomeSection> sections;
+  final List<ResolvedSection> sections;
 
   const KidsAgeCategoryScreen({
     super.key,
@@ -28,7 +28,10 @@ class KidsAgeCategoryScreen extends StatelessWidget {
                   showBackButton: true,
                   title: AppBarTitle(title: ageLabel),
                 ),
-                GenericTabScreen.asSliver(sections: sections),
+                SectionWidgetBuilder.asSliver(
+                  sections: sections,
+                  storageId: 'kids_age_$ageLabel',
+                ),
               ],
             ),
           ),

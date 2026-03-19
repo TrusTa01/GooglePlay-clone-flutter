@@ -5,6 +5,7 @@ import 'package:google_play/data/repositories/json_config_repository.dart';
 import 'package:google_play/data/repositories/json_product_repository.dart';
 import 'package:google_play/domain/usecases/products/get_product_by_id_usecase.dart';
 import 'package:google_play/domain/usecases/products/load_products_usecase.dart';
+import 'package:google_play/domain/usecases/events/build_event_screen_usecase.dart';
 import 'package:google_play/domain/usecases/sections/get_available_tabs_usecase.dart';
 import 'package:google_play/domain/usecases/sections/get_tab_sections_usecase.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
@@ -63,4 +64,8 @@ final resolveSectionUseCaseProvider = Provider<ResolveSectionUsecase>((ref) {
   final bannerRepo = ref.watch(bannerRepositoryProvider);
   return ResolveSectionUsecase(productRepo: productRepo, bannerRepo: bannerRepo);
 });
+
+final buildEventScreenUseCaseProvider = Provider<BuildEventScreenUseCase>(
+  (ref) => const BuildEventScreenUseCase(),
+);
 

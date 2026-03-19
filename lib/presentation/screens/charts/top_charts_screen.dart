@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/constants.dart';
-import 'package:google_play/core/extensions/product_resolver_extension.dart';
+import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TopChartsScreen extends StatelessWidget {
   final FilterType type;
@@ -27,32 +28,9 @@ class TopChartsScreen extends StatelessWidget {
     required FilterType type,
     required bool showFilters,
   }) {
-    final filterProvider = context.watch<FilterProvider>();
-    final queryService = ProductQueryService();
-    final items = queryService.getFilteredProducts(
-      context.allProducts,
-      type: type,
-      selectedTopFilter: filterProvider.selectedTopFilter,
-      selectedGameCategory: filterProvider.selectedGameCategory,
-      selectedAppCategory: filterProvider.selectedAppCategory,
-      selectedBookCategory: filterProvider.selectedBookGenre,
-      isFilterOnlyMode: filterProvider.isFilterOnlyMode,
-      selectedAgeFilter: type == FilterType.books
-          ? filterProvider.selectedAgeFilter
-          : null,
-      selectedRatingFilter: type == FilterType.books
-          ? filterProvider.selectedRatingFilter
-          : null,
-      selectedLanguageFilter: type == FilterType.books
-          ? filterProvider.selectedLanguageFilter
-          : null,
-      selectedAbridgedVersionFilter: type == FilterType.books
-          ? filterProvider.selectedAbridgetVersionFilter
-          : null,
-      getMinRatingFromFilter: type == FilterType.books
-          ? filterProvider.getMinRatingFromFilter
-          : null,
-    );
+    // TODO(db): заменить на данные из БД/репозитория
+    final List<ActionRowUiModel> items = const [];
+
     return [
       if (showFilters)
         SliverToBoxAdapter(
@@ -63,7 +41,11 @@ class TopChartsScreen extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 5, bottom: 15),
-                child: FilterSets.getFilters(context, type, filterProvider),
+                child: Consumer(
+                  builder: (context, ref, _) {
+                    return FilterSets.getFilters(context, ref, type);
+                  },
+                ),
               ),
             ),
           ),
@@ -94,8 +76,11 @@ class TopChartsScreen extends StatelessWidget {
                 mainAxisSpacing: 20,
               ),
               delegate: SliverChildBuilderDelegate(
-                (context, index) =>
-                    TopChartsCard(product: items[index], rank: index + 1),
+                (context, index) => TopChartsCard(
+                  model: items[index],
+                  rank: index + 1,
+                  showButton: true,
+                ),
                 childCount: items.length,
               ),
             ),

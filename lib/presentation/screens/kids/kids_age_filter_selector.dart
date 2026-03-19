@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class KidsAgeFilterSelector extends StatelessWidget {
+class KidsAgeFilterSelector extends ConsumerWidget {
   final FilterType type;
   final String title;
   final String subtitle;
@@ -14,13 +15,11 @@ class KidsAgeFilterSelector extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final provider = context.read<FilterProvider>();
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return FilterSets.getFilters(
       context,
+      ref,
       type,
-      provider,
       sectionTitle: title,
       subtitle: subtitle,
     );

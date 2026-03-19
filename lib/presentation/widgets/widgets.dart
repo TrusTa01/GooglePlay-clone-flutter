@@ -66,3 +66,6 @@ export 'filters/components/toggle_filter.dart';
 export 'filters/custom_filter_chip.dart';
 export 'filters/selection_modal.dart';
 export 'filters/filter_factory.dart';
+
+// Sections 
+export 'package:google_play/presentation/widgets/sections/section_widget_builder.dart';

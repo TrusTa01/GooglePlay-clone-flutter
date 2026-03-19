@@ -4,7 +4,7 @@ part 'available_sections_dto.g.dart';
 part 'available_sections_dto.freezed.dart';
 
 @Freezed(copyWith: false, toJson: false)
-abstract final class AvailableSectionsDto with _$AvailableSectionsDto {
+abstract class AvailableSectionsDto with _$AvailableSectionsDto {
   const factory AvailableSectionsDto({
     required String key,
     required String label,

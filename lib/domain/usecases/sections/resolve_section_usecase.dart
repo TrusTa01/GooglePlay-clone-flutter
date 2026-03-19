@@ -14,12 +14,10 @@ class ResolvedSection {
 class ResolveSectionUsecase {
   final IProductRepository _productRepo;
   final IBannerRepository _bannerRepo;
-  final SectionEntity config;
 
   const ResolveSectionUsecase({
     required IProductRepository productRepo,
     required IBannerRepository bannerRepo,
-    required this.config,
   }) : _productRepo = productRepo,
        _bannerRepo = bannerRepo;
 
