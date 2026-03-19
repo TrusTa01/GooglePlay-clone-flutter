@@ -25,7 +25,7 @@ class ProductPageRatingRow extends StatelessWidget {
         children: [
           Expanded(
             child: _RatingColumn(
-              text: Text(state.rating.toStringAsFixed(1)), // TODO: [field] готовая строка из state
+              text: Text(state.rating.toStringAsFixed(1)), // TODO: [fields] готовая строка из state
               subText:
                   '${state.reviewsCount} ${context.l10n.reviewsCountLabel}',
               isReview: true,

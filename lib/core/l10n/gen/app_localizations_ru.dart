@@ -39,6 +39,33 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tabCategories => 'Категории';
 
   @override
+  String get recommended_tab_label => 'Для вас';
+
+  @override
+  String get best_tab_label => 'Лучшее';
+
+  @override
+  String get kids_tab_label => 'Детям';
+
+  @override
+  String get paid_tab_label => 'Платные';
+
+  @override
+  String get categories_tab_label => 'Категории';
+
+  @override
+  String get top_sales_tab_label => 'Лидеры продаж';
+
+  @override
+  String get new_releases_tab_label => 'Новые поступления';
+
+  @override
+  String get genres_tab_label => 'Жанры';
+
+  @override
+  String get top_free_tab_label => 'Топ бесплатных';
+
+  @override
   String get buttonInstall => 'Установить';
 
   @override

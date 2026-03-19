@@ -39,6 +39,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabCategories => 'Categories';
 
   @override
+  String get recommended_tab_label => 'For you';
+
+  @override
+  String get best_tab_label => 'Top charts';
+
+  @override
+  String get kids_tab_label => 'Kids';
+
+  @override
+  String get paid_tab_label => 'Paid';
+
+  @override
+  String get categories_tab_label => 'Categories';
+
+  @override
+  String get top_sales_tab_label => 'Top sales';
+
+  @override
+  String get new_releases_tab_label => 'New releases';
+
+  @override
+  String get genres_tab_label => 'Genres';
+
+  @override
+  String get top_free_tab_label => 'Top free';
+
+  @override
   String get buttonInstall => 'Install';
 
   @override

@@ -23,26 +23,8 @@ List<Widget> buildStoreAppBar({
   required List<String> tabs,
   required List<Widget> actionWidgets,
 }) {
-  // Разрешаем ключи табов в локализованные строки
-  // TODO: [logic] добавить для всех остальных
   List<String> resolveTabLabels() {
-    final l10n = context.l10n;
-    return tabLabelKeys.map((key) {
-      switch (key) {
-        case 'tabRecommended':
-          return l10n.tabRecommended;
-        case 'tabTopCharts':
-          return l10n.tabTopCharts;
-        case 'tabKids':
-          return l10n.tabKids;
-        case 'tabPaid':
-          return l10n.tabPaid;
-        case 'tabCategories':
-          return l10n.tabCategories;
-        default:
-          return key;
-      }
-    }).toList();
+    return tabLabelKeys.map(context.l10nKey).toList();
   }
 
   final localizedTabs = resolveTabLabels();

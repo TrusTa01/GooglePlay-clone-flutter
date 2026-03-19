@@ -85,7 +85,7 @@ class _ProductPageContent extends ConsumerWidget {
                                 child: ProductTags(
                                   tags: state.tags,
                                   onTap: () {
-                                    // TODO: [filter] queryService.getProductsByTag
+                                    // TODO: [db] queryService.getProductsByTag
                                   },
                                 ),
                               ),

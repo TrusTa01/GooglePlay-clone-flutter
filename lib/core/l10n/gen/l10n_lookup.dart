@@ -66,6 +66,7 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'apps_work_tools_title': return l10n.apps_work_tools_title;
     case 'arcade_games_title': return l10n.arcade_games_title;
     case 'best_indie_games_title': return l10n.best_indie_games_title;
+    case 'best_tab_label': return l10n.best_tab_label;
     case 'board_games_title': return l10n.board_games_title;
     case 'bookTypeAudio': return l10n.bookTypeAudio;
     case 'bookTypeElectronic': return l10n.bookTypeElectronic;
@@ -116,6 +117,7 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'buttonFragment': return l10n.buttonFragment;
     case 'buttonInstall': return l10n.buttonInstall;
     case 'casual_games_title': return l10n.casual_games_title;
+    case 'categories_tab_label': return l10n.categories_tab_label;
     case 'categoryAll': return l10n.categoryAll;
     case 'categoryAppsArt': return l10n.categoryAppsArt;
     case 'categoryAppsBeauty': return l10n.categoryAppsBeauty;
@@ -212,6 +214,7 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'formatEbook': return l10n.formatEbook;
     case 'games_offline_title': return l10n.games_offline_title;
     case 'games_unusual_puzzle_title': return l10n.games_unusual_puzzle_title;
+    case 'genres_tab_label': return l10n.genres_tab_label;
     case 'hasAds': return l10n.hasAds;
     case 'home_grid_everyone_plays_subtitle': return l10n.home_grid_everyone_plays_subtitle;
     case 'home_grid_everyone_plays_title': return l10n.home_grid_everyone_plays_title;
@@ -277,6 +280,7 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'kids_story_rich_title': return l10n.kids_story_rich_title;
     case 'kids_strategy_title': return l10n.kids_strategy_title;
     case 'kids_stylized_title': return l10n.kids_stylized_title;
+    case 'kids_tab_label': return l10n.kids_tab_label;
     case 'kids_top_rated_subtitle': return l10n.kids_top_rated_subtitle;
     case 'kids_top_rated_title': return l10n.kids_top_rated_title;
     case 'kids_trivia_title': return l10n.kids_trivia_title;
@@ -308,6 +312,7 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'navGames': return l10n.navGames;
     case 'navSearch': return l10n.navSearch;
     case 'new_releases_subtitle': return l10n.new_releases_subtitle;
+    case 'new_releases_tab_label': return l10n.new_releases_tab_label;
     case 'new_releases_title': return l10n.new_releases_title;
     case 'noInformation': return l10n.noInformation;
     case 'notificationsEmptyDescription': return l10n.notificationsEmptyDescription;
@@ -350,6 +355,7 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'paid_story_rich_games_title': return l10n.paid_story_rich_games_title;
     case 'paid_strategy_games_title': return l10n.paid_strategy_games_title;
     case 'paid_survival_games_title': return l10n.paid_survival_games_title;
+    case 'paid_tab_label': return l10n.paid_tab_label;
     case 'paid_top_rated_games_title': return l10n.paid_top_rated_games_title;
     case 'paid_turn_based_games_title': return l10n.paid_turn_based_games_title;
     case 'paid_vr_games_title': return l10n.paid_vr_games_title;
@@ -368,6 +374,7 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'ratingAll': return l10n.ratingAll;
     case 'ratingDisclaimer': return l10n.ratingDisclaimer;
     case 'ratingHowCalculated': return l10n.ratingHowCalculated;
+    case 'recommended_tab_label': return l10n.recommended_tab_label;
     case 'refundPolicy': return l10n.refundPolicy;
     case 'relaxing_games_title': return l10n.relaxing_games_title;
     case 'retro_games_title': return l10n.retro_games_title;
@@ -396,7 +403,9 @@ String lookupL10n(AppLocalizations l10n, String key) {
     case 'tabTopCharts': return l10n.tabTopCharts;
     case 'tagContainsPaidContent': return l10n.tagContainsPaidContent;
     case 'tagFree': return l10n.tagFree;
+    case 'top_free_tab_label': return l10n.top_free_tab_label;
     case 'top_rated_games_title': return l10n.top_rated_games_title;
+    case 'top_sales_tab_label': return l10n.top_sales_tab_label;
     case 'turn_based_games_title': return l10n.turn_based_games_title;
     case 'unitMb': return l10n.unitMb;
     case 'unitMillion': return l10n.unitMillion;

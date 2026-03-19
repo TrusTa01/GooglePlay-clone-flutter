@@ -40,6 +40,42 @@
   "@tabCategories": {
     "description": "Store tab: categories"
   },
+  "recommended_tab_label": "For you",
+  "@recommended_tab_label": {
+    "description": "Config tab label: recommended"
+  },
+  "best_tab_label": "Top charts",
+  "@best_tab_label": {
+    "description": "Config tab label: best charts"
+  },
+  "kids_tab_label": "Kids",
+  "@kids_tab_label": {
+    "description": "Config tab label: kids"
+  },
+  "paid_tab_label": "Paid",
+  "@paid_tab_label": {
+    "description": "Config tab label: paid"
+  },
+  "categories_tab_label": "Categories",
+  "@categories_tab_label": {
+    "description": "Config tab label: categories"
+  },
+  "top_sales_tab_label": "Top sales",
+  "@top_sales_tab_label": {
+    "description": "Config tab label: top sales"
+  },
+  "new_releases_tab_label": "New releases",
+  "@new_releases_tab_label": {
+    "description": "Config tab label: new releases"
+  },
+  "genres_tab_label": "Genres",
+  "@genres_tab_label": {
+    "description": "Config tab label: genres"
+  },
+  "top_free_tab_label": "Top free",
+  "@top_free_tab_label": {
+    "description": "Config tab label: top free"
+  },
   "buttonInstall": "Install",
   "@buttonInstall": {
     "description": "Primary install button on product card"
@@ -65,8 +101,17 @@
     "description": "Search field placeholder in books store"
   },
   "for_you_title": "For you",
+  "@for_you_title": {
+    "description": "Tab title: For you"
+  },
   "apps_work_title": "Work",
+  "@apps_work_title": {
+    "description": "Tab title: Work"
+  },
   "apps_new_releases_title": "New releases",
+  "@apps_new_releases_title": {
+    "description": "Tab title: New releases"
+  },
   "aboutGame": "About this game",
   "@aboutGame": {
     "description": "Section title: about game"

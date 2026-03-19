@@ -158,6 +158,60 @@ abstract class AppLocalizations {
   /// **'Categories'**
   String get tabCategories;
 
+  /// Config tab label: recommended
+  ///
+  /// In en, this message translates to:
+  /// **'For you'**
+  String get recommended_tab_label;
+
+  /// Config tab label: best charts
+  ///
+  /// In en, this message translates to:
+  /// **'Top charts'**
+  String get best_tab_label;
+
+  /// Config tab label: kids
+  ///
+  /// In en, this message translates to:
+  /// **'Kids'**
+  String get kids_tab_label;
+
+  /// Config tab label: paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get paid_tab_label;
+
+  /// Config tab label: categories
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories_tab_label;
+
+  /// Config tab label: top sales
+  ///
+  /// In en, this message translates to:
+  /// **'Top sales'**
+  String get top_sales_tab_label;
+
+  /// Config tab label: new releases
+  ///
+  /// In en, this message translates to:
+  /// **'New releases'**
+  String get new_releases_tab_label;
+
+  /// Config tab label: genres
+  ///
+  /// In en, this message translates to:
+  /// **'Genres'**
+  String get genres_tab_label;
+
+  /// Config tab label: top free
+  ///
+  /// In en, this message translates to:
+  /// **'Top free'**
+  String get top_free_tab_label;
+
   /// Primary install button on product card
   ///
   /// In en, this message translates to:
