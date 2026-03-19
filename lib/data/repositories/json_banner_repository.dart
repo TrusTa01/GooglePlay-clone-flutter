@@ -1,6 +1,5 @@
 import 'package:google_play/data/datasources/local/product_local_datasource.dart';
 import 'package:google_play/data/mappers/banner_mappers/banner_mapper.dart';
-import 'package:google_play/data/models/banner_dtos/banner_dto.dart';
 import 'package:google_play/domain/entities/banners/banner_entity.dart';
 import 'package:google_play/domain/repositories/banner_repository.dart';
 
@@ -11,21 +10,16 @@ class JsonBannerRepository implements IBannerRepository {
 
   @override
   Future<List<BannerEntity>> getBanners({required String fileName}) async {
-    final fileName = 'banners.json';
-
     final dtos = await _dataSource.loadBanners(fileName: fileName);
-
     return dtos.map<BannerEntity>((dto) => dto.toEntity()).toList();
   }
 
+  // TODO: [cache] Реализовать проверку инициализации кэша
+  // Если кэш пуст, вызвать загрузку соответствующих файлов перед поиском
   @override
   Future<BannerEntity?> getBannerById({required String id}) async {
-    final dto = _dataSource.getProductById<BannerDto>(id);
-    // TODO: [cache] Реализовать проверку инициализации кэша
-    // Если кэш пуст, вызвать загрузку соответствующих файлов перед поиском
+    final dto = _dataSource.getBannerById(id);
     if (dto == null) return null;
-
-    dto.toEntity();
-    return null;
+    return dto.toEntity();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:google_play/domain/entities/sections/section_entity.dart';
 import 'package:google_play/domain/entities/sections/tab_config_entity.dart';
+import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/domain/repositories/config_repository.dart';
-import 'package:google_play/presentation/viewmodels/home/store_tab_config.dart';
 
 /// Use case для получения списка секций конкретного таба стора.
 abstract interface class GetTabSectionsUseCase {

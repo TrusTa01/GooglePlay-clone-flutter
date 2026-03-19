@@ -1,3 +1,5 @@
+import 'package:google_play/domain/entities/store/store_type.dart';
+
 final class StoreTabConfig {
   final String label; // ключ для l10n, например 'tabRecommended'
   final String key; // таб-ключ, например 'recommended'
@@ -13,8 +15,6 @@ final class StoreTabConfig {
     this.usesBanners = false,
   });
 }
-
-enum StoreType { games, apps, books }
 
 final class StoreScreenConfig {
   final StoreType type; // apps/games/books
@@ -38,15 +38,8 @@ const Map<String, StoreTabConfig> kStoreTabsMetadata = {
     key: 'top_charts',
     isTopCharts: true,
   ),
-  'kids': StoreTabConfig(
-    label: 'tabKids',
-    key: 'kids',
-    usesBanners: true,
-  ),
-  'paid': StoreTabConfig(
-    label: 'tabPaid',
-    key: 'paid',
-  ),
+  'kids': StoreTabConfig(label: 'tabKids', key: 'kids', usesBanners: true),
+  'paid': StoreTabConfig(label: 'tabPaid', key: 'paid'),
   'categories': StoreTabConfig(
     label: 'tabCategories',
     key: 'categories',

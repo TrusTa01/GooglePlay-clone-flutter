@@ -83,20 +83,10 @@ class ProductLocalDatasource {
   }
 
   // Методы доступа для репозитория
-  T? getProductById<T>(String id) {
-    if (T == ProductDto) return _allProductsById as T?;
-
-    if (T == BannerDto) {
-      for (final bannerList in _bannersCache.values) {
-        final found = bannerList.cast<BannerDto?>().firstWhere(
-          (b) => b?.id == id,
-          orElse: () => null,
-        );
-        if (found != null) return found as T;
-      }
-    }
-    return null;
-  }
+  ProductDto? getProductById(String id) =>
+      _allProductsById.values as ProductDto;
+      
+  BannerDto? getBannerById(String id) => _bannersCache.values as BannerDto;
 
   // Получить все закэшированные объекты определенного типа
   List<T> getAllCachedDtos<T>() {

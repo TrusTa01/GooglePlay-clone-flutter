@@ -32,7 +32,7 @@ class JsonProductRepository implements IProductRepository {
 
   @override
   Future<ProductEntity?> getProductById(String id) async {
-    final dto = _dataSource.getProductById<ProductDto>(id);
+    final dto = _dataSource.getProductById(id);
     // TODO: [cache] Реализовать проверку инициализации кэша
     // Если кэш пуст, вызвать загрузку соответствующих файлов перед поиском
     if (dto == null) return null;

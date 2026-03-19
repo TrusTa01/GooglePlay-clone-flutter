@@ -1,9 +1,9 @@
 import 'package:google_play/di/usecase_providers.dart';
+import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/domain/usecases/products/load_products_usecase.dart';
 import 'package:google_play/domain/usecases/sections/get_tab_sections_usecase.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:google_play/presentation/viewmodels/home/home_state.dart';
-import 'package:google_play/presentation/viewmodels/home/store_tab_config.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'home_view_model.g.dart';
@@ -27,13 +27,7 @@ class HomeViewModel extends _$HomeViewModel {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
-      final apiType = switch (storeType) {
-        StoreType.apps => 'app',
-        StoreType.games => 'game',
-        StoreType.books => 'book',
-      };
-
-      final products = await _loadProductsUseCase(type: apiType);
+      final products = await _loadProductsUseCase(type: storeType.categoryKey);
       state = state.copyWith(isLoading: false, products: products);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e);
@@ -56,15 +50,9 @@ class HomeViewModel extends _$HomeViewModel {
         storeType: storeType,
         tabKey: tabKey,
       );
-
-      final categoryType = switch (storeType) {
-        StoreType.apps => 'app',
-        StoreType.games => 'game',
-        StoreType.books => 'book',
-      };
-
+      
       final resolvedSections = await Future.wait(
-        sections.map((s) => _resolveSectionUsecase(s, categoryType)),
+        sections.map((s) => _resolveSectionUsecase(s, storeType.categoryKey)),
       );
 
       state = state.copyWith(

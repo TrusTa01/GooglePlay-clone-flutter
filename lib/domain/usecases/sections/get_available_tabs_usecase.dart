@@ -1,6 +1,6 @@
 import 'package:google_play/domain/entities/sections/available_sections_entity.dart';
+import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/domain/repositories/config_repository.dart';
-import 'package:google_play/presentation/viewmodels/home/store_tab_config.dart';
 
 extension StoreTypeAvailableTabsKey on StoreType {
   String get availableTabsKey => switch (this) {
