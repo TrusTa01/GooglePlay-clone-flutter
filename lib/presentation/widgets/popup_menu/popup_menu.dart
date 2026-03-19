@@ -14,7 +14,7 @@ class PopupMenuEntryItem<T> {
   final VoidCallback? onSelected;
 }
 
-// Переиспользуемое popup-меню с произвольным списком пунктов.
+// Переиспользуемое popup-меню с произвольным списком пунктов
 class CustomPopupMenu<T> extends StatelessWidget {
   const CustomPopupMenu({
     super.key,

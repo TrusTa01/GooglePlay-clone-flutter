@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
@@ -30,6 +31,7 @@ class GooglePlay extends ConsumerWidget {
       onGenerateTitle: (context) => context.l10n.appTitle,
       localizationsDelegates: const [
         AppLocalizations.delegate,
+        LocaleNamesLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

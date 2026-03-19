@@ -112,7 +112,7 @@ class DetailsScreen extends StatelessWidget {
                           subtitle: state.ageRatingReasons,
                           actionText: context.l10n.detailsMore,
                           onActionPressed:
-                              () {}, // TODO: [link] открыть тот же линк, что и в rating_row,
+                              () {}, // TODO: [link] на страницу с отзывами
                         ),
 
                         if (state.showAds) ...[
@@ -154,9 +154,8 @@ class DetailsScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => PermissionsScreen(
-                                          state: state,
-                                        ),
+                                        builder: (_) =>
+                                            PermissionsScreen(state: state),
                                       ),
                                     );
                                   }

@@ -1,30 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
-import 'package:google_play/presentation/screens/notifications/notifications_screen.dart';
 import 'package:google_play/presentation/widgets/app_bars/app_bar/tabbed_app_bar.dart';
+import 'package:google_play/presentation/widgets/popup_menu/language_popup_menu.dart';
 
 List<Widget> buildStoreActionWidgets({
   required StoreType type,
   required BuildContext context,
 }) {
-  return switch (type) {
-    StoreType.games || StoreType.apps => [
-      IconButton(
-        onPressed: () => Navigator.of(
-          context,
-          rootNavigator: true,
-        ).push(MaterialPageRoute(builder: (context) => NotificationsScreen())), // TODO: [ui] На смену языка
-        icon: const Icon(Icons.notifications_outlined),
-      ),
-      const SizedBox(width: 10),
-      const CircleAvatar(radius: 18),
-    ],
-    StoreType.books => [
-      const SizedBox(width: 25),
-      const CircleAvatar(radius: 18),
-    ],
-  };
+  return const [
+    LanguagePopupMenu(),
+    SizedBox(width: 10),
+    CircleAvatar(radius: 18),
+  ];
 }
 
 List<Widget> buildStoreAppBar({
@@ -36,7 +24,7 @@ List<Widget> buildStoreAppBar({
   required List<Widget> actionWidgets,
 }) {
   // Разрешаем ключи табов в локализованные строки
-  // TODO: [logic] добавить для всех остальных 
+  // TODO: [logic] добавить для всех остальных
   List<String> resolveTabLabels() {
     final l10n = context.l10n;
     return tabLabelKeys.map((key) {
@@ -61,17 +49,17 @@ List<Widget> buildStoreAppBar({
 
   return switch (type) {
     StoreType.games || StoreType.apps => buildSliverTabbedAppBar(
-        tabs: localizedTabs,
-        tabController: tabController,
-        actions: actionWidgets,
-      ),
+      tabs: localizedTabs,
+      tabController: tabController,
+      actions: actionWidgets,
+    ),
     StoreType.books => buildSliverTabbedAppBar(
-        showLogo: false,
-        hasSearch: true,
-        searchHint: context.l10n.searchBooksHint,
-        tabs: localizedTabs,
-        tabController: tabController,
-        actions: actionWidgets,
-      ),
+      showLogo: false,
+      hasSearch: true,
+      searchHint: context.l10n.searchBooksHint,
+      tabs: localizedTabs,
+      tabController: tabController,
+      actions: actionWidgets,
+    ),
   };
 }

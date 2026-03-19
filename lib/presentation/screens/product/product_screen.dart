@@ -100,8 +100,7 @@ class _ProductPageContent extends ConsumerWidget {
                           onAboutAuthorTap:
                               state.supportSectionType ==
                                   SupportSectionType.aboutAuthor
-                              ? ()
-                                // TODO: [link] в уровне навигации => openAboutAuthor(state.productId)
+                              ? () 
                                 {
                                   final aboutAuthorMapper = AboutAuthorMapper();
                                   final model = aboutAuthorMapper.fromState(

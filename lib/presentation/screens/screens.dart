@@ -5,9 +5,6 @@ export 'home/games_screen.dart';
 export 'home/search_screen.dart';
 export 'common/store_tab_screen.dart';
 
-// Notifications
-export 'notifications/notifications_screen.dart';
-
 // Commnon
 export 'common/error_screen.dart';
 export '../widgets/sections/section_widget_builder.dart';
