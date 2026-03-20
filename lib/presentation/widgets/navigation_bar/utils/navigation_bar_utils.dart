@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/constants/constants.dart';
 
 const TextStyle unselectedLabelStyle = TextStyle(
   color: Constants.uiUnselectedColor,

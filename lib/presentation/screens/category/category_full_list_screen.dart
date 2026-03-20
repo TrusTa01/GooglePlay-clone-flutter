@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/domain/entities/products/game_entity.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';

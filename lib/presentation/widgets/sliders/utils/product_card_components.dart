@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/shimmers/shimmer_box.dart';
 import 'package:google_play/presentation/widgets/error/asset_not_found_placeholder.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_models/product_card_ui_model.dart';

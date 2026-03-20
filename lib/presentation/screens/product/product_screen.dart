@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_mappers/about_author_mapper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/viewmodels/product/product_view_model.dart';

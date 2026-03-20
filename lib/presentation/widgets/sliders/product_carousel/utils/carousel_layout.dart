@@ -1,4 +1,4 @@
-import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/constants/constants.dart';
 
 const double carouselBookCardWidth = 115;
 const double carouselProductCardMinWidth = 115;

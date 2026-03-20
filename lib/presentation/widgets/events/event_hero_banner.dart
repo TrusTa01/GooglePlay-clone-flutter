@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants.dart';
+import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_models/event_hero_banner_ui_model.dart';
 
 class EventHeroBanner extends StatelessWidget {
