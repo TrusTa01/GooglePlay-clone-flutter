@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/router/app_router.dart';
+import 'package:google_play/core/routes/app_router.dart';
 
 abstract final class Constants {
   // Основной цвет

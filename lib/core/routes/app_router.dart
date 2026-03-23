@@ -21,6 +21,7 @@ abstract final class AppRoutes {
   static const String productScreen = 'product/:productId';
   static const String productDetails = 'details';
   static const String productPermissions = 'permissions';
+  static const String productAboutAuthor = 'author';
 
   // События (банера)
   static const String eventsScreen = 'events';
@@ -71,86 +72,11 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.games,
                 builder: (context, state) => const GamesScreen(),
-                routes: [
-                  // Ветка экрана продукта
-                  GoRoute(
-                    path: AppRoutes.productScreen,
-                    builder: (context, state) {
-                      final productId = state.pathParameters['productId']!;
-                      return ProductPageScreen(productId: productId);
-                    },
-                    routes: [
-                      GoRoute(
-                        path: AppRoutes.productDetails,
-                        builder: (context, state) {
-                          final productId = state.pathParameters['productId']!;
-                          return ProductDetailsScreen(productId: productId);
-                        },
-                        routes: [
-                          GoRoute(
-                            path: AppRoutes.productPermissions,
-                            builder: (context, state) {
-                              final productId =
-                                  state.pathParameters['productId']!;
-                              return ProductPermissionsScreen(
-                                productId: productId,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  // events
-                  GoRoute(
-                    path: AppRoutes.eventsScreen,
-                    builder: (context, state) {
-                      final extra = state.extra;
-                      if (extra is! ProductEventArgs) {
-                        return const Scaffold(
-                          body: Center(
-                            child: Text('Invalid navigation args for events'),
-                          ),
-                        );
-                      }
-
-                      return ProductEventScreen(args: extra);
-                    },
-                  ),
-
-                  // category
-                  GoRoute(
-                    path: AppRoutes.categoriesOverview,
-                    builder: (context, state) {
-                      final categoryKey = state.pathParameters['categoryKey']!;
-                      return CategoriesTabOverviewScreen(
-                        categoryKey: categoryKey,
-                        storeType: StoreType.games,
-                      );
-                    },
-                  ),
-
-                  // kids
-                  GoRoute(
-                    path: AppRoutes.kidsDetailsScreen,
-                    builder: (context, state) => const KidsDetailsScreen(),
-                  ),
-
-                  GoRoute(
-                    path: AppRoutes.kidsAgeCategoryScreen,
-                    builder: (context, state) {
-                      final ageKey = state.pathParameters['ageKey']!;
-                      return KidsAgeCategoryScreen(ageKey: ageKey);
-                    },
-                    routes: [
-                      GoRoute(
-                        path: AppRoutes.kidsDetailsScreen,
-                        builder: (context, state) => const KidsDetailsScreen(),
-                      ),
-                    ],
-                  ),
-                ],
+                routes: buildStoreChildRoutes(
+                  storeType: StoreType.games,
+                  includeEvents: true,
+                  includeKids: true,
+                ),
               ),
             ],
           ),
@@ -162,6 +88,11 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.apps,
                 builder: (context, state) => const AppsScreen(),
+                routes: buildStoreChildRoutes(
+                  storeType: StoreType.apps,
+                  includeEvents: true,
+                  includeKids: false,
+                ),
               ),
             ],
           ),
@@ -184,6 +115,12 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.books,
                 builder: (context, state) => const BooksScreen(),
+                routes: buildStoreChildRoutes(
+                  storeType: StoreType.books,
+                  includeEvents: false,
+                  includeKids: false,
+                  isBooks: true,
+                ),
               ),
             ],
           ),
@@ -192,3 +129,96 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+List<RouteBase> buildStoreChildRoutes({
+  required StoreType storeType,
+  required bool includeEvents,
+  required bool includeKids,
+  bool isBooks = false,
+}) {
+  return [
+    // Ветка экрана продукта
+    GoRoute(
+      path: AppRoutes.productScreen,
+      builder: (context, state) {
+        final productId = state.pathParameters['productId']!;
+        return ProductPageScreen(productId: productId);
+      },
+      routes: [
+        GoRoute(
+          path: AppRoutes.productDetails,
+          builder: (context, state) {
+            final productId = state.pathParameters['productId']!;
+            return ProductDetailsScreen(productId: productId);
+          },
+          routes: [
+            isBooks
+                ? GoRoute(
+                    path: AppRoutes.productPermissions,
+                    builder: (context, state) {
+                      final productId = state.pathParameters['productId']!;
+                      return ProductPermissionsScreen(productId: productId);
+                    },
+                  )
+                : GoRoute(
+                    path: AppRoutes.productAboutAuthor,
+                    builder: (context, state) {
+                      final productId = state.pathParameters['productId']!;
+                      return AboutAuthorScreen(productId: productId);
+                    },
+                  ),
+          ],
+        ),
+      ],
+    ),
+
+    // events
+    if (includeEvents)
+      GoRoute(
+        path: AppRoutes.eventsScreen,
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is! ProductEventArgs) {
+            return const Scaffold(
+              body: Center(child: Text('Invalid navigation args for events')),
+            );
+          }
+          return ProductEventScreen(args: extra);
+        },
+      ),
+
+    // category
+    GoRoute(
+      path: AppRoutes.categoriesOverview,
+      builder: (context, state) {
+        final categoryKey = state.pathParameters['categoryKey']!;
+        return CategoriesTabOverviewScreen(
+          categoryKey: categoryKey,
+          storeType: storeType,
+        );
+      },
+    ),
+
+    // kids
+    if (includeKids) ...[
+      GoRoute(
+        path: AppRoutes.kidsDetailsScreen,
+        builder: (context, state) => const KidsDetailsScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutes.kidsAgeCategoryScreen,
+        builder: (context, state) {
+          final ageKey = state.pathParameters['ageKey']!;
+          return KidsAgeCategoryScreen(ageKey: ageKey);
+        },
+        routes: [
+          GoRoute(
+            path: AppRoutes.kidsDetailsScreen,
+            builder: (context, state) => const KidsDetailsScreen(),
+          ),
+        ],
+      ),
+    ],
+  ];
+}

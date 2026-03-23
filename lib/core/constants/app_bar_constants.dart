@@ -8,12 +8,12 @@ abstract final class AppBarConstants {
   // Цвета
   static const defaultBackgroundColor = Colors.white;
 
-  /// tabAppBar
+  // tabAppBar
   static const tabBarIndicatorColor = Color(0xFF0958CF);
   static const tabBarLabelColor = Color(0xFF0958CF);
   static const tabBarUnselectedLabelColor = Color(0xFF4D4F4E);
 
-  /// SearchAppBar
+  // SearchAppBar
   static const seachInput = Color.fromARGB(255, 232, 239, 246);
   static const searchLabelColor = Color(0xFF4D4F4E);
 
@@ -22,7 +22,6 @@ abstract final class AppBarConstants {
   static const tabBarHeight = 120.0;
 
   // Стили
-  // SearchAppBar
   static final searchAppBarBoxDecoration = BoxDecoration(
     color: AppBarConstants.seachInput,
     borderRadius: BorderRadius.circular(30),

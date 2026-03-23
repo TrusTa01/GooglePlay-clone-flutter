@@ -73,7 +73,7 @@ final class ProductEventViewModelProvider
 }
 
 String _$productEventViewModelHash() =>
-    r'c759a9b2fee81ba77d30abd4900dba5d159d080b';
+    r'6a5097e3c9fdcf9813c8bc103cb3ec8264865a7b';
 
 final class ProductEventViewModelFamily extends $Family
     with $FunctionalFamilyOverride<ProductEventState, ProductEventArgs> {
