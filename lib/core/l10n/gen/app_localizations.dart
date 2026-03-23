@@ -248,19 +248,19 @@ abstract class AppLocalizations {
   /// **'Search books'**
   String get searchBooksHint;
 
-  /// No description provided for @for_you_title.
+  /// Tab title: For you
   ///
   /// In en, this message translates to:
   /// **'For you'**
   String get for_you_title;
 
-  /// No description provided for @apps_work_title.
+  /// Tab title: Work
   ///
   /// In en, this message translates to:
   /// **'Work'**
   String get apps_work_title;
 
-  /// No description provided for @apps_new_releases_title.
+  /// Tab title: New releases
   ///
   /// In en, this message translates to:
   /// **'New releases'**
