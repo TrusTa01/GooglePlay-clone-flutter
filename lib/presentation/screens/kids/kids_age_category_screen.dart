@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/constants.dart';
-import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
+import 'package:google_play/presentation/viewmodels/kids/kids_age_category_view_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class KidsAgeCategoryScreen extends StatelessWidget {
-  final String ageLabel;
-  final List<ResolvedSection> sections;
+class KidsAgeCategoryScreen extends ConsumerWidget {
+  final String ageKey;
 
-  const KidsAgeCategoryScreen({
-    super.key,
-    required this.ageLabel,
-    required this.sections,
-  });
+  const KidsAgeCategoryScreen({super.key, required this.ageKey});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sectionsAsync = ref.watch(kidsAgeCategoryProvider(ageKey));
+
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -26,11 +24,20 @@ class KidsAgeCategoryScreen extends StatelessWidget {
               slivers: [
                 SimpleSliverAppBar(
                   showBackButton: true,
-                  title: AppBarTitle(title: ageLabel),
+                  title: AppBarTitle(title: ageKey),
                 ),
-                SectionWidgetBuilder.asSliver(
-                  sections: sections,
-                  storageId: 'kids_age_$ageLabel',
+                // TODO: [logic]
+                sectionsAsync.when(
+                  data: (sections) => SectionWidgetBuilder.asSliver(
+                    sections: sections,
+                    storageId: 'kids_age_$ageKey',
+                  ),
+                  loading: () => const SliverFillRemaining(
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                  error: (err, stack) => SliverFillRemaining(
+                    child: Center(child: Text('Ошибка: $err')),
+                  ),
                 ),
               ],
             ),

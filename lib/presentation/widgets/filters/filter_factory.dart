@@ -110,10 +110,7 @@ class FilterSets {
                     isSelected: false,
                     onSelected: () => Navigator.of(ctx).push(
                       MaterialPageRoute(
-                        builder: (_) => KidsAgeCategoryScreen(
-                          ageLabel: ageLabel,
-                          sections: const [],
-                        ),
+                        builder: (_) => KidsAgeCategoryScreen(ageKey: ageLabel),
                       ),
                     ),
                   );

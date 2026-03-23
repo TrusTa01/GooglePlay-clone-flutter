@@ -22,8 +22,8 @@ final class GetTabSectionsUseCaseImpl implements GetTabSectionsUseCase {
     required String tabKey,
   }) async {
     final folder = switch (storeType) {
-      StoreType.apps => 'apps',
       StoreType.games => 'games',
+      StoreType.apps => 'apps',
       StoreType.books => 'books',
     };
 
@@ -35,4 +35,3 @@ final class GetTabSectionsUseCaseImpl implements GetTabSectionsUseCase {
     return tabConfig.sections;
   }
 }
-

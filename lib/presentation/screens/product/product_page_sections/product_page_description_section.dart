@@ -24,7 +24,7 @@ class ProductPageDescriptionSection extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  DetailsScreen(state: state),
+                  ProductDetailsScreen(productId: state.productId),
             ),
           ),
         ),

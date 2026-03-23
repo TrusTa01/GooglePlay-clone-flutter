@@ -15,11 +15,13 @@ final categoryOverviewViewModelProvider = CategoryOverviewViewModelFamily._();
 final class CategoryOverviewViewModelProvider
     extends
         $FunctionalProvider<
+          AsyncValue<CategoryOverviewState>,
           CategoryOverviewState,
-          CategoryOverviewState,
-          CategoryOverviewState
+          FutureOr<CategoryOverviewState>
         >
-    with $Provider<CategoryOverviewState> {
+    with
+        $FutureModifier<CategoryOverviewState>,
+        $FutureProvider<CategoryOverviewState> {
   CategoryOverviewViewModelProvider._({
     required CategoryOverviewViewModelFamily super.from,
     required CategoryOverviewArgs super.argument,
@@ -43,22 +45,14 @@ final class CategoryOverviewViewModelProvider
 
   @$internal
   @override
-  $ProviderElement<CategoryOverviewState> $createElement(
+  $FutureProviderElement<CategoryOverviewState> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  CategoryOverviewState create(Ref ref) {
+  FutureOr<CategoryOverviewState> create(Ref ref) {
     final argument = this.argument as CategoryOverviewArgs;
     return categoryOverviewViewModel(ref, argument);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(CategoryOverviewState value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<CategoryOverviewState>(value),
-    );
   }
 
   @override
@@ -74,11 +68,14 @@ final class CategoryOverviewViewModelProvider
 }
 
 String _$categoryOverviewViewModelHash() =>
-    r'589afb72efbffd19d8a0f81042f8359896bcf1a7';
+    r'4629f13caf3e5ad781197a4f6d3f2c945a05b34f';
 
 final class CategoryOverviewViewModelFamily extends $Family
     with
-        $FunctionalFamilyOverride<CategoryOverviewState, CategoryOverviewArgs> {
+        $FunctionalFamilyOverride<
+          FutureOr<CategoryOverviewState>,
+          CategoryOverviewArgs
+        > {
   CategoryOverviewViewModelFamily._()
     : super(
         retry: null,

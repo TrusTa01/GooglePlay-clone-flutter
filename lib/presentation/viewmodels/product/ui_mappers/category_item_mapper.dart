@@ -12,7 +12,7 @@ class CategoryItemMapper {
     final productCard = ProductCardMapper();
 
     return CategoryItemUiModel(
-      id: state.productId ?? '',
+      id: state.productId,
       isBook: state.isBook,
       card: productCard.mapToProductCardUi(state),
     );

@@ -6,7 +6,7 @@ class ActionRowUiMapper {
 
   ActionRowUiModel fromStateGrid(ProductState state) {
     return ActionRowUiModel(
-      id: state.productId ?? '',
+      id: state.productId,
       title: state.title,
       creator: state.creator,
       ageLabel: state.ageRating ?? '',
@@ -31,7 +31,7 @@ class ActionRowUiMapper {
 
   ActionRowUiModel fromStatePreview(ProductState state) {
     return ActionRowUiModel(
-      id: state.productId ?? '',
+      id: state.productId,
       title: state.title,
       creator: state.creator,
       ageLabel: state.ageRating ?? '',

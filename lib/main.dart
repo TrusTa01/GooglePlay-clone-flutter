@@ -26,7 +26,7 @@ class GooglePlay extends ConsumerWidget {
     final baseTheme = ThemeData.light();
     final currentLocale = ref.watch(localeProvider);
 
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => context.l10n.appTitle,
       localizationsDelegates: const [

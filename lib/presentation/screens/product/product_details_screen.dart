@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/presentation/screens/product/permissions_screen.dart';
+import 'package:google_play/presentation/screens/product/product_permissions_screen.dart';
 import 'package:google_play/presentation/screens/product/utils/product_app_bar_leading.dart';
-import 'package:google_play/presentation/viewmodels/product/product_state.dart';
+import 'package:google_play/presentation/viewmodels/product/product_view_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class DetailsScreen extends StatelessWidget {
-  final ProductState state;
+class ProductDetailsScreen extends ConsumerWidget {
+  final String productId;
 
-  const DetailsScreen({super.key, required this.state});
+  const ProductDetailsScreen({super.key, required this.productId});
 
   List<Widget> _withSpacing(List<Widget> widgets, {double spacing = 25}) {
     if (widgets.isEmpty) return [];
@@ -18,7 +19,9 @@ class DetailsScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(productViewModelProvider(productId));
+
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -155,7 +158,9 @@ class DetailsScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (_) =>
-                                            PermissionsScreen(state: state),
+                                            ProductPermissionsScreen(
+                                              productId: productId,
+                                            ),
                                       ),
                                     );
                                   }

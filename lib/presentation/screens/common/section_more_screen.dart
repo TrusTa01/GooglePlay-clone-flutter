@@ -3,36 +3,47 @@ import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/domain/entities/products/game_entity.dart';
 import 'package:google_play/domain/entities/products/product_entity.dart';
-import 'package:google_play/presentation/viewmodels/category/category_overview_view_model.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_mappers/category_item_mapper.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_mappers/product_state_mapper.dart';
 import 'package:google_play/presentation/viewmodels/product/ui_models/product_preview_section_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CategoryOverviewScreen extends ConsumerWidget {
+class SectionMoreScreen extends StatelessWidget {
   final String title;
-  final String categoryKey;
   final List<ProductEntity> products;
 
-  const CategoryOverviewScreen({
+  const SectionMoreScreen({
     super.key,
     required this.title,
-    required this.categoryKey,
     required this.products,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(
-      categoryOverviewViewModelProvider(
-        CategoryOverviewArgs(
-          title: title,
-          categoryKey: categoryKey,
-          products: products,
+  Widget build(BuildContext context) {
+    if (products.isEmpty) {
+      return Scaffold(
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SimpleSliverAppBar(
+                showLogo: false,
+                showBackButton: true,
+                onLeadingPressed: () => Navigator.pop(context),
+                title: AppBarTitle(title: title),
+              ),
+              const SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(child: Text('No products')),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
+
+    final bool isGame = products.first is GameEntity;
+    final l10n = context.l10n;
+    final locale = Localizations.localeOf(context);
 
     return Scaffold(
       body: Center(
@@ -44,22 +55,15 @@ class CategoryOverviewScreen extends ConsumerWidget {
             child: CustomScrollView(
               slivers: [
                 SimpleSliverAppBar(
-                  showBackButton: true,
                   showLogo: false,
+                  showBackButton: true,
                   onLeadingPressed: () => Navigator.pop(context),
-                  title: AppBarTitle(title: state.title),
+                  title: AppBarTitle(title: title),
                 ),
-                if (state.products.isEmpty)
-                  const SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(child: Text('No products')),
-                  )
-                else if (state.products.first is GameEntity)
+                if (isGame)
                   () {
                     final previewModel =
-                        ProductPreviewSectionUiModel.fromProducts(
-                          state.products,
-                        );
+                        ProductPreviewSectionUiModel.fromProducts(products);
                     return ProductPreviewSection.asSliver(
                       productIds: previewModel.productIds,
                       screenshotsByProductId:
@@ -71,9 +75,7 @@ class CategoryOverviewScreen extends ConsumerWidget {
                   () {
                     final stateMapper = ProductStateMapper();
                     final itemMapper = CategoryItemMapper();
-                    final l10n = context.l10n;
-                    final locale = Localizations.localeOf(context);
-                    final items = state.products
+                    final items = products
                         .map(
                           (product) =>
                               stateMapper.fromEntity(product, l10n, locale),

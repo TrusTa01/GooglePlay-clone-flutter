@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
-import 'package:google_play/domain/entities/banners/simple_banner_entity.dart';
-import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
-import 'package:google_play/presentation/screens/product/product_screen.dart';
 import 'package:google_play/presentation/screens/common/error_screen.dart';
 import 'package:google_play/presentation/viewmodels/events/product_event_state.dart';
 import 'package:google_play/presentation/viewmodels/events/product_event_view_model.dart';
@@ -12,23 +10,15 @@ import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductEventScreen extends ConsumerWidget {
-  final SimpleBannerEntity eventBanner;
-  final List<ResolvedSection> sections;
+  final ProductEventArgs args;
 
   const ProductEventScreen({
     super.key,
-    required this.eventBanner,
-    required this.sections,
+    required this.args,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final args = ProductEventArgs(
-      eventBanner: eventBanner,
-      sections: sections,
-      l10n: context.l10n,
-      locale: Localizations.localeOf(context),
-    );
     final state = ref.watch(productEventViewModelProvider(args));
 
     return Scaffold(
@@ -51,13 +41,13 @@ class ProductEventScreen extends ConsumerWidget {
         SimpleSliverAppBar(
           showBackButton: true,
           showLogo: false,
-          onLeadingPressed: () => Navigator.pop(context),
+          onLeadingPressed: () => context.pop(),
           title: const Text(''),
           actions: [
             IconButton(
               onPressed: () {
                 debugPrint(
-                  'Share event: ${eventBanner.eventId}',
+                  'Share event: ${args.eventBanner.eventId}',
                 ); // TODO: [logic] функционал поделится
               },
               icon: const Icon(Icons.share_outlined, color: Colors.black),
@@ -117,11 +107,8 @@ class ProductEventScreen extends ConsumerWidget {
   }
 
   void _openProduct(BuildContext context, String productId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => ProductPageScreen(productId: productId),
-      ),
+    context.push(
+      '/games/product/$productId',
     );
   }
 }

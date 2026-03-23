@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/presentation/viewmodels/product/ui_mappers/about_author_mapper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/core/constants/constants.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/viewmodels/product/product_view_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
@@ -28,17 +26,7 @@ class _ProductPageContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Читаем текущее состояние деталей продукта
-    final ProductState state = ref.watch(productViewModelProvider);
-
-    final productViewModel = ref.read<ProductViewModel>(
-      productViewModelProvider.notifier,
-    );
-    final l10n = context.l10n;
-    final locale = Localizations.localeOf(context);
-
-    if (state.productId != productId && !state.isLoading) {
-      productViewModel.loadById(productId, l10n, locale);
-    }
+    final ProductState state = ref.watch(productViewModelProvider(productId));
 
     return Scaffold(
       body: Center(
@@ -100,17 +88,13 @@ class _ProductPageContent extends ConsumerWidget {
                           onAboutAuthorTap:
                               state.supportSectionType ==
                                   SupportSectionType.aboutAuthor
-                              ? () 
-                                {
-                                  final aboutAuthorMapper = AboutAuthorMapper();
-                                  final model = aboutAuthorMapper.fromState(
-                                    state,
-                                  );
+                              ? () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          AboutAuthorScreen(model: model),
+                                      builder: (context) => AboutAuthorScreen(
+                                        productId: productId,
+                                      ),
                                     ),
                                   );
                                 }

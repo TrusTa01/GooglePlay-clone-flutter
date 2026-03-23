@@ -17,7 +17,7 @@ class ProductCardMapper {
     final String? mainTagIconPath = showPrice ? null : 'assets/icons/star.png';
 
     return ProductCardUiModel(
-      id: state.productId ?? '',
+      id: state.productId,
       title: state.title,
       iconUrl: state.iconUrl,
       mainTagText: mainTagText,

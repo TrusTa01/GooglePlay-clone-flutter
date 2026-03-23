@@ -10,23 +10,30 @@ part of 'product_view_model.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ProductViewModel)
-final productViewModelProvider = ProductViewModelProvider._();
+final productViewModelProvider = ProductViewModelFamily._();
 
 final class ProductViewModelProvider
     extends $NotifierProvider<ProductViewModel, ProductState> {
-  ProductViewModelProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'productViewModelProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+  ProductViewModelProvider._({
+    required ProductViewModelFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'productViewModelProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$productViewModelHash();
+
+  @override
+  String toString() {
+    return r'productViewModelProvider'
+        ''
+        '($argument)';
+  }
 
   @$internal
   @override
@@ -39,12 +46,50 @@ final class ProductViewModelProvider
       providerOverride: $SyncValueProvider<ProductState>(value),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ProductViewModelProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
-String _$productViewModelHash() => r'f5352dec7f344713eb04d83641c5cabc5de9223e';
+String _$productViewModelHash() => r'3f3962aabfa54f694d5c12137a11da649a7e92f9';
+
+final class ProductViewModelFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          ProductViewModel,
+          ProductState,
+          ProductState,
+          ProductState,
+          String
+        > {
+  ProductViewModelFamily._()
+    : super(
+        retry: null,
+        name: r'productViewModelProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  ProductViewModelProvider call(String productId) =>
+      ProductViewModelProvider._(argument: productId, from: this);
+
+  @override
+  String toString() => r'productViewModelProvider';
+}
 
 abstract class _$ProductViewModel extends $Notifier<ProductState> {
-  ProductState build();
+  late final _$args = ref.$arg as String;
+  String get productId => _$args;
+
+  ProductState build(String productId);
   @$mustCallSuper
   @override
   void runBuild() {
@@ -57,6 +102,6 @@ abstract class _$ProductViewModel extends $Notifier<ProductState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    element.handleCreate(ref, () => build(_$args));
   }
 }

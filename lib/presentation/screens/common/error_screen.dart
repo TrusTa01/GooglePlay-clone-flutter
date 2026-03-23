@@ -13,7 +13,7 @@ class ErrorScreen extends StatelessWidget {
     this.icon = Icons.error_outline_rounded,
     this.retryLabel,
   });
-
+  // TODO: [ui] сделтаь нормальный error screen
   @override
   Widget build(BuildContext context) {
     return Center(

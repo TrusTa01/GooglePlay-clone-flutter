@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/presentation/screens/product/utils/product_app_bar_leading.dart';
-import 'package:google_play/presentation/viewmodels/product/product_state.dart';
+import 'package:google_play/presentation/viewmodels/product/product_view_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PermissionsScreen extends StatelessWidget {
-  final ProductState state;
+class ProductPermissionsScreen extends ConsumerWidget {
+  final String productId;
 
-  const PermissionsScreen({super.key, required this.state});
+  const ProductPermissionsScreen({super.key, required this.productId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(productViewModelProvider(productId));
+
     return Scaffold(
       body: Center(
         heightFactor: 1,

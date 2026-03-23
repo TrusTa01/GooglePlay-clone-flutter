@@ -3,28 +3,28 @@ import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_extension.dart';
 import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
+import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 
 class CategoriesTabScreen extends StatelessWidget {
   final List<ProductCategoriesData> categories;
-  final List<ProductEntity> products;
+  final StoreType storeType;
   final bool isSliver;
 
   const CategoriesTabScreen({
     super.key,
     required this.categories,
-    required this.products,
+    required this.storeType,
     this.isSliver = false,
   });
 
   static Widget asSliver({
     required List<ProductCategoriesData> categories,
-    required List<ProductEntity> products,
+    required StoreType storeType,
   }) {
     return CategoriesTabScreen(
       categories: categories,
-      products: products,
+      storeType: storeType,
       isSliver: true,
     );
   }
@@ -42,36 +42,13 @@ class CategoriesTabScreen extends StatelessWidget {
 
         final int crossAxisCount = _calculateAxisCount(fullWidth);
 
-        if (isSliver) {
-          return SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontalPadding,
-              vertical: 22,
-            ),
-            sliver: SliverGrid.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                mainAxisExtent: 56,
-                mainAxisSpacing: 30,
-                crossAxisSpacing: 20,
-              ),
-              itemCount: categories.length - 1,
-              itemBuilder: (context, index) =>
-                  _buildCategoryTile(context, categories[index + 1]),
-            ),
-          );
-        }
-
-        return LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: Constants.sliderMaxContentWidth,
+        return isSliver
+            ? SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: horizontalPadding,
+                  vertical: 22,
                 ),
-                child: GridView.builder(
-                  primary: false,
-                  padding: EdgeInsets.all(22),
+                sliver: SliverGrid.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: crossAxisCount,
                     mainAxisExtent: 56,
@@ -82,10 +59,31 @@ class CategoriesTabScreen extends StatelessWidget {
                   itemBuilder: (context, index) =>
                       _buildCategoryTile(context, categories[index + 1]),
                 ),
-              ),
-            );
-          },
-        );
+              )
+            : LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: Constants.sliderMaxContentWidth,
+                      ),
+                      child: GridView.builder(
+                        primary: false,
+                        padding: EdgeInsets.all(22),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          mainAxisExtent: 56,
+                          mainAxisSpacing: 30,
+                          crossAxisSpacing: 20,
+                        ),
+                        itemCount: categories.length - 1,
+                        itemBuilder: (context, index) =>
+                            _buildCategoryTile(context, categories[index + 1]),
+                      ),
+                    ),
+                  );
+                },
+              );
       },
     );
   }
@@ -117,10 +115,9 @@ class CategoriesTabScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CategoryOverviewScreen(
-                  title: displayTitle,
+                builder: (context) => CategoriesTabOverviewScreen(
                   categoryKey: category.value,
-                  products: products,
+                  storeType: storeType,
                 ),
               ),
             );

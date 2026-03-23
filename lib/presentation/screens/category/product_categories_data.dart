@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProductCategoriesData {
-  /// L10n key for localized display (e.g. categoryGamesArcade). Use for selection value when set.
   final String? titleL10nKey;
-  /// Raw title when no l10n key (e.g. language names: "Čeština"). Use for display and selection when set.
   final String? title;
   final IconData? icon;
   final Color color;
@@ -15,7 +13,6 @@ class ProductCategoriesData {
     this.color = Colors.black,
   });
 
-  /// Value used for selection and comparison (key or raw title).
   String get value => titleL10nKey ?? title ?? '';
 }
 

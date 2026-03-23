@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppBarConstants {
+abstract final class AppBarConstants {
   // Пути и базовые настройки
   static const defaultLogoAssetPath = 'assets/images/google_play_logo.png';
   static const defaultElevation = 0.0;

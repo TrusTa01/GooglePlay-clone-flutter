@@ -17,11 +17,7 @@ class InfoRowData {
 }
 
 // Тип элемента блока поддержки
-enum SupportItemDataType {
-  link,
-  sectionHeader,
-  infoText,
-}
+enum SupportItemDataType { link, sectionHeader, infoText }
 
 // Данные одного элемента поддержки (иконка по codePoint, url для onTap)
 class SupportItemData {
@@ -41,11 +37,7 @@ class SupportItemData {
 }
 
 // Тип секции поддержки на странице продукта
-enum SupportSectionType {
-  none,
-  aboutAuthor,
-  appSupport,
-}
+enum SupportSectionType { none, aboutAuthor, appSupport }
 
 @freezed
 abstract class ProductState with _$ProductState {
@@ -54,7 +46,7 @@ abstract class ProductState with _$ProductState {
     String? errorMessage,
 
     // Id продукта для навигации (About Author, Permissions)
-    String? productId,
+    @Default('') String productId,
 
     // Базовая информация
     @Default('') String title,
