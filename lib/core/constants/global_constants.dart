@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/routes/app_router.dart';
+import 'package:google_play/core/routes/app_routes_names.dart';
 
 abstract final class Constants {
   // Основной цвет
@@ -33,7 +33,7 @@ abstract final class Constants {
   // Индекс вкладки нижней навигации при старте приложения
   // 0 = игры, 1 = приложения, 2 = поиск, 3 = книги
   static const int defaultBottomNavIndex = 0;
-  static const String initialLocation = AppRoutes.games;
+  static const String initialLocation = AppRouterNames.games;
 
   // Простой способ вертикального отступа между блоками
   static const divider15 = SizedBox(height: 15);

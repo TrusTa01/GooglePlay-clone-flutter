@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/presentation/screens/category/product_categories_data.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';

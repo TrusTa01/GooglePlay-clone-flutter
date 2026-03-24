@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/extensions/l10n_ext.dart';
 
 class AssetNotFoundPlaceholder extends StatelessWidget {
   final double width;

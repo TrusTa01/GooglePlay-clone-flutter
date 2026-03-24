@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:google_play/core/constants/global_constants.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/presentation/layouts/main_layout.dart';
+import 'package:google_play/core/routes/app_router.dart';
 import 'package:google_play/presentation/viewmodels/providers/locale_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,10 +25,12 @@ class GooglePlay extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final baseTheme = ThemeData.light();
     final currentLocale = ref.watch(localeProvider);
+    final router = ref.watch(routerProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => context.l10n.appTitle,
+      routerConfig: router,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         LocaleNamesLocalizationsDelegate(),
@@ -49,7 +51,6 @@ class GooglePlay extends ConsumerWidget {
         ),
         colorScheme: ColorScheme.fromSeed(seedColor: Constants.googleBlue),
       ),
-      home: const MainLayout(),
     );
   }
 }

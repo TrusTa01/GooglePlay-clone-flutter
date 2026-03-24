@@ -4,7 +4,7 @@ import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/presentation/widgets/sections/resolved_sections_view.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/presentation/viewmodels/home/home_view_model.dart';
 import 'package:google_play/presentation/viewmodels/tabs/store_tabs_provider.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';

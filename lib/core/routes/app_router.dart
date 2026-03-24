@@ -1,224 +1,137 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/routes/app_routes_names.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/presentation/layouts/main_layout.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/widgets/full_screen_image.dart';
-import 'package:google_play/presentation/viewmodels/events/product_event_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-abstract final class AppRoutes {
-  // Общие
-  static const String games = '/games';
-  static const String apps = '/apps';
-  static const String search = '/search';
-  static const String books = '/books';
-  // Скриншоты
-  static const String image = 'image';
+part 'app_router.g.dart';
+part 'routes/common_routes.dart';
+part 'routes/games_routes.dart';
+part 'routes/apps_routes.dart';
+part 'routes/search_routes.dart';
+part 'routes/books_routes.dart';
 
-  // Экраны продукта
-  static const String productScreen = 'product/:productId';
-  static const String productDetails = 'details';
-  static const String productPermissions = 'permissions';
-  static const String productAboutAuthor = 'author';
-
-  // События (банера)
-  static const String eventsScreen = 'events';
-
-  // Категории
-  static const String categoriesOverview = 'category/:categoryKey';
-
-  // Детям
-  static const String kidsDetailsScreen = 'kids/info';
-  static const String kidsAgeCategoryScreen = 'kids/:ageKey';
-}
-
-// Глобальные ключи навигации
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorGamesKey = GlobalKey<NavigatorState>(debugLabel: 'games');
-final _shellNavigatorAppsKey = GlobalKey<NavigatorState>(debugLabel: 'apps');
-final _shellNavigatorSearchKey = GlobalKey<NavigatorState>(
-  debugLabel: 'search',
-);
-final _shellNavigatorBooksKey = GlobalKey<NavigatorState>(debugLabel: 'books');
 
+// Провайдер роутера
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: Constants.initialLocation,
     navigatorKey: _rootNavigatorKey,
-    routes: [
-      // Общие маршруты
-      GoRoute(
-        path: AppRoutes.image,
-        builder: (context, state) {
-          final args = state.extra as Map<String, String>;
-          return FullScreenImage(
-            imageUrl: args['imageUrl']!,
-            heroTag: args['heroTag']!,
-          );
-        },
-      ),
-
-      // Ветки всех вкладок
-      StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) =>
-            MainLayout(navigationShell: navigationShell),
-        branches: [
-          // Ветка игр
-          StatefulShellBranch(
-            navigatorKey: _shellNavigatorGamesKey,
-            routes: [
-              GoRoute(
-                path: AppRoutes.games,
-                builder: (context, state) => const GamesScreen(),
-                routes: buildStoreChildRoutes(
-                  storeType: StoreType.games,
-                  includeEvents: true,
-                  includeKids: true,
-                ),
-              ),
-            ],
-          ),
-
-          // Ветка приложений
-          StatefulShellBranch(
-            navigatorKey: _shellNavigatorAppsKey,
-            routes: [
-              GoRoute(
-                path: AppRoutes.apps,
-                builder: (context, state) => const AppsScreen(),
-                routes: buildStoreChildRoutes(
-                  storeType: StoreType.apps,
-                  includeEvents: true,
-                  includeKids: false,
-                ),
-              ),
-            ],
-          ),
-
-          // Ветка поиска
-          StatefulShellBranch(
-            navigatorKey: _shellNavigatorSearchKey,
-            routes: [
-              GoRoute(
-                path: AppRoutes.search,
-                builder: (context, state) => const SearchScreen(),
-              ),
-            ],
-          ),
-
-          // Ветка книг
-          StatefulShellBranch(
-            navigatorKey: _shellNavigatorBooksKey,
-            routes: [
-              GoRoute(
-                path: AppRoutes.books,
-                builder: (context, state) => const BooksScreen(),
-                routes: buildStoreChildRoutes(
-                  storeType: StoreType.books,
-                  includeEvents: false,
-                  includeKids: false,
-                  isBooks: true,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ],
+    routes: $appRoutes,
   );
 });
 
-List<RouteBase> buildStoreChildRoutes({
-  required StoreType storeType,
-  required bool includeEvents,
-  required bool includeKids,
-  bool isBooks = false,
-}) {
-  return [
-    // Ветка экрана продукта
-    GoRoute(
-      path: AppRoutes.productScreen,
-      builder: (context, state) {
-        final productId = state.pathParameters['productId']!;
-        return ProductPageScreen(productId: productId);
-      },
+@TypedStatefulShellRoute<MainShellRouteData>(
+  branches: [
+    // Ветка игр
+    TypedStatefulShellBranch<GamesBranchData>(
       routes: [
-        GoRoute(
-          path: AppRoutes.productDetails,
-          builder: (context, state) {
-            final productId = state.pathParameters['productId']!;
-            return ProductDetailsScreen(productId: productId);
-          },
+        TypedGoRoute<GamesRoute>(
+          path: AppRouterNames.games,
           routes: [
-            isBooks
-                ? GoRoute(
-                    path: AppRoutes.productPermissions,
-                    builder: (context, state) {
-                      final productId = state.pathParameters['productId']!;
-                      return ProductPermissionsScreen(productId: productId);
-                    },
-                  )
-                : GoRoute(
-                    path: AppRoutes.productAboutAuthor,
-                    builder: (context, state) {
-                      final productId = state.pathParameters['productId']!;
-                      return AboutAuthorScreen(productId: productId);
-                    },
-                  ),
+            TypedGoRoute<GamesProductRoute>(
+              path: AppRouterNames.productScreen,
+              routes: [
+                TypedGoRoute<GamesProductDetailsRoute>(
+                  path: AppRouterNames.productDetails,
+                  routes: [
+                    TypedGoRoute<GamesProductPermissionsRoute>(
+                      path: AppRouterNames.productPermissions,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            TypedGoRoute<GamesEventRoute>(path: AppRouterNames.eventsScreen),
+            TypedGoRoute<GamesCategoryRoute>(
+              path: AppRouterNames.categoriesOverview,
+            ),
+            TypedGoRoute<GamesKidsDetailsRoute>(
+              path: AppRouterNames.kidsDetailsScreen,
+            ),
+            TypedGoRoute<GamesKidsAgeCategoryRoute>(
+              path: AppRouterNames.kidsAgeCategoryScreen,
+              routes: [
+                TypedGoRoute<GamesKidsAgeDetailsRoute>(
+                  path: AppRouterNames.kidsDetailsScreen,
+                ),
+              ],
+            ),
           ],
         ),
       ],
     ),
 
-    // events
-    if (includeEvents)
-      GoRoute(
-        path: AppRoutes.eventsScreen,
-        builder: (context, state) {
-          final extra = state.extra;
-          if (extra is! ProductEventArgs) {
-            return const Scaffold(
-              body: Center(child: Text('Invalid navigation args for events')),
-            );
-          }
-          return ProductEventScreen(args: extra);
-        },
-      ),
-
-    // category
-    GoRoute(
-      path: AppRoutes.categoriesOverview,
-      builder: (context, state) {
-        final categoryKey = state.pathParameters['categoryKey']!;
-        return CategoriesTabOverviewScreen(
-          categoryKey: categoryKey,
-          storeType: storeType,
-        );
-      },
+    // Ветка приложений
+    TypedStatefulShellBranch<AppsBranchData>(
+      routes: [
+        TypedGoRoute<AppsRoute>(
+          path: AppRouterNames.apps,
+          routes: [
+            TypedGoRoute<AppsProductRoute>(
+              path: AppRouterNames.productScreen,
+              routes: [
+                TypedGoRoute<AppsProductDetailsRoute>(
+                  path: AppRouterNames.productDetails,
+                  routes: [
+                    TypedGoRoute<AppsProductPermissionsRoute>(
+                      path: AppRouterNames.productPermissions,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            TypedGoRoute<AppsEventRoute>(path: AppRouterNames.eventsScreen),
+            TypedGoRoute<AppsCategoryRoute>(
+              path: AppRouterNames.categoriesOverview,
+            ),
+          ],
+        ),
+      ],
     ),
 
-    // kids
-    if (includeKids) ...[
-      GoRoute(
-        path: AppRoutes.kidsDetailsScreen,
-        builder: (context, state) => const KidsDetailsScreen(),
-      ),
+    // Ветка поиска
+    TypedStatefulShellBranch<SearchBranchData>(
+      routes: [TypedGoRoute<SearchRoute>(path: AppRouterNames.search)],
+    ),
 
-      GoRoute(
-        path: AppRoutes.kidsAgeCategoryScreen,
-        builder: (context, state) {
-          final ageKey = state.pathParameters['ageKey']!;
-          return KidsAgeCategoryScreen(ageKey: ageKey);
-        },
-        routes: [
-          GoRoute(
-            path: AppRoutes.kidsDetailsScreen,
-            builder: (context, state) => const KidsDetailsScreen(),
-          ),
-        ],
-      ),
-    ],
-  ];
+    // Ветка книг
+    TypedStatefulShellBranch<BooksBranchData>(
+      routes: [
+        TypedGoRoute<BooksRoute>(
+          path: AppRouterNames.books,
+          routes: [
+            TypedGoRoute<BooksProductRoute>(
+              path: AppRouterNames.productScreen,
+              routes: [
+                TypedGoRoute<BooksAboutAuthorRoute>(
+                  path: AppRouterNames.productAboutAuthor,
+                ),
+              ],
+            ),
+            TypedGoRoute<BooksCategoryRoute>(
+              path: AppRouterNames.categoriesOverview,
+            ),
+          ],
+        ),
+      ],
+    ),
+  ],
+)
+class MainShellRouteData extends StatefulShellRouteData {
+  const MainShellRouteData();
+
+  @override
+  Widget builder(
+    BuildContext context,
+    GoRouterState state,
+    StatefulNavigationShell navigationShell,
+  ) {
+    return MainLayout(navigationShell: navigationShell);
+  }
 }

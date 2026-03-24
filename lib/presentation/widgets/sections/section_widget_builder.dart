@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/presentation/viewmodels/sections/section_payload.dart';
 import 'package:google_play/presentation/viewmodels/sections/ui_mappers/section_payload_mapper.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';

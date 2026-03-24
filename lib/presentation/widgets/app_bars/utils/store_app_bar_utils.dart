@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/presentation/widgets/app_bars/app_bar/tabbed_app_bar.dart';
 import 'package:google_play/presentation/widgets/popup_menu/language_popup_menu.dart';

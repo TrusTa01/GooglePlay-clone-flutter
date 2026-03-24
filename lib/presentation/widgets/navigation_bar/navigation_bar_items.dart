@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/constants.dart';
-import 'package:google_play/core/extensions/l10n_extension.dart';
+import 'package:google_play/core/extensions/l10n_ext.dart';
 
 List<NavigationDestination> buildNavDestinations(BuildContext context) => [
       NavigationDestination(

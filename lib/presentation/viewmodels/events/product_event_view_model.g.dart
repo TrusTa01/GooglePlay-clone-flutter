@@ -9,20 +9,14 @@ part of 'product_event_view_model.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(productEventViewModel)
+@ProviderFor(ProductEventViewModel)
 final productEventViewModelProvider = ProductEventViewModelFamily._();
 
 final class ProductEventViewModelProvider
-    extends
-        $FunctionalProvider<
-          ProductEventState,
-          ProductEventState,
-          ProductEventState
-        >
-    with $Provider<ProductEventState> {
+    extends $NotifierProvider<ProductEventViewModel, ProductEventState> {
   ProductEventViewModelProvider._({
     required ProductEventViewModelFamily super.from,
-    required ProductEventArgs super.argument,
+    required (String, StoreType) super.argument,
   }) : super(
          retry: null,
          name: r'productEventViewModelProvider',
@@ -38,20 +32,12 @@ final class ProductEventViewModelProvider
   String toString() {
     return r'productEventViewModelProvider'
         ''
-        '($argument)';
+        '$argument';
   }
 
   @$internal
   @override
-  $ProviderElement<ProductEventState> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
-
-  @override
-  ProductEventState create(Ref ref) {
-    final argument = this.argument as ProductEventArgs;
-    return productEventViewModel(ref, argument);
-  }
+  ProductEventViewModel create() => ProductEventViewModel();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(ProductEventState value) {
@@ -73,10 +59,17 @@ final class ProductEventViewModelProvider
 }
 
 String _$productEventViewModelHash() =>
-    r'6a5097e3c9fdcf9813c8bc103cb3ec8264865a7b';
+    r'0cc5d16dd1a3dd3045a5086cc3b24d84bcf3196a';
 
 final class ProductEventViewModelFamily extends $Family
-    with $FunctionalFamilyOverride<ProductEventState, ProductEventArgs> {
+    with
+        $ClassFamilyOverride<
+          ProductEventViewModel,
+          ProductEventState,
+          ProductEventState,
+          ProductEventState,
+          (String, StoreType)
+        > {
   ProductEventViewModelFamily._()
     : super(
         retry: null,
@@ -86,9 +79,34 @@ final class ProductEventViewModelFamily extends $Family
         isAutoDispose: true,
       );
 
-  ProductEventViewModelProvider call(ProductEventArgs args) =>
-      ProductEventViewModelProvider._(argument: args, from: this);
+  ProductEventViewModelProvider call(String eventId, StoreType storeType) =>
+      ProductEventViewModelProvider._(
+        argument: (eventId, storeType),
+        from: this,
+      );
 
   @override
   String toString() => r'productEventViewModelProvider';
+}
+
+abstract class _$ProductEventViewModel extends $Notifier<ProductEventState> {
+  late final _$args = ref.$arg as (String, StoreType);
+  String get eventId => _$args.$1;
+  StoreType get storeType => _$args.$2;
+
+  ProductEventState build(String eventId, StoreType storeType);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<ProductEventState, ProductEventState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ProductEventState, ProductEventState>,
+              ProductEventState,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, () => build(_$args.$1, _$args.$2));
+  }
 }
