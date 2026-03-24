@@ -78,3 +78,4 @@ flutter:
       fonts:
         - asset: assets/google_fonts/Nunito-VariableFont_wght.ttf
         - asset: assets/google_fonts/Nunito-Italic-VariableFont_wght.ttf
+          weight: 700

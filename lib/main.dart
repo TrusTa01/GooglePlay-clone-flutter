@@ -14,7 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
-  debugRepaintRainbowEnabled = true;
+  debugRepaintRainbowEnabled = false;
   runApp(const ProviderScope(child: GooglePlay()));
 }
 
@@ -28,7 +28,6 @@ class GooglePlay extends ConsumerWidget {
     final router = ref.watch(routerProvider);
 
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => context.l10n.appTitle,
       routerConfig: router,
       localizationsDelegates: const [
@@ -40,8 +39,8 @@ class GooglePlay extends ConsumerWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: currentLocale,
+
       theme: baseTheme.copyWith(
-        textTheme: GoogleFonts.nunitoTextTheme(baseTheme.textTheme),
         primaryColor: Constants.googleBlue,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
@@ -51,6 +50,7 @@ class GooglePlay extends ConsumerWidget {
         ),
         colorScheme: ColorScheme.fromSeed(seedColor: Constants.googleBlue),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
