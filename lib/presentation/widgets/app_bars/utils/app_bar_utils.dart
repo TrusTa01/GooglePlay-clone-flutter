@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 
 // Логотип
@@ -88,7 +89,7 @@ class AppBarLeading extends StatelessWidget {
     if (showBackButton) {
       return IconButton(
         icon: const Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: onLeadingPressed ?? () => Navigator.pop(context),
+        onPressed: onLeadingPressed ?? () => context.pop(),
       );
     }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
@@ -24,7 +25,7 @@ class KidsDetailsScreen extends StatelessWidget {
                 SimpleSliverAppBar(
                   showBackButton: true,
                   showLogo: false,
-                  onLeadingPressed: () => Navigator.pop(context),
+                  onLeadingPressed: () => context.pop(),
                 ),
                 SliverToBoxAdapter(
                   child: Image.asset(

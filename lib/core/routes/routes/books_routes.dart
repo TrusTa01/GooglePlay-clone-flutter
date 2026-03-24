@@ -5,8 +5,14 @@ class BooksRoute extends GoRouteData with $BooksRoute {
   const BooksRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const BooksScreen();
+  Widget build(BuildContext context, GoRouterState state) => BooksScreen(
+    onProductTap: (productId) =>
+        BooksProductRoute(productId: productId).push(context),
+    onSeeAllTap: (categoryKey, titleKey) => BooksSectionMoreRoute(
+      categoryKey: categoryKey,
+      titleKey: titleKey,
+    ).push(context),
+  );
 }
 
 class BooksProductRoute extends GoRouteData with $BooksProductRoute {
@@ -15,8 +21,11 @@ class BooksProductRoute extends GoRouteData with $BooksProductRoute {
   const BooksProductRoute({required this.productId});
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      ProductPageScreen(productId: productId);
+  Widget build(BuildContext context, GoRouterState state) => ProductPageScreen(
+    productId: productId,
+    onAboutAuthorTap: () =>
+        BooksAboutAuthorRoute(productId: productId).go(context),
+  );
 }
 
 class BooksAboutAuthorRoute extends GoRouteData with $BooksAboutAuthorRoute {
@@ -39,5 +48,26 @@ class BooksCategoryRoute extends GoRouteData with $BooksCategoryRoute {
       CategoriesTabOverviewScreen(
         categoryKey: categoryKey,
         storeType: StoreType.books,
+        onProductTap: (productId) =>
+            BooksProductRoute(productId: productId).push(context),
       );
+}
+
+class BooksSectionMoreRoute extends GoRouteData with $BooksSectionMoreRoute {
+  final String categoryKey;
+  final String titleKey;
+
+  const BooksSectionMoreRoute({
+    required this.categoryKey,
+    required this.titleKey,
+  });
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => SectionMoreScreen(
+    storeType: StoreType.books,
+    categoryKey: categoryKey,
+    titleKey: titleKey,
+    onProductTap: (productId) =>
+        BooksProductRoute(productId: productId).push(context),
+  );
 }

@@ -62,6 +62,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                 ),
               ],
             ),
+            TypedGoRoute<GamesSectionMoreRoute>(
+              path: AppRouterNames.sectionMore,
+            ),
           ],
         ),
       ],
@@ -90,6 +93,9 @@ final routerProvider = Provider<GoRouter>((ref) {
             TypedGoRoute<AppsCategoryRoute>(
               path: AppRouterNames.categoriesOverview,
             ),
+            TypedGoRoute<AppsSectionMoreRoute>(
+              path: AppRouterNames.sectionMore,
+            ),
           ],
         ),
       ],
@@ -116,6 +122,9 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
             TypedGoRoute<BooksCategoryRoute>(
               path: AppRouterNames.categoriesOverview,
+            ),
+            TypedGoRoute<BooksSectionMoreRoute>(
+              path: AppRouterNames.sectionMore,
             ),
           ],
         ),

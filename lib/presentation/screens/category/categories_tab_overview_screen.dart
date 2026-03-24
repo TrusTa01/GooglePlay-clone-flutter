@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/presentation/viewmodels/category/category_overview_view_model.dart';
@@ -8,11 +9,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class CategoriesTabOverviewScreen extends ConsumerWidget {
   final String categoryKey;
   final StoreType storeType;
+  final ValueChanged<String>? onProductTap;
 
   const CategoriesTabOverviewScreen({
     super.key,
     required this.categoryKey,
     required this.storeType,
+    this.onProductTap,
   });
 
   @override
@@ -36,7 +39,7 @@ class CategoriesTabOverviewScreen extends ConsumerWidget {
                   SimpleSliverAppBar(
                     showBackButton: true,
                     showLogo: false,
-                    onLeadingPressed: () => Navigator.pop(context),
+                    onLeadingPressed: () => context.pop(),
                   title: AppBarTitle(title: data.title),
                 ),
                 if (data.isEmpty)
@@ -45,16 +48,21 @@ class CategoriesTabOverviewScreen extends ConsumerWidget {
                     child: Center(child: Text('No products')),
                   )
                 else if (data.isGame)
-                  () {
-                    final preview = data.previewModel!;
-                    return ProductPreviewSection.asSliver(
-                      productIds: preview.productIds,
-                      screenshotsByProductId: preview.screenshotsByProductId,
-                      actionRowsByProductId: preview.actionRowsByProductId,
-                    );
-                  }()
+                  ProductPreviewSection.asSliver(
+                    productIds: data.previewModel!.productIds,
+                    screenshotsByProductId:
+                        data.previewModel!.screenshotsByProductId,
+                    actionRowsByProductId:
+                        data.previewModel!.actionRowsByProductId,
+                    onProductTap: onProductTap,
+                  )
                 else
-                  CategoryDetailsSection.asSliver(items: data.items),
+                  CategoryDetailsSection.asSliver(
+                    items: data.items,
+                    onProductTap: onProductTap != null
+                        ? (item) => onProductTap!(item.id)
+                        : null,
+                  ),
                 ],
               ),
             ),

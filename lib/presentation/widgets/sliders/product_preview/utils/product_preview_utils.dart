@@ -8,6 +8,7 @@ class ProductScreenshotImage extends StatelessWidget {
   final int index;
   final double height;
   final double borderRadius;
+  final void Function(String url, String tag)? onImageTap;
 
   const ProductScreenshotImage({
     super.key,
@@ -16,6 +17,7 @@ class ProductScreenshotImage extends StatelessWidget {
     required this.index,
     this.height = 180,
     this.borderRadius = 6,
+    this.onImageTap,
   });
 
   @override
@@ -29,14 +31,7 @@ class ProductScreenshotImage extends StatelessWidget {
     final int cacheHeight = (height * 3).toInt();
 
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute(
-            builder: (context) =>
-                FullScreenImage(imageUrl: imageUrl, heroTag: heroTag),
-          ),
-        );
-      },
+      onTap: () => onImageTap?.call(imageUrl, heroTag),
       child: Hero(
         tag: heroTag,
         child: Container(

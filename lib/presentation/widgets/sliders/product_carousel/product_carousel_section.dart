@@ -108,8 +108,8 @@ class ProductCarousel extends HookWidget {
                 title: title,
                 subtitle: subtitle,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                onTap: onSeeAllTap ?? () {},
-                showButton: true,
+                onTap: onSeeAllTap,
+                showButton: onSeeAllTap != null,
               ),
             ),
 

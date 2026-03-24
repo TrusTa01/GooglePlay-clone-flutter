@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/viewmodels/product/product_state.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductPageDescriptionSection extends StatelessWidget {
   final ProductState state;
+  final VoidCallback? onTap;
 
   const ProductPageDescriptionSection({
     super.key,
     required this.state,
+    this.onTap,
   });
 
   @override
@@ -20,13 +21,7 @@ class ProductPageDescriptionSection extends StatelessWidget {
         ProductSectionHeader(
           title: state.descriptionSectionTitle,
           padding: EdgeInsets.zero,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  ProductDetailsScreen(productId: state.productId),
-            ),
-          ),
+          onTap: onTap,
         ),
         const SizedBox(height: 10),
         Row(

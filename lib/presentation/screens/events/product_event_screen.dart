@@ -13,11 +13,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class ProductEventScreen extends ConsumerWidget {
   final String eventId;
   final StoreType storeType;
+  final ValueChanged<String>? onProductTap;
 
   const ProductEventScreen({
     super.key,
     required this.eventId,
     required this.storeType,
+    this.onProductTap,
   });
 
   @override
@@ -29,10 +31,11 @@ class ProductEventScreen extends ConsumerWidget {
         child: switch ((state.isLoading, state.error != null)) {
           (true, _) => const AppLoadingIndicator(),
           (_, true) => ErrorScreen(
-              message: context.l10n.productNotFound,
-              onRetry: () =>
-                  ref.invalidate(productEventViewModelProvider(eventId, storeType)),
+            message: context.l10n.productNotFound,
+            onRetry: () => ref.invalidate(
+              productEventViewModelProvider(eventId, storeType),
             ),
+          ),
           _ => _buildContent(context, state),
         },
       ),
@@ -80,41 +83,35 @@ class ProductEventScreen extends ConsumerWidget {
   Widget _buildSection(BuildContext context, EventSectionUiModel section) {
     return switch (section.payload) {
       CarouselPayload(:final items) => ProductCarousel(
-          title: section.title,
-          subtitle: section.subtitle,
-          items: items,
-          onProductTap: (item) => _openProduct(context, item.id),
-          maxItems: 10,
-        ),
+        title: section.title,
+        subtitle: section.subtitle,
+        items: items,
+        onProductTap: (item) => _openProduct(item.id),
+        maxItems: 10,
+      ),
       GridPayload(:final items) => ProductGrid(
-          title: section.title,
-          subtitle: section.subtitle,
-          items: items,
-          onProductTap: (item) => _openProduct(context, item.id),
-          maxItems: 15,
-        ),
+        title: section.title,
+        subtitle: section.subtitle,
+        items: items,
+        onProductTap: (item) => _openProduct(item.id),
+        maxItems: 15,
+      ),
       PreviewPayload(:final model) => ProductPreviewSection(
-          productIds: model.productIds,
-          screenshotsByProductId: model.screenshotsByProductId,
-          actionRowsByProductId: model.actionRowsByProductId,
-          nestedInScrollView: true,
-          onProductTap: (productId) => _openProduct(context, productId),
-        ),
+        productIds: model.productIds,
+        screenshotsByProductId: model.screenshotsByProductId,
+        actionRowsByProductId: model.actionRowsByProductId,
+        nestedInScrollView: true,
+        onProductTap: (productId) => _openProduct(productId),
+      ),
       BannersPayload(:final banners) => BannerSection(
-          title: section.title,
-          subtitle: section.subtitle,
-          banners: banners,
-          maxItems: 8,
-        ),
+        title: section.title,
+        subtitle: section.subtitle,
+        banners: banners,
+        maxItems: 8,
+      ),
       EmptyPayload() => const SizedBox.shrink(),
     };
   }
 
-  void _openProduct(BuildContext context, String productId) {
-    // В зависимости от текущего storeType можно было бы переходить в нужную ветку,
-    // но для простоты пока оставим фиксированный путь или используем текущий контекст.
-    context.push(
-      '/${storeType.name}/product/$productId',
-    );
-  }
+  void _openProduct(String productId) => onProductTap?.call(productId);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/presentation/screens/product/utils/product_app_bar_leading.dart';
@@ -41,7 +42,7 @@ class ProductPermissionsScreen extends ConsumerWidget {
                     context.l10n.permissionsTitle,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
-                  onLeadingPressed: () => Navigator.pop(context),
+                  onLeadingPressed: () => context.pop(),
                 ),
 
                 // Заголовок списка

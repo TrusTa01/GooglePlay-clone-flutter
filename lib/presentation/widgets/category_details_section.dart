@@ -6,15 +6,24 @@ import 'package:google_play/presentation/widgets/widgets.dart';
 class CategoryDetailsSection extends StatelessWidget {
   final List<CategoryItemUiModel> items;
   final bool isSliver;
+  final ValueChanged<CategoryItemUiModel>? onProductTap;
 
   const CategoryDetailsSection({
     super.key,
     required this.items,
     this.isSliver = false,
+    this.onProductTap,
   });
 
-  static Widget asSliver({required List<CategoryItemUiModel> items}) {
-    return CategoryDetailsSection(items: items, isSliver: true);
+  static Widget asSliver({
+    required List<CategoryItemUiModel> items,
+    ValueChanged<CategoryItemUiModel>? onProductTap,
+  }) {
+    return CategoryDetailsSection(
+      items: items,
+      isSliver: true,
+      onProductTap: onProductTap,
+    );
   }
 
   @override
@@ -88,6 +97,9 @@ class CategoryDetailsSection extends StatelessWidget {
   }
 
   Widget _buildItem(CategoryItemUiModel item) {
-    return ProductCardContent(model: item.card);
+    return GestureDetector(
+      onTap: onProductTap != null ? () => onProductTap!(item) : null,
+      child: ProductCardContent(model: item.card),
+    );
   }
 }

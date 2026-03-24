@@ -23,4 +23,7 @@ abstract final class AppRouterNames {
   // Детям
   static const String kidsDetailsScreen = 'kids/info';
   static const String kidsAgeCategoryScreen = 'kids/:ageKey';
+
+  // Секция 'еще'
+  static const String sectionMore = 'section/:categoryKey';
 }

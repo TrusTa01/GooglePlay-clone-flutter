@@ -1,50 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
-import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/domain/entities/products/game_entity.dart';
-import 'package:google_play/domain/entities/products/product_entity.dart';
-import 'package:google_play/presentation/viewmodels/product/ui_mappers/category_item_mapper.dart';
-import 'package:google_play/presentation/viewmodels/product/ui_mappers/product_state_mapper.dart';
-import 'package:google_play/presentation/viewmodels/product/ui_models/product_preview_section_ui_model.dart';
+import 'package:google_play/domain/entities/store/store_type.dart';
+import 'package:google_play/presentation/screens/common/error_screen.dart';
+import 'package:google_play/presentation/viewmodels/section_more/section_more_state.dart';
+import 'package:google_play/presentation/viewmodels/section_more/section_more_view_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SectionMoreScreen extends StatelessWidget {
-  final String title;
-  final List<ProductEntity> products;
+class SectionMoreScreen extends ConsumerWidget {
+  final StoreType storeType;
+  final String categoryKey;
+  final String titleKey;
+  final ValueChanged<String>? onProductTap;
 
   const SectionMoreScreen({
     super.key,
-    required this.title,
-    required this.products,
+    required this.storeType,
+    required this.categoryKey,
+    required this.titleKey,
+    this.onProductTap,
   });
 
   @override
-  Widget build(BuildContext context) {
-    if (products.isEmpty) {
-      return Scaffold(
-        body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SimpleSliverAppBar(
-                showLogo: false,
-                showBackButton: true,
-                onLeadingPressed: () => Navigator.pop(context),
-                title: AppBarTitle(title: title),
-              ),
-              const SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(child: Text('No products')),
-              ),
-            ],
-          ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final args = SectionMoreArgs(
+      storeType: storeType,
+      categoryKey: categoryKey,
+      titleKey: titleKey,
+    );
+    final stateAsync = ref.watch(sectionMoreViewModelProvider(args));
+
+    return stateAsync.when(
+      loading: () => const Scaffold(body: AppLoadingIndicator()),
+      error: (e, _) => Scaffold(
+        body: ErrorScreen(
+          message: e.toString(),
+          onRetry: () => ref.invalidate(sectionMoreViewModelProvider(args)),
         ),
-      );
-    }
+      ),
+      data: (state) =>
+          _SectionMoreContent(state: state, onProductTap: onProductTap),
+    );
+  }
+}
 
-    final bool isGame = products.first is GameEntity;
-    final l10n = context.l10n;
-    final locale = Localizations.localeOf(context);
+class _SectionMoreContent extends StatelessWidget {
+  final SectionMoreState state;
+  final ValueChanged<String>? onProductTap;
 
+  const _SectionMoreContent({required this.state, this.onProductTap});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -57,33 +65,30 @@ class SectionMoreScreen extends StatelessWidget {
                 SimpleSliverAppBar(
                   showLogo: false,
                   showBackButton: true,
-                  onLeadingPressed: () => Navigator.pop(context),
-                  title: AppBarTitle(title: title),
+                  onLeadingPressed: () => context.pop(),
+                  title: AppBarTitle(title: state.title),
                 ),
-                if (isGame)
-                  () {
-                    final previewModel =
-                        ProductPreviewSectionUiModel.fromProducts(products);
-                    return ProductPreviewSection.asSliver(
-                      productIds: previewModel.productIds,
-                      screenshotsByProductId:
-                          previewModel.screenshotsByProductId,
-                      actionRowsByProductId: previewModel.actionRowsByProductId,
-                    );
-                  }()
+                if (state.isEmpty)
+                  const SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(child: Text('No products')),
+                  )
+                else if (state.isGame)
+                  ProductPreviewSection.asSliver(
+                    productIds: state.previewModel!.productIds,
+                    screenshotsByProductId:
+                        state.previewModel!.screenshotsByProductId,
+                    actionRowsByProductId:
+                        state.previewModel!.actionRowsByProductId,
+                    onProductTap: onProductTap,
+                  )
                 else
-                  () {
-                    final stateMapper = ProductStateMapper();
-                    final itemMapper = CategoryItemMapper();
-                    final items = products
-                        .map(
-                          (product) =>
-                              stateMapper.fromEntity(product, l10n, locale),
-                        )
-                        .map(itemMapper.fromState)
-                        .toList(growable: false);
-                    return CategoryDetailsSection.asSliver(items: items);
-                  }(),
+                  CategoryDetailsSection.asSliver(
+                    items: state.items,
+                    onProductTap: onProductTap != null
+                        ? (item) => onProductTap!(item.id)
+                        : null,
+                  ),
               ],
             ),
           ),

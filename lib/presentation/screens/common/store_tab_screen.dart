@@ -12,8 +12,15 @@ import 'package:google_play/presentation/screens/common/error_screen.dart';
 
 class StoreTabScreen extends HookConsumerWidget {
   final StoreType storeType;
+  final ValueChanged<String>? onProductTap;
+  final OnSeeAllTap? onSeeAllTap;
 
-  const StoreTabScreen({super.key, required this.storeType});
+  const StoreTabScreen({
+    super.key,
+    required this.storeType,
+    this.onProductTap,
+    this.onSeeAllTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -126,6 +133,8 @@ class StoreTabScreen extends HookConsumerWidget {
                             sectionState: sectionState,
                             isSliver: true,
                             storageId: '${storeType.name}_$tabKey',
+                            onProductTap: onProductTap,
+                            onSeeAllTap: onSeeAllTap,
                           ),
                         ],
                       );

@@ -5,8 +5,14 @@ class GamesRoute extends GoRouteData with $GamesRoute {
   const GamesRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const GamesScreen();
+  Widget build(BuildContext context, GoRouterState state) => GamesScreen(
+    onProductTap: (productId) =>
+        GamesProductRoute(productId: productId).push(context),
+    onSeeAllTap: (categoryKey, titleKey) => GamesSectionMoreRoute(
+      categoryKey: categoryKey,
+      titleKey: titleKey,
+    ).push(context),
+  );
 }
 
 class GamesProductRoute extends GoRouteData with $GamesProductRoute {
@@ -27,7 +33,11 @@ class GamesProductDetailsRoute extends GoRouteData
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ProductDetailsScreen(productId: productId);
+      ProductDetailsScreen(
+        productId: productId,
+        onPermissionsTap: () =>
+            GamesProductPermissionsRoute(productId: productId).go(context),
+      );
 }
 
 class GamesProductPermissionsRoute extends GoRouteData
@@ -47,8 +57,12 @@ class GamesEventRoute extends GoRouteData with $GamesEventRoute {
   const GamesEventRoute({required this.eventId});
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      ProductEventScreen(eventId: eventId, storeType: StoreType.games);
+  Widget build(BuildContext context, GoRouterState state) => ProductEventScreen(
+    eventId: eventId,
+    storeType: StoreType.games,
+    onProductTap: (productId) =>
+        GamesProductRoute(productId: productId).push(context),
+  );
 }
 
 class GamesCategoryRoute extends GoRouteData with $GamesCategoryRoute {
@@ -61,6 +75,8 @@ class GamesCategoryRoute extends GoRouteData with $GamesCategoryRoute {
       CategoriesTabOverviewScreen(
         categoryKey: categoryKey,
         storeType: StoreType.games,
+        onProductTap: (productId) =>
+            GamesProductRoute(productId: productId).push(context),
       );
 }
 
@@ -92,4 +108,23 @@ class GamesKidsAgeDetailsRoute extends GoRouteData
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const KidsDetailsScreen();
+}
+
+class GamesSectionMoreRoute extends GoRouteData with $GamesSectionMoreRoute {
+  final String categoryKey;
+  final String titleKey;
+
+  const GamesSectionMoreRoute({
+    required this.categoryKey,
+    required this.titleKey,
+  });
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => SectionMoreScreen(
+    storeType: StoreType.games,
+    categoryKey: categoryKey,
+    titleKey: titleKey,
+    onProductTap: (productId) =>
+        GamesProductRoute(productId: productId).push(context),
+  );
 }

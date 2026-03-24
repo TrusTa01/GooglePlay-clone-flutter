@@ -7,25 +7,36 @@ import 'package:google_play/presentation/viewmodels/sections/section_payload.dar
 import 'package:google_play/presentation/viewmodels/sections/ui_mappers/section_payload_mapper.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
+/// Колбэк для "Смотреть все" — передаёт ключ категории и ключ заголовка
+typedef OnSeeAllTap = void Function(String categoryKey, String titleKey);
+
 class SectionWidgetBuilder extends HookWidget {
   final List<ResolvedSection> sections;
   final bool isSliver;
   final String storageId;
+  final ValueChanged<String>? onProductTap;
+  final OnSeeAllTap? onSeeAllTap;
 
   const SectionWidgetBuilder({
     super.key,
     required this.sections,
     this.isSliver = false,
     required this.storageId,
+    this.onProductTap,
+    this.onSeeAllTap,
   });
 
   static Widget asSliver({
     required List<ResolvedSection> sections,
     required String storageId,
+    ValueChanged<String>? onProductTap,
+    OnSeeAllTap? onSeeAllTap,
   }) => SectionWidgetBuilder(
     sections: sections,
     isSliver: true,
     storageId: storageId,
+    onProductTap: onProductTap,
+    onSeeAllTap: onSeeAllTap,
   );
 
   @override
@@ -76,7 +87,7 @@ class SectionWidgetBuilder extends HookWidget {
     if (imagePath == null || imagePath.isEmpty) {
       assert(() {
         debugPrint(
-          '[SectionWidgetBuilder] skip section: empty imagePath'
+          '[SectionWidgetBuilder] skip section: empty imagePath '
           'id=${section.config.id}, layout=${section.config.layout}',
         );
         return true;
@@ -91,28 +102,37 @@ class SectionWidgetBuilder extends HookWidget {
         banners: banners,
         maxItems: 16,
       ),
-      CarouselPayload(:final items) => ProductCarousel(
-        title: title,
-        subtitle: subtitle,
-        items: items,
-        onProductTap: (_) {},
-      ),
-      GridPayload(:final items) => ProductGrid(
-        title: title,
-        subtitle: subtitle,
-        items: items,
-        onProductTap: (_) {},
-      ),
+      CarouselPayload(:final items, :final categoryKey, :final titleKey) =>
+        ProductCarousel(
+          title: title,
+          subtitle: subtitle,
+          items: items,
+          onProductTap: (item) => onProductTap?.call(item.id),
+          onSeeAllTap: categoryKey != null && titleKey != null
+              ? () => onSeeAllTap?.call(categoryKey, titleKey)
+              : null,
+        ),
+      GridPayload(:final items, :final categoryKey, :final titleKey) =>
+        ProductGrid(
+          title: title,
+          subtitle: subtitle,
+          items: items,
+          onProductTap: (item) => onProductTap?.call(item.id),
+          onSeeAllTap: categoryKey != null && titleKey != null
+              ? () => onSeeAllTap?.call(categoryKey, titleKey)
+              : null,
+        ),
       PreviewPayload(:final model) => ProductPreviewSection(
         productIds: model.productIds,
         screenshotsByProductId: model.screenshotsByProductId,
         actionRowsByProductId: model.actionRowsByProductId,
+        onProductTap: onProductTap,
       ),
       EmptyPayload() => () {
         debugPrint(
-          '[SectionWidgetBuilder] EmptyPayload:'
-          'sectionId=${section.config.id},'
-          'layout=${section.config.layout},'
+          '[SectionWidgetBuilder] EmptyPayload: '
+          'sectionId=${section.config.id}, '
+          'layout=${section.config.layout}, '
           'itemsType=${section.items.runtimeType}',
         );
         return const SizedBox.shrink();

@@ -10,12 +10,14 @@ class CategoriesTabScreen extends StatelessWidget {
   final List<ProductCategoriesData> categories;
   final StoreType storeType;
   final bool isSliver;
+  final ValueChanged<String>? onCategoryTap;
 
   const CategoriesTabScreen({
     super.key,
     required this.categories,
     required this.storeType,
     this.isSliver = false,
+    this.onCategoryTap,
   });
 
   static Widget asSliver({
@@ -111,17 +113,7 @@ class CategoriesTabScreen extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CategoriesTabOverviewScreen(
-                  categoryKey: category.value,
-                  storeType: storeType,
-                ),
-              ),
-            );
-          },
+          onTap: () => onCategoryTap?.call(category.value),
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(

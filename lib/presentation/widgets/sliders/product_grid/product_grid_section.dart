@@ -78,9 +78,9 @@ class ProductGrid extends HookWidget {
               child: ProductSectionHeader(
                 title: title,
                 subtitle: subtitle,
-                showButton: true,
+                showButton: onSeeAllTap != null,
                 padding: const EdgeInsets.only(bottom: 5),
-                onTap: onSeeAllTap ?? () {},
+                onTap: onSeeAllTap,
               ),
             ),
 

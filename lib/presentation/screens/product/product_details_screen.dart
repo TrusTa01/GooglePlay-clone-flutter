@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/presentation/screens/product/product_permissions_screen.dart';
 import 'package:google_play/presentation/screens/product/utils/product_app_bar_leading.dart';
 import 'package:google_play/presentation/viewmodels/product/product_view_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
@@ -9,8 +9,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductDetailsScreen extends ConsumerWidget {
   final String productId;
+  final VoidCallback? onPermissionsTap;
 
-  const ProductDetailsScreen({super.key, required this.productId});
+  const ProductDetailsScreen({
+    super.key,
+    required this.productId,
+    this.onPermissionsTap,
+  });
 
   List<Widget> _withSpacing(List<Widget> widgets, {double spacing = 25}) {
     if (widgets.isEmpty) return [];
@@ -46,7 +51,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                     context.l10n.detailsInfo,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
-                  onLeadingPressed: () => Navigator.pop(context),
+                  onLeadingPressed: () => context.pop(),
                 ),
 
                 SliverPadding(
@@ -153,17 +158,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                             value: row.value,
                             hasTextButton: row.hasTextButton,
                             onTextButtonPressed: row.hasTextButton
-                                ? () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            ProductPermissionsScreen(
-                                              productId: productId,
-                                            ),
-                                      ),
-                                    );
-                                  }
+                                ? () => onPermissionsTap?.call()
                                 : null,
                           );
                         }).toList(),

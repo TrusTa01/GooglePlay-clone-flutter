@@ -4,7 +4,7 @@ import 'package:google_play/core/constants/constants.dart';
 class CustomIconButton extends StatelessWidget {
   final double width;
   final double height;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final double borderRadius;
   final Clip clipBehavior;
   final IconData icon;
@@ -15,7 +15,7 @@ class CustomIconButton extends StatelessWidget {
     super.key,
     this.width = 30,
     this.height = 34,
-    required this.onTap,
+    this.onTap,
     this.borderRadius = 23,
     this.clipBehavior = Clip.antiAlias,
     this.icon = Icons.arrow_forward,

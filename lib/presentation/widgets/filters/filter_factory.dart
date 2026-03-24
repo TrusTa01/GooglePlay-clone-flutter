@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/presentation/screens/category/product_categories_data.dart';
-import 'package:google_play/presentation/screens/kids/kids_age_category_screen.dart';
 import 'package:google_play/presentation/viewmodels/filters/filter_provider.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,6 +15,7 @@ class FilterSets {
     FilterType type, {
     String sectionTitle = '',
     String subtitle = '',
+    ValueChanged<String>? onKidsAgeTap,
   }) {
     final state = ref.watch(filterProvider);
     final notifier = ref.read(filterProvider.notifier);
@@ -102,20 +102,14 @@ class FilterSets {
       case FilterType.kidsAge:
         activeFilters = state.selectedKidsFilters
             .map(
-              (ageKey) => Builder(
-                builder: (ctx) {
-                  final ageLabel = lookupL10n(l10n, ageKey);
-                  return ToggleFilter(
-                    label: ageLabel,
-                    isSelected: false,
-                    onSelected: () => Navigator.of(ctx).push(
-                      MaterialPageRoute(
-                        builder: (_) => KidsAgeCategoryScreen(ageKey: ageLabel),
-                      ),
-                    ),
-                  );
-                },
-              ),
+              (ageKey) {
+                final ageLabel = lookupL10n(l10n, ageKey);
+                return ToggleFilter(
+                  label: ageLabel,
+                  isSelected: false,
+                  onSelected: () => onKidsAgeTap?.call(ageLabel),
+                );
+              },
             )
             .toList();
         break;

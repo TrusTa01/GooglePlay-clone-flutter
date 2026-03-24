@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/shimmers/product_slider_skeleton.dart';
 import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
+import 'package:google_play/presentation/widgets/sections/section_widget_builder.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,12 +9,16 @@ class ResolvedSectionsView extends StatelessWidget {
   final AsyncValue<List<ResolvedSection>> sectionState;
   final bool isSliver;
   final String storageId;
+  final ValueChanged<String>? onProductTap;
+  final OnSeeAllTap? onSeeAllTap;
 
   const ResolvedSectionsView({
     super.key,
     required this.sectionState,
     required this.isSliver,
     required this.storageId,
+    this.onProductTap,
+    this.onSeeAllTap,
   });
 
   @override
@@ -27,6 +32,8 @@ class ResolvedSectionsView extends StatelessWidget {
               sections: sections,
               isSliver: isSliver,
               storageId: storageId,
+              onProductTap: onProductTap,
+              onSeeAllTap: onSeeAllTap,
             ),
     );
   }
@@ -73,11 +80,15 @@ class _BuildData extends StatelessWidget {
   final List<ResolvedSection> sections;
   final bool isSliver;
   final String storageId;
+  final ValueChanged<String>? onProductTap;
+  final OnSeeAllTap? onSeeAllTap;
 
   const _BuildData({
     required this.sections,
     required this.storageId,
     this.isSliver = false,
+    this.onProductTap,
+    this.onSeeAllTap,
   });
 
   @override
@@ -86,11 +97,15 @@ class _BuildData extends StatelessWidget {
         ? SectionWidgetBuilder.asSliver(
             sections: sections,
             storageId: storageId,
+            onProductTap: onProductTap,
+            onSeeAllTap: onSeeAllTap,
           )
         : SectionWidgetBuilder(
             sections: sections,
             isSliver: false,
             storageId: storageId,
+            onProductTap: onProductTap,
+            onSeeAllTap: onSeeAllTap,
           );
   }
 }

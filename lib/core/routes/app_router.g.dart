@@ -55,6 +55,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                 ),
               ],
             ),
+            GoRouteData.$route(
+              path: 'section/:categoryKey',
+              factory: $GamesSectionMoreRoute._fromState,
+            ),
           ],
         ),
       ],
@@ -89,6 +93,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
               path: 'category/:categoryKey',
               factory: $AppsCategoryRoute._fromState,
             ),
+            GoRouteData.$route(
+              path: 'section/:categoryKey',
+              factory: $AppsSectionMoreRoute._fromState,
+            ),
           ],
         ),
       ],
@@ -117,6 +125,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
             GoRouteData.$route(
               path: 'category/:categoryKey',
               factory: $BooksCategoryRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'section/:categoryKey',
+              factory: $BooksSectionMoreRoute._fromState,
             ),
           ],
         ),
@@ -349,6 +361,35 @@ mixin $GamesKidsAgeDetailsRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
+mixin $GamesSectionMoreRoute on GoRouteData {
+  static GamesSectionMoreRoute _fromState(GoRouterState state) =>
+      GamesSectionMoreRoute(
+        categoryKey: state.pathParameters['categoryKey']!,
+        titleKey: state.uri.queryParameters['title-key']!,
+      );
+
+  GamesSectionMoreRoute get _self => this as GamesSectionMoreRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/games/section/${Uri.encodeComponent(_self.categoryKey)}',
+    queryParams: {'title-key': _self.titleKey},
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
 mixin $AppsRoute on GoRouteData {
   static AppsRoute _fromState(GoRouterState state) => const AppsRoute();
 
@@ -497,6 +538,35 @@ mixin $AppsCategoryRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
+mixin $AppsSectionMoreRoute on GoRouteData {
+  static AppsSectionMoreRoute _fromState(GoRouterState state) =>
+      AppsSectionMoreRoute(
+        categoryKey: state.pathParameters['categoryKey']!,
+        titleKey: state.uri.queryParameters['title-key']!,
+      );
+
+  AppsSectionMoreRoute get _self => this as AppsSectionMoreRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/apps/section/${Uri.encodeComponent(_self.categoryKey)}',
+    queryParams: {'title-key': _self.titleKey},
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
 mixin $SearchRoute on GoRouteData {
   static SearchRoute _fromState(GoRouterState state) => const SearchRoute();
 
@@ -596,6 +666,35 @@ mixin $BooksCategoryRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/books/category/${Uri.encodeComponent(_self.categoryKey)}',
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $BooksSectionMoreRoute on GoRouteData {
+  static BooksSectionMoreRoute _fromState(GoRouterState state) =>
+      BooksSectionMoreRoute(
+        categoryKey: state.pathParameters['categoryKey']!,
+        titleKey: state.uri.queryParameters['title-key']!,
+      );
+
+  BooksSectionMoreRoute get _self => this as BooksSectionMoreRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/books/section/${Uri.encodeComponent(_self.categoryKey)}',
+    queryParams: {'title-key': _self.titleKey},
   );
 
   @override

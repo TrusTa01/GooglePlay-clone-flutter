@@ -7,6 +7,7 @@ class ProductPreviewCard extends StatelessWidget {
   final List<String> screenshots;
   final ActionRowUiModel? actionRow;
   final VoidCallback? onTap;
+  final void Function(String url, String tag)? onImageTap;
 
   const ProductPreviewCard({
     super.key,
@@ -14,6 +15,7 @@ class ProductPreviewCard extends StatelessWidget {
     required this.screenshots,
     this.actionRow,
     this.onTap,
+    this.onImageTap,
   });
 
   @override
@@ -34,6 +36,7 @@ class ProductPreviewCard extends StatelessWidget {
                   imageUrl: screenshots[index],
                   productId: productId,
                   index: index,
+                  onImageTap: onImageTap,
                 ),
               );
             },

@@ -5,7 +5,7 @@ import 'package:google_play/presentation/widgets/buttons/icon_button.dart';
 class ProductSectionHeader extends StatelessWidget {
   final String title;
   final String subtitle;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final bool showButton;
   final EdgeInsets padding;
   final Widget? button;
@@ -15,7 +15,7 @@ class ProductSectionHeader extends StatelessWidget {
     super.key,
     required this.title,
     this.subtitle = '',
-    required this.onTap,
+    this.onTap,
     this.showButton = true,
     this.padding = EdgeInsets.zero,
     this.button,
@@ -64,7 +64,7 @@ class ProductSectionHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: mainAxisAlignment,
       children: [
-        if (showButton) Expanded(child: headerContent) else headerContent,
+        showButton ? Expanded(child: headerContent) : headerContent,
         if (showButton)
           Padding(
             padding: EdgeInsets.only(right: buttonRightPadding),

@@ -6,22 +6,31 @@ import 'package:google_play/presentation/viewmodels/product/product_view_model.d
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 
-/// Экран страницы продукта (приложение, книга, игра)
-class ProductPageScreen extends ConsumerWidget {
+// Экран страницы продукта
+class ProductPageScreen extends StatelessWidget {
   final String productId;
+  final VoidCallback? onAboutAuthorTap;
 
-  const ProductPageScreen({super.key, required this.productId});
+  const ProductPageScreen({
+    super.key,
+    required this.productId,
+    this.onAboutAuthorTap,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return _ProductPageContent(productId: productId);
+  Widget build(BuildContext context) {
+    return _ProductPageContent(
+      productId: productId,
+      onAboutAuthorTap: onAboutAuthorTap,
+    );
   }
 }
 
 class _ProductPageContent extends ConsumerWidget {
   final String productId;
+  final VoidCallback? onAboutAuthorTap;
 
-  const _ProductPageContent({required this.productId});
+  const _ProductPageContent({required this.productId, this.onAboutAuthorTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -88,16 +97,7 @@ class _ProductPageContent extends ConsumerWidget {
                           onAboutAuthorTap:
                               state.supportSectionType ==
                                   SupportSectionType.aboutAuthor
-                              ? () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AboutAuthorScreen(
-                                        productId: productId,
-                                      ),
-                                    ),
-                                  );
-                                }
+                              ? onAboutAuthorTap
                               : null,
                         ),
                       ),
