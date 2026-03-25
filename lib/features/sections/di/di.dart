@@ -1,5 +1,5 @@
-import 'package:google_play/features/banners/di.dart';
-import 'package:google_play/features/product/di.dart';
+import 'package:google_play/features/banners/di/di.dart';
+import 'package:google_play/features/product/di/di.dart';
 import 'package:google_play/features/sections/data/datasources/local/config_local_datasource.dart';
 import 'package:google_play/features/sections/data/repositories/json_config_repository.dart';
 import 'package:google_play/features/sections/domain/repositories/config_repository.dart';
