@@ -1,3 +1,4 @@
+// TODO: [nav] Разнести route-конфиги по фичам
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
