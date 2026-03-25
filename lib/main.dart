@@ -8,7 +8,7 @@ import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/core/routes/app_router.dart';
-import 'package:google_play/presentation/viewmodels/providers/locale_provider.dart';
+import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
