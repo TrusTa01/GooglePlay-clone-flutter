@@ -1,5 +1,5 @@
 import 'package:google_play/di/usecase_providers.dart';
-import 'package:google_play/domain/entities/store/store_type.dart';
+import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/features/sections/domain/entities/available_tabs_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

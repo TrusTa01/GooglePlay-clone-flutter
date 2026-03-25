@@ -4,8 +4,8 @@ import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/features/product/presentation/screens/utils/product_support_data.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
-import 'package:google_play/presentation/widgets/custom_expansion_tile.dart';
-import 'package:google_play/presentation/widgets/sliders/utils/product_section_header.dart';
+import 'package:google_play/features/shared/presentation/widgets/custom_widgets/custom_expansion_tile.dart';
+import 'package:google_play/features/shared/presentation/widgets/product_widgets/elements/product_section_header.dart';
 
 class ProductPageSupportSection extends StatelessWidget {
   final ProductState state;

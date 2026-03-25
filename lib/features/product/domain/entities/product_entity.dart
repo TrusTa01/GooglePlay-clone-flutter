@@ -1,4 +1,4 @@
-import 'package:google_play/domain/entities/base_entity.dart';
+import 'package:google_play/core/domain/entities/base_entity.dart';
 
 abstract class ProductEntity extends Entity {
   final String type; // app, game, book

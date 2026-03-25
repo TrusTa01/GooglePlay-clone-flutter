@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/features/product/domain/usecases/get_product_by_id_usecase.dart';
-import 'package:google_play/presentation/viewmodels/providers/locale_provider.dart';
+import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_state_mapper.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

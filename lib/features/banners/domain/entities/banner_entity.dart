@@ -1,4 +1,4 @@
-import 'package:google_play/domain/entities/base_entity.dart';
+import 'package:google_play/core/domain/entities/base_entity.dart';
 
 enum BannerType { simple, action }
 

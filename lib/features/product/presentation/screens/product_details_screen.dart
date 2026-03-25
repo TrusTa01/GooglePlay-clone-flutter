@@ -4,8 +4,8 @@ import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/features/product/presentation/screens/utils/product_app_bar_leading.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_view_model.dart';
-import 'package:google_play/presentation/widgets/app_bars/app_bar/simple_app_bar.dart';
-import 'package:google_play/presentation/widgets/sliders/utils/product_card_components.dart';
+import 'package:google_play/features/shared/presentation/widgets/components/app_bars/simple_app_bar.dart';
+import 'package:google_play/features/shared/presentation/widgets/product_widgets/elements/product_card_components.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductDetailsScreen extends ConsumerWidget {

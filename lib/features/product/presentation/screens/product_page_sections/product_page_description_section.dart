@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
-import 'package:google_play/presentation/widgets/sliders/utils/product_section_header.dart';
+import 'package:google_play/features/shared/presentation/widgets/product_widgets/elements/product_section_header.dart';
 
 class ProductPageDescriptionSection extends StatelessWidget {
   final ProductState state;

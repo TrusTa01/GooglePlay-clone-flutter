@@ -5,8 +5,8 @@ import 'package:google_play/features/product/presentation/viewmodels/product_sta
 import 'package:google_play/features/product/presentation/viewmodels/product_view_model.dart';
 import 'package:google_play/features/product/presentation/screens/product_page_sections/product_page_sections.dart';
 import 'package:google_play/features/product/presentation/screens/product_screen_tags.dart';
-import 'package:google_play/presentation/widgets/app_bars/app_bar/simple_app_bar.dart';
-import 'package:google_play/presentation/widgets/popup_menu/product_popup_menu.dart';
+import 'package:google_play/features/shared/presentation/widgets/components/app_bars/simple_app_bar.dart';
+import 'package:google_play/features/shared/presentation/widgets/components/popups/product_popup_menu.dart';
 
 // Экран страницы продукта
 class ProductPageScreen extends StatelessWidget {

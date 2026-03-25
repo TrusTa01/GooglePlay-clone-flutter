@@ -1,4 +1,4 @@
-import 'package:google_play/domain/entities/base_entity.dart';
+import 'package:google_play/core/domain/entities/base_entity.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/tab_config_entity.dart';
 import 'package:google_play/features/banners/domain/repositories/banner_repository.dart';

@@ -3,8 +3,8 @@ import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
-import 'package:google_play/presentation/widgets/custom_show_dialog.dart';
-import 'package:google_play/presentation/widgets/sliders/utils/product_card_components.dart';
+import 'package:google_play/features/shared/presentation/widgets/components/feedback/error/custom_show_dialog.dart';
+import 'package:google_play/features/shared/presentation/widgets/product_widgets/elements/product_card_components.dart';
 
 class ProductPageRatingRow extends StatelessWidget {
   final ProductState state;

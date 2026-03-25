@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_card_ui_model.dart';
-import 'package:google_play/presentation/widgets/buttons/text_button.dart';
-import 'package:google_play/presentation/widgets/sliders/product_carousel/product_carousel_section.dart';
+import 'package:google_play/features/shared/presentation/widgets/ui_kits/buttons/text_button.dart';
+import 'package:google_play/features/shared/presentation/widgets/product_widgets/sections/product_carousel_section.dart';
 
 class ProductPageSimilarAndFooter extends StatelessWidget {
   final String sectionTitle;

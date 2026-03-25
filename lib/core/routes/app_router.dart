@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/routes/app_routes_names.dart';
-import 'package:google_play/domain/entities/store/store_type.dart';
+import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/core/layouts/main_layout.dart';
-import 'package:google_play/presentation/screens/screens.dart';
-import 'package:google_play/presentation/widgets/full_screen_image.dart';
+import 'package:google_play/features/shared/presentation/screens/full_screen_image.dart';
+import 'package:google_play/features/shared/presentation/screens/route_screens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'app_router.g.dart';
