@@ -25,9 +25,9 @@ export 'kids/kids_details_screen.dart';
 export 'events/product_event_screen.dart';
 
 // Product
-export 'product/product_details_screen.dart';
-export 'product/product_screen.dart';
-export 'product/product_permissions_screen.dart';
-export 'product/product_about_author_screen.dart';
-export 'product/product_screen_tags.dart';
-export 'product/product_page_sections/product_page_sections.dart';
+export '../../features/product/presentation/screens/product_details_screen.dart';
+export '../../features/product/presentation/screens/product_screen.dart';
+export '../../features/product/presentation/screens/product_permissions_screen.dart';
+export '../../features/product/presentation/screens/product_about_author_screen.dart';
+export '../../features/product/presentation/screens/product_screen_tags.dart';
+export '../../features/product/presentation/screens/product_page_sections/product_page_sections.dart';

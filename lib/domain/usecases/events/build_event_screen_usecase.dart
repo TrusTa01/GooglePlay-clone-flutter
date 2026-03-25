@@ -1,7 +1,7 @@
-import 'package:google_play/domain/entities/banners/simple_banner_entity.dart';
-import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
+import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
+import 'package:google_play/features/banners/domain/entities/simple_banner_entity.dart';
 
-/// Формирует доменную модель event-экрана из уже загруженных данных
+// Формирует доменную модель event-экрана из уже загруженных данных
 class BuildEventScreenUseCase {
   const BuildEventScreenUseCase();
 

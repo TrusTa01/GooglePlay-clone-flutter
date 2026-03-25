@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/shimmers/product_slider_skeleton.dart';
-import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
+import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
 import 'package:google_play/presentation/widgets/sections/section_widget_builder.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

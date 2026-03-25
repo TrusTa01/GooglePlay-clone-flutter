@@ -1,0 +1,56 @@
+import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/action_row_ui_model.dart';
+
+class ActionRowUiMapper {
+  const ActionRowUiMapper();
+
+  ActionRowUiModel fromStateGrid(ProductState state) {
+    return ActionRowUiModel(
+      id: state.productId,
+      title: state.title,
+      creator: state.creator,
+      ageLabel: state.ageRating ?? '',
+      tags: state.tags,
+      thumbnailUrl: state.iconUrl,
+      thumbnailBorderRadius: state.smallBorderRadius,
+      thumbnailWidth: state.smallIconWidth,
+      thumbnailHeight: state.smallIconHeight,
+      thumbnailCacheWidth: state.smallCacheWidth,
+      thumbnailCacheHeight: state.smallCacheHeight,
+      thumbnailFit: state.thumbnailFit,
+      ratingText: state.rating.toStringAsFixed(1),
+      technicalInfoText: state.technicalInfoFormatted,
+      eventText: state.eventText,
+      priceText: state.price.isNotEmpty ? state.price : null,
+      isPaid: state.isPaid,
+      isBook: state.isBook,
+      containsPaidContent: state.containsPaidContent,
+      showThreeLines: true,
+    );
+  }
+
+  ActionRowUiModel fromStatePreview(ProductState state) {
+    return ActionRowUiModel(
+      id: state.productId,
+      title: state.title,
+      creator: state.creator,
+      ageLabel: state.ageRating ?? '',
+      tags: state.tags,
+      thumbnailUrl: state.iconUrl,
+      thumbnailBorderRadius: state.smallBorderRadius,
+      thumbnailWidth: state.smallIconWidth,
+      thumbnailHeight: state.smallIconHeight,
+      thumbnailCacheWidth: state.smallCacheWidth,
+      thumbnailCacheHeight: state.smallCacheHeight,
+      thumbnailFit: state.thumbnailFit,
+      ratingText: state.rating.toStringAsFixed(1),
+      technicalInfoText: state.technicalInfoFormatted,
+      eventText: state.eventText,
+      priceText: state.price.isNotEmpty ? state.price : null,
+      isPaid: state.isPaid,
+      isBook: state.isBook,
+      containsPaidContent: state.containsPaidContent,
+      showThreeLines: false,
+    );
+  }
+}

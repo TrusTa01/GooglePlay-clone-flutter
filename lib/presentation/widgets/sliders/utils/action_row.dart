@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/presentation/viewmodels/product/ui_models/action_row_ui_model.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/action_row_ui_model.dart';
 import 'package:google_play/presentation/widgets/buttons/elevated_button.dart';
 import 'package:google_play/presentation/widgets/sliders/utils/product_card_components.dart';
 

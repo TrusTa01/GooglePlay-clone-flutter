@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/routes/app_routes_names.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
-import 'package:google_play/presentation/layouts/main_layout.dart';
+import 'package:google_play/core/layouts/main_layout.dart';
 import 'package:google_play/presentation/screens/screens.dart';
 import 'package:google_play/presentation/widgets/full_screen_image.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

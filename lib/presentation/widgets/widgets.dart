@@ -70,4 +70,4 @@ export 'filters/selection_modal.dart';
 export 'filters/filter_factory.dart';
 
 // Sections 
-export 'package:google_play/presentation/widgets/sections/section_widget_builder.dart';
+export 'sections/section_widget_builder.dart';

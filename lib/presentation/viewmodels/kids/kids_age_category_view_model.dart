@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
-import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
+import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
 import 'package:google_play/di/usecase_providers.dart';
 
 part 'kids_age_category_view_model.g.dart';

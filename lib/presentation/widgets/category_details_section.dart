@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
-import 'package:google_play/presentation/viewmodels/product/ui_models/category_item_ui_model.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/category_item_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class CategoryDetailsSection extends StatelessWidget {

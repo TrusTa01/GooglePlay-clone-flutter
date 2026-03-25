@@ -1,4 +1,4 @@
-import 'package:google_play/presentation/viewmodels/sections/section_payload.dart';
+import 'package:google_play/features/sections/presentation/viewmodels/section_payload.dart';
 
 class EventSectionUiModel {
   final String id;

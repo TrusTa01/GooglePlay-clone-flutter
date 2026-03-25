@@ -6,7 +6,7 @@ import 'package:google_play/presentation/screens/common/error_screen.dart';
 import 'package:google_play/presentation/viewmodels/events/product_event_state.dart';
 import 'package:google_play/presentation/viewmodels/events/product_event_view_model.dart';
 import 'package:google_play/presentation/viewmodels/events/ui_models/event_section_ui_model.dart';
-import 'package:google_play/presentation/viewmodels/sections/section_payload.dart';
+import 'package:google_play/features/sections/presentation/viewmodels/section_payload.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

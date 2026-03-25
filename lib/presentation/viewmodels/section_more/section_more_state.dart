@@ -1,5 +1,5 @@
-import 'package:google_play/presentation/viewmodels/product/ui_models/category_item_ui_model.dart';
-import 'package:google_play/presentation/viewmodels/product/ui_models/product_preview_section_ui_model.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/category_item_ui_model.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_preview_section_ui_model.dart';
 
 class SectionMoreState {
   final String title;

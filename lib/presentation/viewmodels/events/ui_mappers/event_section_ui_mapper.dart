@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
-import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
+import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
 import 'package:google_play/presentation/viewmodels/events/ui_models/event_section_ui_model.dart';
-import 'package:google_play/presentation/viewmodels/sections/ui_mappers/section_payload_mapper.dart';
+import 'package:google_play/features/sections/presentation/viewmodels/ui_mappers/section_payload_mapper.dart';
 
 class EventSectionUiMapper {
   const EventSectionUiMapper();

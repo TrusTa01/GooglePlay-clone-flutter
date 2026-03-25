@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/di/usecase_providers.dart';
-import 'package:google_play/domain/entities/banners/simple_banner_entity.dart';
+import 'package:google_play/features/banners/domain/entities/simple_banner_entity.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
 import 'package:google_play/presentation/viewmodels/events/product_event_state.dart';
 import 'package:google_play/presentation/viewmodels/events/ui_mappers/event_section_ui_mapper.dart';
-import 'package:google_play/presentation/viewmodels/product/ui_mappers/event_hero_banner_mapper.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/event_hero_banner_mapper.dart';
 import 'package:google_play/presentation/viewmodels/providers/locale_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

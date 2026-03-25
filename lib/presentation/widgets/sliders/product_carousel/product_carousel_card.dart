@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/presentation/viewmodels/product/ui_models/product_card_ui_model.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_card_ui_model.dart';
 import 'package:google_play/presentation/widgets/widgets.dart';
 
 class ProductCarouselCard extends StatelessWidget {

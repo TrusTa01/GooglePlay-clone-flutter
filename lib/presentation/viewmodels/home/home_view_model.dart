@@ -1,8 +1,8 @@
 import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/domain/entities/store/store_type.dart';
-import 'package:google_play/domain/usecases/products/load_products_usecase.dart';
-import 'package:google_play/domain/usecases/sections/resolve_section_usecase.dart';
-import 'package:google_play/domain/usecases/tabs/get_tab_sections_usecase.dart';
+import 'package:google_play/features/product/domain/usecases/load_products_usecase.dart';
+import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
+import 'package:google_play/features/tabs/domain/usecases/get_tab_sections_usecase.dart';
 import 'package:google_play/presentation/viewmodels/home/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
