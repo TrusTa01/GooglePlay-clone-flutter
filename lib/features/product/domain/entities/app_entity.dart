@@ -3,7 +3,7 @@ import 'package:google_play/features/product/domain/entities/software_entity.dar
 final class AppEntity extends SoftwareEntity {
   final String packageName;
 
-  AppEntity({
+  const AppEntity({
     required super.type,
     required super.id,
     required super.title,
@@ -35,15 +35,8 @@ final class AppEntity extends SoftwareEntity {
     required super.isKidsFriendly,
     required super.ageRatingReasons,
     required super.permissions,
-    required super.websiteUrl,
-    required super.emailSupport,
-    required super.privacyPolicyUrl,
-    required super.developerCompany,
-    required super.developerAddress,
-    required super.developerCity,
-    required super.developerCountry,
-    required super.developerPhone,
     super.supportedLanguages,
+    required super.developer,
     required this.packageName,
   });
 }

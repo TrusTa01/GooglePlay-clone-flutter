@@ -1,3 +1,4 @@
+import 'package:google_play/features/product/domain/entities/developer_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 
 abstract class SoftwareEntity extends ProductEntity {
@@ -14,15 +15,8 @@ abstract class SoftwareEntity extends ProductEntity {
   final bool isKidsFriendly;
   final List<String> ageRatingReasons;
   final List<String> permissions;
-  final String websiteUrl;
-  final String emailSupport;
-  final String privacyPolicyUrl;
-  final String developerCompany;
-  final String developerAddress;
-  final String developerCity;
-  final String developerCountry;
-  final String developerPhone;
   final List<String> supportedLanguages;
+  final DeveloperEntity developer;
 
   const SoftwareEntity({
     required super.type,
@@ -56,15 +50,8 @@ abstract class SoftwareEntity extends ProductEntity {
     required this.isKidsFriendly,
     required this.ageRatingReasons,
     required this.permissions,
-    required this.websiteUrl,
-    required this.emailSupport,
-    required this.privacyPolicyUrl,
-    required this.developerCompany,
-    required this.developerAddress,
-    required this.developerCity,
-    required this.developerCountry,
-    required this.developerPhone,
     this.supportedLanguages = const [],
+    required this.developer,
   });
 
   @override

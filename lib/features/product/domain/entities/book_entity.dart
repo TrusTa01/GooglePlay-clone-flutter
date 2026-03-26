@@ -16,7 +16,7 @@ final class BookEntity extends ProductEntity {
   final DateTime publicationDate; // Дата публикации
   final List<String> awards; // Награды
 
-  BookEntity({
+  const BookEntity({
     required super.type,
     required super.id,
     required super.title,
@@ -35,7 +35,7 @@ final class BookEntity extends ProductEntity {
     required super.url,
     required super.tags,
     required super.categories,
-    required this.pageCount, // int, форматирование — на уровне Presentation
+    required this.pageCount,
     required this.publisher,
     required this.language,
     required this.format,
@@ -54,7 +54,7 @@ final class BookEntity extends ProductEntity {
   /// Жанры книги (то же, что [ProductEntity.categories]; алиас для ясности в контексте книг)
   List<String> get genres => categories;
 
-  /// Электронная книга (не аудио).
+  /// Электронная книга (не аудио)
   bool get isEbook => !format.toLowerCase().contains('аудио');
 
   @override

@@ -1,4 +1,5 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/features/product/data/mappers/developer_mapper.dart';
 import 'package:google_play/features/product/data/models/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/app_entity.dart';
 
@@ -8,7 +9,7 @@ extension AppMapper on AppDto {
       type: type,
       id: id,
       title: title.display(locale),
-      creator: creator.display(locale),
+      creator: developerCompany.display(locale),
       shortDescription: shortDescription.display(locale),
       description: description.display(locale),
       releaseDate: releaseDate,
@@ -36,15 +37,8 @@ extension AppMapper on AppDto {
       isKidsFriendly: isKidsFriendly,
       ageRatingReasons: ageRatingReasons.map((r) => r.display(locale)).toList(),
       permissions: permissions.map((p) => p.display(locale)).toList(),
-      websiteUrl: websiteUrl,
-      emailSupport: emailSupport,
-      privacyPolicyUrl: privacyPolicyUrl,
-      developerCompany: developerCompany.display(locale),
-      developerAddress: developerAddress.display(locale),
-      developerCity: developerCity.display(locale),
-      developerCountry: developerCountry.display(locale),
-      developerPhone: developerPhone,
       supportedLanguages: supportedLanguages,
+      developer: toDeveloperEntity(locale),
       packageName: packageName,
     );
   }

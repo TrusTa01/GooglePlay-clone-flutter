@@ -91,8 +91,8 @@ Future<void> runGames(int count) async {
       )..shuffle()).take(genreCount).toList();
     }
 
-    final String creatorName =
-        '${faker.person.firstName()} ${faker.person.lastName()}';
+    // Выбираем случайный индекс разработчика до использования в creator
+    final int devIndex = random.nextInt(developerCompanies.length);
 
     // Логика цены (10% шанс, что isPaid будет true)
     // Генерируем число от 0 до 99. Если оно < 10, то это 10% шанс.
@@ -203,14 +203,14 @@ Future<void> runGames(int count) async {
       languages,
     )..shuffle()).take(langCount).toList();
 
-    // Выбираем случайный индекс разработчика (одинаковый для всех полей)
-    final int devIndex = random.nextInt(developerCompanies.length);
-
     final gameData = {
       "type": "game",
       "id": id,
       "title": _loc(generatedTitleEn, generatedTitleRu),
-      "creator": _loc(creatorName, creatorName),
+      "creator": _loc(
+        developerCompanies[devIndex],
+        developerCompanies[devIndex],
+      ),
       "rating": faker.randomGenerator.integer(50) / 10.0,
       "iconUrl": localIcon,
       "isPaid": isPaid,

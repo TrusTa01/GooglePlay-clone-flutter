@@ -60,12 +60,21 @@ double _genDiscountPrice(Random r, double price) {
 
 List<String> _pickAgeRatingReasonsByAge(Random random, int ageRating) {
   if (ageRating <= 6) {
-    const kidsSafe = ['Страх', 'Внутриигровые покупки', 'Взаимодействие пользователей'];
+    const kidsSafe = [
+      'Страх',
+      'Внутриигровые покупки',
+      'Взаимодействие пользователей',
+    ];
     final count = random.nextInt(2) + 1;
     return (List<String>.from(kidsSafe)..shuffle()).take(count).toList();
   }
   if (ageRating <= 9) {
-    const mild = ['Страх', 'Сквернословие', 'Внутриигровые покупки', 'Взаимодействие пользователей'];
+    const mild = [
+      'Страх',
+      'Сквернословие',
+      'Внутриигровые покупки',
+      'Взаимодействие пользователей',
+    ];
     final count = random.nextInt(2) + 1;
     return (List<String>.from(mild)..shuffle()).take(count).toList();
   }
@@ -281,9 +290,8 @@ Future<void> runApps(int count) async {
     final String appName = suffixEn.toLowerCase().replaceAll(' ', '');
     final String packageName = 'com.$company.$appName';
 
-    // Creator name
-    final String creatorName =
-        '${faker.person.firstName()} ${faker.person.lastName()}';
+    // Выбираем случайный индекс разработчика до использования в creator
+    final int devIndex = random.nextInt(developerCompanies.length);
 
     // store-like rating + downloads + reviews
     final double rating = _genSkewedRating(random);
@@ -377,9 +385,9 @@ Future<void> runApps(int count) async {
     }).join('\n\n');
 
     final creatorDescriptionRu =
-        '$creatorName — команда, которая постоянно улучшает {category} и делает приложение удобнее.';
+        '${developerCompanies[devIndex]} — команда, которая постоянно улучшает {category} и делает приложение удобнее.';
     final creatorDescriptionEn =
-        '$creatorName — a team focused on improving {category} and delivering a better experience.';
+        '${developerCompanies[devIndex]} — a team focused on improving {category} and delivering a better experience.';
 
     final String creatorDescriptionLocalizedRu = creatorDescriptionRu
         .replaceAll('{category}', primaryCategoryRu);
@@ -426,14 +434,14 @@ Future<void> runApps(int count) async {
       whatsNewRuOptions[random.nextInt(whatsNewRuOptions.length)],
     );
 
-    // Выбираем случайный индекс разработчика (одинаковый для всех полей)
-    final int devIndex = random.nextInt(developerCompanies.length);
-
     final appData = {
       "type": "app",
       "id": id,
       "title": _loc(generatedTitleEn, generatedTitleRu),
-      "creator": _loc(creatorName, creatorName),
+      "creator": _loc(
+        developerCompanies[devIndex],
+        developerCompanies[devIndex],
+      ),
       "rating": rating,
       "iconUrl": localIcon,
       "isPaid": isPaid,

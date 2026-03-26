@@ -267,49 +267,49 @@ class ProductStateMapper {
           type: SupportItemDataType.link,
           iconCodePoint: Icons.language.codePoint,
           title: l10n.supportWebsite,
-          url: software.websiteUrl,
+          url: software.developer.websiteUrl,
         ),
         SupportItemData(
           type: SupportItemDataType.link,
           iconCodePoint: Icons.email_outlined.codePoint,
           title: l10n.supportEmail,
-          subtitle: software.emailSupport,
-          url: 'mailto:${software.emailSupport}',
+          subtitle: software.developer.emailSupport,
+          url: 'mailto:${software.developer.emailSupport}',
         ),
         SupportItemData(
           type: SupportItemDataType.link,
           iconCodePoint: Icons.shield_outlined.codePoint,
           title: l10n.supportPrivacy,
-          url: software.privacyPolicyUrl,
+          url: software.developer.privacyPolicyUrl,
         ),
         SupportItemData(
           type: SupportItemDataType.sectionHeader,
           title: l10n.supportAboutDeveloper,
         ),
-        if (software.developerCompany.isNotEmpty)
+        if (software.developer.company.isNotEmpty)
           SupportItemData(
             type: SupportItemDataType.infoText,
-            title: software.developerCompany,
+            title: software.developer.company,
           ),
-        if (software.developerAddress.isNotEmpty)
+        if (software.developer.address.isNotEmpty)
           SupportItemData(
             type: SupportItemDataType.infoText,
-            title: software.developerAddress,
+            title: software.developer.address,
           ),
-        if (software.developerCity.isNotEmpty)
+        if (software.developer.city.isNotEmpty)
           SupportItemData(
             type: SupportItemDataType.infoText,
-            title: software.developerCity,
+            title: software.developer.city,
           ),
-        if (software.developerCountry.isNotEmpty)
+        if (software.developer.country.isNotEmpty)
           SupportItemData(
             type: SupportItemDataType.infoText,
-            title: software.developerCountry,
+            title: software.developer.country,
           ),
-        if (software.developerPhone.isNotEmpty)
+        if (software.developer.phone.isNotEmpty)
           SupportItemData(
             type: SupportItemDataType.infoText,
-            title: software.developerPhone,
+            title: software.developer.phone,
           ),
       ];
       return (SupportSectionType.appSupport, items);
