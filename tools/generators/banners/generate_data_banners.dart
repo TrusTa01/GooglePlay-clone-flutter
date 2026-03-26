@@ -9,8 +9,6 @@ import 'package:faker/faker.dart';
 
 import 'banners_text_data.dart';
 
-Map<String, String> _loc(String en, String ru) => {'en': en, 'ru': ru};
-
 String _readRuString(dynamic value) {
   if (value is String) return value;
   if (value is Map) {
@@ -25,6 +23,46 @@ String _translateTitleToEn(String ruTitle, Faker faker) {
       faker.lorem.words(2 + Random().nextInt(2)).join(' ');
 }
 
+List<Map<String, dynamic>> _defaultBannerTemplates() {
+  return [
+    {
+      'type': 'simple',
+      'imageAssetPath': 'assets/images/banners/banner_1.webp',
+      'title': 'Рекомендуем',
+      'topToolTipText': 'Новинка',
+      'description': 'Подборка лучших предложений для вас',
+    },
+    {
+      'type': 'action',
+      'imageAssetPath': 'assets/images/banners/banner_2.webp',
+      'title': 'Скидки на приложения',
+      'topToolTipText': 'Акция',
+      'description': 'Популярные приложения по сниженной цене',
+      'productId': 'a_1',
+    },
+  ];
+}
+
+List<Map<String, dynamic>> _decodeSourceSafely(String sourceJson) {
+  if (sourceJson.trim().isEmpty) {
+    return _defaultBannerTemplates();
+  }
+
+  try {
+    final dynamic parsed = jsonDecode(sourceJson);
+    if (parsed is! List) return _defaultBannerTemplates();
+
+    final List<Map<String, dynamic>> templates = parsed
+        .whereType<Map>()
+        .map((item) => Map<String, dynamic>.from(item))
+        .toList();
+
+    return templates.isEmpty ? _defaultBannerTemplates() : templates;
+  } on FormatException {
+    return _defaultBannerTemplates();
+  }
+}
+
 Future<void> runBanners(int count) async {
   final faker = Faker();
   final random = Random();
@@ -35,11 +73,7 @@ Future<void> runBanners(int count) async {
   }
 
   final String sourceJson = await sourceFile.readAsString();
-  final List<dynamic> decoded = jsonDecode(sourceJson);
-  final List<Map<String, dynamic>> source = decoded
-      .whereType<Map>()
-      .map((item) => Map<String, dynamic>.from(item))
-      .toList();
+  final List<Map<String, dynamic>> source = _decodeSourceSafely(sourceJson);
 
   if (source.isEmpty) {
     throw Exception('Source banners list is empty: ${sourceFile.path}');
@@ -62,30 +96,30 @@ Future<void> runBanners(int count) async {
 
     final String titleRu = _readRuString(template['title']);
     if (titleRu.isNotEmpty) {
-      banner['title'] = _loc(_translateTitleToEn(titleRu, faker), titleRu);
+      banner['title'] = titleRu;
+    } else {
+      banner['title'] = _translateTitleToEn('promo', faker);
     }
 
     final String descriptionRu = _readRuString(template['description']);
     if (descriptionRu.isNotEmpty) {
-      banner['description'] = _loc(faker.lorem.sentence(), descriptionRu);
+      banner['description'] = descriptionRu;
+    } else {
+      banner['description'] = faker.lorem.sentence();
     }
 
     final String eventDescriptionRu = _readRuString(
       template['eventDescription'],
     );
     if (eventDescriptionRu.isNotEmpty) {
-      banner['eventDescription'] = _loc(
-        faker.lorem.sentence(),
-        eventDescriptionRu,
-      );
+      banner['eventDescription'] = eventDescriptionRu;
     }
 
     final String tooltipRu = _readRuString(template['topToolTipText']);
     if (tooltipRu.isNotEmpty) {
-      banner['topToolTipText'] = _loc(
-        tooltipEnByRu[tooltipRu] ?? faker.lorem.word(),
-        tooltipRu,
-      );
+      banner['topToolTipText'] = tooltipRu;
+    } else {
+      banner['topToolTipText'] = tooltipEnByRu.values.first;
     }
 
     if (imagePool.isNotEmpty) {
@@ -98,7 +132,9 @@ Future<void> runBanners(int count) async {
   await sourceFile.parent.create(recursive: true);
   await sourceFile.writeAsString(jsonEncode(banners));
 
-  print('Successfully generated ${banners.length} banner objects to ${sourceFile.path}\n');
+  print(
+    'Successfully generated ${banners.length} banner objects to ${sourceFile.path}\n',
+  );
 }
 
 Future<void> main(List<String> args) async {

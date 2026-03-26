@@ -25,7 +25,7 @@ dependencies:
   # state management
   hooks_riverpod: ^3.3.1
   flutter_hooks: ^0.21.0
-  
+
   # data
   http: ^1.6.0
   json_annotation: ^4.8.1
@@ -36,7 +36,7 @@ dependencies:
   supabase: ^2.10.3
   supabase_flutter: ^2.12.1
   dotenv: ^4.2.0
-  
+
   # localization
   flutter_localizations:
     sdk: flutter
@@ -59,26 +59,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
-
-  assets:
-    # images
-    - assets/images/
-    - assets/images/games_screenshots/
-    - assets/images/apps_screenshots/
-    - assets/images/kids_tab/
-    - assets/images/notifications/
-    - assets/images/banners/
-
-    # icons
-    - assets/icons/
-    - assets/icons/apps_icons/
-    - assets/icons/books_icons/
-    - assets/icons/nav_bar_icons/
-    - assets/icons/games_icons/
-
-    # data
-    - assets/data/
-    - assets/config/
 
   fonts:
     - family: Nunito
