@@ -623,6 +623,36 @@ const List<String> ageRatingReasonsEn = [
 
 const List<String> modes = ['Single-player', 'Multiplayer', 'Co-op'];
 
+const List<String> achievementTitlesRu = [
+  'Первый шаг',
+  'Без единой ошибки',
+  'Мастер комбо',
+  'Босс повержен',
+  'Легендарная победа',
+  'Исследователь мира',
+  'Скоростное прохождение',
+  'Коллекционер',
+  'Ни шагу назад',
+  'Победа без урона',
+  'Командный игрок',
+  'Серия побед',
+];
+
+const List<String> achievementTitlesEn = [
+  'First Steps',
+  'Flawless Run',
+  'Combo Master',
+  'Boss Defeated',
+  'Legendary Victory',
+  'World Explorer',
+  'Speedrun',
+  'Collector',
+  'No Retreat',
+  'No-Damage Win',
+  'Team Player',
+  'Win Streak',
+];
+
 // Данные разработчиков игр
 const List<String> developerCompanies = [
   'Rockstar Games, Inc.',
@@ -868,4 +898,9 @@ final Map<String, String> gameTagsRuByEn = {
 
 final Map<String, String> kidsTagsRuByKey = {
   for (int i = 0; i < kidsTags.length; i++) kidsTags[i]: kidsTagsRu[i],
+};
+
+final Map<String, String> achievementTitlesEnByRu = {
+  for (int i = 0; i < achievementTitlesRu.length; i++)
+    achievementTitlesRu[i]: achievementTitlesEn[i],
 };

@@ -13,7 +13,10 @@ class JsonProductRepository implements IProductRepository {
   const JsonProductRepository(this._dataSource);
 
   @override
-  Future<List<ProductEntity>> getProducts({required String type}) async {
+  Future<List<ProductEntity>> getProducts({
+    required String type,
+    required String locale,
+  }) async {
     // Определяем файл по типу
     final fileName = switch (type) {
       'game' => 'games.json',
@@ -25,29 +28,35 @@ class JsonProductRepository implements IProductRepository {
     final dtos = await _dataSource.loadProducts(fileName: fileName);
 
     return dtos.map<ProductEntity>((dto) {
-      if (dto is GameDto) return dto.toEntity();
-      if (dto is AppDto) return dto.toEntity();
-      if (dto is BookDto) return dto.toEntity();
+      if (dto is GameDto) return dto.toEntity(locale);
+      if (dto is AppDto) return dto.toEntity(locale);
+      if (dto is BookDto) return dto.toEntity(locale);
       throw Exception('Mapping error');
     }).toList();
   }
 
   @override
-  Future<ProductEntity?> getProductById(String id) async {
+  Future<ProductEntity?> getProductById(
+    String id, {
+    required String locale,
+  }) async {
     final dto = _dataSource.getProductById(id);
     // TODO: [cache] Реализовать проверку инициализации кэша
     // Если кэш пуст, вызвать загрузку соответствующих файлов перед поиском
     if (dto == null) return null;
 
     // Мапим в зависимости от того, что пришло
-    if (dto is GameDto) return dto.toEntity();
-    if (dto is AppDto) return dto.toEntity();
-    if (dto is BookDto) return dto.toEntity();
+    if (dto is GameDto) return dto.toEntity(locale);
+    if (dto is AppDto) return dto.toEntity(locale);
+    if (dto is BookDto) return dto.toEntity(locale);
     return null;
   }
 
   @override
-  Future<List<ProductEntity>> getSimilarProducts(ProductEntity product) async {
+  Future<List<ProductEntity>> getSimilarProducts(
+    ProductEntity product,
+    String locale,
+  ) async {
     // Получаем все загруженные продукты из DataSource
     final allDtos = _dataSource.getAllCachedDtos<ProductDto>();
 
@@ -65,9 +74,9 @@ class JsonProductRepository implements IProductRepository {
 
     // Мапим результат в Entity
     return similarDtos.map((dto) {
-      if (dto is GameDto) return dto.toEntity();
-      if (dto is AppDto) return dto.toEntity();
-      if (dto is BookDto) return dto.toEntity();
+      if (dto is GameDto) return dto.toEntity(locale);
+      if (dto is AppDto) return dto.toEntity(locale);
+      if (dto is BookDto) return dto.toEntity(locale);
       throw Exception('Unknown DTO type');
     }).toList();
   }
@@ -76,8 +85,9 @@ class JsonProductRepository implements IProductRepository {
   Future<List<ProductEntity>> getProductsByFilters({
     required List<ProductFilter> filters,
     required String categoryType,
+    required String locale,
   }) async {
-    final allProducts = await getProducts(type: categoryType);
+    final allProducts = await getProducts(type: categoryType, locale: locale);
 
     return allProducts.where((product) {
       return filters.every((filter) {

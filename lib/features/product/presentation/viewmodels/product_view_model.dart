@@ -22,12 +22,16 @@ class ProductViewModel extends _$ProductViewModel {
 
   Future<void> loadById(String id) async {
     final locale =
-        ref.read(localeProvider) ?? WidgetsBinding.instance.platformDispatcher.locale;
+        ref.read(localeProvider) ??
+        WidgetsBinding.instance.platformDispatcher.locale;
     final l10n = lookupAppLocalizations(locale);
 
     state = state.copyWith(isLoading: true, productId: id, errorMessage: null);
 
-    final product = await _getProductByIdUseCase(id);
+    final product = await _getProductByIdUseCase(
+      id: id,
+      locale: locale.languageCode,
+    );
 
     if (product == null) {
       state = state.copyWith(

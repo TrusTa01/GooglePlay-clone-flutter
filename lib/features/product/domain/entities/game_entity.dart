@@ -1,7 +1,7 @@
 import 'package:google_play/features/product/domain/entities/software_entity.dart';
 
 final class GameEntity extends SoftwareEntity {
-  final bool hasAchievements;
+  final List<String> achievements;
 
   GameEntity({
     required super.type,
@@ -42,6 +42,6 @@ final class GameEntity extends SoftwareEntity {
     required super.developerCity,
     required super.developerCountry,
     required super.developerPhone,
-    this.hasAchievements = false,
+    this.achievements = const [],
   });
 }

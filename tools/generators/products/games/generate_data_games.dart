@@ -185,6 +185,12 @@ Future<void> runGames(int count) async {
       )..shuffle()).take(tagCount).toList();
     }
 
+    // Ачивки (0..6, чтобы часть игр была без достижений)
+    final int achievementCount = random.nextInt(7);
+    final List<String> selectedAchievementsRu = (List<String>.from(
+      achievementTitlesRu,
+    )..shuffle()).take(achievementCount).toList();
+
     // Причины возрастного рейтинга (от 1 до 3)
     final int reasonCount = random.nextInt(3) + 1;
     final List<String> selectedAgeRatingReasons = (List<String>.from(
@@ -262,7 +268,14 @@ Future<void> runGames(int count) async {
       }).toList(),
       "isOnline": faker.randomGenerator.boolean(),
       "hasMultiplayer": faker.randomGenerator.boolean(),
-      "hasAchievements": faker.randomGenerator.boolean(),
+      "achievements": selectedAchievementsRu
+          .map(
+            (achievementRu) => _loc(
+              achievementTitlesEnByRu[achievementRu] ?? achievementRu,
+              achievementRu,
+            ),
+          )
+          .toList(),
       "gameModes": faker.randomGenerator.element(modes),
       "hasControllerSupport": faker.randomGenerator.boolean(),
       // Информация о разработчике

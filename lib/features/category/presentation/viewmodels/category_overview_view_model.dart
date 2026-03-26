@@ -20,7 +20,10 @@ class CategoryOverviewArgs {
   final String categoryKey;
   final StoreType storeType;
 
-  const CategoryOverviewArgs({required this.categoryKey, required this.storeType});
+  const CategoryOverviewArgs({
+    required this.categoryKey,
+    required this.storeType,
+  });
 
   @override
   bool operator ==(Object other) =>
@@ -39,13 +42,16 @@ Future<CategoryOverviewState> categoryOverviewViewModel(
   Ref ref,
   CategoryOverviewArgs args,
 ) async {
+  final locale =
+      ref.read(localeProvider) ??
+      WidgetsBinding.instance.platformDispatcher.locale;
   final loadProducts = ref.read(loadProductsUseCaseProvider);
-  final allProducts = await loadProducts(type: args.storeType.categoryKey);
+  final allProducts = await loadProducts(
+    type: args.storeType.categoryKey,
+    locale: locale.languageCode,
+  );
 
   final filtered = _filterProducts(allProducts, args.categoryKey);
-
-  final locale =
-      ref.read(localeProvider) ?? WidgetsBinding.instance.platformDispatcher.locale;
   final l10n = lookupAppLocalizations(locale);
 
   final title = _getCategoryTitle(args.categoryKey, args.storeType, l10n);
@@ -53,17 +59,19 @@ Future<CategoryOverviewState> categoryOverviewViewModel(
   final isEmpty = filtered.isEmpty;
   final isGame = !isEmpty && filtered.first is GameEntity;
 
-  final previewModel =
-      isGame ? ProductPreviewSectionUiModel.fromProducts(filtered) : null;
+  final previewModel = isGame
+      ? ProductPreviewSectionUiModel.fromProducts(filtered)
+      : null;
 
   final items = isGame
       ? const <CategoryItemUiModel>[]
       : filtered
-          .map(
-            (product) => ProductStateMapper().fromEntity(product, l10n, locale),
-          )
-          .map(CategoryItemMapper().fromState)
-          .toList(growable: false);
+            .map(
+              (product) =>
+                  ProductStateMapper().fromEntity(product, l10n, locale),
+            )
+            .map(CategoryItemMapper().fromState)
+            .toList(growable: false);
 
   return CategoryOverviewState(
     title: title,
@@ -87,7 +95,11 @@ bool _isAllCategory(String key) {
   return key == 'categoryAll' || key == 'categoryBooksAll';
 }
 
-String _getCategoryTitle(String categoryKey, StoreType type, AppLocalizations l10n) {
+String _getCategoryTitle(
+  String categoryKey,
+  StoreType type,
+  AppLocalizations l10n,
+) {
   List<ProductCategoriesData> dataList;
   switch (type) {
     case StoreType.games:
@@ -101,7 +113,9 @@ String _getCategoryTitle(String categoryKey, StoreType type, AppLocalizations l1
       break;
   }
 
-  final category = dataList.where((c) => c.titleL10nKey == categoryKey || c.title == categoryKey).firstOrNull;
+  final category = dataList
+      .where((c) => c.titleL10nKey == categoryKey || c.title == categoryKey)
+      .firstOrNull;
   if (category != null) {
     if (category.titleL10nKey != null) {
       return lookupL10n(l10n, category.titleL10nKey!);

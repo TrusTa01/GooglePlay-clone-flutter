@@ -84,10 +84,16 @@ class ProductLocalDatasource {
   }
 
   // Методы доступа для репозитория
-  ProductDto? getProductById(String id) =>
-      _allProductsById.values as ProductDto;
-      
-  BannerDto? getBannerById(String id) => _bannersCache.values as BannerDto;
+  ProductDto? getProductById(String id) => _allProductsById[id];
+
+  BannerDto? getBannerById(String id) {
+    for (final banners in _bannersCache.values) {
+      for (final banner in banners) {
+        if (banner.id == id) return banner;
+      }
+    }
+    return null;
+  }
 
   // Получить все закэшированные объекты определенного типа
   List<T> getAllCachedDtos<T>() {

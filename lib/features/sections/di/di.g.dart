@@ -150,4 +150,4 @@ final class ResolveSectionUseCaseProvider
 }
 
 String _$resolveSectionUseCaseHash() =>
-    r'fcf903ca649710fdfd3e030b4095ae9f17329372';
+    r'c330178ce20feaf45f34077c35de0deef7105b03';

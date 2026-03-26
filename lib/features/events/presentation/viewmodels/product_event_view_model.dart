@@ -53,7 +53,13 @@ class ProductEventViewModel extends _$ProductEventViewModel {
       // 3. Резолвим секции (загружаем данные для каждой секции)
       final resolveSection = ref.read(resolveSectionUseCaseProvider);
       final resolvedSections = await Future.wait(
-        sections.map((s) => resolveSection(s, storeType.name)),
+        sections.map(
+          (s) => resolveSection(
+            s,
+            storeType.name,
+            locale.languageCode,
+          ),
+        ),
       );
 
       // 4. Формируем финальную модель через UseCase (санитизация)

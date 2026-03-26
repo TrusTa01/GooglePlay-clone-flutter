@@ -1,15 +1,16 @@
+import 'package:google_play/core/extensions/localized_str_ext.dart';
 import 'package:google_play/features/product/data/models/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/game_entity.dart';
 
 extension GameMapper on GameDto {
-  GameEntity toEntity() {
+  GameEntity toEntity(String locale) {
     return GameEntity(
       type: type,
       id: id,
-      title: title,
-      creator: creator,
-      shortDescription: shortDescription,
-      description: description,
+      title: title.display(locale),
+      creator: creator.display(locale),
+      shortDescription: shortDescription.display(locale),
+      description: description.display(locale),
       releaseDate: releaseDate,
       rating: rating,
       reviewsCount: reviewsCount,
@@ -20,8 +21,8 @@ extension GameMapper on GameDto {
       discountPrice: discountPrice,
       creatorDescription: creatorDescription,
       url: url,
-      tags: tags,
-      categories: categories,
+      tags: tags.map((t) => t.display(locale)).toList(),
+      categories: categories.map((c) => c.display(locale)).toList(),
       screenshots: screenshots,
       size: size,
       version: version,
@@ -32,17 +33,17 @@ extension GameMapper on GameDto {
       whatsNewText: whatsNewText,
       lastUpdated: lastUpdated,
       ageRating: ageRating,
-      ageRatingReasons: ageRatingReasons,
-      permissions: permissions,
+      ageRatingReasons: ageRatingReasons.map((a) => a.display(locale)).toList(),
+      permissions: permissions.map((p) => p.display(locale)).toList(),
       websiteUrl: websiteUrl,
       emailSupport: emailSupport,
       privacyPolicyUrl: privacyPolicyUrl,
-      developerCompany: developerCompany,
-      developerAddress: developerAddress,
-      developerCity: developerCity,
-      developerCountry: developerCountry,
+      developerCompany: developerCompany.display(locale),
+      developerAddress: developerAddress.display(locale),
+      developerCity: developerCity.display(locale),
+      developerCountry: developerCountry.display(locale),
       developerPhone: developerPhone,
-      hasAchievements: false, // TODO: [fields] add to GameDto when available
+      achievements: achievements.map((a) => a.display(locale)).toList(),
     );
   }
 }

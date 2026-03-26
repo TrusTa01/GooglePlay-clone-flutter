@@ -9,10 +9,10 @@ part of 'product_dto.dart';
 GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   type: json['type'] as String? ?? 'game',
   id: json['id'] as String,
-  title: json['title'] as String,
-  creator: json['creator'] as String,
-  shortDescription: json['shortDescription'] as String,
-  description: json['description'] as String,
+  title: Map<String, String>.from(json['title'] as Map),
+  creator: Map<String, String>.from(json['creator'] as Map),
+  shortDescription: Map<String, String>.from(json['shortDescription'] as Map),
+  description: Map<String, String>.from(json['description'] as Map),
   rating: (json['rating'] as num).toDouble(),
   reviewsCount: (json['reviewsCount'] as num).toInt(),
   releaseDate: DateTime.parse(json['releaseDate'] as String),
@@ -32,31 +32,40 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   ageRating: (json['ageRating'] as num).toInt(),
   isKidsFriendly: json['isKidsFriendly'] as bool,
   ageRatingReasons: (json['ageRatingReasons'] as List<dynamic>)
-      .map((e) => e as String)
+      .map((e) => Map<String, String>.from(e as Map))
       .toList(),
   permissions: (json['permissions'] as List<dynamic>)
-      .map((e) => e as String)
+      .map((e) => Map<String, String>.from(e as Map))
       .toList(),
   lastUpdated: DateTime.parse(json['lastUpdated'] as String),
   screenshots: (json['screenshots'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
-  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
+  tags: (json['tags'] as List<dynamic>)
+      .map((e) => Map<String, String>.from(e as Map))
+      .toList(),
   websiteUrl: json['websiteUrl'] as String,
   emailSupport: json['emailSupport'] as String,
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
   creatorDescription: json['creatorDescription'] as String,
   url: json['url'] as String,
-  developerCompany: json['developerCompany'] as String,
-  developerAddress: json['developerAddress'] as String,
-  developerCity: json['developerCity'] as String,
-  developerCountry: json['developerCountry'] as String,
+  developerCompany: Map<String, String>.from(json['developerCompany'] as Map),
+  developerAddress: Map<String, String>.from(json['developerAddress'] as Map),
+  developerCity: Map<String, String>.from(json['developerCity'] as Map),
+  developerCountry: Map<String, String>.from(json['developerCountry'] as Map),
   developerPhone: json['developerPhone'] as String,
   categories: (json['gameGenre'] as List<dynamic>)
-      .map((e) => e as String)
+      .map((e) => Map<String, String>.from(e as Map))
       .toList(),
-  minAndroidVersion: json['minAndroidVersion'] as String?,
-  installsRange: json['installsRange'] as String?,
+  isOnline: json['isOnline'] as bool?,
+  hasMultiplayer: json['hasMultiplayer'] as bool?,
+  achievements:
+      (json['achievements'] as List<dynamic>?)
+          ?.map((e) => Map<String, String>.from(e as Map))
+          .toList() ??
+      const <LocalizedString>[],
+  gameModes: json['gameModes'] as String?,
+  hasControllerSupport: json['hasControllerSupport'] as bool?,
 );
 
 Map<String, dynamic> _$GameDtoToJson(GameDto instance) => <String, dynamic>{
@@ -100,17 +109,20 @@ Map<String, dynamic> _$GameDtoToJson(GameDto instance) => <String, dynamic>{
   'developerCountry': instance.developerCountry,
   'developerPhone': instance.developerPhone,
   'gameGenre': instance.categories,
-  'minAndroidVersion': instance.minAndroidVersion,
-  'installsRange': instance.installsRange,
+  'isOnline': instance.isOnline,
+  'hasMultiplayer': instance.hasMultiplayer,
+  'achievements': instance.achievements,
+  'gameModes': instance.gameModes,
+  'hasControllerSupport': instance.hasControllerSupport,
 };
 
 AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
   type: json['type'] as String? ?? 'app',
   id: json['id'] as String,
-  title: json['title'] as String,
-  creator: json['creator'] as String,
-  shortDescription: json['shortDescription'] as String,
-  description: json['description'] as String,
+  title: Map<String, String>.from(json['title'] as Map),
+  creator: Map<String, String>.from(json['creator'] as Map),
+  shortDescription: Map<String, String>.from(json['shortDescription'] as Map),
+  description: Map<String, String>.from(json['description'] as Map),
   rating: (json['rating'] as num).toDouble(),
   reviewsCount: (json['reviewsCount'] as num).toInt(),
   releaseDate: DateTime.parse(json['releaseDate'] as String),
@@ -119,42 +131,50 @@ AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
   price: (json['price'] as num?)?.toDouble(),
   currencyCode: json['currencyCode'] as String? ?? 'USD',
   discountPrice: (json['discountPrice'] as num?)?.toDouble(),
-  technicalInfo: json['technicalInfo'] as String?,
   containsAds: json['containsAds'] as bool,
   containsPaidContent: json['containsPaidContent'] as bool,
   version: json['version'] as String,
   size: json['size'] as String,
-  eventText: json['eventText'] as String?,
-  whatsNewText: json['whatsNewText'] as String,
+  eventText: (json['eventText'] as Map<String, dynamic>?)?.map(
+    (k, e) => MapEntry(k, e as String),
+  ),
+  whatsNewText: Map<String, String>.from(json['whatsNewText'] as Map),
   downloadCount: (json['downloadCount'] as num).toInt(),
   ageRating: (json['ageRating'] as num).toInt(),
   isKidsFriendly: json['isKidsFriendly'] as bool,
   ageRatingReasons: (json['ageRatingReasons'] as List<dynamic>)
-      .map((e) => e as String)
+      .map((e) => Map<String, String>.from(e as Map))
       .toList(),
   permissions: (json['permissions'] as List<dynamic>)
-      .map((e) => e as String)
+      .map((e) => Map<String, String>.from(e as Map))
       .toList(),
   lastUpdated: DateTime.parse(json['lastUpdated'] as String),
   screenshots: (json['screenshots'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
-  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
+  tags: (json['tags'] as List<dynamic>)
+      .map((e) => Map<String, String>.from(e as Map))
+      .toList(),
   websiteUrl: json['websiteUrl'] as String,
   emailSupport: json['emailSupport'] as String,
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
-  creatorDescription: json['creatorDescription'] as String,
+  creatorDescription: Map<String, String>.from(
+    json['creatorDescription'] as Map,
+  ),
   url: json['url'] as String,
-  developerCompany: json['developerCompany'] as String,
-  developerAddress: json['developerAddress'] as String,
-  developerCity: json['developerCity'] as String,
-  developerCountry: json['developerCountry'] as String,
+  developerCompany: Map<String, String>.from(json['developerCompany'] as Map),
+  developerAddress: Map<String, String>.from(json['developerAddress'] as Map),
+  developerCity: Map<String, String>.from(json['developerCity'] as Map),
+  developerCountry: Map<String, String>.from(json['developerCountry'] as Map),
   developerPhone: json['developerPhone'] as String,
   categories: (json['appCategory'] as List<dynamic>)
+      .map((e) => Map<String, String>.from(e as Map))
+      .toList(),
+  packageName: json['packageName'] as String,
+  supportedLanguages: (json['supportedLanguages'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
-  minAndroidVersion: json['minAndroidVersion'] as String?,
-  installsRange: json['installsRange'] as String?,
+  isEditorChoice: json['isEditorChoice'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
@@ -172,7 +192,6 @@ Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
   'price': instance.price,
   'currencyCode': instance.currencyCode,
   'discountPrice': instance.discountPrice,
-  'technicalInfo': instance.technicalInfo,
   'containsAds': instance.containsAds,
   'containsPaidContent': instance.containsPaidContent,
   'version': instance.version,
@@ -198,46 +217,52 @@ Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
   'developerCountry': instance.developerCountry,
   'developerPhone': instance.developerPhone,
   'appCategory': instance.categories,
-  'minAndroidVersion': instance.minAndroidVersion,
-  'installsRange': instance.installsRange,
+  'packageName': instance.packageName,
+  'supportedLanguages': instance.supportedLanguages,
+  'isEditorChoice': instance.isEditorChoice,
 };
 
 BookDto _$BookDtoFromJson(Map<String, dynamic> json) => BookDto(
   type: json['type'] as String? ?? 'book',
   id: json['id'] as String,
-  title: json['title'] as String,
-  creator: json['creator'] as String,
-  shortDescription: json['shortDescription'] as String,
-  description: json['description'] as String,
+  title: Map<String, String>.from(json['title'] as Map),
+  creator: Map<String, String>.from(json['creator'] as Map),
+  shortDescription: Map<String, String>.from(json['shortDescription'] as Map),
+  description: Map<String, String>.from(json['description'] as Map),
   rating: (json['rating'] as num).toDouble(),
   reviewsCount: (json['reviewsCount'] as num).toInt(),
   releaseDate: DateTime.parse(json['releaseDate'] as String),
-  creatorDescription: json['creatorDescription'] as String,
   iconUrl: json['iconUrl'] as String,
   isPaid: json['isPaid'] as bool,
   price: (json['price'] as num?)?.toDouble(),
   currencyCode: json['currencyCode'] as String? ?? 'USD',
   discountPrice: (json['discountPrice'] as num?)?.toDouble(),
-  publisher: json['publisher'] as String,
-  isbn: json['isbn'] as String?,
+  creatorDescription: Map<String, String>.from(
+    json['creatorDescription'] as Map,
+  ),
+  url: json['url'] as String,
+  tags: (json['tags'] as List<dynamic>)
+      .map((e) => Map<String, String>.from(e as Map))
+      .toList(),
+  categories: (json['categories'] as List<dynamic>)
+      .map((e) => Map<String, String>.from(e as Map))
+      .toList(),
+  publisher: Map<String, String>.from(json['publisher'] as Map),
   pageCount: (json['pageCount'] as num).toInt(),
   language: json['language'] as String,
   format: json['format'] as String,
   publicationDate: DateTime.parse(json['publicationDate'] as String),
-  categories: (json['categories'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
-  hasAudioVersion: json['hasAudioVersion'] as bool,
+  hasAudioVersion: json['hasAudioVersion'] as bool? ?? false,
   audioDuration: (json['audioDuration'] as num?)?.toInt(),
   narrator: json['narrator'] as String?,
-  isSeries: json['isSeries'] as bool,
+  isSeries: json['isSeries'] as bool? ?? false,
   seriesName: json['seriesName'] as String?,
   seriesNumber: (json['seriesNumber'] as num?)?.toInt(),
-  sampleAvailable: json['sampleAvailable'] as bool,
-  isAbridged: json['isAbridged'] as bool,
-  awards: (json['awards'] as List<dynamic>).map((e) => e as String).toList(),
-  url: json['url'] as String,
+  sampleAvailable: json['sampleAvailable'] as bool? ?? false,
+  isAbridged: json['isAbridged'] as bool? ?? false,
+  awards:
+      (json['awards'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const <String>[],
 );
 
 Map<String, dynamic> _$BookDtoToJson(BookDto instance) => <String, dynamic>{
@@ -250,20 +275,20 @@ Map<String, dynamic> _$BookDtoToJson(BookDto instance) => <String, dynamic>{
   'rating': instance.rating,
   'reviewsCount': instance.reviewsCount,
   'releaseDate': instance.releaseDate.toIso8601String(),
-  'creatorDescription': instance.creatorDescription,
   'iconUrl': instance.iconUrl,
   'isPaid': instance.isPaid,
   'price': instance.price,
   'currencyCode': instance.currencyCode,
   'discountPrice': instance.discountPrice,
+  'creatorDescription': instance.creatorDescription,
+  'url': instance.url,
+  'tags': instance.tags,
+  'categories': instance.categories,
   'publisher': instance.publisher,
-  'isbn': instance.isbn,
   'pageCount': instance.pageCount,
   'language': instance.language,
   'format': instance.format,
   'publicationDate': instance.publicationDate.toIso8601String(),
-  'categories': instance.categories,
-  'tags': instance.tags,
   'hasAudioVersion': instance.hasAudioVersion,
   'audioDuration': instance.audioDuration,
   'narrator': instance.narrator,
@@ -273,5 +298,4 @@ Map<String, dynamic> _$BookDtoToJson(BookDto instance) => <String, dynamic>{
   'sampleAvailable': instance.sampleAvailable,
   'isAbridged': instance.isAbridged,
   'awards': instance.awards,
-  'url': instance.url,
 };

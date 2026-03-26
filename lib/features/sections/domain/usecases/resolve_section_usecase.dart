@@ -24,6 +24,7 @@ class ResolveSectionUsecase {
   Future<ResolvedSection> call(
     SectionEntity section,
     String categoryType,
+    String locale,
   ) async {
     List<Entity> items = const [];
 
@@ -33,6 +34,7 @@ class ResolveSectionUsecase {
       items = await _productRepo.getProductsByFilters(
         filters: source.filters,
         categoryType: categoryType,
+        locale: locale,
       );
     } else if (source is BannersSource) {
       items = await _bannerRepo.getBanners(fileName: source.prefix);

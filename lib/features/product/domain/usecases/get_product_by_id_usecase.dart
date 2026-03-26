@@ -3,7 +3,7 @@ import 'package:google_play/features/product/domain/repositories/product_reposit
 
 /// Use case для получения продукта по [id]
 abstract interface class GetProductByIdUseCase {
-  Future<ProductEntity?> call(String id);
+  Future<ProductEntity?> call({required String id, required String locale});
 }
 
 final class GetProductByIdUseCaseImpl implements GetProductByIdUseCase {
@@ -12,8 +12,6 @@ final class GetProductByIdUseCaseImpl implements GetProductByIdUseCase {
   const GetProductByIdUseCaseImpl(this._productRepository);
 
   @override
-  Future<ProductEntity?> call(String id) {
-    return _productRepository.getProductById(id);
-  }
+  Future<ProductEntity?> call({required String id, required String locale}) =>
+      _productRepository.getProductById(id, locale: locale);
 }
-

@@ -45,14 +45,16 @@ Future<SectionMoreState> sectionMoreViewModel(
   Ref ref,
   SectionMoreArgs args,
 ) async {
-  final loadProducts = ref.read(loadProductsUseCaseProvider);
-  final allProducts = await loadProducts(type: args.storeType.categoryKey);
-
-  final filtered = _filterProducts(allProducts, args.categoryKey);
-
   final locale =
       ref.read(localeProvider) ??
       WidgetsBinding.instance.platformDispatcher.locale;
+  final loadProducts = ref.read(loadProductsUseCaseProvider);
+  final allProducts = await loadProducts(
+    type: args.storeType.categoryKey,
+    locale: locale.languageCode,
+  );
+
+  final filtered = _filterProducts(allProducts, args.categoryKey);
   final AppLocalizations l10n = lookupAppLocalizations(locale);
 
   final title = lookupL10n(l10n, args.titleKey);

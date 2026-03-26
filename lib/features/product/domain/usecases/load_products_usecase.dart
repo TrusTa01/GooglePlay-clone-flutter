@@ -3,7 +3,10 @@ import 'package:google_play/features/product/domain/repositories/product_reposit
 
 /// Use case для загрузки списка продуктов по типу стора ([apps]/[games]/[books])
 abstract interface class LoadProductsUseCase {
-  Future<List<ProductEntity>> call({required String type});
+  Future<List<ProductEntity>> call({
+    required String type,
+    required String locale,
+  });
 }
 
 final class LoadProductsUseCaseImpl implements LoadProductsUseCase {
@@ -12,8 +15,8 @@ final class LoadProductsUseCaseImpl implements LoadProductsUseCase {
   const LoadProductsUseCaseImpl(this._productRepository);
 
   @override
-  Future<List<ProductEntity>> call({required String type}) {
-    return _productRepository.getProducts(type: type);
-  }
+  Future<List<ProductEntity>> call({
+    required String type,
+    required String locale,
+  }) => _productRepository.getProducts(type: type, locale: locale);
 }
-

@@ -1,7 +1,9 @@
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
 import 'package:google_play/di/usecase_providers.dart';
+import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
 
 part 'kids_age_category_view_model.g.dart';
 
@@ -11,6 +13,9 @@ class KidsAgeCategory extends _$KidsAgeCategory {
   Future<List<ResolvedSection>> build(String ageKey) async {
     final getTabSections = ref.read(getTabSectionsUseCaseProvider);
     final resolveSection = ref.read(resolveSectionUseCaseProvider);
+    final locale =
+        ref.read(localeProvider) ??
+        WidgetsBinding.instance.platformDispatcher.locale;
 
     final fileName = _mapAgeKeyToFileName(ageKey);
 
@@ -21,7 +26,11 @@ class KidsAgeCategory extends _$KidsAgeCategory {
 
     final resolvedSections = await Future.wait(
       rawSections.map(
-        (section) => resolveSection(section, StoreType.games.categoryKey),
+        (section) => resolveSection(
+          section,
+          StoreType.games.categoryKey,
+          locale.languageCode,
+        ),
       ),
     );
 

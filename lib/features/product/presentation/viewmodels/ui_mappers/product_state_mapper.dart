@@ -107,7 +107,7 @@ class ProductStateMapper {
       ageRatingReasonsStr = software.ageRatingReasons.join(', ');
     }
     final showAds = software?.containsAds ?? false;
-    final showAchievements = game?.hasAchievements ?? false;
+    final showAchievements = game?.achievements.isNotEmpty ?? false;
 
     // Paid content & promo event (для ActionRow / баннеров)
     final containsPaidContent = software?.containsPaidContent ?? false;

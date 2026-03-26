@@ -5,17 +5,24 @@ import 'package:google_play/features/product/domain/entities/product_filter.dart
 /// Контракт, который слой [Data] обязан будет реализовать
 abstract interface class IProductRepository {
   // Получаем список всех продуктов
-  Future<List<ProductEntity>> getProducts({required String type});
+  Future<List<ProductEntity>> getProducts({
+    required String type,
+    required String locale,
+  });
 
   /// Получаем конкретный продукт по [ID]
-  Future<ProductEntity?> getProductById(String id);
+  Future<ProductEntity?> getProductById(String id, {required String locale});
 
   // Получает похожие продукты
-  Future<List<ProductEntity>> getSimilarProducts(ProductEntity product);
+  Future<List<ProductEntity>> getSimilarProducts(
+    ProductEntity product,
+    String locale,
+  );
 
   // Получить продукты по фильтрам
   Future<List<ProductEntity>> getProductsByFilters({
     required List<ProductFilter> filters,
     required String categoryType,
+    required String locale,
   });
 }
