@@ -32,6 +32,7 @@ dependencies:
   freezed_annotation: ^3.1.0
   riverpod_annotation: ^4.0.2
   faker: ^2.2.0
+  uuid: ^4.5.1
   supabase: ^2.10.3
   supabase_flutter: ^2.12.1
   dotenv: ^4.2.0
