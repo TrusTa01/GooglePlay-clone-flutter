@@ -56,6 +56,7 @@ sealed class ProductDto with _$ProductDto {
     @Default(<LocalizedString>[]) List<LocalizedString> achievements,
     String? gameModes,
     bool? hasControllerSupport,
+    @Default(<String>[]) List<String> supportedLanguages,
   }) = GameDto;
 
   /// [App]
@@ -101,8 +102,7 @@ sealed class ProductDto with _$ProductDto {
     required String developerPhone,
     @JsonKey(name: 'appCategory') required List<LocalizedString> categories,
     required String packageName,
-    required List<String> supportedLanguages,
-    @Default(false) bool isEditorChoice,
+    @Default(<String>[]) List<String> supportedLanguages,
   }) = AppDto;
 
   /// [Book]

@@ -47,6 +47,7 @@ final class GameEntity extends SoftwareEntity {
     required super.developerCity,
     required super.developerCountry,
     required super.developerPhone,
+    super.supportedLanguages,
     this.achievements = const [],
     this.isOnline,
     this.hasMultiplayer,

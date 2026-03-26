@@ -904,3 +904,16 @@ final Map<String, String> achievementTitlesEnByRu = {
   for (int i = 0; i < achievementTitlesRu.length; i++)
     achievementTitlesRu[i]: achievementTitlesEn[i],
 };
+
+const List<String> languages = [
+  'RU',
+  'EN',
+  'ES',
+  'FR',
+  'DE',
+  'IT',
+  'PT',
+  'ZH',
+  'JA',
+  'KO',
+];

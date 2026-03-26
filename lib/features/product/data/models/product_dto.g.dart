@@ -70,6 +70,11 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
       const <LocalizedString>[],
   gameModes: json['gameModes'] as String?,
   hasControllerSupport: json['hasControllerSupport'] as bool?,
+  supportedLanguages:
+      (json['supportedLanguages'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const <String>[],
 );
 
 Map<String, dynamic> _$GameDtoToJson(GameDto instance) => <String, dynamic>{
@@ -118,6 +123,7 @@ Map<String, dynamic> _$GameDtoToJson(GameDto instance) => <String, dynamic>{
   'achievements': instance.achievements,
   'gameModes': instance.gameModes,
   'hasControllerSupport': instance.hasControllerSupport,
+  'supportedLanguages': instance.supportedLanguages,
 };
 
 AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
@@ -175,10 +181,11 @@ AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
       .map((e) => Map<String, String>.from(e as Map))
       .toList(),
   packageName: json['packageName'] as String,
-  supportedLanguages: (json['supportedLanguages'] as List<dynamic>)
-      .map((e) => e as String)
-      .toList(),
-  isEditorChoice: json['isEditorChoice'] as bool? ?? false,
+  supportedLanguages:
+      (json['supportedLanguages'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const <String>[],
 );
 
 Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
@@ -223,7 +230,6 @@ Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
   'appCategory': instance.categories,
   'packageName': instance.packageName,
   'supportedLanguages': instance.supportedLanguages,
-  'isEditorChoice': instance.isEditorChoice,
 };
 
 BookDto _$BookDtoFromJson(Map<String, dynamic> json) => BookDto(

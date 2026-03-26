@@ -22,6 +22,7 @@ abstract class SoftwareEntity extends ProductEntity {
   final String developerCity;
   final String developerCountry;
   final String developerPhone;
+  final List<String> supportedLanguages;
 
   const SoftwareEntity({
     required super.type,
@@ -63,6 +64,7 @@ abstract class SoftwareEntity extends ProductEntity {
     required this.developerCity,
     required this.developerCountry,
     required this.developerPhone,
+    this.supportedLanguages = const [],
   });
 
   @override

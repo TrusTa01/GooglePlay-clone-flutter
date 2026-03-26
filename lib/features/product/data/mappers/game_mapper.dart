@@ -49,6 +49,7 @@ extension GameMapper on GameDto {
       hasMultiplayer: hasMultiplayer,
       gameModes: gameModes,
       hasControllerSupport: hasControllerSupport,
+      supportedLanguages: supportedLanguages,
     );
   }
 }

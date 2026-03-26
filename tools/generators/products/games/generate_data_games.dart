@@ -197,6 +197,12 @@ Future<void> runGames(int count) async {
       ageRatingReasons,
     )..shuffle()).take(reasonCount).toList();
 
+    // Поддерживаемые языки (от 2 до 8)
+    final int langCount = random.nextInt(7) + 2;
+    final List<String> supportedLanguages = (List<String>.from(
+      languages,
+    )..shuffle()).take(langCount).toList();
+
     // Выбираем случайный индекс разработчика (одинаковый для всех полей)
     final int devIndex = random.nextInt(developerCompanies.length);
 
@@ -278,6 +284,7 @@ Future<void> runGames(int count) async {
           .toList(),
       "gameModes": faker.randomGenerator.element(modes),
       "hasControllerSupport": faker.randomGenerator.boolean(),
+      "supportedLanguages": supportedLanguages,
       // Информация о разработчике
       "developerCompany": _loc(
         developerCompanies[devIndex],

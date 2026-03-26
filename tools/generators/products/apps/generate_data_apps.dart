@@ -285,9 +285,6 @@ Future<void> runApps(int count) async {
     final String creatorName =
         '${faker.person.firstName()} ${faker.person.lastName()}';
 
-    // isEditorChoice (5% шанс)
-    final bool isEditorChoice = faker.randomGenerator.integer(100) < 5;
-
     // store-like rating + downloads + reviews
     final double rating = _genSkewedRating(random);
     final int downloadCount = _genPowerLawDownloads(random, rating);
@@ -480,7 +477,6 @@ Future<void> runApps(int count) async {
           .toList(),
       "packageName": packageName,
       "supportedLanguages": supportedLanguages,
-      "isEditorChoice": isEditorChoice,
       // Информация о разработчике
       "developerCompany": _loc(
         developerCompanies[devIndex],

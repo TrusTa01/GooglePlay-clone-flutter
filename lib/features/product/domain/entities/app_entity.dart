@@ -2,8 +2,6 @@ import 'package:google_play/features/product/domain/entities/software_entity.dar
 
 final class AppEntity extends SoftwareEntity {
   final String packageName;
-  final List<String> supportedLanguages;
-  final bool isEditorChoice;
 
   AppEntity({
     required super.type,
@@ -45,8 +43,7 @@ final class AppEntity extends SoftwareEntity {
     required super.developerCity,
     required super.developerCountry,
     required super.developerPhone,
+    super.supportedLanguages,
     required this.packageName,
-    required this.supportedLanguages,
-    this.isEditorChoice = false,
   });
 }
