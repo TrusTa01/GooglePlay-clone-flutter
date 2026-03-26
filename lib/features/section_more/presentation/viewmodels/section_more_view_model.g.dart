@@ -65,7 +65,7 @@ final class SectionMoreViewModelProvider
 }
 
 String _$sectionMoreViewModelHash() =>
-    r'15291a0eb34cc4d46cd6f625ff03b261af3f6de3';
+    r'c6fe1464d74e98e8cf22f761c03865769b1bad43';
 
 final class SectionMoreViewModelFamily extends $Family
     with

@@ -295,10 +295,7 @@ Future<void> runGames(int count) async {
         developerCountries[devIndex],
         developerCountriesRu[devIndex],
       ),
-      "developerPhone": _loc(
-        developerPhones[devIndex],
-        developerPhones[devIndex],
-      ),
+      "developerPhone": developerPhones[devIndex],
     };
 
     gamesList.add(gameData);

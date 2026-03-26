@@ -1,6 +1,10 @@
 import 'package:google_play/features/product/domain/entities/software_entity.dart';
 
 final class AppEntity extends SoftwareEntity {
+  final String packageName;
+  final List<String> supportedLanguages;
+  final bool isEditorChoice;
+
   AppEntity({
     required super.type,
     required super.id,
@@ -30,6 +34,7 @@ final class AppEntity extends SoftwareEntity {
     required super.whatsNewText,
     required super.lastUpdated,
     required super.ageRating,
+    required super.isKidsFriendly,
     required super.ageRatingReasons,
     required super.permissions,
     required super.websiteUrl,
@@ -40,5 +45,8 @@ final class AppEntity extends SoftwareEntity {
     required super.developerCity,
     required super.developerCountry,
     required super.developerPhone,
+    required this.packageName,
+    required this.supportedLanguages,
+    this.isEditorChoice = false,
   });
 }

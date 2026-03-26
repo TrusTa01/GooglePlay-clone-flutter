@@ -11,6 +11,7 @@ abstract class SoftwareEntity extends ProductEntity {
   final String whatsNewText;
   final DateTime lastUpdated;
   final int ageRating;
+  final bool isKidsFriendly;
   final List<String> ageRatingReasons;
   final List<String> permissions;
   final String websiteUrl;
@@ -51,6 +52,7 @@ abstract class SoftwareEntity extends ProductEntity {
     required this.whatsNewText,
     required this.lastUpdated,
     required this.ageRating,
+    required this.isKidsFriendly,
     required this.ageRatingReasons,
     required this.permissions,
     required this.websiteUrl,

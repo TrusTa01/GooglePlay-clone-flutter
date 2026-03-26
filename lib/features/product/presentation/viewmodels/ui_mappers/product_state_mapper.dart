@@ -120,7 +120,7 @@ class ProductStateMapper {
     final version = software?.version ?? '';
     final permissions = software?.permissions ?? const <String>[];
     final tags = product.tags;
-    final showTags = software != null && tags.isNotEmpty;
+    final showTags = tags.isNotEmpty;
 
     // Info rows
     final infoRows = _buildInfoRows(product, l10n, locale, book, software);
@@ -218,7 +218,7 @@ class ProductStateMapper {
           label: l10n.labelPublishDate,
           value: DataFormatter.formatDate(product.releaseDate, locale),
         ),
-        InfoRowData(label: l10n.labelPages, value: book.pageCount),
+        InfoRowData(label: l10n.labelPages, value: book.pageCount.toString()),
         InfoRowData(label: l10n.labelLanguage, value: book.language),
         InfoRowData(label: l10n.labelFormat, value: book.format),
         InfoRowData(label: l10n.labelGenres, value: book.genres.join(', ')),

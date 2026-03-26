@@ -306,7 +306,7 @@ Future<void> runBooks(int count) async {
       "language": language,
       "format": format,
       "publicationDate": publicationDate.toIso8601String(),
-      "categories": selectedGenres
+      "genre": selectedGenres
           .map((gRu) => _loc(genresEnByRu[gRu] ?? gRu, gRu))
           .toList(),
       "tags": selectedTags

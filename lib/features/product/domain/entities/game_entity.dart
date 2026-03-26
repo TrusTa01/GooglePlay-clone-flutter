@@ -2,6 +2,10 @@ import 'package:google_play/features/product/domain/entities/software_entity.dar
 
 final class GameEntity extends SoftwareEntity {
   final List<String> achievements;
+  final bool? isOnline;
+  final bool? hasMultiplayer;
+  final String? gameModes;
+  final bool? hasControllerSupport;
 
   GameEntity({
     required super.type,
@@ -32,6 +36,7 @@ final class GameEntity extends SoftwareEntity {
     required super.whatsNewText,
     required super.lastUpdated,
     required super.ageRating,
+    required super.isKidsFriendly,
     required super.ageRatingReasons,
     required super.permissions,
     required super.websiteUrl,
@@ -43,5 +48,9 @@ final class GameEntity extends SoftwareEntity {
     required super.developerCountry,
     required super.developerPhone,
     this.achievements = const [],
+    this.isOnline,
+    this.hasMultiplayer,
+    this.gameModes,
+    this.hasControllerSupport,
   });
 }

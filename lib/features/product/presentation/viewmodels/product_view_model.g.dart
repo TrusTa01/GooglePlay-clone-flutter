@@ -58,7 +58,7 @@ final class ProductViewModelProvider
   }
 }
 
-String _$productViewModelHash() => r'3f3962aabfa54f694d5c12137a11da649a7e92f9';
+String _$productViewModelHash() => r'1a9ef72ed46f816e3cf3afebdb786b42be43dc93';
 
 final class ProductViewModelFamily extends $Family
     with

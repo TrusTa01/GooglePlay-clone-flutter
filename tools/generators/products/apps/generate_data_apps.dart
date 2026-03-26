@@ -498,10 +498,7 @@ Future<void> runApps(int count) async {
         developerCountries[devIndex],
         developerCountries[devIndex],
       ),
-      "developerPhone": _loc(
-        developerPhones[devIndex],
-        developerPhones[devIndex],
-      ),
+      "developerPhone": developerPhones[devIndex],
     };
 
     appsList.add(appData);

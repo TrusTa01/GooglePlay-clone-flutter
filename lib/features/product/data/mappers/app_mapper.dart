@@ -33,6 +33,7 @@ extension AppMapper on AppDto {
       whatsNewText: whatsNewText.display(locale),
       lastUpdated: lastUpdated,
       ageRating: ageRating,
+      isKidsFriendly: isKidsFriendly,
       ageRatingReasons: ageRatingReasons.map((r) => r.display(locale)).toList(),
       permissions: permissions.map((p) => p.display(locale)).toList(),
       websiteUrl: websiteUrl,
@@ -43,6 +44,9 @@ extension AppMapper on AppDto {
       developerCity: developerCity.display(locale),
       developerCountry: developerCountry.display(locale),
       developerPhone: developerPhone,
+      packageName: packageName,
+      supportedLanguages: supportedLanguages,
+      isEditorChoice: isEditorChoice,
     );
   }
 }

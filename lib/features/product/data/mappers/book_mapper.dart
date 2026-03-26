@@ -23,7 +23,7 @@ extension BookMapper on BookDto {
       url: url,
       tags: tags.map((t) => t.display(locale)).toList(),
       categories: categories.map((c) => c.display(locale)).toList(),
-      pageCount: pageCount.toString(),
+      pageCount: pageCount,
       publisher: publisher.display(locale),
       language: language,
       format: format,
@@ -36,6 +36,7 @@ extension BookMapper on BookDto {
       sampleAvailable: sampleAvailable,
       isAbridged: isAbridged,
       publicationDate: publicationDate,
+      awards: awards,
     );
   }
 }

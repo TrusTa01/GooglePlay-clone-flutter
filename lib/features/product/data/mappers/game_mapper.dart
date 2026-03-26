@@ -19,7 +19,7 @@ extension GameMapper on GameDto {
       price: price,
       currencyCode: currencyCode,
       discountPrice: discountPrice,
-      creatorDescription: creatorDescription,
+      creatorDescription: creatorDescription.display(locale),
       url: url,
       tags: tags.map((t) => t.display(locale)).toList(),
       categories: categories.map((c) => c.display(locale)).toList(),
@@ -29,10 +29,11 @@ extension GameMapper on GameDto {
       downloadCount: downloadCount,
       containsAds: containsAds,
       containsPaidContent: containsPaidContent,
-      eventText: eventText,
-      whatsNewText: whatsNewText,
+      eventText: eventText?.display(locale),
+      whatsNewText: whatsNewText.display(locale),
       lastUpdated: lastUpdated,
       ageRating: ageRating,
+      isKidsFriendly: isKidsFriendly,
       ageRatingReasons: ageRatingReasons.map((a) => a.display(locale)).toList(),
       permissions: permissions.map((p) => p.display(locale)).toList(),
       websiteUrl: websiteUrl,
@@ -44,6 +45,10 @@ extension GameMapper on GameDto {
       developerCountry: developerCountry.display(locale),
       developerPhone: developerPhone,
       achievements: achievements.map((a) => a.display(locale)).toList(),
+      isOnline: isOnline,
+      hasMultiplayer: hasMultiplayer,
+      gameModes: gameModes,
+      hasControllerSupport: hasControllerSupport,
     );
   }
 }

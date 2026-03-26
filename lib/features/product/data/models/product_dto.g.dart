@@ -26,8 +26,10 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   containsPaidContent: json['containsPaidContent'] as bool,
   version: json['version'] as String,
   size: json['size'] as String,
-  eventText: json['eventText'] as String?,
-  whatsNewText: json['whatsNewText'] as String,
+  eventText: (json['eventText'] as Map<String, dynamic>?)?.map(
+    (k, e) => MapEntry(k, e as String),
+  ),
+  whatsNewText: Map<String, String>.from(json['whatsNewText'] as Map),
   downloadCount: (json['downloadCount'] as num).toInt(),
   ageRating: (json['ageRating'] as num).toInt(),
   isKidsFriendly: json['isKidsFriendly'] as bool,
@@ -47,7 +49,9 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   websiteUrl: json['websiteUrl'] as String,
   emailSupport: json['emailSupport'] as String,
   privacyPolicyUrl: json['privacyPolicyUrl'] as String,
-  creatorDescription: json['creatorDescription'] as String,
+  creatorDescription: Map<String, String>.from(
+    json['creatorDescription'] as Map,
+  ),
   url: json['url'] as String,
   developerCompany: Map<String, String>.from(json['developerCompany'] as Map),
   developerAddress: Map<String, String>.from(json['developerAddress'] as Map),
@@ -244,7 +248,7 @@ BookDto _$BookDtoFromJson(Map<String, dynamic> json) => BookDto(
   tags: (json['tags'] as List<dynamic>)
       .map((e) => Map<String, String>.from(e as Map))
       .toList(),
-  categories: (json['categories'] as List<dynamic>)
+  categories: (json['genre'] as List<dynamic>)
       .map((e) => Map<String, String>.from(e as Map))
       .toList(),
   publisher: Map<String, String>.from(json['publisher'] as Map),
@@ -283,7 +287,7 @@ Map<String, dynamic> _$BookDtoToJson(BookDto instance) => <String, dynamic>{
   'creatorDescription': instance.creatorDescription,
   'url': instance.url,
   'tags': instance.tags,
-  'categories': instance.categories,
+  'genre': instance.categories,
   'publisher': instance.publisher,
   'pageCount': instance.pageCount,
   'language': instance.language,
