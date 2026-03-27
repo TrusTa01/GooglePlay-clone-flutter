@@ -4,7 +4,7 @@
 // Запуск: dart run tools/upload_data.dart
 //
 // Требования:
-//   - Сгенерированные файлы assets/data/games.json, apps.json, books.json
+//   - Сгенерированные файлы assets/data/games.json, apps.json, books.json, banners.json
 //   - Файл .env в корне проекта с SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY
 
 import 'dart:convert';
@@ -18,14 +18,27 @@ import 'package:uuid/uuid.dart';
 // Конфигурация
 // ──────────────────────────────────────────────────────────────────────────────
 
+const String _contentSchema = 'content';
 const int _batchSize = 500;
+// Для delete через inFilter держим небольшой размер пачки,
+// иначе URL фильтра может стать слишком длинным и дать 400 Bad Request
+const int _cleanupBatchSize = 100;
+const int _cleanupProgressEveryBatches = 20;
 const _uuid = Uuid();
+
+class _CleanupStats {
+  final int batches;
+  final int units;
+
+  const _CleanupStats({required this.batches, required this.units});
+}
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Точка входа
 // ──────────────────────────────────────────────────────────────────────────────
 
 Future<void> main() async {
+  final startedAt = DateTime.now();
   final env = DotEnv(includePlatformEnvironment: true)..load();
 
   final supabaseUrl = env['SUPABASE_URL'];
@@ -39,12 +52,36 @@ Future<void> main() async {
   final client = SupabaseClient(supabaseUrl, supabaseKey);
 
   try {
+    print(
+      '\nWARNING: Перед загрузкой будут удалены все существующие данные в schema $_contentSchema',
+    );
+    while (true) {
+      stdout.write('Вы точно хотите продолжить? (y/n): ');
+      final confirm = stdin.readLineSync()?.trim().toLowerCase();
+      if (confirm == 'y' || confirm == 'yes') {
+        break;
+      }
+      if (confirm == 'n' || confirm == 'no') {
+        print('Операция отменена пользователем');
+        return;
+      }
+      print('Некорректный ввод. Введите y/yes или n/no');
+    }
     final uploader = _DataUploader(client);
     await uploader.run();
+    final elapsed = DateTime.now().difference(startedAt);
+    final minutes = (elapsed.inMilliseconds / 60000).toStringAsFixed(2);
+    _clearTerminalScreen();
     print('\nВсе данные успешно загружены!');
+    print('Время выполнения: $minutes мин');
   } finally {
     client.dispose();
   }
+}
+
+void _clearTerminalScreen() {
+  if (!stdout.hasTerminal) return;
+  stdout.write('\x1B[2J\x1B[H');
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -53,6 +90,7 @@ Future<void> main() async {
 
 class _DataUploader {
   final SupabaseClient _client;
+  final bool _canRewriteLine = stdout.hasTerminal;
 
   // Маппинги для дедупликации
   // developerKey (строка "company_en") → UUID в БД
@@ -67,14 +105,18 @@ class _DataUploader {
   _DataUploader(this._client);
 
   Future<void> run() async {
+    // 0. Перед загрузкой очищаем таблицы в schema content
+    await _clearContentSchemaData();
+
     // 1. Читаем JSON-файлы
     print('Читаю данные из JSON-файлов...');
     final games = await _readJson('assets/data/games.json');
     final apps = await _readJson('assets/data/apps.json');
     final books = await _readJson('assets/data/books.json');
+    final banners = await _readJson('assets/data/banners.json');
 
     print(
-      'Загружено: ${games.length} игр, ${apps.length} приложений, ${books.length} книг',
+      'Загружено: ${games.length} игр, ${apps.length} приложений, ${books.length} книг, ${banners.length} баннеров',
     );
 
     // Предзагрузка существующих products для повторного запуска
@@ -97,6 +139,146 @@ class _DataUploader {
 
     // 7. Вставляем книги
     await _uploadBooks(books);
+
+    // 8. Вставляем баннеры
+    await _uploadBanners(banners);
+  }
+
+  Future<void> _clearContentSchemaData() async {
+    print('\n[cleanup] Очищаю таблицы в schema $_contentSchema...');
+
+    final fastCleanup = await _tryFastCleanupViaRpc();
+    if (fastCleanup) {
+      print('[cleanup] Быстрая очистка через RPC выполнена');
+      return;
+    }
+
+    const tablesInDeleteOrder = <String>[
+      'product_tags',
+      'product_categories',
+      'games',
+      'apps',
+      'books',
+      'software_products',
+      'products',
+      'developers',
+      'categories',
+      'tags',
+      'banners',
+    ];
+
+    for (final table in tablesInDeleteOrder) {
+      final startedAt = DateTime.now();
+      try {
+        print('[cleanup] -> start $_contentSchema.$table');
+        final stats = await _deleteAllRowsInContentTable(table);
+        final elapsedMs = DateTime.now().difference(startedAt).inMilliseconds;
+        print(
+          '[cleanup] $_contentSchema.$table очищена (батчей: ${stats.batches}, единиц: ${stats.units}, ${elapsedMs}ms)',
+        );
+      } catch (e) {
+        // Если таблицы нет в content, просто пропускаем.
+        print('[cleanup] skip $_contentSchema.$table: $e');
+      }
+    }
+  }
+
+  Future<bool> _tryFastCleanupViaRpc() async {
+    try {
+      await _client.rpc('reset_content_data');
+      return true;
+    } catch (e) {
+      print(
+        '[cleanup] RPC reset_content_data недоступен, fallback на batch-delete: $e',
+      );
+      return false;
+    }
+  }
+
+  Future<_CleanupStats> _deleteAllRowsInContentTable(String table) async {
+    switch (table) {
+      case 'categories':
+      case 'tags':
+        return _deleteByIdBatches<int>(table, 'id');
+      case 'product_tags':
+      case 'product_categories':
+        return _deleteByProductIdBatches(table);
+      default:
+        return _deleteByIdBatches<String>(table, 'id');
+    }
+  }
+
+  Future<_CleanupStats> _deleteByIdBatches<T>(
+    String table,
+    String idColumn,
+  ) async {
+    int batches = 0;
+    int units = 0;
+    while (true) {
+      final response = await _client
+          .schema(_contentSchema)
+          .from(table)
+          .select(idColumn)
+          .range(0, _cleanupBatchSize - 1);
+
+      final ids = (response as List)
+          .map((row) => (row as Map)[idColumn])
+          .whereType<T>()
+          .toSet()
+          .toList();
+
+      if (ids.isEmpty) {
+        return _CleanupStats(batches: batches, units: units);
+      }
+
+      await _client
+          .schema(_contentSchema)
+          .from(table)
+          .delete()
+          .inFilter(idColumn, ids);
+      batches += 1;
+      units += ids.length;
+      if (batches % _cleanupProgressEveryBatches == 0) {
+        print(
+          '[cleanup] $_contentSchema.$table в процессе... батчей: $batches, единиц: $units',
+        );
+      }
+    }
+  }
+
+  Future<_CleanupStats> _deleteByProductIdBatches(String table) async {
+    int batches = 0;
+    int units = 0;
+    while (true) {
+      final response = await _client
+          .schema(_contentSchema)
+          .from(table)
+          .select('product_id')
+          .range(0, _cleanupBatchSize - 1);
+
+      final productIds = (response as List)
+          .map((row) => (row as Map)['product_id'])
+          .whereType<String>()
+          .toSet()
+          .toList();
+
+      if (productIds.isEmpty) {
+        return _CleanupStats(batches: batches, units: units);
+      }
+
+      await _client
+          .schema(_contentSchema)
+          .from(table)
+          .delete()
+          .inFilter('product_id', productIds);
+      batches += 1;
+      units += productIds.length;
+      if (batches % _cleanupProgressEveryBatches == 0) {
+        print(
+          '[cleanup] $_contentSchema.$table в процессе... батчей: $batches, product_id: $units',
+        );
+      }
+    }
   }
 
   Future<void> _loadExistingProductsMap() async {
@@ -645,6 +827,49 @@ class _DataUploader {
   }
 
   // ────────────────────────────────────────────────────────────────────────────
+  // Баннеры
+  // ────────────────────────────────────────────────────────────────────────────
+
+  Future<void> _uploadBanners(List<Map<String, dynamic>> banners) async {
+    print('\n[banners] Начинаю загрузку ${banners.length} баннеров...');
+    if (banners.isEmpty) {
+      print('[banners] Нет данных, пропускаю');
+      return;
+    }
+
+    final List<Map<String, dynamic>> bannerRows = [];
+
+    for (final b in banners) {
+      final sourceId = (b['id'] ?? '').toString();
+      final type = _normalizeBannerType((b['type'] ?? '').toString());
+
+      bannerRows.add({
+        // Стабильный UUID на базе source-id для безопасного повторного запуска.
+        // ignore: deprecated_member_use
+        'id': _uuid.v5(Uuid.NAMESPACE_URL, 'banner:$sourceId'),
+        'type': type,
+        'image_asset_path': (b['imageAssetPath'] ?? '').toString(),
+        'title': _locValue(b['title'], 'ru'),
+        'top_tooltip_text': _locValue(b['topToolTipText'], 'ru'),
+        'description': _locValue(b['description'], 'ru'),
+        'event_id': _asNullableString(b['eventId']),
+        'event_category': _asNullableString(b['eventCategory']),
+        'event_description': _locValue(b['eventDescription'], 'ru'),
+      });
+    }
+
+    await _batchUpsert(
+      'banners',
+      bannerRows,
+      'id',
+      label: 'banners',
+      schema: 'content',
+    );
+
+    print('[banners] Готово');
+  }
+
+  // ────────────────────────────────────────────────────────────────────────────
   // Вспомогательные методы
   // ────────────────────────────────────────────────────────────────────────────
 
@@ -654,18 +879,31 @@ class _DataUploader {
     List<Map<String, dynamic>> rows,
     String onConflict, {
     String? label,
+    String? schema,
   }) async {
     if (rows.isEmpty) return;
     final tag = label ?? table;
     final total = rows.length;
     int uploaded = 0;
+    int lastPrintedPercent = 0;
+    if (!_canRewriteLine) {
+      print(
+        '[$tag] start upsert (update existing + insert new), total: $total',
+      );
+    }
 
     for (int i = 0; i < rows.length; i += _batchSize) {
       final batch = rows.sublist(i, (i + _batchSize).clamp(0, rows.length));
-      await _client.from(table).upsert(batch, onConflict: onConflict);
+      final query = _client.schema(schema ?? _contentSchema).from(table);
+      await query.upsert(batch, onConflict: onConflict);
       uploaded += batch.length;
-      print('[$tag] $uploaded/$total');
+      final percent = ((uploaded * 100) / total).floor();
+      if (uploaded == total || percent >= lastPrintedPercent + 10) {
+        _printProgress(tag, '$uploaded/$total ($percent%)');
+        lastPrintedPercent = percent;
+      }
     }
+    _finishProgressLine();
   }
 
   /// Вставка пачками без onConflict (для таблиц без уникального индекса)
@@ -678,12 +916,35 @@ class _DataUploader {
     final tag = label ?? table;
     final total = rows.length;
     int uploaded = 0;
+    int lastPrintedPercent = 0;
+    if (!_canRewriteLine) {
+      print('[$tag] start insert, total: $total');
+    }
 
     for (int i = 0; i < rows.length; i += _batchSize) {
       final batch = rows.sublist(i, (i + _batchSize).clamp(0, rows.length));
-      await _client.from(table).insert(batch);
+      await _client.schema(_contentSchema).from(table).insert(batch);
       uploaded += batch.length;
-      print('[$tag] inserted $uploaded/$total');
+      final percent = ((uploaded * 100) / total).floor();
+      if (uploaded == total || percent >= lastPrintedPercent + 10) {
+        _printProgress(tag, 'inserted $uploaded/$total ($percent%)');
+        lastPrintedPercent = percent;
+      }
+    }
+    _finishProgressLine();
+  }
+
+  void _printProgress(String tag, String text) {
+    if (_canRewriteLine) {
+      stdout.write('\r[$tag] $text');
+      return;
+    }
+    print('[$tag] $text');
+  }
+
+  void _finishProgressLine() {
+    if (_canRewriteLine) {
+      stdout.write('\n');
     }
   }
 
@@ -698,6 +959,7 @@ class _DataUploader {
 
     while (true) {
       final response = await _client
+          .schema(_contentSchema)
           .from(table)
           .select(columns)
           .range(from, from + pageSize - 1);
@@ -731,9 +993,26 @@ class _DataUploader {
   String _locValue(dynamic field, String lang) {
     if (field is Map) {
       final val = field[lang];
-      if (val is String) return val;
+      if (val is String && val.isNotEmpty) return val;
+      for (final fallback in ['en', 'ru']) {
+        final fallbackVal = field[fallback];
+        if (fallbackVal is String && fallbackVal.isNotEmpty) {
+          return fallbackVal;
+        }
+      }
     }
     if (field is String) return field;
     return '';
+  }
+
+  String? _asNullableString(dynamic value) {
+    if (value == null) return null;
+    final str = value.toString().trim();
+    return str.isEmpty ? null : str;
+  }
+
+  String _normalizeBannerType(String value) {
+    if (value == 'action') return 'action';
+    return 'simple';
   }
 }
