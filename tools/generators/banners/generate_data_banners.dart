@@ -27,14 +27,14 @@ List<Map<String, dynamic>> _defaultBannerTemplates() {
   return [
     {
       'type': 'event',
-      'imageAssetPath': 'assets/images/banners/banner_1.webp',
+      'imageAssetPath': 'banners/images/banner_1.webp',
       'title': 'Рекомендуем',
       'topToolTipText': 'Новинка',
       'description': 'Подборка лучших предложений для вас',
     },
     {
       'type': 'action',
-      'imageAssetPath': 'assets/images/banners/banner_2.webp',
+      'imageAssetPath': 'banners/images/banner_2.webp',
       'title': 'Скидки на приложения',
       'topToolTipText': 'Акция',
       'description': 'Популярные приложения по сниженной цене',
@@ -66,6 +66,14 @@ List<Map<String, dynamic>> _decodeSourceSafely(String sourceJson) {
 Future<void> runBanners(int count) async {
   final faker = Faker();
   final random = Random();
+
+  if (bannerImages.isEmpty) {
+    throw StateError(
+      'Список bannerImages пуст в banners_text_data.dart.\n'
+      'Запустите сначала: dart run tools/generators/sync_storage_media_lists.dart',
+    );
+  }
+
   final sourceFile = File('assets/data/banners.json');
 
   if (!await sourceFile.exists()) {
@@ -79,12 +87,7 @@ Future<void> runBanners(int count) async {
     throw Exception('Source banners list is empty: ${sourceFile.path}');
   }
 
-  final List<String> imagePool = source
-      .map((b) => b['imageAssetPath'])
-      .whereType<String>()
-      .where((p) => p.isNotEmpty)
-      .toSet()
-      .toList();
+  final List<String> imagePool = List<String>.from(bannerImages);
 
   final List<Map<String, dynamic>> banners = [];
 

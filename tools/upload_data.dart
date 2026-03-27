@@ -4,7 +4,11 @@
 // Запуск: dart run tools/upload_data.dart
 //
 // Требования:
+//   - Запустить утилиту ссылок
+//     для того чтобы получить актуальные ссылки изображений из бакетов:
+//       dart run tools/generators/sync_storage_media_lists.dart
 //   - Сгенерированные файлы assets/data/games.json, apps.json, books.json, banners.json
+//       dart run tools/generate_data.dart
 //   - Файл .env в корне проекта с SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY
 
 import 'dart:convert';
@@ -74,12 +78,15 @@ Future<void> main() async {
       print('Некорректный ввод. Введите y/yes или n/no');
     }
     final uploader = _DataUploader(client);
-    await uploader.run();
+    final summary = await uploader.run();
     await _clearDataJsonFiles();
     final elapsed = DateTime.now().difference(startedAt);
     final minutes = (elapsed.inMilliseconds / 60000).toStringAsFixed(2);
     _clearTerminalScreen();
-    print('\nВсе данные успешно загружены!');
+    print(
+      'Загружено: ${summary.games} игр, ${summary.apps} приложений, ${summary.books} книг, ${summary.banners} баннеров',
+    );
+    print('Все данные успешно загружены!');
     print('Время выполнения: $minutes мин');
   } finally {
     client.dispose();
@@ -119,7 +126,7 @@ class _DataUploader {
 
   _DataUploader(this._client);
 
-  Future<void> run() async {
+  Future<_UploadSummary> run() async {
     // 0. Перед загрузкой очищаем таблицы в schema content
     await _clearContentSchemaData();
 
@@ -129,9 +136,12 @@ class _DataUploader {
     final apps = await _readJson('assets/data/apps.json');
     final books = await _readJson('assets/data/books.json');
     final banners = await _readJson('assets/data/banners.json');
-
-    print(
-      'Загружено: ${games.length} игр, ${apps.length} приложений, ${books.length} книг, ${banners.length} баннеров',
+    await _assertStorageLinksPrepared();
+    _validateGeneratedMediaUrls(
+      games: games,
+      apps: apps,
+      books: books,
+      banners: banners,
     );
 
     // Предзагрузка существующих products для повторного запуска
@@ -157,6 +167,13 @@ class _DataUploader {
 
     // 8. Вставляем баннеры
     await _uploadBanners(banners);
+
+    return _UploadSummary(
+      games: games.length,
+      apps: apps.length,
+      books: books.length,
+      banners: banners.length,
+    );
   }
 
   Future<void> _clearContentSchemaData() async {
@@ -1038,6 +1055,53 @@ class _DataUploader {
         .toList();
   }
 
+  Future<void> _assertStorageLinksPrepared() async {
+    // Ссылки теперь подготавливаются напрямую в *_text_data.dart
+    // через tools/generators/sync_storage_media_lists.dart.
+  }
+
+  void _validateGeneratedMediaUrls({
+    required List<Map<String, dynamic>> games,
+    required List<Map<String, dynamic>> apps,
+    required List<Map<String, dynamic>> books,
+    required List<Map<String, dynamic>> banners,
+  }) {
+    bool isHttpUrl(dynamic value) =>
+        value is String &&
+        (value.startsWith('https://') || value.startsWith('http://'));
+
+    bool hasInvalidScreenshots(List<Map<String, dynamic>> items) {
+      for (final item in items) {
+        final screenshots = item['screenshots'];
+        if (screenshots is! List) continue;
+        if (screenshots.any((s) => !isHttpUrl(s))) return true;
+      }
+      return false;
+    }
+
+    final gamesInvalidIcons = games.any((item) => !isHttpUrl(item['iconUrl']));
+    final appsInvalidIcons = apps.any((item) => !isHttpUrl(item['iconUrl']));
+    final booksInvalidIcons = books.any((item) => !isHttpUrl(item['iconUrl']));
+    final gamesInvalidShots = hasInvalidScreenshots(games);
+    final appsInvalidShots = hasInvalidScreenshots(apps);
+    final bannersInvalidImages = banners.any(
+      (item) => !isHttpUrl(item['imageAssetPath']),
+    );
+
+    if (gamesInvalidIcons ||
+        appsInvalidIcons ||
+        booksInvalidIcons ||
+        gamesInvalidShots ||
+        appsInvalidShots ||
+        bannersInvalidImages) {
+      throw StateError(
+        'В JSON обнаружены неактуальные ссылки (не HTTP URL). '
+        'Сначала запустите по порядку: '
+        'затем dart run tools/generate_data.dart',
+      );
+    }
+  }
+
   /// Извлекает строковое значение из локализованного поля {"en": "...", "ru": "..."}
   String _locValue(dynamic field, String lang) {
     if (field is Map) {
@@ -1081,4 +1145,18 @@ class _DataUploader {
     if (value == 'action') return 'action';
     return 'event';
   }
+}
+
+class _UploadSummary {
+  final int games;
+  final int apps;
+  final int books;
+  final int banners;
+
+  const _UploadSummary({
+    required this.games,
+    required this.apps,
+    required this.books,
+    required this.banners,
+  });
 }

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:faker/faker.dart';
+
 import 'apps_text_data.dart';
 
 late int count;
@@ -122,6 +123,16 @@ List<String> _pickAgeRatingReasonsByAge(Random random, int ageRating) {
 Future<void> runApps(int count) async {
   final faker = Faker();
   final Random random = Random();
+
+  if (icons.isEmpty) {
+    throw StateError(
+      'Список icons пуст в apps_text_data.dart.\n'
+      'Запустите сначала: dart run tools/generators/sync_storage_media_lists.dart',
+    );
+  }
+
+  final List<String> iconUrls = List<String>.from(icons);
+  final List<String> screenshotUrls = List<String>.from(screenshots);
   final List<Map<String, dynamic>> appsList = [];
 
   // Основной цикл генерации
@@ -218,12 +229,12 @@ Future<void> runApps(int count) async {
     }
 
     // Логика иконок
-    final String localIcon = faker.randomGenerator.element(icons);
+    final String localIcon = faker.randomGenerator.element(iconUrls);
 
     // Логика скриншотов (5 случайных вертикальных)
     final List<String> selectedScreenshots = List.generate(
       5,
-      (_) => faker.randomGenerator.element(screenshots),
+      (_) => faker.randomGenerator.element(screenshotUrls),
     );
 
     // Логика дат

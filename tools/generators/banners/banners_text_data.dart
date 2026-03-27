@@ -13,3 +13,14 @@ const Map<String, String> tooltipEnByRu = {
   'Акция': 'Promo',
   'Рекомендуем': 'Recommended',
 };
+
+const List<String> bannerImages = [
+  'https://fglkdacurfxnwutkgoza.supabase.co/storage/v1/object/public/banners/images/banner1.webp',
+  'https://fglkdacurfxnwutkgoza.supabase.co/storage/v1/object/public/banners/images/banner2.webp',
+  'https://fglkdacurfxnwutkgoza.supabase.co/storage/v1/object/public/banners/images/banner3.webp',
+  'https://fglkdacurfxnwutkgoza.supabase.co/storage/v1/object/public/banners/images/banner4.webp',
+  'https://fglkdacurfxnwutkgoza.supabase.co/storage/v1/object/public/banners/images/banner5.webp',
+  'https://fglkdacurfxnwutkgoza.supabase.co/storage/v1/object/public/banners/images/banner6.webp',
+  'https://fglkdacurfxnwutkgoza.supabase.co/storage/v1/object/public/banners/images/banner7.webp',
+  'https://fglkdacurfxnwutkgoza.supabase.co/storage/v1/object/public/banners/images/banner8.webp',
+];

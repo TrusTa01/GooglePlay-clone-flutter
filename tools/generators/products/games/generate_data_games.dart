@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:faker/faker.dart';
+
 import 'games_text_data.dart';
 
 late int count;
@@ -14,12 +15,28 @@ Map<String, String> _loc(String en, String ru) => {'en': en, 'ru': ru};
 Future<void> runGames(int count) async {
   final faker = Faker();
   final Random random = Random();
+
+  // После запуска sync_storage_media_lists.dart списки icons,
+  // verticalScreenshots, horizontalScreenshots содержат готовые публичные URL.
+  final List<String> iconUrls = List<String>.from(icons);
+  final List<String> verticalScreenshotUrls = List<String>.from(
+    verticalScreenshots,
+  );
+  final List<String> horizontalScreenshotUrls = List<String>.from(
+    horizontalScreenshots,
+  );
+
+  if (iconUrls.isEmpty) {
+    throw StateError(
+      'Список icons пуст в games_text_data.dart.\n'
+      'Запустите сначала: dart run tools/generators/sync_storage_media_lists.dart',
+    );
+  }
+
   final List<Map<String, dynamic>> gamesList = [];
 
-  // Основной цикл генерации
   for (int i = 1; i <= count; i++) {
-    // Генерируем ID с префиксом 'g' (game)
-    final String id = 'g_$i'.toString();
+    final String id = 'g_$i';
 
     final int adjIdx = random.nextInt(titleWords.length);
     final int nounIdx = random.nextInt(suffixWords.length);
@@ -30,14 +47,13 @@ Future<void> runGames(int count) async {
     final String generatedTitleEn =
         '${titleWordsEn[adjIdx]} ${suffixWordsEn[nounIdx]} $randomSuffix';
 
-    // Логика ивентов
-    Map<String, String>? generateEventText(Random random) {
-      // Шанс 10%
-      if (random.nextInt(100) >= 10) return null;
+    // Логика ивентов (шанс 10%)
+    Map<String, String>? generateEventText(Random r) {
+      if (r.nextInt(100) >= 10) return null;
 
-      final int endsInDays = random.nextInt(9) + 1;
-      final int endsOnDay = random.nextInt(28) + 1;
-      final int idx = random.nextInt(8);
+      final int endsInDays = r.nextInt(9) + 1;
+      final int endsOnDay = r.nextInt(28) + 1;
+      final int idx = r.nextInt(8);
 
       final variationsRu = [
         'Крупное обновление',
@@ -71,13 +87,12 @@ Future<void> runGames(int count) async {
     final bool isKidsFriendly = ageRating <= 7;
 
     // Логика жанров (от 1 до 3)
-    // Для детских игр: 70% шанс взять жанр из kidsGenres
-    int genreCount = faker.randomGenerator.integer(4, min: 1);
+    final int genreCount = faker.randomGenerator.integer(4, min: 1);
     List<String> selectedGenres;
     if (isKidsFriendly) {
       final allGenresForKids = [
         ...kidsGenres,
-        ...kidsGenres, // дублируем для повышения вероятности
+        ...kidsGenres,
         ...genres.where((g) => g != 'Все категории'),
       ]..shuffle();
       selectedGenres = allGenresForKids
@@ -91,17 +106,13 @@ Future<void> runGames(int count) async {
       )..shuffle()).take(genreCount).toList();
     }
 
-    // Выбираем случайный индекс разработчика до использования в creator
     final int devIndex = random.nextInt(developerCompanies.length);
 
-    // Логика цены (10% шанс, что isPaid будет true)
-    // Генерируем число от 0 до 99. Если оно < 10, то это 10% шанс.
+    // Логика цены (10% шанс)
     final bool isPaid = faker.randomGenerator.integer(100) < 10;
     double? price;
-
     if (isPaid) {
-      final int wholeAmount = faker.randomGenerator.integer(500, min: 1);
-      price = wholeAmount.toDouble();
+      price = faker.randomGenerator.integer(500, min: 1).toDouble();
     }
 
     final String currencyCode = faker.randomGenerator.element([
@@ -109,34 +120,52 @@ Future<void> runGames(int count) async {
       'EUR',
       'RUB',
     ]);
+
     double? discountPrice;
     if (isPaid && price != null && faker.randomGenerator.integer(100) < 25) {
       final double discountPercent = 0.6 + random.nextDouble() * 0.35;
       discountPrice = (price * discountPercent).roundToDouble();
     }
 
-    // Логика иконок
-    final String localIcon = faker.randomGenerator.element(icons);
+    // Иконка
+    final String localIcon = faker.randomGenerator.element(iconUrls);
 
-    // Логика скриншотов
-    List<String> selectedScreenshots = [];
-
-    // Шанс 50/50: либо только вертикальные, либо сначала горизонтальные
-    if (random.nextBool()) {
-      // Вариант 1: только вертикальные (часто для портретных игр)
-      selectedScreenshots = List.generate(
-        5,
-        (_) => verticalScreenshots[random.nextInt(verticalScreenshots.length)],
-      );
-    } else {
-      // Вариант 2: сначала 1-2 горизонтальных (трейлеры/промо), потом вертикальные
-      selectedScreenshots.add(
-        faker.randomGenerator.element(horizontalScreenshots),
-      );
+    // Скриншоты (шанс 50/50: только вертикальные или горизонтальные + вертикальные)
+    final List<String> selectedScreenshots = [];
+    if (verticalScreenshotUrls.isNotEmpty &&
+        horizontalScreenshotUrls.isNotEmpty) {
+      if (random.nextBool()) {
+        selectedScreenshots.addAll(
+          List.generate(
+            5,
+            (_) =>
+                verticalScreenshotUrls[random.nextInt(
+                  verticalScreenshotUrls.length,
+                )],
+          ),
+        );
+      } else {
+        selectedScreenshots.add(
+          faker.randomGenerator.element(horizontalScreenshotUrls),
+        );
+        selectedScreenshots.addAll(
+          List.generate(
+            4,
+            (_) =>
+                verticalScreenshotUrls[random.nextInt(
+                  verticalScreenshotUrls.length,
+                )],
+          ),
+        );
+      }
+    } else if (verticalScreenshotUrls.isNotEmpty) {
       selectedScreenshots.addAll(
         List.generate(
-          6,
-          (_) => faker.randomGenerator.element(verticalScreenshots),
+          5,
+          (_) =>
+              verticalScreenshotUrls[random.nextInt(
+                verticalScreenshotUrls.length,
+              )],
         ),
       );
     }
@@ -151,12 +180,12 @@ Future<void> runGames(int count) async {
       maxYear: 2025,
     );
 
-    // Логика размера и версии
+    // Размер и версия
     final String version =
         '${random.nextInt(5)}.${random.nextInt(10)}.${random.nextInt(10)}';
     final String size = (random.nextDouble() * 500 + 10).toStringAsFixed(1);
 
-    // Логика разрешений (от 2 до 12)
+    // Разрешения (от 2 до 12)
     final int permCount = random.nextInt(11) + 2;
     final List<String> selectedPermissions = List.generate(
       permCount,
@@ -167,14 +196,11 @@ Future<void> runGames(int count) async {
     final int tagCount = random.nextInt(5) + 3;
     List<String> selectedTags;
 
-    // Для детских игр добавляем детские теги + жанр "Обучающие" тоже считается детским
     final bool isKidsGame =
         isKidsFriendly || selectedGenres.contains('educational');
-
     if (isKidsGame) {
-      final int kidsTagCount = random.nextInt(2) + 2; // 2-3
-      final int regularTagCount = random.nextInt(2) + 2; // 2-3
-
+      final int kidsTagCount = random.nextInt(2) + 2;
+      final int regularTagCount = random.nextInt(2) + 2;
       selectedTags = [
         ...(List<String>.from(kidsTags)..shuffle()).take(kidsTagCount),
         ...(List<String>.from(gameTags)..shuffle()).take(regularTagCount),
@@ -185,7 +211,7 @@ Future<void> runGames(int count) async {
       )..shuffle()).take(tagCount).toList();
     }
 
-    // Ачивки (0..6, чтобы часть игр была без достижений)
+    // Ачивки (0..6)
     final int achievementCount = random.nextInt(7);
     final List<String> selectedAchievementsRu = (List<String>.from(
       achievementTitlesRu,
@@ -264,9 +290,7 @@ Future<void> runGames(int count) async {
           .toList(),
       "screenshots": selectedScreenshots,
       "tags": selectedTags.map((tag) {
-        // kidsTags — ключи (math/drawing/...), gameTags — ключи (survival/fantasy/...)
         if (kidsTagsRuByKey.containsKey(tag)) {
-          // kids: ru=перевод, en=ключ (как в исходных тегах)
           return _loc(tag, kidsTagsRuByKey[tag]!);
         }
         final String? ruTag = gameTagsRuByEn[tag];
@@ -285,7 +309,6 @@ Future<void> runGames(int count) async {
       "gameModes": faker.randomGenerator.element(modes),
       "hasControllerSupport": faker.randomGenerator.boolean(),
       "supportedLanguages": supportedLanguages,
-      // Информация о разработчике
       "developerCompany": _loc(
         developerCompanies[devIndex],
         developerCompanies[devIndex],
@@ -308,7 +331,6 @@ Future<void> runGames(int count) async {
     gamesList.add(gameData);
   }
 
-  // Запись в файл
   final file = File('assets/data/games.json');
   if (!await file.parent.exists()) {
     await file.parent.create(recursive: true);

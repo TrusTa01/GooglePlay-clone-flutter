@@ -81,6 +81,14 @@ int _pageCountFromGenre(Random r, String genreRu) {
 Future<void> runBooks(int count) async {
   final faker = Faker();
   final Random random = Random();
+
+  if (icons.isEmpty) {
+    throw StateError(
+      'Список icons пуст в books_text_data.dart.\n'
+      'Запустите сначала: dart run tools/generators/sync_storage_media_lists.dart',
+    );
+  }
+
   final List<Map<String, dynamic>> booksList = [];
 
   // Основной цикл генерации
@@ -145,7 +153,7 @@ Future<void> runBooks(int count) async {
       discountPrice = dp < price ? dp : null;
     }
 
-    // Логика иконок
+    // После sync_storage_media_lists.dart список icons содержит готовые публичные URL
     final String localIcon = faker.randomGenerator.element(icons);
 
     // Логика дат
