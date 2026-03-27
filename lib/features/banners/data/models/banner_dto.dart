@@ -9,10 +9,10 @@ typedef LocalizedString = Map<String, String>;
 sealed class BannerDto with _$BannerDto {
   const BannerDto._();
 
-  @FreezedUnionValue('simple')
-  const factory BannerDto.simple({
+  @FreezedUnionValue('event')
+  const factory BannerDto.event({
     required String id,
-    @Default('simple') String type,
+    @Default('event') String type,
     required String imageAssetPath,
     required LocalizedString title,
     LocalizedString? topToolTipText,
@@ -20,7 +20,7 @@ sealed class BannerDto with _$BannerDto {
     String? eventId,
     String? eventCategory,
     LocalizedString? eventDescription,
-  }) = SimpleBannerDto;
+  }) = EventBannerDto;
 
   @FreezedUnionValue('action')
   const factory BannerDto.action({

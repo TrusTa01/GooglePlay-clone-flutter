@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/di/usecase_providers.dart';
-import 'package:google_play/features/banners/domain/entities/simple_banner_entity.dart';
+import 'package:google_play/features/banners/domain/entities/event_banner_entity.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/features/events/presentation/viewmodels/product_event_state.dart';
 import 'package:google_play/features/events/presentation/viewmodels/ui_mappers/event_section_ui_mapper.dart';
@@ -34,7 +34,7 @@ class ProductEventViewModel extends _$ProductEventViewModel {
         locale: locale.languageCode,
       );
 
-      if (banner == null || banner is! SimpleBannerEntity) {
+      if (banner == null || banner is! EventBannerEntity) {
         state = state.copyWith(isLoading: false, error: 'Event not found');
         return;
       }

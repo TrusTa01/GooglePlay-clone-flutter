@@ -35,7 +35,13 @@ class ProductLocalDatasource {
     return _loadList<BannerDto>(
       fileName: fileName,
       cache: _bannersCache,
-      fromMap: (map) => BannerDto.fromJson(map),
+      fromMap: (map) {
+        final normalized = Map<String, dynamic>.from(map);
+        if (normalized['type'] == 'simple') {
+          normalized['type'] = 'event';
+        }
+        return BannerDto.fromJson(normalized);
+      },
     );
   }
 

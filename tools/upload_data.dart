@@ -156,6 +156,8 @@ class _DataUploader {
     const tablesInDeleteOrder = <String>[
       'product_tags',
       'product_categories',
+      'banner_actions',
+      'banner_events',
       'games',
       'apps',
       'books',
@@ -200,6 +202,9 @@ class _DataUploader {
       case 'categories':
       case 'tags':
         return _deleteByIdBatches<int>(table, 'id');
+      case 'banner_actions':
+      case 'banner_events':
+        return _deleteByIdBatches<String>(table, 'banner_id');
       case 'product_tags':
       case 'product_categories':
         return _deleteByProductIdBatches(table);
@@ -838,24 +843,39 @@ class _DataUploader {
     }
 
     final List<Map<String, dynamic>> bannerRows = [];
+    final List<Map<String, dynamic>> bannerEventRows = [];
+    final List<Map<String, dynamic>> bannerActionRows = [];
 
     for (final b in banners) {
       final sourceId = (b['id'] ?? '').toString();
       final type = _normalizeBannerType((b['type'] ?? '').toString());
+      // ignore: deprecated_member_use
+      final bannerId = _uuid.v5(Uuid.NAMESPACE_URL, 'banner:$sourceId');
 
       bannerRows.add({
         // Стабильный UUID на базе source-id для безопасного повторного запуска.
-        // ignore: deprecated_member_use
-        'id': _uuid.v5(Uuid.NAMESPACE_URL, 'banner:$sourceId'),
+        'id': bannerId,
         'type': type,
         'image_asset_path': (b['imageAssetPath'] ?? '').toString(),
-        'title': _locValue(b['title'], 'ru'),
-        'top_tooltip_text': _locValue(b['topToolTipText'], 'ru'),
-        'description': _locValue(b['description'], 'ru'),
-        'event_id': _asNullableString(b['eventId']),
-        'event_category': _asNullableString(b['eventCategory']),
-        'event_description': _locValue(b['eventDescription'], 'ru'),
+        'title': _asLocalizedMap(b['title']),
+        'top_tooltip_text': _asNullableLocalizedMap(b['topToolTipText']),
+        'description': _asLocalizedMap(b['description']),
       });
+
+      if (type == 'event') {
+        bannerEventRows.add({
+          'banner_id': bannerId,
+          'event_id': _asNullableString(b['eventId']),
+          'event_category': _asNullableString(b['eventCategory']),
+          'event_description': _asNullableLocalizedMap(b['eventDescription']),
+        });
+      } else if (type == 'action') {
+        bannerActionRows.add({
+          'banner_id': bannerId,
+          // В моках productId соответствует products.external_id (например g_407).
+          'product_external_id': _asNullableString(b['productId']),
+        });
+      }
     }
 
     await _batchUpsert(
@@ -863,6 +883,20 @@ class _DataUploader {
       bannerRows,
       'id',
       label: 'banners',
+      schema: 'content',
+    );
+    await _batchUpsert(
+      'banner_events',
+      bannerEventRows,
+      'banner_id',
+      label: 'banner_events',
+      schema: 'content',
+    );
+    await _batchUpsert(
+      'banner_actions',
+      bannerActionRows,
+      'banner_id',
+      label: 'banner_actions',
       schema: 'content',
     );
 
@@ -1011,8 +1045,25 @@ class _DataUploader {
     return str.isEmpty ? null : str;
   }
 
+  Map<String, String> _asLocalizedMap(dynamic value) {
+    if (value is Map) {
+      final en = _asNullableString(value['en']) ?? '';
+      final ru = _asNullableString(value['ru']) ?? '';
+      return {'en': en, 'ru': ru};
+    }
+    final str = _asNullableString(value) ?? '';
+    return {'en': str, 'ru': str};
+  }
+
+  Map<String, String>? _asNullableLocalizedMap(dynamic value) {
+    if (value == null) return null;
+    final map = _asLocalizedMap(value);
+    final hasData = map.values.any((v) => v.trim().isNotEmpty);
+    return hasData ? map : null;
+  }
+
   String _normalizeBannerType(String value) {
     if (value == 'action') return 'action';
-    return 'simple';
+    return 'event';
   }
 }

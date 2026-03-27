@@ -26,7 +26,7 @@ String _translateTitleToEn(String ruTitle, Faker faker) {
 List<Map<String, dynamic>> _defaultBannerTemplates() {
   return [
     {
-      'type': 'simple',
+      'type': 'event',
       'imageAssetPath': 'assets/images/banners/banner_1.webp',
       'title': 'Рекомендуем',
       'topToolTipText': 'Новинка',

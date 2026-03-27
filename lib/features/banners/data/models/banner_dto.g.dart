@@ -6,10 +6,10 @@ part of 'banner_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SimpleBannerDto _$SimpleBannerDtoFromJson(Map<String, dynamic> json) =>
-    SimpleBannerDto(
+EventBannerDto _$EventBannerDtoFromJson(Map<String, dynamic> json) =>
+    EventBannerDto(
       id: json['id'] as String,
-      type: json['type'] as String? ?? 'simple',
+      type: json['type'] as String? ?? 'event',
       imageAssetPath: json['imageAssetPath'] as String,
       title: Map<String, String>.from(json['title'] as Map),
       topToolTipText: (json['topToolTipText'] as Map<String, dynamic>?)?.map(

@@ -15,8 +15,8 @@ BannerDto _$BannerDtoFromJson(
   Map<String, dynamic> json
 ) {
         switch (json['type']) {
-                  case 'simple':
-          return SimpleBannerDto.fromJson(
+                  case 'event':
+          return EventBannerDto.fromJson(
             json
           );
                 case 'action':
@@ -115,11 +115,11 @@ extension BannerDtoPatterns on BannerDto {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SimpleBannerDto value)?  simple,TResult Function( ActionBannerDto value)?  action,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( EventBannerDto value)?  event,TResult Function( ActionBannerDto value)?  action,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case SimpleBannerDto() when simple != null:
-return simple(_that);case ActionBannerDto() when action != null:
+case EventBannerDto() when event != null:
+return event(_that);case ActionBannerDto() when action != null:
 return action(_that);case _:
   return orElse();
 
@@ -138,11 +138,11 @@ return action(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SimpleBannerDto value)  simple,required TResult Function( ActionBannerDto value)  action,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( EventBannerDto value)  event,required TResult Function( ActionBannerDto value)  action,}){
 final _that = this;
 switch (_that) {
-case SimpleBannerDto():
-return simple(_that);case ActionBannerDto():
+case EventBannerDto():
+return event(_that);case ActionBannerDto():
 return action(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -157,11 +157,11 @@ return action(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SimpleBannerDto value)?  simple,TResult? Function( ActionBannerDto value)?  action,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( EventBannerDto value)?  event,TResult? Function( ActionBannerDto value)?  action,}){
 final _that = this;
 switch (_that) {
-case SimpleBannerDto() when simple != null:
-return simple(_that);case ActionBannerDto() when action != null:
+case EventBannerDto() when event != null:
+return event(_that);case ActionBannerDto() when action != null:
 return action(_that);case _:
   return null;
 
@@ -179,10 +179,10 @@ return action(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)?  simple,TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)?  action,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)?  event,TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)?  action,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case SimpleBannerDto() when simple != null:
-return simple(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto() when action != null:
+case EventBannerDto() when event != null:
+return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto() when action != null:
 return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.productId);case _:
   return orElse();
 
@@ -201,10 +201,10 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)  simple,required TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)  action,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)  event,required TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)  action,}) {final _that = this;
 switch (_that) {
-case SimpleBannerDto():
-return simple(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto():
+case EventBannerDto():
+return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto():
 return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.productId);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -219,10 +219,10 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)?  simple,TResult? Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)?  action,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)?  event,TResult? Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)?  action,}) {final _that = this;
 switch (_that) {
-case SimpleBannerDto() when simple != null:
-return simple(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto() when action != null:
+case EventBannerDto() when event != null:
+return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto() when action != null:
 return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.productId);case _:
   return null;
 
@@ -234,9 +234,9 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 /// @nodoc
 @JsonSerializable(createToJson: false)
 
-class SimpleBannerDto extends BannerDto {
-  const SimpleBannerDto({required this.id, this.type = 'simple', required this.imageAssetPath, required final  LocalizedString title, final  LocalizedString? topToolTipText, required final  LocalizedString description, this.eventId, this.eventCategory, final  LocalizedString? eventDescription}): _title = title,_topToolTipText = topToolTipText,_description = description,_eventDescription = eventDescription,super._();
-  factory SimpleBannerDto.fromJson(Map<String, dynamic> json) => _$SimpleBannerDtoFromJson(json);
+class EventBannerDto extends BannerDto {
+  const EventBannerDto({required this.id, this.type = 'event', required this.imageAssetPath, required final  LocalizedString title, final  LocalizedString? topToolTipText, required final  LocalizedString description, this.eventId, this.eventCategory, final  LocalizedString? eventDescription}): _title = title,_topToolTipText = topToolTipText,_description = description,_eventDescription = eventDescription,super._();
+  factory EventBannerDto.fromJson(Map<String, dynamic> json) => _$EventBannerDtoFromJson(json);
 
 @override final  String id;
 @override@JsonKey() final  String type;
@@ -280,13 +280,13 @@ class SimpleBannerDto extends BannerDto {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SimpleBannerDtoCopyWith<SimpleBannerDto> get copyWith => _$SimpleBannerDtoCopyWithImpl<SimpleBannerDto>(this, _$identity);
+$EventBannerDtoCopyWith<EventBannerDto> get copyWith => _$EventBannerDtoCopyWithImpl<EventBannerDto>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SimpleBannerDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&const DeepCollectionEquality().equals(other._title, _title)&&const DeepCollectionEquality().equals(other._topToolTipText, _topToolTipText)&&const DeepCollectionEquality().equals(other._description, _description)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.eventCategory, eventCategory) || other.eventCategory == eventCategory)&&const DeepCollectionEquality().equals(other._eventDescription, _eventDescription));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventBannerDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&const DeepCollectionEquality().equals(other._title, _title)&&const DeepCollectionEquality().equals(other._topToolTipText, _topToolTipText)&&const DeepCollectionEquality().equals(other._description, _description)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.eventCategory, eventCategory) || other.eventCategory == eventCategory)&&const DeepCollectionEquality().equals(other._eventDescription, _eventDescription));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -295,15 +295,15 @@ int get hashCode => Object.hash(runtimeType,id,type,imageAssetPath,const DeepCol
 
 @override
 String toString() {
-  return 'BannerDto.simple(id: $id, type: $type, imageAssetPath: $imageAssetPath, title: $title, topToolTipText: $topToolTipText, description: $description, eventId: $eventId, eventCategory: $eventCategory, eventDescription: $eventDescription)';
+  return 'BannerDto.event(id: $id, type: $type, imageAssetPath: $imageAssetPath, title: $title, topToolTipText: $topToolTipText, description: $description, eventId: $eventId, eventCategory: $eventCategory, eventDescription: $eventDescription)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $SimpleBannerDtoCopyWith<$Res> implements $BannerDtoCopyWith<$Res> {
-  factory $SimpleBannerDtoCopyWith(SimpleBannerDto value, $Res Function(SimpleBannerDto) _then) = _$SimpleBannerDtoCopyWithImpl;
+abstract mixin class $EventBannerDtoCopyWith<$Res> implements $BannerDtoCopyWith<$Res> {
+  factory $EventBannerDtoCopyWith(EventBannerDto value, $Res Function(EventBannerDto) _then) = _$EventBannerDtoCopyWithImpl;
 @override @useResult
 $Res call({
  String id, String type, String imageAssetPath, LocalizedString title, LocalizedString? topToolTipText, LocalizedString description, String? eventId, String? eventCategory, LocalizedString? eventDescription
@@ -314,17 +314,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$SimpleBannerDtoCopyWithImpl<$Res>
-    implements $SimpleBannerDtoCopyWith<$Res> {
-  _$SimpleBannerDtoCopyWithImpl(this._self, this._then);
+class _$EventBannerDtoCopyWithImpl<$Res>
+    implements $EventBannerDtoCopyWith<$Res> {
+  _$EventBannerDtoCopyWithImpl(this._self, this._then);
 
-  final SimpleBannerDto _self;
-  final $Res Function(SimpleBannerDto) _then;
+  final EventBannerDto _self;
+  final $Res Function(EventBannerDto) _then;
 
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? imageAssetPath = null,Object? title = null,Object? topToolTipText = freezed,Object? description = null,Object? eventId = freezed,Object? eventCategory = freezed,Object? eventDescription = freezed,}) {
-  return _then(SimpleBannerDto(
+  return _then(EventBannerDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as String,imageAssetPath: null == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable

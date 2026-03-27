@@ -1,6 +1,6 @@
 import 'package:google_play/core/domain/entities/base_entity.dart';
 
-enum BannerType { simple, action }
+enum BannerType { event, action }
 
 abstract class BannerEntity extends Entity {
   final BannerType type;

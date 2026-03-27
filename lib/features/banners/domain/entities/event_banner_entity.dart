@@ -1,11 +1,11 @@
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 
-final class SimpleBannerEntity extends BannerEntity {
+final class EventBannerEntity extends BannerEntity {
   final String? eventId;
   final String? eventCategory;
   final String? eventDescription;
 
-  SimpleBannerEntity({
+  EventBannerEntity({
     required super.id,
     required super.type,
     required super.imageAssetPath,
