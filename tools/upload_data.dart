@@ -25,6 +25,12 @@ const int _batchSize = 500;
 const int _cleanupBatchSize = 100;
 const int _cleanupProgressEveryBatches = 20;
 const _uuid = Uuid();
+const List<String> _dataJsonPaths = <String>[
+  'assets/data/games.json',
+  'assets/data/apps.json',
+  'assets/data/books.json',
+  'assets/data/banners.json',
+];
 
 class _CleanupStats {
   final int batches;
@@ -69,6 +75,7 @@ Future<void> main() async {
     }
     final uploader = _DataUploader(client);
     await uploader.run();
+    await _clearDataJsonFiles();
     final elapsed = DateTime.now().difference(startedAt);
     final minutes = (elapsed.inMilliseconds / 60000).toStringAsFixed(2);
     _clearTerminalScreen();
@@ -76,6 +83,14 @@ Future<void> main() async {
     print('Время выполнения: $minutes мин');
   } finally {
     client.dispose();
+  }
+}
+
+Future<void> _clearDataJsonFiles() async {
+  for (final path in _dataJsonPaths) {
+    final file = File(path);
+    if (!await file.exists()) continue;
+    await file.writeAsString('[]');
   }
 }
 
