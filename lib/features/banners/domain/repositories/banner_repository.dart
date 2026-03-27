@@ -4,8 +4,11 @@ import 'package:google_play/features/banners/domain/entities/banner_entity.dart'
 /// Контракт, который слой [Data] обязан будет реализовать
 abstract interface class IBannerRepository {
   // Получаем список всех продуктов
-  Future<List<BannerEntity>> getBanners({required String fileName});
+  Future<List<BannerEntity>> getBanners({
+    required String fileName,
+    required String locale,
+  });
 
   /// Получаем конкретный продукт по [ID]
-  Future<BannerEntity?> getBannerById({required String id});
+  Future<BannerEntity?> getBannerById({required String id, required String locale});
 }

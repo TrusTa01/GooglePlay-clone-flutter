@@ -29,7 +29,10 @@ class ProductEventViewModel extends _$ProductEventViewModel {
 
       // 1. Загружаем банер события
       final bannerRepo = ref.read(bannerRepositoryProvider);
-      final banner = await bannerRepo.getBannerById(id: eventId);
+      final banner = await bannerRepo.getBannerById(
+        id: eventId,
+        locale: locale.languageCode,
+      );
 
       if (banner == null || banner is! SimpleBannerEntity) {
         state = state.copyWith(isLoading: false, error: 'Event not found');
@@ -40,7 +43,10 @@ class ProductEventViewModel extends _$ProductEventViewModel {
       // В текущей архитектуре секции события привязаны к категории события
       final eventCategory = banner.eventCategory;
       if (eventCategory == null) {
-        state = state.copyWith(isLoading: false, error: 'Event category missing');
+        state = state.copyWith(
+          isLoading: false,
+          error: 'Event category missing',
+        );
         return;
       }
 
@@ -54,11 +60,7 @@ class ProductEventViewModel extends _$ProductEventViewModel {
       final resolveSection = ref.read(resolveSectionUseCaseProvider);
       final resolvedSections = await Future.wait(
         sections.map(
-          (s) => resolveSection(
-            s,
-            storeType.name,
-            locale.languageCode,
-          ),
+          (s) => resolveSection(s, storeType.name, locale.languageCode),
         ),
       );
 
@@ -73,11 +75,8 @@ class ProductEventViewModel extends _$ProductEventViewModel {
       final hero = heroMapper.fromEntity(data.banner);
       final mappedSections = data.sections
           .map(
-            (section) => sectionMapper.map(
-              section: section,
-              l10n: l10n,
-              locale: locale,
-            ),
+            (section) =>
+                sectionMapper.map(section: section, l10n: l10n, locale: locale),
           )
           .toList(growable: false);
 

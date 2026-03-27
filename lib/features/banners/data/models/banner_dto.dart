@@ -3,6 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'banner_dto.freezed.dart';
 part 'banner_dto.g.dart';
 
+typedef LocalizedString = Map<String, String>;
+
 @Freezed(unionKey: 'type', toJson: false)
 sealed class BannerDto with _$BannerDto {
   const BannerDto._();
@@ -12,12 +14,12 @@ sealed class BannerDto with _$BannerDto {
     required String id,
     @Default('simple') String type,
     required String imageAssetPath,
-    required String title,
-    String? topToolTipText,
-    required String description,
+    required LocalizedString title,
+    LocalizedString? topToolTipText,
+    required LocalizedString description,
     String? eventId,
     String? eventCategory,
-    String? eventDescription,
+    LocalizedString? eventDescription,
   }) = SimpleBannerDto;
 
   @FreezedUnionValue('action')
@@ -25,9 +27,9 @@ sealed class BannerDto with _$BannerDto {
     required String id,
     @Default('action') String type,
     required String imageAssetPath,
-    required String title,
-    String? topToolTipText,
-    required String description,
+    required LocalizedString title,
+    LocalizedString? topToolTipText,
+    required LocalizedString description,
     required String productId,
   }) = ActionBannerDto;
 

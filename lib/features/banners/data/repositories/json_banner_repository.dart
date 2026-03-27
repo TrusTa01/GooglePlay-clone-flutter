@@ -9,17 +9,23 @@ class JsonBannerRepository implements IBannerRepository {
   const JsonBannerRepository(this._dataSource);
 
   @override
-  Future<List<BannerEntity>> getBanners({required String fileName}) async {
+  Future<List<BannerEntity>> getBanners({
+    required String fileName,
+    required String locale,
+  }) async {
     final dtos = await _dataSource.loadBanners(fileName: fileName);
-    return dtos.map<BannerEntity>((dto) => dto.toEntity()).toList();
+    return dtos.map<BannerEntity>((dto) => dto.toEntity(locale)).toList();
   }
 
   // TODO: [cache] Реализовать проверку инициализации кэша
   // Если кэш пуст, вызвать загрузку соответствующих файлов перед поиском
   @override
-  Future<BannerEntity?> getBannerById({required String id}) async {
+  Future<BannerEntity?> getBannerById({
+    required String id,
+    required String locale,
+  }) async {
     final dto = _dataSource.getBannerById(id);
     if (dto == null) return null;
-    return dto.toEntity();
+    return dto.toEntity(locale);
   }
 }

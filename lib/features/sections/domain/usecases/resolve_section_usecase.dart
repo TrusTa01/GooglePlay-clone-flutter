@@ -37,7 +37,10 @@ class ResolveSectionUsecase {
         locale: locale,
       );
     } else if (source is BannersSource) {
-      items = await _bannerRepo.getBanners(fileName: source.prefix);
+      items = await _bannerRepo.getBanners(
+        fileName: source.prefix,
+        locale: locale,
+      );
     }
 
     return ResolvedSection(config: section, items: items);
