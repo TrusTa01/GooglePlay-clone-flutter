@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
+import 'package:google_play/core/bootstrap/app_bootstrap.dart';
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
+import 'package:google_play/core/presentation/screens/initialization_error_screen.dart';
 import 'package:google_play/core/routes/app_router.dart';
 import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  GoogleFonts.config.allowRuntimeFetching = false;
-  debugRepaintRainbowEnabled = false;
-  runApp(const ProviderScope(child: GooglePlay()));
+void main() async {
+  Widget initialWidget;
+  try {
+    await AppBootstrap.init();
+    initialWidget = const GooglePlay();
+  } catch (e) {
+    initialWidget = InitializationErrorScreen(error: e.toString());
+  }
+  runApp(ProviderScope(child: initialWidget));
 }
 
 class GooglePlay extends ConsumerWidget {

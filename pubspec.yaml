@@ -36,6 +36,7 @@ dependencies:
   supabase: ^2.10.3
   supabase_flutter: ^2.12.1
   dotenv: ^4.2.0
+  flutter_dotenv: ^6.0.0
 
   # localization
   flutter_localizations:
@@ -59,6 +60,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - .env
 
   fonts:
     - family: Nunito
