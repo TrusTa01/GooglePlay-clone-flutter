@@ -301,7 +301,6 @@ Future<void> runApps(int count) async {
     final String appName = suffixEn.toLowerCase().replaceAll(' ', '');
     final String packageName = 'com.$company.$appName';
 
-    // Выбираем случайный индекс разработчика до использования в creator
     final int devIndex = random.nextInt(developerCompanies.length);
 
     // store-like rating + downloads + reviews
@@ -449,10 +448,6 @@ Future<void> runApps(int count) async {
       "type": "app",
       "id": id,
       "title": _loc(generatedTitleEn, generatedTitleRu),
-      "creator": _loc(
-        developerCompanies[devIndex],
-        developerCompanies[devIndex],
-      ),
       "rating": rating,
       "iconUrl": localIcon,
       "isPaid": isPaid,

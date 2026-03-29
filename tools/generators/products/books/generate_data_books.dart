@@ -265,17 +265,19 @@ Future<void> runBooks(int count) async {
       isPaid: isPaid,
     );
 
-    // Описание автора (от 3 предложений до нескольких абзацев)
-    final int paragraphCount = random.nextInt(4) + 1; // 1-4 абзаца
-    final List<String> paragraphs = List.generate(paragraphCount, (index) {
-      final int sentenceCount =
-          random.nextInt(5) + 3; // 3-7 предложений в абзаце
-      return faker.lorem.sentences(sentenceCount).join(' ');
-    });
-    final String creatorDescriptionRu =
-        '$authorName — ${paragraphs.join('\n\n')}';
-    final String creatorDescriptionEn =
-        '$authorName — ${paragraphs.join('\n\n')}';
+    // Описание издательства (в БД — publishers.description)
+    final int publisherParagraphCount = random.nextInt(4) + 1; // 1-4 абзаца
+    final List<String> publisherParagraphs = List.generate(
+      publisherParagraphCount,
+      (index) {
+        final int sentenceCount = random.nextInt(5) + 3;
+        return faker.lorem.sentences(sentenceCount).join(' ');
+      },
+    );
+    final String publisherDescriptionRu =
+        '$publisher — ${publisherParagraphs.join('\n\n')}';
+    final String publisherDescriptionEn =
+        '$publisher — ${publisherParagraphs.join('\n\n')}';
 
     final String titleRu = generatedTitle;
     final String titleEn = faker.lorem.words(2).join(' ');
@@ -297,8 +299,11 @@ Future<void> runBooks(int count) async {
       "id": id,
       "url": "https://play.google.com/store/books/details?id=$id",
       "title": _loc(titleEn, titleRu),
-      "creator": _loc(authorName, authorName),
-      "creatorDescription": _loc(creatorDescriptionEn, creatorDescriptionRu),
+      "author": _loc(authorName, authorName),
+      "publisherDescription": _loc(
+        publisherDescriptionEn,
+        publisherDescriptionRu,
+      ),
       "rating": rating,
       "reviewsCount": reviewsCount,
       "iconUrl": localIcon,

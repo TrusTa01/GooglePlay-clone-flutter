@@ -233,10 +233,6 @@ Future<void> runGames(int count) async {
       "type": "game",
       "id": id,
       "title": _loc(generatedTitleEn, generatedTitleRu),
-      "creator": _loc(
-        developerCompanies[devIndex],
-        developerCompanies[devIndex],
-      ),
       "rating": faker.randomGenerator.integer(50) / 10.0,
       "iconUrl": localIcon,
       "isPaid": isPaid,

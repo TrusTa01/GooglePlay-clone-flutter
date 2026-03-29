@@ -121,6 +121,8 @@ class _DataUploader {
   final Map<String, int> _categoryIds = {};
   // tagKey (строка "type:name_en") → integer id в БД
   final Map<String, int> _tagIds = {};
+  // publisherDedupKey (en+ru) -> UUID в БД
+  final Map<String, String> _publisherIds = {};
   // external_id -> products.id (uuid) для безопасного повторного запуска
   final Map<String, String> _productIdsByExternalId = {};
 
@@ -156,16 +158,19 @@ class _DataUploader {
     // 4. Вставляем теги
     await _uploadTags([...games, ...apps, ...books]);
 
-    // 5. Вставляем игры
+    // 5. Вставляем издателей
+    await _uploadPublishers(books);
+
+    // 6. Вставляем игры
     await _uploadGames(games);
 
-    // 6. Вставляем приложения
+    // 7. Вставляем приложения
     await _uploadApps(apps);
 
-    // 7. Вставляем книги
+    // 8. Вставляем книги
     await _uploadBooks(books);
 
-    // 8. Вставляем баннеры
+    // 9. Вставляем баннеры
     await _uploadBanners(banners);
 
     return _UploadSummary(
@@ -193,6 +198,7 @@ class _DataUploader {
       'games',
       'apps',
       'books',
+      'publishers',
       'software_products',
       'products',
       'developers',
@@ -517,6 +523,40 @@ class _DataUploader {
   }
 
   // ────────────────────────────────────────────────────────────────────────────
+  // Издатели (publishers)
+  // ────────────────────────────────────────────────────────────────────────────
+
+  Future<void> _uploadPublishers(List<Map<String, dynamic>> books) async {
+    print('\n[publishers] Дедупликация...');
+
+    final Map<String, Map<String, dynamic>> unique = {};
+
+    for (final b in books) {
+      final publisherLoc = _asLocalizedMap(b['publisher']);
+      final dedupKey = _publisherDedupKey(publisherLoc);
+      if (dedupKey.isEmpty) continue;
+
+      unique.putIfAbsent(
+        dedupKey,
+        () => {
+          'id': _uuid.v5(Uuid.NAMESPACE_URL, 'publisher:$dedupKey'),
+          // jsonb: те же локализованные поля, что и в мок-JSON книг
+          'publisher': publisherLoc,
+          'description':
+              b['publisherDescription'] ?? b['creatorDescription'] ?? {},
+        },
+      );
+      _publisherIds[dedupKey] = unique[dedupKey]!['id'] as String;
+    }
+
+    final rows = unique.values.toList();
+    print('[publishers] Уникальных: ${rows.length}');
+
+    await _batchUpsert('publishers', rows, 'id', label: 'publishers');
+    print('[publishers] Готово');
+  }
+
+  // ────────────────────────────────────────────────────────────────────────────
   // Игры
   // ────────────────────────────────────────────────────────────────────────────
 
@@ -540,8 +580,6 @@ class _DataUploader {
         'external_id': externalId,
         'type': 'game',
         'title': g['title'],
-        'creator': g['creator'],
-        'creator_description': g['creatorDescription'],
         'short_description': g['shortDescription'],
         'description': g['description'],
         'rating': (g['rating'] as num).toDouble(),
@@ -665,8 +703,6 @@ class _DataUploader {
         'external_id': externalId,
         'type': 'app',
         'title': a['title'],
-        'creator': a['creator'],
-        'creator_description': a['creatorDescription'],
         'short_description': a['shortDescription'],
         'description': a['description'],
         'rating': (a['rating'] as num).toDouble(),
@@ -782,8 +818,6 @@ class _DataUploader {
         'external_id': externalId,
         'type': 'book',
         'title': b['title'],
-        'creator': b['creator'],
-        'creator_description': b['creatorDescription'],
         'short_description': b['shortDescription'],
         'description': b['description'],
         'rating': (b['rating'] as num).toDouble(),
@@ -797,10 +831,17 @@ class _DataUploader {
         'url': b['url'] ?? '',
       });
 
+      final publisherLoc = _asLocalizedMap(b['publisher']);
+      final dedupKey = _publisherDedupKey(publisherLoc);
+      final publisherId = dedupKey.isEmpty
+          ? _uuid.v5(Uuid.NAMESPACE_URL, 'publisher:')
+          : (_publisherIds[dedupKey] ??
+                _uuid.v5(Uuid.NAMESPACE_URL, 'publisher:$dedupKey'));
+
       // books
       bookRows.add({
         'id': productId,
-        'publisher': b['publisher'] ?? {'en': '', 'ru': ''},
+        'publisher_id': publisherId,
         'page_count': b['pageCount'] ?? 0,
         'language': b['language'] ?? '',
         'format': b['format'] ?? '',
@@ -1116,6 +1157,13 @@ class _DataUploader {
     }
     if (field is String) return field;
     return '';
+  }
+
+  /// Стабильный ключ для дедупликации издателей (совпадает с UUID seed).
+  String _publisherDedupKey(Map<String, String> loc) {
+    final en = (loc['en'] ?? '').trim();
+    final ru = (loc['ru'] ?? '').trim();
+    return '$en\x1f$ru';
   }
 
   String? _asNullableString(dynamic value) {
