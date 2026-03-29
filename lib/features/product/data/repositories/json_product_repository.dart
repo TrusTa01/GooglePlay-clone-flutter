@@ -1,132 +1,98 @@
-import 'package:google_play/features/product/data/datasources/product_local_datasource.dart';
-import 'package:google_play/features/product/data/models/product_dto.dart';
+import 'package:google_play/core/data/product/product_remote_views_enum.dart';
+import 'package:google_play/core/domain/result_pattern/product_failure.dart';
+import 'package:google_play/core/domain/result_pattern/product_result.dart';
+import 'package:google_play/features/product/data/datasources/remote/supabase_product_remote_datasource.dart';
 import 'package:google_play/features/product/data/mappers/app_mapper.dart';
 import 'package:google_play/features/product/data/mappers/book_mapper.dart';
 import 'package:google_play/features/product/data/mappers/game_mapper.dart';
+import 'package:google_play/features/product/data/models/product_dto.dart';
+import 'package:google_play/features/product/domain/entities/app_entity.dart';
+import 'package:google_play/features/product/domain/entities/book_entity.dart';
+import 'package:google_play/features/product/domain/entities/game_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/features/product/domain/entities/product_filter.dart';
 import 'package:google_play/features/product/domain/repositories/product_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class JsonProductRepository implements IProductRepository {
-  final ProductLocalDatasource _dataSource;
+class SupabaseBackedProductRepository implements IProductRepository {
+  final SupabaseProductRemoteDatasource _remote;
 
-  const JsonProductRepository(this._dataSource);
+  SupabaseBackedProductRepository({required SupabaseProductRemoteDatasource remote})
+    : _remote = remote;
 
-  @override
-  Future<List<ProductEntity>> getProducts({
-    required String type,
+  Future<ProductResult<List<TEntity>>>
+  _getProductsGeneric<TDto extends ProductDto, TEntity extends ProductEntity>({
     required String locale,
+    required int page,
+    int pageSize = 20,
+    required ProductRemoteViews view,
+    required ({String column, bool ascending}) order,
+    required TDto Function(Map<String, dynamic>) fromJson,
+    required TEntity Function(TDto dto, String locale) toEntity,
   }) async {
-    // Определяем файл по типу
-    final fileName = switch (type) {
-      'game' => 'games.json',
-      'app' => 'apps.json',
-      _ => 'books.json',
-    };
-
-    // Получаем список DTO из датасорса
-    final dtos = await _dataSource.loadProducts(fileName: fileName);
-
-    return dtos.map<ProductEntity>((dto) {
-      if (dto is GameDto) return dto.toEntity(locale);
-      if (dto is AppDto) return dto.toEntity(locale);
-      if (dto is BookDto) return dto.toEntity(locale);
-      throw Exception('Mapping error');
-    }).toList();
+    try {
+      final dtos = await _remote.getProducts(
+        view: view,
+        order: order,
+        page: page,
+        pageSize: pageSize,
+        fromJson: fromJson,
+      );
+      return ProductOk(dtos.map((dto) => toEntity(dto, locale)).toList());
+    } on PostgrestException catch (e) {
+      return ProductErr(ProductNetworkFailure(e.message, cause: e));
+    } catch (e, st) {
+      return ProductErr(ProductUnknownFailure(e, st));
+    }
   }
 
   @override
-  Future<ProductEntity?> getProductById(
-    String id, {
+  Future<ProductResult<List<GameEntity>>> getGames({
     required String locale,
+    required int page,
+    int pageSize = 20,
   }) async {
-    final dto = _dataSource.getProductById(id);
-    // TODO: [cache] Реализовать проверку инициализации кэша
-    // Если кэш пуст, вызвать загрузку соответствующих файлов перед поиском
-    if (dto == null) return null;
-
-    // Мапим в зависимости от того, что пришло
-    if (dto is GameDto) return dto.toEntity(locale);
-    if (dto is AppDto) return dto.toEntity(locale);
-    if (dto is BookDto) return dto.toEntity(locale);
-    return null;
+    return _getProductsGeneric(
+      locale: locale,
+      view: ProductRemoteViews.games,
+      page: page,
+      pageSize: pageSize,
+      order: (column: 'release_date', ascending: false),
+      fromJson: GameDto.fromJson,
+      toEntity: (dto, loc) => dto.toEntity(loc),
+    );
   }
 
   @override
-  Future<List<ProductEntity>> getSimilarProducts(
-    ProductEntity product,
-    String locale,
-  ) async {
-    // Получаем все загруженные продукты из DataSource
-    final allDtos = _dataSource.getAllCachedDtos<ProductDto>();
-
-    // TODO: [db] Логика поиска похожих
-    final similarDtos = allDtos
-        .where((dto) {
-          // Не возвращаем тот же самый продукт
-          if (dto.id == product.id) return false;
-
-          // Сравниваем тип (игры к играм, книги к книгам)
-          return dto.type == product.type;
-        })
-        .take(10)
-        .toList(); // Берем первые 10 для примера
-
-    // Мапим результат в Entity
-    return similarDtos.map((dto) {
-      if (dto is GameDto) return dto.toEntity(locale);
-      if (dto is AppDto) return dto.toEntity(locale);
-      if (dto is BookDto) return dto.toEntity(locale);
-      throw Exception('Unknown DTO type');
-    }).toList();
-  }
-
-  @override
-  Future<List<ProductEntity>> getProductsByFilters({
-    required List<ProductFilter> filters,
-    required String categoryType,
+  Future<ProductResult<List<AppEntity>>> getApps({
     required String locale,
+    required int page,
+    int pageSize = 20,
   }) async {
-    final allProducts = await getProducts(type: categoryType, locale: locale);
-
-    return allProducts.where((product) {
-      return filters.every((filter) {
-        return switch (filter) {
-          CategoryFilter(genre: var c) => product.categories.any(
-            (category) => category.toLowerCase() == c.toLowerCase(),
-          ),
-          CollectionFilter(collectionName: var name) => _collectionFilter(
-            product,
-            name,
-          ),
-          TagFilter(tag: var t) => product.tags.any(
-            (tag) => tag.toLowerCase() == t.toLowerCase(),
-          ),
-          IsPaidFilter(isPaid: var p) => product.isPaid == p,
-          RecommendedFilter() =>
-            product.rating >= 4.7 && product.reviewsCount >= 5000000,
-          UnknownFilter() => true,
-        };
-      });
-    }).toList();
+    return _getProductsGeneric(
+      locale: locale,
+      view: ProductRemoteViews.apps,
+      page: page,
+      pageSize: pageSize,
+      order: (column: 'release_date', ascending: false),
+      fromJson: AppDto.fromJson,
+      toEntity: (dto, loc) => dto.toEntity(loc),
+    );
   }
 
-  bool _collectionFilter(ProductEntity product, String collectionName) =>
-      switch (collectionName) {
-        'top_rated' => product.rating >= 4.6,
-        'new_releases' || 'new_release' => _isNewRelease(product),
-        'popular' => product.rating >= 4.5 && product.reviewsCount >= 200000,
-        'low_price' =>
-          product.isPaid &&
-              product.price != null &&
-              product.price! > 0 &&
-              product.price! < 4.0,
-        'bestseller' => product.rating >= 4.5,
-        _ => true,
-      };
-
-  bool _isNewRelease(ProductEntity product) {
-    const threshold = Duration(days: 90);
-    return DateTime.now().difference(product.releaseDate) <= threshold;
+  @override
+  Future<ProductResult<List<BookEntity>>> getBooks({
+    required String locale,
+    required int page,
+    int pageSize = 20,
+  }) async {
+    return _getProductsGeneric(
+      locale: locale,
+      view: ProductRemoteViews.books,
+      page: page,
+      pageSize: pageSize,
+      order: (column: 'release_date', ascending: false),
+      fromJson: BookDto.fromJson,
+      toEntity: (dto, loc) => dto.toEntity(loc),
+    );
   }
 }

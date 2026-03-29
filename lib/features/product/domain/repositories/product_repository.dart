@@ -1,28 +1,25 @@
-import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/features/product/domain/entities/product_filter.dart';
+import 'package:google_play/core/domain/result_pattern/product_result.dart';
+import 'package:google_play/features/product/domain/entities/app_entity.dart';
+import 'package:google_play/features/product/domain/entities/book_entity.dart';
+import 'package:google_play/features/product/domain/entities/game_entity.dart';
 
 // Интерфейс для работы с продуктами
 /// Контракт, который слой [Data] обязан будет реализовать
 abstract interface class IProductRepository {
-  // Получаем список всех продуктов
-  Future<List<ProductEntity>> getProducts({
-    required String type,
+  // Получение списка продуктов
+  Future<ProductResult<List<GameEntity>>> getGames({
     required String locale,
+    required int page,
+    int pageSize = 20,
   });
-
-  /// Получаем конкретный продукт по [ID]
-  Future<ProductEntity?> getProductById(String id, {required String locale});
-
-  // Получает похожие продукты
-  Future<List<ProductEntity>> getSimilarProducts(
-    ProductEntity product,
-    String locale,
-  );
-
-  // Получить продукты по фильтрам
-  Future<List<ProductEntity>> getProductsByFilters({
-    required List<ProductFilter> filters,
-    required String categoryType,
+  Future<ProductResult<List<AppEntity>>> getApps({
     required String locale,
+    required int page,
+    int pageSize = 20,
+  });
+  Future<ProductResult<List<BookEntity>>> getBooks({
+    required String locale,
+    required int page,
+    int pageSize = 20,
   });
 }
