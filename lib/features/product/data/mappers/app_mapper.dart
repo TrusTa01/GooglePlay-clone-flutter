@@ -9,7 +9,7 @@ extension AppMapper on AppDto {
       type: type,
       id: id,
       title: title.display(locale),
-      creator: developerCompany.display(locale),
+      creator: developer.company.display(locale),
       shortDescription: shortDescription.display(locale),
       description: description.display(locale),
       releaseDate: releaseDate,

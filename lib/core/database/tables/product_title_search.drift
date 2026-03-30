@@ -1,0 +1,42 @@
+import 'products/product_translations.dart';
+import 'products/cached_product.dart';
+
+CREATE VIRTUAL TABLE product_title_fts USING fts5 (
+    value,
+    content='product_translations',
+    content_rowid='rowid'
+);
+
+CREATE TRIGGER product_translations_in_title_fts
+AFTER INSERT ON product_translations
+WHEN new.field = 'title'
+BEGIN
+  INSERT INTO product_title_fts(rowid, value)
+  VALUES (new.rowid, new.value);
+END;
+
+CREATE TRIGGER product_translations_del_title_fts
+AFTER DELETE ON product_translations
+BEGIN
+  DELETE FROM product_title_fts WHERE rowid = old.rowid;
+END;
+
+CREATE TRIGGER product_translations_up_title_fts
+AFTER UPDATE ON product_translations
+BEGIN
+  DELETE FROM product_title_fts WHERE rowid = old.rowid;
+  INSERT INTO product_title_fts(rowid, value)
+  SELECT new.rowid, new.value
+  WHERE new.field = 'title';
+END;
+
+searchProductsByTitle:
+SELECT DISTINCT cp.*
+FROM product_title_fts
+JOIN product_translations AS pt
+  ON pt.rowid = product_title_fts.rowid
+  AND pt.field = 'title'
+  AND pt.language = :lang
+JOIN cached_product AS cp
+  ON cp.id = pt.product_id
+WHERE product_title_fts MATCH :query;

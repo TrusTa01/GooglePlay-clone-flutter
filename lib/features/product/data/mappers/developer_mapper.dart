@@ -5,26 +5,26 @@ import 'package:google_play/features/product/domain/entities/developer_entity.da
 /// Собирает [DeveloperEntity] из плоских полей [GameDto] / [AppDto]
 extension GameDeveloperMapper on GameDto {
   DeveloperEntity toDeveloperEntity(String locale) => DeveloperEntity(
-    company: developerCompany.display(locale),
-    address: developerAddress.display(locale),
-    city: developerCity.display(locale),
-    country: developerCountry.display(locale),
-    phone: developerPhone,
-    websiteUrl: websiteUrl,
-    emailSupport: emailSupport,
-    privacyPolicyUrl: privacyPolicyUrl,
+    company: developer.company.display(locale),
+    address: developer.address.display(locale),
+    city: developer.city.display(locale),
+    country: developer.country.display(locale),
+    phone: developer.phone,
+    websiteUrl: developer.websiteUrl,
+    emailSupport: developer.emailSupport,
+    privacyPolicyUrl: developer.privacyPolicyUrl,
   );
 }
 
 extension AppDeveloperMapper on AppDto {
   DeveloperEntity toDeveloperEntity(String locale) => DeveloperEntity(
-    company: developerCompany.display(locale),
-    address: developerAddress.display(locale),
-    city: developerCity.display(locale),
-    country: developerCountry.display(locale),
-    phone: developerPhone,
-    websiteUrl: websiteUrl,
-    emailSupport: emailSupport,
-    privacyPolicyUrl: privacyPolicyUrl,
+    company: developer.company.display(locale),
+    address: developer.address.display(locale),
+    city: developer.city.display(locale),
+    country: developer.country.display(locale),
+    phone: developer.phone,
+    websiteUrl: developer.websiteUrl,
+    emailSupport: developer.emailSupport,
+    privacyPolicyUrl: developer.privacyPolicyUrl,
   );
 }

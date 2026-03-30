@@ -1,5 +1,5 @@
 import 'package:google_play/features/product/data/datasources/product_local_datasource.dart';
-import 'package:google_play/features/product/data/repositories/json_product_repository.dart';
+import 'package:google_play/features/product/data/repositories/supabase_product_repository.dart';
 import 'package:google_play/features/product/domain/repositories/product_repository.dart';
 import 'package:google_play/features/product/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/load_products_usecase.dart';

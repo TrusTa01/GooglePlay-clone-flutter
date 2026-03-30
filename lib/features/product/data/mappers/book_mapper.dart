@@ -4,11 +4,14 @@ import 'package:google_play/features/product/domain/entities/book_entity.dart';
 
 extension BookMapper on BookDto {
   BookEntity toEntity(String locale) {
+    final publisherName = publisher.name.display(locale);
+    final publisherDescription = publisher.description.display(locale);
+
     return BookEntity(
       type: type,
       id: id,
       title: title.display(locale),
-      creator: creator.display(locale),
+      creator: publisherName,
       shortDescription: shortDescription.display(locale),
       description: description.display(locale),
       releaseDate: releaseDate,
@@ -19,12 +22,12 @@ extension BookMapper on BookDto {
       price: price,
       currencyCode: currencyCode,
       discountPrice: discountPrice,
-      creatorDescription: creatorDescription.display(locale),
+      creatorDescription: publisherDescription,
       url: url,
       tags: tags.map((t) => t.display(locale)).toList(),
       categories: categories.map((c) => c.display(locale)).toList(),
       pageCount: pageCount,
-      publisher: publisher.display(locale),
+      publisher: publisherName,
       language: language,
       format: format,
       hasAudioVersion: hasAudioVersion,

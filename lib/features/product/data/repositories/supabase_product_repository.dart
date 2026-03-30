@@ -13,11 +13,12 @@ import 'package:google_play/features/product/domain/entities/product_entity.dart
 import 'package:google_play/features/product/domain/repositories/product_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SupabaseBackedProductRepository implements IProductRepository {
+class SupabaseProductRepository implements IProductRepository {
   final SupabaseProductRemoteDatasource _remote;
 
-  SupabaseBackedProductRepository({required SupabaseProductRemoteDatasource remote})
-    : _remote = remote;
+  SupabaseProductRepository({
+    required SupabaseProductRemoteDatasource remote,
+  }) : _remote = remote;
 
   Future<ProductResult<List<TEntity>>>
   _getProductsGeneric<TDto extends ProductDto, TEntity extends ProductEntity>({

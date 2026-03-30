@@ -10,5 +10,7 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+  plugins:
+    - drift
   errors:
     invalid_annotation_target: ignore

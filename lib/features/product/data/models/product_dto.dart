@@ -1,9 +1,46 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_play/features/product/data/models/product_dto_json_converters.dart';
+
+export 'product_dto_json_converters.dart';
 
 part 'product_dto.freezed.dart';
 part 'product_dto.g.dart';
 
-typedef LocalizedString = Map<String, String>;
+@freezed
+abstract class DeveloperDto with _$DeveloperDto {
+  const factory DeveloperDto({
+    required String id,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    required LocalizedString city,
+    required String phone,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    required LocalizedString address,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    required LocalizedString company,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    required LocalizedString country,
+    @JsonKey(name: 'website_url') required String websiteUrl,
+    @JsonKey(name: 'email_support') required String emailSupport,
+    @JsonKey(name: 'privacy_policy_url') required String privacyPolicyUrl,
+  }) = _DeveloperDto;
+
+  factory DeveloperDto.fromJson(Map<String, dynamic> json) =>
+      _$DeveloperDtoFromJson(json);
+}
+
+@freezed
+abstract class BookPublisherDto with _$BookPublisherDto {
+  const factory BookPublisherDto({
+    required String id,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    required LocalizedString name,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    required LocalizedString description,
+  }) = _BookPublisherDto;
+
+  factory BookPublisherDto.fromJson(Map<String, dynamic> json) =>
+      _$BookPublisherDtoFromJson(json);
+}
 
 @Freezed(unionKey: 'type')
 sealed class ProductDto with _$ProductDto {
@@ -12,51 +49,93 @@ sealed class ProductDto with _$ProductDto {
   const factory ProductDto.game({
     @Default('game') String type,
     required String id,
+    @JsonKey(name: 'external_id') required String externalId,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
     required LocalizedString title,
-    required LocalizedString creator,
+    @JsonKey(
+      name: 'short_description',
+      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+    )
     required LocalizedString shortDescription,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
     required LocalizedString description,
     required double rating,
-    required int reviewsCount,
-    required DateTime releaseDate,
-    required String iconUrl,
-    required bool isPaid,
-    double? price,
-    @Default('USD') String currencyCode,
-    double? discountPrice,
-    String? technicalInfo,
-    required bool containsAds,
-    required bool containsPaidContent,
+    @JsonKey(name: 'reviews_count') required int reviewsCount,
+    @JsonKey(name: 'release_date') required DateTime releaseDate,
+    @JsonKey(name: 'icon_url') required String iconUrl,
+    @JsonKey(name: 'is_paid') required bool isPaid,
+    @JsonKey(name: 'price') double? price,
+    @JsonKey(name: 'currency_code') @Default('USD') String currencyCode,
+    @JsonKey(name: 'discount_price') double? discountPrice,
+    @JsonKey(name: 'url') required String url,
+    @JsonKey(name: 'technical_info') String? technicalInfo,
+    @JsonKey(
+      name: 'screenshots',
+      fromJson: ProductDtoJsonConverters.stringListFromJson,
+    )
+    @Default(<String>[])
+    List<String> screenshots,
+    @JsonKey(
+      name: 'supported_languages',
+      fromJson: ProductDtoJsonConverters.stringListFromJson,
+    )
+    @Default(<String>[])
+    List<String> supportedLanguages,
+    @JsonKey(name: 'contains_ads') required bool containsAds,
+    @JsonKey(name: 'contains_paid_content') required bool containsPaidContent,
     required String version,
     required String size,
+    @JsonKey(
+      name: 'event_text',
+      fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson,
+    )
     LocalizedString? eventText,
+    @JsonKey(
+      name: 'whats_new_text',
+      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+    )
     required LocalizedString whatsNewText,
-    required int downloadCount,
-    required int ageRating,
-    required bool isKidsFriendly,
+    @JsonKey(name: 'download_count') required int downloadCount,
+    @JsonKey(name: 'age_rating') required int ageRating,
+    @JsonKey(name: 'is_kids_friendly') required bool isKidsFriendly,
+    @JsonKey(
+      name: 'age_rating_reasons',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
     required List<LocalizedString> ageRatingReasons,
+    @JsonKey(
+      name: 'permissions',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
     required List<LocalizedString> permissions,
-    required DateTime lastUpdated,
-    required List<String> screenshots,
+    @JsonKey(name: 'last_updated') required DateTime lastUpdated,
+    @JsonKey(
+      name: 'creator_description',
+      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+    )
+    @Default(<String, String>{})
+    LocalizedString creatorDescription,
+    @JsonKey(name: 'is_online') bool? isOnline,
+    @JsonKey(name: 'has_multiplayer') bool? hasMultiplayer,
+    @JsonKey(name: 'game_modes') String? gameModes,
+    @JsonKey(name: 'has_controller_support') bool? hasControllerSupport,
+    @JsonKey(
+      name: 'achievements',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
+    @Default(<LocalizedString>[])
+    List<LocalizedString> achievements,
+    @JsonKey(name: 'developer') required DeveloperDto developer,
+    @JsonKey(
+      name: 'categories',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
+    required List<LocalizedString> categories,
+    @JsonKey(
+      name: 'tags',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
     required List<LocalizedString> tags,
-    required String websiteUrl,
-    required String emailSupport,
-    required String privacyPolicyUrl,
-    required LocalizedString creatorDescription,
-    required String url,
-    required LocalizedString developerCompany,
-    required LocalizedString developerAddress,
-    required LocalizedString developerCity,
-    required LocalizedString developerCountry,
-    required String developerPhone,
-    // ignore: invalid_annotation_target
-    @JsonKey(name: 'gameGenre') required List<LocalizedString> categories,
-    bool? isOnline,
-    bool? hasMultiplayer,
-    @Default(<LocalizedString>[]) List<LocalizedString> achievements,
-    String? gameModes,
-    bool? hasControllerSupport,
-    @Default(<String>[]) List<String> supportedLanguages,
   }) = GameDto;
 
   /// [App]
@@ -64,45 +143,83 @@ sealed class ProductDto with _$ProductDto {
   const factory ProductDto.app({
     @Default('app') String type,
     required String id,
+    @JsonKey(name: 'external_id') required String externalId,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
     required LocalizedString title,
-    required LocalizedString creator,
+    @JsonKey(
+      name: 'short_description',
+      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+    )
     required LocalizedString shortDescription,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
     required LocalizedString description,
     required double rating,
-    required int reviewsCount,
-    required DateTime releaseDate,
-    required String iconUrl,
-    required bool isPaid,
-    double? price,
-    @Default('USD') String currencyCode,
-    double? discountPrice,
-    required bool containsAds,
-    required bool containsPaidContent,
+    @JsonKey(name: 'reviews_count') required int reviewsCount,
+    @JsonKey(name: 'release_date') required DateTime releaseDate,
+    @JsonKey(name: 'icon_url') required String iconUrl,
+    @JsonKey(name: 'is_paid') required bool isPaid,
+    @JsonKey(name: 'price') double? price,
+    @JsonKey(name: 'currency_code') @Default('USD') String currencyCode,
+    @JsonKey(name: 'discount_price') double? discountPrice,
+    @JsonKey(name: 'url') required String url,
+    @JsonKey(
+      name: 'screenshots',
+      fromJson: ProductDtoJsonConverters.stringListFromJson,
+    )
+    @Default(<String>[])
+    List<String> screenshots,
+    @JsonKey(
+      name: 'supported_languages',
+      fromJson: ProductDtoJsonConverters.stringListFromJson,
+    )
+    @Default(<String>[])
+    List<String> supportedLanguages,
+    @JsonKey(name: 'contains_ads') required bool containsAds,
+    @JsonKey(name: 'contains_paid_content') required bool containsPaidContent,
     required String version,
     required String size,
+    @JsonKey(
+      name: 'event_text',
+      fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson,
+    )
     LocalizedString? eventText,
+    @JsonKey(
+      name: 'whats_new_text',
+      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+    )
     required LocalizedString whatsNewText,
-    required int downloadCount,
-    required int ageRating,
-    required bool isKidsFriendly,
+    @JsonKey(name: 'download_count') required int downloadCount,
+    @JsonKey(name: 'age_rating') required int ageRating,
+    @JsonKey(name: 'is_kids_friendly') required bool isKidsFriendly,
+    @JsonKey(
+      name: 'age_rating_reasons',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
     required List<LocalizedString> ageRatingReasons,
+    @JsonKey(
+      name: 'permissions',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
     required List<LocalizedString> permissions,
-    required DateTime lastUpdated,
-    required List<String> screenshots,
+    @JsonKey(name: 'last_updated') required DateTime lastUpdated,
+    @JsonKey(
+      name: 'creator_description',
+      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+    )
+    @Default(<String, String>{})
+    LocalizedString creatorDescription,
+    @JsonKey(name: 'package_name') required String packageName,
+    @JsonKey(name: 'developer') required DeveloperDto developer,
+    @JsonKey(
+      name: 'categories',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
+    required List<LocalizedString> categories,
+    @JsonKey(
+      name: 'tags',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
     required List<LocalizedString> tags,
-    required String websiteUrl,
-    required String emailSupport,
-    required String privacyPolicyUrl,
-    required LocalizedString creatorDescription,
-    required String url,
-    required LocalizedString developerCompany,
-    required LocalizedString developerAddress,
-    required LocalizedString developerCity,
-    required LocalizedString developerCountry,
-    required String developerPhone,
-    @JsonKey(name: 'appCategory') required List<LocalizedString> categories,
-    required String packageName,
-    @Default(<String>[]) List<String> supportedLanguages,
   }) = AppDto;
 
   /// [Book]
@@ -110,36 +227,54 @@ sealed class ProductDto with _$ProductDto {
   const factory ProductDto.book({
     @Default('book') String type,
     required String id,
+    @JsonKey(name: 'external_id') required String externalId,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
     required LocalizedString title,
-    required LocalizedString creator,
+    @JsonKey(
+      name: 'short_description',
+      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+    )
     required LocalizedString shortDescription,
+    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
     required LocalizedString description,
     required double rating,
-    required int reviewsCount,
-    required DateTime releaseDate,
-    required String iconUrl,
-    required bool isPaid,
-    double? price,
-    @Default('USD') String currencyCode,
-    double? discountPrice,
-    required LocalizedString creatorDescription,
-    required String url,
+    @JsonKey(name: 'reviews_count') required int reviewsCount,
+    @JsonKey(name: 'release_date') required DateTime releaseDate,
+    @JsonKey(name: 'icon_url') required String iconUrl,
+    @JsonKey(name: 'is_paid') required bool isPaid,
+    @JsonKey(name: 'price') double? price,
+    @JsonKey(name: 'currency_code') @Default('USD') String currencyCode,
+    @JsonKey(name: 'discount_price') double? discountPrice,
+    @JsonKey(name: 'url') required String url,
+    @JsonKey(name: 'publisher') required BookPublisherDto publisher,
+    @JsonKey(
+      name: 'categories',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
+    required List<LocalizedString> categories,
+    @JsonKey(
+      name: 'tags',
+      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+    )
     required List<LocalizedString> tags,
-    @JsonKey(name: 'genre') required List<LocalizedString> categories,
-    required LocalizedString publisher,
-    required int pageCount,
+    @JsonKey(name: 'page_count') required int pageCount,
     required String language,
     required String format,
-    required DateTime publicationDate,
-    @Default(false) bool hasAudioVersion,
-    int? audioDuration,
+    @JsonKey(name: 'has_audio_version') required bool hasAudioVersion,
+    @JsonKey(name: 'audio_duration') int? audioDuration,
     String? narrator,
-    @Default(false) bool isSeries,
-    String? seriesName,
-    int? seriesNumber,
-    @Default(false) bool sampleAvailable,
-    @Default(false) bool isAbridged,
-    @Default(<String>[]) List<String> awards,
+    @JsonKey(name: 'is_series') required bool isSeries,
+    @JsonKey(name: 'series_name') String? seriesName,
+    @JsonKey(name: 'series_number') int? seriesNumber,
+    @JsonKey(name: 'sample_available') required bool sampleAvailable,
+    @JsonKey(name: 'is_abridged') required bool isAbridged,
+    @JsonKey(name: 'publication_date') required DateTime publicationDate,
+    @JsonKey(
+      name: 'awards',
+      fromJson: ProductDtoJsonConverters.stringListFromJson,
+    )
+    @Default(<String>[])
+    List<String> awards,
   }) = BookDto;
 
   factory ProductDto.fromJson(Map<String, dynamic> json) =>
