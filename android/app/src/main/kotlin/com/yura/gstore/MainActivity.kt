@@ -1,4 +1,4 @@
-package com.example.google_play
+package com.yura.gstore
 
 import io.flutter.embedding.android.FlutterActivity
 
