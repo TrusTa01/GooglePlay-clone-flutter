@@ -12,8 +12,6 @@ late int count;
 
 Map<String, String> _loc(String en, String ru) => {'en': en, 'ru': ru};
 
-double _quantizeRating(double value) => (value * 10).roundToDouble() / 10.0;
-
 double _genDiscountPrice2(Random r, double price) {
   final factor = 0.65 + r.nextDouble() * 0.25; // 0.65..0.90
   final dp = price * factor;
@@ -26,20 +24,6 @@ double _pickPrice(Random r, String currencyCode, List<double> tiers) {
       .clamp(0, tiers.length - 1)
       .toInt();
   return tiers[idx];
-}
-
-int _reviewsFromRatingAndPages(
-  Random r, {
-  required int pageCount,
-  required double rating,
-  required bool isPaid,
-}) {
-  final q = ((rating - 2.0) / 3.0).clamp(0.0, 1.0);
-  final p = ((pageCount - 50) / 1200.0).clamp(0.0, 1.0);
-  final baseRate = 900 + q * 1300 + p * 600;
-  final noise = 0.75 + r.nextDouble() * 0.7;
-  final paidBoost = isPaid ? 1.18 : 0.95;
-  return (baseRate * noise * paidBoost).round().clamp(300, 50000000);
 }
 
 int _pageCountFromGenre(Random r, String genreRu) {
@@ -247,24 +231,6 @@ Future<void> runBooks(int count) async {
     // Сокращенное издание (20% шанс)
     final bool isAbridged = faker.randomGenerator.integer(100) < 20;
 
-    // Генерация рейтинга с перекосом в сторону высоких значений
-    // 70% книг будут иметь рейтинг 3.5-5.0
-    double ratingRaw;
-    if (faker.randomGenerator.integer(100) < 70) {
-      // Высокий рейтинг: от 3.5 до 5.0
-      ratingRaw = 3.5 + (faker.randomGenerator.integer(16) / 10.0);
-    } else {
-      // Средний/низкий рейтинг: от 2.0 до 3.5
-      ratingRaw = 2.0 + (faker.randomGenerator.integer(16) / 10.0);
-    }
-    final double rating = _quantizeRating(ratingRaw);
-    final int reviewsCount = _reviewsFromRatingAndPages(
-      random,
-      pageCount: pageCount,
-      rating: rating,
-      isPaid: isPaid,
-    );
-
     // Описание издательства (в БД — publishers.description)
     final int publisherParagraphCount = random.nextInt(4) + 1; // 1-4 абзаца
     final List<String> publisherParagraphs = List.generate(
@@ -304,8 +270,9 @@ Future<void> runBooks(int count) async {
         publisherDescriptionEn,
         publisherDescriptionRu,
       ),
-      "rating": rating,
-      "reviewsCount": reviewsCount,
+      "ratingAvg": null,
+      "ratingCount": 0,
+      "ratingDistribution": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0},
       "iconUrl": localIcon,
       "isPaid": isPaid,
       "price": price,

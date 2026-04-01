@@ -233,7 +233,9 @@ Future<void> runGames(int count) async {
       "type": "game",
       "id": id,
       "title": _loc(generatedTitleEn, generatedTitleRu),
-      "rating": faker.randomGenerator.integer(50) / 10.0,
+      "ratingAvg": null,
+      "ratingCount": 0,
+      "ratingDistribution": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0},
       "iconUrl": localIcon,
       "isPaid": isPaid,
       "price": price,
@@ -255,7 +257,6 @@ Future<void> runGames(int count) async {
       "downloadCount": faker.randomGenerator
           .integer(100000000, min: 100)
           .toInt(),
-      "reviewsCount": faker.randomGenerator.integer(10000000, min: 1000),
       "permissions": selectedPermissions
           .map((permRu) => _loc(permissionsEnByRu[permRu] ?? permRu, permRu))
           .toList(),

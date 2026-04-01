@@ -12,44 +12,15 @@ late int count;
 
 Map<String, String> _loc(String en, String ru) => {'en': en, 'ru': ru};
 
-double _quantizeRating(double value) => (value * 10).roundToDouble() / 10.0;
-
-double _genSkewedRating(Random r) {
-  final x = r.nextDouble();
-  late double rating;
-  if (x < 0.05) {
-    rating = 1.5 + r.nextDouble() * 1.4; // 1.5–2.9
-  } else if (x < 0.20) {
-    rating = 3.0 + r.nextDouble() * 0.7; // 3.0–3.7
-  } else if (x < 0.70) {
-    rating = 3.8 + r.nextDouble() * 0.6; // 3.8–4.4
-  } else if (x < 0.95) {
-    rating = 4.5 + r.nextDouble() * 0.3; // 4.5–4.8
-  } else {
-    rating = 4.9 + r.nextDouble() * 0.1; // 4.9–5.0
-  }
-  return _quantizeRating(rating);
-}
-
-int _genPowerLawDownloads(Random r, double rating) {
+int _genPowerLawDownloads(Random r) {
   // Pareto-ish heavy tail: xm / u^(1/alpha)
   final u = max(1e-6, r.nextDouble());
   const alpha = 1.25;
   const xm = 1000.0;
   final base = xm / pow(u, 1 / alpha);
-  final multiplier =
-      0.7 + ((rating - 3.0) / 2.0).clamp(0.0, 1.0) * 2.2; // ~0.7..2.9
+  final multiplier = 0.7 + r.nextDouble() * 2.2; // ~0.7..2.9
   final downloads = (base * multiplier).round();
   return downloads.clamp(1000, 1000000000);
-}
-
-int _genReviewsFromDownloads(Random r, int downloads, double rating) {
-  // Review rate grows slightly with rating; include noise.
-  final q = ((rating - 2.0) / 3.0).clamp(0.0, 1.0);
-  final rate =
-      (0.0018 + q * 0.0075) * (0.7 + r.nextDouble() * 0.6); // ~0.001..0.01
-  final reviews = (downloads * rate).round();
-  return reviews.clamp(50, 15000000);
 }
 
 double _genDiscountPrice(Random r, double price) {
@@ -303,14 +274,7 @@ Future<void> runApps(int count) async {
 
     final int devIndex = random.nextInt(developerCompanies.length);
 
-    // store-like rating + downloads + reviews
-    final double rating = _genSkewedRating(random);
-    final int downloadCount = _genPowerLawDownloads(random, rating);
-    final int reviewsCount = _genReviewsFromDownloads(
-      random,
-      downloadCount,
-      rating,
-    );
+    final int downloadCount = _genPowerLawDownloads(random);
 
     // monetization correlation
     final bool containsAds = isPaid
@@ -448,7 +412,9 @@ Future<void> runApps(int count) async {
       "type": "app",
       "id": id,
       "title": _loc(generatedTitleEn, generatedTitleRu),
-      "rating": rating,
+      "ratingAvg": null,
+      "ratingCount": 0,
+      "ratingDistribution": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0},
       "iconUrl": localIcon,
       "isPaid": isPaid,
       "price": price,
@@ -461,7 +427,6 @@ Future<void> runApps(int count) async {
       "version": version,
       "size": size,
       "downloadCount": downloadCount,
-      "reviewsCount": reviewsCount,
       "permissions": selectedPermissions
           .map((pRu) => _loc(permissionsEnByRu[pRu] ?? pRu, pRu))
           .toList(),

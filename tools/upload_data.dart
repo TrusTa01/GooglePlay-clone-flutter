@@ -6,24 +6,39 @@
 // Требования:
 //   - Запустить утилиту ссылок
 //     для того чтобы получить актуальные ссылки изображений из бакетов:
-//       dart run tools/generators/sync_storage_media_lists.dart
+//       dart run tools/generators/products/sync_storage_media_lists.dart
 //   - Сгенерированные файлы assets/data/games.json, apps.json, books.json, banners.json
 //       dart run tools/generate_data.dart
 //   - Файл .env в корне проекта с SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dotenv/dotenv.dart';
 import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
+
+import 'generators/reviews/reviews_text_data.dart';
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Конфигурация
 // ──────────────────────────────────────────────────────────────────────────────
 
 const String _contentSchema = 'content';
-const int _batchSize = 500;
+const int _batchSize = 1000;
+const int _reviewVotesBatchSize = 100;
+const int _minVotesPerReview = 1;
+const int _maxVotesPerReview = 10;
+const double _minReviewsWithVotesRatio = 0.10;
+const double _maxReviewsWithVotesRatio = 0.20;
+const int _minTotalVotesTarget = 10000;
+const int _maxTotalVotesTarget = 20000;
+const int _maxTotalVotesHardLimit = 20000;
+const double _developerReplyChance = 0.15;
+const double _highRatingUpvoteChance = 0.90;
+const double _lowRatingDownvoteChance = 0.60;
+const double _defaultUpvoteChance = 0.50;
 // Для delete через inFilter держим небольшой размер пачки,
 // иначе URL фильтра может стать слишком длинным и дать 400 Bad Request
 const int _cleanupBatchSize = 100;
@@ -84,7 +99,7 @@ Future<void> main() async {
     final minutes = (elapsed.inMilliseconds / 60000).toStringAsFixed(2);
     _clearTerminalScreen();
     print(
-      'Загружено: ${summary.games} игр, ${summary.apps} приложений, ${summary.books} книг, ${summary.banners} баннеров',
+      'Загружено: ${summary.games} игр, ${summary.apps} приложений, ${summary.books} книг, ${summary.banners} баннеров, ${summary.reviews} отзывов, ${summary.reviewVotes} голосов',
     );
     print('Все данные успешно загружены!');
     print('Время выполнения: $minutes мин');
@@ -113,6 +128,7 @@ void _clearTerminalScreen() {
 class _DataUploader {
   final SupabaseClient _client;
   final bool _canRewriteLine = stdout.hasTerminal;
+  final Random _random = Random();
 
   // Маппинги для дедупликации
   // developerKey (строка "company_en") → UUID в БД
@@ -125,6 +141,8 @@ class _DataUploader {
   final Map<String, String> _publisherIds = {};
   // external_id -> products.id (uuid) для безопасного повторного запуска
   final Map<String, String> _productIdsByExternalId = {};
+  // software_products.id -> developer_id
+  final Map<String, String> _softwareDeveloperByProductId = {};
 
   _DataUploader(this._client);
 
@@ -172,12 +190,18 @@ class _DataUploader {
 
     // 9. Вставляем баннеры
     await _uploadBanners(banners);
+    // 10. Генерируем и вставляем отзывы
+    final insertedReviews = await _generateAndUploadReviews();
+    // 11. Генерируем и вставляем голоса за отзывы
+    final insertedVotes = await _generateAndUploadReviewVotes();
 
     return _UploadSummary(
       games: games.length,
       apps: apps.length,
       books: books.length,
       banners: banners.length,
+      reviews: insertedReviews,
+      reviewVotes: insertedVotes,
     );
   }
 
@@ -191,6 +215,8 @@ class _DataUploader {
     }
 
     const tablesInDeleteOrder = <String>[
+      'review_votes',
+      'reviews',
       'product_tags',
       'product_categories',
       'banner_actions',
@@ -582,8 +608,7 @@ class _DataUploader {
         'title': g['title'],
         'short_description': g['shortDescription'],
         'description': g['description'],
-        'rating': (g['rating'] as num).toDouble(),
-        'reviews_count': g['reviewsCount'],
+        'reviews_count': g['reviewsCount'] ?? 0,
         'release_date': g['releaseDate'],
         'icon_url': g['iconUrl'] ?? '',
         'is_paid': g['isPaid'] ?? false,
@@ -596,6 +621,9 @@ class _DataUploader {
       // software_products
       final companyKey = _locValue(g['developerCompany'], 'en');
       final developerId = _developerIds[companyKey];
+      if (developerId != null && developerId.isNotEmpty) {
+        _softwareDeveloperByProductId[productId] = developerId;
+      }
 
       softwareRows.add({
         'id': productId,
@@ -705,8 +733,7 @@ class _DataUploader {
         'title': a['title'],
         'short_description': a['shortDescription'],
         'description': a['description'],
-        'rating': (a['rating'] as num).toDouble(),
-        'reviews_count': a['reviewsCount'],
+        'reviews_count': a['reviewsCount'] ?? 0,
         'release_date': a['releaseDate'],
         'icon_url': a['iconUrl'] ?? '',
         'is_paid': a['isPaid'] ?? false,
@@ -719,6 +746,9 @@ class _DataUploader {
       // software_products
       final companyKey = _locValue(a['developerCompany'], 'en');
       final developerId = _developerIds[companyKey];
+      if (developerId != null && developerId.isNotEmpty) {
+        _softwareDeveloperByProductId[productId] = developerId;
+      }
 
       softwareRows.add({
         'id': productId,
@@ -820,8 +850,7 @@ class _DataUploader {
         'title': b['title'],
         'short_description': b['shortDescription'],
         'description': b['description'],
-        'rating': (b['rating'] as num).toDouble(),
-        'reviews_count': b['reviewsCount'],
+        'reviews_count': b['reviewsCount'] ?? 0,
         'release_date': b['releaseDate'],
         'icon_url': b['iconUrl'] ?? '',
         'is_paid': b['isPaid'] ?? false,
@@ -976,6 +1005,286 @@ class _DataUploader {
     print('[banners] Готово');
   }
 
+  Future<int> _generateAndUploadReviews() async {
+    print('\n[reviews] Генерация и загрузка...');
+    final profileIds = await _loadProfileIds();
+    if (profileIds.isEmpty) return 0;
+
+    final productRows = await _selectAllRows('products', 'id,type,release_date');
+    if (productRows.isEmpty) return 0;
+    final products = productRows
+        .map((row) {
+          final id = row['id'] as String?;
+          final type = row['type'] as String?;
+          if (id == null || type == null) return null;
+          return _ReviewProductInfo(
+            id: id,
+            type: type,
+            releaseDate: _parseDate(row['release_date']),
+            developerId: _softwareDeveloperByProductId[id],
+          );
+        })
+        .whereType<_ReviewProductInfo>()
+        .toList();
+    if (products.isEmpty) return 0;
+
+    final now = DateTime.now().toUtc();
+    int inserted = 0;
+    final rows = <Map<String, dynamic>>[];
+
+    for (final product in products) {
+      final targetCount = _calculateTargetReviews(product);
+      final selectedUsers = _pickUniqueUsers(
+        allUserIds: profileIds,
+        count: min(targetCount, profileIds.length),
+      );
+
+      for (final userId in selectedUsers) {
+        final rating = _generateRating();
+        final createdAt = _randomDateWithinLastMonths(now, 12);
+        final reply = _maybeDeveloperReply(
+          productType: product.type,
+          developerId: product.developerId,
+          createdAt: createdAt,
+        );
+        rows.add({
+          'product_id': product.id,
+          'user_id': userId,
+          'rating': rating,
+          'content': _generateReviewText(rating),
+          'developer_id': reply?.developerId,
+          'developer_content': reply?.content,
+          'responsed_at': reply?.responsedAt.toIso8601String(),
+          'created_at': createdAt.toIso8601String(),
+        });
+      }
+    }
+
+    for (int i = 0; i < rows.length; i += _batchSize) {
+      final batch = rows.sublist(i, min(i + _batchSize, rows.length));
+      await _client.schema(_contentSchema).from('reviews').insert(batch);
+      inserted += batch.length;
+      final percent = ((inserted * 100) / rows.length).floor();
+      _printProgress(
+        'reviews',
+        'inserted $inserted/${rows.length} ($percent%)',
+      );
+    }
+    _finishProgressLine();
+    return inserted;
+  }
+
+  Future<int> _generateAndUploadReviewVotes() async {
+    print('\n[review_votes] Генерация и загрузка...');
+    final profileIds = await _loadProfileIds();
+    if (profileIds.isEmpty) return 0;
+
+    final reviewRows = await _selectAllRows('reviews', 'id,rating');
+    if (reviewRows.isEmpty) return 0;
+
+    final shuffledReviews = List<Map<String, dynamic>>.from(reviewRows)
+      ..shuffle(_random);
+    final ratio =
+        _minReviewsWithVotesRatio +
+        _random.nextDouble() *
+            (_maxReviewsWithVotesRatio - _minReviewsWithVotesRatio);
+    final selectedCount = max(
+      1,
+      min(shuffledReviews.length, (shuffledReviews.length * ratio).round()),
+    );
+    final selectedReviews = shuffledReviews.take(selectedCount).toList();
+    final votesTarget = _randomInRange(
+      _minTotalVotesTarget,
+      _maxTotalVotesTarget,
+    ).clamp(0, _maxTotalVotesHardLimit);
+    print(
+      '[review_votes] Выбрано отзывов: ${selectedReviews.length}/${reviewRows.length}, целевых голосов: до $votesTarget',
+    );
+
+    int inserted = 0;
+    final rows = <Map<String, dynamic>>[];
+
+    for (final row in selectedReviews) {
+      if (inserted >= votesTarget) break;
+      final reviewId = row['id'] as String?;
+      if (reviewId == null || reviewId.isEmpty) continue;
+      final ratingRaw = row['rating'];
+      final rating = ratingRaw is int ? ratingRaw : int.tryParse('$ratingRaw');
+      if (rating == null) continue;
+
+      final votesCount = _randomInRange(_minVotesPerReview, _maxVotesPerReview);
+      final users = _pickUniqueUsers(
+        allUserIds: profileIds,
+        count: min(votesCount, profileIds.length),
+      );
+      for (final userId in users) {
+        if (inserted + rows.length >= votesTarget) break;
+        final isUpvote = _generateIsUpvote(rating);
+        rows.add({
+          'review_id': reviewId,
+          'user_id': userId,
+          'is_upvote': isUpvote,
+          'upvotes_count': isUpvote ? 1 : 0,
+          'downvotes_count': isUpvote ? 0 : 1,
+        });
+
+        if (rows.length >= _reviewVotesBatchSize) {
+          await _client
+              .schema(_contentSchema)
+              .from('review_votes')
+              .insert(rows);
+          inserted += rows.length;
+          rows.clear();
+          final percent = ((inserted * 100) / votesTarget).floor();
+          _printProgress(
+            'review_votes',
+            'inserted $inserted/$votesTarget (~$percent%)',
+          );
+        }
+      }
+    }
+
+    if (rows.isNotEmpty) {
+      await _client.schema(_contentSchema).from('review_votes').insert(rows);
+      inserted += rows.length;
+      rows.clear();
+    }
+
+    _finishProgressLine();
+    return inserted;
+  }
+
+  Future<List<String>> _loadProfileIds() async {
+    final rows = await _selectAllRows('profiles', 'id', schema: 'public');
+    return rows.map((row) => row['id']).whereType<String>().toList();
+  }
+
+  List<String> _pickUniqueUsers({
+    required List<String> allUserIds,
+    required int count,
+  }) {
+    final pool = List<String>.from(allUserIds)..shuffle(_random);
+    return pool.take(count).toList();
+  }
+
+  int _generateRating() {
+    final roll = _random.nextDouble();
+    if (roll < 0.55) return _random.nextBool() ? 4 : 5;
+    if (roll < 0.75) return 3;
+    return _random.nextBool() ? 1 : 2;
+  }
+
+  int _calculateTargetReviews(_ReviewProductInfo product) {
+    final tierBase = switch (_pickPopularityTier()) {
+      _PopularityTier.top => _randomInRange(300, 1200),
+      _PopularityTier.high => _randomInRange(80, 300),
+      _PopularityTier.mid => _randomInRange(15, 80),
+      _PopularityTier.low => _randomInRange(0, 20),
+    };
+    final typeFactor = switch (product.type) {
+      'app' => 1.2,
+      'book' => 0.6,
+      _ => 1.0,
+    };
+    final ageFactor = _ageFactor(product.releaseDate);
+    final noise = _randomDoubleInRange(0.7, 1.4);
+    final value = tierBase * typeFactor * ageFactor * noise;
+    return max(0, value.round());
+  }
+
+  _PopularityTier _pickPopularityTier() {
+    final roll = _random.nextDouble();
+    if (roll < 0.05) return _PopularityTier.top;
+    if (roll < 0.20) return _PopularityTier.high;
+    if (roll < 0.55) return _PopularityTier.mid;
+    return _PopularityTier.low;
+  }
+
+  double _ageFactor(DateTime? releaseDate) {
+    if (releaseDate == null) return 1.0;
+    final ageDays = DateTime.now().toUtc().difference(releaseDate.toUtc()).inDays;
+    final normalized = (ageDays / 365.0).clamp(0.0, 3.0);
+    return (0.4 + normalized * 0.3).clamp(0.4, 1.3);
+  }
+
+  DateTime? _parseDate(dynamic raw) {
+    if (raw is String && raw.isNotEmpty) return DateTime.tryParse(raw);
+    return null;
+  }
+
+  String _generateReviewText(int rating) {
+    final useLong = _random.nextDouble() < 0.28;
+    if (rating >= 4) {
+      return useLong
+          ? positiveLongReviewTemplates[_random.nextInt(
+              positiveLongReviewTemplates.length,
+            )]
+          : positiveReviewPhrases[_random.nextInt(
+              positiveReviewPhrases.length,
+            )];
+    }
+    if (rating == 3) {
+      return useLong
+          ? neutralLongReviewTemplates[_random.nextInt(
+              neutralLongReviewTemplates.length,
+            )]
+          : neutralReviewPhrases[_random.nextInt(neutralReviewPhrases.length)];
+    }
+    return useLong
+        ? negativeLongReviewTemplates[_random.nextInt(
+            negativeLongReviewTemplates.length,
+          )]
+        : negativeReviewPhrases[_random.nextInt(negativeReviewPhrases.length)];
+  }
+
+  _DeveloperReply? _maybeDeveloperReply({
+    required String productType,
+    required String? developerId,
+    required DateTime createdAt,
+  }) {
+    final isSoftware = productType == 'app' || productType == 'game';
+    if (!isSoftware || developerId == null || developerId.isEmpty) return null;
+    if (_random.nextDouble() >= _developerReplyChance) return null;
+    return _DeveloperReply(
+      developerId: developerId,
+      content:
+          developerReplyPhrases[_random.nextInt(developerReplyPhrases.length)],
+      responsedAt: _randomResponseDate(createdAt),
+    );
+  }
+
+  bool _generateIsUpvote(int rating) {
+    if (rating >= 4) return _random.nextDouble() < _highRatingUpvoteChance;
+    if (rating <= 2) return _random.nextDouble() >= _lowRatingDownvoteChance;
+    return _random.nextDouble() < _defaultUpvoteChance;
+  }
+
+  DateTime _randomDateWithinLastMonths(DateTime nowUtc, int monthsBack) {
+    final maxDays = monthsBack * 30;
+    final daysAgo = _random.nextInt(maxDays + 1);
+    final secondsAgo = _random.nextInt(24 * 60 * 60);
+    return nowUtc.subtract(Duration(days: daysAgo, seconds: secondsAgo));
+  }
+
+  DateTime _randomResponseDate(DateTime createdAt) {
+    final addDays = 1 + _random.nextInt(2);
+    final addHours = _random.nextInt(24);
+    final addMinutes = _random.nextInt(60);
+    return createdAt.add(
+      Duration(days: addDays, hours: addHours, minutes: addMinutes),
+    );
+  }
+
+  int _randomInRange(int minValue, int maxValue) {
+    if (maxValue <= minValue) return minValue;
+    return minValue + _random.nextInt(maxValue - minValue + 1);
+  }
+
+  double _randomDoubleInRange(double minValue, double maxValue) {
+    if (maxValue <= minValue) return minValue;
+    return minValue + _random.nextDouble() * (maxValue - minValue);
+  }
+
   // ────────────────────────────────────────────────────────────────────────────
   // Вспомогательные методы
   // ────────────────────────────────────────────────────────────────────────────
@@ -1058,15 +1367,16 @@ class _DataUploader {
   /// Вычитывает все строки таблицы порциями
   Future<List<Map<String, dynamic>>> _selectAllRows(
     String table,
-    String columns,
-  ) async {
+    String columns, {
+    String schema = _contentSchema,
+  }) async {
     const pageSize = 1000;
     var from = 0;
     final rows = <Map<String, dynamic>>[];
 
     while (true) {
       final response = await _client
-          .schema(_contentSchema)
+          .schema(schema)
           .from(table)
           .select(columns)
           .range(from, from + pageSize - 1);
@@ -1200,11 +1510,43 @@ class _UploadSummary {
   final int apps;
   final int books;
   final int banners;
+  final int reviews;
+  final int reviewVotes;
 
   const _UploadSummary({
     required this.games,
     required this.apps,
     required this.books,
     required this.banners,
+    required this.reviews,
+    required this.reviewVotes,
   });
 }
+
+class _DeveloperReply {
+  const _DeveloperReply({
+    required this.developerId,
+    required this.content,
+    required this.responsedAt,
+  });
+
+  final String developerId;
+  final String content;
+  final DateTime responsedAt;
+}
+
+class _ReviewProductInfo {
+  const _ReviewProductInfo({
+    required this.id,
+    required this.type,
+    required this.releaseDate,
+    required this.developerId,
+  });
+
+  final String id;
+  final String type;
+  final DateTime? releaseDate;
+  final String? developerId;
+}
+
+enum _PopularityTier { top, high, mid, low }
