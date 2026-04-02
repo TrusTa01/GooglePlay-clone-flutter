@@ -108,3 +108,32 @@ class LocalizedStringListNullableConverter
   String? toSql(List<Map<String, String>>? value) =>
       value == null ? null : json.encode(value);
 }
+
+class RatingDistributionConverter
+    extends TypeConverter<Map<String, int>, String> {
+  const RatingDistributionConverter();
+
+  @override
+  Map<String, int> fromSql(String fromDb) {
+    final Map<String, dynamic> data = json.decode(fromDb);
+    return data.map((key, value) => MapEntry(key, value as int));
+  }
+
+  @override
+  String toSql(Map<String, int> value) => json.encode(value);
+}
+
+// Конвертер для [ReviewDto, ReviewDto, ...]
+class TopReviewsConverter
+    extends TypeConverter<List<Map<String, dynamic>>, String> {
+  const TopReviewsConverter();
+
+  @override
+  List<Map<String, dynamic>> fromSql(String fromDb) {
+    final List<dynamic> data = json.decode(fromDb);
+    return data.cast<Map<String, dynamic>>();
+  }
+
+  @override
+  String toSql(List<Map<String, dynamic>> value) => json.encode(value);
+}

@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:google_play/core/database/converters.dart';
+import 'package:google_play/core/local_database/converters.dart';
 
 class Developers extends Table {
   TextColumn get id => text()();

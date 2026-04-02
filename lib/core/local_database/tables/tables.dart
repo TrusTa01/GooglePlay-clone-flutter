@@ -1,0 +1,13 @@
+export 'package:google_play/core/local_database/tables/junctions/categories/categories.dart';
+export 'package:google_play/core/local_database/tables/junctions/categories/product_categories.dart';
+export 'package:google_play/core/local_database/tables/junctions/creators/developers.dart';
+export 'package:google_play/core/local_database/tables/junctions/creators/publishers.dart';
+export 'package:google_play/core/local_database/tables/junctions/tags/product_tags.dart';
+export 'package:google_play/core/local_database/tables/junctions/tags/tags.dart';
+export 'package:google_play/core/local_database/tables/products/product_translations.dart';
+export 'package:google_play/core/local_database/tables/products/cached_apps.dart';
+export 'package:google_play/core/local_database/tables/products/cached_books.dart';
+export 'package:google_play/core/local_database/tables/products/cached_games.dart';
+export 'package:google_play/core/local_database/tables/products/cached_product.dart';
+export 'package:google_play/core/local_database/tables/products/cached_software_product.dart';
+export 'package:google_play/core/local_database/tables/sync_state.dart';

@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:google_play/core/database/tables/junctions/categories/categories.dart';
-import 'package:google_play/core/database/tables/products/cached_product.dart';
+import 'package:google_play/core/local_database/tables/junctions/categories/categories.dart';
+import 'package:google_play/core/local_database/tables/products/cached_product.dart';
 
 class ProductCategories extends Table {
   TextColumn get productId => text()

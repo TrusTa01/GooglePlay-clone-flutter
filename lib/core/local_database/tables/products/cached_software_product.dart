@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:google_play/core/database/converters.dart';
-import 'package:google_play/core/database/tables/junctions/creators/developers.dart';
-import 'package:google_play/core/database/tables/products/cached_product.dart';
+import 'package:google_play/core/local_database/converters.dart';
+import 'package:google_play/core/local_database/tables/junctions/creators/developers.dart';
+import 'package:google_play/core/local_database/tables/products/cached_product.dart';
 
 class CachedSoftwareProduct extends Table {
   TextColumn get productId => text()

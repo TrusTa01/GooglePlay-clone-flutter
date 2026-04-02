@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:google_play/core/database/converters.dart';
+import 'package:google_play/core/local_database/converters.dart';
 
 class CachedProduct extends Table {
   TextColumn get id => text().named('id')();
@@ -12,7 +12,6 @@ class CachedProduct extends Table {
   TextColumn get description =>
       text().named('description').map(const LocalizedStringConverter())();
   RealColumn get rating => real().named('rating')();
-  IntColumn get reviewsCount => integer().named('reviews_count')();
   DateTimeColumn get releaseDate => dateTime().named('release_date')();
   TextColumn get iconUrl => text().named('icon_url')();
   BoolColumn get isPaid => boolean().named('is_paid')();
@@ -20,6 +19,13 @@ class CachedProduct extends Table {
   TextColumn get currencyCode => text().named('currency_code')();
   RealColumn get discountPrice => real().named('discount_price').nullable()();
   TextColumn get url => text().named('url')();
+  RealColumn get ratingAvg => real().named('rating_avg')();
+  IntColumn get reviewsCount => integer().named('reviews_count')();
+  TextColumn get ratingDistribution => text()
+      .named('rating_distribution')
+      .map(const RatingDistributionConverter())();
+  TextColumn get topReviews =>
+      text().named('top_reviews').map(const TopReviewsConverter())();
 
   @override
   Set<Column> get primaryKey => {id};
