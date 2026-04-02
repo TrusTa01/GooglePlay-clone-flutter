@@ -12,10 +12,10 @@ late int count;
 
 Map<String, String> _loc(String en, String ru) => {'en': en, 'ru': ru};
 
-double _genDiscountPrice2(Random r, double price) {
-  final factor = 0.65 + r.nextDouble() * 0.25; // 0.65..0.90
-  final dp = price * factor;
-  return dp.roundToDouble();
+double _genDiscountPrice2(double price) {
+  // Ровно 25% скидки и без дробной части.
+  final discounted = price * 0.75;
+  return discounted.roundToDouble();
 }
 
 double _pickPrice(Random r, String currencyCode, List<double> tiers) {
@@ -91,8 +91,8 @@ Future<void> runBooks(int count) async {
         ? '$prefix $suffix'
         : '$prefix $suffix $randomSuffix';
 
-    // Логика цены (60% шанс платной книги), но цены по реальным ценовым точкам
-    final bool isPaid = faker.randomGenerator.integer(100) < 60;
+    // Логика цены (~70% шанс платной книги), но цены по реальным ценовым точкам
+    final bool isPaid = faker.randomGenerator.integer(100) < 70;
     final String currencyCode = faker.randomGenerator.element([
       'USD',
       'EUR',
@@ -132,8 +132,8 @@ Future<void> runBooks(int count) async {
     }
 
     double? discountPrice;
-    if (isPaid && price != null && random.nextInt(100) < 25) {
-      final dp = _genDiscountPrice2(random, price);
+    if (isPaid && price != null && random.nextInt(100) < 30) {
+      final dp = _genDiscountPrice2(price);
       discountPrice = dp < price ? dp : null;
     }
 

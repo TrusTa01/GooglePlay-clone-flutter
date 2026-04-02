@@ -35,6 +35,8 @@ Future<void> main() async {
   await _loadData(commonCount, bannersCount);
 
   print('Генерация успешно завершена!');
+  print('\nСначала нужно сгенерировать отзывы:');
+  print('dart run tools/generators/reviews/generate_product_reviews.dart');
   print('Теперь можно загрузить данные в облако:');
   print('dart run tools/upload_data.dart');
 }

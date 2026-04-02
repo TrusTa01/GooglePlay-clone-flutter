@@ -23,11 +23,10 @@ int _genPowerLawDownloads(Random r) {
   return downloads.clamp(1000, 1000000000);
 }
 
-double _genDiscountPrice(Random r, double price) {
-  // discount factor in (0.65..0.90)
-  final factor = 0.65 + r.nextDouble() * 0.25;
-  final discounted = price * factor;
-  return max(0.01, discounted).roundToDouble();
+double _genDiscountPrice(double price) {
+  // Ровно 25% скидки.
+  final discounted = price * 0.75;
+  return max(0.01, discounted).roundToDouble(); // без дробной части
 }
 
 List<String> _pickAgeRatingReasonsByAge(Random random, int ageRating) {
@@ -145,7 +144,7 @@ Future<void> runApps(int count) async {
         '${faker.randomGenerator.element(ruPrefixes)} ${faker.randomGenerator.element(ruSuffixes)} $randomSuffix';
 
     // Логика цены: чаще freemium, платные — по типичным ценовым точкам
-    final bool isPaid = faker.randomGenerator.integer(100) < 10; // ~10% платных
+    final bool isPaid = faker.randomGenerator.integer(100) < 30; // ~30% платных
     double? price;
     final String currencyCode = faker.randomGenerator.element([
       'USD',
@@ -195,7 +194,7 @@ Future<void> runApps(int count) async {
 
     double? discountPrice;
     if (isPaid && price != null && random.nextInt(100) < 30) {
-      final dp = _genDiscountPrice(random, price);
+      final dp = _genDiscountPrice(price);
       discountPrice = dp < price ? dp : null;
     }
 

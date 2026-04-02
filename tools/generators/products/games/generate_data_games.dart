@@ -108,8 +108,8 @@ Future<void> runGames(int count) async {
 
     final int devIndex = random.nextInt(developerCompanies.length);
 
-    // Логика цены (10% шанс)
-    final bool isPaid = faker.randomGenerator.integer(100) < 10;
+    // Логика цены (~30% платных)
+    final bool isPaid = faker.randomGenerator.integer(100) < 30;
     double? price;
     if (isPaid) {
       price = faker.randomGenerator.integer(500, min: 1).toDouble();
@@ -122,9 +122,10 @@ Future<void> runGames(int count) async {
     ]);
 
     double? discountPrice;
-    if (isPaid && price != null && faker.randomGenerator.integer(100) < 25) {
-      final double discountPercent = 0.6 + random.nextDouble() * 0.35;
-      discountPrice = (price * discountPercent).roundToDouble();
+    if (isPaid && price != null && faker.randomGenerator.integer(100) < 30) {
+      // Ровно 25% скидки и без дробной части.
+      final dp = (price * 0.75).roundToDouble();
+      discountPrice = dp < price ? dp : null; // скидка должна быть реальной
     }
 
     // Иконка

@@ -1,4 +1,4 @@
-import 'package:google_play/core/data/product/product_remote_views_enum.dart';
+import 'package:google_play/core/data/product/product_network_views_enum.dart';
 import 'package:google_play/core/data/schema_names_enum.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_play/features/product/data/models/product_dto.dart';
@@ -10,7 +10,7 @@ class SupabaseProductNetworkDatasource {
 
   Future<List<T>> getProducts<T extends ProductDto>({
     required ProductNetworkViews view,
-    SchemaNamesEnum schemaName = SchemaNamesEnum.content,
+    SchemaNamesEnum schemaName = SchemaNamesEnum.views,
     required ({String column, bool ascending}) order,
     required int page,
     int pageSize = 20,

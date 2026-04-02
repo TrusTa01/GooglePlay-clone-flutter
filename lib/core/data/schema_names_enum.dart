@@ -1,5 +1,5 @@
 enum SchemaNamesEnum {
-  content('content'),
+  views('views'),
   configs('configs');
 
   final String name;

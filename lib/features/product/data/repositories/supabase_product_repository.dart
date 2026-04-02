@@ -1,7 +1,7 @@
-import 'package:google_play/core/data/product/product_remote_views_enum.dart';
+import 'package:google_play/core/data/product/product_network_views_enum.dart';
 import 'package:google_play/core/domain/result_pattern/product_failure.dart';
 import 'package:google_play/core/domain/result_pattern/product_result.dart';
-import 'package:google_play/features/product/data/datasources/remote/supabase_product_remote_datasource.dart';
+import 'package:google_play/features/product/data/datasources/network/supabase_product_network_datasource.dart';
 import 'package:google_play/features/product/data/mappers/app_mapper.dart';
 import 'package:google_play/features/product/data/mappers/book_mapper.dart';
 import 'package:google_play/features/product/data/mappers/game_mapper.dart';
@@ -14,10 +14,10 @@ import 'package:google_play/features/product/domain/repositories/product_reposit
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseProductRepository implements IProductRepository {
-  final SupabaseProductRemoteDatasource _remote;
+  final SupabaseProductNetworkDatasource _remote;
 
   SupabaseProductRepository({
-    required SupabaseProductRemoteDatasource remote,
+    required SupabaseProductNetworkDatasource remote,
   }) : _remote = remote;
 
   Future<ProductResult<List<TEntity>>>
@@ -25,7 +25,7 @@ class SupabaseProductRepository implements IProductRepository {
     required String locale,
     required int page,
     int pageSize = 20,
-    required ProductRemoteViews view,
+    required ProductNetworkViews view,
     required ({String column, bool ascending}) order,
     required TDto Function(Map<String, dynamic>) fromJson,
     required TEntity Function(TDto dto, String locale) toEntity,
@@ -54,7 +54,7 @@ class SupabaseProductRepository implements IProductRepository {
   }) async {
     return _getProductsGeneric(
       locale: locale,
-      view: ProductRemoteViews.games,
+      view: ProductNetworkViews.games,
       page: page,
       pageSize: pageSize,
       order: (column: 'release_date', ascending: false),
@@ -71,7 +71,7 @@ class SupabaseProductRepository implements IProductRepository {
   }) async {
     return _getProductsGeneric(
       locale: locale,
-      view: ProductRemoteViews.apps,
+      view: ProductNetworkViews.apps,
       page: page,
       pageSize: pageSize,
       order: (column: 'release_date', ascending: false),
@@ -88,7 +88,7 @@ class SupabaseProductRepository implements IProductRepository {
   }) async {
     return _getProductsGeneric(
       locale: locale,
-      view: ProductRemoteViews.books,
+      view: ProductNetworkViews.books,
       page: page,
       pageSize: pageSize,
       order: (column: 'release_date', ascending: false),

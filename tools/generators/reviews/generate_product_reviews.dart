@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_print
 //
-// Генератор отзывов в БД Supabase.
+// Генератор отзывов в JSON-файл (assets/data/reviews.json).
 //
 // Запуск:
-//   dart run tools/generate_product_reviews.dart
+//   dart run tools/generators/reviews/generate_product_reviews.dart
 //
 // Требования:
 //   - Файл .env в корне проекта с SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY
@@ -15,17 +15,52 @@
 //      и генерирует отзывы по long-tail распределению
 //   4) Следит за уникальностью пары (product_id, user_id)
 //   5) Не трогает content.products.rating_avg/reviews_count (это делает триггер)
+//   6) Записывает результат в assets/data/reviews.json (без загрузки в облако)
 
 import 'dart:io';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:dotenv/dotenv.dart';
 import 'package:supabase/supabase.dart';
 import 'reviews_text_data.dart';
 
-const String _contentSchema = 'content';
-const int _batchSize = 1000;
-const double _developerReplyChance = 0.15;
+// Developer replies тоже занимают место, слегка уменьшаем шанс,
+// чтобы уложиться в бюджет по размеру.
+const double _developerReplyChance = 0.08;
+
+// Распределение количества отзывов по продуктам.
+// Цель: при больших объёмах (например, 30k продуктов) снизить суммарное число отзывов.
+//
+// - "Большие": 100-150 отзывов (чуть реже)
+// - "Средние": 5-15 отзывов
+// - "Маленькие": 0-5 отзывов
+//
+// Чтобы отзывов было больше (при этом оставляя длинный хвост),
+// усиливаем "large" tier:
+// Цель: уложиться по размеру в ~260 МБ (для больших объёмов продуктов).
+// Слишком большие tier'ы приводили к гигантским JSON-файлам.
+//
+// - "Большие": 100-250
+// - "Средние": 5-15
+// - "Маленькие": 0-5
+const double _largeProductChance = 0.15; // 15%
+const double _mediumProductChance = 0.20; // 20%
+const double _smallProductChance = 1.0 - _largeProductChance - _mediumProductChance; // 65%
+
+const int _smallReviewsMin = 0;
+const int _smallReviewsMax = 5;
+const int _mediumReviewsMin = 5;
+const int _mediumReviewsMax = 15;
+const int _largeReviewsMin = 100;
+const int _largeReviewsMax = 250;
+
+// Длинные тексты заметно раздувают итоговый размер файла.
+const double _useLongProbability = 0.18; // было 0.28
+
+// Очень грубая оценка накладных расходов строки/TOAST+индексов в байтах.
+// Нужна только чтобы примерно уложиться в бюджет по размеру.
+const int _rowFixedOverheadBytes = 160;
 
 Future<void> main() async {
   final startedAt = DateTime.now();
@@ -61,71 +96,136 @@ class _ReviewsGenerator {
 
   Future<void> run() async {
     final profileIds = await _loadProfileIds();
-    final products = await _loadProducts();
+    final products = await _loadLocalProducts();
 
     if (profileIds.isEmpty) {
       throw StateError('В public.profiles нет пользователей.');
     }
     if (products.isEmpty) {
-      throw StateError('В content.products нет продуктов.');
+      throw StateError(
+        'Не удалось загрузить продукты из assets/data (games/apps/books).',
+      );
     }
 
     print('Профилей: ${profileIds.length}');
     print('Продуктов: ${products.length}');
 
+    // Прикидка объёма данных: сильно грубо, но помогает уложиться в бюджет.
+    final expectedPerProduct =
+        _largeProductChance * ((_largeReviewsMin + _largeReviewsMax) / 2) +
+        _mediumProductChance * ((_mediumReviewsMin + _mediumReviewsMax) / 2) +
+        _smallProductChance * ((_smallReviewsMin + _smallReviewsMax) / 2);
+    final expectedTotalReviews = products.length * expectedPerProduct;
+
+    // avg(content bytes) с учётом вероятностей рейтингов и long/short.
+    const useLongProbability = _useLongProbability;
+    const pHigh = 0.55; // rating 4-5
+    const pMid = 0.20; // rating 3
+    const pLow = 0.25; // rating 1-2
+
+    final avgPosShortBytes = _avgUtf8Bytes(positiveReviewPhrases);
+    final avgNeuShortBytes = _avgUtf8Bytes(neutralReviewPhrases);
+    final avgNegShortBytes = _avgUtf8Bytes(negativeReviewPhrases);
+    final avgPosLongBytes = _avgUtf8Bytes(positiveLongReviewTemplates);
+    final avgNeuLongBytes = _avgUtf8Bytes(neutralLongReviewTemplates);
+    final avgNegLongBytes = _avgUtf8Bytes(negativeLongReviewTemplates);
+
+    final avgShortBytes =
+        pHigh * avgPosShortBytes + pMid * avgNeuShortBytes + pLow * avgNegShortBytes;
+    final avgLongBytes =
+        pHigh * avgPosLongBytes + pMid * avgNeuLongBytes + pLow * avgNegLongBytes;
+    final avgContentBytes = (1 - useLongProbability) * avgShortBytes +
+        useLongProbability * avgLongBytes;
+
+    // Developer content появляется только для app/game.
+    final softwareProductsCount =
+        products.where((p) => p.type == 'app' || p.type == 'game').length;
+    final developerReplyAppliedChance = products.isEmpty
+        ? 0.0
+        : (softwareProductsCount / products.length) * _developerReplyChance;
+
+    final avgDeveloperContentBytes = _avgUtf8Bytes(developerReplyPhrases);
+
+    final avgRowBytes = _rowFixedOverheadBytes +
+        avgContentBytes +
+        developerReplyAppliedChance * avgDeveloperContentBytes;
+    final estimatedTotalBytes = expectedTotalReviews * avgRowBytes;
+    final estimatedMb = estimatedTotalBytes / 1e6;
+
+    print(
+      'Оценка: ~${expectedTotalReviews.toStringAsFixed(0)} отзывов, ориентировочно ~${estimatedMb.toStringAsFixed(1)} МБ (очень грубо).',
+    );
+
     final now = DateTime.now().toUtc();
-    int totalInserted = 0;
+    var totalWritten = 0;
+
+    final outFile = File('assets/data/reviews.json');
+    if (!await outFile.parent.exists()) {
+      await outFile.parent.create(recursive: true);
+    }
+    // Важно: файл выходит в NDJSON-формате (1 JSON-объект на строку),
+    // чтобы можно было безопасно загрузить большие объёмы без OOM.
+    final sink = outFile.openWrite();
 
     for (int index = 0; index < products.length; index++) {
       final product = products[index];
-      final productId = product.id;
-      final existingUserIds = await _loadExistingReviewUserIds(productId);
+      final productExternalId = product.externalId;
 
-      final maxAllowed = profileIds.length - existingUserIds.length;
-      if (maxAllowed <= 0) {
-        _printProgress(index + 1, products.length, productId, 0, 0);
+      final targetCount = _calculateTargetReviews(product);
+      final toGenerate = min(targetCount, profileIds.length);
+
+      if (toGenerate <= 0) {
+      _printProgress(
+        index + 1,
+        products.length,
+        productExternalId,
+        0,
+        totalWritten,
+      );
         continue;
       }
 
-      final targetCount = _calculateTargetReviews(product);
-      final toGenerate = min(targetCount, maxAllowed);
-
       final chosenUsers = _pickUniqueUsers(
         profileIds: profileIds,
-        excludedUserIds: existingUserIds,
+        excludedUserIds: const <String>{},
         count: toGenerate,
       );
 
-      final rows = <Map<String, dynamic>>[];
       for (final userId in chosenUsers) {
         final createdAt = _randomDateWithinLastMonths(now, 12);
         final rating = _generateRating();
         final reply = _maybeGenerateDeveloperReply(product, createdAt);
-        rows.add({
-          'product_id': productId,
+
+        final row = <String, dynamic>{
+          // В JSON храним внешний id продукта.
+          // upload_data() потом сопоставит его с реальным products.id в БД.
+          'product_external_id': productExternalId,
           'user_id': userId,
           'rating': rating,
           'content': _generateReviewText(rating),
-          'developer_id': reply?.developerId,
           'developer_content': reply?.content,
           'responsed_at': reply?.responsedAt.toIso8601String(),
           'created_at': createdAt.toIso8601String(),
-        });
+        };
+
+        sink.writeln(jsonEncode(row));
+        totalWritten += 1;
       }
 
-      await _batchInsertReviews(rows);
-      totalInserted += rows.length;
+      final writtenForProduct = chosenUsers.length;
       _printProgress(
         index + 1,
         products.length,
-        productId,
-        rows.length,
-        totalInserted,
+        productExternalId,
+        writtenForProduct,
+        totalWritten,
       );
     }
 
-    print('Всего вставлено отзывов: $totalInserted');
-    print('Поля rating_avg/reviews_count в products не обновлялись скриптом.');
+    await sink.close();
+
+    print('Всего сгенерировано отзывов: $totalWritten');
+    print('Файл: ${outFile.path}');
   }
 
   Future<List<String>> _loadProfileIds() async {
@@ -150,94 +250,29 @@ class _ReviewsGenerator {
     return ids;
   }
 
-  Future<List<_ProductInfo>> _loadProducts() async {
-    const pageSize = 1000;
-    int from = 0;
-    final products = <_ProductInfo>[];
-    final softwareDeveloperIds = await _loadSoftwareDeveloperIds();
+  Future<List<_ProductInfo>> _loadLocalProducts() async {
+    final items = <_ProductInfo>[];
 
-    while (true) {
-      final response = await _client
-          .schema(_contentSchema)
-          .from('products')
-          .select('id,type,release_date')
-          .range(from, from + pageSize - 1);
-      final batch = (response as List)
-          .map((row) {
-            final data = Map<String, dynamic>.from(row as Map);
-            final id = data['id'] as String?;
-            final type = data['type'] as String?;
-            final releaseDate = _parseDate(data['release_date']);
-            if (id == null || type == null) return null;
-            return _ProductInfo(
-              id: id,
-              type: type,
-              releaseDate: releaseDate,
-              softwareDeveloperId: softwareDeveloperIds[id],
-            );
-          })
-          .whereType<_ProductInfo>()
-          .toList();
-      products.addAll(batch);
-      if (batch.length < pageSize) break;
-      from += pageSize;
-    }
-
-    return products;
-  }
-
-  Future<Map<String, String>> _loadSoftwareDeveloperIds() async {
-    const pageSize = 1000;
-    int from = 0;
-    final map = <String, String>{};
-
-    while (true) {
-      final response = await _client
-          .schema(_contentSchema)
-          .from('software_products')
-          .select('id,developer_id')
-          .range(from, from + pageSize - 1);
-      final batch = (response as List)
-          .map((row) => Map<String, dynamic>.from(row as Map))
-          .toList();
-
-      for (final item in batch) {
-        final id = item['id'] as String?;
-        final developerId = item['developer_id'] as String?;
-        if (id != null && developerId != null && developerId.isNotEmpty) {
-          map[id] = developerId;
-        }
+    Future<void> loadFile(String path) async {
+      final file = File(path);
+      if (!await file.exists()) return;
+      final content = await file.readAsString();
+      final decoded = jsonDecode(content) as List<dynamic>;
+      for (final raw in decoded) {
+        if (raw is! Map) continue;
+        final externalId = raw['id'] as String?;
+        final type = raw['type'] as String?;
+        if (externalId == null || type == null) continue;
+        if (type != 'app' && type != 'game' && type != 'book') continue;
+        items.add(_ProductInfo(externalId: externalId, type: type));
       }
-
-      if (batch.length < pageSize) break;
-      from += pageSize;
     }
 
-    return map;
-  }
+    await loadFile('assets/data/games.json');
+    await loadFile('assets/data/apps.json');
+    await loadFile('assets/data/books.json');
 
-  Future<Set<String>> _loadExistingReviewUserIds(String productId) async {
-    const pageSize = 1000;
-    int from = 0;
-    final userIds = <String>{};
-
-    while (true) {
-      final response = await _client
-          .schema(_contentSchema)
-          .from('reviews')
-          .select('user_id')
-          .eq('product_id', productId)
-          .range(from, from + pageSize - 1);
-      final batch = (response as List)
-          .map((row) => (row as Map)['user_id'])
-          .whereType<String>()
-          .toList();
-      userIds.addAll(batch);
-      if (batch.length < pageSize) break;
-      from += pageSize;
-    }
-
-    return userIds;
+    return items;
   }
 
   List<String> _pickUniqueUsers({
@@ -266,48 +301,22 @@ class _ReviewsGenerator {
   }
 
   int _calculateTargetReviews(_ProductInfo product) {
-    final tierBase = switch (_pickPopularityTier()) {
-      _PopularityTier.top => _randomInRange(300, 1200),
-      _PopularityTier.high => _randomInRange(80, 300),
-      _PopularityTier.mid => _randomInRange(15, 80),
-      _PopularityTier.low => _randomInRange(0, 20),
-    };
-
-    final typeFactor = switch (product.type) {
-      'app' => 1.2,
-      'book' => 0.6,
-      _ => 1.0, // game and fallback
-    };
-    final ageFactor = _ageFactor(product.releaseDate);
-    final noise = _randomDoubleInRange(0.7, 1.4);
-    final value = tierBase * typeFactor * ageFactor * noise;
-    return max(0, value.round());
-  }
-
-  _PopularityTier _pickPopularityTier() {
+    // Детерминируем tier по вероятностям, как просили:
+    // - немного продуктов со 100-150 отзывами
+    // - средние со 5-15
+    // - маленькие со 0-5
     final roll = _random.nextDouble();
-    if (roll < 0.05) return _PopularityTier.top;
-    if (roll < 0.20) return _PopularityTier.high;
-    if (roll < 0.55) return _PopularityTier.mid;
-    return _PopularityTier.low;
-  }
-
-  double _ageFactor(DateTime? releaseDate) {
-    if (releaseDate == null) return 1.0;
-    final ageDays = DateTime.now().toUtc().difference(releaseDate.toUtc()).inDays;
-    final normalized = (ageDays / 365.0).clamp(0.0, 3.0);
-    return (0.4 + normalized * 0.3).clamp(0.4, 1.3);
-  }
-
-  DateTime? _parseDate(dynamic raw) {
-    if (raw is String && raw.isNotEmpty) {
-      return DateTime.tryParse(raw);
+    if (roll < _largeProductChance) {
+      return _randomInRange(_largeReviewsMin, _largeReviewsMax);
     }
-    return null;
+    if (roll < _largeProductChance + _mediumProductChance) {
+      return _randomInRange(_mediumReviewsMin, _mediumReviewsMax);
+    }
+    return _randomInRange(_smallReviewsMin, _smallReviewsMax);
   }
 
   String _generateReviewText(int rating) {
-    final useLong = _random.nextDouble() < 0.28;
+    final useLong = _random.nextDouble() < _useLongProbability;
     if (rating >= 4) {
       if (useLong) {
         return positiveLongReviewTemplates[_random.nextInt(
@@ -340,15 +349,12 @@ class _ReviewsGenerator {
     DateTime createdAt,
   ) {
     final isSoftware = product.type == 'app' || product.type == 'game';
-    if (!isSoftware)
+    if (!isSoftware) {
       return null; // Для книг ответа разработчика быть не должно.
-    // Привязка к реальному владельцу конкретного software-продукта.
-    final ownerDeveloperId = product.softwareDeveloperId;
-    if (ownerDeveloperId == null || ownerDeveloperId.isEmpty) return null;
+    }
     if (_random.nextDouble() >= _developerReplyChance) return null;
 
     return _DeveloperReply(
-      developerId: ownerDeveloperId,
       content:
           developerReplyPhrases[_random.nextInt(developerReplyPhrases.length)],
       responsedAt: _randomResponseDate(createdAt),
@@ -376,17 +382,13 @@ class _ReviewsGenerator {
     return minValue + _random.nextInt(maxValue - minValue + 1);
   }
 
-  double _randomDoubleInRange(double minValue, double maxValue) {
-    if (maxValue <= minValue) return minValue;
-    return minValue + _random.nextDouble() * (maxValue - minValue);
-  }
-
-  Future<void> _batchInsertReviews(List<Map<String, dynamic>> rows) async {
-    if (rows.isEmpty) return;
-    for (int i = 0; i < rows.length; i += _batchSize) {
-      final batch = rows.sublist(i, (i + _batchSize).clamp(0, rows.length));
-      await _client.schema(_contentSchema).from('reviews').insert(batch);
+  double _avgUtf8Bytes(List<String> values) {
+    if (values.isEmpty) return 0.0;
+    var total = 0;
+    for (final s in values) {
+      total += utf8.encode(s).length;
     }
+    return total / values.length;
   }
 
   void _printProgress(
@@ -404,28 +406,20 @@ class _ReviewsGenerator {
 
 class _ProductInfo {
   const _ProductInfo({
-    required this.id,
+    required this.externalId,
     required this.type,
-    required this.releaseDate,
-    required this.softwareDeveloperId,
   });
 
-  final String id;
+  final String externalId;
   final String type;
-  final DateTime? releaseDate;
-  final String? softwareDeveloperId;
 }
-
-enum _PopularityTier { top, high, mid, low }
 
 class _DeveloperReply {
   const _DeveloperReply({
-    required this.developerId,
     required this.content,
     required this.responsedAt,
   });
 
-  final String developerId;
   final String content;
   final DateTime responsedAt;
 }

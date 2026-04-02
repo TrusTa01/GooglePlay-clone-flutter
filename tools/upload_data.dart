@@ -1006,7 +1006,94 @@ class _DataUploader {
   }
 
   Future<int> _generateAndUploadReviews() async {
-    print('\n[reviews] Генерация и загрузка...');
+    final reviewsFile = File('assets/data/reviews.json');
+    if (await reviewsFile.exists()) {
+      print('\n[reviews] Загрузка из assets/data/reviews.json (NDJSON)...');
+      int inserted = 0;
+      final batch = <Map<String, dynamic>>[];
+
+      // После загрузки products/developers (мы внутри upload_data) эти мапы валидны.
+      final productRows = await _selectAllRows('products', 'id,external_id,type');
+      final Map<String, String> productIdByExternalId = {};
+      final Set<String> softwareProductIds = <String>{};
+      for (final row in productRows) {
+        final id = row['id'] as String?;
+        final externalId = row['external_id'] as String?;
+        final type = row['type'] as String?;
+        if (id == null || externalId == null || type == null) continue;
+        productIdByExternalId[externalId] = id;
+        if (type == 'app' || type == 'game') {
+          softwareProductIds.add(id);
+        }
+      }
+
+      final softwareRows = await _selectAllRows(
+        'software_products',
+        'id,developer_id',
+      );
+      final Map<String, String?> developerIdByProductId = {};
+      for (final row in softwareRows) {
+        final productId = row['id'] as String?;
+        final developerId = row['developer_id'] as String?;
+        if (productId == null) continue;
+        if (!softwareProductIds.contains(productId)) continue;
+        developerIdByProductId[productId] = developerId;
+      }
+
+      final lines = reviewsFile
+          .openRead()
+          .transform(const Utf8Decoder())
+          .transform(const LineSplitter());
+
+      await for (final line in lines) {
+        final trimmed = line.trim();
+        if (trimmed.isEmpty) continue;
+
+        final decoded = jsonDecode(trimmed) as Map<String, dynamic>;
+
+        final productExternalId = decoded['product_external_id'] as String?;
+        if (productExternalId == null || productExternalId.isEmpty) continue;
+
+        final productId = productIdByExternalId[productExternalId];
+        if (productId == null) continue;
+
+        final developerContent = decoded['developer_content'];
+        final developerId = developerContent != null && developerContent != ''
+            ? developerIdByProductId[productId]
+            : null;
+
+        final row = <String, dynamic>{
+          'product_id': productId,
+          'user_id': decoded['user_id'],
+          'rating': decoded['rating'],
+          'content': decoded['content'],
+          'developer_id': developerId,
+          'developer_content': developerContent,
+          'responsed_at': decoded['responsed_at'],
+          'created_at': decoded['created_at'],
+        };
+
+        batch.add(row);
+
+        if (batch.length >= _batchSize) {
+          await _client.schema(_contentSchema).from('reviews').insert(batch);
+          inserted += batch.length;
+          batch.clear();
+        }
+      }
+
+      if (batch.isNotEmpty) {
+        await _client.schema(_contentSchema).from('reviews').insert(batch);
+        inserted += batch.length;
+        batch.clear();
+      }
+
+      _finishProgressLine();
+      print('[reviews] Вставлено отзывов из JSON: $inserted');
+      return inserted;
+    }
+
+    print('\n[reviews] Генерация и загрузка (файл reviews.json не найден)...');
     final profileIds = await _loadProfileIds();
     if (profileIds.isEmpty) return 0;
 
