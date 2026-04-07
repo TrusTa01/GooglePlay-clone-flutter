@@ -1,4 +1,6 @@
 import 'package:google_play/features/product/domain/usecases/get_products_by_filters_usecase.dart';
+import 'package:google_play/features/product/domain/usecases/get_product_freshness_usecase.dart';
+import 'package:google_play/features/product/domain/usecases/get_products_freshness_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/core/local_database/app_database.dart';
 import 'package:google_play/features/product/data/datasources/local/i_product_local_datasource.dart';
@@ -10,6 +12,8 @@ import 'package:google_play/features/product/data/datasources/network/i_product_
 import 'package:google_play/features/product/domain/repositories/product_repository.dart';
 import 'package:google_play/features/product/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/load_products_usecase.dart';
+import 'package:google_play/features/product/domain/usecases/watch_products_by_filters_usecase.dart';
+import 'package:google_play/features/product/domain/usecases/watch_products_usecase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
@@ -18,7 +22,7 @@ final appDatabaseProvider = Provider<AppDatabase>((ref) {
   return db;
 });
 
-final productLocalRepositoryProvider = Provider<IProductLocalDatasource>((ref) {
+final productLocalDatasourceProvider = Provider<IProductLocalDatasource>((ref) {
   final db = ref.watch(appDatabaseProvider);
   return DriftProductLocalDatasource(db: db);
 });
@@ -36,7 +40,7 @@ final productNetworkRepositoryProvider = Provider<IProductNetworkRepository>((
 });
 
 final productRepositoryProvider = Provider<IProductRepository>((ref) {
-  final local = ref.watch(productLocalRepositoryProvider);
+  final local = ref.watch(productLocalDatasourceProvider);
   final network = ref.watch(productNetworkRepositoryProvider);
   return OfflineFirstProductRepository(local: local, network: network);
 });
@@ -56,3 +60,27 @@ final loadProductsByFiltersUseCaseProvider =
       final repo = ref.watch(productRepositoryProvider);
       return LoadProductsByFiltersUseCaseImpl(repo);
     });
+
+final watchProductsUseCaseProvider = Provider<WatchProductsUseCase>((ref) {
+  final repo = ref.watch(productRepositoryProvider);
+  return WatchProductsUseCaseImpl(repo);
+});
+
+final watchProductsByFiltersUseCaseProvider =
+    Provider<WatchProductsByFiltersUseCase>((ref) {
+      final repo = ref.watch(productRepositoryProvider);
+      return WatchProductsByFiltersUseCaseImpl(repo);
+    });
+
+final getProductsFreshnessUseCaseProvider =
+    Provider<GetProductsFreshnessUseCase>((ref) {
+      final repo = ref.watch(productRepositoryProvider);
+      return GetProductsFreshnessUseCaseImpl(repo);
+    });
+
+final getProductFreshnessUseCaseProvider = Provider<GetProductFreshnessUseCase>(
+  (ref) {
+    final repo = ref.watch(productRepositoryProvider);
+    return GetProductFreshnessUseCaseImpl(repo);
+  },
+);

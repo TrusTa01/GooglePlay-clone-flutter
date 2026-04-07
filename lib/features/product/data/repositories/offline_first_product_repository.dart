@@ -5,6 +5,7 @@ import 'package:google_play/features/product/data/models/network/product_dto.dar
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
 import 'package:google_play/features/product/data/datasources/network/i_product_network_repository.dart';
+import 'package:google_play/features/product/domain/repositories/product_freshness.dart';
 import 'package:google_play/features/product/domain/repositories/product_repository.dart';
 
 class OfflineFirstProductRepository implements IProductRepository {
@@ -41,6 +42,23 @@ class OfflineFirstProductRepository implements IProductRepository {
   }
 
   @override
+  Stream<List<ProductEntity>> watchProducts({
+    required String type,
+    required String locale,
+    int page = 1,
+    int pageSize = 20,
+  }) {
+    return _local
+        .watchProducts(type: type, page: page, pageSize: pageSize)
+        .map(
+          (bundles) => bundles
+              .map((bundle) => bundle.toEntity(locale))
+              .nonNulls
+              .toList(growable: false),
+        );
+  }
+
+  @override
   Future<List<ProductEntity>> getProductsByFilters({
     required List<ProductFilter> filters,
     required String categoryType,
@@ -61,6 +79,27 @@ class OfflineFirstProductRepository implements IProductRepository {
     return products
         .where((product) => filters.every((f) => _matchesFilter(product, f)))
         .toList(growable: false);
+  }
+
+  @override
+  Stream<List<ProductEntity>> watchProductsByFilters({
+    required List<ProductFilter> filters,
+    required String categoryType,
+    required String locale,
+    int page = 1,
+    int pageSize = 20,
+  }) {
+    return watchProducts(
+      type: categoryType,
+      locale: locale,
+      page: page,
+      pageSize: pageSize,
+    ).map((products) {
+      if (filters.isEmpty) return products;
+      return products
+          .where((product) => filters.every((f) => _matchesFilter(product, f)))
+          .toList(growable: false);
+    });
   }
 
   @override
@@ -113,6 +152,18 @@ class OfflineFirstProductRepository implements IProductRepository {
     final lastSync = await _local.getLastSync(syncKey);
     if (lastSync == null) return true;
     return DateTime.now().difference(lastSync) >= _ttl;
+  }
+
+  @override
+  Future<ProductFreshness> getProductsFreshness({required String type}) async {
+    final lastSync = await _local.getLastSync(_syncListKey(type));
+    return ProductFreshness(lastSyncAt: lastSync, ttl: _ttl);
+  }
+
+  @override
+  Future<ProductFreshness> getProductFreshness(String id) async {
+    final lastSync = await _local.getLastSync(_syncItemKey(id));
+    return ProductFreshness(lastSyncAt: lastSync, ttl: _ttl);
   }
 
   bool _matchesFilter(ProductEntity product, ProductFilter filter) {

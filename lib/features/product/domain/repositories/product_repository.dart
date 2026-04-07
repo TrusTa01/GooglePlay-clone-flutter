@@ -1,5 +1,6 @@
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
+import 'package:google_play/features/product/domain/repositories/product_freshness.dart';
 
 abstract interface class IProductRepository {
   Future<List<ProductEntity>> getProducts({
@@ -8,6 +9,13 @@ abstract interface class IProductRepository {
     int page = 1,
     int pageSize = 20,
     bool forceRefresh = false,
+  });
+
+  Stream<List<ProductEntity>> watchProducts({
+    required String type,
+    required String locale,
+    int page = 1,
+    int pageSize = 20,
   });
 
   Future<ProductEntity?> getProductById(
@@ -24,4 +32,16 @@ abstract interface class IProductRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   });
+
+  Stream<List<ProductEntity>> watchProductsByFilters({
+    required List<ProductFilter> filters,
+    required String categoryType,
+    required String locale,
+    int page = 1,
+    int pageSize = 20,
+  });
+
+  Future<ProductFreshness> getProductsFreshness({required String type});
+
+  Future<ProductFreshness> getProductFreshness(String id);
 }
