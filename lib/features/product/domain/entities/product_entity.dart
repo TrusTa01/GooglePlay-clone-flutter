@@ -9,6 +9,9 @@ abstract class ProductEntity extends Entity {
   final DateTime releaseDate;
   final double rating;
   final int reviewsCount;
+  final double ratingAvg;
+  final Map<String, int> ratingDistribution;
+  final List<Map<String, dynamic>> topReviews;
   final String iconUrl;
   final bool isPaid;
   final double? price;
@@ -30,6 +33,9 @@ abstract class ProductEntity extends Entity {
     required this.releaseDate,
     required this.rating,
     required this.reviewsCount,
+    this.ratingAvg = 0,
+    this.ratingDistribution = const <String, int>{},
+    this.topReviews = const <Map<String, dynamic>>[],
     required this.iconUrl,
     required this.isPaid,
     required this.price,

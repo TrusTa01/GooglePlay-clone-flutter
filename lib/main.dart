@@ -10,8 +10,12 @@ import 'package:google_play/core/presentation/screens/initialization_error_scree
 import 'package:google_play/core/routes/app_router.dart';
 import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+
   Widget initialWidget;
   try {
     await AppBootstrap.init();
@@ -19,7 +23,14 @@ void main() async {
   } catch (e) {
     initialWidget = InitializationErrorScreen(error: e.toString());
   }
-  runApp(ProviderScope(child: initialWidget));
+  runApp(
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+      ],
+      child: initialWidget,
+    ),
+  );
 }
 
 class GooglePlay extends ConsumerWidget {
@@ -43,7 +54,6 @@ class GooglePlay extends ConsumerWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: currentLocale,
-
       theme: baseTheme.copyWith(
         primaryColor: Constants.googleBlue,
         scaffoldBackgroundColor: Colors.white,

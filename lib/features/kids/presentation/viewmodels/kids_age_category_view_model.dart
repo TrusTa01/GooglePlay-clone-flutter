@@ -14,7 +14,7 @@ class KidsAgeCategory extends _$KidsAgeCategory {
     final getTabSections = ref.read(getTabSectionsUseCaseProvider);
     final resolveSection = ref.read(resolveSectionUseCaseProvider);
     final locale =
-        ref.read(localeProvider) ??
+        ref.watch(localeProvider) ??
         WidgetsBinding.instance.platformDispatcher.locale;
 
     final fileName = _mapAgeKeyToFileName(ageKey);

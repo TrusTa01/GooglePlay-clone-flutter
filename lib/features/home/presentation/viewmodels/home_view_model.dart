@@ -24,11 +24,21 @@ class HomeViewModel extends _$HomeViewModel {
   );
 
   @override
-  HomeState build(StoreType storeType) => const HomeState();
+  HomeState build(StoreType storeType) {
+    ref.listen(localeProvider, (_, _) {
+      loadProducts();
+      final tabs = state.sectionsByTab.keys.toList(growable: false);
+      for (final tabKey in tabs) {
+        loadTabSections(tabKey);
+      }
+    });
+    return const HomeState();
+  }
 
   Future<void> loadProducts() async {
     state = state.copyWith(isLoading: true, error: null);
-    final locale = ref.read(localeProvider) ?? PlatformDispatcher.instance.locale;
+    final locale =
+        ref.read(localeProvider) ?? PlatformDispatcher.instance.locale;
 
     try {
       final products = await _loadProductsUseCase(

@@ -80,17 +80,6 @@ class $CachedProductTable extends CachedProduct
     type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _reviewsCountMeta = const VerificationMeta(
-    'reviewsCount',
-  );
-  @override
-  late final GeneratedColumn<int> reviewsCount = GeneratedColumn<int>(
-    'reviews_count',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
   static const VerificationMeta _releaseDateMeta = const VerificationMeta(
     'releaseDate',
   );
@@ -165,6 +154,55 @@ class $CachedProductTable extends CachedProduct
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _ratingAvgMeta = const VerificationMeta(
+    'ratingAvg',
+  );
+  @override
+  late final GeneratedColumn<double> ratingAvg = GeneratedColumn<double>(
+    'rating_avg',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _reviewsCountMeta = const VerificationMeta(
+    'reviewsCount',
+  );
+  @override
+  late final GeneratedColumn<int> reviewsCount = GeneratedColumn<int>(
+    'reviews_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<Map<String, int>, String>
+  ratingDistribution =
+      GeneratedColumn<String>(
+        'rating_distribution',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<Map<String, int>>(
+        $CachedProductTable.$converterratingDistribution,
+      );
+  @override
+  late final GeneratedColumnWithTypeConverter<
+    List<Map<String, dynamic>>,
+    String
+  >
+  topReviews =
+      GeneratedColumn<String>(
+        'top_reviews',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<List<Map<String, dynamic>>>(
+        $CachedProductTable.$convertertopReviews,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -174,7 +212,6 @@ class $CachedProductTable extends CachedProduct
     shortDescription,
     description,
     rating,
-    reviewsCount,
     releaseDate,
     iconUrl,
     isPaid,
@@ -182,6 +219,10 @@ class $CachedProductTable extends CachedProduct
     currencyCode,
     discountPrice,
     url,
+    ratingAvg,
+    reviewsCount,
+    ratingDistribution,
+    topReviews,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -223,17 +264,6 @@ class $CachedProductTable extends CachedProduct
       );
     } else if (isInserting) {
       context.missing(_ratingMeta);
-    }
-    if (data.containsKey('reviews_count')) {
-      context.handle(
-        _reviewsCountMeta,
-        reviewsCount.isAcceptableOrUnknown(
-          data['reviews_count']!,
-          _reviewsCountMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_reviewsCountMeta);
     }
     if (data.containsKey('release_date')) {
       context.handle(
@@ -296,6 +326,25 @@ class $CachedProductTable extends CachedProduct
     } else if (isInserting) {
       context.missing(_urlMeta);
     }
+    if (data.containsKey('rating_avg')) {
+      context.handle(
+        _ratingAvgMeta,
+        ratingAvg.isAcceptableOrUnknown(data['rating_avg']!, _ratingAvgMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_ratingAvgMeta);
+    }
+    if (data.containsKey('reviews_count')) {
+      context.handle(
+        _reviewsCountMeta,
+        reviewsCount.isAcceptableOrUnknown(
+          data['reviews_count']!,
+          _reviewsCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_reviewsCountMeta);
+    }
     return context;
   }
 
@@ -339,10 +388,6 @@ class $CachedProductTable extends CachedProduct
         DriftSqlType.double,
         data['${effectivePrefix}rating'],
       )!,
-      reviewsCount: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}reviews_count'],
-      )!,
       releaseDate: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}release_date'],
@@ -371,6 +416,27 @@ class $CachedProductTable extends CachedProduct
         DriftSqlType.string,
         data['${effectivePrefix}url'],
       )!,
+      ratingAvg: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}rating_avg'],
+      )!,
+      reviewsCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reviews_count'],
+      )!,
+      ratingDistribution: $CachedProductTable.$converterratingDistribution
+          .fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.string,
+              data['${effectivePrefix}rating_distribution'],
+            )!,
+          ),
+      topReviews: $CachedProductTable.$convertertopReviews.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}top_reviews'],
+        )!,
+      ),
     );
   }
 
@@ -385,6 +451,10 @@ class $CachedProductTable extends CachedProduct
       const LocalizedStringConverter();
   static TypeConverter<Map<String, String>, String> $converterdescription =
       const LocalizedStringConverter();
+  static TypeConverter<Map<String, int>, String> $converterratingDistribution =
+      const RatingDistributionConverter();
+  static TypeConverter<List<Map<String, dynamic>>, String>
+  $convertertopReviews = const TopReviewsConverter();
 }
 
 class CachedProductData extends DataClass
@@ -396,7 +466,6 @@ class CachedProductData extends DataClass
   final Map<String, String> shortDescription;
   final Map<String, String> description;
   final double rating;
-  final int reviewsCount;
   final DateTime releaseDate;
   final String iconUrl;
   final bool isPaid;
@@ -404,6 +473,10 @@ class CachedProductData extends DataClass
   final String currencyCode;
   final double? discountPrice;
   final String url;
+  final double ratingAvg;
+  final int reviewsCount;
+  final Map<String, int> ratingDistribution;
+  final List<Map<String, dynamic>> topReviews;
   const CachedProductData({
     required this.id,
     required this.externalId,
@@ -412,7 +485,6 @@ class CachedProductData extends DataClass
     required this.shortDescription,
     required this.description,
     required this.rating,
-    required this.reviewsCount,
     required this.releaseDate,
     required this.iconUrl,
     required this.isPaid,
@@ -420,6 +492,10 @@ class CachedProductData extends DataClass
     required this.currencyCode,
     this.discountPrice,
     required this.url,
+    required this.ratingAvg,
+    required this.reviewsCount,
+    required this.ratingDistribution,
+    required this.topReviews,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -443,7 +519,6 @@ class CachedProductData extends DataClass
       );
     }
     map['rating'] = Variable<double>(rating);
-    map['reviews_count'] = Variable<int>(reviewsCount);
     map['release_date'] = Variable<DateTime>(releaseDate);
     map['icon_url'] = Variable<String>(iconUrl);
     map['is_paid'] = Variable<bool>(isPaid);
@@ -455,6 +530,20 @@ class CachedProductData extends DataClass
       map['discount_price'] = Variable<double>(discountPrice);
     }
     map['url'] = Variable<String>(url);
+    map['rating_avg'] = Variable<double>(ratingAvg);
+    map['reviews_count'] = Variable<int>(reviewsCount);
+    {
+      map['rating_distribution'] = Variable<String>(
+        $CachedProductTable.$converterratingDistribution.toSql(
+          ratingDistribution,
+        ),
+      );
+    }
+    {
+      map['top_reviews'] = Variable<String>(
+        $CachedProductTable.$convertertopReviews.toSql(topReviews),
+      );
+    }
     return map;
   }
 
@@ -467,7 +556,6 @@ class CachedProductData extends DataClass
       shortDescription: Value(shortDescription),
       description: Value(description),
       rating: Value(rating),
-      reviewsCount: Value(reviewsCount),
       releaseDate: Value(releaseDate),
       iconUrl: Value(iconUrl),
       isPaid: Value(isPaid),
@@ -479,6 +567,10 @@ class CachedProductData extends DataClass
           ? const Value.absent()
           : Value(discountPrice),
       url: Value(url),
+      ratingAvg: Value(ratingAvg),
+      reviewsCount: Value(reviewsCount),
+      ratingDistribution: Value(ratingDistribution),
+      topReviews: Value(topReviews),
     );
   }
 
@@ -499,7 +591,6 @@ class CachedProductData extends DataClass
         json['description'],
       ),
       rating: serializer.fromJson<double>(json['rating']),
-      reviewsCount: serializer.fromJson<int>(json['reviewsCount']),
       releaseDate: serializer.fromJson<DateTime>(json['releaseDate']),
       iconUrl: serializer.fromJson<String>(json['iconUrl']),
       isPaid: serializer.fromJson<bool>(json['isPaid']),
@@ -507,6 +598,14 @@ class CachedProductData extends DataClass
       currencyCode: serializer.fromJson<String>(json['currencyCode']),
       discountPrice: serializer.fromJson<double?>(json['discountPrice']),
       url: serializer.fromJson<String>(json['url']),
+      ratingAvg: serializer.fromJson<double>(json['ratingAvg']),
+      reviewsCount: serializer.fromJson<int>(json['reviewsCount']),
+      ratingDistribution: serializer.fromJson<Map<String, int>>(
+        json['ratingDistribution'],
+      ),
+      topReviews: serializer.fromJson<List<Map<String, dynamic>>>(
+        json['topReviews'],
+      ),
     );
   }
   @override
@@ -522,7 +621,6 @@ class CachedProductData extends DataClass
       ),
       'description': serializer.toJson<Map<String, String>>(description),
       'rating': serializer.toJson<double>(rating),
-      'reviewsCount': serializer.toJson<int>(reviewsCount),
       'releaseDate': serializer.toJson<DateTime>(releaseDate),
       'iconUrl': serializer.toJson<String>(iconUrl),
       'isPaid': serializer.toJson<bool>(isPaid),
@@ -530,6 +628,12 @@ class CachedProductData extends DataClass
       'currencyCode': serializer.toJson<String>(currencyCode),
       'discountPrice': serializer.toJson<double?>(discountPrice),
       'url': serializer.toJson<String>(url),
+      'ratingAvg': serializer.toJson<double>(ratingAvg),
+      'reviewsCount': serializer.toJson<int>(reviewsCount),
+      'ratingDistribution': serializer.toJson<Map<String, int>>(
+        ratingDistribution,
+      ),
+      'topReviews': serializer.toJson<List<Map<String, dynamic>>>(topReviews),
     };
   }
 
@@ -541,7 +645,6 @@ class CachedProductData extends DataClass
     Map<String, String>? shortDescription,
     Map<String, String>? description,
     double? rating,
-    int? reviewsCount,
     DateTime? releaseDate,
     String? iconUrl,
     bool? isPaid,
@@ -549,6 +652,10 @@ class CachedProductData extends DataClass
     String? currencyCode,
     Value<double?> discountPrice = const Value.absent(),
     String? url,
+    double? ratingAvg,
+    int? reviewsCount,
+    Map<String, int>? ratingDistribution,
+    List<Map<String, dynamic>>? topReviews,
   }) => CachedProductData(
     id: id ?? this.id,
     externalId: externalId ?? this.externalId,
@@ -557,7 +664,6 @@ class CachedProductData extends DataClass
     shortDescription: shortDescription ?? this.shortDescription,
     description: description ?? this.description,
     rating: rating ?? this.rating,
-    reviewsCount: reviewsCount ?? this.reviewsCount,
     releaseDate: releaseDate ?? this.releaseDate,
     iconUrl: iconUrl ?? this.iconUrl,
     isPaid: isPaid ?? this.isPaid,
@@ -567,6 +673,10 @@ class CachedProductData extends DataClass
         ? discountPrice.value
         : this.discountPrice,
     url: url ?? this.url,
+    ratingAvg: ratingAvg ?? this.ratingAvg,
+    reviewsCount: reviewsCount ?? this.reviewsCount,
+    ratingDistribution: ratingDistribution ?? this.ratingDistribution,
+    topReviews: topReviews ?? this.topReviews,
   );
   CachedProductData copyWithCompanion(CachedProductCompanion data) {
     return CachedProductData(
@@ -583,9 +693,6 @@ class CachedProductData extends DataClass
           ? data.description.value
           : this.description,
       rating: data.rating.present ? data.rating.value : this.rating,
-      reviewsCount: data.reviewsCount.present
-          ? data.reviewsCount.value
-          : this.reviewsCount,
       releaseDate: data.releaseDate.present
           ? data.releaseDate.value
           : this.releaseDate,
@@ -599,6 +706,16 @@ class CachedProductData extends DataClass
           ? data.discountPrice.value
           : this.discountPrice,
       url: data.url.present ? data.url.value : this.url,
+      ratingAvg: data.ratingAvg.present ? data.ratingAvg.value : this.ratingAvg,
+      reviewsCount: data.reviewsCount.present
+          ? data.reviewsCount.value
+          : this.reviewsCount,
+      ratingDistribution: data.ratingDistribution.present
+          ? data.ratingDistribution.value
+          : this.ratingDistribution,
+      topReviews: data.topReviews.present
+          ? data.topReviews.value
+          : this.topReviews,
     );
   }
 
@@ -612,14 +729,17 @@ class CachedProductData extends DataClass
           ..write('shortDescription: $shortDescription, ')
           ..write('description: $description, ')
           ..write('rating: $rating, ')
-          ..write('reviewsCount: $reviewsCount, ')
           ..write('releaseDate: $releaseDate, ')
           ..write('iconUrl: $iconUrl, ')
           ..write('isPaid: $isPaid, ')
           ..write('price: $price, ')
           ..write('currencyCode: $currencyCode, ')
           ..write('discountPrice: $discountPrice, ')
-          ..write('url: $url')
+          ..write('url: $url, ')
+          ..write('ratingAvg: $ratingAvg, ')
+          ..write('reviewsCount: $reviewsCount, ')
+          ..write('ratingDistribution: $ratingDistribution, ')
+          ..write('topReviews: $topReviews')
           ..write(')'))
         .toString();
   }
@@ -633,7 +753,6 @@ class CachedProductData extends DataClass
     shortDescription,
     description,
     rating,
-    reviewsCount,
     releaseDate,
     iconUrl,
     isPaid,
@@ -641,6 +760,10 @@ class CachedProductData extends DataClass
     currencyCode,
     discountPrice,
     url,
+    ratingAvg,
+    reviewsCount,
+    ratingDistribution,
+    topReviews,
   );
   @override
   bool operator ==(Object other) =>
@@ -653,14 +776,17 @@ class CachedProductData extends DataClass
           other.shortDescription == this.shortDescription &&
           other.description == this.description &&
           other.rating == this.rating &&
-          other.reviewsCount == this.reviewsCount &&
           other.releaseDate == this.releaseDate &&
           other.iconUrl == this.iconUrl &&
           other.isPaid == this.isPaid &&
           other.price == this.price &&
           other.currencyCode == this.currencyCode &&
           other.discountPrice == this.discountPrice &&
-          other.url == this.url);
+          other.url == this.url &&
+          other.ratingAvg == this.ratingAvg &&
+          other.reviewsCount == this.reviewsCount &&
+          other.ratingDistribution == this.ratingDistribution &&
+          other.topReviews == this.topReviews);
 }
 
 class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
@@ -671,7 +797,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
   final Value<Map<String, String>> shortDescription;
   final Value<Map<String, String>> description;
   final Value<double> rating;
-  final Value<int> reviewsCount;
   final Value<DateTime> releaseDate;
   final Value<String> iconUrl;
   final Value<bool> isPaid;
@@ -679,6 +804,10 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
   final Value<String> currencyCode;
   final Value<double?> discountPrice;
   final Value<String> url;
+  final Value<double> ratingAvg;
+  final Value<int> reviewsCount;
+  final Value<Map<String, int>> ratingDistribution;
+  final Value<List<Map<String, dynamic>>> topReviews;
   final Value<int> rowid;
   const CachedProductCompanion({
     this.id = const Value.absent(),
@@ -688,7 +817,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     this.shortDescription = const Value.absent(),
     this.description = const Value.absent(),
     this.rating = const Value.absent(),
-    this.reviewsCount = const Value.absent(),
     this.releaseDate = const Value.absent(),
     this.iconUrl = const Value.absent(),
     this.isPaid = const Value.absent(),
@@ -696,6 +824,10 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     this.currencyCode = const Value.absent(),
     this.discountPrice = const Value.absent(),
     this.url = const Value.absent(),
+    this.ratingAvg = const Value.absent(),
+    this.reviewsCount = const Value.absent(),
+    this.ratingDistribution = const Value.absent(),
+    this.topReviews = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   CachedProductCompanion.insert({
@@ -706,7 +838,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     required Map<String, String> shortDescription,
     required Map<String, String> description,
     required double rating,
-    required int reviewsCount,
     required DateTime releaseDate,
     required String iconUrl,
     required bool isPaid,
@@ -714,6 +845,10 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     required String currencyCode,
     this.discountPrice = const Value.absent(),
     required String url,
+    required double ratingAvg,
+    required int reviewsCount,
+    required Map<String, int> ratingDistribution,
+    required List<Map<String, dynamic>> topReviews,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        externalId = Value(externalId),
@@ -722,12 +857,15 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
        shortDescription = Value(shortDescription),
        description = Value(description),
        rating = Value(rating),
-       reviewsCount = Value(reviewsCount),
        releaseDate = Value(releaseDate),
        iconUrl = Value(iconUrl),
        isPaid = Value(isPaid),
        currencyCode = Value(currencyCode),
-       url = Value(url);
+       url = Value(url),
+       ratingAvg = Value(ratingAvg),
+       reviewsCount = Value(reviewsCount),
+       ratingDistribution = Value(ratingDistribution),
+       topReviews = Value(topReviews);
   static Insertable<CachedProductData> custom({
     Expression<String>? id,
     Expression<String>? externalId,
@@ -736,7 +874,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     Expression<String>? shortDescription,
     Expression<String>? description,
     Expression<double>? rating,
-    Expression<int>? reviewsCount,
     Expression<DateTime>? releaseDate,
     Expression<String>? iconUrl,
     Expression<bool>? isPaid,
@@ -744,6 +881,10 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     Expression<String>? currencyCode,
     Expression<double>? discountPrice,
     Expression<String>? url,
+    Expression<double>? ratingAvg,
+    Expression<int>? reviewsCount,
+    Expression<String>? ratingDistribution,
+    Expression<String>? topReviews,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -754,7 +895,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
       if (shortDescription != null) 'short_description': shortDescription,
       if (description != null) 'description': description,
       if (rating != null) 'rating': rating,
-      if (reviewsCount != null) 'reviews_count': reviewsCount,
       if (releaseDate != null) 'release_date': releaseDate,
       if (iconUrl != null) 'icon_url': iconUrl,
       if (isPaid != null) 'is_paid': isPaid,
@@ -762,6 +902,10 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
       if (currencyCode != null) 'currency_code': currencyCode,
       if (discountPrice != null) 'discount_price': discountPrice,
       if (url != null) 'url': url,
+      if (ratingAvg != null) 'rating_avg': ratingAvg,
+      if (reviewsCount != null) 'reviews_count': reviewsCount,
+      if (ratingDistribution != null) 'rating_distribution': ratingDistribution,
+      if (topReviews != null) 'top_reviews': topReviews,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -774,7 +918,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     Value<Map<String, String>>? shortDescription,
     Value<Map<String, String>>? description,
     Value<double>? rating,
-    Value<int>? reviewsCount,
     Value<DateTime>? releaseDate,
     Value<String>? iconUrl,
     Value<bool>? isPaid,
@@ -782,6 +925,10 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     Value<String>? currencyCode,
     Value<double?>? discountPrice,
     Value<String>? url,
+    Value<double>? ratingAvg,
+    Value<int>? reviewsCount,
+    Value<Map<String, int>>? ratingDistribution,
+    Value<List<Map<String, dynamic>>>? topReviews,
     Value<int>? rowid,
   }) {
     return CachedProductCompanion(
@@ -792,7 +939,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
       shortDescription: shortDescription ?? this.shortDescription,
       description: description ?? this.description,
       rating: rating ?? this.rating,
-      reviewsCount: reviewsCount ?? this.reviewsCount,
       releaseDate: releaseDate ?? this.releaseDate,
       iconUrl: iconUrl ?? this.iconUrl,
       isPaid: isPaid ?? this.isPaid,
@@ -800,6 +946,10 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
       currencyCode: currencyCode ?? this.currencyCode,
       discountPrice: discountPrice ?? this.discountPrice,
       url: url ?? this.url,
+      ratingAvg: ratingAvg ?? this.ratingAvg,
+      reviewsCount: reviewsCount ?? this.reviewsCount,
+      ratingDistribution: ratingDistribution ?? this.ratingDistribution,
+      topReviews: topReviews ?? this.topReviews,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -836,9 +986,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     if (rating.present) {
       map['rating'] = Variable<double>(rating.value);
     }
-    if (reviewsCount.present) {
-      map['reviews_count'] = Variable<int>(reviewsCount.value);
-    }
     if (releaseDate.present) {
       map['release_date'] = Variable<DateTime>(releaseDate.value);
     }
@@ -860,6 +1007,24 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
     if (url.present) {
       map['url'] = Variable<String>(url.value);
     }
+    if (ratingAvg.present) {
+      map['rating_avg'] = Variable<double>(ratingAvg.value);
+    }
+    if (reviewsCount.present) {
+      map['reviews_count'] = Variable<int>(reviewsCount.value);
+    }
+    if (ratingDistribution.present) {
+      map['rating_distribution'] = Variable<String>(
+        $CachedProductTable.$converterratingDistribution.toSql(
+          ratingDistribution.value,
+        ),
+      );
+    }
+    if (topReviews.present) {
+      map['top_reviews'] = Variable<String>(
+        $CachedProductTable.$convertertopReviews.toSql(topReviews.value),
+      );
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -876,7 +1041,6 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
           ..write('shortDescription: $shortDescription, ')
           ..write('description: $description, ')
           ..write('rating: $rating, ')
-          ..write('reviewsCount: $reviewsCount, ')
           ..write('releaseDate: $releaseDate, ')
           ..write('iconUrl: $iconUrl, ')
           ..write('isPaid: $isPaid, ')
@@ -884,6 +1048,10 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
           ..write('currencyCode: $currencyCode, ')
           ..write('discountPrice: $discountPrice, ')
           ..write('url: $url, ')
+          ..write('ratingAvg: $ratingAvg, ')
+          ..write('reviewsCount: $reviewsCount, ')
+          ..write('ratingDistribution: $ratingDistribution, ')
+          ..write('topReviews: $topReviews, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1744,13 +1912,13 @@ class $DevelopersTable extends Developers
   );
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, String>, String>
-  adress = GeneratedColumn<String>(
-    'adress',
+  address = GeneratedColumn<String>(
+    'address',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-  ).withConverter<Map<String, String>>($DevelopersTable.$converteradress);
+  ).withConverter<Map<String, String>>($DevelopersTable.$converteraddress);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, String>, String>
   company = GeneratedColumn<String>(
@@ -1807,7 +1975,7 @@ class $DevelopersTable extends Developers
     id,
     city,
     phone,
-    adress,
+    address,
     company,
     country,
     websiteUrl,
@@ -1892,10 +2060,10 @@ class $DevelopersTable extends Developers
         DriftSqlType.string,
         data['${effectivePrefix}phone'],
       )!,
-      adress: $DevelopersTable.$converteradress.fromSql(
+      address: $DevelopersTable.$converteraddress.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}adress'],
+          data['${effectivePrefix}address'],
         )!,
       ),
       company: $DevelopersTable.$convertercompany.fromSql(
@@ -1932,7 +2100,7 @@ class $DevelopersTable extends Developers
 
   static TypeConverter<Map<String, String>, String> $convertercity =
       const LocalizedStringConverter();
-  static TypeConverter<Map<String, String>, String> $converteradress =
+  static TypeConverter<Map<String, String>, String> $converteraddress =
       const LocalizedStringConverter();
   static TypeConverter<Map<String, String>, String> $convertercompany =
       const LocalizedStringConverter();
@@ -1944,7 +2112,7 @@ class Developer extends DataClass implements Insertable<Developer> {
   final String id;
   final Map<String, String> city;
   final String phone;
-  final Map<String, String> adress;
+  final Map<String, String> address;
   final Map<String, String> company;
   final Map<String, String> country;
   final String websiteUrl;
@@ -1954,7 +2122,7 @@ class Developer extends DataClass implements Insertable<Developer> {
     required this.id,
     required this.city,
     required this.phone,
-    required this.adress,
+    required this.address,
     required this.company,
     required this.country,
     required this.websiteUrl,
@@ -1972,8 +2140,8 @@ class Developer extends DataClass implements Insertable<Developer> {
     }
     map['phone'] = Variable<String>(phone);
     {
-      map['adress'] = Variable<String>(
-        $DevelopersTable.$converteradress.toSql(adress),
+      map['address'] = Variable<String>(
+        $DevelopersTable.$converteraddress.toSql(address),
       );
     }
     {
@@ -1997,7 +2165,7 @@ class Developer extends DataClass implements Insertable<Developer> {
       id: Value(id),
       city: Value(city),
       phone: Value(phone),
-      adress: Value(adress),
+      address: Value(address),
       company: Value(company),
       country: Value(country),
       websiteUrl: Value(websiteUrl),
@@ -2015,7 +2183,7 @@ class Developer extends DataClass implements Insertable<Developer> {
       id: serializer.fromJson<String>(json['id']),
       city: serializer.fromJson<Map<String, String>>(json['city']),
       phone: serializer.fromJson<String>(json['phone']),
-      adress: serializer.fromJson<Map<String, String>>(json['adress']),
+      address: serializer.fromJson<Map<String, String>>(json['address']),
       company: serializer.fromJson<Map<String, String>>(json['company']),
       country: serializer.fromJson<Map<String, String>>(json['country']),
       websiteUrl: serializer.fromJson<String>(json['websiteUrl']),
@@ -2030,7 +2198,7 @@ class Developer extends DataClass implements Insertable<Developer> {
       'id': serializer.toJson<String>(id),
       'city': serializer.toJson<Map<String, String>>(city),
       'phone': serializer.toJson<String>(phone),
-      'adress': serializer.toJson<Map<String, String>>(adress),
+      'address': serializer.toJson<Map<String, String>>(address),
       'company': serializer.toJson<Map<String, String>>(company),
       'country': serializer.toJson<Map<String, String>>(country),
       'websiteUrl': serializer.toJson<String>(websiteUrl),
@@ -2043,7 +2211,7 @@ class Developer extends DataClass implements Insertable<Developer> {
     String? id,
     Map<String, String>? city,
     String? phone,
-    Map<String, String>? adress,
+    Map<String, String>? address,
     Map<String, String>? company,
     Map<String, String>? country,
     String? websiteUrl,
@@ -2053,7 +2221,7 @@ class Developer extends DataClass implements Insertable<Developer> {
     id: id ?? this.id,
     city: city ?? this.city,
     phone: phone ?? this.phone,
-    adress: adress ?? this.adress,
+    address: address ?? this.address,
     company: company ?? this.company,
     country: country ?? this.country,
     websiteUrl: websiteUrl ?? this.websiteUrl,
@@ -2065,7 +2233,7 @@ class Developer extends DataClass implements Insertable<Developer> {
       id: data.id.present ? data.id.value : this.id,
       city: data.city.present ? data.city.value : this.city,
       phone: data.phone.present ? data.phone.value : this.phone,
-      adress: data.adress.present ? data.adress.value : this.adress,
+      address: data.address.present ? data.address.value : this.address,
       company: data.company.present ? data.company.value : this.company,
       country: data.country.present ? data.country.value : this.country,
       websiteUrl: data.websiteUrl.present
@@ -2086,7 +2254,7 @@ class Developer extends DataClass implements Insertable<Developer> {
           ..write('id: $id, ')
           ..write('city: $city, ')
           ..write('phone: $phone, ')
-          ..write('adress: $adress, ')
+          ..write('address: $address, ')
           ..write('company: $company, ')
           ..write('country: $country, ')
           ..write('websiteUrl: $websiteUrl, ')
@@ -2101,7 +2269,7 @@ class Developer extends DataClass implements Insertable<Developer> {
     id,
     city,
     phone,
-    adress,
+    address,
     company,
     country,
     websiteUrl,
@@ -2115,7 +2283,7 @@ class Developer extends DataClass implements Insertable<Developer> {
           other.id == this.id &&
           other.city == this.city &&
           other.phone == this.phone &&
-          other.adress == this.adress &&
+          other.address == this.address &&
           other.company == this.company &&
           other.country == this.country &&
           other.websiteUrl == this.websiteUrl &&
@@ -2127,7 +2295,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
   final Value<String> id;
   final Value<Map<String, String>> city;
   final Value<String> phone;
-  final Value<Map<String, String>> adress;
+  final Value<Map<String, String>> address;
   final Value<Map<String, String>> company;
   final Value<Map<String, String>> country;
   final Value<String> websiteUrl;
@@ -2138,7 +2306,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
     this.id = const Value.absent(),
     this.city = const Value.absent(),
     this.phone = const Value.absent(),
-    this.adress = const Value.absent(),
+    this.address = const Value.absent(),
     this.company = const Value.absent(),
     this.country = const Value.absent(),
     this.websiteUrl = const Value.absent(),
@@ -2150,7 +2318,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
     required String id,
     required Map<String, String> city,
     required String phone,
-    required Map<String, String> adress,
+    required Map<String, String> address,
     required Map<String, String> company,
     required Map<String, String> country,
     required String websiteUrl,
@@ -2160,7 +2328,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
   }) : id = Value(id),
        city = Value(city),
        phone = Value(phone),
-       adress = Value(adress),
+       address = Value(address),
        company = Value(company),
        country = Value(country),
        websiteUrl = Value(websiteUrl),
@@ -2170,7 +2338,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
     Expression<String>? id,
     Expression<String>? city,
     Expression<String>? phone,
-    Expression<String>? adress,
+    Expression<String>? address,
     Expression<String>? company,
     Expression<String>? country,
     Expression<String>? websiteUrl,
@@ -2182,7 +2350,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
       if (id != null) 'id': id,
       if (city != null) 'city': city,
       if (phone != null) 'phone': phone,
-      if (adress != null) 'adress': adress,
+      if (address != null) 'address': address,
       if (company != null) 'company': company,
       if (country != null) 'country': country,
       if (websiteUrl != null) 'website_url': websiteUrl,
@@ -2196,7 +2364,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
     Value<String>? id,
     Value<Map<String, String>>? city,
     Value<String>? phone,
-    Value<Map<String, String>>? adress,
+    Value<Map<String, String>>? address,
     Value<Map<String, String>>? company,
     Value<Map<String, String>>? country,
     Value<String>? websiteUrl,
@@ -2208,7 +2376,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
       id: id ?? this.id,
       city: city ?? this.city,
       phone: phone ?? this.phone,
-      adress: adress ?? this.adress,
+      address: address ?? this.address,
       company: company ?? this.company,
       country: country ?? this.country,
       websiteUrl: websiteUrl ?? this.websiteUrl,
@@ -2232,9 +2400,9 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
     if (phone.present) {
       map['phone'] = Variable<String>(phone.value);
     }
-    if (adress.present) {
-      map['adress'] = Variable<String>(
-        $DevelopersTable.$converteradress.toSql(adress.value),
+    if (address.present) {
+      map['address'] = Variable<String>(
+        $DevelopersTable.$converteraddress.toSql(address.value),
       );
     }
     if (company.present) {
@@ -2268,7 +2436,7 @@ class DevelopersCompanion extends UpdateCompanion<Developer> {
           ..write('id: $id, ')
           ..write('city: $city, ')
           ..write('phone: $phone, ')
-          ..write('adress: $adress, ')
+          ..write('address: $address, ')
           ..write('company: $company, ')
           ..write('country: $country, ')
           ..write('websiteUrl: $websiteUrl, ')
@@ -6418,7 +6586,6 @@ typedef $$CachedProductTableCreateCompanionBuilder =
       required Map<String, String> shortDescription,
       required Map<String, String> description,
       required double rating,
-      required int reviewsCount,
       required DateTime releaseDate,
       required String iconUrl,
       required bool isPaid,
@@ -6426,6 +6593,10 @@ typedef $$CachedProductTableCreateCompanionBuilder =
       required String currencyCode,
       Value<double?> discountPrice,
       required String url,
+      required double ratingAvg,
+      required int reviewsCount,
+      required Map<String, int> ratingDistribution,
+      required List<Map<String, dynamic>> topReviews,
       Value<int> rowid,
     });
 typedef $$CachedProductTableUpdateCompanionBuilder =
@@ -6437,7 +6608,6 @@ typedef $$CachedProductTableUpdateCompanionBuilder =
       Value<Map<String, String>> shortDescription,
       Value<Map<String, String>> description,
       Value<double> rating,
-      Value<int> reviewsCount,
       Value<DateTime> releaseDate,
       Value<String> iconUrl,
       Value<bool> isPaid,
@@ -6445,6 +6615,10 @@ typedef $$CachedProductTableUpdateCompanionBuilder =
       Value<String> currencyCode,
       Value<double?> discountPrice,
       Value<String> url,
+      Value<double> ratingAvg,
+      Value<int> reviewsCount,
+      Value<Map<String, int>> ratingDistribution,
+      Value<List<Map<String, dynamic>>> topReviews,
       Value<int> rowid,
     });
 
@@ -6638,11 +6812,6 @@ class $$CachedProductTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get reviewsCount => $composableBuilder(
-    column: $table.reviewsCount,
-    builder: (column) => ColumnFilters(column),
-  );
-
   ColumnFilters<DateTime> get releaseDate => $composableBuilder(
     column: $table.releaseDate,
     builder: (column) => ColumnFilters(column),
@@ -6676,6 +6845,32 @@ class $$CachedProductTableFilterComposer
   ColumnFilters<String> get url => $composableBuilder(
     column: $table.url,
     builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get ratingAvg => $composableBuilder(
+    column: $table.ratingAvg,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get reviewsCount => $composableBuilder(
+    column: $table.reviewsCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<Map<String, int>, Map<String, int>, String>
+  get ratingDistribution => $composableBuilder(
+    column: $table.ratingDistribution,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    List<Map<String, dynamic>>,
+    List<Map<String, dynamic>>,
+    String
+  >
+  get topReviews => $composableBuilder(
+    column: $table.topReviews,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   Expression<bool> productTranslationsRefs(
@@ -6849,11 +7044,6 @@ class $$CachedProductTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get reviewsCount => $composableBuilder(
-    column: $table.reviewsCount,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<DateTime> get releaseDate => $composableBuilder(
     column: $table.releaseDate,
     builder: (column) => ColumnOrderings(column),
@@ -6886,6 +7076,26 @@ class $$CachedProductTableOrderingComposer
 
   ColumnOrderings<String> get url => $composableBuilder(
     column: $table.url,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get ratingAvg => $composableBuilder(
+    column: $table.ratingAvg,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get reviewsCount => $composableBuilder(
+    column: $table.reviewsCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ratingDistribution => $composableBuilder(
+    column: $table.ratingDistribution,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get topReviews => $composableBuilder(
+    column: $table.topReviews,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -6928,11 +7138,6 @@ class $$CachedProductTableAnnotationComposer
   GeneratedColumn<double> get rating =>
       $composableBuilder(column: $table.rating, builder: (column) => column);
 
-  GeneratedColumn<int> get reviewsCount => $composableBuilder(
-    column: $table.reviewsCount,
-    builder: (column) => column,
-  );
-
   GeneratedColumn<DateTime> get releaseDate => $composableBuilder(
     column: $table.releaseDate,
     builder: (column) => column,
@@ -6959,6 +7164,26 @@ class $$CachedProductTableAnnotationComposer
 
   GeneratedColumn<String> get url =>
       $composableBuilder(column: $table.url, builder: (column) => column);
+
+  GeneratedColumn<double> get ratingAvg =>
+      $composableBuilder(column: $table.ratingAvg, builder: (column) => column);
+
+  GeneratedColumn<int> get reviewsCount => $composableBuilder(
+    column: $table.reviewsCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<Map<String, int>, String>
+  get ratingDistribution => $composableBuilder(
+    column: $table.ratingDistribution,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<List<Map<String, dynamic>>, String>
+  get topReviews => $composableBuilder(
+    column: $table.topReviews,
+    builder: (column) => column,
+  );
 
   Expression<T> productTranslationsRefs<T extends Object>(
     Expression<T> Function($$ProductTranslationsTableAnnotationComposer a) f,
@@ -7131,7 +7356,6 @@ class $$CachedProductTableTableManager
                     const Value.absent(),
                 Value<Map<String, String>> description = const Value.absent(),
                 Value<double> rating = const Value.absent(),
-                Value<int> reviewsCount = const Value.absent(),
                 Value<DateTime> releaseDate = const Value.absent(),
                 Value<String> iconUrl = const Value.absent(),
                 Value<bool> isPaid = const Value.absent(),
@@ -7139,6 +7363,12 @@ class $$CachedProductTableTableManager
                 Value<String> currencyCode = const Value.absent(),
                 Value<double?> discountPrice = const Value.absent(),
                 Value<String> url = const Value.absent(),
+                Value<double> ratingAvg = const Value.absent(),
+                Value<int> reviewsCount = const Value.absent(),
+                Value<Map<String, int>> ratingDistribution =
+                    const Value.absent(),
+                Value<List<Map<String, dynamic>>> topReviews =
+                    const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CachedProductCompanion(
                 id: id,
@@ -7148,7 +7378,6 @@ class $$CachedProductTableTableManager
                 shortDescription: shortDescription,
                 description: description,
                 rating: rating,
-                reviewsCount: reviewsCount,
                 releaseDate: releaseDate,
                 iconUrl: iconUrl,
                 isPaid: isPaid,
@@ -7156,6 +7385,10 @@ class $$CachedProductTableTableManager
                 currencyCode: currencyCode,
                 discountPrice: discountPrice,
                 url: url,
+                ratingAvg: ratingAvg,
+                reviewsCount: reviewsCount,
+                ratingDistribution: ratingDistribution,
+                topReviews: topReviews,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -7167,7 +7400,6 @@ class $$CachedProductTableTableManager
                 required Map<String, String> shortDescription,
                 required Map<String, String> description,
                 required double rating,
-                required int reviewsCount,
                 required DateTime releaseDate,
                 required String iconUrl,
                 required bool isPaid,
@@ -7175,6 +7407,10 @@ class $$CachedProductTableTableManager
                 required String currencyCode,
                 Value<double?> discountPrice = const Value.absent(),
                 required String url,
+                required double ratingAvg,
+                required int reviewsCount,
+                required Map<String, int> ratingDistribution,
+                required List<Map<String, dynamic>> topReviews,
                 Value<int> rowid = const Value.absent(),
               }) => CachedProductCompanion.insert(
                 id: id,
@@ -7184,7 +7420,6 @@ class $$CachedProductTableTableManager
                 shortDescription: shortDescription,
                 description: description,
                 rating: rating,
-                reviewsCount: reviewsCount,
                 releaseDate: releaseDate,
                 iconUrl: iconUrl,
                 isPaid: isPaid,
@@ -7192,6 +7427,10 @@ class $$CachedProductTableTableManager
                 currencyCode: currencyCode,
                 discountPrice: discountPrice,
                 url: url,
+                ratingAvg: ratingAvg,
+                reviewsCount: reviewsCount,
+                ratingDistribution: ratingDistribution,
+                topReviews: topReviews,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -7982,7 +8221,7 @@ typedef $$DevelopersTableCreateCompanionBuilder =
       required String id,
       required Map<String, String> city,
       required String phone,
-      required Map<String, String> adress,
+      required Map<String, String> address,
       required Map<String, String> company,
       required Map<String, String> country,
       required String websiteUrl,
@@ -7995,7 +8234,7 @@ typedef $$DevelopersTableUpdateCompanionBuilder =
       Value<String> id,
       Value<Map<String, String>> city,
       Value<String> phone,
-      Value<Map<String, String>> adress,
+      Value<Map<String, String>> address,
       Value<Map<String, String>> company,
       Value<Map<String, String>> country,
       Value<String> websiteUrl,
@@ -8071,8 +8310,8 @@ class $$DevelopersTableFilterComposer
     Map<String, String>,
     String
   >
-  get adress => $composableBuilder(
-    column: $table.adress,
+  get address => $composableBuilder(
+    column: $table.address,
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
@@ -8162,8 +8401,8 @@ class $$DevelopersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get adress => $composableBuilder(
-    column: $table.adress,
+  ColumnOrderings<String> get address => $composableBuilder(
+    column: $table.address,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -8211,8 +8450,8 @@ class $$DevelopersTableAnnotationComposer
   GeneratedColumn<String> get phone =>
       $composableBuilder(column: $table.phone, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<Map<String, String>, String> get adress =>
-      $composableBuilder(column: $table.adress, builder: (column) => column);
+  GeneratedColumnWithTypeConverter<Map<String, String>, String> get address =>
+      $composableBuilder(column: $table.address, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<Map<String, String>, String> get company =>
       $composableBuilder(column: $table.company, builder: (column) => column);
@@ -8293,7 +8532,7 @@ class $$DevelopersTableTableManager
                 Value<String> id = const Value.absent(),
                 Value<Map<String, String>> city = const Value.absent(),
                 Value<String> phone = const Value.absent(),
-                Value<Map<String, String>> adress = const Value.absent(),
+                Value<Map<String, String>> address = const Value.absent(),
                 Value<Map<String, String>> company = const Value.absent(),
                 Value<Map<String, String>> country = const Value.absent(),
                 Value<String> websiteUrl = const Value.absent(),
@@ -8304,7 +8543,7 @@ class $$DevelopersTableTableManager
                 id: id,
                 city: city,
                 phone: phone,
-                adress: adress,
+                address: address,
                 company: company,
                 country: country,
                 websiteUrl: websiteUrl,
@@ -8317,7 +8556,7 @@ class $$DevelopersTableTableManager
                 required String id,
                 required Map<String, String> city,
                 required String phone,
-                required Map<String, String> adress,
+                required Map<String, String> address,
                 required Map<String, String> company,
                 required Map<String, String> country,
                 required String websiteUrl,
@@ -8328,7 +8567,7 @@ class $$DevelopersTableTableManager
                 id: id,
                 city: city,
                 phone: phone,
-                adress: adress,
+                address: address,
                 company: company,
                 country: country,
                 websiteUrl: websiteUrl,

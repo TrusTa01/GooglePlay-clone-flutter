@@ -1,5 +1,5 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
-import 'package:google_play/features/product/data/models/product_dto.dart';
+import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/developer_entity.dart';
 
 /// Собирает [DeveloperEntity] из плоских полей [GameDto] / [AppDto]

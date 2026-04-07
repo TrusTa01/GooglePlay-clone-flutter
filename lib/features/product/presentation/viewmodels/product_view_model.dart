@@ -11,26 +11,30 @@ part 'product_view_model.g.dart';
 
 @Riverpod(keepAlive: true)
 class ProductViewModel extends _$ProductViewModel {
-  late final GetProductByIdUseCase _getProductByIdUseCase;
+  late final GetProductsByIdUseCase _getProductByIdUseCase;
 
   @override
   ProductState build(String productId) {
+    final locale =
+        ref.watch(localeProvider) ??
+        WidgetsBinding.instance.platformDispatcher.locale;
     _getProductByIdUseCase = ref.read(getProductByIdUseCaseProvider);
-    Future.microtask(() => loadById(productId));
+    Future.microtask(() => loadById(productId, locale: locale));
     return const ProductState(isLoading: true);
   }
 
-  Future<void> loadById(String id) async {
-    final locale =
+  Future<void> loadById(String id, {Locale? locale}) async {
+    final effectiveLocale =
+        locale ??
         ref.read(localeProvider) ??
         WidgetsBinding.instance.platformDispatcher.locale;
-    final l10n = lookupAppLocalizations(locale);
+    final l10n = lookupAppLocalizations(effectiveLocale);
 
     state = state.copyWith(isLoading: true, productId: id, errorMessage: null);
 
     final product = await _getProductByIdUseCase(
       id: id,
-      locale: locale.languageCode,
+      locale: effectiveLocale.languageCode,
     );
 
     if (product == null) {
@@ -41,7 +45,11 @@ class ProductViewModel extends _$ProductViewModel {
       return;
     }
 
-    state = const ProductStateMapper().fromEntity(product, l10n, locale);
+    state = const ProductStateMapper().fromEntity(
+      product,
+      l10n,
+      effectiveLocale,
+    );
   }
 
   // Сбрасывает состояние

@@ -1,7 +1,7 @@
 import 'package:google_play/core/data/product/product_network_views_enum.dart';
 import 'package:google_play/core/data/schema_names_enum.dart';
+import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:google_play/features/product/data/models/product_dto.dart';
 
 class SupabaseProductNetworkDatasource {
   final SupabaseClient _client;
@@ -27,5 +27,22 @@ class SupabaseProductNetworkDatasource {
         .range(from, to);
 
     return (response).map((json) => fromJson(json)).toList();
+  }
+
+  Future<T?> getProductById<T extends ProductDto>({
+    required ProductNetworkViews view,
+    required String id,
+    SchemaNamesEnum schemaName = SchemaNamesEnum.views,
+    required T Function(Map<String, dynamic>) fromJson,
+  }) async {
+    final response = await _client
+        .schema(schemaName.name)
+        .from(view.name)
+        .select()
+        .eq('id', id)
+        .maybeSingle();
+
+    if (response == null) return null;
+    return fromJson(response);
   }
 }

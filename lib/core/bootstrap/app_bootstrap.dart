@@ -30,7 +30,7 @@ abstract final class AppBootstrap {
     }
   }
 
-  static void _initGlobalSettings() {
+  static void _initGlobalSettings() async {
     GoogleFonts.config.allowRuntimeFetching = false;
     debugRepaintRainbowEnabled = false;
   }

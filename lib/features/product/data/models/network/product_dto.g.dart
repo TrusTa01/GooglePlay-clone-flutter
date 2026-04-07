@@ -49,6 +49,24 @@ Map<String, dynamic> _$BookPublisherDtoToJson(_BookPublisherDto instance) =>
       'description': instance.description,
     };
 
+_CategoryDto _$CategoryDtoFromJson(Map<String, dynamic> json) => _CategoryDto(
+  id: json['id'] as String,
+  name: ProductDtoJsonConverters.localizedStringFromJson(json['name']),
+);
+
+Map<String, dynamic> _$CategoryDtoToJson(_CategoryDto instance) =>
+    <String, dynamic>{'id': instance.id, 'name': instance.name};
+
+_TagDto _$TagDtoFromJson(Map<String, dynamic> json) => _TagDto(
+  id: json['id'] as String,
+  name: ProductDtoJsonConverters.localizedStringFromJson(json['name']),
+);
+
+Map<String, dynamic> _$TagDtoToJson(_TagDto instance) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+};
+
 GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   type: json['type'] as String? ?? 'game',
   id: json['id'] as String,
@@ -62,6 +80,15 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   ),
   rating: (json['rating'] as num).toDouble(),
   reviewsCount: (json['reviews_count'] as num).toInt(),
+  ratingAvg: (json['rating_avg'] as num?)?.toDouble() ?? 0,
+  ratingDistribution: json['rating_distribution'] == null
+      ? const <String, int>{}
+      : ProductDtoJsonConverters.ratingDistributionFromJson(
+          json['rating_distribution'],
+        ),
+  topReviews: json['top_reviews'] == null
+      ? const <Map<String, dynamic>>[]
+      : ProductDtoJsonConverters.topReviewsFromJson(json['top_reviews']),
   releaseDate: DateTime.parse(json['release_date'] as String),
   iconUrl: json['icon_url'] as String,
   isPaid: json['is_paid'] as bool,
@@ -113,10 +140,12 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
           json['achievements'],
         ),
   developer: DeveloperDto.fromJson(json['developer'] as Map<String, dynamic>),
-  categories: ProductDtoJsonConverters.localizedStringListFromJson(
-    json['categories'],
-  ),
-  tags: ProductDtoJsonConverters.localizedStringListFromJson(json['tags']),
+  categories: (json['categories'] as List<dynamic>)
+      .map((e) => CategoryDto.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  tags: (json['tags'] as List<dynamic>)
+      .map((e) => TagDto.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$GameDtoToJson(GameDto instance) => <String, dynamic>{
@@ -128,6 +157,9 @@ Map<String, dynamic> _$GameDtoToJson(GameDto instance) => <String, dynamic>{
   'description': instance.description,
   'rating': instance.rating,
   'reviews_count': instance.reviewsCount,
+  'rating_avg': instance.ratingAvg,
+  'rating_distribution': instance.ratingDistribution,
+  'top_reviews': instance.topReviews,
   'release_date': instance.releaseDate.toIso8601String(),
   'icon_url': instance.iconUrl,
   'is_paid': instance.isPaid,
@@ -174,6 +206,15 @@ AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
   ),
   rating: (json['rating'] as num).toDouble(),
   reviewsCount: (json['reviews_count'] as num).toInt(),
+  ratingAvg: (json['rating_avg'] as num?)?.toDouble() ?? 0,
+  ratingDistribution: json['rating_distribution'] == null
+      ? const <String, int>{}
+      : ProductDtoJsonConverters.ratingDistributionFromJson(
+          json['rating_distribution'],
+        ),
+  topReviews: json['top_reviews'] == null
+      ? const <Map<String, dynamic>>[]
+      : ProductDtoJsonConverters.topReviewsFromJson(json['top_reviews']),
   releaseDate: DateTime.parse(json['release_date'] as String),
   iconUrl: json['icon_url'] as String,
   isPaid: json['is_paid'] as bool,
@@ -216,10 +257,12 @@ AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
         ),
   packageName: json['package_name'] as String,
   developer: DeveloperDto.fromJson(json['developer'] as Map<String, dynamic>),
-  categories: ProductDtoJsonConverters.localizedStringListFromJson(
-    json['categories'],
-  ),
-  tags: ProductDtoJsonConverters.localizedStringListFromJson(json['tags']),
+  categories: (json['categories'] as List<dynamic>)
+      .map((e) => CategoryDto.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  tags: (json['tags'] as List<dynamic>)
+      .map((e) => TagDto.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
@@ -231,6 +274,9 @@ Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
   'description': instance.description,
   'rating': instance.rating,
   'reviews_count': instance.reviewsCount,
+  'rating_avg': instance.ratingAvg,
+  'rating_distribution': instance.ratingDistribution,
+  'top_reviews': instance.topReviews,
   'release_date': instance.releaseDate.toIso8601String(),
   'icon_url': instance.iconUrl,
   'is_paid': instance.isPaid,
@@ -272,6 +318,15 @@ BookDto _$BookDtoFromJson(Map<String, dynamic> json) => BookDto(
   ),
   rating: (json['rating'] as num).toDouble(),
   reviewsCount: (json['reviews_count'] as num).toInt(),
+  ratingAvg: (json['rating_avg'] as num?)?.toDouble() ?? 0,
+  ratingDistribution: json['rating_distribution'] == null
+      ? const <String, int>{}
+      : ProductDtoJsonConverters.ratingDistributionFromJson(
+          json['rating_distribution'],
+        ),
+  topReviews: json['top_reviews'] == null
+      ? const <Map<String, dynamic>>[]
+      : ProductDtoJsonConverters.topReviewsFromJson(json['top_reviews']),
   releaseDate: DateTime.parse(json['release_date'] as String),
   iconUrl: json['icon_url'] as String,
   isPaid: json['is_paid'] as bool,
@@ -282,10 +337,12 @@ BookDto _$BookDtoFromJson(Map<String, dynamic> json) => BookDto(
   publisher: BookPublisherDto.fromJson(
     json['publisher'] as Map<String, dynamic>,
   ),
-  categories: ProductDtoJsonConverters.localizedStringListFromJson(
-    json['categories'],
-  ),
-  tags: ProductDtoJsonConverters.localizedStringListFromJson(json['tags']),
+  categories: (json['categories'] as List<dynamic>)
+      .map((e) => CategoryDto.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  tags: (json['tags'] as List<dynamic>)
+      .map((e) => TagDto.fromJson(e as Map<String, dynamic>))
+      .toList(),
   pageCount: (json['page_count'] as num).toInt(),
   language: json['language'] as String,
   format: json['format'] as String,
@@ -312,6 +369,9 @@ Map<String, dynamic> _$BookDtoToJson(BookDto instance) => <String, dynamic>{
   'description': instance.description,
   'rating': instance.rating,
   'reviews_count': instance.reviewsCount,
+  'rating_avg': instance.ratingAvg,
+  'rating_distribution': instance.ratingDistribution,
+  'top_reviews': instance.topReviews,
   'release_date': instance.releaseDate.toIso8601String(),
   'icon_url': instance.iconUrl,
   'is_paid': instance.isPaid,

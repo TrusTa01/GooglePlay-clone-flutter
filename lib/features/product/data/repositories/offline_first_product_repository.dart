@@ -1,0 +1,131 @@
+import 'package:google_play/core/domain/result_pattern/product_result.dart';
+import 'package:google_play/features/product/data/datasources/local/i_product_local_datasource.dart';
+import 'package:google_play/features/product/data/mappers/local_product_bundle_mapper.dart';
+import 'package:google_play/features/product/data/models/network/product_dto.dart';
+import 'package:google_play/features/product/domain/entities/product_entity.dart';
+import 'package:google_play/features/product/domain/entities/product_filter.dart';
+import 'package:google_play/features/product/data/datasources/network/i_product_network_repository.dart';
+import 'package:google_play/features/product/domain/repositories/product_repository.dart';
+
+class OfflineFirstProductRepository implements IProductRepository {
+  final IProductNetworkRepository _network;
+  final IProductLocalDatasource _local;
+  final Duration _ttl;
+
+  const OfflineFirstProductRepository({
+    required IProductNetworkRepository network,
+    required IProductLocalDatasource local,
+    Duration ttl = const Duration(hours: 6),
+  }) : _network = network,
+       _local = local,
+       _ttl = ttl;
+
+  @override
+  Future<List<ProductEntity>> getProducts({
+    required String type,
+    required String locale,
+    int page = 1,
+    int pageSize = 20,
+    bool forceRefresh = false,
+  }) async {
+    if (forceRefresh || await _needsSync(syncKey: _syncListKey(type))) {
+      await _refreshProducts(type: type, page: page, pageSize: pageSize);
+    }
+
+    final bundles = await _local.getProducts(
+      type: type,
+      page: page,
+      pageSize: pageSize,
+    );
+    return bundles.map((bundle) => bundle.toEntity(locale)).nonNulls.toList();
+  }
+
+  @override
+  Future<List<ProductEntity>> getProductsByFilters({
+    required List<ProductFilter> filters,
+    required String categoryType,
+    required String locale,
+    int page = 1,
+    int pageSize = 20,
+    bool forceRefresh = false,
+  }) async {
+    final products = await getProducts(
+      type: categoryType,
+      locale: locale,
+      page: page,
+      pageSize: pageSize,
+      forceRefresh: forceRefresh,
+    );
+
+    if (filters.isEmpty) return products;
+    return products
+        .where((product) => filters.every((f) => _matchesFilter(product, f)))
+        .toList(growable: false);
+  }
+
+  @override
+  Future<ProductEntity?> getProductById(
+    String id, {
+    required String locale,
+    bool forceRefresh = false,
+  }) async {
+    final localFirst = await _local.getProductById(id);
+    if (localFirst != null && !forceRefresh) {
+      return localFirst.toEntity(locale);
+    }
+
+    await _refreshProductById(id, forceRefresh: forceRefresh);
+    final refreshed = await _local.getProductById(id);
+    return refreshed?.toEntity(locale);
+  }
+
+  Future<void> _refreshProducts({
+    required String type,
+    required int page,
+    required int pageSize,
+  }) async {
+    final result = await _network.getProducts(
+      type: type,
+      page: page,
+      pageSize: pageSize,
+    );
+
+    if (result case ProductOk<List<ProductDto>>(data: final dtos)) {
+      await _local.upsertProducts(dtos);
+      await _local.setLastSync(_syncListKey(type), DateTime.now());
+    }
+  }
+
+  Future<void> _refreshProductById(
+    String id, {
+    required bool forceRefresh,
+  }) async {
+    final result = await _network.getProductById(id: id);
+    if (result case ProductOk<ProductDto?>(data: final dto?)) {
+      await _local.upsertProducts([dto]);
+      await _local.setLastSync(_syncItemKey(id), DateTime.now());
+    } else if (forceRefresh) {
+      await _local.setLastSync(_syncItemKey(id), DateTime.now());
+    }
+  }
+
+  Future<bool> _needsSync({required String syncKey}) async {
+    final lastSync = await _local.getLastSync(syncKey);
+    if (lastSync == null) return true;
+    return DateTime.now().difference(lastSync) >= _ttl;
+  }
+
+  bool _matchesFilter(ProductEntity product, ProductFilter filter) {
+    return switch (filter) {
+      RecommendedFilter() => true, // TODO: [filter] добавить фильтр
+      CategoryFilter(:final genre) => product.categories.contains(genre),
+      CollectionFilter() => true, // TODO: [filter] добавить фильтр
+      TagFilter(:final tag) => product.tags.contains(tag),
+      IsPaidFilter(:final isPaid) => product.isPaid == isPaid,
+      UnknownFilter() => true,
+    };
+  }
+
+  String _syncListKey(String type) => 'products:$type';
+  String _syncItemKey(String id) => 'product:$id';
+}

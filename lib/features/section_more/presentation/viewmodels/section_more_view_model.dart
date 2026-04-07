@@ -46,7 +46,7 @@ Future<SectionMoreState> sectionMoreViewModel(
   SectionMoreArgs args,
 ) async {
   final locale =
-      ref.read(localeProvider) ??
+      ref.watch(localeProvider) ??
       WidgetsBinding.instance.platformDispatcher.locale;
   final loadProducts = ref.read(loadProductsUseCaseProvider);
   final allProducts = await loadProducts(

@@ -1,6 +1,6 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
 import 'package:google_play/features/product/data/mappers/developer_mapper.dart';
-import 'package:google_play/features/product/data/models/product_dto.dart';
+import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/game_entity.dart';
 
 extension GameMapper on GameDto {
@@ -15,6 +15,9 @@ extension GameMapper on GameDto {
       releaseDate: releaseDate,
       rating: rating,
       reviewsCount: reviewsCount,
+      ratingAvg: ratingAvg,
+      ratingDistribution: ratingDistribution,
+      topReviews: topReviews,
       iconUrl: iconUrl,
       isPaid: isPaid,
       price: price,
@@ -22,8 +25,8 @@ extension GameMapper on GameDto {
       discountPrice: discountPrice,
       creatorDescription: creatorDescription.display(locale),
       url: url,
-      tags: tags.map((t) => t.display(locale)).toList(),
-      categories: categories.map((c) => c.display(locale)).toList(),
+      tags: tags.map((t) => t.name.display(locale)).toList(),
+      categories: categories.map((c) => c.name.display(locale)).toList(),
       screenshots: screenshots,
       size: size,
       version: version,

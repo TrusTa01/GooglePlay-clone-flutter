@@ -17,14 +17,14 @@ part 'product_event_view_model.g.dart';
 class ProductEventViewModel extends _$ProductEventViewModel {
   @override
   ProductEventState build(String eventId, StoreType storeType) {
-    _loadEvent();
+    final locale =
+        ref.watch(localeProvider) ?? PlatformDispatcher.instance.locale;
+    _loadEvent(locale);
     return const ProductEventState(isLoading: true);
   }
 
-  Future<void> _loadEvent() async {
+  Future<void> _loadEvent(Locale locale) async {
     try {
-      final locale =
-          ref.read(localeProvider) ?? PlatformDispatcher.instance.locale;
       final AppLocalizations l10n = lookupAppLocalizations(locale);
 
       // 1. Загружаем банер события

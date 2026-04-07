@@ -53,6 +53,7 @@ dependencies:
   drift_flutter: ^0.2.8
   path_provider: ^2.1.5
   path: ^1.9.1
+  shared_preferences: ^2.5.5
 
   # auth
   google_sign_in: ^7.2.0

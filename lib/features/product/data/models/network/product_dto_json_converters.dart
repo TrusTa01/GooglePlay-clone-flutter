@@ -6,6 +6,57 @@ typedef LocalizedString = Map<String, String>;
 /// Чтение JSON-полей для [ProductDto] из ответов Supabase (map, JSON-string, списки)
 final class ProductDtoJsonConverters {
   const ProductDtoJsonConverters._();
+  static Map<String, int> ratingDistributionFromJson(Object? value) {
+    if (value == null) return const <String, int>{};
+
+    if (value is Map) {
+      return value.map(
+        (key, v) => MapEntry(key.toString(), (v as num).toInt()),
+      );
+    }
+
+    if (value is String) {
+      if (value.trim().isEmpty) return const <String, int>{};
+      final decoded = jsonDecode(value);
+      if (decoded is Map) {
+        return decoded.map(
+          (key, v) => MapEntry(key.toString(), (v as num).toInt()),
+        );
+      }
+    }
+
+    throw FormatException(
+      'Invalid ratingDistribution JSON: ${value.runtimeType}',
+    );
+  }
+
+  static List<Map<String, dynamic>> topReviewsFromJson(Object? value) {
+    if (value == null) return const <Map<String, dynamic>>[];
+
+    if (value is List) {
+      return value.map((e) {
+        if (e is Map) return Map<String, dynamic>.from(e);
+        throw FormatException(
+          'Invalid topReviews element type: ${e.runtimeType}',
+        );
+      }).toList();
+    }
+
+    if (value is String) {
+      if (value.trim().isEmpty) return const <Map<String, dynamic>>[];
+      final decoded = jsonDecode(value);
+      if (decoded is List) {
+        return decoded.map((e) {
+          if (e is Map) return Map<String, dynamic>.from(e);
+          throw FormatException(
+            'Invalid topReviews element type: ${e.runtimeType}',
+          );
+        }).toList();
+      }
+    }
+
+    throw FormatException('Invalid topReviews JSON: ${value.runtimeType}');
+  }
 
   static LocalizedString localizedStringFromJson(Object? value) {
     if (value == null) return const <String, String>{};

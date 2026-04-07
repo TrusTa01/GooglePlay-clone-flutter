@@ -1,25 +1,27 @@
-import 'package:google_play/core/domain/result_pattern/product_result.dart';
-import 'package:google_play/features/product/domain/entities/app_entity.dart';
-import 'package:google_play/features/product/domain/entities/book_entity.dart';
-import 'package:google_play/features/product/domain/entities/game_entity.dart';
+import 'package:google_play/features/product/domain/entities/product_entity.dart';
+import 'package:google_play/features/product/domain/entities/product_filter.dart';
 
-// Интерфейс для работы с продуктами
-/// Контракт, который слой [Data] обязан будет реализовать
 abstract interface class IProductRepository {
-  // Получение списка продуктов
-  Future<ProductResult<List<GameEntity>>> getGames({
+  Future<List<ProductEntity>> getProducts({
+    required String type,
     required String locale,
-    required int page,
+    int page = 1,
     int pageSize = 20,
+    bool forceRefresh = false,
   });
-  Future<ProductResult<List<AppEntity>>> getApps({
+
+  Future<ProductEntity?> getProductById(
+    String id, {
     required String locale,
-    required int page,
-    int pageSize = 20,
+    bool forceRefresh = false,
   });
-  Future<ProductResult<List<BookEntity>>> getBooks({
+
+  Future<List<ProductEntity>> getProductsByFilters({
+    required List<ProductFilter> filters,
+    required String categoryType,
     required String locale,
-    required int page,
+    int page = 1,
     int pageSize = 20,
+    bool forceRefresh = false,
   });
 }
