@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: deprecated_member_use, avoid_print
 // Загрузка мок-данных в Supabase
 //
 // Запуск: dart run tools/upload_data.dart
@@ -951,7 +951,6 @@ class _DataUploader {
     for (final b in banners) {
       final sourceId = (b['id'] ?? '').toString();
       final type = _normalizeBannerType((b['type'] ?? '').toString());
-      // ignore: deprecated_member_use
       final bannerId = _uuid.v5(Uuid.NAMESPACE_URL, 'banner:$sourceId');
 
       bannerRows.add({
