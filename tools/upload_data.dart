@@ -960,16 +960,34 @@ class _DataUploader {
         'type': type,
         'image_asset_path': (b['imageAssetPath'] ?? '').toString(),
         'title': _asLocalizedMap(b['title']),
-        'top_tooltip_text': _asNullableLocalizedMap(b['topToolTipText']),
+        'top_tooltip_text': _asNullableLocalizedMap(
+          b['topTooltipText'] ?? b['topToolTipText'],
+        ),
         'description': _asLocalizedMap(b['description']),
       });
 
       if (type == 'event') {
+        final eventId =
+            _asNullableString(b['eventId']) ??
+            _asNullableString(b['event_id']) ??
+            _asNullableString(b['id']) ??
+            sourceId;
+        final eventCategory =
+            _asNullableString(b['eventCategory']) ??
+            _asNullableString(b['event_category']) ??
+            _asNullableString(b['category']) ??
+            'general';
+        final eventDescription =
+            _asNullableLocalizedMap(b['eventDescription']) ??
+            _asNullableLocalizedMap(b['event_description']) ??
+            _asNullableLocalizedMap(b['description']) ??
+            _asLocalizedMap('Event details');
+
         bannerEventRows.add({
           'banner_id': bannerId,
-          'event_id': _asNullableString(b['eventId']),
-          'event_category': _asNullableString(b['eventCategory']),
-          'event_description': _asNullableLocalizedMap(b['eventDescription']),
+          'event_id': eventId,
+          'event_category': eventCategory,
+          'event_description': eventDescription,
         });
       } else if (type == 'action') {
         bannerActionRows.add({
@@ -1013,7 +1031,10 @@ class _DataUploader {
       final batch = <Map<String, dynamic>>[];
 
       // После загрузки products/developers (мы внутри upload_data) эти мапы валидны.
-      final productRows = await _selectAllRows('products', 'id,external_id,type');
+      final productRows = await _selectAllRows(
+        'products',
+        'id,external_id,type',
+      );
       final Map<String, String> productIdByExternalId = {};
       final Set<String> softwareProductIds = <String>{};
       for (final row in productRows) {
@@ -1097,7 +1118,10 @@ class _DataUploader {
     final profileIds = await _loadProfileIds();
     if (profileIds.isEmpty) return 0;
 
-    final productRows = await _selectAllRows('products', 'id,type,release_date');
+    final productRows = await _selectAllRows(
+      'products',
+      'id,type,release_date',
+    );
     if (productRows.isEmpty) return 0;
     final products = productRows
         .map((row) {
@@ -1289,7 +1313,10 @@ class _DataUploader {
 
   double _ageFactor(DateTime? releaseDate) {
     if (releaseDate == null) return 1.0;
-    final ageDays = DateTime.now().toUtc().difference(releaseDate.toUtc()).inDays;
+    final ageDays = DateTime.now()
+        .toUtc()
+        .difference(releaseDate.toUtc())
+        .inDays;
     final normalized = (ageDays / 365.0).clamp(0.0, 3.0);
     return (0.4 + normalized * 0.3).clamp(0.4, 1.3);
   }
