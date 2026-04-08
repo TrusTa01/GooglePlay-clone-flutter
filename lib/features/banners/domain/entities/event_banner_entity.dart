@@ -10,7 +10,7 @@ final class EventBannerEntity extends BannerEntity {
     required super.type,
     required super.imageAssetPath,
     required super.title,
-    required super.topToolTipText,
+    required super.topTooltipText,
     this.eventId,
     this.eventCategory,
     this.eventDescription,

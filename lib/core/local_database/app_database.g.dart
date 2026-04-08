@@ -6419,6 +6419,952 @@ class ProductTagsCompanion extends UpdateCompanion<ProductTag> {
   }
 }
 
+class $CachedBannersTable extends CachedBanners
+    with TableInfo<$CachedBannersTable, CachedBanner> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CachedBannersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _imageAssetPathMeta = const VerificationMeta(
+    'imageAssetPath',
+  );
+  @override
+  late final GeneratedColumn<String> imageAssetPath = GeneratedColumn<String>(
+    'image_asset_path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _topTooltipTextMeta = const VerificationMeta(
+    'topTooltipText',
+  );
+  @override
+  late final GeneratedColumn<String> topTooltipText = GeneratedColumn<String>(
+    'top_tooltip_text',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    type,
+    imageAssetPath,
+    title,
+    topTooltipText,
+    description,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'cached_banners';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CachedBanner> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('image_asset_path')) {
+      context.handle(
+        _imageAssetPathMeta,
+        imageAssetPath.isAcceptableOrUnknown(
+          data['image_asset_path']!,
+          _imageAssetPathMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_imageAssetPathMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    }
+    if (data.containsKey('top_tooltip_text')) {
+      context.handle(
+        _topTooltipTextMeta,
+        topTooltipText.isAcceptableOrUnknown(
+          data['top_tooltip_text']!,
+          _topTooltipTextMeta,
+        ),
+      );
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(data['type']!, _descriptionMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CachedBanner map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CachedBanner(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      imageAssetPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_asset_path'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      ),
+      topTooltipText: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}top_tooltip_text'],
+      ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      ),
+    );
+  }
+
+  @override
+  $CachedBannersTable createAlias(String alias) {
+    return $CachedBannersTable(attachedDatabase, alias);
+  }
+}
+
+class CachedBanner extends DataClass implements Insertable<CachedBanner> {
+  final String id;
+  final String type;
+  final String imageAssetPath;
+  final String? title;
+  final String? topTooltipText;
+  final String? description;
+  const CachedBanner({
+    required this.id,
+    required this.type,
+    required this.imageAssetPath,
+    this.title,
+    this.topTooltipText,
+    this.description,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['type'] = Variable<String>(type);
+    map['image_asset_path'] = Variable<String>(imageAssetPath);
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || topTooltipText != null) {
+      map['top_tooltip_text'] = Variable<String>(topTooltipText);
+    }
+    if (!nullToAbsent || description != null) {
+      map['type'] = Variable<String>(description);
+    }
+    return map;
+  }
+
+  CachedBannersCompanion toCompanion(bool nullToAbsent) {
+    return CachedBannersCompanion(
+      id: Value(id),
+      type: Value(type),
+      imageAssetPath: Value(imageAssetPath),
+      title: title == null && nullToAbsent
+          ? const Value.absent()
+          : Value(title),
+      topTooltipText: topTooltipText == null && nullToAbsent
+          ? const Value.absent()
+          : Value(topTooltipText),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+    );
+  }
+
+  factory CachedBanner.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CachedBanner(
+      id: serializer.fromJson<String>(json['id']),
+      type: serializer.fromJson<String>(json['type']),
+      imageAssetPath: serializer.fromJson<String>(json['imageAssetPath']),
+      title: serializer.fromJson<String?>(json['title']),
+      topTooltipText: serializer.fromJson<String?>(json['topTooltipText']),
+      description: serializer.fromJson<String?>(json['description']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'type': serializer.toJson<String>(type),
+      'imageAssetPath': serializer.toJson<String>(imageAssetPath),
+      'title': serializer.toJson<String?>(title),
+      'topTooltipText': serializer.toJson<String?>(topTooltipText),
+      'description': serializer.toJson<String?>(description),
+    };
+  }
+
+  CachedBanner copyWith({
+    String? id,
+    String? type,
+    String? imageAssetPath,
+    Value<String?> title = const Value.absent(),
+    Value<String?> topTooltipText = const Value.absent(),
+    Value<String?> description = const Value.absent(),
+  }) => CachedBanner(
+    id: id ?? this.id,
+    type: type ?? this.type,
+    imageAssetPath: imageAssetPath ?? this.imageAssetPath,
+    title: title.present ? title.value : this.title,
+    topTooltipText: topTooltipText.present
+        ? topTooltipText.value
+        : this.topTooltipText,
+    description: description.present ? description.value : this.description,
+  );
+  CachedBanner copyWithCompanion(CachedBannersCompanion data) {
+    return CachedBanner(
+      id: data.id.present ? data.id.value : this.id,
+      type: data.type.present ? data.type.value : this.type,
+      imageAssetPath: data.imageAssetPath.present
+          ? data.imageAssetPath.value
+          : this.imageAssetPath,
+      title: data.title.present ? data.title.value : this.title,
+      topTooltipText: data.topTooltipText.present
+          ? data.topTooltipText.value
+          : this.topTooltipText,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedBanner(')
+          ..write('id: $id, ')
+          ..write('type: $type, ')
+          ..write('imageAssetPath: $imageAssetPath, ')
+          ..write('title: $title, ')
+          ..write('topTooltipText: $topTooltipText, ')
+          ..write('description: $description')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, type, imageAssetPath, title, topTooltipText, description);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CachedBanner &&
+          other.id == this.id &&
+          other.type == this.type &&
+          other.imageAssetPath == this.imageAssetPath &&
+          other.title == this.title &&
+          other.topTooltipText == this.topTooltipText &&
+          other.description == this.description);
+}
+
+class CachedBannersCompanion extends UpdateCompanion<CachedBanner> {
+  final Value<String> id;
+  final Value<String> type;
+  final Value<String> imageAssetPath;
+  final Value<String?> title;
+  final Value<String?> topTooltipText;
+  final Value<String?> description;
+  final Value<int> rowid;
+  const CachedBannersCompanion({
+    this.id = const Value.absent(),
+    this.type = const Value.absent(),
+    this.imageAssetPath = const Value.absent(),
+    this.title = const Value.absent(),
+    this.topTooltipText = const Value.absent(),
+    this.description = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CachedBannersCompanion.insert({
+    required String id,
+    required String type,
+    required String imageAssetPath,
+    this.title = const Value.absent(),
+    this.topTooltipText = const Value.absent(),
+    this.description = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       type = Value(type),
+       imageAssetPath = Value(imageAssetPath);
+  static Insertable<CachedBanner> custom({
+    Expression<String>? id,
+    Expression<String>? type,
+    Expression<String>? imageAssetPath,
+    Expression<String>? title,
+    Expression<String>? topTooltipText,
+    Expression<String>? description,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (type != null) 'type': type,
+      if (imageAssetPath != null) 'image_asset_path': imageAssetPath,
+      if (title != null) 'title': title,
+      if (topTooltipText != null) 'top_tooltip_text': topTooltipText,
+      if (description != null) 'type': description,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CachedBannersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? type,
+    Value<String>? imageAssetPath,
+    Value<String?>? title,
+    Value<String?>? topTooltipText,
+    Value<String?>? description,
+    Value<int>? rowid,
+  }) {
+    return CachedBannersCompanion(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      imageAssetPath: imageAssetPath ?? this.imageAssetPath,
+      title: title ?? this.title,
+      topTooltipText: topTooltipText ?? this.topTooltipText,
+      description: description ?? this.description,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (imageAssetPath.present) {
+      map['image_asset_path'] = Variable<String>(imageAssetPath.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (topTooltipText.present) {
+      map['top_tooltip_text'] = Variable<String>(topTooltipText.value);
+    }
+    if (description.present) {
+      map['type'] = Variable<String>(description.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedBannersCompanion(')
+          ..write('id: $id, ')
+          ..write('type: $type, ')
+          ..write('imageAssetPath: $imageAssetPath, ')
+          ..write('title: $title, ')
+          ..write('topTooltipText: $topTooltipText, ')
+          ..write('description: $description, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CachedActionBannersTable extends CachedActionBanners
+    with TableInfo<$CachedActionBannersTable, CachedActionBanner> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CachedActionBannersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _bannerIdMeta = const VerificationMeta(
+    'bannerId',
+  );
+  @override
+  late final GeneratedColumn<String> bannerId = GeneratedColumn<String>(
+    'banner_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES cached_product (id)',
+    ),
+  );
+  static const VerificationMeta _productExternalIdMeta = const VerificationMeta(
+    'productExternalId',
+  );
+  @override
+  late final GeneratedColumn<String> productExternalId =
+      GeneratedColumn<String>(
+        'product_external_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [bannerId, productExternalId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'cached_action_banners';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CachedActionBanner> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('banner_id')) {
+      context.handle(
+        _bannerIdMeta,
+        bannerId.isAcceptableOrUnknown(data['banner_id']!, _bannerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bannerIdMeta);
+    }
+    if (data.containsKey('product_external_id')) {
+      context.handle(
+        _productExternalIdMeta,
+        productExternalId.isAcceptableOrUnknown(
+          data['product_external_id']!,
+          _productExternalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_productExternalIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {bannerId};
+  @override
+  CachedActionBanner map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CachedActionBanner(
+      bannerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}banner_id'],
+      )!,
+      productExternalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}product_external_id'],
+      )!,
+    );
+  }
+
+  @override
+  $CachedActionBannersTable createAlias(String alias) {
+    return $CachedActionBannersTable(attachedDatabase, alias);
+  }
+}
+
+class CachedActionBanner extends DataClass
+    implements Insertable<CachedActionBanner> {
+  final String bannerId;
+  final String productExternalId;
+  const CachedActionBanner({
+    required this.bannerId,
+    required this.productExternalId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['banner_id'] = Variable<String>(bannerId);
+    map['product_external_id'] = Variable<String>(productExternalId);
+    return map;
+  }
+
+  CachedActionBannersCompanion toCompanion(bool nullToAbsent) {
+    return CachedActionBannersCompanion(
+      bannerId: Value(bannerId),
+      productExternalId: Value(productExternalId),
+    );
+  }
+
+  factory CachedActionBanner.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CachedActionBanner(
+      bannerId: serializer.fromJson<String>(json['bannerId']),
+      productExternalId: serializer.fromJson<String>(json['productExternalId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'bannerId': serializer.toJson<String>(bannerId),
+      'productExternalId': serializer.toJson<String>(productExternalId),
+    };
+  }
+
+  CachedActionBanner copyWith({String? bannerId, String? productExternalId}) =>
+      CachedActionBanner(
+        bannerId: bannerId ?? this.bannerId,
+        productExternalId: productExternalId ?? this.productExternalId,
+      );
+  CachedActionBanner copyWithCompanion(CachedActionBannersCompanion data) {
+    return CachedActionBanner(
+      bannerId: data.bannerId.present ? data.bannerId.value : this.bannerId,
+      productExternalId: data.productExternalId.present
+          ? data.productExternalId.value
+          : this.productExternalId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedActionBanner(')
+          ..write('bannerId: $bannerId, ')
+          ..write('productExternalId: $productExternalId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(bannerId, productExternalId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CachedActionBanner &&
+          other.bannerId == this.bannerId &&
+          other.productExternalId == this.productExternalId);
+}
+
+class CachedActionBannersCompanion extends UpdateCompanion<CachedActionBanner> {
+  final Value<String> bannerId;
+  final Value<String> productExternalId;
+  final Value<int> rowid;
+  const CachedActionBannersCompanion({
+    this.bannerId = const Value.absent(),
+    this.productExternalId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CachedActionBannersCompanion.insert({
+    required String bannerId,
+    required String productExternalId,
+    this.rowid = const Value.absent(),
+  }) : bannerId = Value(bannerId),
+       productExternalId = Value(productExternalId);
+  static Insertable<CachedActionBanner> custom({
+    Expression<String>? bannerId,
+    Expression<String>? productExternalId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (bannerId != null) 'banner_id': bannerId,
+      if (productExternalId != null) 'product_external_id': productExternalId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CachedActionBannersCompanion copyWith({
+    Value<String>? bannerId,
+    Value<String>? productExternalId,
+    Value<int>? rowid,
+  }) {
+    return CachedActionBannersCompanion(
+      bannerId: bannerId ?? this.bannerId,
+      productExternalId: productExternalId ?? this.productExternalId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (bannerId.present) {
+      map['banner_id'] = Variable<String>(bannerId.value);
+    }
+    if (productExternalId.present) {
+      map['product_external_id'] = Variable<String>(productExternalId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedActionBannersCompanion(')
+          ..write('bannerId: $bannerId, ')
+          ..write('productExternalId: $productExternalId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CachedEventBannersTable extends CachedEventBanners
+    with TableInfo<$CachedEventBannersTable, CachedEventBanner> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CachedEventBannersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _eventIdMeta = const VerificationMeta(
+    'eventId',
+  );
+  @override
+  late final GeneratedColumn<String> eventId = GeneratedColumn<String>(
+    'event_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _eventCategoryMeta = const VerificationMeta(
+    'eventCategory',
+  );
+  @override
+  late final GeneratedColumn<String> eventCategory = GeneratedColumn<String>(
+    'event_category',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _eventDescriptionMeta = const VerificationMeta(
+    'eventDescription',
+  );
+  @override
+  late final GeneratedColumn<String> eventDescription = GeneratedColumn<String>(
+    'even_description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    eventId,
+    eventCategory,
+    eventDescription,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'cached_event_banners';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CachedEventBanner> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('event_id')) {
+      context.handle(
+        _eventIdMeta,
+        eventId.isAcceptableOrUnknown(data['event_id']!, _eventIdMeta),
+      );
+    }
+    if (data.containsKey('event_category')) {
+      context.handle(
+        _eventCategoryMeta,
+        eventCategory.isAcceptableOrUnknown(
+          data['event_category']!,
+          _eventCategoryMeta,
+        ),
+      );
+    }
+    if (data.containsKey('even_description')) {
+      context.handle(
+        _eventDescriptionMeta,
+        eventDescription.isAcceptableOrUnknown(
+          data['even_description']!,
+          _eventDescriptionMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {eventId};
+  @override
+  CachedEventBanner map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CachedEventBanner(
+      eventId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}event_id'],
+      ),
+      eventCategory: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}event_category'],
+      ),
+      eventDescription: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}even_description'],
+      ),
+    );
+  }
+
+  @override
+  $CachedEventBannersTable createAlias(String alias) {
+    return $CachedEventBannersTable(attachedDatabase, alias);
+  }
+}
+
+class CachedEventBanner extends DataClass
+    implements Insertable<CachedEventBanner> {
+  final String? eventId;
+  final String? eventCategory;
+  final String? eventDescription;
+  const CachedEventBanner({
+    this.eventId,
+    this.eventCategory,
+    this.eventDescription,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || eventId != null) {
+      map['event_id'] = Variable<String>(eventId);
+    }
+    if (!nullToAbsent || eventCategory != null) {
+      map['event_category'] = Variable<String>(eventCategory);
+    }
+    if (!nullToAbsent || eventDescription != null) {
+      map['even_description'] = Variable<String>(eventDescription);
+    }
+    return map;
+  }
+
+  CachedEventBannersCompanion toCompanion(bool nullToAbsent) {
+    return CachedEventBannersCompanion(
+      eventId: eventId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(eventId),
+      eventCategory: eventCategory == null && nullToAbsent
+          ? const Value.absent()
+          : Value(eventCategory),
+      eventDescription: eventDescription == null && nullToAbsent
+          ? const Value.absent()
+          : Value(eventDescription),
+    );
+  }
+
+  factory CachedEventBanner.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CachedEventBanner(
+      eventId: serializer.fromJson<String?>(json['eventId']),
+      eventCategory: serializer.fromJson<String?>(json['eventCategory']),
+      eventDescription: serializer.fromJson<String?>(json['eventDescription']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'eventId': serializer.toJson<String?>(eventId),
+      'eventCategory': serializer.toJson<String?>(eventCategory),
+      'eventDescription': serializer.toJson<String?>(eventDescription),
+    };
+  }
+
+  CachedEventBanner copyWith({
+    Value<String?> eventId = const Value.absent(),
+    Value<String?> eventCategory = const Value.absent(),
+    Value<String?> eventDescription = const Value.absent(),
+  }) => CachedEventBanner(
+    eventId: eventId.present ? eventId.value : this.eventId,
+    eventCategory: eventCategory.present
+        ? eventCategory.value
+        : this.eventCategory,
+    eventDescription: eventDescription.present
+        ? eventDescription.value
+        : this.eventDescription,
+  );
+  CachedEventBanner copyWithCompanion(CachedEventBannersCompanion data) {
+    return CachedEventBanner(
+      eventId: data.eventId.present ? data.eventId.value : this.eventId,
+      eventCategory: data.eventCategory.present
+          ? data.eventCategory.value
+          : this.eventCategory,
+      eventDescription: data.eventDescription.present
+          ? data.eventDescription.value
+          : this.eventDescription,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedEventBanner(')
+          ..write('eventId: $eventId, ')
+          ..write('eventCategory: $eventCategory, ')
+          ..write('eventDescription: $eventDescription')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(eventId, eventCategory, eventDescription);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CachedEventBanner &&
+          other.eventId == this.eventId &&
+          other.eventCategory == this.eventCategory &&
+          other.eventDescription == this.eventDescription);
+}
+
+class CachedEventBannersCompanion extends UpdateCompanion<CachedEventBanner> {
+  final Value<String?> eventId;
+  final Value<String?> eventCategory;
+  final Value<String?> eventDescription;
+  final Value<int> rowid;
+  const CachedEventBannersCompanion({
+    this.eventId = const Value.absent(),
+    this.eventCategory = const Value.absent(),
+    this.eventDescription = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CachedEventBannersCompanion.insert({
+    this.eventId = const Value.absent(),
+    this.eventCategory = const Value.absent(),
+    this.eventDescription = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<CachedEventBanner> custom({
+    Expression<String>? eventId,
+    Expression<String>? eventCategory,
+    Expression<String>? eventDescription,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (eventId != null) 'event_id': eventId,
+      if (eventCategory != null) 'event_category': eventCategory,
+      if (eventDescription != null) 'even_description': eventDescription,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CachedEventBannersCompanion copyWith({
+    Value<String?>? eventId,
+    Value<String?>? eventCategory,
+    Value<String?>? eventDescription,
+    Value<int>? rowid,
+  }) {
+    return CachedEventBannersCompanion(
+      eventId: eventId ?? this.eventId,
+      eventCategory: eventCategory ?? this.eventCategory,
+      eventDescription: eventDescription ?? this.eventDescription,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (eventId.present) {
+      map['event_id'] = Variable<String>(eventId.value);
+    }
+    if (eventCategory.present) {
+      map['event_category'] = Variable<String>(eventCategory.value);
+    }
+    if (eventDescription.present) {
+      map['even_description'] = Variable<String>(eventDescription.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedEventBannersCompanion(')
+          ..write('eventId: $eventId, ')
+          ..write('eventCategory: $eventCategory, ')
+          ..write('eventDescription: $eventDescription, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -6451,6 +7397,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ProductCategoriesTable productCategories =
       $ProductCategoriesTable(this);
   late final $ProductTagsTable productTags = $ProductTagsTable(this);
+  late final $CachedBannersTable cachedBanners = $CachedBannersTable(this);
+  late final $CachedActionBannersTable cachedActionBanners =
+      $CachedActionBannersTable(this);
+  late final $CachedEventBannersTable cachedEventBanners =
+      $CachedEventBannersTable(this);
   Selectable<CachedProductData> searchProductsByTitle(
     String lang,
     String query,
@@ -6484,6 +7435,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     tags,
     productCategories,
     productTags,
+    cachedBanners,
+    cachedActionBanners,
+    cachedEventBanners,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -6751,6 +7705,33 @@ final class $$CachedProductTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $CachedActionBannersTable,
+    List<CachedActionBanner>
+  >
+  _cachedActionBannersRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.cachedActionBanners,
+        aliasName: $_aliasNameGenerator(
+          db.cachedProduct.id,
+          db.cachedActionBanners.bannerId,
+        ),
+      );
+
+  $$CachedActionBannersTableProcessedTableManager get cachedActionBannersRefs {
+    final manager = $$CachedActionBannersTableTableManager(
+      $_db,
+      $_db.cachedActionBanners,
+    ).filter((f) => f.bannerId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _cachedActionBannersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$CachedProductTableFilterComposer
@@ -6990,6 +7971,31 @@ class $$CachedProductTableFilterComposer
           }) => $$ProductTagsTableFilterComposer(
             $db: $db,
             $table: $db.productTags,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> cachedActionBannersRefs(
+    Expression<bool> Function($$CachedActionBannersTableFilterComposer f) f,
+  ) {
+    final $$CachedActionBannersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.cachedActionBanners,
+      getReferencedColumn: (t) => t.bannerId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedActionBannersTableFilterComposer(
+            $db: $db,
+            $table: $db.cachedActionBanners,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -7312,6 +8318,32 @@ class $$CachedProductTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> cachedActionBannersRefs<T extends Object>(
+    Expression<T> Function($$CachedActionBannersTableAnnotationComposer a) f,
+  ) {
+    final $$CachedActionBannersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.cachedActionBanners,
+          getReferencedColumn: (t) => t.bannerId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CachedActionBannersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.cachedActionBanners,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$CachedProductTableTableManager
@@ -7333,6 +8365,7 @@ class $$CachedProductTableTableManager
             bool cachedBooksRefs,
             bool productCategoriesRefs,
             bool productTagsRefs,
+            bool cachedActionBannersRefs,
           })
         > {
   $$CachedProductTableTableManager(_$AppDatabase db, $CachedProductTable table)
@@ -7448,6 +8481,7 @@ class $$CachedProductTableTableManager
                 cachedBooksRefs = false,
                 productCategoriesRefs = false,
                 productTagsRefs = false,
+                cachedActionBannersRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -7457,6 +8491,7 @@ class $$CachedProductTableTableManager
                     if (cachedBooksRefs) db.cachedBooks,
                     if (productCategoriesRefs) db.productCategories,
                     if (productTagsRefs) db.productTags,
+                    if (cachedActionBannersRefs) db.cachedActionBanners,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -7566,6 +8601,27 @@ class $$CachedProductTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (cachedActionBannersRefs)
+                        await $_getPrefetchedData<
+                          CachedProductData,
+                          $CachedProductTable,
+                          CachedActionBanner
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CachedProductTableReferences
+                              ._cachedActionBannersRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CachedProductTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).cachedActionBannersRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.bannerId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -7592,6 +8648,7 @@ typedef $$CachedProductTableProcessedTableManager =
         bool cachedBooksRefs,
         bool productCategoriesRefs,
         bool productTagsRefs,
+        bool cachedActionBannersRefs,
       })
     >;
 typedef $$ProductTranslationsTableCreateCompanionBuilder =
@@ -11873,6 +12930,696 @@ typedef $$ProductTagsTableProcessedTableManager =
       ProductTag,
       PrefetchHooks Function({bool productId, bool tagId})
     >;
+typedef $$CachedBannersTableCreateCompanionBuilder =
+    CachedBannersCompanion Function({
+      required String id,
+      required String type,
+      required String imageAssetPath,
+      Value<String?> title,
+      Value<String?> topTooltipText,
+      Value<String?> description,
+      Value<int> rowid,
+    });
+typedef $$CachedBannersTableUpdateCompanionBuilder =
+    CachedBannersCompanion Function({
+      Value<String> id,
+      Value<String> type,
+      Value<String> imageAssetPath,
+      Value<String?> title,
+      Value<String?> topTooltipText,
+      Value<String?> description,
+      Value<int> rowid,
+    });
+
+class $$CachedBannersTableFilterComposer
+    extends Composer<_$AppDatabase, $CachedBannersTable> {
+  $$CachedBannersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get imageAssetPath => $composableBuilder(
+    column: $table.imageAssetPath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get topTooltipText => $composableBuilder(
+    column: $table.topTooltipText,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CachedBannersTableOrderingComposer
+    extends Composer<_$AppDatabase, $CachedBannersTable> {
+  $$CachedBannersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get imageAssetPath => $composableBuilder(
+    column: $table.imageAssetPath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get topTooltipText => $composableBuilder(
+    column: $table.topTooltipText,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CachedBannersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CachedBannersTable> {
+  $$CachedBannersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get imageAssetPath => $composableBuilder(
+    column: $table.imageAssetPath,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get topTooltipText => $composableBuilder(
+    column: $table.topTooltipText,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+}
+
+class $$CachedBannersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CachedBannersTable,
+          CachedBanner,
+          $$CachedBannersTableFilterComposer,
+          $$CachedBannersTableOrderingComposer,
+          $$CachedBannersTableAnnotationComposer,
+          $$CachedBannersTableCreateCompanionBuilder,
+          $$CachedBannersTableUpdateCompanionBuilder,
+          (
+            CachedBanner,
+            BaseReferences<_$AppDatabase, $CachedBannersTable, CachedBanner>,
+          ),
+          CachedBanner,
+          PrefetchHooks Function()
+        > {
+  $$CachedBannersTableTableManager(_$AppDatabase db, $CachedBannersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CachedBannersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CachedBannersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CachedBannersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<String> imageAssetPath = const Value.absent(),
+                Value<String?> title = const Value.absent(),
+                Value<String?> topTooltipText = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedBannersCompanion(
+                id: id,
+                type: type,
+                imageAssetPath: imageAssetPath,
+                title: title,
+                topTooltipText: topTooltipText,
+                description: description,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String type,
+                required String imageAssetPath,
+                Value<String?> title = const Value.absent(),
+                Value<String?> topTooltipText = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedBannersCompanion.insert(
+                id: id,
+                type: type,
+                imageAssetPath: imageAssetPath,
+                title: title,
+                topTooltipText: topTooltipText,
+                description: description,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CachedBannersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CachedBannersTable,
+      CachedBanner,
+      $$CachedBannersTableFilterComposer,
+      $$CachedBannersTableOrderingComposer,
+      $$CachedBannersTableAnnotationComposer,
+      $$CachedBannersTableCreateCompanionBuilder,
+      $$CachedBannersTableUpdateCompanionBuilder,
+      (
+        CachedBanner,
+        BaseReferences<_$AppDatabase, $CachedBannersTable, CachedBanner>,
+      ),
+      CachedBanner,
+      PrefetchHooks Function()
+    >;
+typedef $$CachedActionBannersTableCreateCompanionBuilder =
+    CachedActionBannersCompanion Function({
+      required String bannerId,
+      required String productExternalId,
+      Value<int> rowid,
+    });
+typedef $$CachedActionBannersTableUpdateCompanionBuilder =
+    CachedActionBannersCompanion Function({
+      Value<String> bannerId,
+      Value<String> productExternalId,
+      Value<int> rowid,
+    });
+
+final class $$CachedActionBannersTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CachedActionBannersTable,
+          CachedActionBanner
+        > {
+  $$CachedActionBannersTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CachedProductTable _bannerIdTable(_$AppDatabase db) =>
+      db.cachedProduct.createAlias(
+        $_aliasNameGenerator(
+          db.cachedActionBanners.bannerId,
+          db.cachedProduct.id,
+        ),
+      );
+
+  $$CachedProductTableProcessedTableManager get bannerId {
+    final $_column = $_itemColumn<String>('banner_id')!;
+
+    final manager = $$CachedProductTableTableManager(
+      $_db,
+      $_db.cachedProduct,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_bannerIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$CachedActionBannersTableFilterComposer
+    extends Composer<_$AppDatabase, $CachedActionBannersTable> {
+  $$CachedActionBannersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get productExternalId => $composableBuilder(
+    column: $table.productExternalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$CachedProductTableFilterComposer get bannerId {
+    final $$CachedProductTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bannerId,
+      referencedTable: $db.cachedProduct,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedProductTableFilterComposer(
+            $db: $db,
+            $table: $db.cachedProduct,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CachedActionBannersTableOrderingComposer
+    extends Composer<_$AppDatabase, $CachedActionBannersTable> {
+  $$CachedActionBannersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get productExternalId => $composableBuilder(
+    column: $table.productExternalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$CachedProductTableOrderingComposer get bannerId {
+    final $$CachedProductTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bannerId,
+      referencedTable: $db.cachedProduct,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedProductTableOrderingComposer(
+            $db: $db,
+            $table: $db.cachedProduct,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CachedActionBannersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CachedActionBannersTable> {
+  $$CachedActionBannersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get productExternalId => $composableBuilder(
+    column: $table.productExternalId,
+    builder: (column) => column,
+  );
+
+  $$CachedProductTableAnnotationComposer get bannerId {
+    final $$CachedProductTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bannerId,
+      referencedTable: $db.cachedProduct,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedProductTableAnnotationComposer(
+            $db: $db,
+            $table: $db.cachedProduct,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CachedActionBannersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CachedActionBannersTable,
+          CachedActionBanner,
+          $$CachedActionBannersTableFilterComposer,
+          $$CachedActionBannersTableOrderingComposer,
+          $$CachedActionBannersTableAnnotationComposer,
+          $$CachedActionBannersTableCreateCompanionBuilder,
+          $$CachedActionBannersTableUpdateCompanionBuilder,
+          (CachedActionBanner, $$CachedActionBannersTableReferences),
+          CachedActionBanner,
+          PrefetchHooks Function({bool bannerId})
+        > {
+  $$CachedActionBannersTableTableManager(
+    _$AppDatabase db,
+    $CachedActionBannersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CachedActionBannersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CachedActionBannersTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$CachedActionBannersTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> bannerId = const Value.absent(),
+                Value<String> productExternalId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedActionBannersCompanion(
+                bannerId: bannerId,
+                productExternalId: productExternalId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String bannerId,
+                required String productExternalId,
+                Value<int> rowid = const Value.absent(),
+              }) => CachedActionBannersCompanion.insert(
+                bannerId: bannerId,
+                productExternalId: productExternalId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$CachedActionBannersTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({bannerId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (bannerId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.bannerId,
+                                referencedTable:
+                                    $$CachedActionBannersTableReferences
+                                        ._bannerIdTable(db),
+                                referencedColumn:
+                                    $$CachedActionBannersTableReferences
+                                        ._bannerIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$CachedActionBannersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CachedActionBannersTable,
+      CachedActionBanner,
+      $$CachedActionBannersTableFilterComposer,
+      $$CachedActionBannersTableOrderingComposer,
+      $$CachedActionBannersTableAnnotationComposer,
+      $$CachedActionBannersTableCreateCompanionBuilder,
+      $$CachedActionBannersTableUpdateCompanionBuilder,
+      (CachedActionBanner, $$CachedActionBannersTableReferences),
+      CachedActionBanner,
+      PrefetchHooks Function({bool bannerId})
+    >;
+typedef $$CachedEventBannersTableCreateCompanionBuilder =
+    CachedEventBannersCompanion Function({
+      Value<String?> eventId,
+      Value<String?> eventCategory,
+      Value<String?> eventDescription,
+      Value<int> rowid,
+    });
+typedef $$CachedEventBannersTableUpdateCompanionBuilder =
+    CachedEventBannersCompanion Function({
+      Value<String?> eventId,
+      Value<String?> eventCategory,
+      Value<String?> eventDescription,
+      Value<int> rowid,
+    });
+
+class $$CachedEventBannersTableFilterComposer
+    extends Composer<_$AppDatabase, $CachedEventBannersTable> {
+  $$CachedEventBannersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get eventId => $composableBuilder(
+    column: $table.eventId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get eventCategory => $composableBuilder(
+    column: $table.eventCategory,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get eventDescription => $composableBuilder(
+    column: $table.eventDescription,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CachedEventBannersTableOrderingComposer
+    extends Composer<_$AppDatabase, $CachedEventBannersTable> {
+  $$CachedEventBannersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get eventId => $composableBuilder(
+    column: $table.eventId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get eventCategory => $composableBuilder(
+    column: $table.eventCategory,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get eventDescription => $composableBuilder(
+    column: $table.eventDescription,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CachedEventBannersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CachedEventBannersTable> {
+  $$CachedEventBannersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get eventId =>
+      $composableBuilder(column: $table.eventId, builder: (column) => column);
+
+  GeneratedColumn<String> get eventCategory => $composableBuilder(
+    column: $table.eventCategory,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get eventDescription => $composableBuilder(
+    column: $table.eventDescription,
+    builder: (column) => column,
+  );
+}
+
+class $$CachedEventBannersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CachedEventBannersTable,
+          CachedEventBanner,
+          $$CachedEventBannersTableFilterComposer,
+          $$CachedEventBannersTableOrderingComposer,
+          $$CachedEventBannersTableAnnotationComposer,
+          $$CachedEventBannersTableCreateCompanionBuilder,
+          $$CachedEventBannersTableUpdateCompanionBuilder,
+          (
+            CachedEventBanner,
+            BaseReferences<
+              _$AppDatabase,
+              $CachedEventBannersTable,
+              CachedEventBanner
+            >,
+          ),
+          CachedEventBanner,
+          PrefetchHooks Function()
+        > {
+  $$CachedEventBannersTableTableManager(
+    _$AppDatabase db,
+    $CachedEventBannersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CachedEventBannersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CachedEventBannersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CachedEventBannersTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String?> eventId = const Value.absent(),
+                Value<String?> eventCategory = const Value.absent(),
+                Value<String?> eventDescription = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedEventBannersCompanion(
+                eventId: eventId,
+                eventCategory: eventCategory,
+                eventDescription: eventDescription,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String?> eventId = const Value.absent(),
+                Value<String?> eventCategory = const Value.absent(),
+                Value<String?> eventDescription = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedEventBannersCompanion.insert(
+                eventId: eventId,
+                eventCategory: eventCategory,
+                eventDescription: eventDescription,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CachedEventBannersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CachedEventBannersTable,
+      CachedEventBanner,
+      $$CachedEventBannersTableFilterComposer,
+      $$CachedEventBannersTableOrderingComposer,
+      $$CachedEventBannersTableAnnotationComposer,
+      $$CachedEventBannersTableCreateCompanionBuilder,
+      $$CachedEventBannersTableUpdateCompanionBuilder,
+      (
+        CachedEventBanner,
+        BaseReferences<
+          _$AppDatabase,
+          $CachedEventBannersTable,
+          CachedEventBanner
+        >,
+      ),
+      CachedEventBanner,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -11904,4 +13651,10 @@ class $AppDatabaseManager {
       $$ProductCategoriesTableTableManager(_db, _db.productCategories);
   $$ProductTagsTableTableManager get productTags =>
       $$ProductTagsTableTableManager(_db, _db.productTags);
+  $$CachedBannersTableTableManager get cachedBanners =>
+      $$CachedBannersTableTableManager(_db, _db.cachedBanners);
+  $$CachedActionBannersTableTableManager get cachedActionBanners =>
+      $$CachedActionBannersTableTableManager(_db, _db.cachedActionBanners);
+  $$CachedEventBannersTableTableManager get cachedEventBanners =>
+      $$CachedEventBannersTableTableManager(_db, _db.cachedEventBanners);
 }

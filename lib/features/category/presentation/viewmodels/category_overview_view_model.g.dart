@@ -68,7 +68,7 @@ final class CategoryOverviewViewModelProvider
 }
 
 String _$categoryOverviewViewModelHash() =>
-    r'dfe267e2b151b2a989f7cd69d5156140a388def3';
+    r'bf9ad49e8a7aa8bf7f0d7807dd921df7f4b67510';
 
 final class CategoryOverviewViewModelFamily extends $Family
     with

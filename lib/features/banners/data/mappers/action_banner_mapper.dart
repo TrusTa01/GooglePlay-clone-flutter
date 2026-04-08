@@ -10,7 +10,7 @@ extension ActionBannerMapper on ActionBannerDto {
       type: BannerType.action,
       imageAssetPath: imageAssetPath,
       title: title.display(locale),
-      topToolTipText: topToolTipText?.display(locale),
+      topTooltipText: topToolTipText?.display(locale),
       productId: productId,
       description: description.display(locale),
     );

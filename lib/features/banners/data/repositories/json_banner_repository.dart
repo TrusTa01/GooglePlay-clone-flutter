@@ -1,4 +1,3 @@
-import 'package:google_play/features/product/data/datasources/product_local_datasource.dart';
 import 'package:google_play/features/banners/data/mappers/banner_mapper.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 import 'package:google_play/features/banners/domain/repositories/banner_repository.dart';

@@ -11,7 +11,7 @@ extension EventBannerMapper on EventBannerDto {
       imageAssetPath: imageAssetPath,
       title: title.display(locale),
       description: description.display(locale),
-      topToolTipText: topToolTipText?.display(locale),
+      topTooltipText: topToolTipText?.display(locale),
       eventId: eventId,
       eventCategory: eventCategory,
       eventDescription: eventDescription?.display(locale),

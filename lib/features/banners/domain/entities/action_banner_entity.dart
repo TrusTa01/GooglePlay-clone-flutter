@@ -8,7 +8,7 @@ final class ActionBannerEntity extends BannerEntity {
     required super.type,
     required super.imageAssetPath,
     required super.title,
-    required super.topToolTipText,
+    required super.topTooltipText,
     required this.productId,
     required super.description,
   });

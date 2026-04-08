@@ -22,8 +22,11 @@ part 'app_database.g.dart';
     ProductCategories,
     ProductTags,
     ProductTranslations,
+    CachedBanners,
+    CachedActionBanners,
+    CachedEventBanners,
   ],
-  include: {'tables/product_title_search.drift'},
+  include: {'tables/products/product_title_search.drift'},
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

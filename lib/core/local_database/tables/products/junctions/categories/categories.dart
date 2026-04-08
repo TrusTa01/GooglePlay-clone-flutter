@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:google_play/core/local_database/converters.dart';
+import 'package:google_play/core/local_database/tables/products/converters.dart';
 
-class Tags extends Table {
+class Categories extends Table {
   TextColumn get id => text()();
   TextColumn get name => text().map(const LocalizedStringConverter())();
   TextColumn get type => text()();

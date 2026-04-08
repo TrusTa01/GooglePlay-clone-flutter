@@ -7,9 +7,9 @@ class EventHeroBannerMapper {
   EventHeroBannerUiModel fromEntity(EventBannerEntity banner) {
     return EventHeroBannerUiModel(
       imageAssetPath: banner.imageAssetPath,
-      title: banner.title,
-      hasTopTooltip: banner.topToolTipText != null,
-      topTooltipText: banner.topToolTipText,
+      title: banner.title ?? '',
+      hasTopTooltip: banner.topTooltipText != null,
+      topTooltipText: banner.topTooltipText,
     );
   }
 }

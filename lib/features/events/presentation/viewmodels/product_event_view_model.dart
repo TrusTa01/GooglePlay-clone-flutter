@@ -7,7 +7,7 @@ import 'package:google_play/features/banners/domain/entities/event_banner_entity
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/features/events/presentation/viewmodels/product_event_state.dart';
 import 'package:google_play/features/events/presentation/viewmodels/ui_mappers/event_section_ui_mapper.dart';
-import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/event_hero_banner_mapper.dart';
+import 'package:google_play/features/banners/presentation/view_models/ui_mappers/event_hero_banner_mapper.dart';
 import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

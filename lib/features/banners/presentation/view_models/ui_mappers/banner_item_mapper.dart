@@ -13,9 +13,9 @@ class BannerItemMapper {
     return BannerItemUiModel(
       id: banner.id,
       imageAssetPath: banner.imageAssetPath,
-      title: banner.title,
-      topTooltipText: banner.topToolTipText,
-      description: banner.description,
+      title: banner.title ?? '',
+      topTooltipText: banner.topTooltipText,
+      description: banner.description ?? '',
       productId: banner is ActionBannerEntity ? banner.productId : null,
       actionRow: actionRow,
     );
