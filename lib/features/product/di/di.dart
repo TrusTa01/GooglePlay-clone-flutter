@@ -6,7 +6,7 @@ import 'package:google_play/core/local_database/app_database.dart';
 import 'package:google_play/features/product/data/datasources/local/i_product_local_datasource.dart';
 import 'package:google_play/features/product/data/datasources/local/drift_product_local_datasource.dart';
 import 'package:google_play/features/product/data/datasources/network/supabase_product_network_datasource.dart';
-import 'package:google_play/features/product/data/repositories/offline_first_product_repository.dart';
+import 'package:google_play/features/product/data/repositories/cache_first_product_repository.dart';
 import 'package:google_play/features/product/data/datasources/network/supabase_product_network_repository.dart';
 import 'package:google_play/features/product/data/datasources/network/i_product_network_repository.dart';
 import 'package:google_play/features/product/domain/repositories/product_repository.dart';

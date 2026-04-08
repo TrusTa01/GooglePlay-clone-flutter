@@ -1,5 +1,5 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
-import 'package:google_play/features/banners/data/models/banner_dto.dart';
+import 'package:google_play/features/banners/data/models/network/banner_dto.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 import 'package:google_play/features/banners/domain/entities/event_banner_entity.dart';
 

@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:google_play/features/product/data/models/network/product_dto_json_converters.dart';
+import 'package:google_play/core/data/json/dto_json_converters.dart';
 
-export 'product_dto_json_converters.dart';
+export 'package:google_play/core/data/json/dto_json_converters.dart';
 
 part 'product_dto.freezed.dart';
 part 'product_dto.g.dart';
@@ -10,14 +10,14 @@ part 'product_dto.g.dart';
 abstract class DeveloperDto with _$DeveloperDto {
   const factory DeveloperDto({
     required String id,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString city,
     required String phone,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString address,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString company,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString country,
     @JsonKey(name: 'website_url') required String websiteUrl,
     @JsonKey(name: 'email_support') required String emailSupport,
@@ -32,9 +32,9 @@ abstract class DeveloperDto with _$DeveloperDto {
 abstract class BookPublisherDto with _$BookPublisherDto {
   const factory BookPublisherDto({
     required String id,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString name,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString description,
   }) = _BookPublisherDto;
 
@@ -46,7 +46,7 @@ abstract class BookPublisherDto with _$BookPublisherDto {
 abstract class CategoryDto with _$CategoryDto {
   const factory CategoryDto({
     required String id,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString name,
   }) = _CategoryDto;
 
@@ -58,7 +58,7 @@ abstract class CategoryDto with _$CategoryDto {
 abstract class TagDto with _$TagDto {
   const factory TagDto({
     required String id,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString name,
   }) = _TagDto;
 
@@ -73,27 +73,27 @@ sealed class ProductDto with _$ProductDto {
     @Default('game') String type,
     required String id,
     @JsonKey(name: 'external_id') required String externalId,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString title,
     @JsonKey(
       name: 'short_description',
-      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+      fromJson: DtoJsonConverters.localizedStringFromJson,
     )
     required LocalizedString shortDescription,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString description,
     required double rating,
     @JsonKey(name: 'reviews_count') required int reviewsCount,
     @JsonKey(name: 'rating_avg') @Default(0) double ratingAvg,
     @JsonKey(
       name: 'rating_distribution',
-      fromJson: ProductDtoJsonConverters.ratingDistributionFromJson,
+      fromJson: DtoJsonConverters.ratingDistributionFromJson,
     )
     @Default(<String, int>{})
     Map<String, int> ratingDistribution,
     @JsonKey(
       name: 'top_reviews',
-      fromJson: ProductDtoJsonConverters.topReviewsFromJson,
+      fromJson: DtoJsonConverters.topReviewsFromJson,
     )
     @Default(<Map<String, dynamic>>[])
     List<Map<String, dynamic>> topReviews,
@@ -107,13 +107,13 @@ sealed class ProductDto with _$ProductDto {
     @JsonKey(name: 'technical_info') String? technicalInfo,
     @JsonKey(
       name: 'screenshots',
-      fromJson: ProductDtoJsonConverters.stringListFromJson,
+      fromJson: DtoJsonConverters.stringListFromJson,
     )
     @Default(<String>[])
     List<String> screenshots,
     @JsonKey(
       name: 'supported_languages',
-      fromJson: ProductDtoJsonConverters.stringListFromJson,
+      fromJson: DtoJsonConverters.stringListFromJson,
     )
     @Default(<String>[])
     List<String> supportedLanguages,
@@ -123,12 +123,12 @@ sealed class ProductDto with _$ProductDto {
     required String size,
     @JsonKey(
       name: 'event_text',
-      fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson,
+      fromJson: DtoJsonConverters.localizedStringNullableFromJson,
     )
     LocalizedString? eventText,
     @JsonKey(
       name: 'whats_new_text',
-      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+      fromJson: DtoJsonConverters.localizedStringFromJson,
     )
     required LocalizedString whatsNewText,
     @JsonKey(name: 'download_count') required int downloadCount,
@@ -136,18 +136,18 @@ sealed class ProductDto with _$ProductDto {
     @JsonKey(name: 'is_kids_friendly') required bool isKidsFriendly,
     @JsonKey(
       name: 'age_rating_reasons',
-      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+      fromJson: DtoJsonConverters.localizedStringListFromJson,
     )
     required List<LocalizedString> ageRatingReasons,
     @JsonKey(
       name: 'permissions',
-      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+      fromJson: DtoJsonConverters.localizedStringListFromJson,
     )
     required List<LocalizedString> permissions,
     @JsonKey(name: 'last_updated') required DateTime lastUpdated,
     @JsonKey(
       name: 'creator_description',
-      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+      fromJson: DtoJsonConverters.localizedStringFromJson,
     )
     @Default(<String, String>{})
     LocalizedString creatorDescription,
@@ -157,7 +157,7 @@ sealed class ProductDto with _$ProductDto {
     @JsonKey(name: 'has_controller_support') bool? hasControllerSupport,
     @JsonKey(
       name: 'achievements',
-      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+      fromJson: DtoJsonConverters.localizedStringListFromJson,
     )
     @Default(<LocalizedString>[])
     List<LocalizedString> achievements,
@@ -172,27 +172,27 @@ sealed class ProductDto with _$ProductDto {
     @Default('app') String type,
     required String id,
     @JsonKey(name: 'external_id') required String externalId,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString title,
     @JsonKey(
       name: 'short_description',
-      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+      fromJson: DtoJsonConverters.localizedStringFromJson,
     )
     required LocalizedString shortDescription,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString description,
     required double rating,
     @JsonKey(name: 'reviews_count') required int reviewsCount,
     @JsonKey(name: 'rating_avg') @Default(0) double ratingAvg,
     @JsonKey(
       name: 'rating_distribution',
-      fromJson: ProductDtoJsonConverters.ratingDistributionFromJson,
+      fromJson: DtoJsonConverters.ratingDistributionFromJson,
     )
     @Default(<String, int>{})
     Map<String, int> ratingDistribution,
     @JsonKey(
       name: 'top_reviews',
-      fromJson: ProductDtoJsonConverters.topReviewsFromJson,
+      fromJson: DtoJsonConverters.topReviewsFromJson,
     )
     @Default(<Map<String, dynamic>>[])
     List<Map<String, dynamic>> topReviews,
@@ -205,13 +205,13 @@ sealed class ProductDto with _$ProductDto {
     @JsonKey(name: 'url') required String url,
     @JsonKey(
       name: 'screenshots',
-      fromJson: ProductDtoJsonConverters.stringListFromJson,
+      fromJson: DtoJsonConverters.stringListFromJson,
     )
     @Default(<String>[])
     List<String> screenshots,
     @JsonKey(
       name: 'supported_languages',
-      fromJson: ProductDtoJsonConverters.stringListFromJson,
+      fromJson: DtoJsonConverters.stringListFromJson,
     )
     @Default(<String>[])
     List<String> supportedLanguages,
@@ -221,12 +221,12 @@ sealed class ProductDto with _$ProductDto {
     required String size,
     @JsonKey(
       name: 'event_text',
-      fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson,
+      fromJson: DtoJsonConverters.localizedStringNullableFromJson,
     )
     LocalizedString? eventText,
     @JsonKey(
       name: 'whats_new_text',
-      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+      fromJson: DtoJsonConverters.localizedStringFromJson,
     )
     required LocalizedString whatsNewText,
     @JsonKey(name: 'download_count') required int downloadCount,
@@ -234,18 +234,18 @@ sealed class ProductDto with _$ProductDto {
     @JsonKey(name: 'is_kids_friendly') required bool isKidsFriendly,
     @JsonKey(
       name: 'age_rating_reasons',
-      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+      fromJson: DtoJsonConverters.localizedStringListFromJson,
     )
     required List<LocalizedString> ageRatingReasons,
     @JsonKey(
       name: 'permissions',
-      fromJson: ProductDtoJsonConverters.localizedStringListFromJson,
+      fromJson: DtoJsonConverters.localizedStringListFromJson,
     )
     required List<LocalizedString> permissions,
     @JsonKey(name: 'last_updated') required DateTime lastUpdated,
     @JsonKey(
       name: 'creator_description',
-      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+      fromJson: DtoJsonConverters.localizedStringFromJson,
     )
     @Default(<String, String>{})
     LocalizedString creatorDescription,
@@ -261,27 +261,27 @@ sealed class ProductDto with _$ProductDto {
     @Default('book') String type,
     required String id,
     @JsonKey(name: 'external_id') required String externalId,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString title,
     @JsonKey(
       name: 'short_description',
-      fromJson: ProductDtoJsonConverters.localizedStringFromJson,
+      fromJson: DtoJsonConverters.localizedStringFromJson,
     )
     required LocalizedString shortDescription,
-    @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)
+    @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString description,
     required double rating,
     @JsonKey(name: 'reviews_count') required int reviewsCount,
     @JsonKey(name: 'rating_avg') @Default(0) double ratingAvg,
     @JsonKey(
       name: 'rating_distribution',
-      fromJson: ProductDtoJsonConverters.ratingDistributionFromJson,
+      fromJson: DtoJsonConverters.ratingDistributionFromJson,
     )
     @Default(<String, int>{})
     Map<String, int> ratingDistribution,
     @JsonKey(
       name: 'top_reviews',
-      fromJson: ProductDtoJsonConverters.topReviewsFromJson,
+      fromJson: DtoJsonConverters.topReviewsFromJson,
     )
     @Default(<Map<String, dynamic>>[])
     List<Map<String, dynamic>> topReviews,
@@ -307,10 +307,7 @@ sealed class ProductDto with _$ProductDto {
     @JsonKey(name: 'sample_available') required bool sampleAvailable,
     @JsonKey(name: 'is_abridged') required bool isAbridged,
     @JsonKey(name: 'publication_date') required DateTime publicationDate,
-    @JsonKey(
-      name: 'awards',
-      fromJson: ProductDtoJsonConverters.stringListFromJson,
-    )
+    @JsonKey(name: 'awards', fromJson: DtoJsonConverters.stringListFromJson)
     @Default(<String>[])
     List<String> awards,
   }) = BookDto;

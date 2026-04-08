@@ -1,16 +1,16 @@
 import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/result_pattern/failure.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
-import 'package:google_play/features/product/data/datasources/network/i_product_network_repository.dart';
-import 'package:google_play/features/product/data/datasources/network/product_network_views_names_enum.dart';
-import 'package:google_play/features/product/data/datasources/network/supabase_product_network_datasource.dart';
-import 'package:google_play/features/product/data/models/network/product_dto.dart';
+import 'package:google_play/features/banners/data/datasources/network/banner_network_views_names_enum.dart';
+import 'package:google_play/features/banners/data/datasources/network/i_banner_network_repository.dart';
+import 'package:google_play/features/banners/data/datasources/network/supabase_banner_network_datasource.dart';
+import 'package:google_play/features/banners/data/models/network/banner_dto.dart';
 
-class SupabaseProductRepository implements IProductNetworkRepository {
-  final SupabaseProductNetworkDatasource _datasource;
+class SupabaseBannerNetworkRepository implements IBannerNetworkRepository {
+  final SupabaseBannerNetworkDatasource _datasource;
 
-  const SupabaseProductRepository({
-    required SupabaseProductNetworkDatasource datasource,
+  const SupabaseBannerNetworkRepository({
+    required SupabaseBannerNetworkDatasource datasource,
   }) : _datasource = datasource;
 
   static const ({String column, bool ascending}) _releaseDateDesc = (
@@ -19,12 +19,12 @@ class SupabaseProductRepository implements IProductNetworkRepository {
   );
 
   @override
-  Future<Result<List<ProductDto>>> getProducts({
+  Future<Result<List<BannerDto>>> getBanners({
     required String type,
     required int page,
     int pageSize = 20,
   }) {
-    final view = NetworkProductViewsNames.getViewName(type);
+    final view = NetworkBannerViewsNames.getViewName(type);
     final schemaName = SchemaNamesEnum.views;
 
     if (view == null) {
@@ -33,7 +33,7 @@ class SupabaseProductRepository implements IProductNetworkRepository {
       );
     }
 
-    return _datasource.getProducts(
+    return _datasource.getBanners(
       view: view,
       schemaName: schemaName,
       order: _releaseDateDesc,
@@ -43,15 +43,12 @@ class SupabaseProductRepository implements IProductNetworkRepository {
   }
 
   @override
-  Future<Result<ProductDto?>> getProductById({
-    required String id,
-    String? type,
-  }) {
+  Future<Result<BannerDto?>> getBannerById({required String id, String? type}) {
     if (type == null) {
       return Result.asFuture(const Result.success(data: null));
     }
 
-    final view = NetworkProductViewsNames.getViewName(type);
+    final view = NetworkBannerViewsNames.getViewName(type);
     final schemaName = SchemaNamesEnum.views;
 
     if (view == null) {
@@ -60,10 +57,10 @@ class SupabaseProductRepository implements IProductNetworkRepository {
       );
     }
 
-    return _datasource.getProductById(
+    return _datasource.getBannerById(
       view: view,
-      schemaName: schemaName,
       id: id,
+      schemaName: schemaName,
     );
   }
 }

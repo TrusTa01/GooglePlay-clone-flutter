@@ -1,5 +1,5 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
-import 'package:google_play/features/product/data/mappers/developer_mapper.dart';
+import 'package:google_play/features/product/data/mappers/network/developer_mapper.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/app_entity.dart';
 

@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-// Локализованная строка: ключи локали (`en`, `ru`, …)
 typedef LocalizedString = Map<String, String>;
 
-/// Чтение JSON-полей для [ProductDto] из ответов Supabase (map, JSON-string, списки)
-final class ProductDtoJsonConverters {
-  const ProductDtoJsonConverters._();
+final class DtoJsonConverters {
+  const DtoJsonConverters._();
+
   static Map<String, int> ratingDistributionFromJson(Object? value) {
     if (value == null) return const <String, int>{};
 
@@ -81,8 +80,8 @@ final class ProductDtoJsonConverters {
 
   static LocalizedString? localizedStringNullableFromJson(Object? value) {
     if (value == null) return null;
-    final m = localizedStringFromJson(value);
-    return m.isEmpty ? null : m;
+    final map = localizedStringFromJson(value);
+    return map.isEmpty ? null : map;
   }
 
   static List<LocalizedString> localizedStringListFromJson(Object? value) {

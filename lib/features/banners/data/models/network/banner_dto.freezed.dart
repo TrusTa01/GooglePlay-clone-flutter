@@ -38,7 +38,7 @@ BannerDto _$BannerDtoFromJson(
 /// @nodoc
 mixin _$BannerDto {
 
- String get id; String get type; String get imageAssetPath; LocalizedString get title; LocalizedString? get topToolTipText; LocalizedString get description;
+ String get id; String get type; String get imageAssetPath;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get topToolTipText;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description;
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -69,7 +69,7 @@ abstract mixin class $BannerDtoCopyWith<$Res>  {
   factory $BannerDtoCopyWith(BannerDto value, $Res Function(BannerDto) _then) = _$BannerDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String type, String imageAssetPath, Map<String, String> title, Map<String, String>? topToolTipText, Map<String, String> description
+ String id, String type, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) Map<String, String>? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> description
 });
 
 
@@ -179,7 +179,7 @@ return action(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)?  event,TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)?  action,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription)?  event,TResult Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String productId)?  action,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case EventBannerDto() when event != null:
 return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto() when action != null:
@@ -201,7 +201,7 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)  event,required TResult Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)  action,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription)  event,required TResult Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String productId)  action,}) {final _that = this;
 switch (_that) {
 case EventBannerDto():
 return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto():
@@ -219,7 +219,7 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String? eventId,  String? eventCategory,  LocalizedString? eventDescription)?  event,TResult? Function( String id,  String type,  String imageAssetPath,  LocalizedString title,  LocalizedString? topToolTipText,  LocalizedString description,  String productId)?  action,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription)?  event,TResult? Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String productId)?  action,}) {final _that = this;
 switch (_that) {
 case EventBannerDto() when event != null:
 return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto() when action != null:
@@ -235,21 +235,21 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 @JsonSerializable(createToJson: false)
 
 class EventBannerDto extends BannerDto {
-  const EventBannerDto({required this.id, this.type = 'event', required this.imageAssetPath, required final  LocalizedString title, final  LocalizedString? topToolTipText, required final  LocalizedString description, this.eventId, this.eventCategory, final  LocalizedString? eventDescription}): _title = title,_topToolTipText = topToolTipText,_description = description,_eventDescription = eventDescription,super._();
+  const EventBannerDto({required this.id, this.type = 'event', required this.imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, this.eventId, this.eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? eventDescription}): _title = title,_topToolTipText = topToolTipText,_description = description,_eventDescription = eventDescription,super._();
   factory EventBannerDto.fromJson(Map<String, dynamic> json) => _$EventBannerDtoFromJson(json);
 
 @override final  String id;
 @override@JsonKey() final  String type;
 @override final  String imageAssetPath;
  final  LocalizedString _title;
-@override LocalizedString get title {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
   if (_title is EqualUnmodifiableMapView) return _title;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_title);
 }
 
  final  LocalizedString? _topToolTipText;
-@override LocalizedString? get topToolTipText {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get topToolTipText {
   final value = _topToolTipText;
   if (value == null) return null;
   if (_topToolTipText is EqualUnmodifiableMapView) return _topToolTipText;
@@ -258,7 +258,7 @@ class EventBannerDto extends BannerDto {
 }
 
  final  LocalizedString _description;
-@override LocalizedString get description {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description {
   if (_description is EqualUnmodifiableMapView) return _description;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_description);
@@ -267,7 +267,7 @@ class EventBannerDto extends BannerDto {
  final  String? eventId;
  final  String? eventCategory;
  final  LocalizedString? _eventDescription;
- LocalizedString? get eventDescription {
+@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get eventDescription {
   final value = _eventDescription;
   if (value == null) return null;
   if (_eventDescription is EqualUnmodifiableMapView) return _eventDescription;
@@ -306,7 +306,7 @@ abstract mixin class $EventBannerDtoCopyWith<$Res> implements $BannerDtoCopyWith
   factory $EventBannerDtoCopyWith(EventBannerDto value, $Res Function(EventBannerDto) _then) = _$EventBannerDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String type, String imageAssetPath, LocalizedString title, LocalizedString? topToolTipText, LocalizedString description, String? eventId, String? eventCategory, LocalizedString? eventDescription
+ String id, String type, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, String? eventId, String? eventCategory,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? eventDescription
 });
 
 
@@ -345,21 +345,21 @@ as LocalizedString?,
 @JsonSerializable(createToJson: false)
 
 class ActionBannerDto extends BannerDto {
-  const ActionBannerDto({required this.id, this.type = 'action', required this.imageAssetPath, required final  LocalizedString title, final  LocalizedString? topToolTipText, required final  LocalizedString description, required this.productId}): _title = title,_topToolTipText = topToolTipText,_description = description,super._();
+  const ActionBannerDto({required this.id, this.type = 'action', required this.imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.productId}): _title = title,_topToolTipText = topToolTipText,_description = description,super._();
   factory ActionBannerDto.fromJson(Map<String, dynamic> json) => _$ActionBannerDtoFromJson(json);
 
 @override final  String id;
 @override@JsonKey() final  String type;
 @override final  String imageAssetPath;
  final  LocalizedString _title;
-@override LocalizedString get title {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
   if (_title is EqualUnmodifiableMapView) return _title;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_title);
 }
 
  final  LocalizedString? _topToolTipText;
-@override LocalizedString? get topToolTipText {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get topToolTipText {
   final value = _topToolTipText;
   if (value == null) return null;
   if (_topToolTipText is EqualUnmodifiableMapView) return _topToolTipText;
@@ -368,7 +368,7 @@ class ActionBannerDto extends BannerDto {
 }
 
  final  LocalizedString _description;
-@override LocalizedString get description {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description {
   if (_description is EqualUnmodifiableMapView) return _description;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_description);
@@ -406,7 +406,7 @@ abstract mixin class $ActionBannerDtoCopyWith<$Res> implements $BannerDtoCopyWit
   factory $ActionBannerDtoCopyWith(ActionBannerDto value, $Res Function(ActionBannerDto) _then) = _$ActionBannerDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String type, String imageAssetPath, LocalizedString title, LocalizedString? topToolTipText, LocalizedString description, String productId
+ String id, String type, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, String productId
 });
 
 

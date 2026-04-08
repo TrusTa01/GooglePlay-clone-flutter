@@ -1,6 +1,6 @@
-import 'package:google_play/core/domain/result_pattern/product_result.dart';
+import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/product/data/datasources/local/i_product_local_datasource.dart';
-import 'package:google_play/features/product/data/mappers/local_product_bundle_mapper.dart';
+import 'package:google_play/features/product/data/mappers/local/local_product_bundle_mapper.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_filter.dart';

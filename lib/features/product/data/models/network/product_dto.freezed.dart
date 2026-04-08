@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DeveloperDto {
 
- String get id;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get city; String get phone;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get address;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get company;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get country;@JsonKey(name: 'website_url') String get websiteUrl;@JsonKey(name: 'email_support') String get emailSupport;@JsonKey(name: 'privacy_policy_url') String get privacyPolicyUrl;
+ String get id;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get city; String get phone;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get address;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get company;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get country;@JsonKey(name: 'website_url') String get websiteUrl;@JsonKey(name: 'email_support') String get emailSupport;@JsonKey(name: 'privacy_policy_url') String get privacyPolicyUrl;
 /// Create a copy of DeveloperDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $DeveloperDtoCopyWith<$Res>  {
   factory $DeveloperDtoCopyWith(DeveloperDto value, $Res Function(DeveloperDto) _then) = _$DeveloperDtoCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString city, String phone,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString address,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString company,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString country,@JsonKey(name: 'website_url') String websiteUrl,@JsonKey(name: 'email_support') String emailSupport,@JsonKey(name: 'privacy_policy_url') String privacyPolicyUrl
+ String id,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString city, String phone,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString address,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString company,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString country,@JsonKey(name: 'website_url') String websiteUrl,@JsonKey(name: 'email_support') String emailSupport,@JsonKey(name: 'privacy_policy_url') String privacyPolicyUrl
 });
 
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString city,  String phone, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString address, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString company, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString country, @JsonKey(name: 'website_url')  String websiteUrl, @JsonKey(name: 'email_support')  String emailSupport, @JsonKey(name: 'privacy_policy_url')  String privacyPolicyUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString city,  String phone, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString address, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString company, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString country, @JsonKey(name: 'website_url')  String websiteUrl, @JsonKey(name: 'email_support')  String emailSupport, @JsonKey(name: 'privacy_policy_url')  String privacyPolicyUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DeveloperDto() when $default != null:
 return $default(_that.id,_that.city,_that.phone,_that.address,_that.company,_that.country,_that.websiteUrl,_that.emailSupport,_that.privacyPolicyUrl);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.city,_that.phone,_that.address,_that.company,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString city,  String phone, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString address, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString company, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString country, @JsonKey(name: 'website_url')  String websiteUrl, @JsonKey(name: 'email_support')  String emailSupport, @JsonKey(name: 'privacy_policy_url')  String privacyPolicyUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString city,  String phone, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString address, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString company, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString country, @JsonKey(name: 'website_url')  String websiteUrl, @JsonKey(name: 'email_support')  String emailSupport, @JsonKey(name: 'privacy_policy_url')  String privacyPolicyUrl)  $default,) {final _that = this;
 switch (_that) {
 case _DeveloperDto():
 return $default(_that.id,_that.city,_that.phone,_that.address,_that.company,_that.country,_that.websiteUrl,_that.emailSupport,_that.privacyPolicyUrl);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.city,_that.phone,_that.address,_that.company,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString city,  String phone, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString address, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString company, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString country, @JsonKey(name: 'website_url')  String websiteUrl, @JsonKey(name: 'email_support')  String emailSupport, @JsonKey(name: 'privacy_policy_url')  String privacyPolicyUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString city,  String phone, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString address, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString company, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString country, @JsonKey(name: 'website_url')  String websiteUrl, @JsonKey(name: 'email_support')  String emailSupport, @JsonKey(name: 'privacy_policy_url')  String privacyPolicyUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _DeveloperDto() when $default != null:
 return $default(_that.id,_that.city,_that.phone,_that.address,_that.company,_that.country,_that.websiteUrl,_that.emailSupport,_that.privacyPolicyUrl);case _:
@@ -217,12 +217,12 @@ return $default(_that.id,_that.city,_that.phone,_that.address,_that.company,_tha
 @JsonSerializable()
 
 class _DeveloperDto implements DeveloperDto {
-  const _DeveloperDto({required this.id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString city, required this.phone, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString address, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString company, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString country, @JsonKey(name: 'website_url') required this.websiteUrl, @JsonKey(name: 'email_support') required this.emailSupport, @JsonKey(name: 'privacy_policy_url') required this.privacyPolicyUrl}): _city = city,_address = address,_company = company,_country = country;
+  const _DeveloperDto({required this.id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString city, required this.phone, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString address, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString company, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString country, @JsonKey(name: 'website_url') required this.websiteUrl, @JsonKey(name: 'email_support') required this.emailSupport, @JsonKey(name: 'privacy_policy_url') required this.privacyPolicyUrl}): _city = city,_address = address,_company = company,_country = country;
   factory _DeveloperDto.fromJson(Map<String, dynamic> json) => _$DeveloperDtoFromJson(json);
 
 @override final  String id;
  final  LocalizedString _city;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get city {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get city {
   if (_city is EqualUnmodifiableMapView) return _city;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_city);
@@ -230,21 +230,21 @@ class _DeveloperDto implements DeveloperDto {
 
 @override final  String phone;
  final  LocalizedString _address;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get address {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get address {
   if (_address is EqualUnmodifiableMapView) return _address;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_address);
 }
 
  final  LocalizedString _company;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get company {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get company {
   if (_company is EqualUnmodifiableMapView) return _company;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_company);
 }
 
  final  LocalizedString _country;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get country {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get country {
   if (_country is EqualUnmodifiableMapView) return _country;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_country);
@@ -287,7 +287,7 @@ abstract mixin class _$DeveloperDtoCopyWith<$Res> implements $DeveloperDtoCopyWi
   factory _$DeveloperDtoCopyWith(_DeveloperDto value, $Res Function(_DeveloperDto) _then) = __$DeveloperDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString city, String phone,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString address,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString company,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString country,@JsonKey(name: 'website_url') String websiteUrl,@JsonKey(name: 'email_support') String emailSupport,@JsonKey(name: 'privacy_policy_url') String privacyPolicyUrl
+ String id,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString city, String phone,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString address,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString company,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString country,@JsonKey(name: 'website_url') String websiteUrl,@JsonKey(name: 'email_support') String emailSupport,@JsonKey(name: 'privacy_policy_url') String privacyPolicyUrl
 });
 
 
@@ -326,7 +326,7 @@ as String,
 /// @nodoc
 mixin _$BookPublisherDto {
 
- String get id;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get name;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get description;
+ String get id;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get name;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description;
 /// Create a copy of BookPublisherDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -359,7 +359,7 @@ abstract mixin class $BookPublisherDtoCopyWith<$Res>  {
   factory $BookPublisherDtoCopyWith(BookPublisherDto value, $Res Function(BookPublisherDto) _then) = _$BookPublisherDtoCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString name,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString description
+ String id,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString name,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description
 });
 
 
@@ -466,7 +466,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BookPublisherDto() when $default != null:
 return $default(_that.id,_that.name,_that.description);case _:
@@ -487,7 +487,7 @@ return $default(_that.id,_that.name,_that.description);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description)  $default,) {final _that = this;
 switch (_that) {
 case _BookPublisherDto():
 return $default(_that.id,_that.name,_that.description);case _:
@@ -507,7 +507,7 @@ return $default(_that.id,_that.name,_that.description);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description)?  $default,) {final _that = this;
 switch (_that) {
 case _BookPublisherDto() when $default != null:
 return $default(_that.id,_that.name,_that.description);case _:
@@ -522,19 +522,19 @@ return $default(_that.id,_that.name,_that.description);case _:
 @JsonSerializable()
 
 class _BookPublisherDto implements BookPublisherDto {
-  const _BookPublisherDto({required this.id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString name, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString description}): _name = name,_description = description;
+  const _BookPublisherDto({required this.id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString name, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description}): _name = name,_description = description;
   factory _BookPublisherDto.fromJson(Map<String, dynamic> json) => _$BookPublisherDtoFromJson(json);
 
 @override final  String id;
  final  LocalizedString _name;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get name {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get name {
   if (_name is EqualUnmodifiableMapView) return _name;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_name);
 }
 
  final  LocalizedString _description;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get description {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description {
   if (_description is EqualUnmodifiableMapView) return _description;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_description);
@@ -574,7 +574,7 @@ abstract mixin class _$BookPublisherDtoCopyWith<$Res> implements $BookPublisherD
   factory _$BookPublisherDtoCopyWith(_BookPublisherDto value, $Res Function(_BookPublisherDto) _then) = __$BookPublisherDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString name,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString description
+ String id,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString name,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description
 });
 
 
@@ -607,7 +607,7 @@ as LocalizedString,
 /// @nodoc
 mixin _$CategoryDto {
 
- String get id;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get name;
+ String get id;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get name;
 /// Create a copy of CategoryDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -640,7 +640,7 @@ abstract mixin class $CategoryDtoCopyWith<$Res>  {
   factory $CategoryDtoCopyWith(CategoryDto value, $Res Function(CategoryDto) _then) = _$CategoryDtoCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString name
+ String id,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString name
 });
 
 
@@ -746,7 +746,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CategoryDto() when $default != null:
 return $default(_that.id,_that.name);case _:
@@ -767,7 +767,7 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name)  $default,) {final _that = this;
 switch (_that) {
 case _CategoryDto():
 return $default(_that.id,_that.name);case _:
@@ -787,7 +787,7 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name)?  $default,) {final _that = this;
 switch (_that) {
 case _CategoryDto() when $default != null:
 return $default(_that.id,_that.name);case _:
@@ -802,12 +802,12 @@ return $default(_that.id,_that.name);case _:
 @JsonSerializable()
 
 class _CategoryDto implements CategoryDto {
-  const _CategoryDto({required this.id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString name}): _name = name;
+  const _CategoryDto({required this.id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString name}): _name = name;
   factory _CategoryDto.fromJson(Map<String, dynamic> json) => _$CategoryDtoFromJson(json);
 
 @override final  String id;
  final  LocalizedString _name;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get name {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get name {
   if (_name is EqualUnmodifiableMapView) return _name;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_name);
@@ -847,7 +847,7 @@ abstract mixin class _$CategoryDtoCopyWith<$Res> implements $CategoryDtoCopyWith
   factory _$CategoryDtoCopyWith(_CategoryDto value, $Res Function(_CategoryDto) _then) = __$CategoryDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString name
+ String id,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString name
 });
 
 
@@ -879,7 +879,7 @@ as LocalizedString,
 /// @nodoc
 mixin _$TagDto {
 
- String get id;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get name;
+ String get id;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get name;
 /// Create a copy of TagDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -912,7 +912,7 @@ abstract mixin class $TagDtoCopyWith<$Res>  {
   factory $TagDtoCopyWith(TagDto value, $Res Function(TagDto) _then) = _$TagDtoCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString name
+ String id,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString name
 });
 
 
@@ -1018,7 +1018,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TagDto() when $default != null:
 return $default(_that.id,_that.name);case _:
@@ -1039,7 +1039,7 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name)  $default,) {final _that = this;
 switch (_that) {
 case _TagDto():
 return $default(_that.id,_that.name);case _:
@@ -1059,7 +1059,7 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString name)?  $default,) {final _that = this;
 switch (_that) {
 case _TagDto() when $default != null:
 return $default(_that.id,_that.name);case _:
@@ -1074,12 +1074,12 @@ return $default(_that.id,_that.name);case _:
 @JsonSerializable()
 
 class _TagDto implements TagDto {
-  const _TagDto({required this.id, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString name}): _name = name;
+  const _TagDto({required this.id, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString name}): _name = name;
   factory _TagDto.fromJson(Map<String, dynamic> json) => _$TagDtoFromJson(json);
 
 @override final  String id;
  final  LocalizedString _name;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get name {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get name {
   if (_name is EqualUnmodifiableMapView) return _name;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_name);
@@ -1119,7 +1119,7 @@ abstract mixin class _$TagDtoCopyWith<$Res> implements $TagDtoCopyWith<$Res> {
   factory _$TagDtoCopyWith(_TagDto value, $Res Function(_TagDto) _then) = __$TagDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString name
+ String id,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString name
 });
 
 
@@ -1178,7 +1178,7 @@ ProductDto _$ProductDtoFromJson(
 /// @nodoc
 mixin _$ProductDto {
 
- String get type; String get id;@JsonKey(name: 'external_id') String get externalId;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get title;@JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get shortDescription;@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get description; double get rating;@JsonKey(name: 'reviews_count') int get reviewsCount;@JsonKey(name: 'rating_avg') double get ratingAvg;@JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) Map<String, int> get ratingDistribution;@JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> get topReviews;@JsonKey(name: 'release_date') DateTime get releaseDate;@JsonKey(name: 'icon_url') String get iconUrl;@JsonKey(name: 'is_paid') bool get isPaid;@JsonKey(name: 'price') double? get price;@JsonKey(name: 'currency_code') String get currencyCode;@JsonKey(name: 'discount_price') double? get discountPrice;@JsonKey(name: 'url') String get url;@JsonKey(name: 'categories') List<CategoryDto> get categories;@JsonKey(name: 'tags') List<TagDto> get tags;
+ String get type; String get id;@JsonKey(name: 'external_id') String get externalId;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title;@JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get shortDescription;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description; double get rating;@JsonKey(name: 'reviews_count') int get reviewsCount;@JsonKey(name: 'rating_avg') double get ratingAvg;@JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) Map<String, int> get ratingDistribution;@JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> get topReviews;@JsonKey(name: 'release_date') DateTime get releaseDate;@JsonKey(name: 'icon_url') String get iconUrl;@JsonKey(name: 'is_paid') bool get isPaid;@JsonKey(name: 'price') double? get price;@JsonKey(name: 'currency_code') String get currencyCode;@JsonKey(name: 'discount_price') double? get discountPrice;@JsonKey(name: 'url') String get url;@JsonKey(name: 'categories') List<CategoryDto> get categories;@JsonKey(name: 'tags') List<TagDto> get tags;
 /// Create a copy of ProductDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1211,7 +1211,7 @@ abstract mixin class $ProductDtoCopyWith<$Res>  {
   factory $ProductDtoCopyWith(ProductDto value, $Res Function(ProductDto) _then) = _$ProductDtoCopyWithImpl;
 @useResult
 $Res call({
- String type, String id,@JsonKey(name: 'external_id') String externalId,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) Map<String, String> title,@JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) Map<String, String> shortDescription,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) Map<String, String> description, double rating,@JsonKey(name: 'reviews_count') int reviewsCount,@JsonKey(name: 'rating_avg') double ratingAvg,@JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) Map<String, int> ratingDistribution,@JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> topReviews,@JsonKey(name: 'release_date') DateTime releaseDate,@JsonKey(name: 'icon_url') String iconUrl,@JsonKey(name: 'is_paid') bool isPaid,@JsonKey(name: 'price') double? price,@JsonKey(name: 'currency_code') String currencyCode,@JsonKey(name: 'discount_price') double? discountPrice,@JsonKey(name: 'url') String url,@JsonKey(name: 'categories') List<CategoryDto> categories,@JsonKey(name: 'tags') List<TagDto> tags
+ String type, String id,@JsonKey(name: 'external_id') String externalId,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> title,@JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> shortDescription,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> description, double rating,@JsonKey(name: 'reviews_count') int reviewsCount,@JsonKey(name: 'rating_avg') double ratingAvg,@JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) Map<String, int> ratingDistribution,@JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> topReviews,@JsonKey(name: 'release_date') DateTime releaseDate,@JsonKey(name: 'icon_url') String iconUrl,@JsonKey(name: 'is_paid') bool isPaid,@JsonKey(name: 'price') double? price,@JsonKey(name: 'currency_code') String currencyCode,@JsonKey(name: 'discount_price') double? discountPrice,@JsonKey(name: 'url') String url,@JsonKey(name: 'categories') List<CategoryDto> categories,@JsonKey(name: 'tags') List<TagDto> tags
 });
 
 
@@ -1338,7 +1338,7 @@ return book(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'technical_info')  String? technicalInfo, @JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'is_online')  bool? isOnline, @JsonKey(name: 'has_multiplayer')  bool? hasMultiplayer, @JsonKey(name: 'game_modes')  String? gameModes, @JsonKey(name: 'has_controller_support')  bool? hasControllerSupport, @JsonKey(name: 'achievements', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> achievements, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)?  game,TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'package_name')  String packageName, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)?  app,TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'publisher')  BookPublisherDto publisher, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags, @JsonKey(name: 'page_count')  int pageCount,  String language,  String format, @JsonKey(name: 'has_audio_version')  bool hasAudioVersion, @JsonKey(name: 'audio_duration')  int? audioDuration,  String? narrator, @JsonKey(name: 'is_series')  bool isSeries, @JsonKey(name: 'series_name')  String? seriesName, @JsonKey(name: 'series_number')  int? seriesNumber, @JsonKey(name: 'sample_available')  bool sampleAvailable, @JsonKey(name: 'is_abridged')  bool isAbridged, @JsonKey(name: 'publication_date')  DateTime publicationDate, @JsonKey(name: 'awards', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> awards)?  book,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'technical_info')  String? technicalInfo, @JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'is_online')  bool? isOnline, @JsonKey(name: 'has_multiplayer')  bool? hasMultiplayer, @JsonKey(name: 'game_modes')  String? gameModes, @JsonKey(name: 'has_controller_support')  bool? hasControllerSupport, @JsonKey(name: 'achievements', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> achievements, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)?  game,TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'package_name')  String packageName, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)?  app,TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'publisher')  BookPublisherDto publisher, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags, @JsonKey(name: 'page_count')  int pageCount,  String language,  String format, @JsonKey(name: 'has_audio_version')  bool hasAudioVersion, @JsonKey(name: 'audio_duration')  int? audioDuration,  String? narrator, @JsonKey(name: 'is_series')  bool isSeries, @JsonKey(name: 'series_name')  String? seriesName, @JsonKey(name: 'series_number')  int? seriesNumber, @JsonKey(name: 'sample_available')  bool sampleAvailable, @JsonKey(name: 'is_abridged')  bool isAbridged, @JsonKey(name: 'publication_date')  DateTime publicationDate, @JsonKey(name: 'awards', fromJson: DtoJsonConverters.stringListFromJson)  List<String> awards)?  book,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case GameDto() when game != null:
 return game(_that.type,_that.id,_that.externalId,_that.title,_that.shortDescription,_that.description,_that.rating,_that.reviewsCount,_that.ratingAvg,_that.ratingDistribution,_that.topReviews,_that.releaseDate,_that.iconUrl,_that.isPaid,_that.price,_that.currencyCode,_that.discountPrice,_that.url,_that.technicalInfo,_that.screenshots,_that.supportedLanguages,_that.containsAds,_that.containsPaidContent,_that.version,_that.size,_that.eventText,_that.whatsNewText,_that.downloadCount,_that.ageRating,_that.isKidsFriendly,_that.ageRatingReasons,_that.permissions,_that.lastUpdated,_that.creatorDescription,_that.isOnline,_that.hasMultiplayer,_that.gameModes,_that.hasControllerSupport,_that.achievements,_that.developer,_that.categories,_that.tags);case AppDto() when app != null:
@@ -1361,7 +1361,7 @@ return book(_that.type,_that.id,_that.externalId,_that.title,_that.shortDescript
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'technical_info')  String? technicalInfo, @JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'is_online')  bool? isOnline, @JsonKey(name: 'has_multiplayer')  bool? hasMultiplayer, @JsonKey(name: 'game_modes')  String? gameModes, @JsonKey(name: 'has_controller_support')  bool? hasControllerSupport, @JsonKey(name: 'achievements', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> achievements, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)  game,required TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'package_name')  String packageName, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)  app,required TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'publisher')  BookPublisherDto publisher, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags, @JsonKey(name: 'page_count')  int pageCount,  String language,  String format, @JsonKey(name: 'has_audio_version')  bool hasAudioVersion, @JsonKey(name: 'audio_duration')  int? audioDuration,  String? narrator, @JsonKey(name: 'is_series')  bool isSeries, @JsonKey(name: 'series_name')  String? seriesName, @JsonKey(name: 'series_number')  int? seriesNumber, @JsonKey(name: 'sample_available')  bool sampleAvailable, @JsonKey(name: 'is_abridged')  bool isAbridged, @JsonKey(name: 'publication_date')  DateTime publicationDate, @JsonKey(name: 'awards', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> awards)  book,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'technical_info')  String? technicalInfo, @JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'is_online')  bool? isOnline, @JsonKey(name: 'has_multiplayer')  bool? hasMultiplayer, @JsonKey(name: 'game_modes')  String? gameModes, @JsonKey(name: 'has_controller_support')  bool? hasControllerSupport, @JsonKey(name: 'achievements', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> achievements, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)  game,required TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'package_name')  String packageName, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)  app,required TResult Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'publisher')  BookPublisherDto publisher, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags, @JsonKey(name: 'page_count')  int pageCount,  String language,  String format, @JsonKey(name: 'has_audio_version')  bool hasAudioVersion, @JsonKey(name: 'audio_duration')  int? audioDuration,  String? narrator, @JsonKey(name: 'is_series')  bool isSeries, @JsonKey(name: 'series_name')  String? seriesName, @JsonKey(name: 'series_number')  int? seriesNumber, @JsonKey(name: 'sample_available')  bool sampleAvailable, @JsonKey(name: 'is_abridged')  bool isAbridged, @JsonKey(name: 'publication_date')  DateTime publicationDate, @JsonKey(name: 'awards', fromJson: DtoJsonConverters.stringListFromJson)  List<String> awards)  book,}) {final _that = this;
 switch (_that) {
 case GameDto():
 return game(_that.type,_that.id,_that.externalId,_that.title,_that.shortDescription,_that.description,_that.rating,_that.reviewsCount,_that.ratingAvg,_that.ratingDistribution,_that.topReviews,_that.releaseDate,_that.iconUrl,_that.isPaid,_that.price,_that.currencyCode,_that.discountPrice,_that.url,_that.technicalInfo,_that.screenshots,_that.supportedLanguages,_that.containsAds,_that.containsPaidContent,_that.version,_that.size,_that.eventText,_that.whatsNewText,_that.downloadCount,_that.ageRating,_that.isKidsFriendly,_that.ageRatingReasons,_that.permissions,_that.lastUpdated,_that.creatorDescription,_that.isOnline,_that.hasMultiplayer,_that.gameModes,_that.hasControllerSupport,_that.achievements,_that.developer,_that.categories,_that.tags);case AppDto():
@@ -1380,7 +1380,7 @@ return book(_that.type,_that.id,_that.externalId,_that.title,_that.shortDescript
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'technical_info')  String? technicalInfo, @JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'is_online')  bool? isOnline, @JsonKey(name: 'has_multiplayer')  bool? hasMultiplayer, @JsonKey(name: 'game_modes')  String? gameModes, @JsonKey(name: 'has_controller_support')  bool? hasControllerSupport, @JsonKey(name: 'achievements', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> achievements, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)?  game,TResult? Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'package_name')  String packageName, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)?  app,TResult? Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'publisher')  BookPublisherDto publisher, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags, @JsonKey(name: 'page_count')  int pageCount,  String language,  String format, @JsonKey(name: 'has_audio_version')  bool hasAudioVersion, @JsonKey(name: 'audio_duration')  int? audioDuration,  String? narrator, @JsonKey(name: 'is_series')  bool isSeries, @JsonKey(name: 'series_name')  String? seriesName, @JsonKey(name: 'series_number')  int? seriesNumber, @JsonKey(name: 'sample_available')  bool sampleAvailable, @JsonKey(name: 'is_abridged')  bool isAbridged, @JsonKey(name: 'publication_date')  DateTime publicationDate, @JsonKey(name: 'awards', fromJson: ProductDtoJsonConverters.stringListFromJson)  List<String> awards)?  book,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'technical_info')  String? technicalInfo, @JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'is_online')  bool? isOnline, @JsonKey(name: 'has_multiplayer')  bool? hasMultiplayer, @JsonKey(name: 'game_modes')  String? gameModes, @JsonKey(name: 'has_controller_support')  bool? hasControllerSupport, @JsonKey(name: 'achievements', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> achievements, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)?  game,TResult? Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson)  List<String> screenshots, @JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson)  List<String> supportedLanguages, @JsonKey(name: 'contains_ads')  bool containsAds, @JsonKey(name: 'contains_paid_content')  bool containsPaidContent,  String version,  String size, @JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString whatsNewText, @JsonKey(name: 'download_count')  int downloadCount, @JsonKey(name: 'age_rating')  int ageRating, @JsonKey(name: 'is_kids_friendly')  bool isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson)  List<LocalizedString> permissions, @JsonKey(name: 'last_updated')  DateTime lastUpdated, @JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString creatorDescription, @JsonKey(name: 'package_name')  String packageName, @JsonKey(name: 'developer')  DeveloperDto developer, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags)?  app,TResult? Function( String type,  String id, @JsonKey(name: 'external_id')  String externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  double rating, @JsonKey(name: 'reviews_count')  int reviewsCount, @JsonKey(name: 'rating_avg')  double ratingAvg, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson)  Map<String, int> ratingDistribution, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson)  List<Map<String, dynamic>> topReviews, @JsonKey(name: 'release_date')  DateTime releaseDate, @JsonKey(name: 'icon_url')  String iconUrl, @JsonKey(name: 'is_paid')  bool isPaid, @JsonKey(name: 'price')  double? price, @JsonKey(name: 'currency_code')  String currencyCode, @JsonKey(name: 'discount_price')  double? discountPrice, @JsonKey(name: 'url')  String url, @JsonKey(name: 'publisher')  BookPublisherDto publisher, @JsonKey(name: 'categories')  List<CategoryDto> categories, @JsonKey(name: 'tags')  List<TagDto> tags, @JsonKey(name: 'page_count')  int pageCount,  String language,  String format, @JsonKey(name: 'has_audio_version')  bool hasAudioVersion, @JsonKey(name: 'audio_duration')  int? audioDuration,  String? narrator, @JsonKey(name: 'is_series')  bool isSeries, @JsonKey(name: 'series_name')  String? seriesName, @JsonKey(name: 'series_number')  int? seriesNumber, @JsonKey(name: 'sample_available')  bool sampleAvailable, @JsonKey(name: 'is_abridged')  bool isAbridged, @JsonKey(name: 'publication_date')  DateTime publicationDate, @JsonKey(name: 'awards', fromJson: DtoJsonConverters.stringListFromJson)  List<String> awards)?  book,}) {final _that = this;
 switch (_that) {
 case GameDto() when game != null:
 return game(_that.type,_that.id,_that.externalId,_that.title,_that.shortDescription,_that.description,_that.rating,_that.reviewsCount,_that.ratingAvg,_that.ratingDistribution,_that.topReviews,_that.releaseDate,_that.iconUrl,_that.isPaid,_that.price,_that.currencyCode,_that.discountPrice,_that.url,_that.technicalInfo,_that.screenshots,_that.supportedLanguages,_that.containsAds,_that.containsPaidContent,_that.version,_that.size,_that.eventText,_that.whatsNewText,_that.downloadCount,_that.ageRating,_that.isKidsFriendly,_that.ageRatingReasons,_that.permissions,_that.lastUpdated,_that.creatorDescription,_that.isOnline,_that.hasMultiplayer,_that.gameModes,_that.hasControllerSupport,_that.achievements,_that.developer,_that.categories,_that.tags);case AppDto() when app != null:
@@ -1397,28 +1397,28 @@ return book(_that.type,_that.id,_that.externalId,_that.title,_that.shortDescript
 @JsonSerializable()
 
 class GameDto implements ProductDto {
-  const GameDto({this.type = 'game', required this.id, @JsonKey(name: 'external_id') required this.externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.rating, @JsonKey(name: 'reviews_count') required this.reviewsCount, @JsonKey(name: 'rating_avg') this.ratingAvg = 0, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) final  Map<String, int> ratingDistribution = const <String, int>{}, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) final  List<Map<String, dynamic>> topReviews = const <Map<String, dynamic>>[], @JsonKey(name: 'release_date') required this.releaseDate, @JsonKey(name: 'icon_url') required this.iconUrl, @JsonKey(name: 'is_paid') required this.isPaid, @JsonKey(name: 'price') this.price, @JsonKey(name: 'currency_code') this.currencyCode = 'USD', @JsonKey(name: 'discount_price') this.discountPrice, @JsonKey(name: 'url') required this.url, @JsonKey(name: 'technical_info') this.technicalInfo, @JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson) final  List<String> screenshots = const <String>[], @JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson) final  List<String> supportedLanguages = const <String>[], @JsonKey(name: 'contains_ads') required this.containsAds, @JsonKey(name: 'contains_paid_content') required this.containsPaidContent, required this.version, required this.size, @JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString whatsNewText, @JsonKey(name: 'download_count') required this.downloadCount, @JsonKey(name: 'age_rating') required this.ageRating, @JsonKey(name: 'is_kids_friendly') required this.isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) required final  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) required final  List<LocalizedString> permissions, @JsonKey(name: 'last_updated') required this.lastUpdated, @JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) final  LocalizedString creatorDescription = const <String, String>{}, @JsonKey(name: 'is_online') this.isOnline, @JsonKey(name: 'has_multiplayer') this.hasMultiplayer, @JsonKey(name: 'game_modes') this.gameModes, @JsonKey(name: 'has_controller_support') this.hasControllerSupport, @JsonKey(name: 'achievements', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) final  List<LocalizedString> achievements = const <LocalizedString>[], @JsonKey(name: 'developer') required this.developer, @JsonKey(name: 'categories') required final  List<CategoryDto> categories, @JsonKey(name: 'tags') required final  List<TagDto> tags}): _title = title,_shortDescription = shortDescription,_description = description,_ratingDistribution = ratingDistribution,_topReviews = topReviews,_screenshots = screenshots,_supportedLanguages = supportedLanguages,_eventText = eventText,_whatsNewText = whatsNewText,_ageRatingReasons = ageRatingReasons,_permissions = permissions,_creatorDescription = creatorDescription,_achievements = achievements,_categories = categories,_tags = tags;
+  const GameDto({this.type = 'game', required this.id, @JsonKey(name: 'external_id') required this.externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.rating, @JsonKey(name: 'reviews_count') required this.reviewsCount, @JsonKey(name: 'rating_avg') this.ratingAvg = 0, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) final  Map<String, int> ratingDistribution = const <String, int>{}, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) final  List<Map<String, dynamic>> topReviews = const <Map<String, dynamic>>[], @JsonKey(name: 'release_date') required this.releaseDate, @JsonKey(name: 'icon_url') required this.iconUrl, @JsonKey(name: 'is_paid') required this.isPaid, @JsonKey(name: 'price') this.price, @JsonKey(name: 'currency_code') this.currencyCode = 'USD', @JsonKey(name: 'discount_price') this.discountPrice, @JsonKey(name: 'url') required this.url, @JsonKey(name: 'technical_info') this.technicalInfo, @JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson) final  List<String> screenshots = const <String>[], @JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson) final  List<String> supportedLanguages = const <String>[], @JsonKey(name: 'contains_ads') required this.containsAds, @JsonKey(name: 'contains_paid_content') required this.containsPaidContent, required this.version, required this.size, @JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString whatsNewText, @JsonKey(name: 'download_count') required this.downloadCount, @JsonKey(name: 'age_rating') required this.ageRating, @JsonKey(name: 'is_kids_friendly') required this.isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson) required final  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson) required final  List<LocalizedString> permissions, @JsonKey(name: 'last_updated') required this.lastUpdated, @JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson) final  LocalizedString creatorDescription = const <String, String>{}, @JsonKey(name: 'is_online') this.isOnline, @JsonKey(name: 'has_multiplayer') this.hasMultiplayer, @JsonKey(name: 'game_modes') this.gameModes, @JsonKey(name: 'has_controller_support') this.hasControllerSupport, @JsonKey(name: 'achievements', fromJson: DtoJsonConverters.localizedStringListFromJson) final  List<LocalizedString> achievements = const <LocalizedString>[], @JsonKey(name: 'developer') required this.developer, @JsonKey(name: 'categories') required final  List<CategoryDto> categories, @JsonKey(name: 'tags') required final  List<TagDto> tags}): _title = title,_shortDescription = shortDescription,_description = description,_ratingDistribution = ratingDistribution,_topReviews = topReviews,_screenshots = screenshots,_supportedLanguages = supportedLanguages,_eventText = eventText,_whatsNewText = whatsNewText,_ageRatingReasons = ageRatingReasons,_permissions = permissions,_creatorDescription = creatorDescription,_achievements = achievements,_categories = categories,_tags = tags;
   factory GameDto.fromJson(Map<String, dynamic> json) => _$GameDtoFromJson(json);
 
 @override@JsonKey() final  String type;
 @override final  String id;
 @override@JsonKey(name: 'external_id') final  String externalId;
  final  LocalizedString _title;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get title {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
   if (_title is EqualUnmodifiableMapView) return _title;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_title);
 }
 
  final  LocalizedString _shortDescription;
-@override@JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get shortDescription {
+@override@JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get shortDescription {
   if (_shortDescription is EqualUnmodifiableMapView) return _shortDescription;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_shortDescription);
 }
 
  final  LocalizedString _description;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get description {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description {
   if (_description is EqualUnmodifiableMapView) return _description;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_description);
@@ -1428,14 +1428,14 @@ class GameDto implements ProductDto {
 @override@JsonKey(name: 'reviews_count') final  int reviewsCount;
 @override@JsonKey(name: 'rating_avg') final  double ratingAvg;
  final  Map<String, int> _ratingDistribution;
-@override@JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) Map<String, int> get ratingDistribution {
+@override@JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) Map<String, int> get ratingDistribution {
   if (_ratingDistribution is EqualUnmodifiableMapView) return _ratingDistribution;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_ratingDistribution);
 }
 
  final  List<Map<String, dynamic>> _topReviews;
-@override@JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> get topReviews {
+@override@JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> get topReviews {
   if (_topReviews is EqualUnmodifiableListView) return _topReviews;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_topReviews);
@@ -1450,14 +1450,14 @@ class GameDto implements ProductDto {
 @override@JsonKey(name: 'url') final  String url;
 @JsonKey(name: 'technical_info') final  String? technicalInfo;
  final  List<String> _screenshots;
-@JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> get screenshots {
+@JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson) List<String> get screenshots {
   if (_screenshots is EqualUnmodifiableListView) return _screenshots;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_screenshots);
 }
 
  final  List<String> _supportedLanguages;
-@JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> get supportedLanguages {
+@JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson) List<String> get supportedLanguages {
   if (_supportedLanguages is EqualUnmodifiableListView) return _supportedLanguages;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_supportedLanguages);
@@ -1468,7 +1468,7 @@ class GameDto implements ProductDto {
  final  String version;
  final  String size;
  final  LocalizedString? _eventText;
-@JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get eventText {
+@JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get eventText {
   final value = _eventText;
   if (value == null) return null;
   if (_eventText is EqualUnmodifiableMapView) return _eventText;
@@ -1477,7 +1477,7 @@ class GameDto implements ProductDto {
 }
 
  final  LocalizedString _whatsNewText;
-@JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get whatsNewText {
+@JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get whatsNewText {
   if (_whatsNewText is EqualUnmodifiableMapView) return _whatsNewText;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_whatsNewText);
@@ -1487,14 +1487,14 @@ class GameDto implements ProductDto {
 @JsonKey(name: 'age_rating') final  int ageRating;
 @JsonKey(name: 'is_kids_friendly') final  bool isKidsFriendly;
  final  List<LocalizedString> _ageRatingReasons;
-@JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get ageRatingReasons {
+@JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get ageRatingReasons {
   if (_ageRatingReasons is EqualUnmodifiableListView) return _ageRatingReasons;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_ageRatingReasons);
 }
 
  final  List<LocalizedString> _permissions;
-@JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get permissions {
+@JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get permissions {
   if (_permissions is EqualUnmodifiableListView) return _permissions;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_permissions);
@@ -1502,7 +1502,7 @@ class GameDto implements ProductDto {
 
 @JsonKey(name: 'last_updated') final  DateTime lastUpdated;
  final  LocalizedString _creatorDescription;
-@JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get creatorDescription {
+@JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get creatorDescription {
   if (_creatorDescription is EqualUnmodifiableMapView) return _creatorDescription;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_creatorDescription);
@@ -1513,7 +1513,7 @@ class GameDto implements ProductDto {
 @JsonKey(name: 'game_modes') final  String? gameModes;
 @JsonKey(name: 'has_controller_support') final  bool? hasControllerSupport;
  final  List<LocalizedString> _achievements;
-@JsonKey(name: 'achievements', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get achievements {
+@JsonKey(name: 'achievements', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get achievements {
   if (_achievements is EqualUnmodifiableListView) return _achievements;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_achievements);
@@ -1568,7 +1568,7 @@ abstract mixin class $GameDtoCopyWith<$Res> implements $ProductDtoCopyWith<$Res>
   factory $GameDtoCopyWith(GameDto value, $Res Function(GameDto) _then) = _$GameDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String type, String id,@JsonKey(name: 'external_id') String externalId,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString shortDescription,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString description, double rating,@JsonKey(name: 'reviews_count') int reviewsCount,@JsonKey(name: 'rating_avg') double ratingAvg,@JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) Map<String, int> ratingDistribution,@JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> topReviews,@JsonKey(name: 'release_date') DateTime releaseDate,@JsonKey(name: 'icon_url') String iconUrl,@JsonKey(name: 'is_paid') bool isPaid,@JsonKey(name: 'price') double? price,@JsonKey(name: 'currency_code') String currencyCode,@JsonKey(name: 'discount_price') double? discountPrice,@JsonKey(name: 'url') String url,@JsonKey(name: 'technical_info') String? technicalInfo,@JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> screenshots,@JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> supportedLanguages,@JsonKey(name: 'contains_ads') bool containsAds,@JsonKey(name: 'contains_paid_content') bool containsPaidContent, String version, String size,@JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson) LocalizedString? eventText,@JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString whatsNewText,@JsonKey(name: 'download_count') int downloadCount,@JsonKey(name: 'age_rating') int ageRating,@JsonKey(name: 'is_kids_friendly') bool isKidsFriendly,@JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> ageRatingReasons,@JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> permissions,@JsonKey(name: 'last_updated') DateTime lastUpdated,@JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString creatorDescription,@JsonKey(name: 'is_online') bool? isOnline,@JsonKey(name: 'has_multiplayer') bool? hasMultiplayer,@JsonKey(name: 'game_modes') String? gameModes,@JsonKey(name: 'has_controller_support') bool? hasControllerSupport,@JsonKey(name: 'achievements', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> achievements,@JsonKey(name: 'developer') DeveloperDto developer,@JsonKey(name: 'categories') List<CategoryDto> categories,@JsonKey(name: 'tags') List<TagDto> tags
+ String type, String id,@JsonKey(name: 'external_id') String externalId,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString shortDescription,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, double rating,@JsonKey(name: 'reviews_count') int reviewsCount,@JsonKey(name: 'rating_avg') double ratingAvg,@JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) Map<String, int> ratingDistribution,@JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> topReviews,@JsonKey(name: 'release_date') DateTime releaseDate,@JsonKey(name: 'icon_url') String iconUrl,@JsonKey(name: 'is_paid') bool isPaid,@JsonKey(name: 'price') double? price,@JsonKey(name: 'currency_code') String currencyCode,@JsonKey(name: 'discount_price') double? discountPrice,@JsonKey(name: 'url') String url,@JsonKey(name: 'technical_info') String? technicalInfo,@JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson) List<String> screenshots,@JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson) List<String> supportedLanguages,@JsonKey(name: 'contains_ads') bool containsAds,@JsonKey(name: 'contains_paid_content') bool containsPaidContent, String version, String size,@JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? eventText,@JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString whatsNewText,@JsonKey(name: 'download_count') int downloadCount,@JsonKey(name: 'age_rating') int ageRating,@JsonKey(name: 'is_kids_friendly') bool isKidsFriendly,@JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> ageRatingReasons,@JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> permissions,@JsonKey(name: 'last_updated') DateTime lastUpdated,@JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString creatorDescription,@JsonKey(name: 'is_online') bool? isOnline,@JsonKey(name: 'has_multiplayer') bool? hasMultiplayer,@JsonKey(name: 'game_modes') String? gameModes,@JsonKey(name: 'has_controller_support') bool? hasControllerSupport,@JsonKey(name: 'achievements', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> achievements,@JsonKey(name: 'developer') DeveloperDto developer,@JsonKey(name: 'categories') List<CategoryDto> categories,@JsonKey(name: 'tags') List<TagDto> tags
 });
 
 
@@ -1649,28 +1649,28 @@ $DeveloperDtoCopyWith<$Res> get developer {
 @JsonSerializable()
 
 class AppDto implements ProductDto {
-  const AppDto({this.type = 'app', required this.id, @JsonKey(name: 'external_id') required this.externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.rating, @JsonKey(name: 'reviews_count') required this.reviewsCount, @JsonKey(name: 'rating_avg') this.ratingAvg = 0, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) final  Map<String, int> ratingDistribution = const <String, int>{}, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) final  List<Map<String, dynamic>> topReviews = const <Map<String, dynamic>>[], @JsonKey(name: 'release_date') required this.releaseDate, @JsonKey(name: 'icon_url') required this.iconUrl, @JsonKey(name: 'is_paid') required this.isPaid, @JsonKey(name: 'price') this.price, @JsonKey(name: 'currency_code') this.currencyCode = 'USD', @JsonKey(name: 'discount_price') this.discountPrice, @JsonKey(name: 'url') required this.url, @JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson) final  List<String> screenshots = const <String>[], @JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson) final  List<String> supportedLanguages = const <String>[], @JsonKey(name: 'contains_ads') required this.containsAds, @JsonKey(name: 'contains_paid_content') required this.containsPaidContent, required this.version, required this.size, @JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString whatsNewText, @JsonKey(name: 'download_count') required this.downloadCount, @JsonKey(name: 'age_rating') required this.ageRating, @JsonKey(name: 'is_kids_friendly') required this.isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) required final  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) required final  List<LocalizedString> permissions, @JsonKey(name: 'last_updated') required this.lastUpdated, @JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) final  LocalizedString creatorDescription = const <String, String>{}, @JsonKey(name: 'package_name') required this.packageName, @JsonKey(name: 'developer') required this.developer, @JsonKey(name: 'categories') required final  List<CategoryDto> categories, @JsonKey(name: 'tags') required final  List<TagDto> tags}): _title = title,_shortDescription = shortDescription,_description = description,_ratingDistribution = ratingDistribution,_topReviews = topReviews,_screenshots = screenshots,_supportedLanguages = supportedLanguages,_eventText = eventText,_whatsNewText = whatsNewText,_ageRatingReasons = ageRatingReasons,_permissions = permissions,_creatorDescription = creatorDescription,_categories = categories,_tags = tags;
+  const AppDto({this.type = 'app', required this.id, @JsonKey(name: 'external_id') required this.externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.rating, @JsonKey(name: 'reviews_count') required this.reviewsCount, @JsonKey(name: 'rating_avg') this.ratingAvg = 0, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) final  Map<String, int> ratingDistribution = const <String, int>{}, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) final  List<Map<String, dynamic>> topReviews = const <Map<String, dynamic>>[], @JsonKey(name: 'release_date') required this.releaseDate, @JsonKey(name: 'icon_url') required this.iconUrl, @JsonKey(name: 'is_paid') required this.isPaid, @JsonKey(name: 'price') this.price, @JsonKey(name: 'currency_code') this.currencyCode = 'USD', @JsonKey(name: 'discount_price') this.discountPrice, @JsonKey(name: 'url') required this.url, @JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson) final  List<String> screenshots = const <String>[], @JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson) final  List<String> supportedLanguages = const <String>[], @JsonKey(name: 'contains_ads') required this.containsAds, @JsonKey(name: 'contains_paid_content') required this.containsPaidContent, required this.version, required this.size, @JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? eventText, @JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString whatsNewText, @JsonKey(name: 'download_count') required this.downloadCount, @JsonKey(name: 'age_rating') required this.ageRating, @JsonKey(name: 'is_kids_friendly') required this.isKidsFriendly, @JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson) required final  List<LocalizedString> ageRatingReasons, @JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson) required final  List<LocalizedString> permissions, @JsonKey(name: 'last_updated') required this.lastUpdated, @JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson) final  LocalizedString creatorDescription = const <String, String>{}, @JsonKey(name: 'package_name') required this.packageName, @JsonKey(name: 'developer') required this.developer, @JsonKey(name: 'categories') required final  List<CategoryDto> categories, @JsonKey(name: 'tags') required final  List<TagDto> tags}): _title = title,_shortDescription = shortDescription,_description = description,_ratingDistribution = ratingDistribution,_topReviews = topReviews,_screenshots = screenshots,_supportedLanguages = supportedLanguages,_eventText = eventText,_whatsNewText = whatsNewText,_ageRatingReasons = ageRatingReasons,_permissions = permissions,_creatorDescription = creatorDescription,_categories = categories,_tags = tags;
   factory AppDto.fromJson(Map<String, dynamic> json) => _$AppDtoFromJson(json);
 
 @override@JsonKey() final  String type;
 @override final  String id;
 @override@JsonKey(name: 'external_id') final  String externalId;
  final  LocalizedString _title;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get title {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
   if (_title is EqualUnmodifiableMapView) return _title;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_title);
 }
 
  final  LocalizedString _shortDescription;
-@override@JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get shortDescription {
+@override@JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get shortDescription {
   if (_shortDescription is EqualUnmodifiableMapView) return _shortDescription;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_shortDescription);
 }
 
  final  LocalizedString _description;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get description {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description {
   if (_description is EqualUnmodifiableMapView) return _description;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_description);
@@ -1680,14 +1680,14 @@ class AppDto implements ProductDto {
 @override@JsonKey(name: 'reviews_count') final  int reviewsCount;
 @override@JsonKey(name: 'rating_avg') final  double ratingAvg;
  final  Map<String, int> _ratingDistribution;
-@override@JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) Map<String, int> get ratingDistribution {
+@override@JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) Map<String, int> get ratingDistribution {
   if (_ratingDistribution is EqualUnmodifiableMapView) return _ratingDistribution;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_ratingDistribution);
 }
 
  final  List<Map<String, dynamic>> _topReviews;
-@override@JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> get topReviews {
+@override@JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> get topReviews {
   if (_topReviews is EqualUnmodifiableListView) return _topReviews;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_topReviews);
@@ -1701,14 +1701,14 @@ class AppDto implements ProductDto {
 @override@JsonKey(name: 'discount_price') final  double? discountPrice;
 @override@JsonKey(name: 'url') final  String url;
  final  List<String> _screenshots;
-@JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> get screenshots {
+@JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson) List<String> get screenshots {
   if (_screenshots is EqualUnmodifiableListView) return _screenshots;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_screenshots);
 }
 
  final  List<String> _supportedLanguages;
-@JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> get supportedLanguages {
+@JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson) List<String> get supportedLanguages {
   if (_supportedLanguages is EqualUnmodifiableListView) return _supportedLanguages;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_supportedLanguages);
@@ -1719,7 +1719,7 @@ class AppDto implements ProductDto {
  final  String version;
  final  String size;
  final  LocalizedString? _eventText;
-@JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get eventText {
+@JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get eventText {
   final value = _eventText;
   if (value == null) return null;
   if (_eventText is EqualUnmodifiableMapView) return _eventText;
@@ -1728,7 +1728,7 @@ class AppDto implements ProductDto {
 }
 
  final  LocalizedString _whatsNewText;
-@JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get whatsNewText {
+@JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get whatsNewText {
   if (_whatsNewText is EqualUnmodifiableMapView) return _whatsNewText;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_whatsNewText);
@@ -1738,14 +1738,14 @@ class AppDto implements ProductDto {
 @JsonKey(name: 'age_rating') final  int ageRating;
 @JsonKey(name: 'is_kids_friendly') final  bool isKidsFriendly;
  final  List<LocalizedString> _ageRatingReasons;
-@JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get ageRatingReasons {
+@JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get ageRatingReasons {
   if (_ageRatingReasons is EqualUnmodifiableListView) return _ageRatingReasons;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_ageRatingReasons);
 }
 
  final  List<LocalizedString> _permissions;
-@JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get permissions {
+@JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> get permissions {
   if (_permissions is EqualUnmodifiableListView) return _permissions;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_permissions);
@@ -1753,7 +1753,7 @@ class AppDto implements ProductDto {
 
 @JsonKey(name: 'last_updated') final  DateTime lastUpdated;
  final  LocalizedString _creatorDescription;
-@JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get creatorDescription {
+@JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get creatorDescription {
   if (_creatorDescription is EqualUnmodifiableMapView) return _creatorDescription;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_creatorDescription);
@@ -1809,7 +1809,7 @@ abstract mixin class $AppDtoCopyWith<$Res> implements $ProductDtoCopyWith<$Res> 
   factory $AppDtoCopyWith(AppDto value, $Res Function(AppDto) _then) = _$AppDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String type, String id,@JsonKey(name: 'external_id') String externalId,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString shortDescription,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString description, double rating,@JsonKey(name: 'reviews_count') int reviewsCount,@JsonKey(name: 'rating_avg') double ratingAvg,@JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) Map<String, int> ratingDistribution,@JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> topReviews,@JsonKey(name: 'release_date') DateTime releaseDate,@JsonKey(name: 'icon_url') String iconUrl,@JsonKey(name: 'is_paid') bool isPaid,@JsonKey(name: 'price') double? price,@JsonKey(name: 'currency_code') String currencyCode,@JsonKey(name: 'discount_price') double? discountPrice,@JsonKey(name: 'url') String url,@JsonKey(name: 'screenshots', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> screenshots,@JsonKey(name: 'supported_languages', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> supportedLanguages,@JsonKey(name: 'contains_ads') bool containsAds,@JsonKey(name: 'contains_paid_content') bool containsPaidContent, String version, String size,@JsonKey(name: 'event_text', fromJson: ProductDtoJsonConverters.localizedStringNullableFromJson) LocalizedString? eventText,@JsonKey(name: 'whats_new_text', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString whatsNewText,@JsonKey(name: 'download_count') int downloadCount,@JsonKey(name: 'age_rating') int ageRating,@JsonKey(name: 'is_kids_friendly') bool isKidsFriendly,@JsonKey(name: 'age_rating_reasons', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> ageRatingReasons,@JsonKey(name: 'permissions', fromJson: ProductDtoJsonConverters.localizedStringListFromJson) List<LocalizedString> permissions,@JsonKey(name: 'last_updated') DateTime lastUpdated,@JsonKey(name: 'creator_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString creatorDescription,@JsonKey(name: 'package_name') String packageName,@JsonKey(name: 'developer') DeveloperDto developer,@JsonKey(name: 'categories') List<CategoryDto> categories,@JsonKey(name: 'tags') List<TagDto> tags
+ String type, String id,@JsonKey(name: 'external_id') String externalId,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString shortDescription,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, double rating,@JsonKey(name: 'reviews_count') int reviewsCount,@JsonKey(name: 'rating_avg') double ratingAvg,@JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) Map<String, int> ratingDistribution,@JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> topReviews,@JsonKey(name: 'release_date') DateTime releaseDate,@JsonKey(name: 'icon_url') String iconUrl,@JsonKey(name: 'is_paid') bool isPaid,@JsonKey(name: 'price') double? price,@JsonKey(name: 'currency_code') String currencyCode,@JsonKey(name: 'discount_price') double? discountPrice,@JsonKey(name: 'url') String url,@JsonKey(name: 'screenshots', fromJson: DtoJsonConverters.stringListFromJson) List<String> screenshots,@JsonKey(name: 'supported_languages', fromJson: DtoJsonConverters.stringListFromJson) List<String> supportedLanguages,@JsonKey(name: 'contains_ads') bool containsAds,@JsonKey(name: 'contains_paid_content') bool containsPaidContent, String version, String size,@JsonKey(name: 'event_text', fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? eventText,@JsonKey(name: 'whats_new_text', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString whatsNewText,@JsonKey(name: 'download_count') int downloadCount,@JsonKey(name: 'age_rating') int ageRating,@JsonKey(name: 'is_kids_friendly') bool isKidsFriendly,@JsonKey(name: 'age_rating_reasons', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> ageRatingReasons,@JsonKey(name: 'permissions', fromJson: DtoJsonConverters.localizedStringListFromJson) List<LocalizedString> permissions,@JsonKey(name: 'last_updated') DateTime lastUpdated,@JsonKey(name: 'creator_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString creatorDescription,@JsonKey(name: 'package_name') String packageName,@JsonKey(name: 'developer') DeveloperDto developer,@JsonKey(name: 'categories') List<CategoryDto> categories,@JsonKey(name: 'tags') List<TagDto> tags
 });
 
 
@@ -1885,28 +1885,28 @@ $DeveloperDtoCopyWith<$Res> get developer {
 @JsonSerializable()
 
 class BookDto implements ProductDto {
-  const BookDto({this.type = 'book', required this.id, @JsonKey(name: 'external_id') required this.externalId, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString shortDescription, @JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.rating, @JsonKey(name: 'reviews_count') required this.reviewsCount, @JsonKey(name: 'rating_avg') this.ratingAvg = 0, @JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) final  Map<String, int> ratingDistribution = const <String, int>{}, @JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) final  List<Map<String, dynamic>> topReviews = const <Map<String, dynamic>>[], @JsonKey(name: 'release_date') required this.releaseDate, @JsonKey(name: 'icon_url') required this.iconUrl, @JsonKey(name: 'is_paid') required this.isPaid, @JsonKey(name: 'price') this.price, @JsonKey(name: 'currency_code') this.currencyCode = 'USD', @JsonKey(name: 'discount_price') this.discountPrice, @JsonKey(name: 'url') required this.url, @JsonKey(name: 'publisher') required this.publisher, @JsonKey(name: 'categories') required final  List<CategoryDto> categories, @JsonKey(name: 'tags') required final  List<TagDto> tags, @JsonKey(name: 'page_count') required this.pageCount, required this.language, required this.format, @JsonKey(name: 'has_audio_version') required this.hasAudioVersion, @JsonKey(name: 'audio_duration') this.audioDuration, this.narrator, @JsonKey(name: 'is_series') required this.isSeries, @JsonKey(name: 'series_name') this.seriesName, @JsonKey(name: 'series_number') this.seriesNumber, @JsonKey(name: 'sample_available') required this.sampleAvailable, @JsonKey(name: 'is_abridged') required this.isAbridged, @JsonKey(name: 'publication_date') required this.publicationDate, @JsonKey(name: 'awards', fromJson: ProductDtoJsonConverters.stringListFromJson) final  List<String> awards = const <String>[]}): _title = title,_shortDescription = shortDescription,_description = description,_ratingDistribution = ratingDistribution,_topReviews = topReviews,_categories = categories,_tags = tags,_awards = awards;
+  const BookDto({this.type = 'book', required this.id, @JsonKey(name: 'external_id') required this.externalId, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString shortDescription, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.rating, @JsonKey(name: 'reviews_count') required this.reviewsCount, @JsonKey(name: 'rating_avg') this.ratingAvg = 0, @JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) final  Map<String, int> ratingDistribution = const <String, int>{}, @JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) final  List<Map<String, dynamic>> topReviews = const <Map<String, dynamic>>[], @JsonKey(name: 'release_date') required this.releaseDate, @JsonKey(name: 'icon_url') required this.iconUrl, @JsonKey(name: 'is_paid') required this.isPaid, @JsonKey(name: 'price') this.price, @JsonKey(name: 'currency_code') this.currencyCode = 'USD', @JsonKey(name: 'discount_price') this.discountPrice, @JsonKey(name: 'url') required this.url, @JsonKey(name: 'publisher') required this.publisher, @JsonKey(name: 'categories') required final  List<CategoryDto> categories, @JsonKey(name: 'tags') required final  List<TagDto> tags, @JsonKey(name: 'page_count') required this.pageCount, required this.language, required this.format, @JsonKey(name: 'has_audio_version') required this.hasAudioVersion, @JsonKey(name: 'audio_duration') this.audioDuration, this.narrator, @JsonKey(name: 'is_series') required this.isSeries, @JsonKey(name: 'series_name') this.seriesName, @JsonKey(name: 'series_number') this.seriesNumber, @JsonKey(name: 'sample_available') required this.sampleAvailable, @JsonKey(name: 'is_abridged') required this.isAbridged, @JsonKey(name: 'publication_date') required this.publicationDate, @JsonKey(name: 'awards', fromJson: DtoJsonConverters.stringListFromJson) final  List<String> awards = const <String>[]}): _title = title,_shortDescription = shortDescription,_description = description,_ratingDistribution = ratingDistribution,_topReviews = topReviews,_categories = categories,_tags = tags,_awards = awards;
   factory BookDto.fromJson(Map<String, dynamic> json) => _$BookDtoFromJson(json);
 
 @override@JsonKey() final  String type;
 @override final  String id;
 @override@JsonKey(name: 'external_id') final  String externalId;
  final  LocalizedString _title;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get title {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
   if (_title is EqualUnmodifiableMapView) return _title;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_title);
 }
 
  final  LocalizedString _shortDescription;
-@override@JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get shortDescription {
+@override@JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get shortDescription {
   if (_shortDescription is EqualUnmodifiableMapView) return _shortDescription;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_shortDescription);
 }
 
  final  LocalizedString _description;
-@override@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString get description {
+@override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description {
   if (_description is EqualUnmodifiableMapView) return _description;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_description);
@@ -1916,14 +1916,14 @@ class BookDto implements ProductDto {
 @override@JsonKey(name: 'reviews_count') final  int reviewsCount;
 @override@JsonKey(name: 'rating_avg') final  double ratingAvg;
  final  Map<String, int> _ratingDistribution;
-@override@JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) Map<String, int> get ratingDistribution {
+@override@JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) Map<String, int> get ratingDistribution {
   if (_ratingDistribution is EqualUnmodifiableMapView) return _ratingDistribution;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_ratingDistribution);
 }
 
  final  List<Map<String, dynamic>> _topReviews;
-@override@JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> get topReviews {
+@override@JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> get topReviews {
   if (_topReviews is EqualUnmodifiableListView) return _topReviews;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_topReviews);
@@ -1964,7 +1964,7 @@ class BookDto implements ProductDto {
 @JsonKey(name: 'is_abridged') final  bool isAbridged;
 @JsonKey(name: 'publication_date') final  DateTime publicationDate;
  final  List<String> _awards;
-@JsonKey(name: 'awards', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> get awards {
+@JsonKey(name: 'awards', fromJson: DtoJsonConverters.stringListFromJson) List<String> get awards {
   if (_awards is EqualUnmodifiableListView) return _awards;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_awards);
@@ -2004,7 +2004,7 @@ abstract mixin class $BookDtoCopyWith<$Res> implements $ProductDtoCopyWith<$Res>
   factory $BookDtoCopyWith(BookDto value, $Res Function(BookDto) _then) = _$BookDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String type, String id,@JsonKey(name: 'external_id') String externalId,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(name: 'short_description', fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString shortDescription,@JsonKey(fromJson: ProductDtoJsonConverters.localizedStringFromJson) LocalizedString description, double rating,@JsonKey(name: 'reviews_count') int reviewsCount,@JsonKey(name: 'rating_avg') double ratingAvg,@JsonKey(name: 'rating_distribution', fromJson: ProductDtoJsonConverters.ratingDistributionFromJson) Map<String, int> ratingDistribution,@JsonKey(name: 'top_reviews', fromJson: ProductDtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> topReviews,@JsonKey(name: 'release_date') DateTime releaseDate,@JsonKey(name: 'icon_url') String iconUrl,@JsonKey(name: 'is_paid') bool isPaid,@JsonKey(name: 'price') double? price,@JsonKey(name: 'currency_code') String currencyCode,@JsonKey(name: 'discount_price') double? discountPrice,@JsonKey(name: 'url') String url,@JsonKey(name: 'publisher') BookPublisherDto publisher,@JsonKey(name: 'categories') List<CategoryDto> categories,@JsonKey(name: 'tags') List<TagDto> tags,@JsonKey(name: 'page_count') int pageCount, String language, String format,@JsonKey(name: 'has_audio_version') bool hasAudioVersion,@JsonKey(name: 'audio_duration') int? audioDuration, String? narrator,@JsonKey(name: 'is_series') bool isSeries,@JsonKey(name: 'series_name') String? seriesName,@JsonKey(name: 'series_number') int? seriesNumber,@JsonKey(name: 'sample_available') bool sampleAvailable,@JsonKey(name: 'is_abridged') bool isAbridged,@JsonKey(name: 'publication_date') DateTime publicationDate,@JsonKey(name: 'awards', fromJson: ProductDtoJsonConverters.stringListFromJson) List<String> awards
+ String type, String id,@JsonKey(name: 'external_id') String externalId,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(name: 'short_description', fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString shortDescription,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, double rating,@JsonKey(name: 'reviews_count') int reviewsCount,@JsonKey(name: 'rating_avg') double ratingAvg,@JsonKey(name: 'rating_distribution', fromJson: DtoJsonConverters.ratingDistributionFromJson) Map<String, int> ratingDistribution,@JsonKey(name: 'top_reviews', fromJson: DtoJsonConverters.topReviewsFromJson) List<Map<String, dynamic>> topReviews,@JsonKey(name: 'release_date') DateTime releaseDate,@JsonKey(name: 'icon_url') String iconUrl,@JsonKey(name: 'is_paid') bool isPaid,@JsonKey(name: 'price') double? price,@JsonKey(name: 'currency_code') String currencyCode,@JsonKey(name: 'discount_price') double? discountPrice,@JsonKey(name: 'url') String url,@JsonKey(name: 'publisher') BookPublisherDto publisher,@JsonKey(name: 'categories') List<CategoryDto> categories,@JsonKey(name: 'tags') List<TagDto> tags,@JsonKey(name: 'page_count') int pageCount, String language, String format,@JsonKey(name: 'has_audio_version') bool hasAudioVersion,@JsonKey(name: 'audio_duration') int? audioDuration, String? narrator,@JsonKey(name: 'is_series') bool isSeries,@JsonKey(name: 'series_name') String? seriesName,@JsonKey(name: 'series_number') int? seriesNumber,@JsonKey(name: 'sample_available') bool sampleAvailable,@JsonKey(name: 'is_abridged') bool isAbridged,@JsonKey(name: 'publication_date') DateTime publicationDate,@JsonKey(name: 'awards', fromJson: DtoJsonConverters.stringListFromJson) List<String> awards
 });
 
 
