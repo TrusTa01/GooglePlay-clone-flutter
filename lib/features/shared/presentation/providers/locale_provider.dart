@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/features/shared/presentation/providers/shared_preferences_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'locale_provider.g.dart';
 
 const _kAppLocaleKey = 'app_locale';
 
 @Riverpod(keepAlive: true)
-@riverpod
 class LocaleNotifier extends _$LocaleNotifier {
   @override
   Locale? build() {
