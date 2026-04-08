@@ -25,6 +25,8 @@ part 'app_database.g.dart';
     CachedBanners,
     CachedActionBanners,
     CachedEventBanners,
+    CachedTabSections,
+    CachedTabs,
   ],
   include: {'tables/products/product_title_search.drift'},
 )
@@ -36,18 +38,18 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        onCreate: (Migrator m) async {
-          await m.createAll();
-          await _backfillTitleFts();
-        },
-        onUpgrade: (Migrator m, int from, int to) async {
-          if (from < 3) {
-            await _destructiveRecreateSchema();
-            await m.createAll();
-            await _backfillTitleFts();
-          }
-        },
-      );
+    onCreate: (Migrator m) async {
+      await m.createAll();
+      await _backfillTitleFts();
+    },
+    onUpgrade: (Migrator m, int from, int to) async {
+      if (from < 3) {
+        await _destructiveRecreateSchema();
+        await m.createAll();
+        await _backfillTitleFts();
+      }
+    },
+  );
 
   Future<void> _backfillTitleFts() async {
     await customStatement(
@@ -74,6 +76,11 @@ class AppDatabase extends _$AppDatabase {
       'publishers',
       'developers',
       'sync_state',
+      'banners',
+      'action_banners',
+      'event_banners',
+      'tabs',
+      'tab_sections',
     ];
     for (final name in tables) {
       await customStatement('DROP TABLE IF EXISTS $name');

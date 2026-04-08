@@ -8,9 +8,9 @@ class Developers extends Table {
   TextColumn get address => text().map(const LocalizedStringConverter())();
   TextColumn get company => text().map(const LocalizedStringConverter())();
   TextColumn get country => text().map(const LocalizedStringConverter())();
-  TextColumn get websiteUrl => text().named('website_url')();
-  TextColumn get emailSupport => text().named('email_support')();
-  TextColumn get privacyPolicyUrl => text().named('privacy_policy_url')();
+  TextColumn get websiteUrl => text()();
+  TextColumn get emailSupport => text()();
+  TextColumn get privacyPolicyUrl => text()();
 
   @override
   Set<Column> get primaryKey => {id};
