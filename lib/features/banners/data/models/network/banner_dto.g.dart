@@ -8,8 +8,8 @@ part of 'banner_dto.dart';
 
 EventBannerDto _$EventBannerDtoFromJson(Map<String, dynamic> json) =>
     EventBannerDto(
-      id: json['id'] as String,
       type: json['type'] as String? ?? 'event',
+      id: json['id'] as String,
       imageAssetPath: json['imageAssetPath'] as String,
       title: DtoJsonConverters.localizedStringFromJson(json['title']),
       topToolTipText: DtoJsonConverters.localizedStringNullableFromJson(
@@ -23,12 +23,15 @@ EventBannerDto _$EventBannerDtoFromJson(Map<String, dynamic> json) =>
       eventDescription: DtoJsonConverters.localizedStringNullableFromJson(
         json['eventDescription'],
       ),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
 ActionBannerDto _$ActionBannerDtoFromJson(Map<String, dynamic> json) =>
     ActionBannerDto(
-      id: json['id'] as String,
       type: json['type'] as String? ?? 'action',
+      id: json['id'] as String,
+      productExternalId: json['productExternalId'] as String,
       imageAssetPath: json['imageAssetPath'] as String,
       title: DtoJsonConverters.localizedStringFromJson(json['title']),
       topToolTipText: DtoJsonConverters.localizedStringNullableFromJson(
@@ -37,5 +40,6 @@ ActionBannerDto _$ActionBannerDtoFromJson(Map<String, dynamic> json) =>
       description: DtoJsonConverters.localizedStringFromJson(
         json['description'],
       ),
-      productId: json['productId'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
     );

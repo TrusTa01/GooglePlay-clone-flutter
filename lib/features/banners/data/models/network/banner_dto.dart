@@ -10,8 +10,8 @@ sealed class BannerDto with _$BannerDto {
 
   @FreezedUnionValue('event')
   const factory BannerDto.event({
-    required String id,
     @Default('event') String type,
+    required String id,
     required String imageAssetPath,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString title,
@@ -23,12 +23,15 @@ sealed class BannerDto with _$BannerDto {
     String? eventCategory,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)
     LocalizedString? eventDescription,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) = EventBannerDto;
 
   @FreezedUnionValue('action')
   const factory BannerDto.action({
-    required String id,
     @Default('action') String type,
+    required String id,
+    required String productExternalId,
     required String imageAssetPath,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString title,
@@ -36,7 +39,8 @@ sealed class BannerDto with _$BannerDto {
     LocalizedString? topToolTipText,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
     required LocalizedString description,
-    required String productId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) = ActionBannerDto;
 
   factory BannerDto.fromJson(Map<String, dynamic> json) =>

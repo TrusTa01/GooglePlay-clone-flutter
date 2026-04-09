@@ -1,5 +1,5 @@
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/features/product/domain/repositories/product_repository.dart';
+import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 
 abstract interface class GetProductsByIdUseCase {
   Future<ProductEntity?> call({

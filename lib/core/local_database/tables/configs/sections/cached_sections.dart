@@ -9,8 +9,8 @@ class CachedTabSections extends Table {
     onDelete: KeyAction.cascade,
   )();
   TextColumn get sectionType => text()();
-  TextColumn get titleKey => text().nullable()();
-  TextColumn get subtitleKey => text().nullable()();
+  TextColumn get title => text().nullable()();
+  TextColumn get subtitle => text().nullable()();
   TextColumn get dataSource => text().nullable()();
   TextColumn get params => text().nullable()();
   TextColumn get imageAssetPath => text().nullable()();

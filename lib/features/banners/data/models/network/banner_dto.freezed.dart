@@ -38,7 +38,7 @@ BannerDto _$BannerDtoFromJson(
 /// @nodoc
 mixin _$BannerDto {
 
- String get id; String get type; String get imageAssetPath;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get topToolTipText;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description;
+ String get type; String get id; String get imageAssetPath;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get topToolTipText;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,16 +49,16 @@ $BannerDtoCopyWith<BannerDto> get copyWith => _$BannerDtoCopyWithImpl<BannerDto>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BannerDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&const DeepCollectionEquality().equals(other.title, title)&&const DeepCollectionEquality().equals(other.topToolTipText, topToolTipText)&&const DeepCollectionEquality().equals(other.description, description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BannerDto&&(identical(other.type, type) || other.type == type)&&(identical(other.id, id) || other.id == id)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&const DeepCollectionEquality().equals(other.title, title)&&const DeepCollectionEquality().equals(other.topToolTipText, topToolTipText)&&const DeepCollectionEquality().equals(other.description, description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,imageAssetPath,const DeepCollectionEquality().hash(title),const DeepCollectionEquality().hash(topToolTipText),const DeepCollectionEquality().hash(description));
+int get hashCode => Object.hash(runtimeType,type,id,imageAssetPath,const DeepCollectionEquality().hash(title),const DeepCollectionEquality().hash(topToolTipText),const DeepCollectionEquality().hash(description),createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'BannerDto(id: $id, type: $type, imageAssetPath: $imageAssetPath, title: $title, topToolTipText: $topToolTipText, description: $description)';
+  return 'BannerDto(type: $type, id: $id, imageAssetPath: $imageAssetPath, title: $title, topToolTipText: $topToolTipText, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -69,7 +69,7 @@ abstract mixin class $BannerDtoCopyWith<$Res>  {
   factory $BannerDtoCopyWith(BannerDto value, $Res Function(BannerDto) _then) = _$BannerDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String type, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) Map<String, String>? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> description
+ String type, String id, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) Map<String, String>? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> description, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -86,15 +86,17 @@ class _$BannerDtoCopyWithImpl<$Res>
 
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? imageAssetPath = null,Object? title = null,Object? topToolTipText = freezed,Object? description = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? id = null,Object? imageAssetPath = null,Object? title = null,Object? topToolTipText = freezed,Object? description = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,imageAssetPath: null == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as Map<String, String>,topToolTipText: freezed == topToolTipText ? _self.topToolTipText : topToolTipText // ignore: cast_nullable_to_non_nullable
 as Map<String, String>?,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,
+as Map<String, String>,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 
@@ -179,11 +181,11 @@ return action(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription)?  event,TResult Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String productId)?  action,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String type,  String id,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription,  DateTime createdAt,  DateTime updatedAt)?  event,TResult Function( String type,  String id,  String productExternalId,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  DateTime createdAt,  DateTime updatedAt)?  action,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case EventBannerDto() when event != null:
-return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto() when action != null:
-return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.productId);case _:
+return event(_that.type,_that.id,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription,_that.createdAt,_that.updatedAt);case ActionBannerDto() when action != null:
+return action(_that.type,_that.id,_that.productExternalId,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -201,11 +203,11 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription)  event,required TResult Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String productId)  action,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String type,  String id,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription,  DateTime createdAt,  DateTime updatedAt)  event,required TResult Function( String type,  String id,  String productExternalId,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  DateTime createdAt,  DateTime updatedAt)  action,}) {final _that = this;
 switch (_that) {
 case EventBannerDto():
-return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto():
-return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.productId);}
+return event(_that.type,_that.id,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription,_that.createdAt,_that.updatedAt);case ActionBannerDto():
+return action(_that.type,_that.id,_that.productExternalId,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.createdAt,_that.updatedAt);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -219,11 +221,11 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription)?  event,TResult? Function( String id,  String type,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String productId)?  action,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String type,  String id,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription,  DateTime createdAt,  DateTime updatedAt)?  event,TResult? Function( String type,  String id,  String productExternalId,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  DateTime createdAt,  DateTime updatedAt)?  action,}) {final _that = this;
 switch (_that) {
 case EventBannerDto() when event != null:
-return event(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription);case ActionBannerDto() when action != null:
-return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.productId);case _:
+return event(_that.type,_that.id,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription,_that.createdAt,_that.updatedAt);case ActionBannerDto() when action != null:
+return action(_that.type,_that.id,_that.productExternalId,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -235,11 +237,11 @@ return action(_that.id,_that.type,_that.imageAssetPath,_that.title,_that.topTool
 @JsonSerializable(createToJson: false)
 
 class EventBannerDto extends BannerDto {
-  const EventBannerDto({required this.id, this.type = 'event', required this.imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, this.eventId, this.eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? eventDescription}): _title = title,_topToolTipText = topToolTipText,_description = description,_eventDescription = eventDescription,super._();
+  const EventBannerDto({this.type = 'event', required this.id, required this.imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, this.eventId, this.eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? eventDescription, required this.createdAt, required this.updatedAt}): _title = title,_topToolTipText = topToolTipText,_description = description,_eventDescription = eventDescription,super._();
   factory EventBannerDto.fromJson(Map<String, dynamic> json) => _$EventBannerDtoFromJson(json);
 
-@override final  String id;
 @override@JsonKey() final  String type;
+@override final  String id;
 @override final  String imageAssetPath;
  final  LocalizedString _title;
 @override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
@@ -275,6 +277,8 @@ class EventBannerDto extends BannerDto {
   return EqualUnmodifiableMapView(value);
 }
 
+@override final  DateTime createdAt;
+@override final  DateTime updatedAt;
 
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
@@ -286,16 +290,16 @@ $EventBannerDtoCopyWith<EventBannerDto> get copyWith => _$EventBannerDtoCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventBannerDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&const DeepCollectionEquality().equals(other._title, _title)&&const DeepCollectionEquality().equals(other._topToolTipText, _topToolTipText)&&const DeepCollectionEquality().equals(other._description, _description)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.eventCategory, eventCategory) || other.eventCategory == eventCategory)&&const DeepCollectionEquality().equals(other._eventDescription, _eventDescription));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EventBannerDto&&(identical(other.type, type) || other.type == type)&&(identical(other.id, id) || other.id == id)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&const DeepCollectionEquality().equals(other._title, _title)&&const DeepCollectionEquality().equals(other._topToolTipText, _topToolTipText)&&const DeepCollectionEquality().equals(other._description, _description)&&(identical(other.eventId, eventId) || other.eventId == eventId)&&(identical(other.eventCategory, eventCategory) || other.eventCategory == eventCategory)&&const DeepCollectionEquality().equals(other._eventDescription, _eventDescription)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,imageAssetPath,const DeepCollectionEquality().hash(_title),const DeepCollectionEquality().hash(_topToolTipText),const DeepCollectionEquality().hash(_description),eventId,eventCategory,const DeepCollectionEquality().hash(_eventDescription));
+int get hashCode => Object.hash(runtimeType,type,id,imageAssetPath,const DeepCollectionEquality().hash(_title),const DeepCollectionEquality().hash(_topToolTipText),const DeepCollectionEquality().hash(_description),eventId,eventCategory,const DeepCollectionEquality().hash(_eventDescription),createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'BannerDto.event(id: $id, type: $type, imageAssetPath: $imageAssetPath, title: $title, topToolTipText: $topToolTipText, description: $description, eventId: $eventId, eventCategory: $eventCategory, eventDescription: $eventDescription)';
+  return 'BannerDto.event(type: $type, id: $id, imageAssetPath: $imageAssetPath, title: $title, topToolTipText: $topToolTipText, description: $description, eventId: $eventId, eventCategory: $eventCategory, eventDescription: $eventDescription, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -306,7 +310,7 @@ abstract mixin class $EventBannerDtoCopyWith<$Res> implements $BannerDtoCopyWith
   factory $EventBannerDtoCopyWith(EventBannerDto value, $Res Function(EventBannerDto) _then) = _$EventBannerDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String type, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, String? eventId, String? eventCategory,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? eventDescription
+ String type, String id, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, String? eventId, String? eventCategory,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? eventDescription, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -323,10 +327,10 @@ class _$EventBannerDtoCopyWithImpl<$Res>
 
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? imageAssetPath = null,Object? title = null,Object? topToolTipText = freezed,Object? description = null,Object? eventId = freezed,Object? eventCategory = freezed,Object? eventDescription = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? imageAssetPath = null,Object? title = null,Object? topToolTipText = freezed,Object? description = null,Object? eventId = freezed,Object? eventCategory = freezed,Object? eventDescription = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(EventBannerDto(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,imageAssetPath: null == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self._title : title // ignore: cast_nullable_to_non_nullable
 as LocalizedString,topToolTipText: freezed == topToolTipText ? _self._topToolTipText : topToolTipText // ignore: cast_nullable_to_non_nullable
@@ -334,7 +338,9 @@ as LocalizedString?,description: null == description ? _self._description : desc
 as LocalizedString,eventId: freezed == eventId ? _self.eventId : eventId // ignore: cast_nullable_to_non_nullable
 as String?,eventCategory: freezed == eventCategory ? _self.eventCategory : eventCategory // ignore: cast_nullable_to_non_nullable
 as String?,eventDescription: freezed == eventDescription ? _self._eventDescription : eventDescription // ignore: cast_nullable_to_non_nullable
-as LocalizedString?,
+as LocalizedString?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 
@@ -345,11 +351,12 @@ as LocalizedString?,
 @JsonSerializable(createToJson: false)
 
 class ActionBannerDto extends BannerDto {
-  const ActionBannerDto({required this.id, this.type = 'action', required this.imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.productId}): _title = title,_topToolTipText = topToolTipText,_description = description,super._();
+  const ActionBannerDto({this.type = 'action', required this.id, required this.productExternalId, required this.imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.createdAt, required this.updatedAt}): _title = title,_topToolTipText = topToolTipText,_description = description,super._();
   factory ActionBannerDto.fromJson(Map<String, dynamic> json) => _$ActionBannerDtoFromJson(json);
 
-@override final  String id;
 @override@JsonKey() final  String type;
+@override final  String id;
+ final  String productExternalId;
 @override final  String imageAssetPath;
  final  LocalizedString _title;
 @override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
@@ -374,7 +381,8 @@ class ActionBannerDto extends BannerDto {
   return EqualUnmodifiableMapView(_description);
 }
 
- final  String productId;
+@override final  DateTime createdAt;
+@override final  DateTime updatedAt;
 
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
@@ -386,16 +394,16 @@ $ActionBannerDtoCopyWith<ActionBannerDto> get copyWith => _$ActionBannerDtoCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ActionBannerDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&const DeepCollectionEquality().equals(other._title, _title)&&const DeepCollectionEquality().equals(other._topToolTipText, _topToolTipText)&&const DeepCollectionEquality().equals(other._description, _description)&&(identical(other.productId, productId) || other.productId == productId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ActionBannerDto&&(identical(other.type, type) || other.type == type)&&(identical(other.id, id) || other.id == id)&&(identical(other.productExternalId, productExternalId) || other.productExternalId == productExternalId)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&const DeepCollectionEquality().equals(other._title, _title)&&const DeepCollectionEquality().equals(other._topToolTipText, _topToolTipText)&&const DeepCollectionEquality().equals(other._description, _description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,imageAssetPath,const DeepCollectionEquality().hash(_title),const DeepCollectionEquality().hash(_topToolTipText),const DeepCollectionEquality().hash(_description),productId);
+int get hashCode => Object.hash(runtimeType,type,id,productExternalId,imageAssetPath,const DeepCollectionEquality().hash(_title),const DeepCollectionEquality().hash(_topToolTipText),const DeepCollectionEquality().hash(_description),createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'BannerDto.action(id: $id, type: $type, imageAssetPath: $imageAssetPath, title: $title, topToolTipText: $topToolTipText, description: $description, productId: $productId)';
+  return 'BannerDto.action(type: $type, id: $id, productExternalId: $productExternalId, imageAssetPath: $imageAssetPath, title: $title, topToolTipText: $topToolTipText, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -406,7 +414,7 @@ abstract mixin class $ActionBannerDtoCopyWith<$Res> implements $BannerDtoCopyWit
   factory $ActionBannerDtoCopyWith(ActionBannerDto value, $Res Function(ActionBannerDto) _then) = _$ActionBannerDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String type, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, String productId
+ String type, String id, String productExternalId, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -423,16 +431,18 @@ class _$ActionBannerDtoCopyWithImpl<$Res>
 
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? imageAssetPath = null,Object? title = null,Object? topToolTipText = freezed,Object? description = null,Object? productId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? id = null,Object? productExternalId = null,Object? imageAssetPath = null,Object? title = null,Object? topToolTipText = freezed,Object? description = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(ActionBannerDto(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,productExternalId: null == productExternalId ? _self.productExternalId : productExternalId // ignore: cast_nullable_to_non_nullable
 as String,imageAssetPath: null == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self._title : title // ignore: cast_nullable_to_non_nullable
 as LocalizedString,topToolTipText: freezed == topToolTipText ? _self._topToolTipText : topToolTipText // ignore: cast_nullable_to_non_nullable
 as LocalizedString?,description: null == description ? _self._description : description // ignore: cast_nullable_to_non_nullable
-as LocalizedString,productId: null == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
-as String,
+as LocalizedString,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 

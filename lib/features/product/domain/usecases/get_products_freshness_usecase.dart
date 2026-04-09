@@ -1,5 +1,5 @@
 import 'package:google_play/features/product/domain/repositories/product_freshness.dart';
-import 'package:google_play/features/product/domain/repositories/product_repository.dart';
+import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 
 abstract interface class GetProductsFreshnessUseCase {
   Future<ProductFreshness> call({required String type});

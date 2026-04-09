@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:google_play/core/local_database/tables/content/products/converters.dart';
+import 'package:google_play/core/local_database/tables/shared/converters.dart';
 import 'package:google_play/core/local_database/tables/content/products/junctions/creators/publishers.dart';
 import 'package:google_play/core/local_database/tables/content/products/cached_product.dart';
 

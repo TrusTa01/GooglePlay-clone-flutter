@@ -1,3 +1,4 @@
+import 'package:google_play/features/product/data/datasources/network/supabase_product_remote_datasource.dart';
 import 'package:google_play/features/product/domain/usecases/get_products_by_filters_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/get_product_freshness_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/get_products_freshness_usecase.dart';
@@ -9,8 +10,7 @@ import 'package:google_play/features/product/data/datasources/local/drift_produc
 import 'package:google_play/features/product/data/datasources/network/supabase_product_network_datasource.dart';
 import 'package:google_play/features/product/data/repositories/cache_first_product_repository.dart';
 import 'package:google_play/features/product/data/datasources/network/i_product_remote_data_source.dart';
-import 'package:google_play/features/product/data/datasources/network/supabase_product_network_data_source.dart';
-import 'package:google_play/features/product/domain/repositories/product_repository.dart';
+import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 import 'package:google_play/features/product/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/load_products_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/watch_products_by_filters_usecase.dart';

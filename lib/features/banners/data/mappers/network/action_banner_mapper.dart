@@ -7,11 +7,11 @@ extension ActionBannerMapper on ActionBannerDto {
   ActionBannerEntity toEntity(String locale) {
     return ActionBannerEntity(
       id: id,
+      productExternalId: productExternalId,
       type: BannerType.action,
       imageAssetPath: imageAssetPath,
       title: title.display(locale),
       topTooltipText: topToolTipText?.display(locale),
-      productId: productId,
       description: description.display(locale),
     );
   }

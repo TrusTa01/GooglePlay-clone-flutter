@@ -123,7 +123,6 @@ class RatingDistributionConverter
   String toSql(Map<String, int> value) => json.encode(value);
 }
 
-// Конвертер для [ReviewDto, ReviewDto, ...]
 class TopReviewsConverter
     extends TypeConverter<List<Map<String, dynamic>>, String> {
   const TopReviewsConverter();

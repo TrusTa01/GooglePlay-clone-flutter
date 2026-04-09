@@ -6,14 +6,14 @@ import 'package:google_play/features/product/domain/entities/product_entity.dart
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
 import 'package:google_play/features/product/data/datasources/network/i_product_remote_data_source.dart';
 import 'package:google_play/features/product/domain/repositories/product_freshness.dart';
-import 'package:google_play/features/product/domain/repositories/product_repository.dart';
+import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 
-class OfflineFirstProductRepository implements IProductRepository {
+class CacheFirstProductRepository implements IProductRepository {
   final IProductRemoteDataSource _remoteDataSource;
   final IProductLocalDatasource _local;
   final Duration _ttl;
 
-  const OfflineFirstProductRepository({
+  const CacheFirstProductRepository({
     required IProductRemoteDataSource remoteDataSource,
     required IProductLocalDatasource local,
     Duration ttl = const Duration(hours: 6),

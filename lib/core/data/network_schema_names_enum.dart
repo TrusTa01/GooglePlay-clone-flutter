@@ -1,6 +1,5 @@
 enum SchemaNamesEnum {
-  views('views'),
-  configs('configs');
+  views('views');
 
   final String name;
   const SchemaNamesEnum(this.name);

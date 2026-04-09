@@ -16,7 +16,7 @@ class BannerItemMapper {
       title: banner.title ?? '',
       topTooltipText: banner.topTooltipText,
       description: banner.description ?? '',
-      productId: banner is ActionBannerEntity ? banner.productId : null,
+      productId: banner is ActionBannerEntity ? banner.productExternalId : null,
       actionRow: actionRow,
     );
   }

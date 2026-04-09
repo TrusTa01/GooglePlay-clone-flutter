@@ -1,8 +1,8 @@
 import 'package:google_play/core/domain/entities/base_entity.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/tab_config_entity.dart';
-import 'package:google_play/features/banners/domain/repositories/banner_repository.dart';
-import 'package:google_play/features/product/domain/repositories/product_repository.dart';
+import 'package:google_play/features/banners/domain/repositories/i_banner_repository.dart';
+import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 
 class ResolvedSection {
   final SectionEntity config;

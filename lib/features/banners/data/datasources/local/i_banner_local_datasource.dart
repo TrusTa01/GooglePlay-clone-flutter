@@ -1,6 +1,5 @@
 import 'package:google_play/features/banners/data/models/local/local_banner_bundle.dart';
-import 'package:google_play/features/product/data/models/local/local_product_bundle.dart';
-import 'package:google_play/features/product/data/models/network/product_dto.dart';
+import 'package:google_play/features/banners/data/models/network/banner_dto.dart';
 
 abstract interface class IBannerLocalDatasource {
   Future<List<LocalBannerBundle>> getBanners({
@@ -15,9 +14,9 @@ abstract interface class IBannerLocalDatasource {
     required int pageSize,
   });
 
-  Future<LocalProductBundle?> getBannerById(String id);
+  Future<LocalBannerBundle?> getBannerById(String id);
 
-  Future<void> upsertBanners(List<ProductDto> dtos);
+  Future<void> upsertBanners(List<BannerDto> dtos);
 
   Future<DateTime?> getLastSync(String syncKey);
   Future<void> setLastSync(String syncKey, DateTime at);
