@@ -8,9 +8,9 @@ class AppsRoute extends GoRouteData with $AppsRoute {
   Widget build(BuildContext context, GoRouterState state) => AppsScreen(
     onProductTap: (productId) =>
         AppsProductRoute(productId: productId).push(context),
-    onSeeAllTap: (categoryKey, titleKey) => AppsSectionMoreRoute(
+    onSeeAllTap: (categoryKey, title) => AppsSectionMoreRoute(
       categoryKey: categoryKey,
-      titleKey: titleKey,
+      title: title,
     ).push(context),
   );
 }
@@ -82,18 +82,18 @@ class AppsCategoryRoute extends GoRouteData with $AppsCategoryRoute {
 
 class AppsSectionMoreRoute extends GoRouteData with $AppsSectionMoreRoute {
   final String categoryKey;
-  final String titleKey;
+  final String title;
 
   const AppsSectionMoreRoute({
     required this.categoryKey,
-    required this.titleKey,
+    required this.title,
   });
 
   @override
   Widget build(BuildContext context, GoRouterState state) => SectionMoreScreen(
     storeType: StoreType.apps,
     categoryKey: categoryKey,
-    titleKey: titleKey,
+    title: title,
     onProductTap: (productId) =>
         AppsProductRoute(productId: productId).push(context),
   );

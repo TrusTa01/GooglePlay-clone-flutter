@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/features/product/domain/entities/game_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
@@ -117,10 +116,7 @@ String _getCategoryTitle(
       .where((c) => c.titleL10nKey == categoryKey || c.title == categoryKey)
       .firstOrNull;
   if (category != null) {
-    if (category.titleL10nKey != null) {
-      return lookupL10n(l10n, category.titleL10nKey!);
-    }
-    return category.title ?? categoryKey;
+    return resolveProductCategoryTitle(l10n, category);
   }
   return categoryKey;
 }

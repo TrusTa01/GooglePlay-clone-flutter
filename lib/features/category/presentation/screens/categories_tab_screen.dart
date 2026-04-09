@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
 
@@ -104,9 +103,7 @@ class CategoriesTabScreen extends StatelessWidget {
     ProductCategoriesData category,
   ) {
     final l10n = context.l10n;
-    final displayTitle = category.titleL10nKey != null
-        ? lookupL10n(l10n, category.titleL10nKey!)
-        : (category.title ?? '');
+    final displayTitle = resolveProductCategoryTitle(l10n, category);
     return Padding(
       padding: Constants.horizontalContentPadding,
       child: Material(

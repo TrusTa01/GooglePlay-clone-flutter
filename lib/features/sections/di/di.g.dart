@@ -9,53 +9,104 @@ part of 'di.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(configLocalDatasource)
-final configLocalDatasourceProvider = ConfigLocalDatasourceProvider._();
+@ProviderFor(supabaseSectionNetworkDatasource)
+final supabaseSectionNetworkDatasourceProvider =
+    SupabaseSectionNetworkDatasourceProvider._();
 
-final class ConfigLocalDatasourceProvider
+final class SupabaseSectionNetworkDatasourceProvider
     extends
         $FunctionalProvider<
-          ConfigLocalDatasource,
-          ConfigLocalDatasource,
-          ConfigLocalDatasource
+          SupabaseSectionNetworkDatasource,
+          SupabaseSectionNetworkDatasource,
+          SupabaseSectionNetworkDatasource
         >
-    with $Provider<ConfigLocalDatasource> {
-  ConfigLocalDatasourceProvider._()
+    with $Provider<SupabaseSectionNetworkDatasource> {
+  SupabaseSectionNetworkDatasourceProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'configLocalDatasourceProvider',
+        name: r'supabaseSectionNetworkDatasourceProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$configLocalDatasourceHash();
+  String debugGetCreateSourceHash() => _$supabaseSectionNetworkDatasourceHash();
 
   @$internal
   @override
-  $ProviderElement<ConfigLocalDatasource> $createElement(
+  $ProviderElement<SupabaseSectionNetworkDatasource> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  ConfigLocalDatasource create(Ref ref) {
-    return configLocalDatasource(ref);
+  SupabaseSectionNetworkDatasource create(Ref ref) {
+    return supabaseSectionNetworkDatasource(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ConfigLocalDatasource value) {
+  Override overrideWithValue(SupabaseSectionNetworkDatasource value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ConfigLocalDatasource>(value),
+      providerOverride: $SyncValueProvider<SupabaseSectionNetworkDatasource>(
+        value,
+      ),
     );
   }
 }
 
-String _$configLocalDatasourceHash() =>
-    r'6c0c909f5a4933ab13ecd8cc60a73c2a077bb3fe';
+String _$supabaseSectionNetworkDatasourceHash() =>
+    r'a0ce8669252b2d9dc56805491f8badd748dea6fd';
+
+@ProviderFor(sectionRemoteDataSource)
+final sectionRemoteDataSourceProvider = SectionRemoteDataSourceProvider._();
+
+final class SectionRemoteDataSourceProvider
+    extends
+        $FunctionalProvider<
+          ISectionRemoteDataSource,
+          ISectionRemoteDataSource,
+          ISectionRemoteDataSource
+        >
+    with $Provider<ISectionRemoteDataSource> {
+  SectionRemoteDataSourceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sectionRemoteDataSourceProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sectionRemoteDataSourceHash();
+
+  @$internal
+  @override
+  $ProviderElement<ISectionRemoteDataSource> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ISectionRemoteDataSource create(Ref ref) {
+    return sectionRemoteDataSource(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ISectionRemoteDataSource value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ISectionRemoteDataSource>(value),
+    );
+  }
+}
+
+String _$sectionRemoteDataSourceHash() =>
+    r'6603007e7a27480c7159e4132b44911cc9d44acd';
 
 @ProviderFor(configRepository)
 final configRepositoryProvider = ConfigRepositoryProvider._();
@@ -102,7 +153,7 @@ final class ConfigRepositoryProvider
   }
 }
 
-String _$configRepositoryHash() => r'052e20f6965509d98402e1682a9b6e2f30f1c7f1';
+String _$configRepositoryHash() => r'090645d7edddc711d91bedfefda17978a664a4e4';
 
 @ProviderFor(resolveSectionUseCase)
 final resolveSectionUseCaseProvider = ResolveSectionUseCaseProvider._();
@@ -150,4 +201,4 @@ final class ResolveSectionUseCaseProvider
 }
 
 String _$resolveSectionUseCaseHash() =>
-    r'c330178ce20feaf45f34077c35de0deef7105b03';
+    r'c7a0aab67afa1ebd1533f4520b4262d14de64761';

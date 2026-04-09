@@ -83,6 +83,8 @@ Future<void> main() async {
     print(
       'Готово за ${(elapsed.inMilliseconds / 1000).toStringAsFixed(1)} сек',
     );
+    print('Теперь можно загрузить данные в облако:');
+    print('dart run tools/upload_data.dart');
   } finally {
     client.dispose();
   }

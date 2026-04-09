@@ -6,7 +6,7 @@ import 'package:google_play/features/product/domain/entities/product_entity.dart
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind.dart';
-import 'package:google_play/features/sections/domain/entities/tab_config_entity.dart';
+import 'package:google_play/features/sections/domain/entities/section_entity.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/action_row_ui_mapper.dart';
 import 'package:google_play/features/banners/presentation/view_models/ui_mappers/banner_item_mapper.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_card_mapper.dart';
@@ -26,12 +26,12 @@ class SectionPayloadMapper {
       SectionLayoutKind.carousel => CarouselPayload(
         _mapCarousel(items: items, l10n: l10n, locale: locale),
         categoryKey: _extractCategoryKey(config),
-        titleKey: config.titleKey,
+        title: config.title?[locale.languageCode] ?? config.title?['en'],
       ),
       SectionLayoutKind.grid => GridPayload(
         _mapGrid(items: items, l10n: l10n, locale: locale),
         categoryKey: _extractCategoryKey(config),
-        titleKey: config.titleKey,
+        title: config.title?[locale.languageCode] ?? config.title?['en'],
       ),
       SectionLayoutKind.preview => PreviewPayload(_mapPreview(items: items)),
       SectionLayoutKind.kidsHeroBanner ||

@@ -3,510 +3,6 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class ProductTitleFts extends Table
-    with
-        TableInfo<ProductTitleFts, ProductTitleFt>,
-        VirtualTableInfo<ProductTitleFts, ProductTitleFt> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  ProductTitleFts(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _valueMeta = const VerificationMeta('value');
-  late final GeneratedColumn<String> value = GeneratedColumn<String>(
-    'value',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [value];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'product_title_fts';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ProductTitleFt> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('value')) {
-      context.handle(
-        _valueMeta,
-        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_valueMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  ProductTitleFt map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ProductTitleFt(
-      value: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}value'],
-      )!,
-    );
-  }
-
-  @override
-  ProductTitleFts createAlias(String alias) {
-    return ProductTitleFts(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'fts5(value, content=\'product_translations\', content_rowid=\'rowid\')';
-}
-
-class ProductTitleFt extends DataClass implements Insertable<ProductTitleFt> {
-  final String value;
-  const ProductTitleFt({required this.value});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['value'] = Variable<String>(value);
-    return map;
-  }
-
-  ProductTitleFtsCompanion toCompanion(bool nullToAbsent) {
-    return ProductTitleFtsCompanion(value: Value(value));
-  }
-
-  factory ProductTitleFt.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ProductTitleFt(value: serializer.fromJson<String>(json['value']));
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{'value': serializer.toJson<String>(value)};
-  }
-
-  ProductTitleFt copyWith({String? value}) =>
-      ProductTitleFt(value: value ?? this.value);
-  ProductTitleFt copyWithCompanion(ProductTitleFtsCompanion data) {
-    return ProductTitleFt(
-      value: data.value.present ? data.value.value : this.value,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ProductTitleFt(')
-          ..write('value: $value')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => value.hashCode;
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ProductTitleFt && other.value == this.value);
-}
-
-class ProductTitleFtsCompanion extends UpdateCompanion<ProductTitleFt> {
-  final Value<String> value;
-  final Value<int> rowid;
-  const ProductTitleFtsCompanion({
-    this.value = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ProductTitleFtsCompanion.insert({
-    required String value,
-    this.rowid = const Value.absent(),
-  }) : value = Value(value);
-  static Insertable<ProductTitleFt> custom({
-    Expression<String>? value,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (value != null) 'value': value,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ProductTitleFtsCompanion copyWith({Value<String>? value, Value<int>? rowid}) {
-    return ProductTitleFtsCompanion(
-      value: value ?? this.value,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (value.present) {
-      map['value'] = Variable<String>(value.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ProductTitleFtsCompanion(')
-          ..write('value: $value, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $SyncStateTable extends SyncState
-    with TableInfo<$SyncStateTable, SyncStateData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $SyncStateTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _syncKeyMeta = const VerificationMeta(
-    'syncKey',
-  );
-  @override
-  late final GeneratedColumn<String> syncKey = GeneratedColumn<String>(
-    'sync_key',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _lastSyncAtMeta = const VerificationMeta(
-    'lastSyncAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> lastSyncAt = GeneratedColumn<DateTime>(
-    'last_sync_at',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _cursorMeta = const VerificationMeta('cursor');
-  @override
-  late final GeneratedColumn<String> cursor = GeneratedColumn<String>(
-    'cursor',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _remoteSchemaVersionMeta =
-      const VerificationMeta('remoteSchemaVersion');
-  @override
-  late final GeneratedColumn<int> remoteSchemaVersion = GeneratedColumn<int>(
-    'remote_schema_version',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    syncKey,
-    lastSyncAt,
-    cursor,
-    remoteSchemaVersion,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'sync_state';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<SyncStateData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('sync_key')) {
-      context.handle(
-        _syncKeyMeta,
-        syncKey.isAcceptableOrUnknown(data['sync_key']!, _syncKeyMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_syncKeyMeta);
-    }
-    if (data.containsKey('last_sync_at')) {
-      context.handle(
-        _lastSyncAtMeta,
-        lastSyncAt.isAcceptableOrUnknown(
-          data['last_sync_at']!,
-          _lastSyncAtMeta,
-        ),
-      );
-    }
-    if (data.containsKey('cursor')) {
-      context.handle(
-        _cursorMeta,
-        cursor.isAcceptableOrUnknown(data['cursor']!, _cursorMeta),
-      );
-    }
-    if (data.containsKey('remote_schema_version')) {
-      context.handle(
-        _remoteSchemaVersionMeta,
-        remoteSchemaVersion.isAcceptableOrUnknown(
-          data['remote_schema_version']!,
-          _remoteSchemaVersionMeta,
-        ),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {syncKey};
-  @override
-  SyncStateData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return SyncStateData(
-      syncKey: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}sync_key'],
-      )!,
-      lastSyncAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}last_sync_at'],
-      ),
-      cursor: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}cursor'],
-      ),
-      remoteSchemaVersion: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}remote_schema_version'],
-      ),
-    );
-  }
-
-  @override
-  $SyncStateTable createAlias(String alias) {
-    return $SyncStateTable(attachedDatabase, alias);
-  }
-}
-
-class SyncStateData extends DataClass implements Insertable<SyncStateData> {
-  final String syncKey;
-  final DateTime? lastSyncAt;
-  final String? cursor;
-  final int? remoteSchemaVersion;
-  const SyncStateData({
-    required this.syncKey,
-    this.lastSyncAt,
-    this.cursor,
-    this.remoteSchemaVersion,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['sync_key'] = Variable<String>(syncKey);
-    if (!nullToAbsent || lastSyncAt != null) {
-      map['last_sync_at'] = Variable<DateTime>(lastSyncAt);
-    }
-    if (!nullToAbsent || cursor != null) {
-      map['cursor'] = Variable<String>(cursor);
-    }
-    if (!nullToAbsent || remoteSchemaVersion != null) {
-      map['remote_schema_version'] = Variable<int>(remoteSchemaVersion);
-    }
-    return map;
-  }
-
-  SyncStateCompanion toCompanion(bool nullToAbsent) {
-    return SyncStateCompanion(
-      syncKey: Value(syncKey),
-      lastSyncAt: lastSyncAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(lastSyncAt),
-      cursor: cursor == null && nullToAbsent
-          ? const Value.absent()
-          : Value(cursor),
-      remoteSchemaVersion: remoteSchemaVersion == null && nullToAbsent
-          ? const Value.absent()
-          : Value(remoteSchemaVersion),
-    );
-  }
-
-  factory SyncStateData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return SyncStateData(
-      syncKey: serializer.fromJson<String>(json['syncKey']),
-      lastSyncAt: serializer.fromJson<DateTime?>(json['lastSyncAt']),
-      cursor: serializer.fromJson<String?>(json['cursor']),
-      remoteSchemaVersion: serializer.fromJson<int?>(
-        json['remoteSchemaVersion'],
-      ),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'syncKey': serializer.toJson<String>(syncKey),
-      'lastSyncAt': serializer.toJson<DateTime?>(lastSyncAt),
-      'cursor': serializer.toJson<String?>(cursor),
-      'remoteSchemaVersion': serializer.toJson<int?>(remoteSchemaVersion),
-    };
-  }
-
-  SyncStateData copyWith({
-    String? syncKey,
-    Value<DateTime?> lastSyncAt = const Value.absent(),
-    Value<String?> cursor = const Value.absent(),
-    Value<int?> remoteSchemaVersion = const Value.absent(),
-  }) => SyncStateData(
-    syncKey: syncKey ?? this.syncKey,
-    lastSyncAt: lastSyncAt.present ? lastSyncAt.value : this.lastSyncAt,
-    cursor: cursor.present ? cursor.value : this.cursor,
-    remoteSchemaVersion: remoteSchemaVersion.present
-        ? remoteSchemaVersion.value
-        : this.remoteSchemaVersion,
-  );
-  SyncStateData copyWithCompanion(SyncStateCompanion data) {
-    return SyncStateData(
-      syncKey: data.syncKey.present ? data.syncKey.value : this.syncKey,
-      lastSyncAt: data.lastSyncAt.present
-          ? data.lastSyncAt.value
-          : this.lastSyncAt,
-      cursor: data.cursor.present ? data.cursor.value : this.cursor,
-      remoteSchemaVersion: data.remoteSchemaVersion.present
-          ? data.remoteSchemaVersion.value
-          : this.remoteSchemaVersion,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SyncStateData(')
-          ..write('syncKey: $syncKey, ')
-          ..write('lastSyncAt: $lastSyncAt, ')
-          ..write('cursor: $cursor, ')
-          ..write('remoteSchemaVersion: $remoteSchemaVersion')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(syncKey, lastSyncAt, cursor, remoteSchemaVersion);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is SyncStateData &&
-          other.syncKey == this.syncKey &&
-          other.lastSyncAt == this.lastSyncAt &&
-          other.cursor == this.cursor &&
-          other.remoteSchemaVersion == this.remoteSchemaVersion);
-}
-
-class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
-  final Value<String> syncKey;
-  final Value<DateTime?> lastSyncAt;
-  final Value<String?> cursor;
-  final Value<int?> remoteSchemaVersion;
-  final Value<int> rowid;
-  const SyncStateCompanion({
-    this.syncKey = const Value.absent(),
-    this.lastSyncAt = const Value.absent(),
-    this.cursor = const Value.absent(),
-    this.remoteSchemaVersion = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  SyncStateCompanion.insert({
-    required String syncKey,
-    this.lastSyncAt = const Value.absent(),
-    this.cursor = const Value.absent(),
-    this.remoteSchemaVersion = const Value.absent(),
-    this.rowid = const Value.absent(),
-  }) : syncKey = Value(syncKey);
-  static Insertable<SyncStateData> custom({
-    Expression<String>? syncKey,
-    Expression<DateTime>? lastSyncAt,
-    Expression<String>? cursor,
-    Expression<int>? remoteSchemaVersion,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (syncKey != null) 'sync_key': syncKey,
-      if (lastSyncAt != null) 'last_sync_at': lastSyncAt,
-      if (cursor != null) 'cursor': cursor,
-      if (remoteSchemaVersion != null)
-        'remote_schema_version': remoteSchemaVersion,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  SyncStateCompanion copyWith({
-    Value<String>? syncKey,
-    Value<DateTime?>? lastSyncAt,
-    Value<String?>? cursor,
-    Value<int?>? remoteSchemaVersion,
-    Value<int>? rowid,
-  }) {
-    return SyncStateCompanion(
-      syncKey: syncKey ?? this.syncKey,
-      lastSyncAt: lastSyncAt ?? this.lastSyncAt,
-      cursor: cursor ?? this.cursor,
-      remoteSchemaVersion: remoteSchemaVersion ?? this.remoteSchemaVersion,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (syncKey.present) {
-      map['sync_key'] = Variable<String>(syncKey.value);
-    }
-    if (lastSyncAt.present) {
-      map['last_sync_at'] = Variable<DateTime>(lastSyncAt.value);
-    }
-    if (cursor.present) {
-      map['cursor'] = Variable<String>(cursor.value);
-    }
-    if (remoteSchemaVersion.present) {
-      map['remote_schema_version'] = Variable<int>(remoteSchemaVersion.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SyncStateCompanion(')
-          ..write('syncKey: $syncKey, ')
-          ..write('lastSyncAt: $lastSyncAt, ')
-          ..write('cursor: $cursor, ')
-          ..write('remoteSchemaVersion: $remoteSchemaVersion, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $CachedProductTable extends CachedProduct
     with TableInfo<$CachedProductTable, CachedProductData> {
   @override
@@ -1556,6 +1052,825 @@ class CachedProductCompanion extends UpdateCompanion<CachedProductData> {
           ..write('reviewsCount: $reviewsCount, ')
           ..write('ratingDistribution: $ratingDistribution, ')
           ..write('topReviews: $topReviews, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProductTranslationsTable extends ProductTranslations
+    with TableInfo<$ProductTranslationsTable, ProductTranslation> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductTranslationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _productIdMeta = const VerificationMeta(
+    'productId',
+  );
+  @override
+  late final GeneratedColumn<String> productId = GeneratedColumn<String>(
+    'product_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES cached_product (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _fieldMeta = const VerificationMeta('field');
+  @override
+  late final GeneratedColumn<String> field = GeneratedColumn<String>(
+    'field',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _languageMeta = const VerificationMeta(
+    'language',
+  );
+  @override
+  late final GeneratedColumn<String> language = GeneratedColumn<String>(
+    'language',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [productId, field, language, value];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_translations';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ProductTranslation> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('product_id')) {
+      context.handle(
+        _productIdMeta,
+        productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_productIdMeta);
+    }
+    if (data.containsKey('field')) {
+      context.handle(
+        _fieldMeta,
+        field.isAcceptableOrUnknown(data['field']!, _fieldMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fieldMeta);
+    }
+    if (data.containsKey('language')) {
+      context.handle(
+        _languageMeta,
+        language.isAcceptableOrUnknown(data['language']!, _languageMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_languageMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {productId, field, language};
+  @override
+  ProductTranslation map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductTranslation(
+      productId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}product_id'],
+      )!,
+      field: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}field'],
+      )!,
+      language: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+    );
+  }
+
+  @override
+  $ProductTranslationsTable createAlias(String alias) {
+    return $ProductTranslationsTable(attachedDatabase, alias);
+  }
+}
+
+class ProductTranslation extends DataClass
+    implements Insertable<ProductTranslation> {
+  final String productId;
+  final String field;
+  final String language;
+  final String value;
+  const ProductTranslation({
+    required this.productId,
+    required this.field,
+    required this.language,
+    required this.value,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['product_id'] = Variable<String>(productId);
+    map['field'] = Variable<String>(field);
+    map['language'] = Variable<String>(language);
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  ProductTranslationsCompanion toCompanion(bool nullToAbsent) {
+    return ProductTranslationsCompanion(
+      productId: Value(productId),
+      field: Value(field),
+      language: Value(language),
+      value: Value(value),
+    );
+  }
+
+  factory ProductTranslation.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProductTranslation(
+      productId: serializer.fromJson<String>(json['productId']),
+      field: serializer.fromJson<String>(json['field']),
+      language: serializer.fromJson<String>(json['language']),
+      value: serializer.fromJson<String>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'productId': serializer.toJson<String>(productId),
+      'field': serializer.toJson<String>(field),
+      'language': serializer.toJson<String>(language),
+      'value': serializer.toJson<String>(value),
+    };
+  }
+
+  ProductTranslation copyWith({
+    String? productId,
+    String? field,
+    String? language,
+    String? value,
+  }) => ProductTranslation(
+    productId: productId ?? this.productId,
+    field: field ?? this.field,
+    language: language ?? this.language,
+    value: value ?? this.value,
+  );
+  ProductTranslation copyWithCompanion(ProductTranslationsCompanion data) {
+    return ProductTranslation(
+      productId: data.productId.present ? data.productId.value : this.productId,
+      field: data.field.present ? data.field.value : this.field,
+      language: data.language.present ? data.language.value : this.language,
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProductTranslation(')
+          ..write('productId: $productId, ')
+          ..write('field: $field, ')
+          ..write('language: $language, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(productId, field, language, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ProductTranslation &&
+          other.productId == this.productId &&
+          other.field == this.field &&
+          other.language == this.language &&
+          other.value == this.value);
+}
+
+class ProductTranslationsCompanion extends UpdateCompanion<ProductTranslation> {
+  final Value<String> productId;
+  final Value<String> field;
+  final Value<String> language;
+  final Value<String> value;
+  final Value<int> rowid;
+  const ProductTranslationsCompanion({
+    this.productId = const Value.absent(),
+    this.field = const Value.absent(),
+    this.language = const Value.absent(),
+    this.value = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductTranslationsCompanion.insert({
+    required String productId,
+    required String field,
+    required String language,
+    required String value,
+    this.rowid = const Value.absent(),
+  }) : productId = Value(productId),
+       field = Value(field),
+       language = Value(language),
+       value = Value(value);
+  static Insertable<ProductTranslation> custom({
+    Expression<String>? productId,
+    Expression<String>? field,
+    Expression<String>? language,
+    Expression<String>? value,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (productId != null) 'product_id': productId,
+      if (field != null) 'field': field,
+      if (language != null) 'language': language,
+      if (value != null) 'value': value,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProductTranslationsCompanion copyWith({
+    Value<String>? productId,
+    Value<String>? field,
+    Value<String>? language,
+    Value<String>? value,
+    Value<int>? rowid,
+  }) {
+    return ProductTranslationsCompanion(
+      productId: productId ?? this.productId,
+      field: field ?? this.field,
+      language: language ?? this.language,
+      value: value ?? this.value,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (productId.present) {
+      map['product_id'] = Variable<String>(productId.value);
+    }
+    if (field.present) {
+      map['field'] = Variable<String>(field.value);
+    }
+    if (language.present) {
+      map['language'] = Variable<String>(language.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProductTranslationsCompanion(')
+          ..write('productId: $productId, ')
+          ..write('field: $field, ')
+          ..write('language: $language, ')
+          ..write('value: $value, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class ProductTitleFts extends Table
+    with
+        TableInfo<ProductTitleFts, ProductTitleFt>,
+        VirtualTableInfo<ProductTitleFts, ProductTitleFt> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  ProductTitleFts(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [value];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_title_fts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ProductTitleFt> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ProductTitleFt map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductTitleFt(
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+    );
+  }
+
+  @override
+  ProductTitleFts createAlias(String alias) {
+    return ProductTitleFts(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(value, content=\'product_translations\', content_rowid=\'rowid\')';
+}
+
+class ProductTitleFt extends DataClass implements Insertable<ProductTitleFt> {
+  final String value;
+  const ProductTitleFt({required this.value});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  ProductTitleFtsCompanion toCompanion(bool nullToAbsent) {
+    return ProductTitleFtsCompanion(value: Value(value));
+  }
+
+  factory ProductTitleFt.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProductTitleFt(value: serializer.fromJson<String>(json['value']));
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{'value': serializer.toJson<String>(value)};
+  }
+
+  ProductTitleFt copyWith({String? value}) =>
+      ProductTitleFt(value: value ?? this.value);
+  ProductTitleFt copyWithCompanion(ProductTitleFtsCompanion data) {
+    return ProductTitleFt(
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProductTitleFt(')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => value.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ProductTitleFt && other.value == this.value);
+}
+
+class ProductTitleFtsCompanion extends UpdateCompanion<ProductTitleFt> {
+  final Value<String> value;
+  final Value<int> rowid;
+  const ProductTitleFtsCompanion({
+    this.value = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductTitleFtsCompanion.insert({
+    required String value,
+    this.rowid = const Value.absent(),
+  }) : value = Value(value);
+  static Insertable<ProductTitleFt> custom({
+    Expression<String>? value,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (value != null) 'value': value,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProductTitleFtsCompanion copyWith({Value<String>? value, Value<int>? rowid}) {
+    return ProductTitleFtsCompanion(
+      value: value ?? this.value,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProductTitleFtsCompanion(')
+          ..write('value: $value, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SyncStateTable extends SyncState
+    with TableInfo<$SyncStateTable, SyncStateData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SyncStateTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _syncKeyMeta = const VerificationMeta(
+    'syncKey',
+  );
+  @override
+  late final GeneratedColumn<String> syncKey = GeneratedColumn<String>(
+    'sync_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastSyncAtMeta = const VerificationMeta(
+    'lastSyncAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastSyncAt = GeneratedColumn<DateTime>(
+    'last_sync_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cursorMeta = const VerificationMeta('cursor');
+  @override
+  late final GeneratedColumn<String> cursor = GeneratedColumn<String>(
+    'cursor',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _remoteSchemaVersionMeta =
+      const VerificationMeta('remoteSchemaVersion');
+  @override
+  late final GeneratedColumn<int> remoteSchemaVersion = GeneratedColumn<int>(
+    'remote_schema_version',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    syncKey,
+    lastSyncAt,
+    cursor,
+    remoteSchemaVersion,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sync_state';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SyncStateData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('sync_key')) {
+      context.handle(
+        _syncKeyMeta,
+        syncKey.isAcceptableOrUnknown(data['sync_key']!, _syncKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_syncKeyMeta);
+    }
+    if (data.containsKey('last_sync_at')) {
+      context.handle(
+        _lastSyncAtMeta,
+        lastSyncAt.isAcceptableOrUnknown(
+          data['last_sync_at']!,
+          _lastSyncAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('cursor')) {
+      context.handle(
+        _cursorMeta,
+        cursor.isAcceptableOrUnknown(data['cursor']!, _cursorMeta),
+      );
+    }
+    if (data.containsKey('remote_schema_version')) {
+      context.handle(
+        _remoteSchemaVersionMeta,
+        remoteSchemaVersion.isAcceptableOrUnknown(
+          data['remote_schema_version']!,
+          _remoteSchemaVersionMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {syncKey};
+  @override
+  SyncStateData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SyncStateData(
+      syncKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sync_key'],
+      )!,
+      lastSyncAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_sync_at'],
+      ),
+      cursor: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cursor'],
+      ),
+      remoteSchemaVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}remote_schema_version'],
+      ),
+    );
+  }
+
+  @override
+  $SyncStateTable createAlias(String alias) {
+    return $SyncStateTable(attachedDatabase, alias);
+  }
+}
+
+class SyncStateData extends DataClass implements Insertable<SyncStateData> {
+  final String syncKey;
+  final DateTime? lastSyncAt;
+  final String? cursor;
+  final int? remoteSchemaVersion;
+  const SyncStateData({
+    required this.syncKey,
+    this.lastSyncAt,
+    this.cursor,
+    this.remoteSchemaVersion,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['sync_key'] = Variable<String>(syncKey);
+    if (!nullToAbsent || lastSyncAt != null) {
+      map['last_sync_at'] = Variable<DateTime>(lastSyncAt);
+    }
+    if (!nullToAbsent || cursor != null) {
+      map['cursor'] = Variable<String>(cursor);
+    }
+    if (!nullToAbsent || remoteSchemaVersion != null) {
+      map['remote_schema_version'] = Variable<int>(remoteSchemaVersion);
+    }
+    return map;
+  }
+
+  SyncStateCompanion toCompanion(bool nullToAbsent) {
+    return SyncStateCompanion(
+      syncKey: Value(syncKey),
+      lastSyncAt: lastSyncAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSyncAt),
+      cursor: cursor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(cursor),
+      remoteSchemaVersion: remoteSchemaVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(remoteSchemaVersion),
+    );
+  }
+
+  factory SyncStateData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SyncStateData(
+      syncKey: serializer.fromJson<String>(json['syncKey']),
+      lastSyncAt: serializer.fromJson<DateTime?>(json['lastSyncAt']),
+      cursor: serializer.fromJson<String?>(json['cursor']),
+      remoteSchemaVersion: serializer.fromJson<int?>(
+        json['remoteSchemaVersion'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'syncKey': serializer.toJson<String>(syncKey),
+      'lastSyncAt': serializer.toJson<DateTime?>(lastSyncAt),
+      'cursor': serializer.toJson<String?>(cursor),
+      'remoteSchemaVersion': serializer.toJson<int?>(remoteSchemaVersion),
+    };
+  }
+
+  SyncStateData copyWith({
+    String? syncKey,
+    Value<DateTime?> lastSyncAt = const Value.absent(),
+    Value<String?> cursor = const Value.absent(),
+    Value<int?> remoteSchemaVersion = const Value.absent(),
+  }) => SyncStateData(
+    syncKey: syncKey ?? this.syncKey,
+    lastSyncAt: lastSyncAt.present ? lastSyncAt.value : this.lastSyncAt,
+    cursor: cursor.present ? cursor.value : this.cursor,
+    remoteSchemaVersion: remoteSchemaVersion.present
+        ? remoteSchemaVersion.value
+        : this.remoteSchemaVersion,
+  );
+  SyncStateData copyWithCompanion(SyncStateCompanion data) {
+    return SyncStateData(
+      syncKey: data.syncKey.present ? data.syncKey.value : this.syncKey,
+      lastSyncAt: data.lastSyncAt.present
+          ? data.lastSyncAt.value
+          : this.lastSyncAt,
+      cursor: data.cursor.present ? data.cursor.value : this.cursor,
+      remoteSchemaVersion: data.remoteSchemaVersion.present
+          ? data.remoteSchemaVersion.value
+          : this.remoteSchemaVersion,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncStateData(')
+          ..write('syncKey: $syncKey, ')
+          ..write('lastSyncAt: $lastSyncAt, ')
+          ..write('cursor: $cursor, ')
+          ..write('remoteSchemaVersion: $remoteSchemaVersion')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(syncKey, lastSyncAt, cursor, remoteSchemaVersion);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SyncStateData &&
+          other.syncKey == this.syncKey &&
+          other.lastSyncAt == this.lastSyncAt &&
+          other.cursor == this.cursor &&
+          other.remoteSchemaVersion == this.remoteSchemaVersion);
+}
+
+class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
+  final Value<String> syncKey;
+  final Value<DateTime?> lastSyncAt;
+  final Value<String?> cursor;
+  final Value<int?> remoteSchemaVersion;
+  final Value<int> rowid;
+  const SyncStateCompanion({
+    this.syncKey = const Value.absent(),
+    this.lastSyncAt = const Value.absent(),
+    this.cursor = const Value.absent(),
+    this.remoteSchemaVersion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SyncStateCompanion.insert({
+    required String syncKey,
+    this.lastSyncAt = const Value.absent(),
+    this.cursor = const Value.absent(),
+    this.remoteSchemaVersion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : syncKey = Value(syncKey);
+  static Insertable<SyncStateData> custom({
+    Expression<String>? syncKey,
+    Expression<DateTime>? lastSyncAt,
+    Expression<String>? cursor,
+    Expression<int>? remoteSchemaVersion,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (syncKey != null) 'sync_key': syncKey,
+      if (lastSyncAt != null) 'last_sync_at': lastSyncAt,
+      if (cursor != null) 'cursor': cursor,
+      if (remoteSchemaVersion != null)
+        'remote_schema_version': remoteSchemaVersion,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SyncStateCompanion copyWith({
+    Value<String>? syncKey,
+    Value<DateTime?>? lastSyncAt,
+    Value<String?>? cursor,
+    Value<int?>? remoteSchemaVersion,
+    Value<int>? rowid,
+  }) {
+    return SyncStateCompanion(
+      syncKey: syncKey ?? this.syncKey,
+      lastSyncAt: lastSyncAt ?? this.lastSyncAt,
+      cursor: cursor ?? this.cursor,
+      remoteSchemaVersion: remoteSchemaVersion ?? this.remoteSchemaVersion,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (syncKey.present) {
+      map['sync_key'] = Variable<String>(syncKey.value);
+    }
+    if (lastSyncAt.present) {
+      map['last_sync_at'] = Variable<DateTime>(lastSyncAt.value);
+    }
+    if (cursor.present) {
+      map['cursor'] = Variable<String>(cursor.value);
+    }
+    if (remoteSchemaVersion.present) {
+      map['remote_schema_version'] = Variable<int>(remoteSchemaVersion.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncStateCompanion(')
+          ..write('syncKey: $syncKey, ')
+          ..write('lastSyncAt: $lastSyncAt, ')
+          ..write('cursor: $cursor, ')
+          ..write('remoteSchemaVersion: $remoteSchemaVersion, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -6104,321 +6419,6 @@ class ProductTagsCompanion extends UpdateCompanion<ProductTag> {
   }
 }
 
-class $ProductTranslationsTable extends ProductTranslations
-    with TableInfo<$ProductTranslationsTable, ProductTranslation> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ProductTranslationsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _productIdMeta = const VerificationMeta(
-    'productId',
-  );
-  @override
-  late final GeneratedColumn<String> productId = GeneratedColumn<String>(
-    'product_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES cached_product (id) ON DELETE CASCADE',
-    ),
-  );
-  static const VerificationMeta _fieldMeta = const VerificationMeta('field');
-  @override
-  late final GeneratedColumn<String> field = GeneratedColumn<String>(
-    'field',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _languageMeta = const VerificationMeta(
-    'language',
-  );
-  @override
-  late final GeneratedColumn<String> language = GeneratedColumn<String>(
-    'language',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _valueMeta = const VerificationMeta('value');
-  @override
-  late final GeneratedColumn<String> value = GeneratedColumn<String>(
-    'value',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [productId, field, language, value];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'product_translations';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ProductTranslation> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('product_id')) {
-      context.handle(
-        _productIdMeta,
-        productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_productIdMeta);
-    }
-    if (data.containsKey('field')) {
-      context.handle(
-        _fieldMeta,
-        field.isAcceptableOrUnknown(data['field']!, _fieldMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_fieldMeta);
-    }
-    if (data.containsKey('language')) {
-      context.handle(
-        _languageMeta,
-        language.isAcceptableOrUnknown(data['language']!, _languageMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_languageMeta);
-    }
-    if (data.containsKey('value')) {
-      context.handle(
-        _valueMeta,
-        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_valueMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {productId, field, language};
-  @override
-  ProductTranslation map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ProductTranslation(
-      productId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}product_id'],
-      )!,
-      field: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}field'],
-      )!,
-      language: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language'],
-      )!,
-      value: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}value'],
-      )!,
-    );
-  }
-
-  @override
-  $ProductTranslationsTable createAlias(String alias) {
-    return $ProductTranslationsTable(attachedDatabase, alias);
-  }
-}
-
-class ProductTranslation extends DataClass
-    implements Insertable<ProductTranslation> {
-  final String productId;
-  final String field;
-  final String language;
-  final String value;
-  const ProductTranslation({
-    required this.productId,
-    required this.field,
-    required this.language,
-    required this.value,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['product_id'] = Variable<String>(productId);
-    map['field'] = Variable<String>(field);
-    map['language'] = Variable<String>(language);
-    map['value'] = Variable<String>(value);
-    return map;
-  }
-
-  ProductTranslationsCompanion toCompanion(bool nullToAbsent) {
-    return ProductTranslationsCompanion(
-      productId: Value(productId),
-      field: Value(field),
-      language: Value(language),
-      value: Value(value),
-    );
-  }
-
-  factory ProductTranslation.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ProductTranslation(
-      productId: serializer.fromJson<String>(json['productId']),
-      field: serializer.fromJson<String>(json['field']),
-      language: serializer.fromJson<String>(json['language']),
-      value: serializer.fromJson<String>(json['value']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'productId': serializer.toJson<String>(productId),
-      'field': serializer.toJson<String>(field),
-      'language': serializer.toJson<String>(language),
-      'value': serializer.toJson<String>(value),
-    };
-  }
-
-  ProductTranslation copyWith({
-    String? productId,
-    String? field,
-    String? language,
-    String? value,
-  }) => ProductTranslation(
-    productId: productId ?? this.productId,
-    field: field ?? this.field,
-    language: language ?? this.language,
-    value: value ?? this.value,
-  );
-  ProductTranslation copyWithCompanion(ProductTranslationsCompanion data) {
-    return ProductTranslation(
-      productId: data.productId.present ? data.productId.value : this.productId,
-      field: data.field.present ? data.field.value : this.field,
-      language: data.language.present ? data.language.value : this.language,
-      value: data.value.present ? data.value.value : this.value,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ProductTranslation(')
-          ..write('productId: $productId, ')
-          ..write('field: $field, ')
-          ..write('language: $language, ')
-          ..write('value: $value')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(productId, field, language, value);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ProductTranslation &&
-          other.productId == this.productId &&
-          other.field == this.field &&
-          other.language == this.language &&
-          other.value == this.value);
-}
-
-class ProductTranslationsCompanion extends UpdateCompanion<ProductTranslation> {
-  final Value<String> productId;
-  final Value<String> field;
-  final Value<String> language;
-  final Value<String> value;
-  final Value<int> rowid;
-  const ProductTranslationsCompanion({
-    this.productId = const Value.absent(),
-    this.field = const Value.absent(),
-    this.language = const Value.absent(),
-    this.value = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ProductTranslationsCompanion.insert({
-    required String productId,
-    required String field,
-    required String language,
-    required String value,
-    this.rowid = const Value.absent(),
-  }) : productId = Value(productId),
-       field = Value(field),
-       language = Value(language),
-       value = Value(value);
-  static Insertable<ProductTranslation> custom({
-    Expression<String>? productId,
-    Expression<String>? field,
-    Expression<String>? language,
-    Expression<String>? value,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (productId != null) 'product_id': productId,
-      if (field != null) 'field': field,
-      if (language != null) 'language': language,
-      if (value != null) 'value': value,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ProductTranslationsCompanion copyWith({
-    Value<String>? productId,
-    Value<String>? field,
-    Value<String>? language,
-    Value<String>? value,
-    Value<int>? rowid,
-  }) {
-    return ProductTranslationsCompanion(
-      productId: productId ?? this.productId,
-      field: field ?? this.field,
-      language: language ?? this.language,
-      value: value ?? this.value,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (productId.present) {
-      map['product_id'] = Variable<String>(productId.value);
-    }
-    if (field.present) {
-      map['field'] = Variable<String>(field.value);
-    }
-    if (language.present) {
-      map['language'] = Variable<String>(language.value);
-    }
-    if (value.present) {
-      map['value'] = Variable<String>(value.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ProductTranslationsCompanion(')
-          ..write('productId: $productId, ')
-          ..write('field: $field, ')
-          ..write('language: $language, ')
-          ..write('value: $value, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $CachedBannersTable extends CachedBanners
     with TableInfo<$CachedBannersTable, CachedBanner> {
   @override
@@ -7085,6 +7085,20 @@ class $CachedEventBannersTable extends CachedEventBanners
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $CachedEventBannersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _bannerIdMeta = const VerificationMeta(
+    'bannerId',
+  );
+  @override
+  late final GeneratedColumn<String> bannerId = GeneratedColumn<String>(
+    'banner_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES cached_banners (id)',
+    ),
+  );
   static const VerificationMeta _eventIdMeta = const VerificationMeta(
     'eventId',
   );
@@ -7120,6 +7134,7 @@ class $CachedEventBannersTable extends CachedEventBanners
   );
   @override
   List<GeneratedColumn> get $columns => [
+    bannerId,
     eventId,
     eventCategory,
     eventDescription,
@@ -7136,6 +7151,14 @@ class $CachedEventBannersTable extends CachedEventBanners
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('banner_id')) {
+      context.handle(
+        _bannerIdMeta,
+        bannerId.isAcceptableOrUnknown(data['banner_id']!, _bannerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bannerIdMeta);
+    }
     if (data.containsKey('event_id')) {
       context.handle(
         _eventIdMeta,
@@ -7164,11 +7187,15 @@ class $CachedEventBannersTable extends CachedEventBanners
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {eventId};
+  Set<GeneratedColumn> get $primaryKey => {bannerId};
   @override
   CachedEventBanner map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CachedEventBanner(
+      bannerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}banner_id'],
+      )!,
       eventId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}event_id'],
@@ -7192,10 +7219,12 @@ class $CachedEventBannersTable extends CachedEventBanners
 
 class CachedEventBanner extends DataClass
     implements Insertable<CachedEventBanner> {
+  final String bannerId;
   final String? eventId;
   final String? eventCategory;
   final String? eventDescription;
   const CachedEventBanner({
+    required this.bannerId,
     this.eventId,
     this.eventCategory,
     this.eventDescription,
@@ -7203,6 +7232,7 @@ class CachedEventBanner extends DataClass
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['banner_id'] = Variable<String>(bannerId);
     if (!nullToAbsent || eventId != null) {
       map['event_id'] = Variable<String>(eventId);
     }
@@ -7217,6 +7247,7 @@ class CachedEventBanner extends DataClass
 
   CachedEventBannersCompanion toCompanion(bool nullToAbsent) {
     return CachedEventBannersCompanion(
+      bannerId: Value(bannerId),
       eventId: eventId == null && nullToAbsent
           ? const Value.absent()
           : Value(eventId),
@@ -7235,6 +7266,7 @@ class CachedEventBanner extends DataClass
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return CachedEventBanner(
+      bannerId: serializer.fromJson<String>(json['bannerId']),
       eventId: serializer.fromJson<String?>(json['eventId']),
       eventCategory: serializer.fromJson<String?>(json['eventCategory']),
       eventDescription: serializer.fromJson<String?>(json['eventDescription']),
@@ -7244,6 +7276,7 @@ class CachedEventBanner extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'bannerId': serializer.toJson<String>(bannerId),
       'eventId': serializer.toJson<String?>(eventId),
       'eventCategory': serializer.toJson<String?>(eventCategory),
       'eventDescription': serializer.toJson<String?>(eventDescription),
@@ -7251,10 +7284,12 @@ class CachedEventBanner extends DataClass
   }
 
   CachedEventBanner copyWith({
+    String? bannerId,
     Value<String?> eventId = const Value.absent(),
     Value<String?> eventCategory = const Value.absent(),
     Value<String?> eventDescription = const Value.absent(),
   }) => CachedEventBanner(
+    bannerId: bannerId ?? this.bannerId,
     eventId: eventId.present ? eventId.value : this.eventId,
     eventCategory: eventCategory.present
         ? eventCategory.value
@@ -7265,6 +7300,7 @@ class CachedEventBanner extends DataClass
   );
   CachedEventBanner copyWithCompanion(CachedEventBannersCompanion data) {
     return CachedEventBanner(
+      bannerId: data.bannerId.present ? data.bannerId.value : this.bannerId,
       eventId: data.eventId.present ? data.eventId.value : this.eventId,
       eventCategory: data.eventCategory.present
           ? data.eventCategory.value
@@ -7278,6 +7314,7 @@ class CachedEventBanner extends DataClass
   @override
   String toString() {
     return (StringBuffer('CachedEventBanner(')
+          ..write('bannerId: $bannerId, ')
           ..write('eventId: $eventId, ')
           ..write('eventCategory: $eventCategory, ')
           ..write('eventDescription: $eventDescription')
@@ -7286,40 +7323,47 @@ class CachedEventBanner extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(eventId, eventCategory, eventDescription);
+  int get hashCode =>
+      Object.hash(bannerId, eventId, eventCategory, eventDescription);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CachedEventBanner &&
+          other.bannerId == this.bannerId &&
           other.eventId == this.eventId &&
           other.eventCategory == this.eventCategory &&
           other.eventDescription == this.eventDescription);
 }
 
 class CachedEventBannersCompanion extends UpdateCompanion<CachedEventBanner> {
+  final Value<String> bannerId;
   final Value<String?> eventId;
   final Value<String?> eventCategory;
   final Value<String?> eventDescription;
   final Value<int> rowid;
   const CachedEventBannersCompanion({
+    this.bannerId = const Value.absent(),
     this.eventId = const Value.absent(),
     this.eventCategory = const Value.absent(),
     this.eventDescription = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   CachedEventBannersCompanion.insert({
+    required String bannerId,
     this.eventId = const Value.absent(),
     this.eventCategory = const Value.absent(),
     this.eventDescription = const Value.absent(),
     this.rowid = const Value.absent(),
-  });
+  }) : bannerId = Value(bannerId);
   static Insertable<CachedEventBanner> custom({
+    Expression<String>? bannerId,
     Expression<String>? eventId,
     Expression<String>? eventCategory,
     Expression<String>? eventDescription,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
+      if (bannerId != null) 'banner_id': bannerId,
       if (eventId != null) 'event_id': eventId,
       if (eventCategory != null) 'event_category': eventCategory,
       if (eventDescription != null) 'event_description': eventDescription,
@@ -7328,12 +7372,14 @@ class CachedEventBannersCompanion extends UpdateCompanion<CachedEventBanner> {
   }
 
   CachedEventBannersCompanion copyWith({
+    Value<String>? bannerId,
     Value<String?>? eventId,
     Value<String?>? eventCategory,
     Value<String?>? eventDescription,
     Value<int>? rowid,
   }) {
     return CachedEventBannersCompanion(
+      bannerId: bannerId ?? this.bannerId,
       eventId: eventId ?? this.eventId,
       eventCategory: eventCategory ?? this.eventCategory,
       eventDescription: eventDescription ?? this.eventDescription,
@@ -7344,6 +7390,9 @@ class CachedEventBannersCompanion extends UpdateCompanion<CachedEventBanner> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (bannerId.present) {
+      map['banner_id'] = Variable<String>(bannerId.value);
+    }
     if (eventId.present) {
       map['event_id'] = Variable<String>(eventId.value);
     }
@@ -7362,6 +7411,7 @@ class CachedEventBannersCompanion extends UpdateCompanion<CachedEventBanner> {
   @override
   String toString() {
     return (StringBuffer('CachedEventBannersCompanion(')
+          ..write('bannerId: $bannerId, ')
           ..write('eventId: $eventId, ')
           ..write('eventCategory: $eventCategory, ')
           ..write('eventDescription: $eventDescription, ')
@@ -8520,6 +8570,9 @@ class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
+  late final $CachedProductTable cachedProduct = $CachedProductTable(this);
+  late final $ProductTranslationsTable productTranslations =
+      $ProductTranslationsTable(this);
   late final ProductTitleFts productTitleFts = ProductTitleFts(this);
   late final Trigger productTranslationsInTitleFts = Trigger(
     'CREATE TRIGGER product_translations_in_title_fts AFTER INSERT ON product_translations WHEN new.field = \'title\' BEGIN INSERT INTO product_title_fts ("rowid", value) VALUES (new."rowid", new.value);END',
@@ -8534,7 +8587,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     'product_translations_up_title_fts',
   );
   late final $SyncStateTable syncState = $SyncStateTable(this);
-  late final $CachedProductTable cachedProduct = $CachedProductTable(this);
   late final $DevelopersTable developers = $DevelopersTable(this);
   late final $CachedSoftwareProductTable cachedSoftwareProduct =
       $CachedSoftwareProductTable(this);
@@ -8547,8 +8599,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ProductCategoriesTable productCategories =
       $ProductCategoriesTable(this);
   late final $ProductTagsTable productTags = $ProductTagsTable(this);
-  late final $ProductTranslationsTable productTranslations =
-      $ProductTranslationsTable(this);
   late final $CachedBannersTable cachedBanners = $CachedBannersTable(this);
   late final $CachedActionBannersTable cachedActionBanners =
       $CachedActionBannersTable(this);
@@ -8557,15 +8607,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CachedTabsTable cachedTabs = $CachedTabsTable(this);
   late final $CachedTabSectionsTable cachedTabSections =
       $CachedTabSectionsTable(this);
-  Selectable<SearchProductsByTitleResult> searchProductsByTitle(
+  Selectable<CachedProductData> searchProductsByTitle(
     String lang,
     String query,
   ) {
     return customSelect(
       'SELECT DISTINCT cp.* FROM product_title_fts JOIN product_translations AS pt ON pt."rowid" = product_title_fts."rowid" AND pt.field = \'title\' AND pt.language = ?1 JOIN cached_product AS cp ON cp.id = pt.product_id WHERE product_title_fts MATCH ?2',
       variables: [Variable<String>(lang), Variable<String>(query)],
-      readsFrom: {productTitleFts},
-    ).map((QueryRow row) => SearchProductsByTitleResult());
+      readsFrom: {productTitleFts, productTranslations, cachedProduct},
+    ).asyncMap(cachedProduct.mapFromRow);
   }
 
   @override
@@ -8573,12 +8623,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
+    cachedProduct,
+    productTranslations,
     productTitleFts,
     productTranslationsInTitleFts,
     productTranslationsDelTitleFts,
     productTranslationsUpTitleFts,
     syncState,
-    cachedProduct,
     developers,
     cachedSoftwareProduct,
     cachedGames,
@@ -8589,7 +8640,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     tags,
     productCategories,
     productTags,
-    productTranslations,
     cachedBanners,
     cachedActionBanners,
     cachedEventBanners,
@@ -8598,6 +8648,37 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'cached_product',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('product_translations', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'product_translations',
+        limitUpdateKind: UpdateKind.insert,
+      ),
+      result: [TableUpdate('product_title_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'product_translations',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('product_title_fts', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'product_translations',
+        limitUpdateKind: UpdateKind.update,
+      ),
+      result: [
+        TableUpdate('product_title_fts', kind: UpdateKind.delete),
+        TableUpdate('product_title_fts', kind: UpdateKind.insert),
+      ],
+    ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
         'cached_product',
@@ -8656,13 +8737,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
-        'cached_product',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('product_translations', kind: UpdateKind.delete)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
         'cached_tabs',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -8671,6 +8745,1562 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   ]);
 }
 
+typedef $$CachedProductTableCreateCompanionBuilder =
+    CachedProductCompanion Function({
+      required String id,
+      required String externalId,
+      required String type,
+      required Map<String, String> title,
+      required Map<String, String> shortDescription,
+      required Map<String, String> description,
+      required double rating,
+      required DateTime releaseDate,
+      required String iconUrl,
+      required bool isPaid,
+      Value<double?> price,
+      required String currencyCode,
+      Value<double?> discountPrice,
+      required String url,
+      required double ratingAvg,
+      required int reviewsCount,
+      required Map<String, int> ratingDistribution,
+      required List<Map<String, dynamic>> topReviews,
+      Value<int> rowid,
+    });
+typedef $$CachedProductTableUpdateCompanionBuilder =
+    CachedProductCompanion Function({
+      Value<String> id,
+      Value<String> externalId,
+      Value<String> type,
+      Value<Map<String, String>> title,
+      Value<Map<String, String>> shortDescription,
+      Value<Map<String, String>> description,
+      Value<double> rating,
+      Value<DateTime> releaseDate,
+      Value<String> iconUrl,
+      Value<bool> isPaid,
+      Value<double?> price,
+      Value<String> currencyCode,
+      Value<double?> discountPrice,
+      Value<String> url,
+      Value<double> ratingAvg,
+      Value<int> reviewsCount,
+      Value<Map<String, int>> ratingDistribution,
+      Value<List<Map<String, dynamic>>> topReviews,
+      Value<int> rowid,
+    });
+
+final class $$CachedProductTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $CachedProductTable, CachedProductData> {
+  $$CachedProductTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $ProductTranslationsTable,
+    List<ProductTranslation>
+  >
+  _productTranslationsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.productTranslations,
+        aliasName: $_aliasNameGenerator(
+          db.cachedProduct.id,
+          db.productTranslations.productId,
+        ),
+      );
+
+  $$ProductTranslationsTableProcessedTableManager get productTranslationsRefs {
+    final manager = $$ProductTranslationsTableTableManager(
+      $_db,
+      $_db.productTranslations,
+    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _productTranslationsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $CachedSoftwareProductTable,
+    List<CachedSoftwareProductData>
+  >
+  _cachedSoftwareProductRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.cachedSoftwareProduct,
+        aliasName: $_aliasNameGenerator(
+          db.cachedProduct.id,
+          db.cachedSoftwareProduct.productId,
+        ),
+      );
+
+  $$CachedSoftwareProductTableProcessedTableManager
+  get cachedSoftwareProductRefs {
+    final manager = $$CachedSoftwareProductTableTableManager(
+      $_db,
+      $_db.cachedSoftwareProduct,
+    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _cachedSoftwareProductRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$CachedBooksTable, List<CachedBook>>
+  _cachedBooksRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.cachedBooks,
+    aliasName: $_aliasNameGenerator(
+      db.cachedProduct.id,
+      db.cachedBooks.productId,
+    ),
+  );
+
+  $$CachedBooksTableProcessedTableManager get cachedBooksRefs {
+    final manager = $$CachedBooksTableTableManager(
+      $_db,
+      $_db.cachedBooks,
+    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_cachedBooksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ProductCategoriesTable, List<ProductCategory>>
+  _productCategoriesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.productCategories,
+        aliasName: $_aliasNameGenerator(
+          db.cachedProduct.id,
+          db.productCategories.productId,
+        ),
+      );
+
+  $$ProductCategoriesTableProcessedTableManager get productCategoriesRefs {
+    final manager = $$ProductCategoriesTableTableManager(
+      $_db,
+      $_db.productCategories,
+    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _productCategoriesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ProductTagsTable, List<ProductTag>>
+  _productTagsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.productTags,
+    aliasName: $_aliasNameGenerator(
+      db.cachedProduct.id,
+      db.productTags.productId,
+    ),
+  );
+
+  $$ProductTagsTableProcessedTableManager get productTagsRefs {
+    final manager = $$ProductTagsTableTableManager(
+      $_db,
+      $_db.productTags,
+    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_productTagsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $CachedActionBannersTable,
+    List<CachedActionBanner>
+  >
+  _cached_action_banner_by_banner_idTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.cachedActionBanners,
+        aliasName: $_aliasNameGenerator(
+          db.cachedProduct.id,
+          db.cachedActionBanners.bannerId,
+        ),
+      );
+
+  $$CachedActionBannersTableProcessedTableManager
+  get cached_action_banner_by_banner_id {
+    final manager = $$CachedActionBannersTableTableManager(
+      $_db,
+      $_db.cachedActionBanners,
+    ).filter((f) => f.bannerId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _cached_action_banner_by_banner_idTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $CachedActionBannersTable,
+    List<CachedActionBanner>
+  >
+  _cached_action_banner_by_product_external_idTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.cachedActionBanners,
+        aliasName: $_aliasNameGenerator(
+          db.cachedProduct.externalId,
+          db.cachedActionBanners.productExternalId,
+        ),
+      );
+
+  $$CachedActionBannersTableProcessedTableManager
+  get cached_action_banner_by_product_external_id {
+    final manager =
+        $$CachedActionBannersTableTableManager(
+          $_db,
+          $_db.cachedActionBanners,
+        ).filter(
+          (f) => f.productExternalId.externalId.sqlEquals(
+            $_itemColumn<String>('external_id')!,
+          ),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _cached_action_banner_by_product_external_idTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$CachedProductTableFilterComposer
+    extends Composer<_$AppDatabase, $CachedProductTable> {
+  $$CachedProductTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get externalId => $composableBuilder(
+    column: $table.externalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    Map<String, String>,
+    Map<String, String>,
+    String
+  >
+  get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    Map<String, String>,
+    Map<String, String>,
+    String
+  >
+  get shortDescription => $composableBuilder(
+    column: $table.shortDescription,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    Map<String, String>,
+    Map<String, String>,
+    String
+  >
+  get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<double> get rating => $composableBuilder(
+    column: $table.rating,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get releaseDate => $composableBuilder(
+    column: $table.releaseDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get iconUrl => $composableBuilder(
+    column: $table.iconUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPaid => $composableBuilder(
+    column: $table.isPaid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get price => $composableBuilder(
+    column: $table.price,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currencyCode => $composableBuilder(
+    column: $table.currencyCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get discountPrice => $composableBuilder(
+    column: $table.discountPrice,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get url => $composableBuilder(
+    column: $table.url,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get ratingAvg => $composableBuilder(
+    column: $table.ratingAvg,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get reviewsCount => $composableBuilder(
+    column: $table.reviewsCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<Map<String, int>, Map<String, int>, String>
+  get ratingDistribution => $composableBuilder(
+    column: $table.ratingDistribution,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    List<Map<String, dynamic>>,
+    List<Map<String, dynamic>>,
+    String
+  >
+  get topReviews => $composableBuilder(
+    column: $table.topReviews,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  Expression<bool> productTranslationsRefs(
+    Expression<bool> Function($$ProductTranslationsTableFilterComposer f) f,
+  ) {
+    final $$ProductTranslationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.productTranslations,
+      getReferencedColumn: (t) => t.productId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProductTranslationsTableFilterComposer(
+            $db: $db,
+            $table: $db.productTranslations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> cachedSoftwareProductRefs(
+    Expression<bool> Function($$CachedSoftwareProductTableFilterComposer f) f,
+  ) {
+    final $$CachedSoftwareProductTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.cachedSoftwareProduct,
+          getReferencedColumn: (t) => t.productId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CachedSoftwareProductTableFilterComposer(
+                $db: $db,
+                $table: $db.cachedSoftwareProduct,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> cachedBooksRefs(
+    Expression<bool> Function($$CachedBooksTableFilterComposer f) f,
+  ) {
+    final $$CachedBooksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.cachedBooks,
+      getReferencedColumn: (t) => t.productId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedBooksTableFilterComposer(
+            $db: $db,
+            $table: $db.cachedBooks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> productCategoriesRefs(
+    Expression<bool> Function($$ProductCategoriesTableFilterComposer f) f,
+  ) {
+    final $$ProductCategoriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.productCategories,
+      getReferencedColumn: (t) => t.productId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProductCategoriesTableFilterComposer(
+            $db: $db,
+            $table: $db.productCategories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> productTagsRefs(
+    Expression<bool> Function($$ProductTagsTableFilterComposer f) f,
+  ) {
+    final $$ProductTagsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.productTags,
+      getReferencedColumn: (t) => t.productId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProductTagsTableFilterComposer(
+            $db: $db,
+            $table: $db.productTags,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> cached_action_banner_by_banner_id(
+    Expression<bool> Function($$CachedActionBannersTableFilterComposer f) f,
+  ) {
+    final $$CachedActionBannersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.cachedActionBanners,
+      getReferencedColumn: (t) => t.bannerId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedActionBannersTableFilterComposer(
+            $db: $db,
+            $table: $db.cachedActionBanners,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> cached_action_banner_by_product_external_id(
+    Expression<bool> Function($$CachedActionBannersTableFilterComposer f) f,
+  ) {
+    final $$CachedActionBannersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.externalId,
+      referencedTable: $db.cachedActionBanners,
+      getReferencedColumn: (t) => t.productExternalId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedActionBannersTableFilterComposer(
+            $db: $db,
+            $table: $db.cachedActionBanners,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CachedProductTableOrderingComposer
+    extends Composer<_$AppDatabase, $CachedProductTable> {
+  $$CachedProductTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get externalId => $composableBuilder(
+    column: $table.externalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get shortDescription => $composableBuilder(
+    column: $table.shortDescription,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get rating => $composableBuilder(
+    column: $table.rating,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get releaseDate => $composableBuilder(
+    column: $table.releaseDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get iconUrl => $composableBuilder(
+    column: $table.iconUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPaid => $composableBuilder(
+    column: $table.isPaid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get price => $composableBuilder(
+    column: $table.price,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currencyCode => $composableBuilder(
+    column: $table.currencyCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get discountPrice => $composableBuilder(
+    column: $table.discountPrice,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get url => $composableBuilder(
+    column: $table.url,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get ratingAvg => $composableBuilder(
+    column: $table.ratingAvg,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get reviewsCount => $composableBuilder(
+    column: $table.reviewsCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ratingDistribution => $composableBuilder(
+    column: $table.ratingDistribution,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get topReviews => $composableBuilder(
+    column: $table.topReviews,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CachedProductTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CachedProductTable> {
+  $$CachedProductTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get externalId => $composableBuilder(
+    column: $table.externalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<Map<String, String>, String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<Map<String, String>, String>
+  get shortDescription => $composableBuilder(
+    column: $table.shortDescription,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<Map<String, String>, String>
+  get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get rating =>
+      $composableBuilder(column: $table.rating, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get releaseDate => $composableBuilder(
+    column: $table.releaseDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get iconUrl =>
+      $composableBuilder(column: $table.iconUrl, builder: (column) => column);
+
+  GeneratedColumn<bool> get isPaid =>
+      $composableBuilder(column: $table.isPaid, builder: (column) => column);
+
+  GeneratedColumn<double> get price =>
+      $composableBuilder(column: $table.price, builder: (column) => column);
+
+  GeneratedColumn<String> get currencyCode => $composableBuilder(
+    column: $table.currencyCode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get discountPrice => $composableBuilder(
+    column: $table.discountPrice,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get url =>
+      $composableBuilder(column: $table.url, builder: (column) => column);
+
+  GeneratedColumn<double> get ratingAvg =>
+      $composableBuilder(column: $table.ratingAvg, builder: (column) => column);
+
+  GeneratedColumn<int> get reviewsCount => $composableBuilder(
+    column: $table.reviewsCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<Map<String, int>, String>
+  get ratingDistribution => $composableBuilder(
+    column: $table.ratingDistribution,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<List<Map<String, dynamic>>, String>
+  get topReviews => $composableBuilder(
+    column: $table.topReviews,
+    builder: (column) => column,
+  );
+
+  Expression<T> productTranslationsRefs<T extends Object>(
+    Expression<T> Function($$ProductTranslationsTableAnnotationComposer a) f,
+  ) {
+    final $$ProductTranslationsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.productTranslations,
+          getReferencedColumn: (t) => t.productId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ProductTranslationsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.productTranslations,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> cachedSoftwareProductRefs<T extends Object>(
+    Expression<T> Function($$CachedSoftwareProductTableAnnotationComposer a) f,
+  ) {
+    final $$CachedSoftwareProductTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.cachedSoftwareProduct,
+          getReferencedColumn: (t) => t.productId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CachedSoftwareProductTableAnnotationComposer(
+                $db: $db,
+                $table: $db.cachedSoftwareProduct,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> cachedBooksRefs<T extends Object>(
+    Expression<T> Function($$CachedBooksTableAnnotationComposer a) f,
+  ) {
+    final $$CachedBooksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.cachedBooks,
+      getReferencedColumn: (t) => t.productId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedBooksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.cachedBooks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> productCategoriesRefs<T extends Object>(
+    Expression<T> Function($$ProductCategoriesTableAnnotationComposer a) f,
+  ) {
+    final $$ProductCategoriesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.productCategories,
+          getReferencedColumn: (t) => t.productId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ProductCategoriesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.productCategories,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> productTagsRefs<T extends Object>(
+    Expression<T> Function($$ProductTagsTableAnnotationComposer a) f,
+  ) {
+    final $$ProductTagsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.productTags,
+      getReferencedColumn: (t) => t.productId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ProductTagsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.productTags,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> cached_action_banner_by_banner_id<T extends Object>(
+    Expression<T> Function($$CachedActionBannersTableAnnotationComposer a) f,
+  ) {
+    final $$CachedActionBannersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.cachedActionBanners,
+          getReferencedColumn: (t) => t.bannerId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CachedActionBannersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.cachedActionBanners,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> cached_action_banner_by_product_external_id<T extends Object>(
+    Expression<T> Function($$CachedActionBannersTableAnnotationComposer a) f,
+  ) {
+    final $$CachedActionBannersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.externalId,
+          referencedTable: $db.cachedActionBanners,
+          getReferencedColumn: (t) => t.productExternalId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CachedActionBannersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.cachedActionBanners,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$CachedProductTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CachedProductTable,
+          CachedProductData,
+          $$CachedProductTableFilterComposer,
+          $$CachedProductTableOrderingComposer,
+          $$CachedProductTableAnnotationComposer,
+          $$CachedProductTableCreateCompanionBuilder,
+          $$CachedProductTableUpdateCompanionBuilder,
+          (CachedProductData, $$CachedProductTableReferences),
+          CachedProductData,
+          PrefetchHooks Function({
+            bool productTranslationsRefs,
+            bool cachedSoftwareProductRefs,
+            bool cachedBooksRefs,
+            bool productCategoriesRefs,
+            bool productTagsRefs,
+            bool cached_action_banner_by_banner_id,
+            bool cached_action_banner_by_product_external_id,
+          })
+        > {
+  $$CachedProductTableTableManager(_$AppDatabase db, $CachedProductTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CachedProductTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CachedProductTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CachedProductTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> externalId = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<Map<String, String>> title = const Value.absent(),
+                Value<Map<String, String>> shortDescription =
+                    const Value.absent(),
+                Value<Map<String, String>> description = const Value.absent(),
+                Value<double> rating = const Value.absent(),
+                Value<DateTime> releaseDate = const Value.absent(),
+                Value<String> iconUrl = const Value.absent(),
+                Value<bool> isPaid = const Value.absent(),
+                Value<double?> price = const Value.absent(),
+                Value<String> currencyCode = const Value.absent(),
+                Value<double?> discountPrice = const Value.absent(),
+                Value<String> url = const Value.absent(),
+                Value<double> ratingAvg = const Value.absent(),
+                Value<int> reviewsCount = const Value.absent(),
+                Value<Map<String, int>> ratingDistribution =
+                    const Value.absent(),
+                Value<List<Map<String, dynamic>>> topReviews =
+                    const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedProductCompanion(
+                id: id,
+                externalId: externalId,
+                type: type,
+                title: title,
+                shortDescription: shortDescription,
+                description: description,
+                rating: rating,
+                releaseDate: releaseDate,
+                iconUrl: iconUrl,
+                isPaid: isPaid,
+                price: price,
+                currencyCode: currencyCode,
+                discountPrice: discountPrice,
+                url: url,
+                ratingAvg: ratingAvg,
+                reviewsCount: reviewsCount,
+                ratingDistribution: ratingDistribution,
+                topReviews: topReviews,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String externalId,
+                required String type,
+                required Map<String, String> title,
+                required Map<String, String> shortDescription,
+                required Map<String, String> description,
+                required double rating,
+                required DateTime releaseDate,
+                required String iconUrl,
+                required bool isPaid,
+                Value<double?> price = const Value.absent(),
+                required String currencyCode,
+                Value<double?> discountPrice = const Value.absent(),
+                required String url,
+                required double ratingAvg,
+                required int reviewsCount,
+                required Map<String, int> ratingDistribution,
+                required List<Map<String, dynamic>> topReviews,
+                Value<int> rowid = const Value.absent(),
+              }) => CachedProductCompanion.insert(
+                id: id,
+                externalId: externalId,
+                type: type,
+                title: title,
+                shortDescription: shortDescription,
+                description: description,
+                rating: rating,
+                releaseDate: releaseDate,
+                iconUrl: iconUrl,
+                isPaid: isPaid,
+                price: price,
+                currencyCode: currencyCode,
+                discountPrice: discountPrice,
+                url: url,
+                ratingAvg: ratingAvg,
+                reviewsCount: reviewsCount,
+                ratingDistribution: ratingDistribution,
+                topReviews: topReviews,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$CachedProductTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                productTranslationsRefs = false,
+                cachedSoftwareProductRefs = false,
+                cachedBooksRefs = false,
+                productCategoriesRefs = false,
+                productTagsRefs = false,
+                cached_action_banner_by_banner_id = false,
+                cached_action_banner_by_product_external_id = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (productTranslationsRefs) db.productTranslations,
+                    if (cachedSoftwareProductRefs) db.cachedSoftwareProduct,
+                    if (cachedBooksRefs) db.cachedBooks,
+                    if (productCategoriesRefs) db.productCategories,
+                    if (productTagsRefs) db.productTags,
+                    if (cached_action_banner_by_banner_id)
+                      db.cachedActionBanners,
+                    if (cached_action_banner_by_product_external_id)
+                      db.cachedActionBanners,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (productTranslationsRefs)
+                        await $_getPrefetchedData<
+                          CachedProductData,
+                          $CachedProductTable,
+                          ProductTranslation
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CachedProductTableReferences
+                              ._productTranslationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CachedProductTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).productTranslationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.productId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (cachedSoftwareProductRefs)
+                        await $_getPrefetchedData<
+                          CachedProductData,
+                          $CachedProductTable,
+                          CachedSoftwareProductData
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CachedProductTableReferences
+                              ._cachedSoftwareProductRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CachedProductTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).cachedSoftwareProductRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.productId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (cachedBooksRefs)
+                        await $_getPrefetchedData<
+                          CachedProductData,
+                          $CachedProductTable,
+                          CachedBook
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CachedProductTableReferences
+                              ._cachedBooksRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CachedProductTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).cachedBooksRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.productId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (productCategoriesRefs)
+                        await $_getPrefetchedData<
+                          CachedProductData,
+                          $CachedProductTable,
+                          ProductCategory
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CachedProductTableReferences
+                              ._productCategoriesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CachedProductTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).productCategoriesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.productId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (productTagsRefs)
+                        await $_getPrefetchedData<
+                          CachedProductData,
+                          $CachedProductTable,
+                          ProductTag
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CachedProductTableReferences
+                              ._productTagsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CachedProductTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).productTagsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.productId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (cached_action_banner_by_banner_id)
+                        await $_getPrefetchedData<
+                          CachedProductData,
+                          $CachedProductTable,
+                          CachedActionBanner
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CachedProductTableReferences
+                              ._cached_action_banner_by_banner_idTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CachedProductTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).cached_action_banner_by_banner_id,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.bannerId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (cached_action_banner_by_product_external_id)
+                        await $_getPrefetchedData<
+                          CachedProductData,
+                          $CachedProductTable,
+                          CachedActionBanner
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CachedProductTableReferences
+                              ._cached_action_banner_by_product_external_idTable(
+                                db,
+                              ),
+                          managerFromTypedResult: (p0) =>
+                              $$CachedProductTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).cached_action_banner_by_product_external_id,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.productExternalId == item.externalId,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$CachedProductTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CachedProductTable,
+      CachedProductData,
+      $$CachedProductTableFilterComposer,
+      $$CachedProductTableOrderingComposer,
+      $$CachedProductTableAnnotationComposer,
+      $$CachedProductTableCreateCompanionBuilder,
+      $$CachedProductTableUpdateCompanionBuilder,
+      (CachedProductData, $$CachedProductTableReferences),
+      CachedProductData,
+      PrefetchHooks Function({
+        bool productTranslationsRefs,
+        bool cachedSoftwareProductRefs,
+        bool cachedBooksRefs,
+        bool productCategoriesRefs,
+        bool productTagsRefs,
+        bool cached_action_banner_by_banner_id,
+        bool cached_action_banner_by_product_external_id,
+      })
+    >;
+typedef $$ProductTranslationsTableCreateCompanionBuilder =
+    ProductTranslationsCompanion Function({
+      required String productId,
+      required String field,
+      required String language,
+      required String value,
+      Value<int> rowid,
+    });
+typedef $$ProductTranslationsTableUpdateCompanionBuilder =
+    ProductTranslationsCompanion Function({
+      Value<String> productId,
+      Value<String> field,
+      Value<String> language,
+      Value<String> value,
+      Value<int> rowid,
+    });
+
+final class $$ProductTranslationsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ProductTranslationsTable,
+          ProductTranslation
+        > {
+  $$ProductTranslationsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CachedProductTable _productIdTable(_$AppDatabase db) =>
+      db.cachedProduct.createAlias(
+        $_aliasNameGenerator(
+          db.productTranslations.productId,
+          db.cachedProduct.id,
+        ),
+      );
+
+  $$CachedProductTableProcessedTableManager get productId {
+    final $_column = $_itemColumn<String>('product_id')!;
+
+    final manager = $$CachedProductTableTableManager(
+      $_db,
+      $_db.cachedProduct,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_productIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ProductTranslationsTableFilterComposer
+    extends Composer<_$AppDatabase, $ProductTranslationsTable> {
+  $$ProductTranslationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get field => $composableBuilder(
+    column: $table.field,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$CachedProductTableFilterComposer get productId {
+    final $$CachedProductTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.productId,
+      referencedTable: $db.cachedProduct,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedProductTableFilterComposer(
+            $db: $db,
+            $table: $db.cachedProduct,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ProductTranslationsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ProductTranslationsTable> {
+  $$ProductTranslationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get field => $composableBuilder(
+    column: $table.field,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$CachedProductTableOrderingComposer get productId {
+    final $$CachedProductTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.productId,
+      referencedTable: $db.cachedProduct,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedProductTableOrderingComposer(
+            $db: $db,
+            $table: $db.cachedProduct,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ProductTranslationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ProductTranslationsTable> {
+  $$ProductTranslationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get field =>
+      $composableBuilder(column: $table.field, builder: (column) => column);
+
+  GeneratedColumn<String> get language =>
+      $composableBuilder(column: $table.language, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  $$CachedProductTableAnnotationComposer get productId {
+    final $$CachedProductTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.productId,
+      referencedTable: $db.cachedProduct,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedProductTableAnnotationComposer(
+            $db: $db,
+            $table: $db.cachedProduct,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ProductTranslationsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ProductTranslationsTable,
+          ProductTranslation,
+          $$ProductTranslationsTableFilterComposer,
+          $$ProductTranslationsTableOrderingComposer,
+          $$ProductTranslationsTableAnnotationComposer,
+          $$ProductTranslationsTableCreateCompanionBuilder,
+          $$ProductTranslationsTableUpdateCompanionBuilder,
+          (ProductTranslation, $$ProductTranslationsTableReferences),
+          ProductTranslation,
+          PrefetchHooks Function({bool productId})
+        > {
+  $$ProductTranslationsTableTableManager(
+    _$AppDatabase db,
+    $ProductTranslationsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ProductTranslationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ProductTranslationsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ProductTranslationsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> productId = const Value.absent(),
+                Value<String> field = const Value.absent(),
+                Value<String> language = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProductTranslationsCompanion(
+                productId: productId,
+                field: field,
+                language: language,
+                value: value,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String productId,
+                required String field,
+                required String language,
+                required String value,
+                Value<int> rowid = const Value.absent(),
+              }) => ProductTranslationsCompanion.insert(
+                productId: productId,
+                field: field,
+                language: language,
+                value: value,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ProductTranslationsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({productId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (productId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.productId,
+                                referencedTable:
+                                    $$ProductTranslationsTableReferences
+                                        ._productIdTable(db),
+                                referencedColumn:
+                                    $$ProductTranslationsTableReferences
+                                        ._productIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ProductTranslationsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ProductTranslationsTable,
+      ProductTranslation,
+      $$ProductTranslationsTableFilterComposer,
+      $$ProductTranslationsTableOrderingComposer,
+      $$ProductTranslationsTableAnnotationComposer,
+      $$ProductTranslationsTableCreateCompanionBuilder,
+      $$ProductTranslationsTableUpdateCompanionBuilder,
+      (ProductTranslation, $$ProductTranslationsTableReferences),
+      ProductTranslation,
+      PrefetchHooks Function({bool productId})
+    >;
 typedef $ProductTitleFtsCreateCompanionBuilder =
     ProductTitleFtsCompanion Function({
       required String value,
@@ -8970,1240 +10600,6 @@ typedef $$SyncStateTableProcessedTableManager =
       ),
       SyncStateData,
       PrefetchHooks Function()
-    >;
-typedef $$CachedProductTableCreateCompanionBuilder =
-    CachedProductCompanion Function({
-      required String id,
-      required String externalId,
-      required String type,
-      required Map<String, String> title,
-      required Map<String, String> shortDescription,
-      required Map<String, String> description,
-      required double rating,
-      required DateTime releaseDate,
-      required String iconUrl,
-      required bool isPaid,
-      Value<double?> price,
-      required String currencyCode,
-      Value<double?> discountPrice,
-      required String url,
-      required double ratingAvg,
-      required int reviewsCount,
-      required Map<String, int> ratingDistribution,
-      required List<Map<String, dynamic>> topReviews,
-      Value<int> rowid,
-    });
-typedef $$CachedProductTableUpdateCompanionBuilder =
-    CachedProductCompanion Function({
-      Value<String> id,
-      Value<String> externalId,
-      Value<String> type,
-      Value<Map<String, String>> title,
-      Value<Map<String, String>> shortDescription,
-      Value<Map<String, String>> description,
-      Value<double> rating,
-      Value<DateTime> releaseDate,
-      Value<String> iconUrl,
-      Value<bool> isPaid,
-      Value<double?> price,
-      Value<String> currencyCode,
-      Value<double?> discountPrice,
-      Value<String> url,
-      Value<double> ratingAvg,
-      Value<int> reviewsCount,
-      Value<Map<String, int>> ratingDistribution,
-      Value<List<Map<String, dynamic>>> topReviews,
-      Value<int> rowid,
-    });
-
-final class $$CachedProductTableReferences
-    extends
-        BaseReferences<_$AppDatabase, $CachedProductTable, CachedProductData> {
-  $$CachedProductTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<
-    $CachedSoftwareProductTable,
-    List<CachedSoftwareProductData>
-  >
-  _cachedSoftwareProductRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.cachedSoftwareProduct,
-        aliasName: $_aliasNameGenerator(
-          db.cachedProduct.id,
-          db.cachedSoftwareProduct.productId,
-        ),
-      );
-
-  $$CachedSoftwareProductTableProcessedTableManager
-  get cachedSoftwareProductRefs {
-    final manager = $$CachedSoftwareProductTableTableManager(
-      $_db,
-      $_db.cachedSoftwareProduct,
-    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _cachedSoftwareProductRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<$CachedBooksTable, List<CachedBook>>
-  _cachedBooksRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-    db.cachedBooks,
-    aliasName: $_aliasNameGenerator(
-      db.cachedProduct.id,
-      db.cachedBooks.productId,
-    ),
-  );
-
-  $$CachedBooksTableProcessedTableManager get cachedBooksRefs {
-    final manager = $$CachedBooksTableTableManager(
-      $_db,
-      $_db.cachedBooks,
-    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_cachedBooksRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<$ProductCategoriesTable, List<ProductCategory>>
-  _productCategoriesRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.productCategories,
-        aliasName: $_aliasNameGenerator(
-          db.cachedProduct.id,
-          db.productCategories.productId,
-        ),
-      );
-
-  $$ProductCategoriesTableProcessedTableManager get productCategoriesRefs {
-    final manager = $$ProductCategoriesTableTableManager(
-      $_db,
-      $_db.productCategories,
-    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _productCategoriesRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<$ProductTagsTable, List<ProductTag>>
-  _productTagsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-    db.productTags,
-    aliasName: $_aliasNameGenerator(
-      db.cachedProduct.id,
-      db.productTags.productId,
-    ),
-  );
-
-  $$ProductTagsTableProcessedTableManager get productTagsRefs {
-    final manager = $$ProductTagsTableTableManager(
-      $_db,
-      $_db.productTags,
-    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_productTagsRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
-    $ProductTranslationsTable,
-    List<ProductTranslation>
-  >
-  _productTranslationsRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.productTranslations,
-        aliasName: $_aliasNameGenerator(
-          db.cachedProduct.id,
-          db.productTranslations.productId,
-        ),
-      );
-
-  $$ProductTranslationsTableProcessedTableManager get productTranslationsRefs {
-    final manager = $$ProductTranslationsTableTableManager(
-      $_db,
-      $_db.productTranslations,
-    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _productTranslationsRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
-    $CachedActionBannersTable,
-    List<CachedActionBanner>
-  >
-  _cached_action_banner_by_banner_idTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.cachedActionBanners,
-        aliasName: $_aliasNameGenerator(
-          db.cachedProduct.id,
-          db.cachedActionBanners.bannerId,
-        ),
-      );
-
-  $$CachedActionBannersTableProcessedTableManager
-  get cached_action_banner_by_banner_id {
-    final manager = $$CachedActionBannersTableTableManager(
-      $_db,
-      $_db.cachedActionBanners,
-    ).filter((f) => f.bannerId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _cached_action_banner_by_banner_idTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
-    $CachedActionBannersTable,
-    List<CachedActionBanner>
-  >
-  _cached_action_banner_by_product_external_idTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.cachedActionBanners,
-        aliasName: $_aliasNameGenerator(
-          db.cachedProduct.externalId,
-          db.cachedActionBanners.productExternalId,
-        ),
-      );
-
-  $$CachedActionBannersTableProcessedTableManager
-  get cached_action_banner_by_product_external_id {
-    final manager =
-        $$CachedActionBannersTableTableManager(
-          $_db,
-          $_db.cachedActionBanners,
-        ).filter(
-          (f) => f.productExternalId.externalId.sqlEquals(
-            $_itemColumn<String>('external_id')!,
-          ),
-        );
-
-    final cache = $_typedResult.readTableOrNull(
-      _cached_action_banner_by_product_external_idTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$CachedProductTableFilterComposer
-    extends Composer<_$AppDatabase, $CachedProductTable> {
-  $$CachedProductTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get externalId => $composableBuilder(
-    column: $table.externalId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get type => $composableBuilder(
-    column: $table.type,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<
-    Map<String, String>,
-    Map<String, String>,
-    String
-  >
-  get title => $composableBuilder(
-    column: $table.title,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<
-    Map<String, String>,
-    Map<String, String>,
-    String
-  >
-  get shortDescription => $composableBuilder(
-    column: $table.shortDescription,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<
-    Map<String, String>,
-    Map<String, String>,
-    String
-  >
-  get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  ColumnFilters<double> get rating => $composableBuilder(
-    column: $table.rating,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get releaseDate => $composableBuilder(
-    column: $table.releaseDate,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get iconUrl => $composableBuilder(
-    column: $table.iconUrl,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isPaid => $composableBuilder(
-    column: $table.isPaid,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get price => $composableBuilder(
-    column: $table.price,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get currencyCode => $composableBuilder(
-    column: $table.currencyCode,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get discountPrice => $composableBuilder(
-    column: $table.discountPrice,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get url => $composableBuilder(
-    column: $table.url,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get ratingAvg => $composableBuilder(
-    column: $table.ratingAvg,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get reviewsCount => $composableBuilder(
-    column: $table.reviewsCount,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<Map<String, int>, Map<String, int>, String>
-  get ratingDistribution => $composableBuilder(
-    column: $table.ratingDistribution,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<
-    List<Map<String, dynamic>>,
-    List<Map<String, dynamic>>,
-    String
-  >
-  get topReviews => $composableBuilder(
-    column: $table.topReviews,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  Expression<bool> cachedSoftwareProductRefs(
-    Expression<bool> Function($$CachedSoftwareProductTableFilterComposer f) f,
-  ) {
-    final $$CachedSoftwareProductTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.cachedSoftwareProduct,
-          getReferencedColumn: (t) => t.productId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$CachedSoftwareProductTableFilterComposer(
-                $db: $db,
-                $table: $db.cachedSoftwareProduct,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<bool> cachedBooksRefs(
-    Expression<bool> Function($$CachedBooksTableFilterComposer f) f,
-  ) {
-    final $$CachedBooksTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.cachedBooks,
-      getReferencedColumn: (t) => t.productId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CachedBooksTableFilterComposer(
-            $db: $db,
-            $table: $db.cachedBooks,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> productCategoriesRefs(
-    Expression<bool> Function($$ProductCategoriesTableFilterComposer f) f,
-  ) {
-    final $$ProductCategoriesTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.productCategories,
-      getReferencedColumn: (t) => t.productId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ProductCategoriesTableFilterComposer(
-            $db: $db,
-            $table: $db.productCategories,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> productTagsRefs(
-    Expression<bool> Function($$ProductTagsTableFilterComposer f) f,
-  ) {
-    final $$ProductTagsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.productTags,
-      getReferencedColumn: (t) => t.productId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ProductTagsTableFilterComposer(
-            $db: $db,
-            $table: $db.productTags,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> productTranslationsRefs(
-    Expression<bool> Function($$ProductTranslationsTableFilterComposer f) f,
-  ) {
-    final $$ProductTranslationsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.productTranslations,
-      getReferencedColumn: (t) => t.productId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ProductTranslationsTableFilterComposer(
-            $db: $db,
-            $table: $db.productTranslations,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> cached_action_banner_by_banner_id(
-    Expression<bool> Function($$CachedActionBannersTableFilterComposer f) f,
-  ) {
-    final $$CachedActionBannersTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.cachedActionBanners,
-      getReferencedColumn: (t) => t.bannerId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CachedActionBannersTableFilterComposer(
-            $db: $db,
-            $table: $db.cachedActionBanners,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> cached_action_banner_by_product_external_id(
-    Expression<bool> Function($$CachedActionBannersTableFilterComposer f) f,
-  ) {
-    final $$CachedActionBannersTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.externalId,
-      referencedTable: $db.cachedActionBanners,
-      getReferencedColumn: (t) => t.productExternalId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CachedActionBannersTableFilterComposer(
-            $db: $db,
-            $table: $db.cachedActionBanners,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$CachedProductTableOrderingComposer
-    extends Composer<_$AppDatabase, $CachedProductTable> {
-  $$CachedProductTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get externalId => $composableBuilder(
-    column: $table.externalId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get type => $composableBuilder(
-    column: $table.type,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get title => $composableBuilder(
-    column: $table.title,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get shortDescription => $composableBuilder(
-    column: $table.shortDescription,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get rating => $composableBuilder(
-    column: $table.rating,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get releaseDate => $composableBuilder(
-    column: $table.releaseDate,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get iconUrl => $composableBuilder(
-    column: $table.iconUrl,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isPaid => $composableBuilder(
-    column: $table.isPaid,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get price => $composableBuilder(
-    column: $table.price,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get currencyCode => $composableBuilder(
-    column: $table.currencyCode,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get discountPrice => $composableBuilder(
-    column: $table.discountPrice,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get url => $composableBuilder(
-    column: $table.url,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get ratingAvg => $composableBuilder(
-    column: $table.ratingAvg,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get reviewsCount => $composableBuilder(
-    column: $table.reviewsCount,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get ratingDistribution => $composableBuilder(
-    column: $table.ratingDistribution,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get topReviews => $composableBuilder(
-    column: $table.topReviews,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$CachedProductTableAnnotationComposer
-    extends Composer<_$AppDatabase, $CachedProductTable> {
-  $$CachedProductTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get externalId => $composableBuilder(
-    column: $table.externalId,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get type =>
-      $composableBuilder(column: $table.type, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<Map<String, String>, String> get title =>
-      $composableBuilder(column: $table.title, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<Map<String, String>, String>
-  get shortDescription => $composableBuilder(
-    column: $table.shortDescription,
-    builder: (column) => column,
-  );
-
-  GeneratedColumnWithTypeConverter<Map<String, String>, String>
-  get description => $composableBuilder(
-    column: $table.description,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get rating =>
-      $composableBuilder(column: $table.rating, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get releaseDate => $composableBuilder(
-    column: $table.releaseDate,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get iconUrl =>
-      $composableBuilder(column: $table.iconUrl, builder: (column) => column);
-
-  GeneratedColumn<bool> get isPaid =>
-      $composableBuilder(column: $table.isPaid, builder: (column) => column);
-
-  GeneratedColumn<double> get price =>
-      $composableBuilder(column: $table.price, builder: (column) => column);
-
-  GeneratedColumn<String> get currencyCode => $composableBuilder(
-    column: $table.currencyCode,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get discountPrice => $composableBuilder(
-    column: $table.discountPrice,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get url =>
-      $composableBuilder(column: $table.url, builder: (column) => column);
-
-  GeneratedColumn<double> get ratingAvg =>
-      $composableBuilder(column: $table.ratingAvg, builder: (column) => column);
-
-  GeneratedColumn<int> get reviewsCount => $composableBuilder(
-    column: $table.reviewsCount,
-    builder: (column) => column,
-  );
-
-  GeneratedColumnWithTypeConverter<Map<String, int>, String>
-  get ratingDistribution => $composableBuilder(
-    column: $table.ratingDistribution,
-    builder: (column) => column,
-  );
-
-  GeneratedColumnWithTypeConverter<List<Map<String, dynamic>>, String>
-  get topReviews => $composableBuilder(
-    column: $table.topReviews,
-    builder: (column) => column,
-  );
-
-  Expression<T> cachedSoftwareProductRefs<T extends Object>(
-    Expression<T> Function($$CachedSoftwareProductTableAnnotationComposer a) f,
-  ) {
-    final $$CachedSoftwareProductTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.cachedSoftwareProduct,
-          getReferencedColumn: (t) => t.productId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$CachedSoftwareProductTableAnnotationComposer(
-                $db: $db,
-                $table: $db.cachedSoftwareProduct,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<T> cachedBooksRefs<T extends Object>(
-    Expression<T> Function($$CachedBooksTableAnnotationComposer a) f,
-  ) {
-    final $$CachedBooksTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.cachedBooks,
-      getReferencedColumn: (t) => t.productId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CachedBooksTableAnnotationComposer(
-            $db: $db,
-            $table: $db.cachedBooks,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<T> productCategoriesRefs<T extends Object>(
-    Expression<T> Function($$ProductCategoriesTableAnnotationComposer a) f,
-  ) {
-    final $$ProductCategoriesTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.productCategories,
-          getReferencedColumn: (t) => t.productId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ProductCategoriesTableAnnotationComposer(
-                $db: $db,
-                $table: $db.productCategories,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<T> productTagsRefs<T extends Object>(
-    Expression<T> Function($$ProductTagsTableAnnotationComposer a) f,
-  ) {
-    final $$ProductTagsTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.productTags,
-      getReferencedColumn: (t) => t.productId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ProductTagsTableAnnotationComposer(
-            $db: $db,
-            $table: $db.productTags,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<T> productTranslationsRefs<T extends Object>(
-    Expression<T> Function($$ProductTranslationsTableAnnotationComposer a) f,
-  ) {
-    final $$ProductTranslationsTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.productTranslations,
-          getReferencedColumn: (t) => t.productId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ProductTranslationsTableAnnotationComposer(
-                $db: $db,
-                $table: $db.productTranslations,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<T> cached_action_banner_by_banner_id<T extends Object>(
-    Expression<T> Function($$CachedActionBannersTableAnnotationComposer a) f,
-  ) {
-    final $$CachedActionBannersTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.cachedActionBanners,
-          getReferencedColumn: (t) => t.bannerId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$CachedActionBannersTableAnnotationComposer(
-                $db: $db,
-                $table: $db.cachedActionBanners,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
-  Expression<T> cached_action_banner_by_product_external_id<T extends Object>(
-    Expression<T> Function($$CachedActionBannersTableAnnotationComposer a) f,
-  ) {
-    final $$CachedActionBannersTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.externalId,
-          referencedTable: $db.cachedActionBanners,
-          getReferencedColumn: (t) => t.productExternalId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$CachedActionBannersTableAnnotationComposer(
-                $db: $db,
-                $table: $db.cachedActionBanners,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-}
-
-class $$CachedProductTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $CachedProductTable,
-          CachedProductData,
-          $$CachedProductTableFilterComposer,
-          $$CachedProductTableOrderingComposer,
-          $$CachedProductTableAnnotationComposer,
-          $$CachedProductTableCreateCompanionBuilder,
-          $$CachedProductTableUpdateCompanionBuilder,
-          (CachedProductData, $$CachedProductTableReferences),
-          CachedProductData,
-          PrefetchHooks Function({
-            bool cachedSoftwareProductRefs,
-            bool cachedBooksRefs,
-            bool productCategoriesRefs,
-            bool productTagsRefs,
-            bool productTranslationsRefs,
-            bool cached_action_banner_by_banner_id,
-            bool cached_action_banner_by_product_external_id,
-          })
-        > {
-  $$CachedProductTableTableManager(_$AppDatabase db, $CachedProductTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$CachedProductTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$CachedProductTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$CachedProductTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<String> externalId = const Value.absent(),
-                Value<String> type = const Value.absent(),
-                Value<Map<String, String>> title = const Value.absent(),
-                Value<Map<String, String>> shortDescription =
-                    const Value.absent(),
-                Value<Map<String, String>> description = const Value.absent(),
-                Value<double> rating = const Value.absent(),
-                Value<DateTime> releaseDate = const Value.absent(),
-                Value<String> iconUrl = const Value.absent(),
-                Value<bool> isPaid = const Value.absent(),
-                Value<double?> price = const Value.absent(),
-                Value<String> currencyCode = const Value.absent(),
-                Value<double?> discountPrice = const Value.absent(),
-                Value<String> url = const Value.absent(),
-                Value<double> ratingAvg = const Value.absent(),
-                Value<int> reviewsCount = const Value.absent(),
-                Value<Map<String, int>> ratingDistribution =
-                    const Value.absent(),
-                Value<List<Map<String, dynamic>>> topReviews =
-                    const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => CachedProductCompanion(
-                id: id,
-                externalId: externalId,
-                type: type,
-                title: title,
-                shortDescription: shortDescription,
-                description: description,
-                rating: rating,
-                releaseDate: releaseDate,
-                iconUrl: iconUrl,
-                isPaid: isPaid,
-                price: price,
-                currencyCode: currencyCode,
-                discountPrice: discountPrice,
-                url: url,
-                ratingAvg: ratingAvg,
-                reviewsCount: reviewsCount,
-                ratingDistribution: ratingDistribution,
-                topReviews: topReviews,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required String externalId,
-                required String type,
-                required Map<String, String> title,
-                required Map<String, String> shortDescription,
-                required Map<String, String> description,
-                required double rating,
-                required DateTime releaseDate,
-                required String iconUrl,
-                required bool isPaid,
-                Value<double?> price = const Value.absent(),
-                required String currencyCode,
-                Value<double?> discountPrice = const Value.absent(),
-                required String url,
-                required double ratingAvg,
-                required int reviewsCount,
-                required Map<String, int> ratingDistribution,
-                required List<Map<String, dynamic>> topReviews,
-                Value<int> rowid = const Value.absent(),
-              }) => CachedProductCompanion.insert(
-                id: id,
-                externalId: externalId,
-                type: type,
-                title: title,
-                shortDescription: shortDescription,
-                description: description,
-                rating: rating,
-                releaseDate: releaseDate,
-                iconUrl: iconUrl,
-                isPaid: isPaid,
-                price: price,
-                currencyCode: currencyCode,
-                discountPrice: discountPrice,
-                url: url,
-                ratingAvg: ratingAvg,
-                reviewsCount: reviewsCount,
-                ratingDistribution: ratingDistribution,
-                topReviews: topReviews,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$CachedProductTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback:
-              ({
-                cachedSoftwareProductRefs = false,
-                cachedBooksRefs = false,
-                productCategoriesRefs = false,
-                productTagsRefs = false,
-                productTranslationsRefs = false,
-                cached_action_banner_by_banner_id = false,
-                cached_action_banner_by_product_external_id = false,
-              }) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (cachedSoftwareProductRefs) db.cachedSoftwareProduct,
-                    if (cachedBooksRefs) db.cachedBooks,
-                    if (productCategoriesRefs) db.productCategories,
-                    if (productTagsRefs) db.productTags,
-                    if (productTranslationsRefs) db.productTranslations,
-                    if (cached_action_banner_by_banner_id)
-                      db.cachedActionBanners,
-                    if (cached_action_banner_by_product_external_id)
-                      db.cachedActionBanners,
-                  ],
-                  addJoins: null,
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (cachedSoftwareProductRefs)
-                        await $_getPrefetchedData<
-                          CachedProductData,
-                          $CachedProductTable,
-                          CachedSoftwareProductData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$CachedProductTableReferences
-                              ._cachedSoftwareProductRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$CachedProductTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).cachedSoftwareProductRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.productId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (cachedBooksRefs)
-                        await $_getPrefetchedData<
-                          CachedProductData,
-                          $CachedProductTable,
-                          CachedBook
-                        >(
-                          currentTable: table,
-                          referencedTable: $$CachedProductTableReferences
-                              ._cachedBooksRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$CachedProductTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).cachedBooksRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.productId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (productCategoriesRefs)
-                        await $_getPrefetchedData<
-                          CachedProductData,
-                          $CachedProductTable,
-                          ProductCategory
-                        >(
-                          currentTable: table,
-                          referencedTable: $$CachedProductTableReferences
-                              ._productCategoriesRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$CachedProductTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).productCategoriesRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.productId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (productTagsRefs)
-                        await $_getPrefetchedData<
-                          CachedProductData,
-                          $CachedProductTable,
-                          ProductTag
-                        >(
-                          currentTable: table,
-                          referencedTable: $$CachedProductTableReferences
-                              ._productTagsRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$CachedProductTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).productTagsRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.productId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (productTranslationsRefs)
-                        await $_getPrefetchedData<
-                          CachedProductData,
-                          $CachedProductTable,
-                          ProductTranslation
-                        >(
-                          currentTable: table,
-                          referencedTable: $$CachedProductTableReferences
-                              ._productTranslationsRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$CachedProductTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).productTranslationsRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.productId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (cached_action_banner_by_banner_id)
-                        await $_getPrefetchedData<
-                          CachedProductData,
-                          $CachedProductTable,
-                          CachedActionBanner
-                        >(
-                          currentTable: table,
-                          referencedTable: $$CachedProductTableReferences
-                              ._cached_action_banner_by_banner_idTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$CachedProductTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).cached_action_banner_by_banner_id,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.bannerId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (cached_action_banner_by_product_external_id)
-                        await $_getPrefetchedData<
-                          CachedProductData,
-                          $CachedProductTable,
-                          CachedActionBanner
-                        >(
-                          currentTable: table,
-                          referencedTable: $$CachedProductTableReferences
-                              ._cached_action_banner_by_product_external_idTable(
-                                db,
-                              ),
-                          managerFromTypedResult: (p0) =>
-                              $$CachedProductTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).cached_action_banner_by_product_external_id,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.productExternalId == item.externalId,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$CachedProductTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $CachedProductTable,
-      CachedProductData,
-      $$CachedProductTableFilterComposer,
-      $$CachedProductTableOrderingComposer,
-      $$CachedProductTableAnnotationComposer,
-      $$CachedProductTableCreateCompanionBuilder,
-      $$CachedProductTableUpdateCompanionBuilder,
-      (CachedProductData, $$CachedProductTableReferences),
-      CachedProductData,
-      PrefetchHooks Function({
-        bool cachedSoftwareProductRefs,
-        bool cachedBooksRefs,
-        bool productCategoriesRefs,
-        bool productTagsRefs,
-        bool productTranslationsRefs,
-        bool cached_action_banner_by_banner_id,
-        bool cached_action_banner_by_product_external_id,
-      })
     >;
 typedef $$DevelopersTableCreateCompanionBuilder =
     DevelopersCompanion Function({
@@ -13862,328 +14258,6 @@ typedef $$ProductTagsTableProcessedTableManager =
       ProductTag,
       PrefetchHooks Function({bool productId, bool tagId})
     >;
-typedef $$ProductTranslationsTableCreateCompanionBuilder =
-    ProductTranslationsCompanion Function({
-      required String productId,
-      required String field,
-      required String language,
-      required String value,
-      Value<int> rowid,
-    });
-typedef $$ProductTranslationsTableUpdateCompanionBuilder =
-    ProductTranslationsCompanion Function({
-      Value<String> productId,
-      Value<String> field,
-      Value<String> language,
-      Value<String> value,
-      Value<int> rowid,
-    });
-
-final class $$ProductTranslationsTableReferences
-    extends
-        BaseReferences<
-          _$AppDatabase,
-          $ProductTranslationsTable,
-          ProductTranslation
-        > {
-  $$ProductTranslationsTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $CachedProductTable _productIdTable(_$AppDatabase db) =>
-      db.cachedProduct.createAlias(
-        $_aliasNameGenerator(
-          db.productTranslations.productId,
-          db.cachedProduct.id,
-        ),
-      );
-
-  $$CachedProductTableProcessedTableManager get productId {
-    final $_column = $_itemColumn<String>('product_id')!;
-
-    final manager = $$CachedProductTableTableManager(
-      $_db,
-      $_db.cachedProduct,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_productIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$ProductTranslationsTableFilterComposer
-    extends Composer<_$AppDatabase, $ProductTranslationsTable> {
-  $$ProductTranslationsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get field => $composableBuilder(
-    column: $table.field,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get language => $composableBuilder(
-    column: $table.language,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get value => $composableBuilder(
-    column: $table.value,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$CachedProductTableFilterComposer get productId {
-    final $$CachedProductTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.productId,
-      referencedTable: $db.cachedProduct,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CachedProductTableFilterComposer(
-            $db: $db,
-            $table: $db.cachedProduct,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ProductTranslationsTableOrderingComposer
-    extends Composer<_$AppDatabase, $ProductTranslationsTable> {
-  $$ProductTranslationsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get field => $composableBuilder(
-    column: $table.field,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get language => $composableBuilder(
-    column: $table.language,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get value => $composableBuilder(
-    column: $table.value,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$CachedProductTableOrderingComposer get productId {
-    final $$CachedProductTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.productId,
-      referencedTable: $db.cachedProduct,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CachedProductTableOrderingComposer(
-            $db: $db,
-            $table: $db.cachedProduct,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ProductTranslationsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ProductTranslationsTable> {
-  $$ProductTranslationsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get field =>
-      $composableBuilder(column: $table.field, builder: (column) => column);
-
-  GeneratedColumn<String> get language =>
-      $composableBuilder(column: $table.language, builder: (column) => column);
-
-  GeneratedColumn<String> get value =>
-      $composableBuilder(column: $table.value, builder: (column) => column);
-
-  $$CachedProductTableAnnotationComposer get productId {
-    final $$CachedProductTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.productId,
-      referencedTable: $db.cachedProduct,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CachedProductTableAnnotationComposer(
-            $db: $db,
-            $table: $db.cachedProduct,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ProductTranslationsTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $ProductTranslationsTable,
-          ProductTranslation,
-          $$ProductTranslationsTableFilterComposer,
-          $$ProductTranslationsTableOrderingComposer,
-          $$ProductTranslationsTableAnnotationComposer,
-          $$ProductTranslationsTableCreateCompanionBuilder,
-          $$ProductTranslationsTableUpdateCompanionBuilder,
-          (ProductTranslation, $$ProductTranslationsTableReferences),
-          ProductTranslation,
-          PrefetchHooks Function({bool productId})
-        > {
-  $$ProductTranslationsTableTableManager(
-    _$AppDatabase db,
-    $ProductTranslationsTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ProductTranslationsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ProductTranslationsTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$ProductTranslationsTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<String> productId = const Value.absent(),
-                Value<String> field = const Value.absent(),
-                Value<String> language = const Value.absent(),
-                Value<String> value = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ProductTranslationsCompanion(
-                productId: productId,
-                field: field,
-                language: language,
-                value: value,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String productId,
-                required String field,
-                required String language,
-                required String value,
-                Value<int> rowid = const Value.absent(),
-              }) => ProductTranslationsCompanion.insert(
-                productId: productId,
-                field: field,
-                language: language,
-                value: value,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ProductTranslationsTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({productId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (productId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.productId,
-                                referencedTable:
-                                    $$ProductTranslationsTableReferences
-                                        ._productIdTable(db),
-                                referencedColumn:
-                                    $$ProductTranslationsTableReferences
-                                        ._productIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$ProductTranslationsTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $ProductTranslationsTable,
-      ProductTranslation,
-      $$ProductTranslationsTableFilterComposer,
-      $$ProductTranslationsTableOrderingComposer,
-      $$ProductTranslationsTableAnnotationComposer,
-      $$ProductTranslationsTableCreateCompanionBuilder,
-      $$ProductTranslationsTableUpdateCompanionBuilder,
-      (ProductTranslation, $$ProductTranslationsTableReferences),
-      ProductTranslation,
-      PrefetchHooks Function({bool productId})
-    >;
 typedef $$CachedBannersTableCreateCompanionBuilder =
     CachedBannersCompanion Function({
       required String id,
@@ -14204,6 +14278,39 @@ typedef $$CachedBannersTableUpdateCompanionBuilder =
       Value<String?> description,
       Value<int> rowid,
     });
+
+final class $$CachedBannersTableReferences
+    extends BaseReferences<_$AppDatabase, $CachedBannersTable, CachedBanner> {
+  $$CachedBannersTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$CachedEventBannersTable, List<CachedEventBanner>>
+  _cachedEventBannersRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.cachedEventBanners,
+        aliasName: $_aliasNameGenerator(
+          db.cachedBanners.id,
+          db.cachedEventBanners.bannerId,
+        ),
+      );
+
+  $$CachedEventBannersTableProcessedTableManager get cachedEventBannersRefs {
+    final manager = $$CachedEventBannersTableTableManager(
+      $_db,
+      $_db.cachedEventBanners,
+    ).filter((f) => f.bannerId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _cachedEventBannersRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
 
 class $$CachedBannersTableFilterComposer
     extends Composer<_$AppDatabase, $CachedBannersTable> {
@@ -14243,6 +14350,31 @@ class $$CachedBannersTableFilterComposer
     column: $table.description,
     builder: (column) => ColumnFilters(column),
   );
+
+  Expression<bool> cachedEventBannersRefs(
+    Expression<bool> Function($$CachedEventBannersTableFilterComposer f) f,
+  ) {
+    final $$CachedEventBannersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.cachedEventBanners,
+      getReferencedColumn: (t) => t.bannerId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedEventBannersTableFilterComposer(
+            $db: $db,
+            $table: $db.cachedEventBanners,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$CachedBannersTableOrderingComposer
@@ -14317,6 +14449,32 @@ class $$CachedBannersTableAnnotationComposer
     column: $table.description,
     builder: (column) => column,
   );
+
+  Expression<T> cachedEventBannersRefs<T extends Object>(
+    Expression<T> Function($$CachedEventBannersTableAnnotationComposer a) f,
+  ) {
+    final $$CachedEventBannersTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.cachedEventBanners,
+          getReferencedColumn: (t) => t.bannerId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CachedEventBannersTableAnnotationComposer(
+                $db: $db,
+                $table: $db.cachedEventBanners,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$CachedBannersTableTableManager
@@ -14330,12 +14488,9 @@ class $$CachedBannersTableTableManager
           $$CachedBannersTableAnnotationComposer,
           $$CachedBannersTableCreateCompanionBuilder,
           $$CachedBannersTableUpdateCompanionBuilder,
-          (
-            CachedBanner,
-            BaseReferences<_$AppDatabase, $CachedBannersTable, CachedBanner>,
-          ),
+          (CachedBanner, $$CachedBannersTableReferences),
           CachedBanner,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool cachedEventBannersRefs})
         > {
   $$CachedBannersTableTableManager(_$AppDatabase db, $CachedBannersTable table)
     : super(
@@ -14385,9 +14540,45 @@ class $$CachedBannersTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$CachedBannersTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({cachedEventBannersRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (cachedEventBannersRefs) db.cachedEventBanners,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (cachedEventBannersRefs)
+                    await $_getPrefetchedData<
+                      CachedBanner,
+                      $CachedBannersTable,
+                      CachedEventBanner
+                    >(
+                      currentTable: table,
+                      referencedTable: $$CachedBannersTableReferences
+                          ._cachedEventBannersRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$CachedBannersTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).cachedEventBannersRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.bannerId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
         ),
       );
 }
@@ -14402,12 +14593,9 @@ typedef $$CachedBannersTableProcessedTableManager =
       $$CachedBannersTableAnnotationComposer,
       $$CachedBannersTableCreateCompanionBuilder,
       $$CachedBannersTableUpdateCompanionBuilder,
-      (
-        CachedBanner,
-        BaseReferences<_$AppDatabase, $CachedBannersTable, CachedBanner>,
-      ),
+      (CachedBanner, $$CachedBannersTableReferences),
       CachedBanner,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool cachedEventBannersRefs})
     >;
 typedef $$CachedActionBannersTableCreateCompanionBuilder =
     CachedActionBannersCompanion Function({
@@ -14789,6 +14977,7 @@ typedef $$CachedActionBannersTableProcessedTableManager =
     >;
 typedef $$CachedEventBannersTableCreateCompanionBuilder =
     CachedEventBannersCompanion Function({
+      required String bannerId,
       Value<String?> eventId,
       Value<String?> eventCategory,
       Value<String?> eventDescription,
@@ -14796,11 +14985,48 @@ typedef $$CachedEventBannersTableCreateCompanionBuilder =
     });
 typedef $$CachedEventBannersTableUpdateCompanionBuilder =
     CachedEventBannersCompanion Function({
+      Value<String> bannerId,
       Value<String?> eventId,
       Value<String?> eventCategory,
       Value<String?> eventDescription,
       Value<int> rowid,
     });
+
+final class $$CachedEventBannersTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CachedEventBannersTable,
+          CachedEventBanner
+        > {
+  $$CachedEventBannersTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CachedBannersTable _bannerIdTable(_$AppDatabase db) =>
+      db.cachedBanners.createAlias(
+        $_aliasNameGenerator(
+          db.cachedEventBanners.bannerId,
+          db.cachedBanners.id,
+        ),
+      );
+
+  $$CachedBannersTableProcessedTableManager get bannerId {
+    final $_column = $_itemColumn<String>('banner_id')!;
+
+    final manager = $$CachedBannersTableTableManager(
+      $_db,
+      $_db.cachedBanners,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_bannerIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
 
 class $$CachedEventBannersTableFilterComposer
     extends Composer<_$AppDatabase, $CachedEventBannersTable> {
@@ -14825,6 +15051,29 @@ class $$CachedEventBannersTableFilterComposer
     column: $table.eventDescription,
     builder: (column) => ColumnFilters(column),
   );
+
+  $$CachedBannersTableFilterComposer get bannerId {
+    final $$CachedBannersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bannerId,
+      referencedTable: $db.cachedBanners,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedBannersTableFilterComposer(
+            $db: $db,
+            $table: $db.cachedBanners,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$CachedEventBannersTableOrderingComposer
@@ -14850,6 +15099,29 @@ class $$CachedEventBannersTableOrderingComposer
     column: $table.eventDescription,
     builder: (column) => ColumnOrderings(column),
   );
+
+  $$CachedBannersTableOrderingComposer get bannerId {
+    final $$CachedBannersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bannerId,
+      referencedTable: $db.cachedBanners,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedBannersTableOrderingComposer(
+            $db: $db,
+            $table: $db.cachedBanners,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$CachedEventBannersTableAnnotationComposer
@@ -14873,6 +15145,29 @@ class $$CachedEventBannersTableAnnotationComposer
     column: $table.eventDescription,
     builder: (column) => column,
   );
+
+  $$CachedBannersTableAnnotationComposer get bannerId {
+    final $$CachedBannersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.bannerId,
+      referencedTable: $db.cachedBanners,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedBannersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.cachedBanners,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$CachedEventBannersTableTableManager
@@ -14886,16 +15181,9 @@ class $$CachedEventBannersTableTableManager
           $$CachedEventBannersTableAnnotationComposer,
           $$CachedEventBannersTableCreateCompanionBuilder,
           $$CachedEventBannersTableUpdateCompanionBuilder,
-          (
-            CachedEventBanner,
-            BaseReferences<
-              _$AppDatabase,
-              $CachedEventBannersTable,
-              CachedEventBanner
-            >,
-          ),
+          (CachedEventBanner, $$CachedEventBannersTableReferences),
           CachedEventBanner,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool bannerId})
         > {
   $$CachedEventBannersTableTableManager(
     _$AppDatabase db,
@@ -14915,11 +15203,13 @@ class $$CachedEventBannersTableTableManager
               ),
           updateCompanionCallback:
               ({
+                Value<String> bannerId = const Value.absent(),
                 Value<String?> eventId = const Value.absent(),
                 Value<String?> eventCategory = const Value.absent(),
                 Value<String?> eventDescription = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CachedEventBannersCompanion(
+                bannerId: bannerId,
                 eventId: eventId,
                 eventCategory: eventCategory,
                 eventDescription: eventDescription,
@@ -14927,20 +15217,69 @@ class $$CachedEventBannersTableTableManager
               ),
           createCompanionCallback:
               ({
+                required String bannerId,
                 Value<String?> eventId = const Value.absent(),
                 Value<String?> eventCategory = const Value.absent(),
                 Value<String?> eventDescription = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CachedEventBannersCompanion.insert(
+                bannerId: bannerId,
                 eventId: eventId,
                 eventCategory: eventCategory,
                 eventDescription: eventDescription,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$CachedEventBannersTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({bannerId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (bannerId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.bannerId,
+                                referencedTable:
+                                    $$CachedEventBannersTableReferences
+                                        ._bannerIdTable(db),
+                                referencedColumn:
+                                    $$CachedEventBannersTableReferences
+                                        ._bannerIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ),
       );
 }
@@ -14955,16 +15294,9 @@ typedef $$CachedEventBannersTableProcessedTableManager =
       $$CachedEventBannersTableAnnotationComposer,
       $$CachedEventBannersTableCreateCompanionBuilder,
       $$CachedEventBannersTableUpdateCompanionBuilder,
-      (
-        CachedEventBanner,
-        BaseReferences<
-          _$AppDatabase,
-          $CachedEventBannersTable,
-          CachedEventBanner
-        >,
-      ),
+      (CachedEventBanner, $$CachedEventBannersTableReferences),
       CachedEventBanner,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool bannerId})
     >;
 typedef $$CachedTabsTableCreateCompanionBuilder =
     CachedTabsCompanion Function({
@@ -15781,12 +16113,14 @@ typedef $$CachedTabSectionsTableProcessedTableManager =
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
+  $$CachedProductTableTableManager get cachedProduct =>
+      $$CachedProductTableTableManager(_db, _db.cachedProduct);
+  $$ProductTranslationsTableTableManager get productTranslations =>
+      $$ProductTranslationsTableTableManager(_db, _db.productTranslations);
   $ProductTitleFtsTableManager get productTitleFts =>
       $ProductTitleFtsTableManager(_db, _db.productTitleFts);
   $$SyncStateTableTableManager get syncState =>
       $$SyncStateTableTableManager(_db, _db.syncState);
-  $$CachedProductTableTableManager get cachedProduct =>
-      $$CachedProductTableTableManager(_db, _db.cachedProduct);
   $$DevelopersTableTableManager get developers =>
       $$DevelopersTableTableManager(_db, _db.developers);
   $$CachedSoftwareProductTableTableManager get cachedSoftwareProduct =>
@@ -15806,8 +16140,6 @@ class $AppDatabaseManager {
       $$ProductCategoriesTableTableManager(_db, _db.productCategories);
   $$ProductTagsTableTableManager get productTags =>
       $$ProductTagsTableTableManager(_db, _db.productTags);
-  $$ProductTranslationsTableTableManager get productTranslations =>
-      $$ProductTranslationsTableTableManager(_db, _db.productTranslations);
   $$CachedBannersTableTableManager get cachedBanners =>
       $$CachedBannersTableTableManager(_db, _db.cachedBanners);
   $$CachedActionBannersTableTableManager get cachedActionBanners =>

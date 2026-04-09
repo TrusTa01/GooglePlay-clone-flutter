@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/l10n/gen/app_localizations.dart';
 
 class ProductCategoriesData {
   final String? titleL10nKey;
@@ -14,6 +15,46 @@ class ProductCategoriesData {
   });
 
   String get value => titleL10nKey ?? title ?? '';
+}
+
+String resolveProductCategoryTitle(
+  AppLocalizations l10n,
+  ProductCategoriesData data,
+) {
+  if (data.title != null && data.title!.isNotEmpty) return data.title!;
+  final key = data.titleL10nKey;
+  if (key == null || key.isEmpty) return '';
+
+  return switch (key) {
+    'categoryAll' => l10n.categoryAll,
+    'filterTopFreeOption' => l10n.filterTopFreeOption,
+    'filterBestsellers' => l10n.filterBestsellers,
+    'filterTopPaid' => l10n.filterTopPaid,
+    'filterAll' => l10n.filterAll,
+    'ageUnder5' => l10n.ageUnder5,
+    'age6to8' => l10n.age6to8,
+    'age9to12' => l10n.age9to12,
+    'age13plus' => l10n.age13plus,
+    'ratingAll' => l10n.ratingAll,
+    'rating45Up' => l10n.rating45Up,
+    'rating40Up' => l10n.rating40Up,
+    'versionAbridged' => l10n.versionAbridged,
+    'versionFull' => l10n.versionFull,
+    _ => _humanizeCategoryKey(key),
+  };
+}
+
+String _humanizeCategoryKey(String key) {
+  final stripped = key
+      .replaceFirst('categoryApps', '')
+      .replaceFirst('categoryBooks', '')
+      .replaceFirst('categoryGames', '')
+      .replaceFirst('category', '');
+  if (stripped.isEmpty) return key;
+  return stripped.replaceAllMapped(
+    RegExp(r'([a-z])([A-Z])'),
+    (m) => '${m.group(1)} ${m.group(2)}',
+  );
 }
 
 final List<ProductCategoriesData> gamesCategoriesData = const [

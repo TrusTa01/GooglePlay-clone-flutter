@@ -1,34 +1,34 @@
-import 'package:google_play/features/sections/domain/entities/tab_config_entity.dart';
+import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
+import 'package:google_play/features/sections/domain/entities/section_layout_kind.dart';
 
-sealed class TabConfigEntity {
-  final String tabKey;
-  final String displayName;
-  final List<SectionEntity> sections;
+class SectionEntity {
+  final String id;
+  final SectionLayoutKind layout;
+  final Map<String, String>? title;
+  final Map<String, String>? subtitle;
+  final SectionDataSource? dataSource;
+  final String? imageAssetPath;
+  final DataParamsEntity? dataParamsEntity;
 
-  const TabConfigEntity({
-    required this.tabKey,
-    required this.displayName,
-    required this.sections,
+  const SectionEntity({
+    required this.id,
+    required this.layout,
+    this.title,
+    this.subtitle,
+    this.dataSource,
+    this.imageAssetPath,
+    this.dataParamsEntity,
   });
 }
 
-// Обычная вкладка (игры, приложения, книги)
-final class StandartTabEntity extends TabConfigEntity {
-  StandartTabEntity({
-    required super.tabKey,
-    required super.displayName,
-    required super.sections,
-  });
-}
+class DataParamsEntity {
+  final String? filterType;
+  final dynamic filterValue;
+  final Map<String, dynamic> extras;
 
-// Вкладка ля детей
-final class KidsTabEntity extends TabConfigEntity {
-  final int? selectedAge;
-
-  KidsTabEntity({
-    required super.tabKey,
-    required super.displayName,
-    required super.sections,
-    this.selectedAge,
+  const DataParamsEntity({
+    required this.filterType,
+    required this.filterValue,
+    this.extras = const {},
   });
 }

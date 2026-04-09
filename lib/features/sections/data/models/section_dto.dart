@@ -20,10 +20,10 @@ abstract class SectionDto with _$SectionDto {
   const factory SectionDto({
     required String id,
     required String type,
-    @JsonKey(name: 'title_key') String? titleKey,
-    @JsonKey(name: 'subtitle_key') String? subtitleKey,
+    Map<String, String>? title,
+    Map<String, String>? subtitle,
     @JsonKey(name: 'data_source') String? dataSource,
-    @JsonKey(name: 'imagea_asset_path') required String imageAssetPath,
+    @JsonKey(name: 'image_asset_path') required String imageAssetPath,
     @JsonKey(name: 'data_params_dto') required DataParamsDto? dataParamsDto,
   }) = _SectionDto;
 

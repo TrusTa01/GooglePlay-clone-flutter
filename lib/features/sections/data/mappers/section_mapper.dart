@@ -1,6 +1,6 @@
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind.dart';
-import 'package:google_play/features/sections/domain/entities/tab_config_entity.dart';
+import 'package:google_play/features/sections/domain/entities/section_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
 import 'package:google_play/features/sections/data/models/section_dto.dart';
 
@@ -9,8 +9,8 @@ extension SectionMapper on SectionDto {
     return SectionEntity(
       id: id,
       layout: _mapLayout(type),
-      titleKey: titleKey,
-      subtitleKey: subtitleKey,
+      title: title,
+      subtitle: subtitle,
       dataSource: _mapDataSource(dataSource, dataParamsDto),
       imageAssetPath: imageAssetPath,
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
 import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
 
@@ -31,7 +30,14 @@ class ModalFilter extends StatelessWidget {
     final defaultValue = options.isNotEmpty ? options.first.value : '';
     final isDefault = currentSelection == defaultValue;
     final l10n = context.l10n;
-    final label = isDefault ? defaultTitle : lookupL10n(l10n, currentSelection);
+    final selectedOption = options
+        .where((o) => o.value == currentSelection)
+        .firstOrNull;
+    final label = isDefault
+        ? defaultTitle
+        : (selectedOption != null
+              ? resolveProductCategoryTitle(l10n, selectedOption)
+              : currentSelection);
 
     return CustomFilterChip(
       hasOptions: true,

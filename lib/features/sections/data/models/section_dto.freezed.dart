@@ -290,7 +290,7 @@ as List<SectionDto>,
 /// @nodoc
 mixin _$SectionDto {
 
- String get id; String get type;@JsonKey(name: 'title_key') String? get titleKey;@JsonKey(name: 'subtitle_key') String? get subtitleKey;@JsonKey(name: 'data_source') String? get dataSource;@JsonKey(name: 'imagea_asset_path') String get imageAssetPath;@JsonKey(name: 'data_params_dto') DataParamsDto? get dataParamsDto;
+ String get id; String get type; Map<String, String>? get title; Map<String, String>? get subtitle;@JsonKey(name: 'data_source') String? get dataSource;@JsonKey(name: 'image_asset_path') String get imageAssetPath;@JsonKey(name: 'data_params_dto') DataParamsDto? get dataParamsDto;
 /// Create a copy of SectionDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -303,16 +303,16 @@ $SectionDtoCopyWith<SectionDto> get copyWith => _$SectionDtoCopyWithImpl<Section
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SectionDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.titleKey, titleKey) || other.titleKey == titleKey)&&(identical(other.subtitleKey, subtitleKey) || other.subtitleKey == subtitleKey)&&(identical(other.dataSource, dataSource) || other.dataSource == dataSource)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&(identical(other.dataParamsDto, dataParamsDto) || other.dataParamsDto == dataParamsDto));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SectionDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other.title, title)&&const DeepCollectionEquality().equals(other.subtitle, subtitle)&&(identical(other.dataSource, dataSource) || other.dataSource == dataSource)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&(identical(other.dataParamsDto, dataParamsDto) || other.dataParamsDto == dataParamsDto));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,titleKey,subtitleKey,dataSource,imageAssetPath,dataParamsDto);
+int get hashCode => Object.hash(runtimeType,id,type,const DeepCollectionEquality().hash(title),const DeepCollectionEquality().hash(subtitle),dataSource,imageAssetPath,dataParamsDto);
 
 @override
 String toString() {
-  return 'SectionDto(id: $id, type: $type, titleKey: $titleKey, subtitleKey: $subtitleKey, dataSource: $dataSource, imageAssetPath: $imageAssetPath, dataParamsDto: $dataParamsDto)';
+  return 'SectionDto(id: $id, type: $type, title: $title, subtitle: $subtitle, dataSource: $dataSource, imageAssetPath: $imageAssetPath, dataParamsDto: $dataParamsDto)';
 }
 
 
@@ -323,7 +323,7 @@ abstract mixin class $SectionDtoCopyWith<$Res>  {
   factory $SectionDtoCopyWith(SectionDto value, $Res Function(SectionDto) _then) = _$SectionDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String type,@JsonKey(name: 'title_key') String? titleKey,@JsonKey(name: 'subtitle_key') String? subtitleKey,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'imagea_asset_path') String imageAssetPath,@JsonKey(name: 'data_params_dto') DataParamsDto? dataParamsDto
+ String id, String type, Map<String, String>? title, Map<String, String>? subtitle,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'image_asset_path') String imageAssetPath,@JsonKey(name: 'data_params_dto') DataParamsDto? dataParamsDto
 });
 
 
@@ -340,13 +340,13 @@ class _$SectionDtoCopyWithImpl<$Res>
 
 /// Create a copy of SectionDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? titleKey = freezed,Object? subtitleKey = freezed,Object? dataSource = freezed,Object? imageAssetPath = null,Object? dataParamsDto = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? subtitle = freezed,Object? dataSource = freezed,Object? imageAssetPath = null,Object? dataParamsDto = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,titleKey: freezed == titleKey ? _self.titleKey : titleKey // ignore: cast_nullable_to_non_nullable
-as String?,subtitleKey: freezed == subtitleKey ? _self.subtitleKey : subtitleKey // ignore: cast_nullable_to_non_nullable
-as String?,dataSource: freezed == dataSource ? _self.dataSource : dataSource // ignore: cast_nullable_to_non_nullable
+as String,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as Map<String, String>?,subtitle: freezed == subtitle ? _self.subtitle : subtitle // ignore: cast_nullable_to_non_nullable
+as Map<String, String>?,dataSource: freezed == dataSource ? _self.dataSource : dataSource // ignore: cast_nullable_to_non_nullable
 as String?,imageAssetPath: null == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
 as String,dataParamsDto: freezed == dataParamsDto ? _self.dataParamsDto : dataParamsDto // ignore: cast_nullable_to_non_nullable
 as DataParamsDto?,
@@ -446,10 +446,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String type, @JsonKey(name: 'title_key')  String? titleKey, @JsonKey(name: 'subtitle_key')  String? subtitleKey, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'imagea_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String type,  Map<String, String>? title,  Map<String, String>? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SectionDto() when $default != null:
-return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
+return $default(_that.id,_that.type,_that.title,_that.subtitle,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
   return orElse();
 
 }
@@ -467,10 +467,10 @@ return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataS
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String type, @JsonKey(name: 'title_key')  String? titleKey, @JsonKey(name: 'subtitle_key')  String? subtitleKey, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'imagea_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String type,  Map<String, String>? title,  Map<String, String>? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)  $default,) {final _that = this;
 switch (_that) {
 case _SectionDto():
-return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
+return $default(_that.id,_that.type,_that.title,_that.subtitle,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -487,10 +487,10 @@ return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataS
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String type, @JsonKey(name: 'title_key')  String? titleKey, @JsonKey(name: 'subtitle_key')  String? subtitleKey, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'imagea_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String type,  Map<String, String>? title,  Map<String, String>? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(name: 'data_params_dto')  DataParamsDto? dataParamsDto)?  $default,) {final _that = this;
 switch (_that) {
 case _SectionDto() when $default != null:
-return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
+return $default(_that.id,_that.type,_that.title,_that.subtitle,_that.dataSource,_that.imageAssetPath,_that.dataParamsDto);case _:
   return null;
 
 }
@@ -502,15 +502,31 @@ return $default(_that.id,_that.type,_that.titleKey,_that.subtitleKey,_that.dataS
 @JsonSerializable()
 
 class _SectionDto implements SectionDto {
-  const _SectionDto({required this.id, required this.type, @JsonKey(name: 'title_key') this.titleKey, @JsonKey(name: 'subtitle_key') this.subtitleKey, @JsonKey(name: 'data_source') this.dataSource, @JsonKey(name: 'imagea_asset_path') required this.imageAssetPath, @JsonKey(name: 'data_params_dto') required this.dataParamsDto});
+  const _SectionDto({required this.id, required this.type, final  Map<String, String>? title, final  Map<String, String>? subtitle, @JsonKey(name: 'data_source') this.dataSource, @JsonKey(name: 'image_asset_path') required this.imageAssetPath, @JsonKey(name: 'data_params_dto') required this.dataParamsDto}): _title = title,_subtitle = subtitle;
   factory _SectionDto.fromJson(Map<String, dynamic> json) => _$SectionDtoFromJson(json);
 
 @override final  String id;
 @override final  String type;
-@override@JsonKey(name: 'title_key') final  String? titleKey;
-@override@JsonKey(name: 'subtitle_key') final  String? subtitleKey;
+ final  Map<String, String>? _title;
+@override Map<String, String>? get title {
+  final value = _title;
+  if (value == null) return null;
+  if (_title is EqualUnmodifiableMapView) return _title;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
+ final  Map<String, String>? _subtitle;
+@override Map<String, String>? get subtitle {
+  final value = _subtitle;
+  if (value == null) return null;
+  if (_subtitle is EqualUnmodifiableMapView) return _subtitle;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
 @override@JsonKey(name: 'data_source') final  String? dataSource;
-@override@JsonKey(name: 'imagea_asset_path') final  String imageAssetPath;
+@override@JsonKey(name: 'image_asset_path') final  String imageAssetPath;
 @override@JsonKey(name: 'data_params_dto') final  DataParamsDto? dataParamsDto;
 
 /// Create a copy of SectionDto
@@ -526,16 +542,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SectionDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.titleKey, titleKey) || other.titleKey == titleKey)&&(identical(other.subtitleKey, subtitleKey) || other.subtitleKey == subtitleKey)&&(identical(other.dataSource, dataSource) || other.dataSource == dataSource)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&(identical(other.dataParamsDto, dataParamsDto) || other.dataParamsDto == dataParamsDto));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SectionDto&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._title, _title)&&const DeepCollectionEquality().equals(other._subtitle, _subtitle)&&(identical(other.dataSource, dataSource) || other.dataSource == dataSource)&&(identical(other.imageAssetPath, imageAssetPath) || other.imageAssetPath == imageAssetPath)&&(identical(other.dataParamsDto, dataParamsDto) || other.dataParamsDto == dataParamsDto));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,titleKey,subtitleKey,dataSource,imageAssetPath,dataParamsDto);
+int get hashCode => Object.hash(runtimeType,id,type,const DeepCollectionEquality().hash(_title),const DeepCollectionEquality().hash(_subtitle),dataSource,imageAssetPath,dataParamsDto);
 
 @override
 String toString() {
-  return 'SectionDto(id: $id, type: $type, titleKey: $titleKey, subtitleKey: $subtitleKey, dataSource: $dataSource, imageAssetPath: $imageAssetPath, dataParamsDto: $dataParamsDto)';
+  return 'SectionDto(id: $id, type: $type, title: $title, subtitle: $subtitle, dataSource: $dataSource, imageAssetPath: $imageAssetPath, dataParamsDto: $dataParamsDto)';
 }
 
 
@@ -546,7 +562,7 @@ abstract mixin class _$SectionDtoCopyWith<$Res> implements $SectionDtoCopyWith<$
   factory _$SectionDtoCopyWith(_SectionDto value, $Res Function(_SectionDto) _then) = __$SectionDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String type,@JsonKey(name: 'title_key') String? titleKey,@JsonKey(name: 'subtitle_key') String? subtitleKey,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'imagea_asset_path') String imageAssetPath,@JsonKey(name: 'data_params_dto') DataParamsDto? dataParamsDto
+ String id, String type, Map<String, String>? title, Map<String, String>? subtitle,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'image_asset_path') String imageAssetPath,@JsonKey(name: 'data_params_dto') DataParamsDto? dataParamsDto
 });
 
 
@@ -563,13 +579,13 @@ class __$SectionDtoCopyWithImpl<$Res>
 
 /// Create a copy of SectionDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? titleKey = freezed,Object? subtitleKey = freezed,Object? dataSource = freezed,Object? imageAssetPath = null,Object? dataParamsDto = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? subtitle = freezed,Object? dataSource = freezed,Object? imageAssetPath = null,Object? dataParamsDto = freezed,}) {
   return _then(_SectionDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,titleKey: freezed == titleKey ? _self.titleKey : titleKey // ignore: cast_nullable_to_non_nullable
-as String?,subtitleKey: freezed == subtitleKey ? _self.subtitleKey : subtitleKey // ignore: cast_nullable_to_non_nullable
-as String?,dataSource: freezed == dataSource ? _self.dataSource : dataSource // ignore: cast_nullable_to_non_nullable
+as String,title: freezed == title ? _self._title : title // ignore: cast_nullable_to_non_nullable
+as Map<String, String>?,subtitle: freezed == subtitle ? _self._subtitle : subtitle // ignore: cast_nullable_to_non_nullable
+as Map<String, String>?,dataSource: freezed == dataSource ? _self.dataSource : dataSource // ignore: cast_nullable_to_non_nullable
 as String?,imageAssetPath: null == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
 as String,dataParamsDto: freezed == dataParamsDto ? _self.dataParamsDto : dataParamsDto // ignore: cast_nullable_to_non_nullable
 as DataParamsDto?,

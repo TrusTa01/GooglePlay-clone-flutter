@@ -4,20 +4,20 @@ import 'package:google_play/features/product/data/mappers/local/local_product_bu
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
-import 'package:google_play/features/product/data/datasources/network/i_product_network_repository.dart';
+import 'package:google_play/features/product/data/datasources/network/i_product_remote_data_source.dart';
 import 'package:google_play/features/product/domain/repositories/product_freshness.dart';
 import 'package:google_play/features/product/domain/repositories/product_repository.dart';
 
 class OfflineFirstProductRepository implements IProductRepository {
-  final IProductNetworkRepository _network;
+  final IProductRemoteDataSource _remoteDataSource;
   final IProductLocalDatasource _local;
   final Duration _ttl;
 
   const OfflineFirstProductRepository({
-    required IProductNetworkRepository network,
+    required IProductRemoteDataSource remoteDataSource,
     required IProductLocalDatasource local,
     Duration ttl = const Duration(hours: 6),
-  }) : _network = network,
+  }) : _remoteDataSource = remoteDataSource,
        _local = local,
        _ttl = ttl;
 
@@ -123,13 +123,13 @@ class OfflineFirstProductRepository implements IProductRepository {
     required int page,
     required int pageSize,
   }) async {
-    final result = await _network.getProducts(
+    final result = await _remoteDataSource.getProducts(
       type: type,
       page: page,
       pageSize: pageSize,
     );
 
-    if (result case ProductOk<List<ProductDto>>(data: final dtos)) {
+    if (result case SuccessResult<List<ProductDto>>(data: final dtos)) {
       await _local.upsertProducts(dtos);
       await _local.setLastSync(_syncListKey(type), DateTime.now());
     }
@@ -139,8 +139,8 @@ class OfflineFirstProductRepository implements IProductRepository {
     String id, {
     required bool forceRefresh,
   }) async {
-    final result = await _network.getProductById(id: id);
-    if (result case ProductOk<ProductDto?>(data: final dto?)) {
+    final result = await _remoteDataSource.getProductById(id: id);
+    if (result case SuccessResult<ProductDto?>(data: final dto?)) {
       await _local.upsertProducts([dto]);
       await _local.setLastSync(_syncItemKey(id), DateTime.now());
     } else if (forceRefresh) {

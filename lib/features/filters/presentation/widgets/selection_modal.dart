@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
 
 class SelectionModal {
@@ -50,9 +49,10 @@ class SelectionModal {
                     children: List.generate(options.length, (index) {
                       final option = options[index];
                       final isSelected = option.value == activeOption;
-                      final displayTitle = option.titleL10nKey != null
-                          ? lookupL10n(l10n, option.titleL10nKey!)
-                          : (option.title ?? '');
+                      final displayTitle = resolveProductCategoryTitle(
+                        l10n,
+                        option,
+                      );
                       return Column(
                         children: [
                           Material(
@@ -172,9 +172,10 @@ class SelectionModal {
                         itemBuilder: (_, index) {
                           final category = options[index];
                           final isSelected = category.value == activeOption;
-                          final displayTitle = category.titleL10nKey != null
-                              ? lookupL10n(l10n, category.titleL10nKey!)
-                              : (category.title ?? '');
+                          final displayTitle = resolveProductCategoryTitle(
+                            l10n,
+                            category,
+                          );
 
                           return Material(
                             color: isSelected

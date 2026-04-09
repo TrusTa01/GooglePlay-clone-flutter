@@ -28,7 +28,7 @@ part 'app_database.g.dart';
     CachedTabSections,
     CachedTabs,
   ],
-  include: {'tables/products/product_title_search.drift'},
+  include: {'tables/content/products/product_title_search.drift'},
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

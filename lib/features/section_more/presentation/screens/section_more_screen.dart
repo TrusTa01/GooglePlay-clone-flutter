@@ -11,14 +11,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class SectionMoreScreen extends ConsumerWidget {
   final StoreType storeType;
   final String categoryKey;
-  final String titleKey;
+  final String title;
   final ValueChanged<String>? onProductTap;
 
   const SectionMoreScreen({
     super.key,
     required this.storeType,
     required this.categoryKey,
-    required this.titleKey,
+    required this.title,
     this.onProductTap,
   });
 
@@ -27,7 +27,7 @@ class SectionMoreScreen extends ConsumerWidget {
     final args = SectionMoreArgs(
       storeType: storeType,
       categoryKey: categoryKey,
-      titleKey: titleKey,
+      title: title,
     );
     final stateAsync = ref.watch(sectionMoreViewModelProvider(args));
 

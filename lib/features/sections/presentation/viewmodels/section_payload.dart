@@ -12,15 +12,15 @@ final class BannersPayload extends SectionPayload {
 final class CarouselPayload extends SectionPayload {
   final List<ProductCardUiModel> items;
   final String? categoryKey;
-  final String? titleKey;
-  const CarouselPayload(this.items, {this.categoryKey, this.titleKey});
+  final String? title;
+  const CarouselPayload(this.items, {this.categoryKey, this.title});
 }
 
 final class GridPayload extends SectionPayload {
   final List<ActionRowUiModel> items;
   final String? categoryKey;
-  final String? titleKey;
-  const GridPayload(this.items, {this.categoryKey, this.titleKey});
+  final String? title;
+  const GridPayload(this.items, {this.categoryKey, this.title});
 }
 
 final class PreviewPayload extends SectionPayload {

@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
 import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/features/product/domain/entities/game_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
@@ -18,12 +17,12 @@ part 'section_more_view_model.g.dart';
 class SectionMoreArgs {
   final StoreType storeType;
   final String categoryKey;
-  final String titleKey;
+  final String title;
 
   const SectionMoreArgs({
     required this.storeType,
     required this.categoryKey,
-    required this.titleKey,
+    required this.title,
   });
 
   @override
@@ -33,11 +32,11 @@ class SectionMoreArgs {
           runtimeType == other.runtimeType &&
           storeType == other.storeType &&
           categoryKey == other.categoryKey &&
-          titleKey == other.titleKey;
+          title == other.title;
 
   @override
   int get hashCode =>
-      storeType.hashCode ^ categoryKey.hashCode ^ titleKey.hashCode;
+      storeType.hashCode ^ categoryKey.hashCode ^ title.hashCode;
 }
 
 @riverpod
@@ -56,8 +55,7 @@ Future<SectionMoreState> sectionMoreViewModel(
 
   final filtered = _filterProducts(allProducts, args.categoryKey);
   final AppLocalizations l10n = lookupAppLocalizations(locale);
-
-  final title = lookupL10n(l10n, args.titleKey);
+  final title = args.title;
 
   final isEmpty = filtered.isEmpty;
   final isGame = !isEmpty && filtered.first is GameEntity;

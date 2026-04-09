@@ -2,13 +2,14 @@ import 'package:google_play/features/product/domain/usecases/get_products_by_fil
 import 'package:google_play/features/product/domain/usecases/get_product_freshness_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/get_products_freshness_usecase.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:google_play/core/data/network/supabase_query_executor.dart';
 import 'package:google_play/core/local_database/app_database.dart';
 import 'package:google_play/features/product/data/datasources/local/i_product_local_datasource.dart';
 import 'package:google_play/features/product/data/datasources/local/drift_product_local_datasource.dart';
 import 'package:google_play/features/product/data/datasources/network/supabase_product_network_datasource.dart';
 import 'package:google_play/features/product/data/repositories/cache_first_product_repository.dart';
-import 'package:google_play/features/product/data/datasources/network/supabase_product_network_repository.dart';
-import 'package:google_play/features/product/data/datasources/network/i_product_network_repository.dart';
+import 'package:google_play/features/product/data/datasources/network/i_product_remote_data_source.dart';
+import 'package:google_play/features/product/data/datasources/network/supabase_product_network_data_source.dart';
 import 'package:google_play/features/product/domain/repositories/product_repository.dart';
 import 'package:google_play/features/product/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/load_products_usecase.dart';
@@ -29,20 +30,22 @@ final productLocalDatasourceProvider = Provider<IProductLocalDatasource>((ref) {
 
 final supabaseProductNetworkDatasourceProvider =
     Provider<SupabaseProductNetworkDatasource>((ref) {
-      return SupabaseProductNetworkDatasource(Supabase.instance.client);
+      return SupabaseProductNetworkDatasource(
+        executor: SupabaseQueryExecutor(client: Supabase.instance.client),
+      );
     });
 
-final productNetworkRepositoryProvider = Provider<IProductNetworkRepository>((
+final productRemoteDataSourceProvider = Provider<IProductRemoteDataSource>((
   ref,
 ) {
-  final network = ref.watch(supabaseProductNetworkDatasourceProvider);
-  return SupabaseProductRepository(network: network);
+  final datasource = ref.watch(supabaseProductNetworkDatasourceProvider);
+  return SupabaseProductRemoteDataSource(datasource: datasource);
 });
 
 final productRepositoryProvider = Provider<IProductRepository>((ref) {
   final local = ref.watch(productLocalDatasourceProvider);
-  final network = ref.watch(productNetworkRepositoryProvider);
-  return OfflineFirstProductRepository(local: local, network: network);
+  final remote = ref.watch(productRemoteDataSourceProvider);
+  return OfflineFirstProductRepository(local: local, remoteDataSource: remote);
 });
 
 final loadProductsUseCaseProvider = Provider<LoadProductsUseCase>((ref) {

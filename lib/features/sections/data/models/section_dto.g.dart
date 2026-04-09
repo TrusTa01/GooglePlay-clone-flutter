@@ -25,10 +25,14 @@ Map<String, dynamic> _$TabConfigDtoToJson(_TabConfigDto instance) =>
 _SectionDto _$SectionDtoFromJson(Map<String, dynamic> json) => _SectionDto(
   id: json['id'] as String,
   type: json['type'] as String,
-  titleKey: json['title_key'] as String?,
-  subtitleKey: json['subtitle_key'] as String?,
+  title: (json['title'] as Map<String, dynamic>?)?.map(
+    (k, e) => MapEntry(k, e as String),
+  ),
+  subtitle: (json['subtitle'] as Map<String, dynamic>?)?.map(
+    (k, e) => MapEntry(k, e as String),
+  ),
   dataSource: json['data_source'] as String?,
-  imageAssetPath: json['imagea_asset_path'] as String,
+  imageAssetPath: json['image_asset_path'] as String,
   dataParamsDto: json['data_params_dto'] == null
       ? null
       : DataParamsDto.fromJson(json['data_params_dto'] as Map<String, dynamic>),
@@ -38,10 +42,10 @@ Map<String, dynamic> _$SectionDtoToJson(_SectionDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'type': instance.type,
-      'title_key': instance.titleKey,
-      'subtitle_key': instance.subtitleKey,
+      'title': instance.title,
+      'subtitle': instance.subtitle,
       'data_source': instance.dataSource,
-      'imagea_asset_path': instance.imageAssetPath,
+      'image_asset_path': instance.imageAssetPath,
       'data_params_dto': instance.dataParamsDto,
     };
 
