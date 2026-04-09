@@ -1,6 +1,5 @@
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
-import 'package:google_play/features/product/domain/repositories/product_freshness.dart';
 
 abstract interface class IProductRepository {
   Future<List<ProductEntity>> getProducts({

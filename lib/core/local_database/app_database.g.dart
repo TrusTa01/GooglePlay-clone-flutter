@@ -6462,7 +6462,7 @@ class $CachedBannersTable extends CachedBanners
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-  ).withConverter<Map<String, String>?>($CachedBannersTable.$convertertitlen);
+  ).withConverter<Map<String, String>?>($CachedBannersTable.$convertertitle);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, String>?, String>
   topTooltipText =
@@ -6473,7 +6473,7 @@ class $CachedBannersTable extends CachedBanners
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       ).withConverter<Map<String, String>?>(
-        $CachedBannersTable.$convertertopTooltipTextn,
+        $CachedBannersTable.$convertertopTooltipText,
       );
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, String>?, String>
@@ -6485,7 +6485,7 @@ class $CachedBannersTable extends CachedBanners
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       ).withConverter<Map<String, String>?>(
-        $CachedBannersTable.$converterdescriptionn,
+        $CachedBannersTable.$converterdescription,
       );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -6593,19 +6593,19 @@ class $CachedBannersTable extends CachedBanners
         DriftSqlType.string,
         data['${effectivePrefix}image_asset_path'],
       )!,
-      title: $CachedBannersTable.$convertertitlen.fromSql(
+      title: $CachedBannersTable.$convertertitle.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}title'],
         ),
       ),
-      topTooltipText: $CachedBannersTable.$convertertopTooltipTextn.fromSql(
+      topTooltipText: $CachedBannersTable.$convertertopTooltipText.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}top_tooltip_text'],
         ),
       ),
-      description: $CachedBannersTable.$converterdescriptionn.fromSql(
+      description: $CachedBannersTable.$converterdescription.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}description'],
@@ -6627,20 +6627,12 @@ class $CachedBannersTable extends CachedBanners
     return $CachedBannersTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<Map<String, String>, String> $convertertitle =
-      const LocalizedStringConverter();
-  static TypeConverter<Map<String, String>?, String?> $convertertitlen =
-      NullAwareTypeConverter.wrap($convertertitle);
-  static TypeConverter<Map<String, String>, String> $convertertopTooltipText =
-      const LocalizedStringConverter();
-  static TypeConverter<Map<String, String>?, String?>
-  $convertertopTooltipTextn = NullAwareTypeConverter.wrap(
-    $convertertopTooltipText,
-  );
-  static TypeConverter<Map<String, String>, String> $converterdescription =
-      const LocalizedStringConverter();
-  static TypeConverter<Map<String, String>?, String?> $converterdescriptionn =
-      NullAwareTypeConverter.wrap($converterdescription);
+  static TypeConverter<Map<String, String>?, String?> $convertertitle =
+      const LocalizedStringNullableConverter();
+  static TypeConverter<Map<String, String>?, String?> $convertertopTooltipText =
+      const LocalizedStringNullableConverter();
+  static TypeConverter<Map<String, String>?, String?> $converterdescription =
+      const LocalizedStringNullableConverter();
 }
 
 class CachedBanner extends DataClass implements Insertable<CachedBanner> {
@@ -6670,17 +6662,17 @@ class CachedBanner extends DataClass implements Insertable<CachedBanner> {
     map['image_asset_path'] = Variable<String>(imageAssetPath);
     if (!nullToAbsent || title != null) {
       map['title'] = Variable<String>(
-        $CachedBannersTable.$convertertitlen.toSql(title),
+        $CachedBannersTable.$convertertitle.toSql(title),
       );
     }
     if (!nullToAbsent || topTooltipText != null) {
       map['top_tooltip_text'] = Variable<String>(
-        $CachedBannersTable.$convertertopTooltipTextn.toSql(topTooltipText),
+        $CachedBannersTable.$convertertopTooltipText.toSql(topTooltipText),
       );
     }
     if (!nullToAbsent || description != null) {
       map['description'] = Variable<String>(
-        $CachedBannersTable.$converterdescriptionn.toSql(description),
+        $CachedBannersTable.$converterdescription.toSql(description),
       );
     }
     map['created_at'] = Variable<DateTime>(createdAt);
@@ -6920,19 +6912,19 @@ class CachedBannersCompanion extends UpdateCompanion<CachedBanner> {
     }
     if (title.present) {
       map['title'] = Variable<String>(
-        $CachedBannersTable.$convertertitlen.toSql(title.value),
+        $CachedBannersTable.$convertertitle.toSql(title.value),
       );
     }
     if (topTooltipText.present) {
       map['top_tooltip_text'] = Variable<String>(
-        $CachedBannersTable.$convertertopTooltipTextn.toSql(
+        $CachedBannersTable.$convertertopTooltipText.toSql(
           topTooltipText.value,
         ),
       );
     }
     if (description.present) {
       map['description'] = Variable<String>(
-        $CachedBannersTable.$converterdescriptionn.toSql(description.value),
+        $CachedBannersTable.$converterdescription.toSql(description.value),
       );
     }
     if (createdAt.present) {
@@ -7240,17 +7232,18 @@ class $CachedEventBannersTable extends CachedEventBanners
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _eventDescriptionMeta = const VerificationMeta(
-    'eventDescription',
-  );
   @override
-  late final GeneratedColumn<String> eventDescription = GeneratedColumn<String>(
-    'event_description',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
+  late final GeneratedColumnWithTypeConverter<Map<String, String>?, String>
+  eventDescription =
+      GeneratedColumn<String>(
+        'event_description',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      ).withConverter<Map<String, String>?>(
+        $CachedEventBannersTable.$convertereventDescription,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     bannerId,
@@ -7293,15 +7286,6 @@ class $CachedEventBannersTable extends CachedEventBanners
         ),
       );
     }
-    if (data.containsKey('event_description')) {
-      context.handle(
-        _eventDescriptionMeta,
-        eventDescription.isAcceptableOrUnknown(
-          data['event_description']!,
-          _eventDescriptionMeta,
-        ),
-      );
-    }
     return context;
   }
 
@@ -7323,10 +7307,13 @@ class $CachedEventBannersTable extends CachedEventBanners
         DriftSqlType.string,
         data['${effectivePrefix}event_category'],
       ),
-      eventDescription: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}event_description'],
-      ),
+      eventDescription: $CachedEventBannersTable.$convertereventDescription
+          .fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.string,
+              data['${effectivePrefix}event_description'],
+            ),
+          ),
     );
   }
 
@@ -7334,6 +7321,9 @@ class $CachedEventBannersTable extends CachedEventBanners
   $CachedEventBannersTable createAlias(String alias) {
     return $CachedEventBannersTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<Map<String, String>?, String?>
+  $convertereventDescription = const LocalizedStringNullableConverter();
 }
 
 class CachedEventBanner extends DataClass
@@ -7341,7 +7331,7 @@ class CachedEventBanner extends DataClass
   final String bannerId;
   final String? eventId;
   final String? eventCategory;
-  final String? eventDescription;
+  final Map<String, String>? eventDescription;
   const CachedEventBanner({
     required this.bannerId,
     this.eventId,
@@ -7359,7 +7349,11 @@ class CachedEventBanner extends DataClass
       map['event_category'] = Variable<String>(eventCategory);
     }
     if (!nullToAbsent || eventDescription != null) {
-      map['event_description'] = Variable<String>(eventDescription);
+      map['event_description'] = Variable<String>(
+        $CachedEventBannersTable.$convertereventDescription.toSql(
+          eventDescription,
+        ),
+      );
     }
     return map;
   }
@@ -7388,7 +7382,9 @@ class CachedEventBanner extends DataClass
       bannerId: serializer.fromJson<String>(json['bannerId']),
       eventId: serializer.fromJson<String?>(json['eventId']),
       eventCategory: serializer.fromJson<String?>(json['eventCategory']),
-      eventDescription: serializer.fromJson<String?>(json['eventDescription']),
+      eventDescription: serializer.fromJson<Map<String, String>?>(
+        json['eventDescription'],
+      ),
     );
   }
   @override
@@ -7398,7 +7394,9 @@ class CachedEventBanner extends DataClass
       'bannerId': serializer.toJson<String>(bannerId),
       'eventId': serializer.toJson<String?>(eventId),
       'eventCategory': serializer.toJson<String?>(eventCategory),
-      'eventDescription': serializer.toJson<String?>(eventDescription),
+      'eventDescription': serializer.toJson<Map<String, String>?>(
+        eventDescription,
+      ),
     };
   }
 
@@ -7406,7 +7404,7 @@ class CachedEventBanner extends DataClass
     String? bannerId,
     Value<String?> eventId = const Value.absent(),
     Value<String?> eventCategory = const Value.absent(),
-    Value<String?> eventDescription = const Value.absent(),
+    Value<Map<String, String>?> eventDescription = const Value.absent(),
   }) => CachedEventBanner(
     bannerId: bannerId ?? this.bannerId,
     eventId: eventId.present ? eventId.value : this.eventId,
@@ -7458,7 +7456,7 @@ class CachedEventBannersCompanion extends UpdateCompanion<CachedEventBanner> {
   final Value<String> bannerId;
   final Value<String?> eventId;
   final Value<String?> eventCategory;
-  final Value<String?> eventDescription;
+  final Value<Map<String, String>?> eventDescription;
   final Value<int> rowid;
   const CachedEventBannersCompanion({
     this.bannerId = const Value.absent(),
@@ -7494,7 +7492,7 @@ class CachedEventBannersCompanion extends UpdateCompanion<CachedEventBanner> {
     Value<String>? bannerId,
     Value<String?>? eventId,
     Value<String?>? eventCategory,
-    Value<String?>? eventDescription,
+    Value<Map<String, String>?>? eventDescription,
     Value<int>? rowid,
   }) {
     return CachedEventBannersCompanion(
@@ -7519,7 +7517,11 @@ class CachedEventBannersCompanion extends UpdateCompanion<CachedEventBanner> {
       map['event_category'] = Variable<String>(eventCategory.value);
     }
     if (eventDescription.present) {
-      map['event_description'] = Variable<String>(eventDescription.value);
+      map['event_description'] = Variable<String>(
+        $CachedEventBannersTable.$convertereventDescription.toSql(
+          eventDescription.value,
+        ),
+      );
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -15584,7 +15586,7 @@ typedef $$CachedEventBannersTableCreateCompanionBuilder =
       required String bannerId,
       Value<String?> eventId,
       Value<String?> eventCategory,
-      Value<String?> eventDescription,
+      Value<Map<String, String>?> eventDescription,
       Value<int> rowid,
     });
 typedef $$CachedEventBannersTableUpdateCompanionBuilder =
@@ -15592,7 +15594,7 @@ typedef $$CachedEventBannersTableUpdateCompanionBuilder =
       Value<String> bannerId,
       Value<String?> eventId,
       Value<String?> eventCategory,
-      Value<String?> eventDescription,
+      Value<Map<String, String>?> eventDescription,
       Value<int> rowid,
     });
 
@@ -15651,9 +15653,14 @@ class $$CachedEventBannersTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get eventDescription => $composableBuilder(
+  ColumnWithTypeConverterFilters<
+    Map<String, String>?,
+    Map<String, String>,
+    String
+  >
+  get eventDescription => $composableBuilder(
     column: $table.eventDescription,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   $$CachedBannersTableFilterComposer get bannerId {
@@ -15745,7 +15752,8 @@ class $$CachedEventBannersTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get eventDescription => $composableBuilder(
+  GeneratedColumnWithTypeConverter<Map<String, String>?, String>
+  get eventDescription => $composableBuilder(
     column: $table.eventDescription,
     builder: (column) => column,
   );
@@ -15810,7 +15818,8 @@ class $$CachedEventBannersTableTableManager
                 Value<String> bannerId = const Value.absent(),
                 Value<String?> eventId = const Value.absent(),
                 Value<String?> eventCategory = const Value.absent(),
-                Value<String?> eventDescription = const Value.absent(),
+                Value<Map<String, String>?> eventDescription =
+                    const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CachedEventBannersCompanion(
                 bannerId: bannerId,
@@ -15824,7 +15833,8 @@ class $$CachedEventBannersTableTableManager
                 required String bannerId,
                 Value<String?> eventId = const Value.absent(),
                 Value<String?> eventCategory = const Value.absent(),
-                Value<String?> eventDescription = const Value.absent(),
+                Value<Map<String, String>?> eventDescription =
+                    const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CachedEventBannersCompanion.insert(
                 bannerId: bannerId,

@@ -49,7 +49,7 @@ class CacheFirstBannerRepository implements IBannerRepository {
   }
 
   @override
-  Stream<List<BannerEntity>> watchProductsByFilters({
+  Stream<List<BannerEntity>> watchBannersByFilters({
     required filters,
     required String categoryType,
     required String locale,

@@ -31,7 +31,7 @@ abstract interface class IBannerRepository {
     bool forceRefresh = false,
   });
 
-  Stream<List<BannerEntity>> watchProductsByFilters({
+  Stream<List<BannerEntity>> watchBannersByFilters({
     required List<BannerFilter> filters,
     required String categoryType,
     required String locale,
