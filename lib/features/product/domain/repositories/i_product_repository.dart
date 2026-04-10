@@ -1,3 +1,4 @@
+import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
 
@@ -40,7 +41,7 @@ abstract interface class IProductRepository {
     int pageSize = 20,
   });
 
-  Future<ProductFreshness> getProductsFreshness({required String type});
+  Future<DataFreshness> getProductsFreshness({required String type});
 
-  Future<ProductFreshness> getProductFreshness(String id);
+  Future<DataFreshness> getProductFreshness(String id);
 }

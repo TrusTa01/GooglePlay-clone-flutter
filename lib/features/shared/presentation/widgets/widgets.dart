@@ -16,7 +16,7 @@ export 'components/navigation_bar/utils/navigation_bar_utils.dart';
 export '../../../banners/presentation/widgets/items/banner_item.dart';
 export '../../../banners/presentation/widgets/sections/banner_section.dart';
 export '../../../banners/presentation/widgets/sections/kids_hero_banner.dart';
-export '../../../banners/presentation/widgets/components/banners_utils.dart';
+export '../../../banners/presentation/widgets/utils/banners_utils.dart';
 
 // Scroll widgets
 export 'product_widgets/elements/sliders_utils.dart';

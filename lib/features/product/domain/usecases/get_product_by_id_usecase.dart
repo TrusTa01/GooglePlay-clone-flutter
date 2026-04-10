@@ -19,11 +19,9 @@ final class GetProductByIdUseCaseImpl implements GetProductsByIdUseCase {
     required String id,
     required String locale,
     bool forceRefresh = false,
-  }) {
-    return _repository.getProductById(
-      id,
-      locale: locale,
-      forceRefresh: forceRefresh,
-    );
-  }
+  }) => _repository.getProductById(
+    id,
+    locale: locale,
+    forceRefresh: forceRefresh,
+  );
 }

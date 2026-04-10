@@ -45,7 +45,7 @@ class _DriftBannerLocalReader {
   Future<LocalBannerBundle?> getBannerById(String id) async {
     final banner = await (_db.select(
       _db.cachedBanners,
-    )..where((b) => b.type.equals(id))).getSingleOrNull();
+    )..where((b) => b.id.equals(id))).getSingleOrNull();
 
     if (banner == null) return null;
     return _buildBundle(banner);

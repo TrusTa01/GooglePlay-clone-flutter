@@ -25,13 +25,11 @@ final class WatchProductsByFiltersUseCaseImpl
     required String locale,
     int page = 1,
     int pageSize = 20,
-  }) {
-    return _repository.watchProductsByFilters(
-      filters: filters,
-      categoryType: categoryType,
-      locale: locale,
-      page: page,
-      pageSize: pageSize,
-    );
-  }
+  }) => _repository.watchProductsByFilters(
+    filters: filters,
+    categoryType: categoryType,
+    locale: locale,
+    page: page,
+    pageSize: pageSize,
+  );
 }

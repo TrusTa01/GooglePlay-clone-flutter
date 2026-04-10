@@ -21,12 +21,10 @@ final class WatchProductsUseCaseImpl implements WatchProductsUseCase {
     required String locale,
     int page = 1,
     int pageSize = 20,
-  }) {
-    return _repository.watchProducts(
-      type: type,
-      locale: locale,
-      page: page,
-      pageSize: pageSize,
-    );
-  }
+  }) => _repository.watchProducts(
+    type: type,
+    locale: locale,
+    page: page,
+    pageSize: pageSize,
+  );
 }

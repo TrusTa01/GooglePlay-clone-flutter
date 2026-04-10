@@ -23,7 +23,11 @@ class ProductViewModel extends _$ProductViewModel {
     return const ProductState(isLoading: true);
   }
 
-  Future<void> loadById(String id, {Locale? locale}) async {
+  Future<void> loadById(
+    String id, {
+    Locale? locale,
+    bool forceRefresh = false,
+  }) async {
     final effectiveLocale =
         locale ??
         ref.read(localeProvider) ??
@@ -35,6 +39,7 @@ class ProductViewModel extends _$ProductViewModel {
     final product = await _getProductByIdUseCase(
       id: id,
       locale: effectiveLocale.languageCode,
+      forceRefresh: forceRefresh,
     );
 
     if (product == null) {

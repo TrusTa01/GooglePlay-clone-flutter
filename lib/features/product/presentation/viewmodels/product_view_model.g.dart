@@ -32,7 +32,7 @@ final class ProductViewModelProvider
   String toString() {
     return r'productViewModelProvider'
         ''
-        '($argument)';
+        '$argument';
   }
 
   @$internal

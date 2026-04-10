@@ -24,7 +24,7 @@ final class _DriftBannerLocalWriter {
         await _upsertEventBanner(
           bannerId: e.id,
           eventCategory: e.eventCategory,
-          eventDescription: _pickFallback(e.eventDescription),
+          eventDescription: e.eventDescription,
           eventId: e.eventId,
         );
         await _cleanupSubtypeTables(bannerId: e.id, keepType: 'event');
@@ -59,7 +59,7 @@ final class _DriftBannerLocalWriter {
   Future<void> _upsertEventBanner({
     required String bannerId,
     String? eventCategory,
-    String? eventDescription,
+    LocalizedString? eventDescription,
     String? eventId,
   }) async {
     await _db
@@ -154,10 +154,5 @@ final class _DriftBannerLocalWriter {
         _db.cachedActionBanners,
       )..where((a) => a.bannerId.equals(bannerId))).go();
     }
-  }
-
-  String? _pickFallback(LocalizedString? ls) {
-    if (ls == null || ls.isEmpty) return null;
-    return ls['en'] ?? ls.values.first;
   }
 }

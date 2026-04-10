@@ -1,4 +1,5 @@
 import 'package:google_play/core/local_database/app_database.dart';
+import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 
 class LocalBannerBundle {
   final CachedBanner banner;
@@ -12,4 +13,10 @@ class LocalBannerBundle {
     this.action,
     required this.translations,
   });
+
+  BannerType get bannerType => switch (banner.type) {
+    'event' => BannerType.event,
+    'action' => BannerType.action,
+    _ => BannerType.unknown,
+  };
 }

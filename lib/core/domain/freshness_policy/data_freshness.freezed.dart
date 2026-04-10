@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DataFreshness {
 
- FresnessStatus get status; DateTime? get lastSuccessAt; DateTime? get lastAttemptAt; DateTime? get lastFailureAt; int? get failureCount;
+ FreshnessStatus get status; DateTime? get lastSuccessAt; DateTime? get lastAttemptAt; DateTime? get lastFailureAt; int get failureCount;
 /// Create a copy of DataFreshness
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $DataFreshnessCopyWith<$Res>  {
   factory $DataFreshnessCopyWith(DataFreshness value, $Res Function(DataFreshness) _then) = _$DataFreshnessCopyWithImpl;
 @useResult
 $Res call({
- FresnessStatus status, DateTime? lastSuccessAt, DateTime? lastAttemptAt, DateTime? lastFailureAt, int? failureCount
+ FreshnessStatus status, DateTime? lastSuccessAt, DateTime? lastAttemptAt, DateTime? lastFailureAt, int failureCount
 });
 
 
@@ -62,14 +62,14 @@ class _$DataFreshnessCopyWithImpl<$Res>
 
 /// Create a copy of DataFreshness
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? lastSuccessAt = freezed,Object? lastAttemptAt = freezed,Object? lastFailureAt = freezed,Object? failureCount = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? lastSuccessAt = freezed,Object? lastAttemptAt = freezed,Object? lastFailureAt = freezed,Object? failureCount = null,}) {
   return _then(_self.copyWith(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as FresnessStatus,lastSuccessAt: freezed == lastSuccessAt ? _self.lastSuccessAt : lastSuccessAt // ignore: cast_nullable_to_non_nullable
+as FreshnessStatus,lastSuccessAt: freezed == lastSuccessAt ? _self.lastSuccessAt : lastSuccessAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,lastAttemptAt: freezed == lastAttemptAt ? _self.lastAttemptAt : lastAttemptAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,lastFailureAt: freezed == lastFailureAt ? _self.lastFailureAt : lastFailureAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,failureCount: freezed == failureCount ? _self.failureCount : failureCount // ignore: cast_nullable_to_non_nullable
-as int?,
+as DateTime?,failureCount: null == failureCount ? _self.failureCount : failureCount // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -151,7 +151,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( FresnessStatus status,  DateTime? lastSuccessAt,  DateTime? lastAttemptAt,  DateTime? lastFailureAt,  int? failureCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( FreshnessStatus status,  DateTime? lastSuccessAt,  DateTime? lastAttemptAt,  DateTime? lastFailureAt,  int failureCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DataFreshness() when $default != null:
 return $default(_that.status,_that.lastSuccessAt,_that.lastAttemptAt,_that.lastFailureAt,_that.failureCount);case _:
@@ -172,7 +172,7 @@ return $default(_that.status,_that.lastSuccessAt,_that.lastAttemptAt,_that.lastF
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( FresnessStatus status,  DateTime? lastSuccessAt,  DateTime? lastAttemptAt,  DateTime? lastFailureAt,  int? failureCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( FreshnessStatus status,  DateTime? lastSuccessAt,  DateTime? lastAttemptAt,  DateTime? lastFailureAt,  int failureCount)  $default,) {final _that = this;
 switch (_that) {
 case _DataFreshness():
 return $default(_that.status,_that.lastSuccessAt,_that.lastAttemptAt,_that.lastFailureAt,_that.failureCount);}
@@ -189,7 +189,7 @@ return $default(_that.status,_that.lastSuccessAt,_that.lastAttemptAt,_that.lastF
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( FresnessStatus status,  DateTime? lastSuccessAt,  DateTime? lastAttemptAt,  DateTime? lastFailureAt,  int? failureCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( FreshnessStatus status,  DateTime? lastSuccessAt,  DateTime? lastAttemptAt,  DateTime? lastFailureAt,  int failureCount)?  $default,) {final _that = this;
 switch (_that) {
 case _DataFreshness() when $default != null:
 return $default(_that.status,_that.lastSuccessAt,_that.lastAttemptAt,_that.lastFailureAt,_that.failureCount);case _:
@@ -203,15 +203,15 @@ return $default(_that.status,_that.lastSuccessAt,_that.lastAttemptAt,_that.lastF
 /// @nodoc
 
 
-class _DataFreshness implements DataFreshness {
-  const _DataFreshness({required this.status, this.lastSuccessAt, this.lastAttemptAt, this.lastFailureAt, this.failureCount = 0});
+class _DataFreshness extends DataFreshness {
+  const _DataFreshness({required this.status, this.lastSuccessAt, this.lastAttemptAt, this.lastFailureAt, this.failureCount = 0}): super._();
   
 
-@override final  FresnessStatus status;
+@override final  FreshnessStatus status;
 @override final  DateTime? lastSuccessAt;
 @override final  DateTime? lastAttemptAt;
 @override final  DateTime? lastFailureAt;
-@override@JsonKey() final  int? failureCount;
+@override@JsonKey() final  int failureCount;
 
 /// Create a copy of DataFreshness
 /// with the given fields replaced by the non-null parameter values.
@@ -243,7 +243,7 @@ abstract mixin class _$DataFreshnessCopyWith<$Res> implements $DataFreshnessCopy
   factory _$DataFreshnessCopyWith(_DataFreshness value, $Res Function(_DataFreshness) _then) = __$DataFreshnessCopyWithImpl;
 @override @useResult
 $Res call({
- FresnessStatus status, DateTime? lastSuccessAt, DateTime? lastAttemptAt, DateTime? lastFailureAt, int? failureCount
+ FreshnessStatus status, DateTime? lastSuccessAt, DateTime? lastAttemptAt, DateTime? lastFailureAt, int failureCount
 });
 
 
@@ -260,14 +260,14 @@ class __$DataFreshnessCopyWithImpl<$Res>
 
 /// Create a copy of DataFreshness
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? lastSuccessAt = freezed,Object? lastAttemptAt = freezed,Object? lastFailureAt = freezed,Object? failureCount = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? lastSuccessAt = freezed,Object? lastAttemptAt = freezed,Object? lastFailureAt = freezed,Object? failureCount = null,}) {
   return _then(_DataFreshness(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as FresnessStatus,lastSuccessAt: freezed == lastSuccessAt ? _self.lastSuccessAt : lastSuccessAt // ignore: cast_nullable_to_non_nullable
+as FreshnessStatus,lastSuccessAt: freezed == lastSuccessAt ? _self.lastSuccessAt : lastSuccessAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,lastAttemptAt: freezed == lastAttemptAt ? _self.lastAttemptAt : lastAttemptAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,lastFailureAt: freezed == lastFailureAt ? _self.lastFailureAt : lastFailureAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,failureCount: freezed == failureCount ? _self.failureCount : failureCount // ignore: cast_nullable_to_non_nullable
-as int?,
+as DateTime?,failureCount: null == failureCount ? _self.failureCount : failureCount // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

@@ -1,11 +1,15 @@
-import 'package:google_play/core/domain/freshness_policy/data_freshness/data_freshness.dart';
+import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
+import 'package:google_play/core/domain/freshness_policy/freshness_status_enum.dart';
+
+export 'fetch_backoff_policy.dart';
 
 abstract interface class FreshnessPolicy {
   Duration get staleDuration;
   Duration get expireDuration;
-  FreshnessStatus getStatus(DateTime? lastSuccessAt);
+  FreshnessStatus getStatus(DataFreshness freshness, {DateTime? now});
 }
 
+/// Статус только по возрасту [DataFreshness.lastSuccessAt].
 class TimeBasedFreshnessPolicy implements FreshnessPolicy {
   @override
   final Duration staleDuration;
@@ -15,18 +19,24 @@ class TimeBasedFreshnessPolicy implements FreshnessPolicy {
   const TimeBasedFreshnessPolicy({
     required this.staleDuration,
     required this.expireDuration,
-  });
+  }) : assert(
+         expireDuration >= staleDuration,
+         'expireDuration must be >= staleDuration',
+       );
 
   @override
-  FreshnessStatus getStatus(DateTime? lastSuccessAt) {
-    if (lastSuccessAt == null) return FreshnessStatus.missing;
+  FreshnessStatus getStatus(DataFreshness freshness, {DateTime? now}) {
+    final referenceTime = now ?? DateTime.now();
+    final lastSuccess = freshness.lastSuccessAt;
 
-    final now = DateTime.now();
-    final age = now.difference(lastSuccessAt);
+    if (lastSuccess == null) return FreshnessStatus.missing;
 
-    if (age >= expireDuration) return FreshnessStatus.expired;
-    if (age >= staleDuration) return FreshnessStatus.stale;
+    final age = referenceTime.difference(lastSuccess);
 
-    return FreshnessStatus.fresh;
+    return switch (age) {
+      _ when age >= expireDuration => FreshnessStatus.expired,
+      _ when age >= staleDuration => FreshnessStatus.stale,
+      _ => FreshnessStatus.fresh,
+    };
   }
 }

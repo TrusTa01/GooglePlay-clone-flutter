@@ -30,7 +30,8 @@ class ProductEventViewModel extends _$ProductEventViewModel {
       // 1. Загружаем банер события
       final bannerRepo = ref.read(bannerRepositoryProvider);
       final banner = await bannerRepo.getBannerById(
-        id: eventId,
+        eventId,
+        'banners',
         locale: locale.languageCode,
       );
 

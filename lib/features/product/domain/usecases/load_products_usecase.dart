@@ -23,13 +23,11 @@ final class LoadProductsUseCaseImpl implements LoadProductsUseCase {
     int page = 1,
     int pageSize = 20,
     bool forceRefresh = false,
-  }) {
-    return _repository.getProducts(
-      type: type,
-      locale: locale,
-      page: page,
-      pageSize: pageSize,
-      forceRefresh: forceRefresh,
-    );
-  }
+  }) => _repository.getProducts(
+    type: type,
+    locale: locale,
+    page: page,
+    pageSize: pageSize,
+    forceRefresh: forceRefresh,
+  );
 }

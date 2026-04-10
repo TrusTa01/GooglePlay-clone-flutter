@@ -1,3 +1,4 @@
+import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/features/product/data/datasources/network/supabase_product_remote_datasource.dart';
 import 'package:google_play/features/product/domain/usecases/get_products_by_filters_usecase.dart';
 import 'package:google_play/features/product/domain/usecases/get_product_freshness_usecase.dart';
@@ -42,10 +43,20 @@ final productRemoteDataSourceProvider = Provider<IProductRemoteDataSource>((
   return SupabaseProductRemoteDataSource(datasource: datasource);
 });
 
+final productFreshnessPolicyProvider = Provider<FreshnessPolicy>((ref) {
+  const ttl = Duration(hours: 6);
+  return TimeBasedFreshnessPolicy(staleDuration: ttl, expireDuration: ttl);
+});
+
 final productRepositoryProvider = Provider<IProductRepository>((ref) {
   final local = ref.watch(productLocalDatasourceProvider);
   final remote = ref.watch(productRemoteDataSourceProvider);
-  return OfflineFirstProductRepository(local: local, remoteDataSource: remote);
+  final policy = ref.watch(productFreshnessPolicyProvider);
+  return CacheFirstProductRepository(
+    local: local,
+    remoteDataSource: remote,
+    freshnessPolicy: policy,
+  );
 });
 
 final loadProductsUseCaseProvider = Provider<LoadProductsUseCase>((ref) {

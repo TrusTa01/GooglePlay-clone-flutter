@@ -27,14 +27,12 @@ final class LoadProductsByFiltersUseCaseImpl
     int page = 1,
     int pageSize = 20,
     bool forceRefresh = false,
-  }) {
-    return _repository.getProductsByFilters(
-      filters: filters,
-      categoryType: categoryType,
-      locale: locale,
-      page: page,
-      pageSize: pageSize,
-      forceRefresh: forceRefresh,
-    );
-  }
+  }) => _repository.getProductsByFilters(
+    filters: filters,
+    categoryType: categoryType,
+    locale: locale,
+    page: page,
+    pageSize: pageSize,
+    forceRefresh: forceRefresh,
+  );
 }

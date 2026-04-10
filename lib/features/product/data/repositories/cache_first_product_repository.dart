@@ -1,3 +1,5 @@
+import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
+import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/product/data/datasources/local/i_product_local_datasource.dart';
 import 'package:google_play/features/product/data/mappers/local/local_product_bundle_mapper.dart';
@@ -5,21 +7,20 @@ import 'package:google_play/features/product/data/models/network/product_dto.dar
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_filter.dart';
 import 'package:google_play/features/product/data/datasources/network/i_product_remote_data_source.dart';
-import 'package:google_play/features/product/domain/repositories/product_freshness.dart';
 import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 
 class CacheFirstProductRepository implements IProductRepository {
   final IProductRemoteDataSource _remoteDataSource;
   final IProductLocalDatasource _local;
-  final Duration _ttl;
+  final FreshnessPolicy _freshnessPolicy;
 
   const CacheFirstProductRepository({
     required IProductRemoteDataSource remoteDataSource,
     required IProductLocalDatasource local,
-    Duration ttl = const Duration(hours: 6),
+    required FreshnessPolicy freshnessPolicy,
   }) : _remoteDataSource = remoteDataSource,
        _local = local,
-       _ttl = ttl;
+       _freshnessPolicy = freshnessPolicy;
 
   @override
   Future<List<ProductEntity>> getProducts({
@@ -108,14 +109,14 @@ class CacheFirstProductRepository implements IProductRepository {
     required String locale,
     bool forceRefresh = false,
   }) async {
-    final localFirst = await _local.getProductById(id);
-    if (localFirst != null && !forceRefresh) {
-      return localFirst.toEntity(locale);
+    final syncKey = _syncItemKey(id);
+
+    if (forceRefresh || await _needsSync(syncKey: syncKey)) {
+      await _refreshProductById(id);
     }
 
-    await _refreshProductById(id, forceRefresh: forceRefresh);
-    final refreshed = await _local.getProductById(id);
-    return refreshed?.toEntity(locale);
+    final fromLocal = await _local.getProductById(id);
+    return fromLocal?.toEntity(locale);
   }
 
   Future<void> _refreshProducts({
@@ -135,36 +136,34 @@ class CacheFirstProductRepository implements IProductRepository {
     }
   }
 
-  Future<void> _refreshProductById(
-    String id, {
-    required bool forceRefresh,
-  }) async {
+  Future<void> _refreshProductById(String id) async {
     final result = await _remoteDataSource.getProductById(id: id);
     if (result case SuccessResult<ProductDto?>(data: final dto?)) {
       await _local.upsertProducts([dto]);
-      await _local.setLastSync(_syncItemKey(id), DateTime.now());
-    } else if (forceRefresh) {
       await _local.setLastSync(_syncItemKey(id), DateTime.now());
     }
   }
 
   Future<bool> _needsSync({required String syncKey}) async {
+    final freshness = await _freshnessForSyncKey(syncKey);
+    return freshness.status.shouldFetch;
+  }
+
+  Future<DataFreshness> _freshnessForSyncKey(String syncKey) async {
     final lastSync = await _local.getLastSync(syncKey);
-    if (lastSync == null) return true;
-    return DateTime.now().difference(lastSync) >= _ttl;
+    return DataFreshness.fromPersistedFields(
+      policy: _freshnessPolicy,
+      lastSuccessAt: lastSync,
+    );
   }
 
   @override
-  Future<ProductFreshness> getProductsFreshness({required String type}) async {
-    final lastSync = await _local.getLastSync(_syncListKey(type));
-    return ProductFreshness(lastSyncAt: lastSync, ttl: _ttl);
-  }
+  Future<DataFreshness> getProductsFreshness({required String type}) =>
+      _freshnessForSyncKey(_syncListKey(type));
 
   @override
-  Future<ProductFreshness> getProductFreshness(String id) async {
-    final lastSync = await _local.getLastSync(_syncItemKey(id));
-    return ProductFreshness(lastSyncAt: lastSync, ttl: _ttl);
-  }
+  Future<DataFreshness> getProductFreshness(String id) =>
+      _freshnessForSyncKey(_syncItemKey(id));
 
   bool _matchesFilter(ProductEntity product, ProductFilter filter) {
     return switch (filter) {
