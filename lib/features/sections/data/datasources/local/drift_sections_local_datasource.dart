@@ -41,6 +41,6 @@ class DriftSectionLocalDatasource
   );
 
   @override
-  Future<void> upsertSections(List<TabSectionsDto> dtos) =>
+  Future<void> upsertSections(List<SectionsDto> dtos) =>
       _writer.upsertAll(dtos);
 }

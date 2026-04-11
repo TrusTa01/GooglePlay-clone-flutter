@@ -9,8 +9,5 @@ abstract interface class ISectionLocalDatasource {
     required int pageSize,
   });
 
-  Future<void> upsertSections(List<TabSectionsDto> dtos);
-
-  Future<DateTime?> getLastSync(String syncKey);
-  Future<void> setLastSync(String syncKey, DateTime at);
+  Future<void> upsertSections(List<SectionsDto> dtos);
 }

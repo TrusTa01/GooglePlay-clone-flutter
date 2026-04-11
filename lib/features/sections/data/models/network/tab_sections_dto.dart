@@ -5,20 +5,10 @@ part 'tab_sections_dto.freezed.dart';
 part 'tab_sections_dto.g.dart';
 
 @freezed
-abstract class TabSectionsDto with _$TabSectionsDto {
-  const factory TabSectionsDto({
-    @JsonKey(name: 'tabId') required String tabId,
-    required List<SectionDto> sections,
-  }) = _TabSectionsDto;
-
-  factory TabSectionsDto.fromJson(Map<String, dynamic> json) =>
-      _$TabSectionsDtoFromJson(json);
-}
-
-@freezed
-abstract class SectionDto with _$SectionDto {
-  const factory SectionDto({
+abstract class SectionsDto with _$SectionsDto {
+  const factory SectionsDto({
     required String id,
+    @JsonKey(name: 'tab_id') required String tabId,
     @JsonKey(name: 'tab_key') required String tabKey,
     @JsonKey(name: 'section_title') required String sectionType,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)
@@ -29,32 +19,31 @@ abstract class SectionDto with _$SectionDto {
     @JsonKey(name: 'image_asset_path') required String imageAssetPath,
     @JsonKey(name: 'sort_order') required int sortOrder,
     @JsonKey(name: 'content_type') required String contentType,
-    @JsonKey(name: 'data_params_dto') required DataParamsDto? dataParamsDto,
-  }) = _SectionDto;
+    @JsonKey(name: 'data_params_dto') required ParamsDto? dataParamsDto,
+  }) = _SectionsDto;
 
-  factory SectionDto.fromJson(Map<String, dynamic> json) =>
-      _$SectionDtoFromJson(json);
+  factory SectionsDto.fromJson(Map<String, dynamic> json) =>
+      _$SectionsDtoFromJson(json);
 }
 
 @freezed
-abstract class DataParamsDto with _$DataParamsDto {
-  const factory DataParamsDto({
+abstract class ParamsDto with _$ParamsDto {
+  const factory ParamsDto({
     String? sort,
-    @Default(DataParamsExtrasDto(filters: [])) DataParamsExtrasDto extras,
-  }) = _DataParamsDto;
+    @Default(ParamsExtrasDto(filters: [])) ParamsExtrasDto extras,
+  }) = _ParamsDto;
 
-  factory DataParamsDto.fromJson(Map<String, dynamic> json) =>
-      _$DataParamsDtoFromJson(json);
+  factory ParamsDto.fromJson(Map<String, dynamic> json) =>
+      _$ParamsDtoFromJson(json);
 }
 
 @freezed
-abstract class DataParamsExtrasDto with _$DataParamsExtrasDto {
-  const factory DataParamsExtrasDto({
-    @Default([]) List<ParamFilterDto> filters,
-  }) = _DataParamsExtrasDto;
+abstract class ParamsExtrasDto with _$ParamsExtrasDto {
+  const factory ParamsExtrasDto({@Default([]) List<ParamFilterDto> filters}) =
+      _ParamsExtrasDto;
 
-  factory DataParamsExtrasDto.fromJson(Map<String, dynamic> json) =>
-      _$DataParamsExtrasDtoFromJson(json);
+  factory ParamsExtrasDto.fromJson(Map<String, dynamic> json) =>
+      _$ParamsExtrasDtoFromJson(json);
 }
 
 @freezed

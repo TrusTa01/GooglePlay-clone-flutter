@@ -7,9 +7,10 @@ import 'package:google_play/features/sections/domain/entities/section_entity.dar
 extension CachedTabSectionMapper on CachedTabSection {
   SectionEntity toEntity(String locale) => toSectionDto().toEntity(locale);
 
-  SectionDto toSectionDto() {
-    return SectionDto(
+  SectionsDto toSectionDto() {
+    return SectionsDto(
       id: id,
+      tabId: tabId,
       tabKey: tabKey,
       sectionType: sectionType,
       title: title,
@@ -23,12 +24,12 @@ extension CachedTabSectionMapper on CachedTabSection {
   }
 }
 
-DataParamsDto? _decodeDataParams(String? raw) {
+ParamsDto? _decodeDataParams(String? raw) {
   if (raw == null || raw.isEmpty) return null;
   try {
     final decoded = jsonDecode(raw);
     if (decoded is! Map<String, dynamic>) return null;
-    return DataParamsDto.fromJson(decoded);
+    return ParamsDto.fromJson(decoded);
   } on Object {
     return null;
   }

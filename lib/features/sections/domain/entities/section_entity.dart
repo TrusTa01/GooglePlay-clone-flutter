@@ -1,4 +1,4 @@
-import 'package:google_play/features/sections/domain/entities/data_params_entity.dart';
+import 'package:google_play/features/sections/domain/entities/params_entity.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind_enum.dart';
 
@@ -12,7 +12,7 @@ class SectionEntity {
   final String? imageAssetPath;
   final int sortOrder;
   final String contentType;
-  final DataParamsEntity? dataParamsEntity;
+  final ParamsEntity? dataParamsEntity;
 
   const SectionEntity({
     required this.id,

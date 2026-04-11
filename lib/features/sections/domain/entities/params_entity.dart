@@ -1,14 +1,14 @@
-class DataParamsEntity {
+class ParamsEntity {
   final String? sort;
-  final DataParamsExtrasEntity? extras;
+  final ParamsExtrasEntity? extras;
 
-  const DataParamsEntity({this.sort, this.extras});
+  const ParamsEntity({this.sort, this.extras});
 }
 
-class DataParamsExtrasEntity {
+class ParamsExtrasEntity {
   final List<ParamFilterEntity> filters;
 
-  const DataParamsExtrasEntity({required this.filters});
+  const ParamsExtrasEntity({required this.filters});
 }
 
 class ParamFilterEntity {

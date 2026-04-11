@@ -4,14 +4,13 @@ import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
 
 class SupabaseSectionNetworkDatasource
-    extends BaseSupabaseDatasourse<TabSectionsDto> {
+    extends BaseSupabaseDatasourse<SectionsDto> {
   const SupabaseSectionNetworkDatasource({required super.executor});
 
   @override
-  TabSectionsDto fromJson(Map<String, dynamic> json) =>
-      TabSectionsDto.fromJson(json);
+  SectionsDto fromJson(Map<String, dynamic> json) => SectionsDto.fromJson(json);
 
-  Future<Result<List<TabSectionsDto>>> getSections({
+  Future<Result<List<SectionsDto>>> getSections({
     required String view,
     SchemaNamesEnum schemaName = SchemaNamesEnum.views,
     required ({bool ascending, String column}) order,

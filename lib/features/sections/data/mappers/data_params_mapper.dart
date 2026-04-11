@@ -1,15 +1,15 @@
-import 'package:google_play/features/sections/domain/entities/data_params_entity.dart';
+import 'package:google_play/features/sections/domain/entities/params_entity.dart';
 import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
 
-extension DataParamsMapper on DataParamsDto {
-  DataParamsEntity toEntity() => DataParamsEntity(
+extension DataParamsMapper on ParamsDto {
+  ParamsEntity toEntity() => ParamsEntity(
     sort: sort,
     extras: extras.toEntity(),
   );
 }
 
-extension DataParamsExtrasMapper on DataParamsExtrasDto {
-  DataParamsExtrasEntity toEntity() => DataParamsExtrasEntity(
+extension DataParamsExtrasMapper on ParamsExtrasDto {
+  ParamsExtrasEntity toEntity() => ParamsExtrasEntity(
     filters: filters.map((f) => f.toEntity()).toList(),
   );
 }

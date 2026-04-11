@@ -18,7 +18,7 @@ class SupabaseSectionRemoteDataSource implements ISectionRemoteDataSource {
   );
 
   @override
-  Future<Result<List<TabSectionsDto>>> getSections({
+  Future<Result<List<SectionsDto>>> getSections({
     required int page,
     int pageSize = 20,
   }) {

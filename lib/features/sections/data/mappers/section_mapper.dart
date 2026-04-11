@@ -5,7 +5,7 @@ import 'package:google_play/features/sections/domain/entities/section_layout_kin
 import 'package:google_play/features/sections/domain/entities/section_entity.dart';
 import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
 
-extension SectionMapper on SectionDto {
+extension SectionMapper on SectionsDto {
   SectionEntity toEntity(String locale) {
     return SectionEntity(
       id: id,
