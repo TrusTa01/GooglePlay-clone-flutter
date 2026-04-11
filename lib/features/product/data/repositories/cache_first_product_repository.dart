@@ -7,6 +7,7 @@ import 'package:google_play/features/product/data/models/network/product_dto.dar
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/core/domain/entities/filters.dart';
 import 'package:google_play/features/product/data/datasources/network/i_product_remote_data_source.dart';
+import 'package:google_play/features/product/domain/entities/software_entity.dart';
 import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 
 class CacheFirstProductRepository implements IProductRepository {
@@ -172,7 +173,8 @@ class CacheFirstProductRepository implements IProductRepository {
       CollectionFilter() => true, // TODO: [filter] добавить фильтр
       TagFilter(:final tag) => product.tags.contains(tag),
       IsPaidFilter(:final isPaid) => product.isPaid == isPaid,
-      AgeLimitFilter(:final age) => product.,
+      AgeLimitFilter(:final age) =>
+        product is SoftwareEntity ? (product.ageRating >= age) : true,
       UnknownFilter() => true,
     };
   }

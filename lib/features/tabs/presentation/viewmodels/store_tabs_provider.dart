@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'store_tabs_provider.g.dart';
 
 @riverpod
-Future<List<TabEntity>> storeTabs(Ref ref, StoreType storeType) async {
-  final useCase = ref.watch(getAvailableTabsUseCaseProvider);
+Future<List<TabsEntity>> storeTabs(Ref ref, StoreType storeType) async {
+  final useCase = ref.watch(getTabsUseCaseProvider);
   return useCase(storeType: storeType);
 }

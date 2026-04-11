@@ -5,7 +5,7 @@ import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/features/product/domain/usecases/load_products_usecase.dart';
 import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
 import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
-import 'package:google_play/features/tabs/domain/usecases/get_tab_sections_usecase.dart';
+import 'package:google_play/features/sections/domain/usecases/get_sections_usecase.dart';
 import 'package:google_play/features/home/presentation/viewmodels/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

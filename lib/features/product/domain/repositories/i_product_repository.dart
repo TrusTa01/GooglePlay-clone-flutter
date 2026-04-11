@@ -25,7 +25,7 @@ abstract interface class IProductRepository {
   });
 
   Future<List<ProductEntity>> getProductsByFilters({
-    required List<ProductFilter> filters,
+    required List<Filter> filters,
     required String categoryType,
     required String locale,
     int page = 1,
@@ -34,7 +34,7 @@ abstract interface class IProductRepository {
   });
 
   Stream<List<ProductEntity>> watchProductsByFilters({
-    required List<ProductFilter> filters,
+    required List<Filter> filters,
     required String categoryType,
     required String locale,
     int page = 1,

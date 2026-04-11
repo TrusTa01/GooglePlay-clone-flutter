@@ -54,7 +54,7 @@ class StoreTabScreen extends HookConsumerWidget {
             if (tabController.indexIsChanging) return;
 
             final index = tabController.index;
-            final tabKey = tabsData[index].key;
+            final tabKey = tabsData[index].tabKey;
 
             if (!visitedIndexes.value.contains(index)) {
               visitedIndexes.value = {...visitedIndexes.value, index};
@@ -66,7 +66,7 @@ class StoreTabScreen extends HookConsumerWidget {
           tabController.addListener(listener);
 
           // Загружаем первый таб и продукты
-          homeProvider.loadTabSections(tabsData[0].key);
+          homeProvider.loadTabSections(tabsData[0].tabKey);
           homeProvider.loadProducts();
 
           return () => tabController.removeListener(listener);
@@ -108,7 +108,7 @@ class StoreTabScreen extends HookConsumerWidget {
                 controller: tabController,
                 children: List.generate(tabs.length, (index) {
                   final tabConfig = tabsData[index];
-                  final tabKey = tabConfig.key;
+                  final tabKey = tabConfig.tabKey;
                   final sectionState =
                       homeState.sectionsByTab[tabKey] ??
                       const AsyncValue<List<ResolvedSection>>.loading();
