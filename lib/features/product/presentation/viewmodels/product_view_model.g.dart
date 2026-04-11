@@ -32,7 +32,7 @@ final class ProductViewModelProvider
   String toString() {
     return r'productViewModelProvider'
         ''
-        '$argument';
+        '($argument)';
   }
 
   @$internal
@@ -58,7 +58,7 @@ final class ProductViewModelProvider
   }
 }
 
-String _$productViewModelHash() => r'0803de4f839d6d4a47ccc6592b60d7a793374fc8';
+String _$productViewModelHash() => r'912fab1813ded2e031be13a0e72f2189acb38688';
 
 final class ProductViewModelFamily extends $Family
     with

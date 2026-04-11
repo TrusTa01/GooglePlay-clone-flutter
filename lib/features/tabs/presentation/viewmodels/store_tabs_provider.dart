@@ -1,6 +1,6 @@
 import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
-import 'package:google_play/features/sections/domain/entities/available_tabs_entity.dart';
+import 'package:google_play/features/tabs/domain/entities/available_tabs_entity.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'store_tabs_provider.g.dart';

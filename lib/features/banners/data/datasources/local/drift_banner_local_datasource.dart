@@ -1,5 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:google_play/core/data/json/dto_json_converters.dart';
+import 'package:google_play/core/data/local/base_drift_writter.dart';
+import 'package:google_play/core/data/local/simple_select_statement_ext.dart';
+import 'package:google_play/core/data/local/sync_state_mixin.dart';
 import 'package:google_play/core/local_database/app_database.dart';
 import 'package:google_play/features/banners/data/datasources/local/i_banner_local_datasource.dart';
 import 'package:google_play/features/banners/data/models/local/local_banner_bundle.dart';
@@ -8,7 +10,9 @@ import 'package:google_play/features/banners/data/models/network/banner_dto.dart
 part 'drift_banner_local_reader.dart';
 part 'drift_banner_local_writer.dart';
 
-class DriftBannerLocalDatasource implements IBannerLocalDatasource {
+class DriftBannerLocalDatasource
+    with SyncStateMixin
+    implements IBannerLocalDatasource {
   final AppDatabase _db;
   late final _DriftBannerLocalReader _reader;
   late final _DriftBannerLocalWriter _writer;
@@ -17,6 +21,9 @@ class DriftBannerLocalDatasource implements IBannerLocalDatasource {
     _reader = _DriftBannerLocalReader(_db);
     _writer = _DriftBannerLocalWriter(_db);
   }
+
+  @override
+  AppDatabase get db => _db;
 
   @override
   Future<List<LocalBannerBundle>> getBanners({
@@ -36,23 +43,5 @@ class DriftBannerLocalDatasource implements IBannerLocalDatasource {
       _reader.getBannerById(id);
 
   @override
-  Future<void> upsertBanners(List<BannerDto> dtos) =>
-      _writer.upsertBanners(dtos);
-
-  @override
-  Future<DateTime?> getLastSync(String syncKey) async {
-    final row = await (_db.select(
-      _db.syncState,
-    )..where((t) => t.syncKey.equals(syncKey))).getSingleOrNull();
-    return row?.lastSyncAt;
-  }
-
-  @override
-  Future<void> setLastSync(String syncKey, DateTime at) async {
-    await _db
-        .into(_db.syncState)
-        .insertOnConflictUpdate(
-          SyncStateCompanion.insert(syncKey: syncKey, lastSyncAt: Value(at)),
-        );
-  }
+  Future<void> upsertBanners(List<BannerDto> dtos) => _writer.upsertAll(dtos);
 }

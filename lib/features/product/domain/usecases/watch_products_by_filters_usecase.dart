@@ -1,10 +1,10 @@
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/features/product/domain/entities/product_filter.dart';
+import 'package:google_play/core/domain/entities/filters.dart';
 import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 
 abstract interface class WatchProductsByFiltersUseCase {
   Stream<List<ProductEntity>> call({
-    required List<ProductFilter> filters,
+    required List<Filter> filters,
     required String categoryType,
     required String locale,
     int page = 1,
@@ -20,7 +20,7 @@ final class WatchProductsByFiltersUseCaseImpl
 
   @override
   Stream<List<ProductEntity>> call({
-    required List<ProductFilter> filters,
+    required List<Filter> filters,
     required String categoryType,
     required String locale,
     int page = 1,

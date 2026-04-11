@@ -5,7 +5,7 @@ import 'package:google_play/features/product/data/datasources/local/i_product_lo
 import 'package:google_play/features/product/data/mappers/local/local_product_bundle_mapper.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/features/product/domain/entities/product_filter.dart';
+import 'package:google_play/core/domain/entities/filters.dart';
 import 'package:google_play/features/product/data/datasources/network/i_product_remote_data_source.dart';
 import 'package:google_play/features/product/domain/repositories/i_product_repository.dart';
 
@@ -61,7 +61,7 @@ class CacheFirstProductRepository implements IProductRepository {
 
   @override
   Future<List<ProductEntity>> getProductsByFilters({
-    required List<ProductFilter> filters,
+    required List<Filter> filters,
     required String categoryType,
     required String locale,
     int page = 1,
@@ -84,7 +84,7 @@ class CacheFirstProductRepository implements IProductRepository {
 
   @override
   Stream<List<ProductEntity>> watchProductsByFilters({
-    required List<ProductFilter> filters,
+    required List<Filter> filters,
     required String categoryType,
     required String locale,
     int page = 1,
@@ -165,13 +165,14 @@ class CacheFirstProductRepository implements IProductRepository {
   Future<DataFreshness> getProductFreshness(String id) =>
       _freshnessForSyncKey(_syncItemKey(id));
 
-  bool _matchesFilter(ProductEntity product, ProductFilter filter) {
+  bool _matchesFilter(ProductEntity product, Filter filter) {
     return switch (filter) {
       RecommendedFilter() => true, // TODO: [filter] добавить фильтр
       CategoryFilter(:final genre) => product.categories.contains(genre),
       CollectionFilter() => true, // TODO: [filter] добавить фильтр
       TagFilter(:final tag) => product.tags.contains(tag),
       IsPaidFilter(:final isPaid) => product.isPaid == isPaid,
+      AgeLimitFilter(:final age) => product.,
       UnknownFilter() => true,
     };
   }

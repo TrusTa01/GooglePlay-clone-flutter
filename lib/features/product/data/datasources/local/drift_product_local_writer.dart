@@ -1,21 +1,10 @@
 part of 'drift_product_local_datasource.dart';
 
-final class _ProductLocalWriter {
-  final AppDatabase _db;
+final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
+  const _ProductLocalWriter(super._db);
 
-  const _ProductLocalWriter(this._db);
-
-  Future<void> upsertProducts(List<ProductDto> dtos) async {
-    if (dtos.isEmpty) return;
-
-    await _db.transaction(() async {
-      for (final dto in dtos) {
-        await _upsertOne(dto);
-      }
-    });
-  }
-
-  Future<void> _upsertOne(ProductDto dto) async {
+  @override
+  Future<void> upsertOne(ProductDto dto) async {
     await _upsertBaseProduct(dto);
     await _replaceTranslations(dto);
     await _replaceCategories(dto.id, dto.categories);
@@ -79,8 +68,8 @@ final class _ProductLocalWriter {
   }
 
   Future<void> _upsertBaseProduct(ProductDto dto) async {
-    await _db
-        .into(_db.cachedProduct)
+    await db
+        .into(db.cachedProduct)
         .insertOnConflictUpdate(
           CachedProductCompanion.insert(
             id: dto.id,
@@ -124,8 +113,8 @@ final class _ProductLocalWriter {
     required DateTime lastUpdated,
     required LocalizedString creatorDescription,
   }) async {
-    await _db
-        .into(_db.cachedSoftwareProduct)
+    await db
+        .into(db.cachedSoftwareProduct)
         .insertOnConflictUpdate(
           CachedSoftwareProductCompanion.insert(
             productId: productId,
@@ -154,8 +143,8 @@ final class _ProductLocalWriter {
   }
 
   Future<void> _upsertApp(AppDto a) async {
-    await _db
-        .into(_db.cachedApps)
+    await db
+        .into(db.cachedApps)
         .insertOnConflictUpdate(
           CachedAppsCompanion.insert(
             productId: a.id,
@@ -165,8 +154,8 @@ final class _ProductLocalWriter {
   }
 
   Future<void> _upsertGame(GameDto g) async {
-    await _db
-        .into(_db.cachedGames)
+    await db
+        .into(db.cachedGames)
         .insertOnConflictUpdate(
           CachedGamesCompanion.insert(
             productId: g.id,
@@ -181,8 +170,8 @@ final class _ProductLocalWriter {
   }
 
   Future<void> _upsertBook(BookDto b) async {
-    await _db
-        .into(_db.cachedBooks)
+    await db
+        .into(db.cachedBooks)
         .insertOnConflictUpdate(
           CachedBooksCompanion.insert(
             productId: b.id,
@@ -205,8 +194,8 @@ final class _ProductLocalWriter {
   }
 
   Future<void> _upsertDeveloper(DeveloperDto d) async {
-    await _db
-        .into(_db.developers)
+    await db
+        .into(db.developers)
         .insertOnConflictUpdate(
           DevelopersCompanion.insert(
             id: d.id,
@@ -223,8 +212,8 @@ final class _ProductLocalWriter {
   }
 
   Future<void> _upsertPublisher(BookPublisherDto p) async {
-    await _db
-        .into(_db.publishers)
+    await db
+        .into(db.publishers)
         .insertOnConflictUpdate(
           PublishersCompanion.insert(
             id: p.id,
@@ -239,34 +228,34 @@ final class _ProductLocalWriter {
     required String keepType,
   }) async {
     if (keepType != 'app') {
-      await (_db.delete(
-        _db.cachedApps,
+      await (db.delete(
+        db.cachedApps,
       )..where((t) => t.productId.equals(productId))).go();
     }
 
     if (keepType != 'game') {
-      await (_db.delete(
-        _db.cachedGames,
+      await (db.delete(
+        db.cachedGames,
       )..where((t) => t.productId.equals(productId))).go();
     }
 
     if (keepType != 'book') {
-      await (_db.delete(
-        _db.cachedBooks,
+      await (db.delete(
+        db.cachedBooks,
       )..where((t) => t.productId.equals(productId))).go();
     }
 
     if (keepType == 'book') {
-      await (_db.delete(
-        _db.cachedSoftwareProduct,
+      await (db.delete(
+        db.cachedSoftwareProduct,
       )..where((t) => t.productId.equals(productId))).go();
     }
   }
 
   Future<void> _replaceTranslations(ProductDto dto) async {
     final productId = dto.id;
-    await (_db.delete(
-      _db.productTranslations,
+    await (db.delete(
+      db.productTranslations,
     )..where((t) => t.productId.equals(productId))).go();
 
     final fields = _translationFields(dto);
@@ -290,9 +279,9 @@ final class _ProductLocalWriter {
     }
 
     if (rows.isEmpty) return;
-    await _db.batch((batch) {
+    await db.batch((batch) {
       batch.insertAll(
-        _db.productTranslations,
+        db.productTranslations,
         rows,
         mode: InsertMode.insertOrReplace,
       );
@@ -331,59 +320,76 @@ final class _ProductLocalWriter {
     String productId,
     List<CategoryDto> categories,
   ) async {
-    await (_db.delete(
-      _db.productCategories,
+    await (db.delete(
+      db.productCategories,
     )..where((t) => t.productId.equals(productId))).go();
 
     if (categories.isEmpty) return;
     final seen = <String>{};
+    final categoryRows = <CategoriesCompanion>[];
+    final junctionRows = <ProductCategoriesCompanion>[];
 
     for (final category in categories) {
       if (!seen.add(category.id)) continue;
 
-      await _db
-          .into(_db.categories)
-          .insertOnConflictUpdate(
-            CategoriesCompanion.insert(
-              id: category.id,
-              name: category.name,
-              type: 'product',
-            ),
-          );
+      categoryRows.add(
+        CategoriesCompanion.insert(
+          id: category.id,
+          name: category.name,
+          type: 'product',
+        ),
+      );
 
-      await _db
-          .into(_db.productCategories)
-          .insertOnConflictUpdate(
-            ProductCategoriesCompanion.insert(
-              productId: productId,
-              categoryId: category.id,
-            ),
-          );
+      junctionRows.add(
+        ProductCategoriesCompanion.insert(
+          productId: productId,
+          categoryId: category.id,
+        ),
+      );
     }
+
+    await db.batch((batch) {
+      batch.insertAll(
+        db.categories,
+        categoryRows,
+        mode: InsertMode.insertOrReplace,
+      );
+
+      batch.insertAll(
+        db.productCategories,
+        junctionRows,
+        mode: InsertMode.insertOrReplace,
+      );
+    });
   }
 
   Future<void> _replaceTags(String productId, List<TagDto> tags) async {
-    await (_db.delete(
-      _db.productTags,
+    await (db.delete(
+      db.productTags,
     )..where((t) => t.productId.equals(productId))).go();
 
     if (tags.isEmpty) return;
     final seen = <String>{};
+    final tagsRows = <TagsCompanion>[];
+    final junctionRows = <ProductTagsCompanion>[];
 
     for (final tag in tags) {
       if (!seen.add(tag.id)) continue;
+      tagsRows.add(
+        TagsCompanion.insert(id: tag.id, name: tag.name, type: 'product'),
+      );
 
-      await _db
-          .into(_db.tags)
-          .insertOnConflictUpdate(
-            TagsCompanion.insert(id: tag.id, name: tag.name, type: 'product'),
-          );
-
-      await _db
-          .into(_db.productTags)
-          .insertOnConflictUpdate(
-            ProductTagsCompanion.insert(productId: productId, tagId: tag.id),
-          );
+      junctionRows.add(
+        ProductTagsCompanion.insert(productId: productId, tagId: tag.id),
+      );
     }
+    await db.batch((batch) {
+      batch.insertAll(db.tags, tagsRows, mode: InsertMode.insertOrReplace);
+      batch.insertAll(
+        db.productTags,
+        junctionRows,
+        mode: InsertMode.insertOrReplace,
+      );
+    });
   }
 }

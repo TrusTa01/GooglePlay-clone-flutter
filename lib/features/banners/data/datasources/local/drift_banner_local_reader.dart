@@ -10,15 +10,11 @@ class _DriftBannerLocalReader {
     required int page,
     required int pageSize,
   }) async {
-    final safePage = page < 1 ? 1 : page;
-    final safePageSize = pageSize < 1 ? 20 : pageSize;
-    final offset = (safePage - 1) * safePageSize;
-
     final banners =
         await (_db.select(_db.cachedBanners)
               ..where((b) => b.type.equals(type))
-              ..orderBy([(b) => OrderingTerm.desc(b.createdAt)])
-              ..limit(safePageSize, offset: offset))
+              ..orderBy([(b) => OrderingTerm.desc(b.createdAt)]))
+            .withPagination(page, pageSize)
             .get();
 
     return _loadBundlesForBanners(banners);
@@ -29,15 +25,11 @@ class _DriftBannerLocalReader {
     required int page,
     required int pageSize,
   }) {
-    final safePage = page < 1 ? 1 : page;
-    final safePageSize = pageSize < 1 ? 20 : pageSize;
-    final offset = (safePage - 1) * safePageSize;
-
     final query =
         (_db.select(_db.cachedBanners)
               ..where((b) => b.type.equals(type))
-              ..orderBy([(b) => OrderingTerm.desc(b.createdAt)])
-              ..limit(safePageSize, offset: offset))
+              ..orderBy([(b) => OrderingTerm.desc(b.createdAt)]))
+            .withPagination(page, pageSize)
             .watch();
     return query.asyncMap(_loadBundlesForBanners);
   }
@@ -72,15 +64,6 @@ class _DriftBannerLocalReader {
           )..where((a) => a.bannerId.equals(bannerId))).getSingleOrNull()
         : null;
 
-    final translations = await (_db.select(
-      _db.bannersTranslations,
-    )..where((b) => b.bannerId.equals(bannerId))).get();
-
-    return LocalBannerBundle(
-      banner: banner,
-      event: event,
-      action: action,
-      translations: translations,
-    );
+    return LocalBannerBundle(banner: banner, event: event, action: action);
   }
 }

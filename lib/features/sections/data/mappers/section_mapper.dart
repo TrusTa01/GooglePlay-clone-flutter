@@ -1,22 +1,27 @@
+import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/features/sections/data/mappers/data_params_mapper.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
-import 'package:google_play/features/sections/domain/entities/section_layout_kind.dart';
+import 'package:google_play/features/sections/domain/entities/section_layout_kind_enum.dart';
 import 'package:google_play/features/sections/domain/entities/section_entity.dart';
-import 'package:google_play/features/product/domain/entities/product_filter.dart';
-import 'package:google_play/features/sections/data/models/section_dto.dart';
+import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
 
 extension SectionMapper on SectionDto {
-  SectionEntity toEntity() {
+  SectionEntity toEntity(String locale) {
     return SectionEntity(
       id: id,
-      layout: _mapLayout(type),
-      title: title,
-      subtitle: subtitle,
-      dataSource: _mapDataSource(dataSource, dataParamsDto),
+      tabKey: tabKey,
+      sectionType: _mapSectionType(sectionType),
+      title: title?.display(locale),
+      subtitle: subtitle?.display(locale),
+      dataSource: _mapSectionDataSource(dataSource),
       imageAssetPath: imageAssetPath,
+      sortOrder: sortOrder,
+      contentType: contentType,
+      dataParamsEntity: dataParamsDto?.toEntity(),
     );
   }
 
-  SectionLayoutKind _mapLayout(String? type) {
+  SectionLayoutKind _mapSectionType(String? type) {
     return switch (type) {
       'carousel' => SectionLayoutKind.carousel,
       'grid' => SectionLayoutKind.grid,
@@ -28,38 +33,11 @@ extension SectionMapper on SectionDto {
     };
   }
 
-  SectionDataSource _mapDataSource(String? source, DataParamsDto? params) {
-    if (source == 'banners') {
-      final prefix = params?.extras['prefix'] ?? 'defautl';
-      return BannersSource(prefix);
-    }
-
-    final filters = <ProductFilter>[];
-
-    if (params?.filterType != null) {
-      filters.add(_createFilter(params!.filterType!, params.filterValue));
-    }
-
-    final dynamic filterList = params?.extras['filters'];
-    if (filterList is List) {
-      for (var f in filterList) {
-        if (f is Map<String, dynamic>) {
-          filters.add(_createFilter(f['type'], f['value']));
-        }
-      }
-    }
-
-    return ProductListSource(filters);
-  }
-
-  ProductFilter _createFilter(String type, dynamic value) {
-    return switch (type) {
-      'recommended' => const RecommendedFilter(),
-      'category' => CategoryFilter(genre: value.toString()),
-      'is_paid' => IsPaidFilter(isPaid: value == true),
-      'tag' => TagFilter(tag: value.toString()),
-      'collection' => CollectionFilter(collectionName: value.toString()),
-      _ => const UnknownFilter(),
+  SectionDataSource _mapSectionDataSource(String? source) {
+    return switch (source) {
+      'product_list' => const ProductListSource(),
+      'banners' => const BannersSource(),
+      _ => const UnknownSource(),
     };
   }
 }

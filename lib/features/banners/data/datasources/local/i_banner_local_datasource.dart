@@ -1,7 +1,8 @@
+import 'package:google_play/core/data/local/i_local_sync_state.dart';
 import 'package:google_play/features/banners/data/models/local/local_banner_bundle.dart';
 import 'package:google_play/features/banners/data/models/network/banner_dto.dart';
 
-abstract interface class IBannerLocalDatasource {
+abstract interface class IBannerLocalDatasource implements ILocalSyncState {
   Future<List<LocalBannerBundle>> getBanners({
     required String type,
     required int page,
@@ -17,7 +18,4 @@ abstract interface class IBannerLocalDatasource {
   Future<LocalBannerBundle?> getBannerById(String id);
 
   Future<void> upsertBanners(List<BannerDto> dtos);
-
-  Future<DateTime?> getLastSync(String syncKey);
-  Future<void> setLastSync(String syncKey, DateTime at);
 }

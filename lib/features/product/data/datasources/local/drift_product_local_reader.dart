@@ -10,15 +10,11 @@ final class _ProductLocalReader {
     required int page,
     required int pageSize,
   }) async {
-    final safePage = page < 1 ? 1 : page;
-    final safePageSize = pageSize < 1 ? 20 : pageSize;
-    final offset = (safePage - 1) * safePageSize;
-
     final products =
         await (_db.select(_db.cachedProduct)
               ..where((t) => t.type.equals(type))
-              ..orderBy([(t) => OrderingTerm.desc(t.releaseDate)])
-              ..limit(safePageSize, offset: offset))
+              ..orderBy([(t) => OrderingTerm.desc(t.releaseDate)]))
+            .withPagination(page, pageSize)
             .get();
 
     return _loadBundlesForProducts(products);
@@ -29,15 +25,11 @@ final class _ProductLocalReader {
     required int page,
     required int pageSize,
   }) {
-    final safePage = page < 1 ? 1 : page;
-    final safePageSize = pageSize < 1 ? 20 : pageSize;
-    final offset = (safePage - 1) * safePageSize;
-
     final query =
         (_db.select(_db.cachedProduct)
               ..where((t) => t.type.equals(type))
-              ..orderBy([(t) => OrderingTerm.desc(t.releaseDate)])
-              ..limit(safePageSize, offset: offset))
+              ..orderBy([(t) => OrderingTerm.desc(t.releaseDate)]))
+            .withPagination(page, pageSize)
             .watch();
 
     return query.asyncMap(_loadBundlesForProducts);

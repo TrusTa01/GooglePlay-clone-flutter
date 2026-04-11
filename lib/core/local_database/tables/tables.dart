@@ -14,6 +14,5 @@ export 'package:google_play/core/local_database/tables/shared/sync_state.dart';
 export 'package:google_play/core/local_database/tables/content/banners/cached_banners.dart';
 export 'package:google_play/core/local_database/tables/content/banners/cached_action_banners.dart';
 export 'package:google_play/core/local_database/tables/content/banners/cached_event_banners.dart';
-export 'package:google_play/core/local_database/tables/content/banners/banners_translations.dart';
 export 'package:google_play/core/local_database/tables/configs/sections/cached_sections.dart';
 export 'package:google_play/core/local_database/tables/configs/tabs/cached_tabs.dart';

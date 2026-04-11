@@ -25,7 +25,6 @@ part 'app_database.g.dart';
     CachedBanners,
     CachedActionBanners,
     CachedEventBanners,
-    BannersTranslations,
     CachedTabSections,
     CachedTabs,
   ],

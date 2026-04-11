@@ -1,7 +1,8 @@
+import 'package:google_play/core/data/local/i_local_sync_state.dart';
 import 'package:google_play/features/product/data/models/local/local_product_bundle.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 
-abstract interface class IProductLocalDatasource {
+abstract interface class IProductLocalDatasource implements ILocalSyncState {
   Future<List<LocalProductBundle>> getProducts({
     required String type,
     required int page,
@@ -17,7 +18,4 @@ abstract interface class IProductLocalDatasource {
   Future<LocalProductBundle?> getProductById(String id);
 
   Future<void> upsertProducts(List<ProductDto> dtos);
-
-  Future<DateTime?> getLastSync(String syncKey);
-  Future<void> setLastSync(String syncKey, DateTime at);
 }
