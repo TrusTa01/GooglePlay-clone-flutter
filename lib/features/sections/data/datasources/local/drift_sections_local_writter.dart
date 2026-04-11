@@ -4,9 +4,9 @@ class _DriftSectionsLocalWritter extends BaseDriftWriter<SectionsDto> {
   const _DriftSectionsLocalWritter(super.db);
 
   @override
-  Future<void> upsertOne(SectionsDto dto) async {
+  Future<void> upsertOne(SectionsDto dto) {
     final paramsJson = _encodeDataParams(dto.dataParamsDto);
-    final row = CachedTabSectionsCompanion.insert(
+    final row = CachedSectionsCompanion.insert(
       id: dto.id,
       tabId: dto.tabId,
       sectionType: dto.sectionType,
@@ -21,9 +21,7 @@ class _DriftSectionsLocalWritter extends BaseDriftWriter<SectionsDto> {
       sectionKey: dto.id,
     );
 
-    await db.batch((batch) {
-      batch.insertAllOnConflictUpdate(db.cachedTabSections, [row]);
-    });
+    return db.into(db.cachedSections).insertOnConflictUpdate(row);
   }
 
   String? _encodeDataParams(ParamsDto? params) =>

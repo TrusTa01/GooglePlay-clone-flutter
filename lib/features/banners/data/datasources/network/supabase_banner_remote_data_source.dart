@@ -1,5 +1,5 @@
+import 'package:google_play/core/data/network/sort_orders.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
-import 'package:google_play/core/domain/result_pattern/failure.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/banners/data/datasources/network/banner_network_views_names_enum.dart';
 import 'package:google_play/features/banners/data/datasources/network/i_banner_remote_data_source.dart';
@@ -13,10 +13,8 @@ class SupabaseBannerRemoteDataSource implements IBannerRemoteDataSource {
     required SupabaseBannerNetworkDatasource datasource,
   }) : _datasource = datasource;
 
-  static const ({String column, bool ascending}) _releaseDateDesc = (
-    column: 'release_date',
-    ascending: false,
-  );
+  static final view = NetworkBannerViewsNames.banners;
+  static final schemaName = SchemaNamesEnum.views;
 
   @override
   Future<Result<List<BannerDto>>> getBanners({
@@ -24,19 +22,12 @@ class SupabaseBannerRemoteDataSource implements IBannerRemoteDataSource {
     required int page,
     int pageSize = 20,
   }) {
-    final view = NetworkBannerViewsNames.getViewName(type);
-    final schemaName = SchemaNamesEnum.views;
-
-    if (view == null) {
-      return Result.asFuture(
-        Result.failure(failure: UnsupportedFailure(type: type)),
-      );
-    }
+    final order = SortOrders.releaseDateDesc;
 
     return _datasource.getBanners(
       view: view,
       schemaName: schemaName,
-      order: _releaseDateDesc,
+      order: order,
       page: page,
       pageSize: pageSize,
     );
@@ -48,18 +39,9 @@ class SupabaseBannerRemoteDataSource implements IBannerRemoteDataSource {
       return Result.asFuture(const Result.success(data: null));
     }
 
-    final view = NetworkBannerViewsNames.getViewName(type);
-    final schemaName = SchemaNamesEnum.views;
-
-    if (view == null) {
-      return Result.asFuture(
-        Result.failure(failure: UnsupportedFailure(type: type)),
-      );
-    }
-
     return _datasource.getBannerById(
-      view: view,
       id: id,
+      view: view,
       schemaName: schemaName,
     );
   }

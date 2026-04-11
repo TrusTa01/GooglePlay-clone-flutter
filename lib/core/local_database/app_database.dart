@@ -25,7 +25,7 @@ part 'app_database.g.dart';
     CachedBanners,
     CachedActionBanners,
     CachedEventBanners,
-    CachedTabSections,
+    CachedSections,
     CachedTabs,
   ],
   include: {'tables/content/products/product_title_search.drift'},

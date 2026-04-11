@@ -12,7 +12,7 @@ class _DriftSectionsLocalReader {
     required int pageSize,
   }) async {
     final sections =
-        await (_db.select(_db.cachedTabSections)
+        await (_db.select(_db.cachedSections)
               ..where((s) => s.tabId.equals(tabId))
               ..orderBy([(s) => OrderingTerm.asc(s.sortOrder)]))
             .withPagination(page, pageSize)
@@ -22,11 +22,11 @@ class _DriftSectionsLocalReader {
   }
 
   Future<List<SectionEntity>> _getSectionsEntity(
-    List<CachedTabSection> sections,
+    List<CachedSection> sections,
     String locale,
   ) => Future.value(
     sections.isEmpty
-        ? const []
+        ? const <SectionEntity>[]
         : sections.map((s) => s.toEntity(locale)).toList(),
   );
 }

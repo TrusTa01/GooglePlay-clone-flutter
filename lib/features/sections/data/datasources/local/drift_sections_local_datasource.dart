@@ -4,8 +4,8 @@ import 'package:google_play/core/data/local/base_drift_writter.dart';
 import 'package:google_play/core/data/local/simple_select_statement_ext.dart';
 import 'package:google_play/core/data/local/sync_state_mixin.dart';
 import 'package:google_play/core/local_database/app_database.dart';
-import 'package:google_play/features/sections/data/datasources/local/i_section_local_datasource.dart';
-import 'package:google_play/features/sections/data/mappers/cached_tab_section_mapper.dart';
+import 'package:google_play/features/sections/data/datasources/local/i_sections_local_datasource.dart';
+import 'package:google_play/features/sections/data/mappers/local/cached_section_mapper.dart';
 import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
 import 'package:google_play/features/sections/domain/entities/section_entity.dart';
 
@@ -14,7 +14,7 @@ part 'drift_sections_local_reader.dart';
 
 class DriftSectionLocalDatasource
     with SyncStateMixin
-    implements ISectionLocalDatasource {
+    implements ISectionsLocalDatasource {
   final AppDatabase _db;
   late final _DriftSectionsLocalReader _reader;
   late final _DriftSectionsLocalWritter _writer;

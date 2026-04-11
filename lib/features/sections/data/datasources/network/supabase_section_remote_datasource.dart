@@ -1,3 +1,4 @@
+import 'package:google_play/core/data/network/sort_orders.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/sections/data/datasources/network/i_section_remote_datasource.dart';
@@ -12,11 +13,6 @@ class SupabaseSectionRemoteDataSource implements ISectionRemoteDataSource {
     required SupabaseSectionNetworkDatasource datasource,
   }) : _datasource = datasource;
 
-  static const ({String column, bool ascending}) _releaseDateDesc = (
-    column: 'release_date',
-    ascending: false,
-  );
-
   @override
   Future<Result<List<SectionsDto>>> getSections({
     required int page,
@@ -28,7 +24,7 @@ class SupabaseSectionRemoteDataSource implements ISectionRemoteDataSource {
     return _datasource.getSections(
       view: view.name,
       schemaName: schemaName,
-      order: _releaseDateDesc,
+      order: SortOrders.sortOrderAsc,
       page: page,
       pageSize: pageSize,
     );

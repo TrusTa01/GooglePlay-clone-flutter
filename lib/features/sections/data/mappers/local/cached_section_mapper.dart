@@ -1,10 +1,11 @@
 import 'dart:convert';
+
 import 'package:google_play/core/local_database/app_database.dart';
-import 'package:google_play/features/sections/data/mappers/section_mapper.dart';
+import 'package:google_play/features/sections/data/mappers/network/section_mapper.dart';
 import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
 import 'package:google_play/features/sections/domain/entities/section_entity.dart';
 
-extension CachedTabSectionMapper on CachedTabSection {
+extension CachedSectionsMapper on CachedSection {
   SectionEntity toEntity(String locale) => toSectionDto().toEntity(locale);
 
   SectionsDto toSectionDto() {

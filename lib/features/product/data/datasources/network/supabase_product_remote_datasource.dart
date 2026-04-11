@@ -1,3 +1,4 @@
+import 'package:google_play/core/data/network/sort_orders.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/result_pattern/failure.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
@@ -13,10 +14,7 @@ class SupabaseProductRemoteDataSource implements IProductRemoteDataSource {
     required SupabaseProductNetworkDatasource datasource,
   }) : _datasource = datasource;
 
-  static const ({String column, bool ascending}) _releaseDateDesc = (
-    column: 'release_date',
-    ascending: false,
-  );
+  static final schemaName = SchemaNamesEnum.views;
 
   @override
   Future<Result<List<ProductDto>>> getProducts({
@@ -25,7 +23,7 @@ class SupabaseProductRemoteDataSource implements IProductRemoteDataSource {
     int pageSize = 20,
   }) {
     final view = NetworkProductViewsNames.getViewName(type);
-    final schemaName = SchemaNamesEnum.views;
+    final order = SortOrders.releaseDateDesc;
 
     if (view == null) {
       return Result.asFuture(
@@ -36,7 +34,7 @@ class SupabaseProductRemoteDataSource implements IProductRemoteDataSource {
     return _datasource.getProducts(
       view: view,
       schemaName: schemaName,
-      order: _releaseDateDesc,
+      order: order,
       page: page,
       pageSize: pageSize,
     );
@@ -52,7 +50,6 @@ class SupabaseProductRemoteDataSource implements IProductRemoteDataSource {
     }
 
     final view = NetworkProductViewsNames.getViewName(type);
-    final schemaName = SchemaNamesEnum.views;
 
     if (view == null) {
       return Result.asFuture(

@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:google_play/core/local_database/tables/configs/tabs/cached_tabs.dart';
 import 'package:google_play/core/local_database/tables/shared/converters.dart';
 
-class CachedTabSections extends Table {
+class CachedSections extends Table {
   TextColumn get id => text()();
   TextColumn get tabId =>
       text().references(CachedTabs, #id, onDelete: KeyAction.cascade)();

@@ -7577,15 +7577,15 @@ class $CachedTabsTable extends CachedTabs
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _labelMeta = const VerificationMeta('label');
   @override
-  late final GeneratedColumn<String> label = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<Map<String, String>, String>
+  label = GeneratedColumn<String>(
     'label',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-  );
+  ).withConverter<Map<String, String>>($CachedTabsTable.$converterlabel);
   static const VerificationMeta _tabTypeMeta = const VerificationMeta(
     'tabType',
   );
@@ -7654,14 +7654,6 @@ class $CachedTabsTable extends CachedTabs
     } else if (isInserting) {
       context.missing(_tabKeyMeta);
     }
-    if (data.containsKey('label')) {
-      context.handle(
-        _labelMeta,
-        label.isAcceptableOrUnknown(data['label']!, _labelMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_labelMeta);
-    }
     if (data.containsKey('tab_type')) {
       context.handle(
         _tabTypeMeta,
@@ -7697,10 +7689,12 @@ class $CachedTabsTable extends CachedTabs
         DriftSqlType.string,
         data['${effectivePrefix}tab_key'],
       )!,
-      label: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}label'],
-      )!,
+      label: $CachedTabsTable.$converterlabel.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}label'],
+        )!,
+      ),
       tabType: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}tab_type'],
@@ -7716,13 +7710,16 @@ class $CachedTabsTable extends CachedTabs
   $CachedTabsTable createAlias(String alias) {
     return $CachedTabsTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<Map<String, String>, String> $converterlabel =
+      const LocalizedStringConverter();
 }
 
 class CachedTab extends DataClass implements Insertable<CachedTab> {
   final String id;
   final String contentType;
   final String tabKey;
-  final String label;
+  final Map<String, String> label;
   final String tabType;
   final int sortOrder;
   const CachedTab({
@@ -7739,7 +7736,11 @@ class CachedTab extends DataClass implements Insertable<CachedTab> {
     map['id'] = Variable<String>(id);
     map['content_type'] = Variable<String>(contentType);
     map['tab_key'] = Variable<String>(tabKey);
-    map['label'] = Variable<String>(label);
+    {
+      map['label'] = Variable<String>(
+        $CachedTabsTable.$converterlabel.toSql(label),
+      );
+    }
     map['tab_type'] = Variable<String>(tabType);
     map['sort_order'] = Variable<int>(sortOrder);
     return map;
@@ -7765,7 +7766,7 @@ class CachedTab extends DataClass implements Insertable<CachedTab> {
       id: serializer.fromJson<String>(json['id']),
       contentType: serializer.fromJson<String>(json['contentType']),
       tabKey: serializer.fromJson<String>(json['tabKey']),
-      label: serializer.fromJson<String>(json['label']),
+      label: serializer.fromJson<Map<String, String>>(json['label']),
       tabType: serializer.fromJson<String>(json['tabType']),
       sortOrder: serializer.fromJson<int>(json['sortOrder']),
     );
@@ -7777,7 +7778,7 @@ class CachedTab extends DataClass implements Insertable<CachedTab> {
       'id': serializer.toJson<String>(id),
       'contentType': serializer.toJson<String>(contentType),
       'tabKey': serializer.toJson<String>(tabKey),
-      'label': serializer.toJson<String>(label),
+      'label': serializer.toJson<Map<String, String>>(label),
       'tabType': serializer.toJson<String>(tabType),
       'sortOrder': serializer.toJson<int>(sortOrder),
     };
@@ -7787,7 +7788,7 @@ class CachedTab extends DataClass implements Insertable<CachedTab> {
     String? id,
     String? contentType,
     String? tabKey,
-    String? label,
+    Map<String, String>? label,
     String? tabType,
     int? sortOrder,
   }) => CachedTab(
@@ -7843,7 +7844,7 @@ class CachedTabsCompanion extends UpdateCompanion<CachedTab> {
   final Value<String> id;
   final Value<String> contentType;
   final Value<String> tabKey;
-  final Value<String> label;
+  final Value<Map<String, String>> label;
   final Value<String> tabType;
   final Value<int> sortOrder;
   final Value<int> rowid;
@@ -7860,7 +7861,7 @@ class CachedTabsCompanion extends UpdateCompanion<CachedTab> {
     required String id,
     required String contentType,
     required String tabKey,
-    required String label,
+    required Map<String, String> label,
     required String tabType,
     this.sortOrder = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -7893,7 +7894,7 @@ class CachedTabsCompanion extends UpdateCompanion<CachedTab> {
     Value<String>? id,
     Value<String>? contentType,
     Value<String>? tabKey,
-    Value<String>? label,
+    Value<Map<String, String>>? label,
     Value<String>? tabType,
     Value<int>? sortOrder,
     Value<int>? rowid,
@@ -7922,7 +7923,9 @@ class CachedTabsCompanion extends UpdateCompanion<CachedTab> {
       map['tab_key'] = Variable<String>(tabKey.value);
     }
     if (label.present) {
-      map['label'] = Variable<String>(label.value);
+      map['label'] = Variable<String>(
+        $CachedTabsTable.$converterlabel.toSql(label.value),
+      );
     }
     if (tabType.present) {
       map['tab_type'] = Variable<String>(tabType.value);
@@ -7951,12 +7954,12 @@ class CachedTabsCompanion extends UpdateCompanion<CachedTab> {
   }
 }
 
-class $CachedTabSectionsTable extends CachedTabSections
-    with TableInfo<$CachedTabSectionsTable, CachedTabSection> {
+class $CachedSectionsTable extends CachedSections
+    with TableInfo<$CachedSectionsTable, CachedSection> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CachedTabSectionsTable(this.attachedDatabase, [this._alias]);
+  $CachedSectionsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
@@ -7991,16 +7994,13 @@ class $CachedTabSectionsTable extends CachedTabSections
   );
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, String>?, String>
-  title =
-      GeneratedColumn<String>(
-        'title',
-        aliasedName,
-        true,
-        type: DriftSqlType.string,
-        requiredDuringInsert: false,
-      ).withConverter<Map<String, String>?>(
-        $CachedTabSectionsTable.$convertertitle,
-      );
+  title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  ).withConverter<Map<String, String>?>($CachedSectionsTable.$convertertitle);
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, String>?, String>
   subtitle =
@@ -8011,7 +8011,7 @@ class $CachedTabSectionsTable extends CachedTabSections
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       ).withConverter<Map<String, String>?>(
-        $CachedTabSectionsTable.$convertersubtitle,
+        $CachedSectionsTable.$convertersubtitle,
       );
   static const VerificationMeta _dataSourceMeta = const VerificationMeta(
     'dataSource',
@@ -8106,10 +8106,10 @@ class $CachedTabSectionsTable extends CachedTabSections
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'cached_tab_sections';
+  static const String $name = 'cached_sections';
   @override
   VerificationContext validateIntegrity(
-    Insertable<CachedTabSection> instance, {
+    Insertable<CachedSection> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -8200,9 +8200,9 @@ class $CachedTabSectionsTable extends CachedTabSections
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  CachedTabSection map(Map<String, dynamic> data, {String? tablePrefix}) {
+  CachedSection map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return CachedTabSection(
+    return CachedSection(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -8215,13 +8215,13 @@ class $CachedTabSectionsTable extends CachedTabSections
         DriftSqlType.string,
         data['${effectivePrefix}section_type'],
       )!,
-      title: $CachedTabSectionsTable.$convertertitle.fromSql(
+      title: $CachedSectionsTable.$convertertitle.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}title'],
         ),
       ),
-      subtitle: $CachedTabSectionsTable.$convertersubtitle.fromSql(
+      subtitle: $CachedSectionsTable.$convertersubtitle.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}subtitle'],
@@ -8259,8 +8259,8 @@ class $CachedTabSectionsTable extends CachedTabSections
   }
 
   @override
-  $CachedTabSectionsTable createAlias(String alias) {
-    return $CachedTabSectionsTable(attachedDatabase, alias);
+  $CachedSectionsTable createAlias(String alias) {
+    return $CachedSectionsTable(attachedDatabase, alias);
   }
 
   static TypeConverter<Map<String, String>?, String?> $convertertitle =
@@ -8269,8 +8269,7 @@ class $CachedTabSectionsTable extends CachedTabSections
       const LocalizedStringNullableConverter();
 }
 
-class CachedTabSection extends DataClass
-    implements Insertable<CachedTabSection> {
+class CachedSection extends DataClass implements Insertable<CachedSection> {
   final String id;
   final String tabId;
   final String sectionType;
@@ -8283,7 +8282,7 @@ class CachedTabSection extends DataClass
   final String contentType;
   final String tabKey;
   final String sectionKey;
-  const CachedTabSection({
+  const CachedSection({
     required this.id,
     required this.tabId,
     required this.sectionType,
@@ -8305,12 +8304,12 @@ class CachedTabSection extends DataClass
     map['section_type'] = Variable<String>(sectionType);
     if (!nullToAbsent || title != null) {
       map['title'] = Variable<String>(
-        $CachedTabSectionsTable.$convertertitle.toSql(title),
+        $CachedSectionsTable.$convertertitle.toSql(title),
       );
     }
     if (!nullToAbsent || subtitle != null) {
       map['subtitle'] = Variable<String>(
-        $CachedTabSectionsTable.$convertersubtitle.toSql(subtitle),
+        $CachedSectionsTable.$convertersubtitle.toSql(subtitle),
       );
     }
     map['data_source'] = Variable<String>(dataSource);
@@ -8327,8 +8326,8 @@ class CachedTabSection extends DataClass
     return map;
   }
 
-  CachedTabSectionsCompanion toCompanion(bool nullToAbsent) {
-    return CachedTabSectionsCompanion(
+  CachedSectionsCompanion toCompanion(bool nullToAbsent) {
+    return CachedSectionsCompanion(
       id: Value(id),
       tabId: Value(tabId),
       sectionType: Value(sectionType),
@@ -8352,12 +8351,12 @@ class CachedTabSection extends DataClass
     );
   }
 
-  factory CachedTabSection.fromJson(
+  factory CachedSection.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return CachedTabSection(
+    return CachedSection(
       id: serializer.fromJson<String>(json['id']),
       tabId: serializer.fromJson<String>(json['tabId']),
       sectionType: serializer.fromJson<String>(json['sectionType']),
@@ -8391,7 +8390,7 @@ class CachedTabSection extends DataClass
     };
   }
 
-  CachedTabSection copyWith({
+  CachedSection copyWith({
     String? id,
     String? tabId,
     String? sectionType,
@@ -8404,7 +8403,7 @@ class CachedTabSection extends DataClass
     String? contentType,
     String? tabKey,
     String? sectionKey,
-  }) => CachedTabSection(
+  }) => CachedSection(
     id: id ?? this.id,
     tabId: tabId ?? this.tabId,
     sectionType: sectionType ?? this.sectionType,
@@ -8420,8 +8419,8 @@ class CachedTabSection extends DataClass
     tabKey: tabKey ?? this.tabKey,
     sectionKey: sectionKey ?? this.sectionKey,
   );
-  CachedTabSection copyWithCompanion(CachedTabSectionsCompanion data) {
-    return CachedTabSection(
+  CachedSection copyWithCompanion(CachedSectionsCompanion data) {
+    return CachedSection(
       id: data.id.present ? data.id.value : this.id,
       tabId: data.tabId.present ? data.tabId.value : this.tabId,
       sectionType: data.sectionType.present
@@ -8449,7 +8448,7 @@ class CachedTabSection extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('CachedTabSection(')
+    return (StringBuffer('CachedSection(')
           ..write('id: $id, ')
           ..write('tabId: $tabId, ')
           ..write('sectionType: $sectionType, ')
@@ -8484,7 +8483,7 @@ class CachedTabSection extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is CachedTabSection &&
+      (other is CachedSection &&
           other.id == this.id &&
           other.tabId == this.tabId &&
           other.sectionType == this.sectionType &&
@@ -8499,7 +8498,7 @@ class CachedTabSection extends DataClass
           other.sectionKey == this.sectionKey);
 }
 
-class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
+class CachedSectionsCompanion extends UpdateCompanion<CachedSection> {
   final Value<String> id;
   final Value<String> tabId;
   final Value<String> sectionType;
@@ -8513,7 +8512,7 @@ class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
   final Value<String> tabKey;
   final Value<String> sectionKey;
   final Value<int> rowid;
-  const CachedTabSectionsCompanion({
+  const CachedSectionsCompanion({
     this.id = const Value.absent(),
     this.tabId = const Value.absent(),
     this.sectionType = const Value.absent(),
@@ -8528,7 +8527,7 @@ class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
     this.sectionKey = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  CachedTabSectionsCompanion.insert({
+  CachedSectionsCompanion.insert({
     required String id,
     required String tabId,
     required String sectionType,
@@ -8549,7 +8548,7 @@ class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
        contentType = Value(contentType),
        tabKey = Value(tabKey),
        sectionKey = Value(sectionKey);
-  static Insertable<CachedTabSection> custom({
+  static Insertable<CachedSection> custom({
     Expression<String>? id,
     Expression<String>? tabId,
     Expression<String>? sectionType,
@@ -8581,7 +8580,7 @@ class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
     });
   }
 
-  CachedTabSectionsCompanion copyWith({
+  CachedSectionsCompanion copyWith({
     Value<String>? id,
     Value<String>? tabId,
     Value<String>? sectionType,
@@ -8596,7 +8595,7 @@ class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
     Value<String>? sectionKey,
     Value<int>? rowid,
   }) {
-    return CachedTabSectionsCompanion(
+    return CachedSectionsCompanion(
       id: id ?? this.id,
       tabId: tabId ?? this.tabId,
       sectionType: sectionType ?? this.sectionType,
@@ -8627,12 +8626,12 @@ class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
     }
     if (title.present) {
       map['title'] = Variable<String>(
-        $CachedTabSectionsTable.$convertertitle.toSql(title.value),
+        $CachedSectionsTable.$convertertitle.toSql(title.value),
       );
     }
     if (subtitle.present) {
       map['subtitle'] = Variable<String>(
-        $CachedTabSectionsTable.$convertersubtitle.toSql(subtitle.value),
+        $CachedSectionsTable.$convertersubtitle.toSql(subtitle.value),
       );
     }
     if (dataSource.present) {
@@ -8664,7 +8663,7 @@ class CachedTabSectionsCompanion extends UpdateCompanion<CachedTabSection> {
 
   @override
   String toString() {
-    return (StringBuffer('CachedTabSectionsCompanion(')
+    return (StringBuffer('CachedSectionsCompanion(')
           ..write('id: $id, ')
           ..write('tabId: $tabId, ')
           ..write('sectionType: $sectionType, ')
@@ -8721,8 +8720,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CachedEventBannersTable cachedEventBanners =
       $CachedEventBannersTable(this);
   late final $CachedTabsTable cachedTabs = $CachedTabsTable(this);
-  late final $CachedTabSectionsTable cachedTabSections =
-      $CachedTabSectionsTable(this);
+  late final $CachedSectionsTable cachedSections = $CachedSectionsTable(this);
   Selectable<CachedProductData> searchProductsByTitle(
     String lang,
     String query,
@@ -8760,7 +8758,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     cachedActionBanners,
     cachedEventBanners,
     cachedTabs,
-    cachedTabSections,
+    cachedSections,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -8856,7 +8854,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         'cached_tabs',
         limitUpdateKind: UpdateKind.delete,
       ),
-      result: [TableUpdate('cached_tab_sections', kind: UpdateKind.delete)],
+      result: [TableUpdate('cached_sections', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -15493,7 +15491,7 @@ typedef $$CachedTabsTableCreateCompanionBuilder =
       required String id,
       required String contentType,
       required String tabKey,
-      required String label,
+      required Map<String, String> label,
       required String tabType,
       Value<int> sortOrder,
       Value<int> rowid,
@@ -15503,7 +15501,7 @@ typedef $$CachedTabsTableUpdateCompanionBuilder =
       Value<String> id,
       Value<String> contentType,
       Value<String> tabKey,
-      Value<String> label,
+      Value<Map<String, String>> label,
       Value<String> tabType,
       Value<int> sortOrder,
       Value<int> rowid,
@@ -15513,25 +15511,19 @@ final class $$CachedTabsTableReferences
     extends BaseReferences<_$AppDatabase, $CachedTabsTable, CachedTab> {
   $$CachedTabsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$CachedTabSectionsTable, List<CachedTabSection>>
-  _cachedTabSectionsRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.cachedTabSections,
-        aliasName: $_aliasNameGenerator(
-          db.cachedTabs.id,
-          db.cachedTabSections.tabId,
-        ),
-      );
+  static MultiTypedResultKey<$CachedSectionsTable, List<CachedSection>>
+  _cachedSectionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.cachedSections,
+    aliasName: $_aliasNameGenerator(db.cachedTabs.id, db.cachedSections.tabId),
+  );
 
-  $$CachedTabSectionsTableProcessedTableManager get cachedTabSectionsRefs {
-    final manager = $$CachedTabSectionsTableTableManager(
+  $$CachedSectionsTableProcessedTableManager get cachedSectionsRefs {
+    final manager = $$CachedSectionsTableTableManager(
       $_db,
-      $_db.cachedTabSections,
+      $_db.cachedSections,
     ).filter((f) => f.tabId.id.sqlEquals($_itemColumn<String>('id')!));
 
-    final cache = $_typedResult.readTableOrNull(
-      _cachedTabSectionsRefsTable($_db),
-    );
+    final cache = $_typedResult.readTableOrNull(_cachedSectionsRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -15562,9 +15554,14 @@ class $$CachedTabsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get label => $composableBuilder(
+  ColumnWithTypeConverterFilters<
+    Map<String, String>,
+    Map<String, String>,
+    String
+  >
+  get label => $composableBuilder(
     column: $table.label,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   ColumnFilters<String> get tabType => $composableBuilder(
@@ -15577,22 +15574,22 @@ class $$CachedTabsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  Expression<bool> cachedTabSectionsRefs(
-    Expression<bool> Function($$CachedTabSectionsTableFilterComposer f) f,
+  Expression<bool> cachedSectionsRefs(
+    Expression<bool> Function($$CachedSectionsTableFilterComposer f) f,
   ) {
-    final $$CachedTabSectionsTableFilterComposer composer = $composerBuilder(
+    final $$CachedSectionsTableFilterComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.id,
-      referencedTable: $db.cachedTabSections,
+      referencedTable: $db.cachedSections,
       getReferencedColumn: (t) => t.tabId,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$CachedTabSectionsTableFilterComposer(
+          }) => $$CachedSectionsTableFilterComposer(
             $db: $db,
-            $table: $db.cachedTabSections,
+            $table: $db.cachedSections,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -15663,7 +15660,7 @@ class $$CachedTabsTableAnnotationComposer
   GeneratedColumn<String> get tabKey =>
       $composableBuilder(column: $table.tabKey, builder: (column) => column);
 
-  GeneratedColumn<String> get label =>
+  GeneratedColumnWithTypeConverter<Map<String, String>, String> get label =>
       $composableBuilder(column: $table.label, builder: (column) => column);
 
   GeneratedColumn<String> get tabType =>
@@ -15672,29 +15669,28 @@ class $$CachedTabsTableAnnotationComposer
   GeneratedColumn<int> get sortOrder =>
       $composableBuilder(column: $table.sortOrder, builder: (column) => column);
 
-  Expression<T> cachedTabSectionsRefs<T extends Object>(
-    Expression<T> Function($$CachedTabSectionsTableAnnotationComposer a) f,
+  Expression<T> cachedSectionsRefs<T extends Object>(
+    Expression<T> Function($$CachedSectionsTableAnnotationComposer a) f,
   ) {
-    final $$CachedTabSectionsTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.cachedTabSections,
-          getReferencedColumn: (t) => t.tabId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
+    final $$CachedSectionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.cachedSections,
+      getReferencedColumn: (t) => t.tabId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CachedSectionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.cachedSections,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
                 $removeJoinBuilderFromRootComposer,
-              }) => $$CachedTabSectionsTableAnnotationComposer(
-                $db: $db,
-                $table: $db.cachedTabSections,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
+          ),
+    );
     return f(composer);
   }
 }
@@ -15712,7 +15708,7 @@ class $$CachedTabsTableTableManager
           $$CachedTabsTableUpdateCompanionBuilder,
           (CachedTab, $$CachedTabsTableReferences),
           CachedTab,
-          PrefetchHooks Function({bool cachedTabSectionsRefs})
+          PrefetchHooks Function({bool cachedSectionsRefs})
         > {
   $$CachedTabsTableTableManager(_$AppDatabase db, $CachedTabsTable table)
     : super(
@@ -15730,7 +15726,7 @@ class $$CachedTabsTableTableManager
                 Value<String> id = const Value.absent(),
                 Value<String> contentType = const Value.absent(),
                 Value<String> tabKey = const Value.absent(),
-                Value<String> label = const Value.absent(),
+                Value<Map<String, String>> label = const Value.absent(),
                 Value<String> tabType = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -15748,7 +15744,7 @@ class $$CachedTabsTableTableManager
                 required String id,
                 required String contentType,
                 required String tabKey,
-                required String label,
+                required Map<String, String> label,
                 required String tabType,
                 Value<int> sortOrder = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -15769,30 +15765,30 @@ class $$CachedTabsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({cachedTabSectionsRefs = false}) {
+          prefetchHooksCallback: ({cachedSectionsRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (cachedTabSectionsRefs) db.cachedTabSections,
+                if (cachedSectionsRefs) db.cachedSections,
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
-                  if (cachedTabSectionsRefs)
+                  if (cachedSectionsRefs)
                     await $_getPrefetchedData<
                       CachedTab,
                       $CachedTabsTable,
-                      CachedTabSection
+                      CachedSection
                     >(
                       currentTable: table,
                       referencedTable: $$CachedTabsTableReferences
-                          ._cachedTabSectionsRefsTable(db),
+                          ._cachedSectionsRefsTable(db),
                       managerFromTypedResult: (p0) =>
                           $$CachedTabsTableReferences(
                             db,
                             table,
                             p0,
-                          ).cachedTabSectionsRefs,
+                          ).cachedSectionsRefs,
                       referencedItemsForCurrentItem: (item, referencedItems) =>
                           referencedItems.where((e) => e.tabId == item.id),
                       typedResults: items,
@@ -15817,10 +15813,10 @@ typedef $$CachedTabsTableProcessedTableManager =
       $$CachedTabsTableUpdateCompanionBuilder,
       (CachedTab, $$CachedTabsTableReferences),
       CachedTab,
-      PrefetchHooks Function({bool cachedTabSectionsRefs})
+      PrefetchHooks Function({bool cachedSectionsRefs})
     >;
-typedef $$CachedTabSectionsTableCreateCompanionBuilder =
-    CachedTabSectionsCompanion Function({
+typedef $$CachedSectionsTableCreateCompanionBuilder =
+    CachedSectionsCompanion Function({
       required String id,
       required String tabId,
       required String sectionType,
@@ -15835,8 +15831,8 @@ typedef $$CachedTabSectionsTableCreateCompanionBuilder =
       required String sectionKey,
       Value<int> rowid,
     });
-typedef $$CachedTabSectionsTableUpdateCompanionBuilder =
-    CachedTabSectionsCompanion Function({
+typedef $$CachedSectionsTableUpdateCompanionBuilder =
+    CachedSectionsCompanion Function({
       Value<String> id,
       Value<String> tabId,
       Value<String> sectionType,
@@ -15852,14 +15848,9 @@ typedef $$CachedTabSectionsTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-final class $$CachedTabSectionsTableReferences
-    extends
-        BaseReferences<
-          _$AppDatabase,
-          $CachedTabSectionsTable,
-          CachedTabSection
-        > {
-  $$CachedTabSectionsTableReferences(
+final class $$CachedSectionsTableReferences
+    extends BaseReferences<_$AppDatabase, $CachedSectionsTable, CachedSection> {
+  $$CachedSectionsTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
@@ -15867,7 +15858,7 @@ final class $$CachedTabSectionsTableReferences
 
   static $CachedTabsTable _tabIdTable(_$AppDatabase db) =>
       db.cachedTabs.createAlias(
-        $_aliasNameGenerator(db.cachedTabSections.tabId, db.cachedTabs.id),
+        $_aliasNameGenerator(db.cachedSections.tabId, db.cachedTabs.id),
       );
 
   $$CachedTabsTableProcessedTableManager get tabId {
@@ -15885,9 +15876,9 @@ final class $$CachedTabSectionsTableReferences
   }
 }
 
-class $$CachedTabSectionsTableFilterComposer
-    extends Composer<_$AppDatabase, $CachedTabSectionsTable> {
-  $$CachedTabSectionsTableFilterComposer({
+class $$CachedSectionsTableFilterComposer
+    extends Composer<_$AppDatabase, $CachedSectionsTable> {
+  $$CachedSectionsTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -15983,9 +15974,9 @@ class $$CachedTabSectionsTableFilterComposer
   }
 }
 
-class $$CachedTabSectionsTableOrderingComposer
-    extends Composer<_$AppDatabase, $CachedTabSectionsTable> {
-  $$CachedTabSectionsTableOrderingComposer({
+class $$CachedSectionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CachedSectionsTable> {
+  $$CachedSectionsTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16071,9 +16062,9 @@ class $$CachedTabSectionsTableOrderingComposer
   }
 }
 
-class $$CachedTabSectionsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $CachedTabSectionsTable> {
-  $$CachedTabSectionsTableAnnotationComposer({
+class $$CachedSectionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CachedSectionsTable> {
+  $$CachedSectionsTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16147,37 +16138,34 @@ class $$CachedTabSectionsTableAnnotationComposer
   }
 }
 
-class $$CachedTabSectionsTableTableManager
+class $$CachedSectionsTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $CachedTabSectionsTable,
-          CachedTabSection,
-          $$CachedTabSectionsTableFilterComposer,
-          $$CachedTabSectionsTableOrderingComposer,
-          $$CachedTabSectionsTableAnnotationComposer,
-          $$CachedTabSectionsTableCreateCompanionBuilder,
-          $$CachedTabSectionsTableUpdateCompanionBuilder,
-          (CachedTabSection, $$CachedTabSectionsTableReferences),
-          CachedTabSection,
+          $CachedSectionsTable,
+          CachedSection,
+          $$CachedSectionsTableFilterComposer,
+          $$CachedSectionsTableOrderingComposer,
+          $$CachedSectionsTableAnnotationComposer,
+          $$CachedSectionsTableCreateCompanionBuilder,
+          $$CachedSectionsTableUpdateCompanionBuilder,
+          (CachedSection, $$CachedSectionsTableReferences),
+          CachedSection,
           PrefetchHooks Function({bool tabId})
         > {
-  $$CachedTabSectionsTableTableManager(
+  $$CachedSectionsTableTableManager(
     _$AppDatabase db,
-    $CachedTabSectionsTable table,
+    $CachedSectionsTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$CachedTabSectionsTableFilterComposer($db: db, $table: table),
+              $$CachedSectionsTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$CachedTabSectionsTableOrderingComposer($db: db, $table: table),
+              $$CachedSectionsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$CachedTabSectionsTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+              $$CachedSectionsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
@@ -16193,7 +16181,7 @@ class $$CachedTabSectionsTableTableManager
                 Value<String> tabKey = const Value.absent(),
                 Value<String> sectionKey = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => CachedTabSectionsCompanion(
+              }) => CachedSectionsCompanion(
                 id: id,
                 tabId: tabId,
                 sectionType: sectionType,
@@ -16223,7 +16211,7 @@ class $$CachedTabSectionsTableTableManager
                 required String tabKey,
                 required String sectionKey,
                 Value<int> rowid = const Value.absent(),
-              }) => CachedTabSectionsCompanion.insert(
+              }) => CachedSectionsCompanion.insert(
                 id: id,
                 tabId: tabId,
                 sectionType: sectionType,
@@ -16242,7 +16230,7 @@ class $$CachedTabSectionsTableTableManager
               .map(
                 (e) => (
                   e.readTable(table),
-                  $$CachedTabSectionsTableReferences(db, table, e),
+                  $$CachedSectionsTableReferences(db, table, e),
                 ),
               )
               .toList(),
@@ -16271,11 +16259,10 @@ class $$CachedTabSectionsTableTableManager
                           state.withJoin(
                                 currentTable: table,
                                 currentColumn: table.tabId,
-                                referencedTable:
-                                    $$CachedTabSectionsTableReferences
-                                        ._tabIdTable(db),
+                                referencedTable: $$CachedSectionsTableReferences
+                                    ._tabIdTable(db),
                                 referencedColumn:
-                                    $$CachedTabSectionsTableReferences
+                                    $$CachedSectionsTableReferences
                                         ._tabIdTable(db)
                                         .id,
                               )
@@ -16293,18 +16280,18 @@ class $$CachedTabSectionsTableTableManager
       );
 }
 
-typedef $$CachedTabSectionsTableProcessedTableManager =
+typedef $$CachedSectionsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $CachedTabSectionsTable,
-      CachedTabSection,
-      $$CachedTabSectionsTableFilterComposer,
-      $$CachedTabSectionsTableOrderingComposer,
-      $$CachedTabSectionsTableAnnotationComposer,
-      $$CachedTabSectionsTableCreateCompanionBuilder,
-      $$CachedTabSectionsTableUpdateCompanionBuilder,
-      (CachedTabSection, $$CachedTabSectionsTableReferences),
-      CachedTabSection,
+      $CachedSectionsTable,
+      CachedSection,
+      $$CachedSectionsTableFilterComposer,
+      $$CachedSectionsTableOrderingComposer,
+      $$CachedSectionsTableAnnotationComposer,
+      $$CachedSectionsTableCreateCompanionBuilder,
+      $$CachedSectionsTableUpdateCompanionBuilder,
+      (CachedSection, $$CachedSectionsTableReferences),
+      CachedSection,
       PrefetchHooks Function({bool tabId})
     >;
 
@@ -16346,6 +16333,6 @@ class $AppDatabaseManager {
       $$CachedEventBannersTableTableManager(_db, _db.cachedEventBanners);
   $$CachedTabsTableTableManager get cachedTabs =>
       $$CachedTabsTableTableManager(_db, _db.cachedTabs);
-  $$CachedTabSectionsTableTableManager get cachedTabSections =>
-      $$CachedTabSectionsTableTableManager(_db, _db.cachedTabSections);
+  $$CachedSectionsTableTableManager get cachedSections =>
+      $$CachedSectionsTableTableManager(_db, _db.cachedSections);
 }
