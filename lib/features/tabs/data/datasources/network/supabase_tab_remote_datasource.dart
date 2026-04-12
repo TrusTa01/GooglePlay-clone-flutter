@@ -7,10 +7,10 @@ import 'package:google_play/features/tabs/data/datasources/network/tab_network_v
 import 'package:google_play/features/tabs/data/models/tabs_dto.dart';
 
 class SupabaseTabsRemoteDatasource implements ITabRemoteDataSource {
-  final SupabaseTabRemoteDatasource _datasource;
+  final SupabaseTabNetworkDatasource _datasource;
 
   const SupabaseTabsRemoteDatasource({
-    required SupabaseTabRemoteDatasource datasource,
+    required SupabaseTabNetworkDatasource datasource,
   }) : _datasource = datasource;
 
   @override

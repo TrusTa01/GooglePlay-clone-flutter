@@ -4,6 +4,6 @@ import 'package:google_play/features/sections/data/models/network/tab_sections_d
 abstract interface class ISectionRemoteDataSource {
   Future<Result<List<SectionsDto>>> getSections({
     required int page,
-    int pageSize = 20,
+    int pageSize = 200,
   });
 }

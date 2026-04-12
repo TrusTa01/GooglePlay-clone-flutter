@@ -5,19 +5,11 @@ import 'package:google_play/features/sections/domain/entities/section_entity.dar
 abstract interface class ISectionRepository {
   Future<List<SectionEntity>> getSections({
     required StoreType storeType,
-    required String tabKey,
+    required String tabId,
     required String locale,
     int page = 1,
     int pageSize = 200,
     bool forceRefresh = false,
-  });
-
-  Stream<List<SectionEntity>> watchSections({
-    required StoreType storeType,
-    required String tabKey,
-    required String locale,
-    int page = 1,
-    int pageSize = 200,
   });
 
   Future<DataFreshness> getSectionsFreshness({

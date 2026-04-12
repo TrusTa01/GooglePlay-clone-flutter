@@ -5,7 +5,7 @@ import 'package:google_play/features/sections/domain/repositories/i_section_repo
 abstract interface class GetSectionsUseCase {
   Future<List<SectionEntity>> call({
     required StoreType storeType,
-    required String tabKey,
+    required String tabId,
     required String locale,
     bool forceRefresh = false,
   });
@@ -19,13 +19,13 @@ final class GetSectionsUseCaseImpl implements GetSectionsUseCase {
   @override
   Future<List<SectionEntity>> call({
     required StoreType storeType,
-    required String tabKey,
+    required String tabId,
     required String locale,
     bool forceRefresh = false,
   }) {
     return _repository.getSections(
       storeType: storeType,
-      tabKey: tabKey,
+      tabId: tabId,
       locale: locale,
       forceRefresh: forceRefresh,
     );

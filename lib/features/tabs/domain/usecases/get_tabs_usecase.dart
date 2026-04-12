@@ -4,6 +4,7 @@ import 'package:google_play/features/tabs/domain/repositories/i_tab_repository.d
 
 abstract interface class GetTabsUseCase {
   Future<List<TabsEntity>> call({
+    required String id,
     required StoreType storeType,
     required String locale,
     bool forceRefresh = false,
@@ -17,11 +18,13 @@ final class GetTabsUseCaseImpl implements GetTabsUseCase {
 
   @override
   Future<List<TabsEntity>> call({
+    required String id,
     required StoreType storeType,
     required String locale,
     bool forceRefresh = false,
   }) {
     return _repository.getTabs(
+      id: id,
       storeType: storeType,
       locale: locale,
       forceRefresh: forceRefresh,

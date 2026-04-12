@@ -1,9 +1,8 @@
-enum StoreType { games, apps, books }
+enum StoreType {
+  games('games'),
+  apps('apps'),
+  books('books');
 
-extension StoreTypeKey on StoreType {
-  String get categoryKey => switch (this) {
-    StoreType.apps => 'app',
-    StoreType.games => 'game',
-    StoreType.books => 'book',
-  };
+  final String name;
+  const StoreType(this.name);
 }

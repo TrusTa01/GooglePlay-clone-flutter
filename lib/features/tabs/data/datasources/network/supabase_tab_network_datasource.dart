@@ -3,8 +3,8 @@ import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/tabs/data/models/tabs_dto.dart';
 
-class SupabaseTabRemoteDatasource extends BaseSupabaseDatasourse<TabsDto> {
-  const SupabaseTabRemoteDatasource({required super.executor});
+class SupabaseTabNetworkDatasource extends BaseSupabaseDatasourse<TabsDto> {
+  const SupabaseTabNetworkDatasource({required super.executor});
 
   @override
   TabsDto fromJson(Map<String, dynamic> json) => TabsDto.fromJson(json);
