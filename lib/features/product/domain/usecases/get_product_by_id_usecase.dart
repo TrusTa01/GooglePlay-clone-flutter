@@ -4,6 +4,7 @@ import 'package:google_play/features/product/domain/repositories/i_product_repos
 abstract interface class GetProductsByIdUseCase {
   Future<ProductEntity?> call({
     required String id,
+    required String type,
     required String locale,
     bool forceRefresh = false,
   });
@@ -17,10 +18,12 @@ final class GetProductByIdUseCaseImpl implements GetProductsByIdUseCase {
   @override
   Future<ProductEntity?> call({
     required String id,
+    required String type,
     required String locale,
     bool forceRefresh = false,
   }) => _repository.getProductById(
     id,
+    type: type,
     locale: locale,
     forceRefresh: forceRefresh,
   );

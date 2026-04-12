@@ -20,6 +20,7 @@ abstract interface class IProductRepository {
 
   Future<ProductEntity?> getProductById(
     String id, {
+    required String type,
     required String locale,
     bool forceRefresh = false,
   });

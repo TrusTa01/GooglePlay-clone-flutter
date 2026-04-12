@@ -1,3 +1,4 @@
+import 'package:google_play/core/data/local/sync_keys.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
@@ -31,7 +32,13 @@ class SectionRepository implements ISectionRepository {
     bool forceRefresh = false,
   }) async {
     if (forceRefresh ||
-        await _needsSync(syncKey: _syncListKey(storeType.name))) {
+        await _needsSync(
+          syncKey: SyncKeys.sectionsList(
+            storeTypeName: storeType.name,
+            page: page,
+            pageSize: pageSize,
+          ),
+        )) {
       await _refreshSections(
         storeType: storeType,
         page: page,
@@ -54,7 +61,14 @@ class SectionRepository implements ISectionRepository {
     final result = await _remote.getSections(page: page, pageSize: pageSize);
     if (result case SuccessResult<List<SectionsDto>>(data: final dtos)) {
       await _local.upsertSections(dtos);
-      await _local.setLastSync(_syncListKey(storeType.name), DateTime.now());
+      await _local.setLastSync(
+        SyncKeys.sectionsList(
+          storeTypeName: storeType.name,
+          page: page,
+          pageSize: pageSize,
+        ),
+        DateTime.now(),
+      );
     }
   }
 
@@ -75,7 +89,11 @@ class SectionRepository implements ISectionRepository {
   Future<DataFreshness> getSectionsFreshness({
     required StoreType storeType,
     required String tabKey,
-  }) => _freshnessForSyncKey(_syncListKey(storeType.name));
-
-  String _syncListKey(String type) => 'sections:$type';
+  }) => _freshnessForSyncKey(
+    SyncKeys.sectionsList(
+      storeTypeName: storeType.name,
+      page: 1,
+      pageSize: 200,
+    ),
+  );
 }

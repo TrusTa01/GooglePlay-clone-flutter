@@ -43,24 +43,18 @@ class SupabaseProductRemoteDataSource implements IProductRemoteDataSource {
   @override
   Future<Result<ProductDto?>> getProductById({
     required String id,
-    String? type,
+    required String type,
   }) {
-    if (type == null) {
-      return Result.asFuture(const Result.success(data: null));
-    }
-
     final view = NetworkProductViewsNames.getViewName(type);
 
-    if (view == null) {
-      return Result.asFuture(
-        Result.failure(failure: UnsupportedFailure(type: type)),
-      );
-    }
-
-    return _datasource.getProductById(
-      view: view,
-      schemaName: schemaName,
-      id: id,
-    );
+    return view == null
+        ? Result.asFuture(
+            Result.failure(failure: UnsupportedFailure(type: type)),
+          )
+        : _datasource.getProductById(
+            view: view,
+            schemaName: schemaName,
+            id: id,
+          );
   }
 }

@@ -10,6 +10,6 @@ abstract interface class IProductRemoteDataSource {
 
   Future<Result<ProductDto?>> getProductById({
     required String id,
-    String? type,
+    required String type,
   });
 }

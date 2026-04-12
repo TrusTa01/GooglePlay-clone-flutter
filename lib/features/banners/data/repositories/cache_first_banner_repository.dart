@@ -1,3 +1,4 @@
+import 'package:google_play/core/data/local/sync_keys.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
@@ -29,7 +30,14 @@ class CacheFirstBannerRepository implements IBannerRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
-    if (forceRefresh || await _needsSync(syncKey: _syncListKey(type))) {
+    if (forceRefresh ||
+        await _needsSync(
+          syncKey: SyncKeys.bannerListPage(
+            type: type,
+            page: page,
+            pageSize: pageSize,
+          ),
+        )) {
       await _refreshBanners(type: type, page: page, pageSize: pageSize);
     }
     final bundles = await _local.getBanners(
@@ -66,7 +74,10 @@ class CacheFirstBannerRepository implements IBannerRepository {
 
     if (result case SuccessResult(data: final dtos)) {
       await _local.upsertBanners(dtos);
-      await _local.setLastSync(_syncListKey(type), DateTime.now());
+      await _local.setLastSync(
+        SyncKeys.bannerListPage(type: type, page: page, pageSize: pageSize),
+        DateTime.now(),
+      );
     }
   }
 
@@ -93,7 +104,7 @@ class CacheFirstBannerRepository implements IBannerRepository {
     required String locale,
     bool forceRefresh = false,
   }) async {
-    final syncKey = _syncItemKey(id);
+    final syncKey = SyncKeys.bannerItem(id);
     if (forceRefresh || await _needsSync(syncKey: syncKey)) {
       await _refreshBannerById(id);
     }
@@ -106,18 +117,16 @@ class CacheFirstBannerRepository implements IBannerRepository {
     final result = await _remote.getBannerById(id: id);
     if (result case SuccessResult<BannerDto>(data: final dto)) {
       await _local.upsertBanners([dto]);
-      await _local.setLastSync(_syncItemKey(id), DateTime.now());
+      await _local.setLastSync(SyncKeys.bannerItem(id), DateTime.now());
     }
   }
 
   @override
-  getBannersFreshness({required String type}) =>
-      _freshnessForSyncKey(_syncListKey(type));
+  getBannersFreshness({required String type}) => _freshnessForSyncKey(
+    SyncKeys.bannerListPage(type: type, page: 1, pageSize: 20),
+  );
 
   @override
   getBannerFreshness(String id, String type) =>
-      _freshnessForSyncKey(_syncItemKey(id));
-
-  String _syncListKey(String type) => 'banners:$type';
-  String _syncItemKey(String id) => 'banner:$id';
+      _freshnessForSyncKey(SyncKeys.bannerItem(id));
 }

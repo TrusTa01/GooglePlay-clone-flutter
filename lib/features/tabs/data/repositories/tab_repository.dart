@@ -1,3 +1,4 @@
+import 'package:google_play/core/data/local/sync_keys.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
@@ -30,7 +31,14 @@ class TabRepository implements ITabRepository {
     int pageSize = 100,
     bool forceRefresh = false,
   }) async {
-    if (forceRefresh || await _needsSync(syncKey: storeType.name)) {
+    if (forceRefresh ||
+        await _needsSync(
+          syncKey: SyncKeys.tabsList(
+            storeTypeName: storeType.name,
+            page: page,
+            pageSize: pageSize,
+          ),
+        )) {
       await _refreshTabs(storeType: storeType, page: page, pageSize: pageSize);
     }
 
@@ -52,7 +60,14 @@ class TabRepository implements ITabRepository {
     final result = await _remote.getTabs(page: page, pageSize: pageSize);
     if (result case SuccessResult<List<TabsDto>>(data: final dtos)) {
       await _local.upsertSections(dtos);
-      await _local.setLastSync(_syncListKey(storeType.name), DateTime.now());
+      await _local.setLastSync(
+        SyncKeys.tabsList(
+          storeTypeName: storeType.name,
+          page: page,
+          pageSize: pageSize,
+        ),
+        DateTime.now(),
+      );
     }
   }
 
@@ -63,7 +78,13 @@ class TabRepository implements ITabRepository {
 
   @override
   Future<DataFreshness> getTabsFreshness({required StoreType storeType}) =>
-      _freshnessForSyncKey(_syncListKey(storeType.name));
+      _freshnessForSyncKey(
+        SyncKeys.tabsList(
+          storeTypeName: storeType.name,
+          page: 1,
+          pageSize: 100,
+        ),
+      );
 
   Future<DataFreshness> _freshnessForSyncKey(String syncKey) async {
     final lastSync = await _local.getLastSync(syncKey);
@@ -72,6 +93,4 @@ class TabRepository implements ITabRepository {
       lastSuccessAt: lastSync,
     );
   }
-
-  String _syncListKey(String type) => 'tabs:$type';
 }

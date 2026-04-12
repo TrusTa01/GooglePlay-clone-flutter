@@ -1,3 +1,4 @@
+import 'package:google_play/core/data/local/sync_keys.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
@@ -31,7 +32,14 @@ class CacheFirstProductRepository implements IProductRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
-    if (forceRefresh || await _needsSync(syncKey: _syncListKey(type))) {
+    if (forceRefresh ||
+        await _needsSync(
+          syncKey: SyncKeys.productListPage(
+            type: type,
+            page: page,
+            pageSize: pageSize,
+          ),
+        )) {
       await _refreshProducts(type: type, page: page, pageSize: pageSize);
     }
 
@@ -107,13 +115,14 @@ class CacheFirstProductRepository implements IProductRepository {
   @override
   Future<ProductEntity?> getProductById(
     String id, {
+    required String type,
     required String locale,
     bool forceRefresh = false,
   }) async {
-    final syncKey = _syncItemKey(id);
+    final syncKey = SyncKeys.productItem(id);
 
     if (forceRefresh || await _needsSync(syncKey: syncKey)) {
-      await _refreshProductById(id);
+      await _refreshProductById(id, type);
     }
 
     final fromLocal = await _local.getProductById(id);
@@ -133,15 +142,18 @@ class CacheFirstProductRepository implements IProductRepository {
 
     if (result case SuccessResult<List<ProductDto>>(data: final dtos)) {
       await _local.upsertProducts(dtos);
-      await _local.setLastSync(_syncListKey(type), DateTime.now());
+      await _local.setLastSync(
+        SyncKeys.productListPage(type: type, page: page, pageSize: pageSize),
+        DateTime.now(),
+      );
     }
   }
 
-  Future<void> _refreshProductById(String id) async {
-    final result = await _remoteDataSource.getProductById(id: id);
+  Future<void> _refreshProductById(String id, String type) async {
+    final result = await _remoteDataSource.getProductById(id: id, type: type);
     if (result case SuccessResult<ProductDto?>(data: final dto?)) {
       await _local.upsertProducts([dto]);
-      await _local.setLastSync(_syncItemKey(id), DateTime.now());
+      await _local.setLastSync(SyncKeys.productItem(id), DateTime.now());
     }
   }
 
@@ -160,11 +172,13 @@ class CacheFirstProductRepository implements IProductRepository {
 
   @override
   Future<DataFreshness> getProductsFreshness({required String type}) =>
-      _freshnessForSyncKey(_syncListKey(type));
+      _freshnessForSyncKey(
+        SyncKeys.productListPage(type: type, page: 1, pageSize: 20),
+      );
 
   @override
   Future<DataFreshness> getProductFreshness(String id) =>
-      _freshnessForSyncKey(_syncItemKey(id));
+      _freshnessForSyncKey(SyncKeys.productItem(id));
 
   bool _matchesFilter(ProductEntity product, Filter filter) {
     return switch (filter) {
@@ -178,7 +192,4 @@ class CacheFirstProductRepository implements IProductRepository {
       UnknownFilter() => true,
     };
   }
-
-  String _syncListKey(String type) => 'products:$type';
-  String _syncItemKey(String id) => 'product:$id';
 }
