@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/constants.dart';
-import 'package:google_play/features/shared/presentation/widgets/components/feedback/error/asset_not_found_placeholder.dart';
+import 'package:google_play/core/presentation/widgets/components/feedback/error/asset_not_found_placeholder.dart';
 
 class BannerImage extends StatelessWidget {
   final String assetPath;

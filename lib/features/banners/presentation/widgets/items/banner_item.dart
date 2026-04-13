@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/features/banners/presentation/view_models/ui_models/banner_item_ui_model.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 
 class BannerItem extends StatelessWidget {
   final BannerItemUiModel model;

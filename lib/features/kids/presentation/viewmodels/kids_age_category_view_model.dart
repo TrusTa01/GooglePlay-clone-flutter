@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/di/usecase_providers.dart';
-import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
+import 'package:google_play/core/presentation/providers/locale_provider.dart';
 
 part 'kids_age_category_view_model.g.dart';
 

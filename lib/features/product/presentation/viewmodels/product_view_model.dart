@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/di/usecase_providers.dart';
-import 'package:google_play/features/product/domain/usecases/get_product_by_id_usecase.dart';
-import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
+import 'package:google_play/features/product/domain/use_cases/get_product_by_id_use_case.dart';
+import 'package:google_play/core/presentation/providers/locale_provider.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_state_mapper.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,9 +14,7 @@ class ProductViewModel extends _$ProductViewModel {
 
   @override
   ProductState build(String productId) {
-    final locale =
-        ref.watch(localeProvider) ??
-        WidgetsBinding.instance.platformDispatcher.locale;
+    final locale = ref.watch(localeProvider);
     _getProductByIdUseCase = ref.read(getProductByIdUseCaseProvider);
     Future.microtask(() => loadById(productId, locale: locale));
     return const ProductState(isLoading: true);
@@ -57,6 +54,5 @@ class ProductViewModel extends _$ProductViewModel {
     );
   }
 
-  // Сбрасывает состояние
   void clear() => state = const ProductState();
 }

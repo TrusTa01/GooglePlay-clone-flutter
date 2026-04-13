@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:google_play/core/local_database/tables/content/banners/cached_banners.dart';
-import 'package:google_play/core/local_database/tables/shared/converters.dart';
+import 'package:google_play/core/local_database/shared/converters.dart';
 
 class CachedEventBanners extends Table {
   TextColumn get bannerId => text().references(CachedBanners, #id)();

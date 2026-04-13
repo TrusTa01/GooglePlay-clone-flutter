@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
 import 'package:google_play/features/filters/presentation/viewmodels/filter_provider.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum FilterType { games, apps, books, kidsAge }

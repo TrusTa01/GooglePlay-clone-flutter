@@ -1569,6 +1569,30 @@ class $SyncStateTable extends SyncState
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _lastFailureAtMeta = const VerificationMeta(
+    'lastFailureAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastFailureAt =
+      GeneratedColumn<DateTime>(
+        'last_failure_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _failureCountMeta = const VerificationMeta(
+    'failureCount',
+  );
+  @override
+  late final GeneratedColumn<int> failureCount = GeneratedColumn<int>(
+    'failure_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
   static const VerificationMeta _cursorMeta = const VerificationMeta('cursor');
   @override
   late final GeneratedColumn<String> cursor = GeneratedColumn<String>(
@@ -1592,6 +1616,8 @@ class $SyncStateTable extends SyncState
   List<GeneratedColumn> get $columns => [
     syncKey,
     lastSyncAt,
+    lastFailureAt,
+    failureCount,
     cursor,
     remoteSchemaVersion,
   ];
@@ -1621,6 +1647,24 @@ class $SyncStateTable extends SyncState
         lastSyncAt.isAcceptableOrUnknown(
           data['last_sync_at']!,
           _lastSyncAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_failure_at')) {
+      context.handle(
+        _lastFailureAtMeta,
+        lastFailureAt.isAcceptableOrUnknown(
+          data['last_failure_at']!,
+          _lastFailureAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('failure_count')) {
+      context.handle(
+        _failureCountMeta,
+        failureCount.isAcceptableOrUnknown(
+          data['failure_count']!,
+          _failureCountMeta,
         ),
       );
     }
@@ -1656,6 +1700,14 @@ class $SyncStateTable extends SyncState
         DriftSqlType.dateTime,
         data['${effectivePrefix}last_sync_at'],
       ),
+      lastFailureAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_failure_at'],
+      ),
+      failureCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}failure_count'],
+      )!,
       cursor: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}cursor'],
@@ -1676,11 +1728,15 @@ class $SyncStateTable extends SyncState
 class SyncStateData extends DataClass implements Insertable<SyncStateData> {
   final String syncKey;
   final DateTime? lastSyncAt;
+  final DateTime? lastFailureAt;
+  final int failureCount;
   final String? cursor;
   final int? remoteSchemaVersion;
   const SyncStateData({
     required this.syncKey,
     this.lastSyncAt,
+    this.lastFailureAt,
+    required this.failureCount,
     this.cursor,
     this.remoteSchemaVersion,
   });
@@ -1691,6 +1747,10 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
     if (!nullToAbsent || lastSyncAt != null) {
       map['last_sync_at'] = Variable<DateTime>(lastSyncAt);
     }
+    if (!nullToAbsent || lastFailureAt != null) {
+      map['last_failure_at'] = Variable<DateTime>(lastFailureAt);
+    }
+    map['failure_count'] = Variable<int>(failureCount);
     if (!nullToAbsent || cursor != null) {
       map['cursor'] = Variable<String>(cursor);
     }
@@ -1706,6 +1766,10 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
       lastSyncAt: lastSyncAt == null && nullToAbsent
           ? const Value.absent()
           : Value(lastSyncAt),
+      lastFailureAt: lastFailureAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastFailureAt),
+      failureCount: Value(failureCount),
       cursor: cursor == null && nullToAbsent
           ? const Value.absent()
           : Value(cursor),
@@ -1723,6 +1787,8 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
     return SyncStateData(
       syncKey: serializer.fromJson<String>(json['syncKey']),
       lastSyncAt: serializer.fromJson<DateTime?>(json['lastSyncAt']),
+      lastFailureAt: serializer.fromJson<DateTime?>(json['lastFailureAt']),
+      failureCount: serializer.fromJson<int>(json['failureCount']),
       cursor: serializer.fromJson<String?>(json['cursor']),
       remoteSchemaVersion: serializer.fromJson<int?>(
         json['remoteSchemaVersion'],
@@ -1735,6 +1801,8 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
     return <String, dynamic>{
       'syncKey': serializer.toJson<String>(syncKey),
       'lastSyncAt': serializer.toJson<DateTime?>(lastSyncAt),
+      'lastFailureAt': serializer.toJson<DateTime?>(lastFailureAt),
+      'failureCount': serializer.toJson<int>(failureCount),
       'cursor': serializer.toJson<String?>(cursor),
       'remoteSchemaVersion': serializer.toJson<int?>(remoteSchemaVersion),
     };
@@ -1743,11 +1811,17 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
   SyncStateData copyWith({
     String? syncKey,
     Value<DateTime?> lastSyncAt = const Value.absent(),
+    Value<DateTime?> lastFailureAt = const Value.absent(),
+    int? failureCount,
     Value<String?> cursor = const Value.absent(),
     Value<int?> remoteSchemaVersion = const Value.absent(),
   }) => SyncStateData(
     syncKey: syncKey ?? this.syncKey,
     lastSyncAt: lastSyncAt.present ? lastSyncAt.value : this.lastSyncAt,
+    lastFailureAt: lastFailureAt.present
+        ? lastFailureAt.value
+        : this.lastFailureAt,
+    failureCount: failureCount ?? this.failureCount,
     cursor: cursor.present ? cursor.value : this.cursor,
     remoteSchemaVersion: remoteSchemaVersion.present
         ? remoteSchemaVersion.value
@@ -1759,6 +1833,12 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
       lastSyncAt: data.lastSyncAt.present
           ? data.lastSyncAt.value
           : this.lastSyncAt,
+      lastFailureAt: data.lastFailureAt.present
+          ? data.lastFailureAt.value
+          : this.lastFailureAt,
+      failureCount: data.failureCount.present
+          ? data.failureCount.value
+          : this.failureCount,
       cursor: data.cursor.present ? data.cursor.value : this.cursor,
       remoteSchemaVersion: data.remoteSchemaVersion.present
           ? data.remoteSchemaVersion.value
@@ -1771,6 +1851,8 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
     return (StringBuffer('SyncStateData(')
           ..write('syncKey: $syncKey, ')
           ..write('lastSyncAt: $lastSyncAt, ')
+          ..write('lastFailureAt: $lastFailureAt, ')
+          ..write('failureCount: $failureCount, ')
           ..write('cursor: $cursor, ')
           ..write('remoteSchemaVersion: $remoteSchemaVersion')
           ..write(')'))
@@ -1778,14 +1860,22 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(syncKey, lastSyncAt, cursor, remoteSchemaVersion);
+  int get hashCode => Object.hash(
+    syncKey,
+    lastSyncAt,
+    lastFailureAt,
+    failureCount,
+    cursor,
+    remoteSchemaVersion,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SyncStateData &&
           other.syncKey == this.syncKey &&
           other.lastSyncAt == this.lastSyncAt &&
+          other.lastFailureAt == this.lastFailureAt &&
+          other.failureCount == this.failureCount &&
           other.cursor == this.cursor &&
           other.remoteSchemaVersion == this.remoteSchemaVersion);
 }
@@ -1793,12 +1883,16 @@ class SyncStateData extends DataClass implements Insertable<SyncStateData> {
 class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
   final Value<String> syncKey;
   final Value<DateTime?> lastSyncAt;
+  final Value<DateTime?> lastFailureAt;
+  final Value<int> failureCount;
   final Value<String?> cursor;
   final Value<int?> remoteSchemaVersion;
   final Value<int> rowid;
   const SyncStateCompanion({
     this.syncKey = const Value.absent(),
     this.lastSyncAt = const Value.absent(),
+    this.lastFailureAt = const Value.absent(),
+    this.failureCount = const Value.absent(),
     this.cursor = const Value.absent(),
     this.remoteSchemaVersion = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1806,6 +1900,8 @@ class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
   SyncStateCompanion.insert({
     required String syncKey,
     this.lastSyncAt = const Value.absent(),
+    this.lastFailureAt = const Value.absent(),
+    this.failureCount = const Value.absent(),
     this.cursor = const Value.absent(),
     this.remoteSchemaVersion = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1813,6 +1909,8 @@ class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
   static Insertable<SyncStateData> custom({
     Expression<String>? syncKey,
     Expression<DateTime>? lastSyncAt,
+    Expression<DateTime>? lastFailureAt,
+    Expression<int>? failureCount,
     Expression<String>? cursor,
     Expression<int>? remoteSchemaVersion,
     Expression<int>? rowid,
@@ -1820,6 +1918,8 @@ class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
     return RawValuesInsertable({
       if (syncKey != null) 'sync_key': syncKey,
       if (lastSyncAt != null) 'last_sync_at': lastSyncAt,
+      if (lastFailureAt != null) 'last_failure_at': lastFailureAt,
+      if (failureCount != null) 'failure_count': failureCount,
       if (cursor != null) 'cursor': cursor,
       if (remoteSchemaVersion != null)
         'remote_schema_version': remoteSchemaVersion,
@@ -1830,6 +1930,8 @@ class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
   SyncStateCompanion copyWith({
     Value<String>? syncKey,
     Value<DateTime?>? lastSyncAt,
+    Value<DateTime?>? lastFailureAt,
+    Value<int>? failureCount,
     Value<String?>? cursor,
     Value<int?>? remoteSchemaVersion,
     Value<int>? rowid,
@@ -1837,6 +1939,8 @@ class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
     return SyncStateCompanion(
       syncKey: syncKey ?? this.syncKey,
       lastSyncAt: lastSyncAt ?? this.lastSyncAt,
+      lastFailureAt: lastFailureAt ?? this.lastFailureAt,
+      failureCount: failureCount ?? this.failureCount,
       cursor: cursor ?? this.cursor,
       remoteSchemaVersion: remoteSchemaVersion ?? this.remoteSchemaVersion,
       rowid: rowid ?? this.rowid,
@@ -1851,6 +1955,12 @@ class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
     }
     if (lastSyncAt.present) {
       map['last_sync_at'] = Variable<DateTime>(lastSyncAt.value);
+    }
+    if (lastFailureAt.present) {
+      map['last_failure_at'] = Variable<DateTime>(lastFailureAt.value);
+    }
+    if (failureCount.present) {
+      map['failure_count'] = Variable<int>(failureCount.value);
     }
     if (cursor.present) {
       map['cursor'] = Variable<String>(cursor.value);
@@ -1869,6 +1979,8 @@ class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
     return (StringBuffer('SyncStateCompanion(')
           ..write('syncKey: $syncKey, ')
           ..write('lastSyncAt: $lastSyncAt, ')
+          ..write('lastFailureAt: $lastFailureAt, ')
+          ..write('failureCount: $failureCount, ')
           ..write('cursor: $cursor, ')
           ..write('remoteSchemaVersion: $remoteSchemaVersion, ')
           ..write('rowid: $rowid')
@@ -10429,6 +10541,8 @@ typedef $$SyncStateTableCreateCompanionBuilder =
     SyncStateCompanion Function({
       required String syncKey,
       Value<DateTime?> lastSyncAt,
+      Value<DateTime?> lastFailureAt,
+      Value<int> failureCount,
       Value<String?> cursor,
       Value<int?> remoteSchemaVersion,
       Value<int> rowid,
@@ -10437,6 +10551,8 @@ typedef $$SyncStateTableUpdateCompanionBuilder =
     SyncStateCompanion Function({
       Value<String> syncKey,
       Value<DateTime?> lastSyncAt,
+      Value<DateTime?> lastFailureAt,
+      Value<int> failureCount,
       Value<String?> cursor,
       Value<int?> remoteSchemaVersion,
       Value<int> rowid,
@@ -10458,6 +10574,16 @@ class $$SyncStateTableFilterComposer
 
   ColumnFilters<DateTime> get lastSyncAt => $composableBuilder(
     column: $table.lastSyncAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastFailureAt => $composableBuilder(
+    column: $table.lastFailureAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get failureCount => $composableBuilder(
+    column: $table.failureCount,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -10491,6 +10617,16 @@ class $$SyncStateTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get lastFailureAt => $composableBuilder(
+    column: $table.lastFailureAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get failureCount => $composableBuilder(
+    column: $table.failureCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get cursor => $composableBuilder(
     column: $table.cursor,
     builder: (column) => ColumnOrderings(column),
@@ -10516,6 +10652,16 @@ class $$SyncStateTableAnnotationComposer
 
   GeneratedColumn<DateTime> get lastSyncAt => $composableBuilder(
     column: $table.lastSyncAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastFailureAt => $composableBuilder(
+    column: $table.lastFailureAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get failureCount => $composableBuilder(
+    column: $table.failureCount,
     builder: (column) => column,
   );
 
@@ -10561,12 +10707,16 @@ class $$SyncStateTableTableManager
               ({
                 Value<String> syncKey = const Value.absent(),
                 Value<DateTime?> lastSyncAt = const Value.absent(),
+                Value<DateTime?> lastFailureAt = const Value.absent(),
+                Value<int> failureCount = const Value.absent(),
                 Value<String?> cursor = const Value.absent(),
                 Value<int?> remoteSchemaVersion = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SyncStateCompanion(
                 syncKey: syncKey,
                 lastSyncAt: lastSyncAt,
+                lastFailureAt: lastFailureAt,
+                failureCount: failureCount,
                 cursor: cursor,
                 remoteSchemaVersion: remoteSchemaVersion,
                 rowid: rowid,
@@ -10575,12 +10725,16 @@ class $$SyncStateTableTableManager
               ({
                 required String syncKey,
                 Value<DateTime?> lastSyncAt = const Value.absent(),
+                Value<DateTime?> lastFailureAt = const Value.absent(),
+                Value<int> failureCount = const Value.absent(),
                 Value<String?> cursor = const Value.absent(),
                 Value<int?> remoteSchemaVersion = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SyncStateCompanion.insert(
                 syncKey: syncKey,
                 lastSyncAt: lastSyncAt,
+                lastFailureAt: lastFailureAt,
+                failureCount: failureCount,
                 cursor: cursor,
                 remoteSchemaVersion: remoteSchemaVersion,
                 rowid: rowid,

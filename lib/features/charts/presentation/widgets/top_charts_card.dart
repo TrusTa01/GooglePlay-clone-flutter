@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/action_row_ui_model.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 
 class TopChartsCard extends StatelessWidget {
   final ActionRowUiModel model;

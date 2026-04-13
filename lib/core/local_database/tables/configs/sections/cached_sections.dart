@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:google_play/core/local_database/tables/configs/tabs/cached_tabs.dart';
-import 'package:google_play/core/local_database/tables/shared/converters.dart';
+import 'package:google_play/core/local_database/shared/converters.dart';
 
 class CachedSections extends Table {
   TextColumn get id => text()();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
-import 'package:google_play/features/shared/presentation/widgets/product_widgets/elements/product_card_components.dart';
+import 'package:google_play/core/presentation/widgets/product_widgets/elements/product_card_components.dart';
 
 // Миниатюра продукта для использования в SimpleAppBar (titleLeading)
 class ProductAppBarLeading extends StatelessWidget {

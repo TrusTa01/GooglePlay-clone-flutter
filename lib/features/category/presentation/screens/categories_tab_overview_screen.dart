@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/features/category/presentation/viewmodels/category_overview_view_model.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CategoriesTabOverviewScreen extends ConsumerWidget {

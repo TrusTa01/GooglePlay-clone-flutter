@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_view_model.dart';
 import 'package:google_play/features/product/presentation/screens/product_page_sections/product_page_sections.dart';
 import 'package:google_play/features/product/presentation/screens/product_screen_tags.dart';
-import 'package:google_play/features/shared/presentation/widgets/components/app_bars/simple_app_bar.dart';
-import 'package:google_play/features/shared/presentation/widgets/components/popups/product_popup_menu.dart';
+import 'package:google_play/core/presentation/widgets/components/app_bars/simple_app_bar.dart';
+import 'package:google_play/core/presentation/widgets/components/popups/product_popup_menu.dart';
 
 // Экран страницы продукта
 class ProductPageScreen extends StatelessWidget {

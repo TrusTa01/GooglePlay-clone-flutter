@@ -10,7 +10,7 @@ import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_state_mapper.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/category_item_ui_model.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_preview_section_ui_model.dart';
-import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
+import 'package:google_play/core/presentation/providers/locale_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'category_overview_view_model.g.dart';

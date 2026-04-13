@@ -2,7 +2,7 @@ import 'package:google_play/core/extensions/localized_str_ext.dart';
 import 'package:google_play/features/sections/data/mappers/network/params_mapper.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind_enum.dart';
-import 'package:google_play/features/sections/domain/entities/section_entity.dart';
+import 'package:google_play/features/sections/domain/entities/sections_entity.dart';
 import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
 
 extension SectionMapper on SectionsDto {
@@ -35,7 +35,7 @@ extension SectionMapper on SectionsDto {
 
   SectionDataSource _mapSectionDataSource(String? source) {
     return switch (source) {
-      'product_list' => const ProductListSource(),
+      'products_list' => const ProductListSource(),
       'banners' => const BannersSource(),
       _ => const UnknownSource(),
     };

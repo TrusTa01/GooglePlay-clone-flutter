@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
 import 'package:google_play/features/sections/presentation/viewmodels/section_payload.dart';
 import 'package:google_play/features/sections/presentation/viewmodels/ui_mappers/section_payload_mapper.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 
-/// Колбэк для "Смотреть все" — передаёт ключ категории и локализованный заголовок
 typedef OnSeeAllTap = void Function(String categoryKey, String title);
 
 class SectionWidgetBuilder extends HookWidget {
@@ -120,7 +118,11 @@ class SectionWidgetBuilder extends HookWidget {
               ? () => onSeeAllTap?.call(categoryKey, sectionTitle)
               : null,
         ),
-      GridPayload(:final items, :final categoryKey, title: final sectionTitle) =>
+      GridPayload(
+        :final items,
+        :final categoryKey,
+        title: final sectionTitle,
+      ) =>
         ProductGrid(
           title: title,
           subtitle: subtitle,

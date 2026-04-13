@@ -43,7 +43,7 @@ class AppDatabase extends _$AppDatabase {
       await _backfillTitleFts();
     },
     onUpgrade: (Migrator m, int from, int to) async {
-      if (from < 3) {
+      if (from < 2) {
         await _destructiveRecreateSchema();
         await m.createAll();
         await _backfillTitleFts();
@@ -53,7 +53,7 @@ class AppDatabase extends _$AppDatabase {
 
   Future<void> _backfillTitleFts() async {
     await customStatement(
-      'INSERT INTO product_title_fts(rowid, value) '
+      'INSERT INTO product_title_fts(rowid, value)'
       'SELECT rowid, value FROM product_translations WHERE field = \'title\'',
     );
   }

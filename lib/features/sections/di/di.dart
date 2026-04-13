@@ -1,19 +1,55 @@
-import 'package:google_play/features/sections/domain/repositories/i_section_repository.dart';
-import 'package:google_play/features/sections/domain/usecases/get_sections_freshness_usecase.dart';
-import 'package:google_play/features/sections/domain/usecases/get_sections_usecase.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:google_play/core/di/di.dart';
+import 'package:google_play/features/sections/data/data_sources/local/drift_sections_local_data_source.dart';
+import 'package:google_play/features/sections/data/data_sources/network/supabase_sections_network_data_source.dart';
+import 'package:google_play/features/sections/data/data_sources/network/supabase_sections_remote_data_source.dart';
+import 'package:google_play/features/sections/data/repositories/sections_repository.dart';
+import 'package:google_play/features/sections/domain/repositories/i_sections_repository.dart';
+import 'package:google_play/features/sections/domain/use_cases/get_sections_freshness_use_case.dart';
+import 'package:google_play/features/sections/domain/use_cases/get_sections_use_case.dart';
 
-final sectionRepositoryProvider = Provider<ISectionRepository>((ref) {
-  throw UnimplementedError('');
-});
+part 'di.g.dart';
 
-final getTabSectionsUseCaseProvider = Provider<GetSectionsUseCase>((ref) {
-  return GetSectionsUseCaseImpl(ref.watch(sectionRepositoryProvider));
-});
+// network
+@riverpod
+SupabaseSectionsNetworkDataSource sectionsNetworkDatasource(Ref ref) {
+  final executor = queryExecutor(ref);
+  return SupabaseSectionsNetworkDataSource(executor: executor);
+}
 
-final getSectionsFreshnessUseCaseProvider =
-    Provider<GetSectionsFreshnessUseCase>((ref) {
-      return GetSectionsFreshnessUseCaseImpl(
-        ref.watch(sectionRepositoryProvider),
-      );
-    });
+// remote
+@riverpod
+SupabaseSectionsRemoteDataSource sectionsRemoteDatasource(Ref ref) {
+  return SupabaseSectionsRemoteDataSource(
+    datasource: sectionsNetworkDatasource(ref),
+  );
+}
+
+// local
+@riverpod
+DriftSectionsLocalDataSource sectionsLocalDatasource(Ref ref) {
+  final db = appDatabase();
+  return DriftSectionsLocalDataSource(db: db);
+}
+
+// repo
+@riverpod
+ISectionsRepository sectionsRepo(Ref ref) {
+  final remote = sectionsRemoteDatasource(ref);
+  final local = sectionsLocalDatasource(ref);
+  final policy = getPolicy();
+  return SectionsRepository(remote: remote, local: local, policy: policy);
+}
+
+// usecases
+@riverpod
+GetSectionsUseCaseImpl getSectionsUseCase(Ref ref) {
+  final repo = ref.watch(sectionsRepoProvider);
+  return GetSectionsUseCaseImpl(repo);
+}
+
+@riverpod
+GetSectionsFreshnessUseCase getSectionsFreshnessUseCase(Ref ref) {
+  final repo = ref.watch(sectionsRepoProvider);
+  return GetSectionsFreshnessUseCaseImpl(repo);
+}

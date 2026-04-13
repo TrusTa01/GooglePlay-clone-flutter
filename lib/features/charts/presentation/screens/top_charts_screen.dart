@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/action_row_ui_model.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TopChartsScreen extends StatelessWidget {

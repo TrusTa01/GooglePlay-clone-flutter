@@ -3,7 +3,9 @@ sealed class Filter {
 }
 
 final class RecommendedFilter extends Filter {
-  const RecommendedFilter();
+  final List<String> productIds;
+
+  const RecommendedFilter({required this.productIds});
 }
 
 final class CategoryFilter extends Filter {

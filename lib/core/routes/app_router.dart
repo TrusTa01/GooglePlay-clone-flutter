@@ -5,8 +5,13 @@ import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/routes/app_routes_names.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
 import 'package:google_play/core/layouts/main_layout.dart';
-import 'package:google_play/features/shared/presentation/screens/full_screen_image.dart';
-import 'package:google_play/features/shared/presentation/screens/route_screens.dart';
+import 'package:google_play/core/presentation/screens/full_screen_image.dart';
+import 'package:google_play/features/category/presentation/screens/categories_tab_overview_screen.dart';
+import 'package:google_play/features/product/presentation/screens/product_details_screen.dart';
+import 'package:google_play/features/product/presentation/screens/product_permissions_screen.dart';
+import 'package:google_play/features/product/presentation/screens/product_screen.dart';
+import 'package:google_play/features/section_more/presentation/screens/section_more_screen.dart';
+import 'package:google_play/features/store/presentation/screens/apps_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'app_router.g.dart';

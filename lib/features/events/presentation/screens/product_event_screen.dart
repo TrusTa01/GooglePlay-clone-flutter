@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
-import 'package:google_play/features/shared/presentation/screens/error_screen.dart';
+import 'package:google_play/core/presentation/screens/error_screen.dart';
 import 'package:google_play/features/events/presentation/viewmodels/product_event_state.dart';
 import 'package:google_play/features/events/presentation/viewmodels/product_event_view_model.dart';
 import 'package:google_play/features/events/presentation/viewmodels/ui_models/event_section_ui_model.dart';
 import 'package:google_play/features/sections/presentation/viewmodels/section_payload.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductEventScreen extends ConsumerWidget {

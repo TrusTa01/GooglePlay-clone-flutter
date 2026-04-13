@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:google_play/core/local_database/tables/shared/converters.dart';
+import 'package:google_play/core/local_database/shared/converters.dart';
 
 class CachedProduct extends Table {
   TextColumn get id => text()();

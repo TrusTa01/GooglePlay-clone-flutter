@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 
 class ModalFilter extends StatelessWidget {
   /// Localized short label when the default (first) option is selected.

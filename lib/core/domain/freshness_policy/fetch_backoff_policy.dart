@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 
 /// Политика откладывания сетевых запросов после ошибок
-///
 /// Не смешивается со [FreshnessPolicy]: 'насколько стары кэш' и 'можно ли сейчас
 /// бить по сети' - разные оси. Здесь только правило: 'подождать ещё X времени'
 abstract interface class FetchBackoffPolicy {

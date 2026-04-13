@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/domain/entities/store_type.dart';
-import 'package:google_play/features/shared/presentation/screens/error_screen.dart';
+import 'package:google_play/core/presentation/screens/error_screen.dart';
 import 'package:google_play/features/section_more/presentation/viewmodels/section_more_state.dart';
 import 'package:google_play/features/section_more/presentation/viewmodels/section_more_view_model.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SectionMoreScreen extends ConsumerWidget {

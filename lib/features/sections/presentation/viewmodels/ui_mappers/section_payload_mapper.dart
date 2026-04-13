@@ -6,7 +6,7 @@ import 'package:google_play/features/product/domain/entities/product_entity.dart
 import 'package:google_play/core/domain/entities/filters.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind_enum.dart';
-import 'package:google_play/features/sections/domain/entities/section_entity.dart';
+import 'package:google_play/features/sections/domain/entities/sections_entity.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/action_row_ui_mapper.dart';
 import 'package:google_play/features/banners/presentation/view_models/ui_mappers/banner_item_mapper.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_card_mapper.dart';
@@ -21,7 +21,7 @@ class SectionPayloadMapper {
     required AppLocalizations l10n,
     required Locale locale,
   }) {
-    return switch (config.layout) {
+    return switch (config.sectionType) {
       SectionLayoutKind.banners => BannersPayload(_mapBanners(items: items)),
       SectionLayoutKind.carousel => CarouselPayload(
         _mapCarousel(items: items, l10n: l10n, locale: locale),
@@ -81,8 +81,9 @@ class SectionPayloadMapper {
   String? _extractCategoryKey(SectionEntity config) {
     final source = config.dataSource;
     if (source is! ProductListSource || source.filters.isEmpty) return null;
-    final categoryFilter =
-        source.filters.whereType<CategoryFilter>().firstOrNull;
+    final categoryFilter = source.filters
+        .whereType<CategoryFilter>()
+        .firstOrNull;
     return categoryFilter?.genre;
   }
 }

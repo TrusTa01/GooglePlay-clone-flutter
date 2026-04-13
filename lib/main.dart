@@ -8,8 +8,8 @@ import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/core/presentation/screens/initialization_error_screen.dart';
 import 'package:google_play/core/routes/app_router.dart';
-import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
-import 'package:google_play/features/shared/presentation/providers/shared_preferences_provider.dart';
+import 'package:google_play/core/presentation/providers/locale_provider.dart';
+import 'package:google_play/core/presentation/providers/shared_preferences_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,9 +26,7 @@ void main() async {
   }
   runApp(
     ProviderScope(
-      overrides: [
-        sharedPreferencesProvider.overrideWithValue(prefs),
-      ],
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
       child: initialWidget,
     ),
   );

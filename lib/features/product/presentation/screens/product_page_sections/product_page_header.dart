@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
-import 'package:google_play/features/shared/presentation/widgets/product_widgets/elements/product_card_components.dart';
+import 'package:google_play/core/presentation/widgets/product_widgets/elements/product_card_components.dart';
 
 class ProductPageHeader extends StatelessWidget {
   final ProductState state;
