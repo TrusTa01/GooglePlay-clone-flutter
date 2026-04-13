@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/di/usecase_providers.dart';
+import 'package:google_play/features/banners/di/di.dart';
 import 'package:google_play/features/banners/domain/entities/event_banner_entity.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/events/presentation/viewmodels/product_event_state.dart';
 import 'package:google_play/features/events/presentation/viewmodels/ui_mappers/event_section_ui_mapper.dart';
 import 'package:google_play/features/banners/presentation/view_models/ui_mappers/event_hero_banner_mapper.dart';
@@ -16,7 +16,7 @@ part 'product_event_view_model.g.dart';
 @riverpod
 class ProductEventViewModel extends _$ProductEventViewModel {
   @override
-  ProductEventState build(String eventId, StoreType storeType) {
+  ProductEventState build(String eventId, ProductKind productKind) {
     final locale =
         ref.watch(localeProvider) ?? PlatformDispatcher.instance.locale;
     _loadEvent(locale);
@@ -28,7 +28,7 @@ class ProductEventViewModel extends _$ProductEventViewModel {
       final AppLocalizations l10n = lookupAppLocalizations(locale);
 
       // 1. Загружаем банер события
-      final bannerRepo = ref.read(bannerRepositoryProvider);
+      final bannerRepo = ref.read(bannersRepoProvider);
       final banner = await bannerRepo.getBannerById(
         eventId,
         type: 'banners',
@@ -53,7 +53,7 @@ class ProductEventViewModel extends _$ProductEventViewModel {
 
       final getTabSections = ref.read(getTabSectionsUseCaseProvider);
       final sections = await getTabSections(
-        storeType: storeType,
+        productKind: productKind,
         tabKey: eventCategory,
       );
 
@@ -61,7 +61,7 @@ class ProductEventViewModel extends _$ProductEventViewModel {
       final resolveSection = ref.read(resolveSectionUseCaseProvider);
       final resolvedSections = await Future.wait(
         sections.map(
-          (s) => resolveSection(s, storeType.name, locale.languageCode),
+          (s) => resolveSection(s, productKind.name, locale.languageCode),
         ),
       );
 

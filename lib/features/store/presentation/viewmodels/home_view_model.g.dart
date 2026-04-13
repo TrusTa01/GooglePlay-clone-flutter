@@ -16,7 +16,7 @@ final class HomeViewModelProvider
     extends $NotifierProvider<HomeViewModel, HomeState> {
   HomeViewModelProvider._({
     required HomeViewModelFamily super.from,
-    required StoreType super.argument,
+    required ProductKind super.argument,
   }) : super(
          retry: null,
          name: r'homeViewModelProvider',
@@ -58,7 +58,7 @@ final class HomeViewModelProvider
   }
 }
 
-String _$homeViewModelHash() => r'99b34de870db7fd6d6938e61c90fcdadb601ccfe';
+String _$homeViewModelHash() => r'a3f34972bb8c6c689bf2bac1f436412401e0933c';
 
 final class HomeViewModelFamily extends $Family
     with
@@ -67,7 +67,7 @@ final class HomeViewModelFamily extends $Family
           HomeState,
           HomeState,
           HomeState,
-          StoreType
+          ProductKind
         > {
   HomeViewModelFamily._()
     : super(
@@ -78,18 +78,18 @@ final class HomeViewModelFamily extends $Family
         isAutoDispose: true,
       );
 
-  HomeViewModelProvider call(StoreType storeType) =>
-      HomeViewModelProvider._(argument: storeType, from: this);
+  HomeViewModelProvider call(ProductKind productKind) =>
+      HomeViewModelProvider._(argument: productKind, from: this);
 
   @override
   String toString() => r'homeViewModelProvider';
 }
 
 abstract class _$HomeViewModel extends $Notifier<HomeState> {
-  late final _$args = ref.$arg as StoreType;
-  StoreType get storeType => _$args;
+  late final _$args = ref.$arg as ProductKind;
+  ProductKind get productKind => _$args;
 
-  HomeState build(StoreType storeType);
+  HomeState build(ProductKind productKind);
   @$mustCallSuper
   @override
   void runBuild() {

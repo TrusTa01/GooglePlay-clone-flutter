@@ -1,4 +1,5 @@
 import 'package:google_play/core/data/local/sync_keys.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
@@ -26,7 +27,7 @@ class CacheFirstProductRepository implements IProductsRepository {
 
   @override
   Future<List<ProductEntity>> getProducts({
-    required String type,
+    required ProductKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
@@ -53,7 +54,7 @@ class CacheFirstProductRepository implements IProductsRepository {
 
   @override
   Stream<List<ProductEntity>> watchProducts({
-    required String type,
+    required ProductKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
@@ -71,14 +72,14 @@ class CacheFirstProductRepository implements IProductsRepository {
   @override
   Future<List<ProductEntity>> getProductsByFilters({
     required List<Filter> filters,
-    required String categoryType,
+    required ProductKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
     final products = await getProducts(
-      type: categoryType,
+      type: type,
       locale: locale,
       page: page,
       pageSize: pageSize,
@@ -94,13 +95,13 @@ class CacheFirstProductRepository implements IProductsRepository {
   @override
   Stream<List<ProductEntity>> watchProductsByFilters({
     required List<Filter> filters,
-    required String categoryType,
+    required ProductKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
   }) {
     return watchProducts(
-      type: categoryType,
+      type: type,
       locale: locale,
       page: page,
       pageSize: pageSize,
@@ -115,7 +116,7 @@ class CacheFirstProductRepository implements IProductsRepository {
   @override
   Future<ProductEntity?> getProductById(
     String id, {
-    required String type,
+    required ProductKind type,
     required String locale,
     bool forceRefresh = false,
   }) async {
@@ -130,7 +131,7 @@ class CacheFirstProductRepository implements IProductsRepository {
   }
 
   Future<void> _refreshProducts({
-    required String type,
+    required ProductKind type,
     required int page,
     required int pageSize,
   }) async {
@@ -154,9 +155,10 @@ class CacheFirstProductRepository implements IProductsRepository {
     }
   }
 
-  Future<void> _refreshProductById(String id, String type) async {
+  Future<void> _refreshProductById(String id, ProductKind type) async {
     final syncKey = SyncKeys.productItem(id);
     final result = await _remoteDataSource.getProductById(id: id, type: type);
+
     switch (result) {
       case SuccessResult<ProductDto?>(data: final dto):
         if (dto != null) {
@@ -184,7 +186,7 @@ class CacheFirstProductRepository implements IProductsRepository {
   }
 
   @override
-  Future<DataFreshness> getProductsFreshness({required String type}) =>
+  Future<DataFreshness> getProductsFreshness({required ProductKind type}) =>
       _freshnessForSyncKey(
         SyncKeys.productListPage(type: type, page: 1, pageSize: 20),
       );

@@ -1,11 +1,11 @@
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/tabs/domain/entities/tabs_entity.dart';
 import 'package:google_play/features/tabs/domain/repositories/i_tabs_repository.dart';
 
 abstract interface class GetTabsUseCase {
   Future<List<TabsEntity>> call({
     required String id,
-    required StoreType storeType,
+    required ProductKind productKind,
     required String locale,
     int page = 1,
     int pageSize = 100,
@@ -21,14 +21,14 @@ final class GetTabsUseCaseImpl implements GetTabsUseCase {
   @override
   Future<List<TabsEntity>> call({
     required String id,
-    required StoreType storeType,
+    required ProductKind productKind,
     required String locale,
     int page = 1,
     int pageSize = 100,
     bool forceRefresh = false,
   }) => _repository.getTabs(
     id: id,
-    storeType: storeType,
+    productKind: productKind,
     locale: locale,
     page: page,
     pageSize: pageSize,

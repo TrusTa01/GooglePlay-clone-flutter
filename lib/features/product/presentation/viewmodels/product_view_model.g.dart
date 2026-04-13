@@ -16,11 +16,11 @@ final class ProductViewModelProvider
     extends $NotifierProvider<ProductViewModel, ProductState> {
   ProductViewModelProvider._({
     required ProductViewModelFamily super.from,
-    required String super.argument,
+    required (String, ProductKind) super.argument,
   }) : super(
          retry: null,
          name: r'productViewModelProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -58,7 +58,7 @@ final class ProductViewModelProvider
   }
 }
 
-String _$productViewModelHash() => r'587884037da81a17c4c11be5e2149e71b2fd2dac';
+String _$productViewModelHash() => r'be92d837a08975d26420955ad6faacb2ba302046';
 
 final class ProductViewModelFamily extends $Family
     with
@@ -67,7 +67,7 @@ final class ProductViewModelFamily extends $Family
           ProductState,
           ProductState,
           ProductState,
-          String
+          (String, ProductKind)
         > {
   ProductViewModelFamily._()
     : super(
@@ -75,21 +75,21 @@ final class ProductViewModelFamily extends $Family
         name: r'productViewModelProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
-  ProductViewModelProvider call(String productId) =>
-      ProductViewModelProvider._(argument: productId, from: this);
+  ProductViewModelProvider call((String, ProductKind) arg) =>
+      ProductViewModelProvider._(argument: arg, from: this);
 
   @override
   String toString() => r'productViewModelProvider';
 }
 
 abstract class _$ProductViewModel extends $Notifier<ProductState> {
-  late final _$args = ref.$arg as String;
-  String get productId => _$args;
+  late final _$args = ref.$arg as (String, ProductKind);
+  (String, ProductKind) get arg => _$args;
 
-  ProductState build(String productId);
+  ProductState build((String, ProductKind) arg);
   @$mustCallSuper
   @override
   void runBuild() {

@@ -3,7 +3,7 @@ import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/features/product/domain/entities/game_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
 import 'package:google_play/features/category/presentation/viewmodels/category_overview_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/category_item_mapper.dart';
@@ -17,11 +17,11 @@ part 'category_overview_view_model.g.dart';
 
 class CategoryOverviewArgs {
   final String categoryKey;
-  final StoreType storeType;
+  final ProductKind productKind;
 
   const CategoryOverviewArgs({
     required this.categoryKey,
-    required this.storeType,
+    required this.productKind,
   });
 
   @override
@@ -30,10 +30,10 @@ class CategoryOverviewArgs {
       other is CategoryOverviewArgs &&
           runtimeType == other.runtimeType &&
           categoryKey == other.categoryKey &&
-          storeType == other.storeType;
+          productKind == other.productKind;
 
   @override
-  int get hashCode => categoryKey.hashCode ^ storeType.hashCode;
+  int get hashCode => categoryKey.hashCode ^ productKind.hashCode;
 }
 
 @riverpod
@@ -46,14 +46,14 @@ Future<CategoryOverviewState> categoryOverviewViewModel(
       WidgetsBinding.instance.platformDispatcher.locale;
   final loadProducts = ref.read(loadProductsUseCaseProvider);
   final allProducts = await loadProducts(
-    type: args.storeType.categoryKey,
+    type: args.productKind.categoryKey,
     locale: locale.languageCode,
   );
 
   final filtered = _filterProducts(allProducts, args.categoryKey);
   final l10n = lookupAppLocalizations(locale);
 
-  final title = _getCategoryTitle(args.categoryKey, args.storeType, l10n);
+  final title = _getCategoryTitle(args.categoryKey, args.productKind, l10n);
 
   final isEmpty = filtered.isEmpty;
   final isGame = !isEmpty && filtered.first is GameEntity;
@@ -96,18 +96,18 @@ bool _isAllCategory(String key) {
 
 String _getCategoryTitle(
   String categoryKey,
-  StoreType type,
+  ProductKind type,
   AppLocalizations l10n,
 ) {
   List<ProductCategoriesData> dataList;
   switch (type) {
-    case StoreType.games:
+    case ProductKind.games:
       dataList = gamesCategoriesData;
       break;
-    case StoreType.apps:
+    case ProductKind.apps:
       dataList = appsCategoriesData;
       break;
-    case StoreType.books:
+    case ProductKind.books:
       dataList = booksGenresData;
       break;
   }

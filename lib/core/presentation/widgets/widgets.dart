@@ -19,24 +19,24 @@ export '../../../features/banners/presentation/widgets/sections/kids_hero_banner
 export '../../../features/banners/presentation/widgets/utils/banners_utils.dart';
 
 // Scroll widgets
-export 'product_widgets/elements/sliders_utils.dart';
+export '../../../features/product/presentation/widgets/elements/sliders_utils.dart';
 
 // Carousel widget
-export 'product_widgets/cards/product_carousel_card.dart';
-export 'product_widgets/sections/product_carousel_section.dart';
+export '../../../features/product/presentation/widgets/cards/product_carousel_card.dart';
+export '../../../features/product/presentation/widgets/sections/product_carousel_section.dart';
 
 // Grid widget
-export 'product_widgets/cards/product_grid_card.dart';
-export 'product_widgets/sections/product_grid_section.dart';
+export '../../../features/product/presentation/widgets/cards/product_grid_card.dart';
+export '../../../features/product/presentation/widgets/sections/product_grid_section.dart';
 
 // Charts widget
 export '../../../features/charts/presentation/widgets/top_charts_card.dart';
 export '../../../features/charts/presentation/widgets/top_charts_section.dart';
 
 // Game preview widget
-export 'product_widgets/cards/product_preview_card.dart';
-export 'product_widgets/sections/product_preview_section.dart';
-export 'product_widgets/elements/product_screenshot_image.dart';
+export '../../../features/product/presentation/widgets/cards/product_preview_card.dart';
+export '../../../features/product/presentation/widgets/sections/product_preview_section.dart';
+export '../../../features/product/presentation/widgets/elements/product_screenshot_image.dart';
 
 export '../../../features/category/presentation/widgets/category_details_section.dart';
 

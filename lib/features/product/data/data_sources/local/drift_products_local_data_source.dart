@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:google_play/core/data/local/base_drift_writter.dart';
 import 'package:google_play/core/data/local/simple_select_statement_ext.dart';
 import 'package:google_play/core/data/local/sync_state_mixin.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/local_database/app_database.dart';
 import 'package:google_play/features/product/data/data_sources/local/i_products_local_datasource.dart';
 import 'package:google_play/features/product/data/models/local/local_product_bundle.dart';
@@ -27,14 +28,14 @@ class DriftProductsLocalDataSource
 
   @override
   Future<List<LocalProductBundle>> getProducts({
-    required String type,
+    required ProductKind type,
     required int page,
     required int pageSize,
   }) => _reader.getProducts(type: type, page: page, pageSize: pageSize);
 
   @override
   Stream<List<LocalProductBundle>> watchProducts({
-    required String type,
+    required ProductKind type,
     required int page,
     required int pageSize,
   }) => _reader.watchProducts(type: type, page: page, pageSize: pageSize);

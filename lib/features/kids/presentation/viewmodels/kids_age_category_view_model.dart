@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/di/usecase_providers.dart';
 import 'package:google_play/core/presentation/providers/locale_provider.dart';
 
@@ -19,7 +19,7 @@ class KidsAgeCategory extends _$KidsAgeCategory {
     final fileName = _mapAgeKeyToFileName(ageKey);
 
     final rawSections = await getTabSections(
-      storeType: StoreType.games,
+      productKind: ProductKind.games,
       tabKey: fileName,
     );
 
@@ -27,7 +27,7 @@ class KidsAgeCategory extends _$KidsAgeCategory {
       rawSections.map(
         (section) => resolveSection(
           section,
-          StoreType.games.categoryKey,
+          ProductKind.games.categoryKey,
           locale.languageCode,
         ),
       ),

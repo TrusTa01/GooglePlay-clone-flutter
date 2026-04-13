@@ -1,5 +1,5 @@
 import 'package:google_play/core/data/local/sync_keys.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
@@ -25,7 +25,7 @@ class TabsRepository implements ITabsRepository {
   @override
   Future<List<TabsEntity>> getTabs({
     required String id,
-    required StoreType storeType,
+    required ProductKind productKind,
     required String locale,
     int page = 1,
     int pageSize = 100,
@@ -34,12 +34,12 @@ class TabsRepository implements ITabsRepository {
     if (forceRefresh ||
         await _needsSync(
           syncKey: SyncKeys.tabsList(
-            storeTypeName: storeType.name,
+            storeTypeName: productKind.name,
             page: page,
             pageSize: pageSize,
           ),
         )) {
-      await _refreshTabs(storeType: storeType, page: page, pageSize: pageSize);
+      await _refreshTabs(productKind: productKind, page: page, pageSize: pageSize);
     }
 
     final tabs = await _local.getTabs(
@@ -53,13 +53,13 @@ class TabsRepository implements ITabsRepository {
   }
 
   Future<void> _refreshTabs({
-    required StoreType storeType,
+    required ProductKind productKind,
     required int page,
     required int pageSize,
   }) async {
     final result = await _remote.getTabs(page: page, pageSize: pageSize);
     final syncKey = SyncKeys.tabsList(
-      storeTypeName: storeType.name,
+      storeTypeName: productKind.name,
       page: page,
       pageSize: pageSize,
     );
@@ -79,10 +79,10 @@ class TabsRepository implements ITabsRepository {
   }
 
   @override
-  Future<DataFreshness> getTabsFreshness({required StoreType storeType}) =>
+  Future<DataFreshness> getTabsFreshness({required ProductKind productKind}) =>
       _freshnessForSyncKey(
         SyncKeys.tabsList(
-          storeTypeName: storeType.name,
+          storeTypeName: productKind.name,
           page: 1,
           pageSize: 100,
         ),

@@ -3,21 +3,15 @@ import 'package:google_play/features/product/presentation/viewmodels/ui_models/p
 
 class ProductCardMapper {
   const ProductCardMapper();
-  
+
   /// Маппинг параметров карточки
   ProductCardUiModel mapToProductCardUi(ProductState state) {
     final bool showPrice = state.isPaid && state.price.isNotEmpty;
-
-    final String mainTagText = showPrice
-        ? state.price
-        : state.rating > 0
-        ? state.rating.toStringAsFixed(1)
-        : '';
-
+    final String mainTagText = showPrice ? state.price : state.ratingAvgText;
     final String? mainTagIconPath = showPrice ? null : 'assets/icons/star.png';
 
     return ProductCardUiModel(
-      id: state.productId,
+      id: state.id,
       title: state.title,
       iconUrl: state.iconUrl,
       mainTagText: mainTagText,

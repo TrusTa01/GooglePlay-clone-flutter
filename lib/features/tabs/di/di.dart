@@ -34,7 +34,7 @@ DriftTabsLocalDataSource tabsLocalDataSource(Ref ref) {
 ITabsRepository tabsRepo(Ref ref) {
   final remote = tabsRemoteDataSource(ref);
   final local = tabsLocalDataSource(ref);
-  final policy = getPolicy();
+  final policy = freshnessPolicy();
   return TabsRepository(remote: remote, local: local, policy: policy);
 }
 

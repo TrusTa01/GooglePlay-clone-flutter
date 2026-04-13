@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/features/store/presentation/viewmodels/home_view_model.dart';
@@ -8,13 +8,13 @@ import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:google_play/core/presentation/screens/error_screen.dart';
 
 class StoreTabScreen extends HookConsumerWidget {
-  final StoreType storeType;
+  final ProductKind productKind;
   final ValueChanged<String>? onProductTap;
   final OnSeeAllTap? onSeeAllTap;
 
   const StoreTabScreen({
     super.key,
-    required this.storeType,
+    required this.productKind,
     this.onProductTap,
     this.onSeeAllTap,
   });
@@ -23,16 +23,16 @@ class StoreTabScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vsync = useSingleTickerProvider();
 
-    final tabsAsync = ref.watch(storeTabsProvider(storeType));
-    final homeProvider = ref.read(homeViewModelProvider(storeType).notifier);
-    final homeState = ref.watch(homeViewModelProvider(storeType));
+    final tabsAsync = ref.watch(storeTabsProvider(productKind));
+    final homeProvider = ref.read(homeViewModelProvider(productKind).notifier);
+    final homeState = ref.watch(homeViewModelProvider(productKind));
 
     return tabsAsync.when(
       loading: () => const Scaffold(body: AppLoadingIndicator()),
       error: (e, _) => Scaffold(
         body: ErrorScreen(
           message: context.l10n.failedToLoadTabs(e),
-          onRetry: () => ref.invalidate(storeTabsProvider(storeType)),
+          onRetry: () => ref.invalidate(storeTabsProvider(productKind)),
         ),
       ),
       data: (tabsData) {
@@ -78,12 +78,12 @@ class StoreTabScreen extends HookConsumerWidget {
                   (BuildContext context, bool innerBoxIsScrolled) {
                     final appBarSlivers = buildStoreAppBar(
                       context: context,
-                      type: storeType,
+                      type: productKind,
                       tabLabelKeys: tabLabels,
                       tabController: tabController,
                       tabs: tabs,
                       actionWidgets: buildStoreActionWidgets(
-                        type: storeType,
+                        type: productKind,
                         context: context,
                       ),
                     );
@@ -129,7 +129,7 @@ class StoreTabScreen extends HookConsumerWidget {
                           ResolvedSectionsView(
                             sectionState: sectionState,
                             isSliver: true,
-                            storageId: '${storeType.name}_$tabKey',
+                            storageId: '${productKind.name}_$tabKey',
                             onProductTap: onProductTap,
                             onSeeAllTap: onSeeAllTap,
                           ),

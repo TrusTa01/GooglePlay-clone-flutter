@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/l10n/gen/app_localizations.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/features/product/di/di.dart';
 import 'package:google_play/features/product/domain/use_cases/get_product_by_id_use_case.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/core/presentation/providers/locale_provider.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_state_mapper.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_view_model.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class ProductViewModel extends _$ProductViewModel {
-  late final GetProductsByIdUseCase _getProductByIdUseCase;
-
   @override
-  ProductState build(String productId) {
+  ProductState build((String productId, ProductKind productType) arg) {
     final locale = ref.watch(localeProvider);
-    _getProductByIdUseCase = ref.read(getProductByIdUseCaseProvider);
-    Future.microtask(() => loadById(productId, locale: locale));
+    final (id, type) = arg;
+
+    Future.microtask(() => loadById(id, type, locale: locale));
+
     return const ProductState(isLoading: true);
   }
 
   Future<void> loadById(
-    String id, {
+    String id,
+    ProductKind type, {
     Locale? locale,
     bool forceRefresh = false,
   }) async {
@@ -30,20 +33,19 @@ class ProductViewModel extends _$ProductViewModel {
         ref.read(localeProvider) ??
         WidgetsBinding.instance.platformDispatcher.locale;
     final l10n = lookupAppLocalizations(effectiveLocale);
+    final GetProductByIdUseCase useCase = getProductByIdUseCase(ref);
 
-    state = state.copyWith(isLoading: true, productId: id, errorMessage: null);
+    state = state.copyWith(isLoading: true, id: id, errorMessage: null);
 
-    final product = await _getProductByIdUseCase(
+    final product = await useCase(
       id: id,
+      type: type,
       locale: effectiveLocale.languageCode,
       forceRefresh: forceRefresh,
     );
 
     if (product == null) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: 'Product not found',
-      );
+      state = state.copyWith(isLoading: false, errorMessage: l10n.emptyNoData);
       return;
     }
 

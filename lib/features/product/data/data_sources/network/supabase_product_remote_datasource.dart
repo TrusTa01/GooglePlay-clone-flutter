@@ -1,5 +1,6 @@
 import 'package:google_play/core/data/network/sort_orders.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/result_pattern/failure.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/product/data/data_sources/network/i_products_remote_data_source.dart';
@@ -18,16 +19,16 @@ class SupabaseProductRemoteDataSource implements IProductsRemoteDataSource {
 
   @override
   Future<Result<List<ProductDto>>> getProducts({
-    required String type,
+    required ProductKind type,
     required int page,
     int pageSize = 20,
   }) {
-    final view = NetworkProductsViewsNames.getViewName(type);
+    final view = NetworkProductsViewsNames.getViewName(type.name);
     final order = SortOrders.releaseDateDesc;
 
     if (view == null) {
       return Result.asFuture(
-        Result.failure(failure: UnsupportedFailure(type: type)),
+        Result.failure(failure: UnsupportedFailure(type: type.name)),
       );
     }
 
@@ -43,13 +44,13 @@ class SupabaseProductRemoteDataSource implements IProductsRemoteDataSource {
   @override
   Future<Result<ProductDto?>> getProductById({
     required String id,
-    required String type,
+    required ProductKind type,
   }) {
-    final view = NetworkProductsViewsNames.getViewName(type);
+    final view = NetworkProductsViewsNames.getViewName(type.name);
 
     return view == null
         ? Result.asFuture(
-            Result.failure(failure: UnsupportedFailure(type: type)),
+            Result.failure(failure: UnsupportedFailure(type: type.name)),
           )
         : _datasource.getProductById(
             view: view,

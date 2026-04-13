@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/presentation/screens/error_screen.dart';
 import 'package:google_play/features/events/presentation/viewmodels/product_event_state.dart';
 import 'package:google_play/features/events/presentation/viewmodels/product_event_view_model.dart';
@@ -12,19 +12,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductEventScreen extends ConsumerWidget {
   final String eventId;
-  final StoreType storeType;
+  final ProductKind productKind;
   final ValueChanged<String>? onProductTap;
 
   const ProductEventScreen({
     super.key,
     required this.eventId,
-    required this.storeType,
+    required this.productKind,
     this.onProductTap,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(productEventViewModelProvider(eventId, storeType));
+    final state = ref.watch(productEventViewModelProvider(eventId, productKind));
 
     return Scaffold(
       body: SafeArea(
@@ -33,7 +33,7 @@ class ProductEventScreen extends ConsumerWidget {
           (_, true) => ErrorScreen(
             message: context.l10n.productNotFound,
             onRetry: () => ref.invalidate(
-              productEventViewModelProvider(eventId, storeType),
+              productEventViewModelProvider(eventId, productKind),
             ),
           ),
           _ => _buildContent(context, state),

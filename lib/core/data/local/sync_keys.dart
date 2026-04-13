@@ -1,9 +1,11 @@
+import 'package:google_play/core/domain/entities/product_kind.dart';
+
 /// Стабильные строковые ключи для [ILocalSyncState] (кеш / политика свежести)
 abstract final class SyncKeys {
   const SyncKeys._();
 
   static String productListPage({
-    required String type,
+    required ProductKind type,
     required int page,
     required int pageSize,
   }) => 'products:$type:page=$page:size=$pageSize';
@@ -11,7 +13,7 @@ abstract final class SyncKeys {
   static String productItem(String id) => 'product:$id';
 
   static String bannerListPage({
-    required String type,
+    required ProductKind type,
     required int page,
     required int pageSize,
   }) => 'banners:$type:page=$page:size=$pageSize';
@@ -19,13 +21,13 @@ abstract final class SyncKeys {
   static String bannerItem(String id) => 'banner:$id';
 
   static String sectionsList({
-    required String storeTypeName,
+    required ProductKind storeTypeName,
     required int page,
     required int pageSize,
   }) => 'sections:$storeTypeName:page=$page:size=$pageSize';
 
   static String tabsList({
-    required String storeTypeName,
+    required ProductKind storeTypeName,
     required int page,
     required int pageSize,
   }) => 'tabs:$storeTypeName:page=$page:size=$pageSize';

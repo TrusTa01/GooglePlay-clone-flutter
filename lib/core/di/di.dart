@@ -17,7 +17,10 @@ SupabaseQueryExecutor queryExecutor(Ref ref) {
 }
 
 @riverpod
-FreshnessPolicy getPolicy() => TimeBasedFreshnessPolicy(
+FreshnessPolicy freshnessPolicy() => TimeBasedFreshnessPolicy(
   staleDuration: CacheConstants.staleDuration,
   expireDuration: CacheConstants.expireDuration,
 );
+
+@riverpod
+ExponentialFetchBackoff fetchBackoffPolicy() => const ExponentialFetchBackoff();

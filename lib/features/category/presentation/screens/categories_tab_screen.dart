@@ -2,30 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
 
 class CategoriesTabScreen extends StatelessWidget {
   final List<ProductCategoriesData> categories;
-  final StoreType storeType;
+  final ProductKind productKind;
   final bool isSliver;
   final ValueChanged<String>? onCategoryTap;
 
   const CategoriesTabScreen({
     super.key,
     required this.categories,
-    required this.storeType,
+    required this.productKind,
     this.isSliver = false,
     this.onCategoryTap,
   });
 
   static Widget asSliver({
     required List<ProductCategoriesData> categories,
-    required StoreType storeType,
+    required ProductKind productKind,
   }) {
     return CategoriesTabScreen(
       categories: categories,
-      storeType: storeType,
+      productKind: productKind,
       isSliver: true,
     );
   }

@@ -1,16 +1,17 @@
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/repositories/i_products_repository.dart';
 
-abstract interface class GetProductsByIdUseCase {
+abstract interface class GetProductByIdUseCase {
   Future<ProductEntity?> call({
     required String id,
-    required String type,
+    required ProductKind type,
     required String locale,
     bool forceRefresh = false,
   });
 }
 
-final class GetProductByIdUseCaseImpl implements GetProductsByIdUseCase {
+final class GetProductByIdUseCaseImpl implements GetProductByIdUseCase {
   final IProductsRepository _repository;
 
   const GetProductByIdUseCaseImpl(this._repository);
@@ -18,7 +19,7 @@ final class GetProductByIdUseCaseImpl implements GetProductsByIdUseCase {
   @override
   Future<ProductEntity?> call({
     required String id,
-    required String type,
+    required ProductKind type,
     required String locale,
     bool forceRefresh = false,
   }) => _repository.getProductById(

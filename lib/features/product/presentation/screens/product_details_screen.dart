@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/features/product/presentation/screens/utils/product_app_bar_leading.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_view_model.dart';
 import 'package:google_play/core/presentation/widgets/components/app_bars/simple_app_bar.dart';
-import 'package:google_play/core/presentation/widgets/product_widgets/elements/product_card_components.dart';
+import 'package:google_play/features/product/presentation/widgets/elements/product_card_components.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductDetailsScreen extends ConsumerWidget {
   final String productId;
+  final ProductKind productType;
   final VoidCallback? onPermissionsTap;
 
   const ProductDetailsScreen({
     super.key,
     required this.productId,
+    required this.productType,
     this.onPermissionsTap,
   });
 
@@ -26,7 +29,7 @@ class ProductDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(productViewModelProvider(productId));
+    final state = ref.watch(productViewModelProvider((productId, productType)));
 
     return Scaffold(
       body: Center(

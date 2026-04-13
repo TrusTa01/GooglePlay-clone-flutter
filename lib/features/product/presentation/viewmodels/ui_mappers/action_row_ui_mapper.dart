@@ -6,7 +6,7 @@ class ActionRowUiMapper {
 
   ActionRowUiModel fromStateGrid(ProductState state) {
     return ActionRowUiModel(
-      id: state.productId,
+      id: state.id,
       title: state.title,
       creator: state.creator,
       ageLabel: state.ageRating ?? '',
@@ -18,7 +18,7 @@ class ActionRowUiMapper {
       thumbnailCacheWidth: state.smallCacheWidth,
       thumbnailCacheHeight: state.smallCacheHeight,
       thumbnailFit: state.thumbnailFit,
-      ratingText: state.rating.toStringAsFixed(1),
+      ratingText: state.ratingAvgText,
       technicalInfoText: state.technicalInfoFormatted,
       eventText: state.eventText,
       priceText: state.price.isNotEmpty ? state.price : null,
@@ -31,7 +31,7 @@ class ActionRowUiMapper {
 
   ActionRowUiModel fromStatePreview(ProductState state) {
     return ActionRowUiModel(
-      id: state.productId,
+      id: state.id,
       title: state.title,
       creator: state.creator,
       ageLabel: state.ageRating ?? '',
@@ -43,7 +43,7 @@ class ActionRowUiMapper {
       thumbnailCacheWidth: state.smallCacheWidth,
       thumbnailCacheHeight: state.smallCacheHeight,
       thumbnailFit: state.thumbnailFit,
-      ratingText: state.rating.toStringAsFixed(1),
+      ratingText: state.ratingAvgText,
       technicalInfoText: state.technicalInfoFormatted,
       eventText: state.eventText,
       priceText: state.price.isNotEmpty ? state.price : null,

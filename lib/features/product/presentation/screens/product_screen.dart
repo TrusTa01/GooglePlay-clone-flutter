@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/constants/link_constants.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_support_ui_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_view_model.dart';
 import 'package:google_play/features/product/presentation/screens/product_page_sections/product_page_sections.dart';
 import 'package:google_play/features/product/presentation/screens/product_screen_tags.dart';
@@ -11,17 +13,20 @@ import 'package:google_play/core/presentation/widgets/components/popups/product_
 // Экран страницы продукта
 class ProductPageScreen extends StatelessWidget {
   final String productId;
+  final ProductKind productType;
   final VoidCallback? onAboutAuthorTap;
 
   const ProductPageScreen({
     super.key,
     required this.productId,
+    required this.productType,
     this.onAboutAuthorTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return _ProductPageContent(
+      productType: productType,
       productId: productId,
       onAboutAuthorTap: onAboutAuthorTap,
     );
@@ -30,14 +35,18 @@ class ProductPageScreen extends StatelessWidget {
 
 class _ProductPageContent extends ConsumerWidget {
   final String productId;
+  final ProductKind productType;
   final VoidCallback? onAboutAuthorTap;
 
-  const _ProductPageContent({required this.productId, this.onAboutAuthorTap});
+  const _ProductPageContent({
+    required this.productId,
+    required this.productType,
+    this.onAboutAuthorTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Читаем текущее состояние деталей продукта
-    final ProductState state = ref.watch(productViewModelProvider(productId));
+    final state = ref.watch(productViewModelProvider((productId, productType)));
 
     return Scaffold(
       body: Center(
@@ -84,7 +93,7 @@ class _ProductPageContent extends ConsumerWidget {
                                 child: ProductTags(
                                   tags: state.tags,
                                   onTap: () {
-                                    // TODO: [db] queryService.getProductsByTag
+                                    // TODO: [db] getProductsByTag
                                   },
                                 ),
                               ),
@@ -110,8 +119,8 @@ class _ProductPageContent extends ConsumerWidget {
                           onProductTap: (value) {},
                           sectionTitle: state.title,
                           similarProducts:
-                              const [], // TODO: [db] queryService.getSimilarProducts
-                          link: 'https://support.google.com/',
+                              const [], // TODO: [db] getSimilarProducts
+                          link: LinkConstants.supportLink,
                         ),
                       ),
                     ],

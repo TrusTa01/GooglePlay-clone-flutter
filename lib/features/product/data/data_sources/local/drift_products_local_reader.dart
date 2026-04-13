@@ -6,13 +6,13 @@ final class _ProductLocalReader {
   const _ProductLocalReader(this._db);
 
   Future<List<LocalProductBundle>> getProducts({
-    required String type,
+    required ProductKind type,
     required int page,
     required int pageSize,
   }) async {
     final products =
         await (_db.select(_db.cachedProduct)
-              ..where((t) => t.type.equals(type))
+              ..where((t) => t.type.equals(type.name))
               ..orderBy([(t) => OrderingTerm.desc(t.releaseDate)]))
             .withPagination(page, pageSize)
             .get();
@@ -21,13 +21,13 @@ final class _ProductLocalReader {
   }
 
   Stream<List<LocalProductBundle>> watchProducts({
-    required String type,
+    required ProductKind type,
     required int page,
     required int pageSize,
   }) {
     final query =
         (_db.select(_db.cachedProduct)
-              ..where((t) => t.type.equals(type))
+              ..where((t) => t.type.equals(type.name))
               ..orderBy([(t) => OrderingTerm.desc(t.releaseDate)]))
             .withPagination(page, pageSize)
             .watch();

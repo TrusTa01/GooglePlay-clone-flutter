@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/constants/constants.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_card_ui_model.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
-import 'package:google_play/core/presentation/widgets/product_widgets/configs/carousel_layout_config.dart';
+import 'package:google_play/features/product/presentation/widgets/configs/carousel_layout_config.dart';
 
 class ProductCarousel extends HookWidget {
   final String title;

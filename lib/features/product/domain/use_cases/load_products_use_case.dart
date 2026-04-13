@@ -1,9 +1,10 @@
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/features/product/domain/repositories/i_products_repository.dart';
 
 abstract interface class LoadProductsUseCase {
   Future<List<ProductEntity>> call({
-    required String type,
+    required ProductKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
@@ -18,7 +19,7 @@ final class LoadProductsUseCaseImpl implements LoadProductsUseCase {
 
   @override
   Future<List<ProductEntity>> call({
-    required String type,
+    required ProductKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,

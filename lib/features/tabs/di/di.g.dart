@@ -195,7 +195,7 @@ final class TabsRepoProvider
   }
 }
 
-String _$tabsRepoHash() => r'7b9be2f09584d2afa5dc8556f4d4f9fe02ed1e36';
+String _$tabsRepoHash() => r'69748821be3a59642e1640c9a83abb00c44d1b9b';
 
 @ProviderFor(getTabsUseCase)
 final getTabsUseCaseProvider = GetTabsUseCaseProvider._();

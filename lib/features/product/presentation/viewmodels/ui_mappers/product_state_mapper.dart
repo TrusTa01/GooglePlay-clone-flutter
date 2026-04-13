@@ -7,6 +7,7 @@ import 'package:google_play/features/product/domain/entities/product_entity.dart
 import 'package:google_play/features/product/domain/entities/software_entity.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_ui_models.dart';
 
 /// Собирает [ProductState] из [ProductEntity]
 /// Вся логика ветвления по типу продукта (book/app/game) сосредоточена здесь
@@ -29,6 +30,9 @@ class ProductStateMapper {
       locale,
       l10n,
     );
+
+    final ratingAvgText = product.ratingAvg.toStringAsFixed(1);
+
     final technicalInfoFormatted = book != null
         ? '${book.pageCount} ${l10n.pagesShort}'
         : (software != null ? '${software.size} ${l10n.unitMb}' : '');
@@ -62,7 +66,7 @@ class ProductStateMapper {
       aboutSectionTitle = l10n.aboutApp;
     } else if (product is BookEntity) {
       final format = product.format.toLowerCase();
-      final bookType = format.contains('аудио')
+      final bookType = format.contains('audiobook')
           ? l10n.formatAudiobook
           : l10n.formatEbook;
       descriptionSectionTitle = l10n.aboutBookType(bookType);
@@ -113,14 +117,17 @@ class ProductStateMapper {
     final containsPaidContent = software?.containsPaidContent ?? false;
     final eventText = software?.eventText;
 
-    // Описание автора (для книг)
-    final creatorDescription = book?.creatorDescription;
+    final creatorDescription = product.creatorDescription.trim().isEmpty
+        ? null
+        : product.creatorDescription;
 
     // Permissions & Tags
     final version = software?.version ?? '';
     final permissions = software?.permissions ?? const <String>[];
     final tags = product.tags;
     final showTags = tags.isNotEmpty;
+    final categories = product.categories;
+    final showCategories = categories.isNotEmpty;
 
     // Info rows
     final infoRows = _buildInfoRows(product, l10n, locale, book, software);
@@ -134,7 +141,9 @@ class ProductStateMapper {
     );
 
     return ProductState(
-      productId: product.id,
+      id: product.id,
+      type: product.type,
+      currencyCode: product.currencyCode,
       title: product.title,
       creator: product.creator,
       creatorDescription: creatorDescription,
@@ -143,7 +152,10 @@ class ProductStateMapper {
       description: product.description,
       url: product.url,
       price: priceFormatted,
-      rating: product.rating,
+      ratingAvgText: ratingAvgText,
+      ratingDistribution: product.ratingDistribution,
+      topReviews: product.topReviews,
+      reviewsCountRaw: product.reviewsCount,
       reviewsCount: reviewsCountStr,
       technicalInfo: product.technicalInfo,
       technicalInfoFormatted: technicalInfoFormatted,
@@ -183,8 +195,28 @@ class ProductStateMapper {
       showAds: showAds,
       showAchievements: showAchievements,
       containsPaidContent: containsPaidContent,
+      categories: categories,
+      showCategories: showCategories,
       tags: tags,
       showTags: showTags,
+      screenshots: software?.screenshots ?? const <String>[],
+      supportedLanguages: software?.supportedLanguages ?? const <String>[],
+      isKidsFriendly: software?.isKidsFriendly ?? false,
+      packageName: product is AppEntity ? product.packageName : '',
+      achievements: game?.achievements ?? const <String>[],
+      isOnline: game?.isOnline,
+      hasMultiplayer: game?.hasMultiplayer,
+      gameModes: game?.gameModes,
+      hasControllerSupport: game?.hasControllerSupport,
+      audioDuration: book?.audioDuration,
+      narrator: book?.narrator,
+      isSeries: book?.isSeries ?? false,
+      seriesName: book?.seriesName,
+      seriesNumber: book?.seriesNumber,
+      sampleAvailable: book?.sampleAvailable ?? false,
+      isAbridged: book?.isAbridged ?? false,
+      publicationDate: book?.publicationDate,
+      awards: book?.awards ?? const <String>[],
       infoRows: infoRows,
       supportSectionType: supportSectionType,
       supportItems: supportItems,
@@ -203,7 +235,7 @@ class ProductStateMapper {
     );
   }
 
-  List<InfoRowData> _buildInfoRows(
+  List<SupportInfoRowData> _buildInfoRows(
     ProductEntity product,
     AppLocalizations l10n,
     Locale locale,
@@ -212,16 +244,22 @@ class ProductStateMapper {
   ) {
     if (book != null) {
       return [
-        InfoRowData(label: l10n.labelAuthor, value: product.creator),
-        InfoRowData(label: l10n.labelPublisher, value: book.publisher),
-        InfoRowData(
+        SupportInfoRowData(label: l10n.labelAuthor, value: product.creator),
+        SupportInfoRowData(label: l10n.labelPublisher, value: book.publisher),
+        SupportInfoRowData(
           label: l10n.labelPublishDate,
           value: DataFormatter.formatDate(product.releaseDate, locale),
         ),
-        InfoRowData(label: l10n.labelPages, value: book.pageCount.toString()),
-        InfoRowData(label: l10n.labelLanguage, value: book.language),
-        InfoRowData(label: l10n.labelFormat, value: book.format),
-        InfoRowData(label: l10n.labelGenres, value: book.genres.join(', ')),
+        SupportInfoRowData(
+          label: l10n.labelPages,
+          value: book.pageCount.toString(),
+        ),
+        SupportInfoRowData(label: l10n.labelLanguage, value: book.language),
+        SupportInfoRowData(label: l10n.labelFormat, value: book.format),
+        SupportInfoRowData(
+          label: l10n.labelGenres,
+          value: book.genres.join(', '),
+        ),
       ];
     }
     if (software != null) {
@@ -236,13 +274,16 @@ class ProductStateMapper {
       );
       final technicalFormatted = '${software.size} ${l10n.unitMb}';
       return [
-        InfoRowData(label: l10n.labelVersion, value: software.version),
-        InfoRowData(label: l10n.labelLastUpdate, value: lastUpdatedStr),
-        InfoRowData(label: l10n.labelDownloads, value: downloadCountFull),
-        InfoRowData(label: l10n.labelSize, value: technicalFormatted),
-        InfoRowData(label: l10n.labelDeveloper, value: product.creator),
-        InfoRowData(label: l10n.labelReleaseDate, value: releaseStr),
-        InfoRowData(
+        SupportInfoRowData(label: l10n.labelVersion, value: software.version),
+        SupportInfoRowData(label: l10n.labelLastUpdate, value: lastUpdatedStr),
+        SupportInfoRowData(
+          label: l10n.labelDownloads,
+          value: downloadCountFull,
+        ),
+        SupportInfoRowData(label: l10n.labelSize, value: technicalFormatted),
+        SupportInfoRowData(label: l10n.labelDeveloper, value: product.creator),
+        SupportInfoRowData(label: l10n.labelReleaseDate, value: releaseStr),
+        SupportInfoRowData(
           label: l10n.labelPermissions,
           value: l10n.labelMore,
           hasTextButton: true,

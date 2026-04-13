@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/sections/presentation/widgets/section_widget_builder.dart';
 import 'package:google_play/features/store/presentation/screens/store_tab_screen.dart';
 
@@ -12,7 +12,7 @@ class AppsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreTabScreen(
-      storeType: StoreType.apps,
+      productKind: ProductKind.apps,
       onProductTap: onProductTap,
       onSeeAllTap: onSeeAllTap,
     );

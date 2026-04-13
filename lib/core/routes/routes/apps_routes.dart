@@ -22,7 +22,7 @@ class AppsProductRoute extends GoRouteData with $AppsProductRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ProductPageScreen(productId: productId);
+      ProductPageScreen(productType: 'app', productId: productId);
 }
 
 class AppsProductDetailsRoute extends GoRouteData
@@ -34,6 +34,7 @@ class AppsProductDetailsRoute extends GoRouteData
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       ProductDetailsScreen(
+        productType: 'app',
         productId: productId,
         onPermissionsTap: () =>
             AppsProductPermissionsRoute(productId: productId).go(context),
@@ -48,7 +49,7 @@ class AppsProductPermissionsRoute extends GoRouteData
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ProductPermissionsScreen(productId: productId);
+      ProductPermissionsScreen(productType: 'app', productId: productId);
 }
 
 class AppsEventRoute extends GoRouteData with $AppsEventRoute {
@@ -59,7 +60,7 @@ class AppsEventRoute extends GoRouteData with $AppsEventRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => ProductEventScreen(
     eventId: eventId,
-    storeType: StoreType.apps,
+    productKind: ProductKind.apps,
     onProductTap: (productId) =>
         AppsProductRoute(productId: productId).push(context),
   );
@@ -74,7 +75,7 @@ class AppsCategoryRoute extends GoRouteData with $AppsCategoryRoute {
   Widget build(BuildContext context, GoRouterState state) =>
       CategoriesTabOverviewScreen(
         categoryKey: categoryKey,
-        storeType: StoreType.apps,
+        productKind: ProductKind.apps,
         onProductTap: (productId) =>
             AppsProductRoute(productId: productId).push(context),
       );
@@ -84,14 +85,11 @@ class AppsSectionMoreRoute extends GoRouteData with $AppsSectionMoreRoute {
   final String categoryKey;
   final String title;
 
-  const AppsSectionMoreRoute({
-    required this.categoryKey,
-    required this.title,
-  });
+  const AppsSectionMoreRoute({required this.categoryKey, required this.title});
 
   @override
   Widget build(BuildContext context, GoRouterState state) => SectionMoreScreen(
-    storeType: StoreType.apps,
+    productKind: ProductKind.apps,
     categoryKey: categoryKey,
     title: title,
     onProductTap: (productId) =>

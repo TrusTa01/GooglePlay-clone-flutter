@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/presentation/providers/locale_provider.dart';
 import 'package:google_play/features/sections/domain/use_cases/get_sections_use_case.dart';
 import 'package:google_play/features/store/presentation/viewmodels/home_state.dart';
@@ -15,7 +15,7 @@ class HomeViewModel extends _$HomeViewModel {
   late final _getTabSectionsUseCase = ref.watch(getTabsUsecaseProvider);
 
   @override
-  HomeState build(StoreType storeType) {
+  HomeState build(ProductKind productKind) {
     ref.listen(localeProvider, (_, _) {
       loadProducts();
       final tabs = state.sectionsByTab.keys.toList(growable: false);
@@ -33,7 +33,7 @@ class HomeViewModel extends _$HomeViewModel {
 
     try {
       final products = await _loadProductsUseCase(
-        type: storeType.name,
+        type: productKind.name,
         locale: locale.languageCode,
       );
       state = state.copyWith(isLoading: false, products: products);
@@ -57,13 +57,13 @@ class HomeViewModel extends _$HomeViewModel {
       final locale =
           ref.read(localeProvider) ?? PlatformDispatcher.instance.locale;
       final sections = await _getTabSectionsUseCase(
-        storeType: storeType,
+        productKind: productKind,
         tabKey: tabKey,
       );
 
       final resolvedSections = await Future.wait(
         sections.map(
-          (s) => _resolveSectionUsecase(s, storeType.name, locale.languageCode),
+          (s) => _resolveSectionUsecase(s, productKind.name, locale.languageCode),
         ),
       );
 

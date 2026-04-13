@@ -1,5 +1,5 @@
 import 'package:google_play/core/data/local/sync_keys.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
@@ -24,7 +24,7 @@ class SectionsRepository implements ISectionsRepository {
 
   @override
   Future<List<SectionEntity>> getSections({
-    required StoreType storeType,
+    required ProductKind productKind,
     required String tabId,
     required String locale,
     int page = 1,
@@ -34,13 +34,13 @@ class SectionsRepository implements ISectionsRepository {
     if (forceRefresh ||
         await _needsSync(
           syncKey: SyncKeys.sectionsList(
-            storeTypeName: storeType.name,
+            storeTypeName: productKind.name,
             page: page,
             pageSize: pageSize,
           ),
         )) {
       await _refreshSections(
-        storeType: storeType,
+        productKind: productKind,
         page: page,
         pageSize: pageSize,
       );
@@ -54,13 +54,13 @@ class SectionsRepository implements ISectionsRepository {
   }
 
   Future<void> _refreshSections({
-    required StoreType storeType,
+    required ProductKind productKind,
     int page = 1,
     int pageSize = 200,
   }) async {
     final result = await _remote.getSections(page: page, pageSize: pageSize);
     final syncKey = SyncKeys.sectionsList(
-      storeTypeName: storeType.name,
+      storeTypeName: productKind.name,
       page: page,
       pageSize: pageSize,
     );
@@ -90,11 +90,11 @@ class SectionsRepository implements ISectionsRepository {
 
   @override
   Future<DataFreshness> getSectionsFreshness({
-    required StoreType storeType,
+    required ProductKind productKind,
     required String tabKey,
   }) => _freshnessForSyncKey(
     SyncKeys.sectionsList(
-      storeTypeName: storeType.name,
+      storeTypeName: productKind.name,
       page: 1,
       pageSize: 200,
     ),

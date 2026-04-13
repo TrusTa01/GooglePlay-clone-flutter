@@ -97,26 +97,26 @@ final class QueryExecutorProvider
 
 String _$queryExecutorHash() => r'6429206c566a6aec56d61ba2ebefc05dd12184e4';
 
-@ProviderFor(getPolicy)
-final getPolicyProvider = GetPolicyProvider._();
+@ProviderFor(freshnessPolicy)
+final freshnessPolicyProvider = FreshnessPolicyProvider._();
 
-final class GetPolicyProvider
+final class FreshnessPolicyProvider
     extends
         $FunctionalProvider<FreshnessPolicy, FreshnessPolicy, FreshnessPolicy>
     with $Provider<FreshnessPolicy> {
-  GetPolicyProvider._()
+  FreshnessPolicyProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'getPolicyProvider',
+        name: r'freshnessPolicyProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$getPolicyHash();
+  String debugGetCreateSourceHash() => _$freshnessPolicyHash();
 
   @$internal
   @override
@@ -125,7 +125,7 @@ final class GetPolicyProvider
 
   @override
   FreshnessPolicy create(Ref ref) {
-    return getPolicy(ref);
+    return freshnessPolicy(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -137,4 +137,52 @@ final class GetPolicyProvider
   }
 }
 
-String _$getPolicyHash() => r'c0346125c061185d8e54f362aaa0af3e6cd2ade9';
+String _$freshnessPolicyHash() => r'c79a37f31d8bc8a3e31573d9a61e2e1d97273eb2';
+
+@ProviderFor(fetchBackoffPolicy)
+final fetchBackoffPolicyProvider = FetchBackoffPolicyProvider._();
+
+final class FetchBackoffPolicyProvider
+    extends
+        $FunctionalProvider<
+          ExponentialFetchBackoff,
+          ExponentialFetchBackoff,
+          ExponentialFetchBackoff
+        >
+    with $Provider<ExponentialFetchBackoff> {
+  FetchBackoffPolicyProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'fetchBackoffPolicyProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$fetchBackoffPolicyHash();
+
+  @$internal
+  @override
+  $ProviderElement<ExponentialFetchBackoff> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ExponentialFetchBackoff create(Ref ref) {
+    return fetchBackoffPolicy(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ExponentialFetchBackoff value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ExponentialFetchBackoff>(value),
+    );
+  }
+}
+
+String _$fetchBackoffPolicyHash() =>
+    r'405ebf35e4ed45fb35a22f42f3aaf3773ea7e1fe';
