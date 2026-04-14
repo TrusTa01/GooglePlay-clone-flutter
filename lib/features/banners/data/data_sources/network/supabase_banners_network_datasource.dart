@@ -17,7 +17,7 @@ class SupabaseBannerNetworkDataSource
     required ({String column, bool ascending}) order,
     required int page,
     int pageSize = 20,
-  }) => getContent(
+  }) => getData(
     view: view.name,
     schemaName: schemaName,
     order: order,
@@ -29,5 +29,5 @@ class SupabaseBannerNetworkDataSource
     required NetworkBannersViewsNames view,
     required String id,
     SchemaNamesEnum schemaName = SchemaNamesEnum.views,
-  }) => getContentById(view: view.name, id: id, schemaName: schemaName);
+  }) => getDataById(view: view.name, id: id, schemaName: schemaName);
 }

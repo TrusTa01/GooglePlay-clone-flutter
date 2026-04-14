@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/presentation/screens/error_screen.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';

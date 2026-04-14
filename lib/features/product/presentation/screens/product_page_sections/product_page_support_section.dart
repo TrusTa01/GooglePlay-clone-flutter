@@ -59,7 +59,7 @@ class ProductPageSupportSection extends StatelessWidget {
     switch (item.type) {
       case SupportItemDataType.link:
         final icon = item.iconCodePoint != null
-            ? IconData(item.iconCodePoint!, fontFamily: 'MaterialIcons')
+            ? IconData(item.iconCodePoint!)
             : null;
         return SupportItem.link(
           icon: icon,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/product/di/di.dart';
 import 'package:google_play/features/product/domain/use_cases/get_product_by_id_use_case.dart';
+import 'package:google_play/features/product/domain/use_cases/get_similar_products_use_case.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/entity_to_card_mapper.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/core/presentation/providers/locale_provider.dart';
@@ -33,11 +35,13 @@ class ProductViewModel extends _$ProductViewModel {
         ref.read(localeProvider) ??
         WidgetsBinding.instance.platformDispatcher.locale;
     final l10n = lookupAppLocalizations(effectiveLocale);
-    final GetProductByIdUseCase useCase = getProductByIdUseCase(ref);
+    final GetProductByIdUseCase getProductById = getProductByIdUseCase(ref);
+    final GetSimilarProductsUseCase getSimilarProducts =
+        getSimilarProductsUseCase(ref);
 
     state = state.copyWith(isLoading: true, id: id, errorMessage: null);
 
-    final product = await useCase(
+    final product = await getProductById(
       id: id,
       type: type,
       locale: effectiveLocale.languageCode,
@@ -49,11 +53,23 @@ class ProductViewModel extends _$ProductViewModel {
       return;
     }
 
-    state = const ProductStateMapper().fromEntity(
+    final similarProduct = await getSimilarProducts(
+      product: product,
+      type: type,
+      locale: effectiveLocale.languageCode,
+      pageSize: 10,
+    );
+
+    final baseState = const ProductStateMapper().fromEntity(
       product,
       l10n,
       effectiveLocale,
     );
+    final cards = similarProduct
+        .map((e) => mapEntityToCard(e, l10n, effectiveLocale))
+        .toList();
+
+    state = baseState.copyWith(isLoading: false, similarProducts: cards);
   }
 
   void clear() => state = const ProductState();

@@ -43,6 +43,15 @@ abstract interface class IProductsRepository {
     int pageSize = 20,
   });
 
+  Future<List<ProductEntity>> getSimilarProducts({
+    required ProductEntity product,
+    required ProductKind type,
+    required String locale,
+    int page = 1,
+    int pageSize = 20,
+    bool forceRefresh = false,
+  });
+
   Future<DataFreshness> getProductsFreshness({required ProductKind type});
 
   Future<DataFreshness> getProductFreshness(String id);

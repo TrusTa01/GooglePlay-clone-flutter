@@ -22,7 +22,7 @@ class AppsProductRoute extends GoRouteData with $AppsProductRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ProductPageScreen(productType: 'app', productId: productId);
+      ProductPageScreen(productType: ProductKind.app, productId: productId);
 }
 
 class AppsProductDetailsRoute extends GoRouteData
@@ -34,7 +34,7 @@ class AppsProductDetailsRoute extends GoRouteData
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       ProductDetailsScreen(
-        productType: 'app',
+        productType: ProductKind.app,
         productId: productId,
         onPermissionsTap: () =>
             AppsProductPermissionsRoute(productId: productId).go(context),
@@ -49,7 +49,10 @@ class AppsProductPermissionsRoute extends GoRouteData
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ProductPermissionsScreen(productType: 'app', productId: productId);
+      ProductPermissionsScreen(
+        productType: ProductKind.app,
+        productId: productId,
+      );
 }
 
 class AppsEventRoute extends GoRouteData with $AppsEventRoute {
@@ -60,7 +63,7 @@ class AppsEventRoute extends GoRouteData with $AppsEventRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => ProductEventScreen(
     eventId: eventId,
-    productKind: ProductKind.apps,
+    productKind: ProductKind.app,
     onProductTap: (productId) =>
         AppsProductRoute(productId: productId).push(context),
   );
@@ -75,7 +78,7 @@ class AppsCategoryRoute extends GoRouteData with $AppsCategoryRoute {
   Widget build(BuildContext context, GoRouterState state) =>
       CategoriesTabOverviewScreen(
         categoryKey: categoryKey,
-        productKind: ProductKind.apps,
+        productKind: ProductKind.app,
         onProductTap: (productId) =>
             AppsProductRoute(productId: productId).push(context),
       );
@@ -89,7 +92,7 @@ class AppsSectionMoreRoute extends GoRouteData with $AppsSectionMoreRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => SectionMoreScreen(
-    productKind: ProductKind.apps,
+    productKind: ProductKind.app,
     categoryKey: categoryKey,
     title: title,
     onProductTap: (productId) =>

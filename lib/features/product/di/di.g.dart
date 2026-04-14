@@ -202,7 +202,7 @@ final class ProductsRepoProvider
   }
 }
 
-String _$productsRepoHash() => r'8c90e937e10e0b5f1d9d050d27b670f59972f0c7';
+String _$productsRepoHash() => r'bbcc2826907cad8578305c9fb6b744b5a353d333';
 
 @ProviderFor(loadProductsUseCase)
 final loadProductsUseCaseProvider = LoadProductsUseCaseProvider._();
@@ -447,6 +447,54 @@ final class GetProductByIdUseCaseProvider
 
 String _$getProductByIdUseCaseHash() =>
     r'e725ff0301d54b2f3a82af375cc2ff7ba103d215';
+
+@ProviderFor(getSimilarProductsUseCase)
+final getSimilarProductsUseCaseProvider = GetSimilarProductsUseCaseProvider._();
+
+final class GetSimilarProductsUseCaseProvider
+    extends
+        $FunctionalProvider<
+          GetSimilarProductsUseCase,
+          GetSimilarProductsUseCase,
+          GetSimilarProductsUseCase
+        >
+    with $Provider<GetSimilarProductsUseCase> {
+  GetSimilarProductsUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getSimilarProductsUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getSimilarProductsUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<GetSimilarProductsUseCase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  GetSimilarProductsUseCase create(Ref ref) {
+    return getSimilarProductsUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(GetSimilarProductsUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<GetSimilarProductsUseCase>(value),
+    );
+  }
+}
+
+String _$getSimilarProductsUseCaseHash() =>
+    r'ad720dfe13d522c5377eeca4fbf5d69bbac059f5';
 
 @ProviderFor(getProductFreshnessUseCase)
 final getProductFreshnessUseCaseProvider =

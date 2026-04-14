@@ -3,14 +3,14 @@ import 'package:google_play/core/constants/global_constants.dart';
 
 class ProductTag extends StatelessWidget {
   final String tag;
-  final VoidCallback onTap;
+  final ValueChanged<String> onTap;
 
   const ProductTag({super.key, required this.onTap, required this.tag});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () => onTap(tag),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
@@ -34,7 +34,7 @@ class ProductTag extends StatelessWidget {
 
 class ProductTags extends StatelessWidget {
   final List<String> tags;
-  final VoidCallback onTap;
+  final ValueChanged<String> onTap;
 
   const ProductTags({super.key, required this.tags, required this.onTap});
 

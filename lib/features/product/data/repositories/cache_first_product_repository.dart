@@ -6,6 +6,7 @@ import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/product/data/data_sources/local/i_products_local_datasource.dart';
 import 'package:google_play/features/product/data/mappers/local/local_product_bundle_mapper.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
+import 'package:google_play/features/product/domain/entities/book_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/core/domain/entities/filters.dart';
 import 'package:google_play/features/product/data/data_sources/network/i_products_remote_data_source.dart';
@@ -13,17 +14,20 @@ import 'package:google_play/features/product/domain/entities/software_entity.dar
 import 'package:google_play/features/product/domain/repositories/i_products_repository.dart';
 
 class CacheFirstProductRepository implements IProductsRepository {
-  final IProductsRemoteDataSource _remoteDataSource;
+  final IProductsRemoteDataSource _remote;
   final IProductsLocalDataSource _local;
   final FreshnessPolicy _freshnessPolicy;
+  final FetchBackoffPolicy _fetchBackoffPolicy;
 
   const CacheFirstProductRepository({
-    required IProductsRemoteDataSource remoteDataSource,
+    required IProductsRemoteDataSource remote,
     required IProductsLocalDataSource local,
     required FreshnessPolicy freshnessPolicy,
-  }) : _remoteDataSource = remoteDataSource,
+    required FetchBackoffPolicy fetchBackoffPolicy,
+  }) : _remote = remote,
        _local = local,
-       _freshnessPolicy = freshnessPolicy;
+       _freshnessPolicy = freshnessPolicy,
+       _fetchBackoffPolicy = fetchBackoffPolicy;
 
   @override
   Future<List<ProductEntity>> getProducts({
@@ -33,14 +37,16 @@ class CacheFirstProductRepository implements IProductsRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
-    if (forceRefresh ||
-        await _needsSync(
-          syncKey: SyncKeys.productListPage(
-            type: type,
-            page: page,
-            pageSize: pageSize,
-          ),
-        )) {
+    final syncKey = SyncKeys.productListPage(
+      type: type,
+      page: page,
+      pageSize: pageSize,
+    );
+
+    if (await _shouldAttemptRemoteRefresh(
+      syncKey: syncKey,
+      forceRefresh: forceRefresh,
+    )) {
       await _refreshProducts(type: type, page: page, pageSize: pageSize);
     }
 
@@ -50,6 +56,16 @@ class CacheFirstProductRepository implements IProductsRepository {
       pageSize: pageSize,
     );
     return bundles.map((bundle) => bundle.toEntity(locale)).nonNulls.toList();
+  }
+
+  Future<bool> _shouldAttemptRemoteRefresh({
+    required String syncKey,
+    required bool forceRefresh,
+  }) async {
+    if (forceRefresh) return true;
+    final freshness = await _freshnessForSyncKey(syncKey);
+    if (!freshness.status.shouldFetch) return false;
+    return !_fetchBackoffPolicy.shouldDeferFetch(freshness);
   }
 
   @override
@@ -135,7 +151,7 @@ class CacheFirstProductRepository implements IProductsRepository {
     required int page,
     required int pageSize,
   }) async {
-    final result = await _remoteDataSource.getProducts(
+    final result = await _remote.getProducts(
       type: type,
       page: page,
       pageSize: pageSize,
@@ -157,7 +173,7 @@ class CacheFirstProductRepository implements IProductsRepository {
 
   Future<void> _refreshProductById(String id, ProductKind type) async {
     final syncKey = SyncKeys.productItem(id);
-    final result = await _remoteDataSource.getProductById(id: id, type: type);
+    final result = await _remote.getProductById(id: id, type: type);
 
     switch (result) {
       case SuccessResult<ProductDto?>(data: final dto):
@@ -186,6 +202,99 @@ class CacheFirstProductRepository implements IProductsRepository {
   }
 
   @override
+  Future<List<ProductEntity>> getSimilarProducts({
+    required ProductEntity product,
+    required ProductKind type,
+    required String locale,
+    int page = 1,
+    int pageSize = 20,
+    bool forceRefresh = false,
+  }) async {
+    final syncKey = SyncKeys.productListPage(
+      type: type,
+      page: page,
+      pageSize: pageSize,
+    );
+
+    if (await _shouldAttemptRemoteRefresh(
+      syncKey: syncKey,
+      forceRefresh: forceRefresh,
+    )) {
+      await _refreshProducts(type: type, page: page, pageSize: pageSize);
+    }
+
+    final candidates = await getProductsByFilters(
+      filters: [
+        if (product.tags.isNotEmpty) TagFilter(tag: product.tags.first),
+        if (product.categories.isNotEmpty)
+          CategoryFilter(genre: product.categories.first),
+        if (product is SoftwareEntity) AgeLimitFilter(age: product.ageRating),
+      ],
+      type: type,
+      locale: locale,
+      page: page,
+      pageSize: pageSize,
+      forceRefresh: false,
+    );
+
+    final matches = _getMatches(product: product, candidates: candidates);
+
+    return matches;
+  }
+
+  List<ProductEntity> _getMatches({
+    required ProductEntity product,
+    required List<ProductEntity> candidates,
+  }) {
+    final matches = candidates
+        .where((candidate) {
+          if (candidate.id == product.id) return false;
+          return _isSimilarProductCondition(product, candidate);
+        })
+        .toList(growable: false);
+
+    return matches;
+  }
+
+  bool _isSimilarProductCondition(
+    ProductEntity product,
+    ProductEntity candidate,
+  ) {
+    final sameType = candidate.type == product.type;
+
+    final sameTags = _hasAtLeastNCommonValues(
+      product.tags,
+      candidate.tags,
+      minCommon: 2,
+    );
+
+    final sameCategories = _hasAtLeastNCommonValues(
+      product.categories,
+      candidate.categories,
+      minCommon: 2,
+    );
+
+    final sameGenres = (product is BookEntity && candidate is BookEntity)
+        ? _hasAtLeastNCommonValues(
+            product.genres,
+            candidate.genres,
+            minCommon: 2,
+          )
+        : false;
+    return sameType && sameTags && (sameCategories || sameGenres);
+  }
+
+  bool _hasAtLeastNCommonValues(
+    List<String> left,
+    List<String> right, {
+    required int minCommon,
+  }) {
+    final leftSet = left.map((v) => v.toLowerCase()).toSet();
+    final rightSet = left.map((v) => v.toLowerCase()).toSet();
+    return leftSet.intersection(rightSet).length >= minCommon;
+  }
+
+  @override
   Future<DataFreshness> getProductsFreshness({required ProductKind type}) =>
       _freshnessForSyncKey(
         SyncKeys.productListPage(type: type, page: 1, pageSize: 20),
@@ -197,7 +306,9 @@ class CacheFirstProductRepository implements IProductsRepository {
 
   bool _matchesFilter(ProductEntity product, Filter filter) {
     return switch (filter) {
-      RecommendedFilter(:final productIds) => productIds.contains(product.id),
+      RecommendedFilter(:final productIds) => productIds.contains(
+        product.id,
+      ), // TODO: [filter] добавить фильтр
       CategoryFilter(:final genre) => product.categories.contains(genre),
       CollectionFilter() => true, // TODO: [filter] добавить фильтр
       TagFilter(:final tag) => product.tags.contains(tag),

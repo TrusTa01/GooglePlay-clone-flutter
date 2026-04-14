@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/constants/link_constants.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/core/routes/routes/factories/section_more_factory.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_support_ui_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_view_model.dart';
@@ -92,9 +93,12 @@ class _ProductPageContent extends ConsumerWidget {
                               Flexible(
                                 child: ProductTags(
                                   tags: state.tags,
-                                  onTap: () {
-                                    // TODO: [db] getProductsByTag
-                                  },
+                                  onTap: (tag) => SectionMoreNavigation.push(
+                                    context,
+                                    kind: productType,
+                                    key: tag,
+                                    title: tag,
+                                  ),
                                 ),
                               ),
                             ],
@@ -118,8 +122,7 @@ class _ProductPageContent extends ConsumerWidget {
                         child: ProductPageSimilarAndFooter(
                           onProductTap: (value) {},
                           sectionTitle: state.title,
-                          similarProducts:
-                              const [], // TODO: [db] getSimilarProducts
+                          similarProducts: state.similarProducts,
                           link: LinkConstants.supportLink,
                         ),
                       ),

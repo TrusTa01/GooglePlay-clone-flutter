@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/presentation/widgets/ui_kits/buttons/icon_button.dart';
 
 class ProductSectionHeader extends StatelessWidget {

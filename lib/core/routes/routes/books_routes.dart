@@ -22,7 +22,7 @@ class BooksProductRoute extends GoRouteData with $BooksProductRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => ProductPageScreen(
-    productType: 'book',
+    productType: ProductKind.book,
     productId: productId,
     onAboutAuthorTap: () =>
         BooksAboutAuthorRoute(productId: productId).go(context),
@@ -36,7 +36,7 @@ class BooksAboutAuthorRoute extends GoRouteData with $BooksAboutAuthorRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      AboutAuthorScreen(productType: 'book', productId: productId);
+      AboutAuthorScreen(productType: ProductKind.book, productId: productId);
 }
 
 class BooksCategoryRoute extends GoRouteData with $BooksCategoryRoute {
@@ -48,7 +48,7 @@ class BooksCategoryRoute extends GoRouteData with $BooksCategoryRoute {
   Widget build(BuildContext context, GoRouterState state) =>
       CategoriesTabOverviewScreen(
         categoryKey: categoryKey,
-        productKind: ProductKind.books,
+        productKind: ProductKind.book,
         onProductTap: (productId) =>
             BooksProductRoute(productId: productId).push(context),
       );
@@ -65,7 +65,7 @@ class BooksSectionMoreRoute extends GoRouteData with $BooksSectionMoreRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => SectionMoreScreen(
-    productKind: ProductKind.books,
+    productKind: ProductKind.book,
     categoryKey: categoryKey,
     title: title,
     onProductTap: (productId) =>

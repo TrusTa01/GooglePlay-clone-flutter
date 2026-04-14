@@ -22,7 +22,7 @@ class GamesProductRoute extends GoRouteData with $GamesProductRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ProductPageScreen(productType: 'game', productId: productId);
+      ProductPageScreen(productType: ProductKind.game, productId: productId);
 }
 
 class GamesProductDetailsRoute extends GoRouteData
@@ -34,7 +34,7 @@ class GamesProductDetailsRoute extends GoRouteData
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       ProductDetailsScreen(
-        productType: 'game',
+        productType: ProductKind.game,
         productId: productId,
         onPermissionsTap: () =>
             GamesProductPermissionsRoute(productId: productId).go(context),
@@ -49,7 +49,10 @@ class GamesProductPermissionsRoute extends GoRouteData
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ProductPermissionsScreen(productType: 'game', productId: productId);
+      ProductPermissionsScreen(
+        productType: ProductKind.game,
+        productId: productId,
+      );
 }
 
 class GamesEventRoute extends GoRouteData with $GamesEventRoute {
@@ -60,7 +63,7 @@ class GamesEventRoute extends GoRouteData with $GamesEventRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => ProductEventScreen(
     eventId: eventId,
-    productKind: ProductKind.games,
+    productKind: ProductKind.game,
     onProductTap: (productId) =>
         GamesProductRoute(productId: productId).push(context),
   );
@@ -75,7 +78,7 @@ class GamesCategoryRoute extends GoRouteData with $GamesCategoryRoute {
   Widget build(BuildContext context, GoRouterState state) =>
       CategoriesTabOverviewScreen(
         categoryKey: categoryKey,
-        productKind: ProductKind.games,
+        productKind: ProductKind.game,
         onProductTap: (productId) =>
             GamesProductRoute(productId: productId).push(context),
       );
@@ -119,7 +122,7 @@ class GamesSectionMoreRoute extends GoRouteData with $GamesSectionMoreRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => SectionMoreScreen(
-    productKind: ProductKind.games,
+    productKind: ProductKind.game,
     categoryKey: categoryKey,
     title: title,
     onProductTap: (productId) =>

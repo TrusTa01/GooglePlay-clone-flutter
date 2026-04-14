@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_card_ui_model.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_support_ui_model.dart';
 
 part 'product_state.freezed.dart';
@@ -70,6 +71,9 @@ abstract class ProductState with _$ProductState {
     @Default(false) bool showAudioSampleButton,
     @Default(false) bool showPreviewCard,
 
+    // Секция 'Похожие продукты'
+    @Default([]) List<ProductCardUiModel> similarProducts,
+
     // Секция 'Что нового'
     @Default(false) bool showWhatsNewSection,
     String? whatsNewText,
@@ -95,7 +99,7 @@ abstract class ProductState with _$ProductState {
     @Default(<String>[]) List<String> supportedLanguages,
     @Default(false) bool isKidsFriendly,
 
-    /// Только для приложений
+    // Только для приложений
     @Default('') String packageName,
 
     // Game

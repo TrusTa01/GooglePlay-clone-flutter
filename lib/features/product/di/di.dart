@@ -1,3 +1,4 @@
+import 'package:google_play/features/product/domain/use_cases/get_similar_products_use_case.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:google_play/core/di/di.dart';
 import 'package:google_play/features/product/data/data_sources/local/drift_products_local_data_source.dart';
@@ -42,9 +43,10 @@ IProductsRepository productsRepo(Ref ref) {
   final policy = freshnessPolicy();
 
   return CacheFirstProductRepository(
-    remoteDataSource: remote,
+    remote: remote,
     local: local,
     freshnessPolicy: policy,
+    fetchBackoffPolicy: fetchBackoffPolicy(),
   );
 }
 
@@ -77,6 +79,12 @@ WatchProductsByFiltersUseCase watchProductsByFiltersUseCase(Ref ref) {
 GetProductByIdUseCase getProductByIdUseCase(Ref ref) {
   final repo = ref.watch(productsRepoProvider);
   return GetProductByIdUseCaseImpl(repo);
+}
+
+@riverpod
+GetSimilarProductsUseCase getSimilarProductsUseCase(Ref ref) {
+  final repo = ref.watch(productsRepoProvider);
+  return GetSimilarProductsUseCaseImpl(repo);
 }
 
 @riverpod

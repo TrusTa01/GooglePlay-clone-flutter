@@ -10,7 +10,7 @@ abstract class BaseSupabaseDataSourse<T> {
 
   T fromJson(Map<String, dynamic> json);
 
-  Future<Result<List<T>>> getContent({
+  Future<Result<List<T>>> getData({
     required String view,
     SchemaNamesEnum schemaName = SchemaNamesEnum.views,
     required ({String column, bool ascending}) order,
@@ -31,7 +31,7 @@ abstract class BaseSupabaseDataSourse<T> {
     );
   }
 
-  Future<Result<T?>> getContentById({
+  Future<Result<T?>> getDataById({
     required String view,
     required String id,
     SchemaNamesEnum schemaName = SchemaNamesEnum.views,
