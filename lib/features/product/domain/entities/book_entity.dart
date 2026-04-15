@@ -24,7 +24,6 @@ final class BookEntity extends ProductEntity {
     required super.shortDescription,
     required super.description,
     required super.releaseDate,
-    required super.rating,
     required super.reviewsCount,
     super.ratingAvg = 0,
     super.ratingDistribution = const <String, int>{},

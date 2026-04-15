@@ -8,7 +8,8 @@ import 'package:google_play/features/product/data/mappers/local/local_product_bu
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/book_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/core/domain/entities/filters.dart';
+import 'package:google_play/features/product/domain/entities/filters/product_filters.dart';
+import 'package:google_play/features/product/domain/entities/filters/product_sort.dart';
 import 'package:google_play/features/product/data/data_sources/network/i_products_remote_data_source.dart';
 import 'package:google_play/features/product/domain/entities/software_entity.dart';
 import 'package:google_play/features/product/domain/repositories/i_products_repository.dart';
@@ -87,7 +88,8 @@ class CacheFirstProductRepository implements IProductsRepository {
 
   @override
   Future<List<ProductEntity>> getProductsByFilters({
-    required List<Filter> filters,
+    required List<ProductFilter> filters,
+    ProductSort? sort,
     required ProductKind type,
     required String locale,
     int page = 1,
@@ -102,15 +104,13 @@ class CacheFirstProductRepository implements IProductsRepository {
       forceRefresh: forceRefresh,
     );
 
-    if (filters.isEmpty) return products;
-    return products
-        .where((product) => filters.every((f) => _matchesFilter(product, f)))
-        .toList(growable: false);
+    return _applyFiltersAndSort(products, filters: filters, sort: sort);
   }
 
   @override
   Stream<List<ProductEntity>> watchProductsByFilters({
-    required List<Filter> filters,
+    required List<ProductFilter> filters,
+    ProductSort? sort,
     required ProductKind type,
     required String locale,
     int page = 1,
@@ -122,10 +122,7 @@ class CacheFirstProductRepository implements IProductsRepository {
       page: page,
       pageSize: pageSize,
     ).map((products) {
-      if (filters.isEmpty) return products;
-      return products
-          .where((product) => filters.every((f) => _matchesFilter(product, f)))
-          .toList(growable: false);
+      return _applyFiltersAndSort(products, filters: filters, sort: sort);
     });
   }
 
@@ -304,18 +301,30 @@ class CacheFirstProductRepository implements IProductsRepository {
   Future<DataFreshness> getProductFreshness(String id) =>
       _freshnessForSyncKey(SyncKeys.productItem(id));
 
-  bool _matchesFilter(ProductEntity product, Filter filter) {
+  bool _matchesFilter(ProductEntity product, ProductFilter filter) {
     return switch (filter) {
-      RecommendedFilter(:final productIds) => productIds.contains(
-        product.id,
-      ), // TODO: [filter] добавить фильтр
       CategoryFilter(:final genre) => product.categories.contains(genre),
-      CollectionFilter() => true, // TODO: [filter] добавить фильтр
       TagFilter(:final tag) => product.tags.contains(tag),
       IsPaidFilter(:final isPaid) => product.isPaid == isPaid,
       AgeLimitFilter(:final age) =>
         product is SoftwareEntity ? (product.ageRating <= age) : true,
       UnknownFilter() => true,
     };
+  }
+
+  List<ProductEntity> _applyFiltersAndSort(
+    List<ProductEntity> products, {
+    required List<ProductFilter> filters,
+    ProductSort? sort,
+  }) {
+    final filtered = filters.isEmpty
+        ? products
+        : products
+              .where(
+                (product) => filters.every((f) => _matchesFilter(product, f)),
+              )
+              .toList(growable: false);
+    if (sort == null) return filtered;
+    return sort.sort(filtered);
   }
 }

@@ -13,4 +13,11 @@ abstract interface class IProductsRemoteDataSource {
     required String id,
     required ProductKind type,
   });
+
+  Future<Result<List<String>>> getRecommendedProducts({
+    required ProductKind type,
+    int limit = 20,
+    int excludeRecentDays = 30,
+    String? seed,
+  });
 }

@@ -7,7 +7,6 @@ abstract class ProductEntity extends Entity {
   final String shortDescription;
   final String description;
   final DateTime releaseDate;
-  final double rating;
   final int reviewsCount;
   final double ratingAvg;
   final Map<String, int> ratingDistribution;
@@ -31,7 +30,6 @@ abstract class ProductEntity extends Entity {
     required this.shortDescription,
     required this.description,
     required this.releaseDate,
-    required this.rating,
     required this.reviewsCount,
     this.ratingAvg = 0,
     this.ratingDistribution = const <String, int>{},

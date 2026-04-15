@@ -3,7 +3,7 @@ import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 import 'package:google_play/core/domain/entities/base_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/core/domain/entities/filters.dart';
+import 'package:google_play/features/product/domain/entities/filters/product_filters.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind_enum.dart';
 import 'package:google_play/features/sections/domain/entities/sections_entity.dart';

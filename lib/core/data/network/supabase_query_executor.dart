@@ -17,6 +17,11 @@ abstract interface class IQueryExecutor {
     required String id,
     SchemaNamesEnum schemaName = SchemaNamesEnum.views,
   });
+
+  Future<Result<List<Map<String, dynamic>>>> rpcList({
+    required String fn,
+    Map<String, dynamic> params = const {},
+  });
 }
 
 class SupabaseQueryExecutor implements IQueryExecutor {
@@ -73,6 +78,26 @@ class SupabaseQueryExecutor implements IQueryExecutor {
       if (response == null) return const Result.success(data: null);
 
       final data = Map<String, dynamic>.from(response);
+      return Result.success(data: data);
+    } on PostgrestException catch (e) {
+      return Result.failure(failure: ServerFailure(message: e.message));
+    } on SocketException catch (e) {
+      return Result.failure(failure: NetworkFailure(message: e.message));
+    } on FormatException catch (e) {
+      return Result.failure(failure: ParsingFailure(message: e.message));
+    } catch (e) {
+      return Result.failure(failure: UnknownFailure(error: e));
+    }
+  }
+
+  @override
+  Future<Result<List<Map<String, dynamic>>>> rpcList({
+    required String fn,
+    Map<String, dynamic> params = const {},
+  }) async {
+    try {
+      final response = await _client.rpc(fn, params: params);
+      final data = List<Map<String, dynamic>>.from(response as List);
       return Result.success(data: data);
     } on PostgrestException catch (e) {
       return Result.failure(failure: ServerFailure(message: e.message));

@@ -26,19 +26,17 @@ class SupabaseProductRemoteDataSource implements IProductsRemoteDataSource {
     final view = NetworkProductsViewsNames.getViewName(type.name);
     final order = SortOrders.releaseDateDesc;
 
-    if (view == null) {
-      return Result.asFuture(
-        Result.failure(failure: UnsupportedFailure(type: type.name)),
-      );
-    }
-
-    return _datasource.getProducts(
-      view: view,
-      schemaName: schemaName,
-      order: order,
-      page: page,
-      pageSize: pageSize,
-    );
+    return view == null
+        ? Result.asFuture(
+            Result.failure(failure: UnsupportedFailure(type: type.name)),
+          )
+        : _datasource.getProducts(
+            view: view,
+            schemaName: schemaName,
+            order: order,
+            page: page,
+            pageSize: pageSize,
+          );
   }
 
   @override
@@ -58,4 +56,17 @@ class SupabaseProductRemoteDataSource implements IProductsRemoteDataSource {
             id: id,
           );
   }
+
+  @override
+  Future<Result<List<String>>> getRecommendedProducts({
+    required ProductKind type,
+    int limit = 20,
+    int excludeRecentDays = 30,
+    String? seed,
+  }) => _datasource.getRecommendedProducts(
+    type: type,
+    limit: limit,
+    excludeRecentDays: excludeRecentDays,
+    seed: seed,
+  );
 }
