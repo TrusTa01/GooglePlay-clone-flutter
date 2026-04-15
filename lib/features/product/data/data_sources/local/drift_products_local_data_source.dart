@@ -48,10 +48,7 @@ class DriftProductsLocalDataSource
   @override
   Stream<List<LocalProductBundle>> watchAllProducts({
     required ProductKind type,
-  }) {
-    // TODO: implement watchAllProducts
-    throw UnimplementedError();
-  }
+  }) => _reader.watchAllProducts(type);
 
   @override
   Future<LocalProductBundle?> getProductById(String id) =>
