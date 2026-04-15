@@ -35,6 +35,26 @@ final class _ProductLocalReader {
     return query.asyncMap(_loadBundlesForProducts);
   }
 
+  Future<List<LocalProductBundle>> getAllProducts(ProductKind type) async {
+    final products =
+        await (_db.select(_db.cachedProduct)
+              ..where((t) => t.type.equals(type.name))
+              ..orderBy([(t) => OrderingTerm.desc(t.releaseDate)]))
+            .get();
+
+    return _loadBundlesForProducts(products);
+  }
+
+  Stream<List<LocalProductBundle>> watchAllProducts(ProductKind type) {
+    final query =
+        (_db.select(_db.cachedProduct)
+              ..where((t) => t.type.equals(type.name))
+              ..orderBy([(t) => OrderingTerm.desc(t.releaseDate)]))
+            .watch();
+
+    return query.asyncMap(_loadBundlesForProducts);
+  }
+
   Future<LocalProductBundle?> getProductById(String id) async {
     final base = await (_db.select(
       _db.cachedProduct,

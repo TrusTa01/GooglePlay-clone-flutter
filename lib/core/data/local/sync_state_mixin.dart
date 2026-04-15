@@ -24,15 +24,44 @@ abstract mixin class SyncStateMixin implements ILocalSyncState {
   }
 
   @override
+  Future<String?> getSyncCursor(String syncKey) async {
+    final row = await (db.select(
+      db.syncState,
+    )..where((t) => t.syncKey.equals(syncKey))).getSingleOrNull();
+    return row?.cursor;
+  }
+
+  @override
   Future<void> setLastSync(String syncKey, DateTime at) async {
-    await db.into(db.syncState).insertOnConflictUpdate(
-      SyncStateCompanion.insert(
-        syncKey: syncKey,
-        lastSyncAt: Value(at),
-        lastFailureAt: const Value(null),
-        failureCount: const Value(0),
-      ),
-    );
+    await db
+        .into(db.syncState)
+        .insertOnConflictUpdate(
+          SyncStateCompanion.insert(
+            syncKey: syncKey,
+            lastSyncAt: Value(at),
+            lastFailureAt: const Value(null),
+            failureCount: const Value(0),
+          ),
+        );
+  }
+
+  @override
+  Future<void> setSyncCursor(String syncKey, String? cursor) async {
+    final row = await (db.select(
+      db.syncState,
+    )..where((t) => t.syncKey.equals(syncKey))).getSingleOrNull();
+    await db
+        .into(db.syncState)
+        .insertOnConflictUpdate(
+          SyncStateCompanion(
+            syncKey: Value(syncKey),
+            lastSyncAt: Value(row?.lastSyncAt),
+            lastFailureAt: Value(row?.lastFailureAt),
+            failureCount: Value(row?.failureCount ?? 0),
+            cursor: Value(cursor),
+            remoteSchemaVersion: Value(row?.remoteSchemaVersion),
+          ),
+        );
   }
 
   @override
@@ -41,15 +70,17 @@ abstract mixin class SyncStateMixin implements ILocalSyncState {
       db.syncState,
     )..where((t) => t.syncKey.equals(syncKey))).getSingleOrNull();
     final count = (row?.failureCount ?? 0) + 1;
-    await db.into(db.syncState).insertOnConflictUpdate(
-      SyncStateCompanion(
-        syncKey: Value(syncKey),
-        lastSyncAt: Value(row?.lastSyncAt),
-        lastFailureAt: Value(DateTime.now()),
-        failureCount: Value(count),
-        cursor: Value(row?.cursor),
-        remoteSchemaVersion: Value(row?.remoteSchemaVersion),
-      ),
-    );
+    await db
+        .into(db.syncState)
+        .insertOnConflictUpdate(
+          SyncStateCompanion(
+            syncKey: Value(syncKey),
+            lastSyncAt: Value(row?.lastSyncAt),
+            lastFailureAt: Value(DateTime.now()),
+            failureCount: Value(count),
+            cursor: Value(row?.cursor),
+            remoteSchemaVersion: Value(row?.remoteSchemaVersion),
+          ),
+        );
   }
 }

@@ -5,6 +5,7 @@ import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/product/data/data_sources/local/i_products_local_datasource.dart';
 import 'package:google_play/features/product/data/mappers/local/local_product_bundle_mapper.dart';
+import 'package:google_play/features/product/data/models/local/product_collection_coverage.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/book_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
@@ -38,14 +39,14 @@ class CacheFirstProductRepository implements IProductsRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
-    final syncKey = SyncKeys.productListPage(
+    final pageSyncKey = SyncKeys.productListPage(
       type: type,
       page: page,
       pageSize: pageSize,
     );
 
     if (await _shouldAttemptRemoteRefresh(
-      syncKey: syncKey,
+      syncKey: pageSyncKey,
       forceRefresh: forceRefresh,
     )) {
       await _refreshProducts(type: type, page: page, pageSize: pageSize);
@@ -75,16 +76,14 @@ class CacheFirstProductRepository implements IProductsRepository {
     required String locale,
     int page = 1,
     int pageSize = 20,
-  }) {
-    return _local
-        .watchProducts(type: type, page: page, pageSize: pageSize)
-        .map(
-          (bundles) => bundles
-              .map((bundle) => bundle.toEntity(locale))
-              .nonNulls
-              .toList(growable: false),
-        );
-  }
+  }) => _local
+      .watchProducts(type: type, page: page, pageSize: pageSize)
+      .map(
+        (bundles) => bundles
+            .map((bundle) => bundle.toEntity(locale))
+            .nonNulls
+            .toList(growable: false),
+      );
 
   @override
   Future<List<ProductEntity>> getProductsByFilters({
@@ -96,15 +95,31 @@ class CacheFirstProductRepository implements IProductsRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
-    final products = await getProducts(
-      type: type,
-      locale: locale,
-      page: page,
-      pageSize: pageSize,
+    final collectionSyncKey = SyncKeys.productsCollection(type);
+    if (await _shouldAttemptRemoteRefresh(
+      syncKey: collectionSyncKey,
       forceRefresh: forceRefresh,
+    )) {
+      await _refreshProducts(type: type, page: page, pageSize: pageSize);
+    }
+    await _ensureCollectionCoverage(
+      type: type,
+      pageSize: pageSize,
+      coverageSyncKey: collectionSyncKey,
+    );
+    final bundles = await _local.getAllProducts(type: type);
+    final allProducts = bundles
+        .map((b) => b.toEntity(locale))
+        .nonNulls
+        .toList();
+
+    final filtered = _applyFiltersAndSort(
+      allProducts,
+      filters: filters,
+      sort: sort,
     );
 
-    return _applyFiltersAndSort(products, filters: filters, sort: sort);
+    return _paginate(filtered, page: page, pageSize: pageSize);
   }
 
   @override
@@ -115,16 +130,18 @@ class CacheFirstProductRepository implements IProductsRepository {
     required String locale,
     int page = 1,
     int pageSize = 20,
-  }) {
-    return watchProducts(
-      type: type,
-      locale: locale,
-      page: page,
-      pageSize: pageSize,
-    ).map((products) {
-      return _applyFiltersAndSort(products, filters: filters, sort: sort);
-    });
-  }
+  }) => _local.watchAllProducts(type: type).map((bundles) {
+    final allProducts = bundles
+        .map((b) => b.toEntity(locale))
+        .nonNulls
+        .toList();
+    final filtered = _applyFiltersAndSort(
+      allProducts,
+      filters: filters,
+      sort: sort,
+    );
+    return _paginate(filtered, page: page, pageSize: pageSize);
+  });
 
   @override
   Future<ProductEntity?> getProductById(
@@ -133,9 +150,9 @@ class CacheFirstProductRepository implements IProductsRepository {
     required String locale,
     bool forceRefresh = false,
   }) async {
-    final syncKey = SyncKeys.productItem(id);
+    final productSyncKey = SyncKeys.productItem(id);
 
-    if (forceRefresh || await _needsSync(syncKey: syncKey)) {
+    if (forceRefresh || await _needsSync(syncKey: productSyncKey)) {
       await _refreshProductById(id, type);
     }
 
@@ -153,33 +170,47 @@ class CacheFirstProductRepository implements IProductsRepository {
       page: page,
       pageSize: pageSize,
     );
-    final syncKey = SyncKeys.productListPage(
+    final pageSyncKey = SyncKeys.productListPage(
       type: type,
       page: page,
       pageSize: pageSize,
     );
+    final collectionSyncKey = SyncKeys.productsCollection(type);
 
     switch (result) {
       case SuccessResult<List<ProductDto>>(data: final dtos):
+        final now = DateTime.now();
         await _local.upsertProducts(dtos);
-        await _local.setLastSync(syncKey, DateTime.now());
+        await _local.setLastSync(pageSyncKey, now);
+        await _local.setLastSync(collectionSyncKey, now);
+        final existingCoverage = await _getCoverage(collectionSyncKey);
+        final mergedCoverage = existingCoverage.mergeLoadedPage(
+          page: page,
+          pageSize: pageSize,
+          loadedItemsCount: dtos.length,
+        );
+        await _setCoverage(
+          syncKey: collectionSyncKey,
+          coverage: mergedCoverage,
+        );
       case FailureResult():
-        await _local.recordSyncFailure(syncKey);
+        await _local.recordSyncFailure(pageSyncKey);
+        await _local.recordSyncFailure(collectionSyncKey);
     }
   }
 
   Future<void> _refreshProductById(String id, ProductKind type) async {
-    final syncKey = SyncKeys.productItem(id);
+    final productSyncKey = SyncKeys.productItem(id);
     final result = await _remote.getProductById(id: id, type: type);
 
     switch (result) {
       case SuccessResult<ProductDto?>(data: final dto):
         if (dto != null) {
           await _local.upsertProducts([dto]);
-          await _local.setLastSync(syncKey, DateTime.now());
+          await _local.setLastSync(productSyncKey, DateTime.now());
         }
       case FailureResult():
-        await _local.recordSyncFailure(syncKey);
+        await _local.recordSyncFailure(productSyncKey);
     }
   }
 
@@ -293,9 +324,7 @@ class CacheFirstProductRepository implements IProductsRepository {
 
   @override
   Future<DataFreshness> getProductsFreshness({required ProductKind type}) =>
-      _freshnessForSyncKey(
-        SyncKeys.productListPage(type: type, page: 1, pageSize: 20),
-      );
+      _freshnessForSyncKey(SyncKeys.productsCollection(type));
 
   @override
   Future<DataFreshness> getProductFreshness(String id) =>
@@ -327,4 +356,47 @@ class CacheFirstProductRepository implements IProductsRepository {
     if (sort == null) return filtered;
     return sort.sort(filtered);
   }
+
+  List<T> _paginate<T>(
+    List<T> items, {
+    required int page,
+    required int pageSize,
+  }) {
+    if (page <= 0 || pageSize <= 0 || items.isEmpty) return const [];
+
+    final start = (page - 1) * pageSize;
+    if (start >= items.length) return const [];
+
+    final end = (start + pageSize).clamp(0, items.length);
+    return items.sublist(start, end);
+  }
+
+  Future<void> _ensureCollectionCoverage({
+    required ProductKind type,
+    required int pageSize,
+    required String coverageSyncKey,
+  }) async {
+    var coverage = await _getCoverage(coverageSyncKey);
+    if (coverage.hasReachedEnd) return;
+
+    var pageToLoad = coverage.lastLoadedPage + 1;
+    if (pageToLoad < 1) pageToLoad = 1;
+
+    while (!coverage.hasReachedEnd) {
+      await _refreshProducts(type: type, page: pageToLoad, pageSize: pageSize);
+      coverage = await _getCoverage(coverageSyncKey);
+      if (coverage.lastLoadedPage < pageToLoad) break;
+      pageToLoad += 1;
+    }
+  }
+
+  Future<ProductCollectionCoverage> _getCoverage(String syncKey) async {
+    final raw = await _local.getSyncCursor(syncKey);
+    return ProductCollectionCoverage.fromCursor(raw);
+  }
+
+  Future<void> _setCoverage({
+    required String syncKey,
+    required ProductCollectionCoverage coverage,
+  }) => _local.setSyncCursor(syncKey, coverage.toCursor());
 }

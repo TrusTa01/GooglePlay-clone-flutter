@@ -12,6 +12,9 @@ abstract final class SyncKeys {
 
   static String productItem(String id) => 'product:$id';
 
+  static String productsCollection(ProductKind type) =>
+      'products:$type:collection';
+
   static String bannerListPage({
     required ProductKind type,
     required int page,

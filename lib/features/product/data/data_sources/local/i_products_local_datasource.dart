@@ -16,6 +16,9 @@ abstract interface class IProductsLocalDataSource implements ILocalSyncState {
     required int pageSize,
   });
 
+  Future<List<LocalProductBundle>> getAllProducts({required ProductKind type});
+  Stream<List<LocalProductBundle>> watchAllProducts({required ProductKind type});
+
   Future<LocalProductBundle?> getProductById(String id);
 
   Future<void> upsertProducts(List<ProductDto> dtos);
