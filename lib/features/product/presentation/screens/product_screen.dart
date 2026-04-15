@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/constants/link_constants.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/core/routes/routes/factories/product_screen_factory.dart';
 import 'package:google_play/core/routes/routes/factories/section_more_factory.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_support_ui_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,34 +13,13 @@ import 'package:google_play/core/presentation/widgets/components/app_bars/simple
 import 'package:google_play/core/presentation/widgets/components/popups/product_popup_menu.dart';
 
 // Экран страницы продукта
-class ProductPageScreen extends StatelessWidget {
+class ProductPageScreen extends ConsumerWidget {
   final String productId;
   final ProductKind productType;
   final VoidCallback? onAboutAuthorTap;
 
   const ProductPageScreen({
     super.key,
-    required this.productId,
-    required this.productType,
-    this.onAboutAuthorTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return _ProductPageContent(
-      productType: productType,
-      productId: productId,
-      onAboutAuthorTap: onAboutAuthorTap,
-    );
-  }
-}
-
-class _ProductPageContent extends ConsumerWidget {
-  final String productId;
-  final ProductKind productType;
-  final VoidCallback? onAboutAuthorTap;
-
-  const _ProductPageContent({
     required this.productId,
     required this.productType,
     this.onAboutAuthorTap,
@@ -120,7 +100,11 @@ class _ProductPageContent extends ConsumerWidget {
 
                       SliverToBoxAdapter(
                         child: ProductPageSimilarAndFooter(
-                          onProductTap: (value) {},
+                          onProductTap: (product) => ProductScreenFactory.push(
+                            context,
+                            kind: productType,
+                            id: product.id,
+                          ),
                           sectionTitle: state.title,
                           similarProducts: state.similarProducts,
                           link: LinkConstants.supportLink,

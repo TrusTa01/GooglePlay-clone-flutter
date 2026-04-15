@@ -13,7 +13,6 @@ extension GameMapper on GameDto {
       shortDescription: shortDescription.display(locale),
       description: description.display(locale),
       releaseDate: releaseDate,
-      rating: rating,
       reviewsCount: reviewsCount,
       ratingAvg: ratingAvg,
       ratingDistribution: ratingDistribution,

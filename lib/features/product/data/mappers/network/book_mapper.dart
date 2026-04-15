@@ -15,7 +15,6 @@ extension BookMapper on BookDto {
       shortDescription: shortDescription.display(locale),
       description: description.display(locale),
       releaseDate: releaseDate,
-      rating: rating,
       reviewsCount: reviewsCount,
       ratingAvg: ratingAvg,
       ratingDistribution: ratingDistribution,

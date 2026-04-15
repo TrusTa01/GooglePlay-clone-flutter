@@ -286,8 +286,8 @@ class CacheFirstProductRepository implements IProductsRepository {
     List<String> right, {
     required int minCommon,
   }) {
-    final leftSet = left.map((v) => v.toLowerCase()).toSet();
-    final rightSet = left.map((v) => v.toLowerCase()).toSet();
+    final leftSet = left.map((l) => l.toLowerCase()).toSet();
+    final rightSet = right.map((r) => r.toLowerCase()).toSet();
     return leftSet.intersection(rightSet).length >= minCommon;
   }
 
