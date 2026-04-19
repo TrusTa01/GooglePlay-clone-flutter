@@ -17,7 +17,6 @@ List<Widget> buildStoreAppBar({
   required ProductKind type,
   required List<String> tabLabelKeys,
   required TabController tabController,
-  required List<String> tabs,
   required List<Widget> actionWidgets,
 }) {
   final localizedTabs = List<String>.unmodifiable(tabLabelKeys);

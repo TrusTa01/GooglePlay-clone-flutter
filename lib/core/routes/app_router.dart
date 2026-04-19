@@ -18,7 +18,7 @@ import 'package:google_play/features/section_more/presentation/screens/section_m
 import 'package:google_play/features/store/presentation/screens/apps_screen.dart';
 import 'package:google_play/features/store/presentation/screens/books_screen.dart';
 import 'package:google_play/features/store/presentation/screens/games_screen.dart';
-import 'package:google_play/features/store/presentation/screens/search_screen.dart';
+import 'package:google_play/features/search/presentation/screens/search_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'app_router.g.dart';

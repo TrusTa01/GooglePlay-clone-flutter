@@ -69,13 +69,13 @@ class SectionWidgetBuilder extends HookWidget {
 
   Widget _buildSectionWrapper(
     BuildContext context,
-    ResolvedSection section,
+     section,
     SectionPayload payload,
   ) => RepaintBoundary(child: _buildSection(context, section, payload));
 
   Widget _buildSection(
     BuildContext context,
-    ResolvedSection section,
+     section,
     SectionPayload payload,
   ) {
     final locale = Localizations.localeOf(context).languageCode;

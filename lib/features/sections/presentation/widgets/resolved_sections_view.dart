@@ -5,7 +5,7 @@ import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ResolvedSectionsView extends StatelessWidget {
-  final AsyncValue<List<ResolvedSection>> sectionState;
+  final AsyncValue<List<>> sectionState;
   final bool isSliver;
   final String storageId;
   final ValueChanged<String>? onProductTap;
@@ -76,7 +76,7 @@ class _BuildError extends StatelessWidget {
 }
 
 class _BuildData extends StatelessWidget {
-  final List<ResolvedSection> sections;
+  final List<> sections;
   final bool isSliver;
   final String storageId;
   final ValueChanged<String>? onProductTap;

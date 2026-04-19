@@ -4,7 +4,6 @@ import 'package:google_play/features/tabs/domain/entities/tabs_entity.dart';
 
 abstract interface class ITabsRepository {
   Future<List<TabsEntity>> getTabs({
-    required String id,
     required ProductKind productKind,
     required String locale,
     int page = 1,

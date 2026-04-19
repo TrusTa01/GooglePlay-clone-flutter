@@ -202,7 +202,7 @@ final class SectionsRepoProvider
   }
 }
 
-String _$sectionsRepoHash() => r'eb4cd16ba0def55df5454af3968010bad057adf9';
+String _$sectionsRepoHash() => r'8d3c29c8bbf426bb4128ac765fd7d4e82f41baf5';
 
 @ProviderFor(getSectionsUseCase)
 final getSectionsUseCaseProvider = GetSectionsUseCaseProvider._();

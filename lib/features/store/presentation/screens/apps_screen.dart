@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/sections/presentation/widgets/section_widget_builder.dart';
-import 'package:google_play/features/store/presentation/screens/store_tab_screen.dart';
+import 'package:google_play/features/store/presentation/widgets/store_tabs_screen.dart';
 
 class AppsScreen extends StatelessWidget {
   final ValueChanged<String>? onProductTap;
@@ -11,7 +11,7 @@ class AppsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreTabScreen(
+    return StoreTabsScreen(
       productKind: ProductKind.app,
       onProductTap: onProductTap,
       onSeeAllTap: onSeeAllTap,

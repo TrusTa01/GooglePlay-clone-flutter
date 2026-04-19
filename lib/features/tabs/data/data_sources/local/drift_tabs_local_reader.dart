@@ -6,14 +6,14 @@ class _DriftTabsLocalReader {
   const _DriftTabsLocalReader(this._db);
 
   Future<List<TabsEntity>> getTabs({
-    required String id,
+    required ProductKind productKind,
     required String locale,
     required int page,
     required int pageSize,
   }) async {
     final tabs =
         await (_db.select(_db.cachedTabs)
-              ..where((t) => t.id.equals(id))
+              ..where((t) => t.contentType.equals(productKind.name))
               ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
             .withPagination(page, pageSize)
             .get();

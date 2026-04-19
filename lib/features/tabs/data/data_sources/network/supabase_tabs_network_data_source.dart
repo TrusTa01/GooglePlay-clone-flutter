@@ -14,7 +14,7 @@ class SupabaseTabsNetworkDataSource extends BaseSupabaseDataSourse<TabsDto> {
     SchemaNamesEnum schemaName = SchemaNamesEnum.views,
     required ({String column, bool ascending}) order,
     required int page,
-    int pageSize = 20,
+    int pageSize = 100,
   }) => getData(
     view: view,
     schemaName: schemaName,

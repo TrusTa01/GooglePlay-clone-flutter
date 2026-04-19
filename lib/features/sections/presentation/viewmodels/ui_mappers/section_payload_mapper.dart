@@ -21,25 +21,23 @@ class SectionPayloadMapper {
     required List<Entity> items,
     required AppLocalizations l10n,
     required Locale locale,
-  }) {
-    return switch (config.sectionType) {
-      SectionLayoutKind.banners => BannersPayload(_mapBanners(items: items)),
-      SectionLayoutKind.carousel => CarouselPayload(
-        _mapCarousel(items: items, l10n: l10n, locale: locale),
-        categoryKey: _extractCategoryKey(config),
-        title: config.title?[locale.languageCode] ?? config.title?['en'],
-      ),
-      SectionLayoutKind.grid => GridPayload(
-        _mapGrid(items: items, l10n: l10n, locale: locale),
-        categoryKey: _extractCategoryKey(config),
-        title: config.title?[locale.languageCode] ?? config.title?['en'],
-      ),
-      SectionLayoutKind.preview => PreviewPayload(_mapPreview(items: items)),
-      SectionLayoutKind.kidsHeroBanner ||
-      SectionLayoutKind.ageFilterSelector ||
-      SectionLayoutKind.unknown => EmptyPayload(),
-    };
-  }
+  }) => switch (config.sectionType) {
+    SectionLayoutKind.banners => BannersPayload(_mapBanners(items: items)),
+    SectionLayoutKind.carousel => CarouselPayload(
+      _mapCarousel(items: items, l10n: l10n, locale: locale),
+      categoryKey: _extractCategoryKey(config),
+      title: config.title?[locale.languageCode] ?? config.title?['en'],
+    ),
+    SectionLayoutKind.grid => GridPayload(
+      _mapGrid(items: items, l10n: l10n, locale: locale),
+      categoryKey: _extractCategoryKey(config),
+      title: config.title?[locale.languageCode] ?? config.title?['en'],
+    ),
+    SectionLayoutKind.preview => PreviewPayload(_mapPreview(items: items)),
+    SectionLayoutKind.kidsHeroBanner ||
+    SectionLayoutKind.ageFilterSelector ||
+    SectionLayoutKind.unknown => EmptyPayload(),
+  };
 
   List<BannerItemUiModel> _mapBanners({required List<Entity> items}) {
     final banners = items.whereType<BannerEntity>();

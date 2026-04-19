@@ -13,10 +13,10 @@ part of 'home_view_model.dart';
 final homeViewModelProvider = HomeViewModelFamily._();
 
 final class HomeViewModelProvider
-    extends $NotifierProvider<HomeViewModel, HomeState> {
+    extends $NotifierProvider<HomeViewModel, dynamic> {
   HomeViewModelProvider._({
     required HomeViewModelFamily super.from,
-    required ProductKind super.argument,
+    required dynamic super.argument,
   }) : super(
          retry: null,
          name: r'homeViewModelProvider',
@@ -40,10 +40,10 @@ final class HomeViewModelProvider
   HomeViewModel create() => HomeViewModel();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(HomeState value) {
+  Override overrideWithValue(dynamic value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<HomeState>(value),
+      providerOverride: $SyncValueProvider<dynamic>(value),
     );
   }
 
@@ -58,16 +58,16 @@ final class HomeViewModelProvider
   }
 }
 
-String _$homeViewModelHash() => r'a3f34972bb8c6c689bf2bac1f436412401e0933c';
+String _$homeViewModelHash() => r'47848c7608a24697894e30931daa4987844f60ce';
 
 final class HomeViewModelFamily extends $Family
     with
         $ClassFamilyOverride<
           HomeViewModel,
-          HomeState,
-          HomeState,
-          HomeState,
-          ProductKind
+          dynamic,
+          dynamic,
+          dynamic,
+          dynamic
         > {
   HomeViewModelFamily._()
     : super(
@@ -78,27 +78,27 @@ final class HomeViewModelFamily extends $Family
         isAutoDispose: true,
       );
 
-  HomeViewModelProvider call(ProductKind productKind) =>
+  HomeViewModelProvider call(dynamic productKind) =>
       HomeViewModelProvider._(argument: productKind, from: this);
 
   @override
   String toString() => r'homeViewModelProvider';
 }
 
-abstract class _$HomeViewModel extends $Notifier<HomeState> {
-  late final _$args = ref.$arg as ProductKind;
-  ProductKind get productKind => _$args;
+abstract class _$HomeViewModel extends $Notifier<dynamic> {
+  late final _$args = ref.$arg as dynamic;
+  dynamic get productKind => _$args;
 
-  HomeState build(ProductKind productKind);
+  dynamic build(dynamic productKind);
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<HomeState, HomeState>;
+    final ref = this.ref as $Ref<dynamic, dynamic>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<HomeState, HomeState>,
-              HomeState,
+              AnyNotifier<dynamic, dynamic>,
+              dynamic,
               Object?,
               Object?
             >;

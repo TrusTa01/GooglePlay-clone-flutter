@@ -24,7 +24,6 @@ class TabsRepository implements ITabsRepository {
 
   @override
   Future<List<TabsEntity>> getTabs({
-    required String id,
     required ProductKind productKind,
     required String locale,
     int page = 1,
@@ -39,11 +38,15 @@ class TabsRepository implements ITabsRepository {
             pageSize: pageSize,
           ),
         )) {
-      await _refreshTabs(productKind: productKind, page: page, pageSize: pageSize);
+      await _refreshTabs(
+        productKind: productKind,
+        page: page,
+        pageSize: pageSize,
+      );
     }
 
     final tabs = await _local.getTabs(
-      id: id,
+      productKind: productKind,
       locale: locale,
       page: page,
       pageSize: pageSize,
