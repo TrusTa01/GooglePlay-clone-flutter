@@ -6,13 +6,13 @@ class _DriftBannerLocalReader {
   const _DriftBannerLocalReader(this._db);
 
   Future<List<LocalBannerBundle>> getBanners({
-    required String type,
+    required BannerKind type,
     required int page,
     required int pageSize,
   }) async {
     final banners =
         await (_db.select(_db.cachedBanners)
-              ..where((b) => b.type.equals(type))
+              ..where((b) => b.type.equals(type.name))
               ..orderBy([(b) => OrderingTerm.desc(b.createdAt)]))
             .withPagination(page, pageSize)
             .get();
@@ -21,13 +21,13 @@ class _DriftBannerLocalReader {
   }
 
   Stream<List<LocalBannerBundle>> watchBanners({
-    required String type,
+    required BannerKind type,
     required int page,
     required int pageSize,
   }) {
     final query =
         (_db.select(_db.cachedBanners)
-              ..where((b) => b.type.equals(type))
+              ..where((b) => b.type.equals(type.name))
               ..orderBy([(b) => OrderingTerm.desc(b.createdAt)]))
             .withPagination(page, pageSize)
             .watch();

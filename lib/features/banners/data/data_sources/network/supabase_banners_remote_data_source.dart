@@ -5,6 +5,7 @@ import 'package:google_play/features/banners/data/data_sources/network/banners_n
 import 'package:google_play/features/banners/data/data_sources/network/i_banners_remote_data_source.dart';
 import 'package:google_play/features/banners/data/data_sources/network/supabase_banners_network_datasource.dart';
 import 'package:google_play/features/banners/data/models/network/banner_dto.dart';
+import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 
 class SupabaseBannerRemoteDataSource implements IBannersRemoteDataSource {
   final SupabaseBannerNetworkDataSource _datasource;
@@ -18,7 +19,7 @@ class SupabaseBannerRemoteDataSource implements IBannersRemoteDataSource {
 
   @override
   Future<Result<List<BannerDto>>> getBanners({
-    required String type,
+    required BannerKind type,
     required int page,
     int pageSize = 20,
   }) {

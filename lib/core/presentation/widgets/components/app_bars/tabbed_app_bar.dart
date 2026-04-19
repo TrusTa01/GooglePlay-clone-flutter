@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/app_bar_constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
 
 // Функция для создания SliverTabbedAppBar

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/features/category/presentation/viewmodels/category_overview_view_model.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
@@ -45,7 +45,7 @@ class CategoriesTabOverviewScreen extends ConsumerWidget {
                 if (data.isEmpty)
                   const SliverFillRemaining(
                     hasScrollBody: false,
-                    child: Center(child: Text('No products')),
+                    child: Center(child: Text('No products')), // TODO: [ui] 
                   )
                 else if (data.isGame)
                   ProductPreviewSection.asSliver(

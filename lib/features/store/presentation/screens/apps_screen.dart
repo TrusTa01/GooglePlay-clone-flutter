@@ -12,7 +12,7 @@ class AppsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreTabScreen(
-      productKind: ProductKind.apps,
+      productKind: ProductKind.app,
       onProductTap: onProductTap,
       onSeeAllTap: onSeeAllTap,
     );

@@ -7,6 +7,7 @@ import 'package:google_play/features/banners/data/data_sources/network/i_banners
 import 'package:google_play/features/banners/data/mappers/local/local_banner_bundle_mapper.dart';
 import 'package:google_play/features/banners/data/models/network/banner_dto.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
+import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/repositories/i_banners_repository.dart';
 
 class CacheFirstBannersRepository implements IBannersRepository {
@@ -27,7 +28,7 @@ class CacheFirstBannersRepository implements IBannersRepository {
 
   @override
   Future<List<BannerEntity>> getBanners({
-    required String type,
+    required BannerKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
@@ -73,7 +74,7 @@ class CacheFirstBannersRepository implements IBannersRepository {
   }
 
   Future<void> _refreshBanners({
-    required String type,
+    required BannerKind type,
     required int page,
     required int pageSize,
   }) async {
@@ -99,7 +100,7 @@ class CacheFirstBannersRepository implements IBannersRepository {
 
   @override
   Stream<List<BannerEntity>> watchBanners({
-    required String type,
+    required BannerKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
@@ -117,13 +118,13 @@ class CacheFirstBannersRepository implements IBannersRepository {
   @override
   Future<BannerEntity?> getBannerById(
     String id, {
-    required String type,
+    required BannerKind type,
     required String locale,
     bool forceRefresh = false,
   }) async {
     final syncKey = SyncKeys.bannerItem(id);
     assert(
-      type.isNotEmpty,
+      type.name.isNotEmpty,
       'banner type is required for cache policy alignment',
     );
     if (await _shouldAttemptRemoteRefresh(
@@ -153,11 +154,11 @@ class CacheFirstBannersRepository implements IBannersRepository {
   }
 
   @override
-  getBannersFreshness({required String type}) => _freshnessForSyncKey(
+  getBannersFreshness({required BannerKind type}) => _freshnessForSyncKey(
     SyncKeys.bannerListPage(type: type, page: 1, pageSize: 20),
   );
 
   @override
-  getBannerFreshness(String id, String type) =>
+  getBannerFreshness(String id, BannerKind type) =>
       _freshnessForSyncKey(SyncKeys.bannerItem(id));
 }

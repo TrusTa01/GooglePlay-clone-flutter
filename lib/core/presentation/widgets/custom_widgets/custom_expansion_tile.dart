@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/features/product/presentation/screens/utils/product_support_data.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
 

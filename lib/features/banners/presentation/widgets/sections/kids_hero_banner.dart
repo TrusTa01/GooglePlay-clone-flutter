@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
+
 import 'package:google_play/features/banners/presentation/widgets/configs/kids_hero_banner_layout_config.dart';
 
 class KidsHeroBanner extends StatelessWidget {

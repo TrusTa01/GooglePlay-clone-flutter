@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:google_play/core/constants/constants.dart';
+
 import 'package:google_play/features/banners/presentation/view_models/ui_models/banner_item_ui_model.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:google_play/features/banners/presentation/widgets/configs/banner_layout_config.dart';

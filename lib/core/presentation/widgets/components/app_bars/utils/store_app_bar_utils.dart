@@ -20,19 +20,15 @@ List<Widget> buildStoreAppBar({
   required List<String> tabs,
   required List<Widget> actionWidgets,
 }) {
-  List<String> resolveTabLabels() {
-    return tabLabelKeys.map(context.l10nKey).toList();
-  }
-
-  final localizedTabs = resolveTabLabels();
+  final localizedTabs = List<String>.unmodifiable(tabLabelKeys);
 
   return switch (type) {
-    ProductKind.games || ProductKind.apps => buildSliverTabbedAppBar(
+    ProductKind.game || ProductKind.app => buildSliverTabbedAppBar(
       tabs: localizedTabs,
       tabController: tabController,
       actions: actionWidgets,
     ),
-    ProductKind.books => buildSliverTabbedAppBar(
+    ProductKind.book => buildSliverTabbedAppBar(
       showLogo: false,
       hasSearch: true,
       searchHint: context.l10n.searchBooksHint,

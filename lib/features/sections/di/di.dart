@@ -37,7 +37,7 @@ DriftSectionsLocalDataSource sectionsLocalDatasource(Ref ref) {
 ISectionsRepository sectionsRepo(Ref ref) {
   final remote = sectionsRemoteDatasource(ref);
   final local = sectionsLocalDatasource(ref);
-  final policy = getPolicy();
+  final policy = freshnessPolicy();
   return SectionsRepository(remote: remote, local: local, policy: policy);
 }
 

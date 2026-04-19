@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/action_row_ui_model.dart';
 import 'package:google_play/features/charts/presentation/widgets/top_charts_card.dart';
 

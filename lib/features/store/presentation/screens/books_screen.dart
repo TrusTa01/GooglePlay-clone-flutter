@@ -12,7 +12,7 @@ class BooksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreTabScreen(
-      productKind: ProductKind.books,
+      productKind: ProductKind.book,
       onProductTap: onProductTap,
       onSeeAllTap: onSeeAllTap,
     );

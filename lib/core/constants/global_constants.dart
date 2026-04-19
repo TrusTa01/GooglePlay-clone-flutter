@@ -36,21 +36,21 @@ abstract final class Constants {
   static const String initialLocation = AppRouterNames.games;
 
   // Простой способ вертикального отступа между блоками
-  static const divider15 = SizedBox(height: 15);
-  static const divider20 = SizedBox(height: 20);
-  static const divider25 = SizedBox(height: 25);
+  static const Widget divider15 = SizedBox(height: 15);
+  static const Widget divider20 = SizedBox(height: 20);
+  static const Widget divider25 = SizedBox(height: 25);
 
   // Простой способ вертикального отступа между блоками (сливерная версия)
-  static const sliverDivider15 = SliverToBoxAdapter(
+  static const Widget sliverDivider15 = SliverToBoxAdapter(
     child: SizedBox(height: 15),
   );
-  static const sliverDivider20 = SliverToBoxAdapter(
+  static const Widget sliverDivider20 = SliverToBoxAdapter(
     child: SizedBox(height: 20),
   );
-  static const sliverDivider25 = SliverToBoxAdapter(
+  static const Widget sliverDivider25 = SliverToBoxAdapter(
     child: SizedBox(height: 25),
   );
-  
+
   // Общая палитра выбора
   static const Color uiUnselectedColor = Color(0xFF4D4F4E);
   static const Color uiSelectedLabelColor = Color(0xFF2076A7);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
-import 'package:google_play/core/constants/constants.dart';
-import 'package:google_play/features/product/presentation/viewmodels/ui_models/action_row_ui_model.dart';
+import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/features/charts/presentation/viewmodels/top_charts_view_model.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -22,15 +22,12 @@ class TopChartsScreen extends StatelessWidget {
     );
   }
 
-  /// Сливеры чартов для встраивания в другой [CustomScrollView] (например, в [CategoryOverviewScreen]).
+  /// Сливеры чартов для встраивания в другой [CustomScrollView] (например, в [CategoryOverviewScreen])
   static List<Widget> asSliver(
     BuildContext context, {
     required FilterType type,
     required bool showFilters,
   }) {
-    // TODO: [db] заменить на данные из БД/репозитория
-    final List<ActionRowUiModel> items = const [];
-
     return [
       if (showFilters)
         SliverToBoxAdapter(
@@ -50,39 +47,57 @@ class TopChartsScreen extends StatelessWidget {
             ),
           ),
         ),
-      SliverLayoutBuilder(
-        builder: (BuildContext context, SliverConstraints constraints) {
-          final double width = constraints.crossAxisExtent;
-          final double maxWidth = Constants.sliderMaxContentWidth;
+        // TODO: [ui]
+      Consumer(
+        builder: (context, ref, _) {
+          final itemsAsync = ref.watch(topChartsItemsProvider(type));
+          return itemsAsync.when(
+            loading: () => const SliverFillRemaining(
+              hasScrollBody: false,
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            error: (error, stackTrace) => SliverFillRemaining(
+              hasScrollBody: false,
+              child: Center(child: Text('Error: $error')),
+            ),
+            data: (items) => SliverLayoutBuilder(
+              builder: (BuildContext context, SliverConstraints constraints) {
+                final double width = constraints.crossAxisExtent;
+                final double maxWidth = Constants.sliderMaxContentWidth;
 
-          final double horizontalPadding = width > maxWidth
-              ? (width - maxWidth) / 2
-              : 0;
+                final double horizontalPadding = width > maxWidth
+                    ? (width - maxWidth) / 2
+                    : 0;
 
-          const double minItemWidth = 350;
-          final double effectiveWidth = width > maxWidth ? maxWidth : width;
-          int crossAxisCount = (effectiveWidth / minItemWidth).floor();
-          crossAxisCount = crossAxisCount.clamp(1, 3);
+                const double minItemWidth = 350;
+                final double effectiveWidth = width > maxWidth
+                    ? maxWidth
+                    : width;
+                int crossAxisCount = (effectiveWidth / minItemWidth).floor();
+                crossAxisCount = crossAxisCount.clamp(1, 3);
 
-          return SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontalPadding,
-            ).add(const EdgeInsets.only(bottom: 45)),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                mainAxisExtent: 80,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 20,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => TopChartsCard(
-                  model: items[index],
-                  rank: index + 1,
-                  showButton: true,
-                ),
-                childCount: items.length,
-              ),
+                return SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: horizontalPadding,
+                  ).add(const EdgeInsets.only(bottom: 45)),
+                  sliver: SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      mainAxisExtent: 80,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 20,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => TopChartsCard(
+                        model: items[index],
+                        rank: index + 1,
+                        showButton: true,
+                      ),
+                      childCount: items.length,
+                    ),
+                  ),
+                );
+              },
             ),
           );
         },

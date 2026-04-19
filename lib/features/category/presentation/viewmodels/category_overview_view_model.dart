@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/di/usecase_providers.dart';
+import 'package:google_play/features/product/di/di.dart';
 import 'package:google_play/features/product/domain/entities/game_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
-import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
+import 'package:google_play/features/category/data/product_categories_data.dart';
 import 'package:google_play/features/category/presentation/viewmodels/category_overview_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/category_item_mapper.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_state_mapper.dart';
@@ -46,7 +46,7 @@ Future<CategoryOverviewState> categoryOverviewViewModel(
       WidgetsBinding.instance.platformDispatcher.locale;
   final loadProducts = ref.read(loadProductsUseCaseProvider);
   final allProducts = await loadProducts(
-    type: args.productKind.categoryKey,
+    type: args.productKind,
     locale: locale.languageCode,
   );
 
@@ -90,27 +90,19 @@ List<ProductEntity> _filterProducts(
   return products.where((p) => p.categories.contains(categoryKey)).toList();
 }
 
-bool _isAllCategory(String key) {
-  return key == 'categoryAll' || key == 'categoryBooksAll';
-}
+bool _isAllCategory(String key) =>
+    key == 'categoryAll' || key == 'categoryBooksAll';
 
 String _getCategoryTitle(
   String categoryKey,
   ProductKind type,
   AppLocalizations l10n,
 ) {
-  List<ProductCategoriesData> dataList;
-  switch (type) {
-    case ProductKind.games:
-      dataList = gamesCategoriesData;
-      break;
-    case ProductKind.apps:
-      dataList = appsCategoriesData;
-      break;
-    case ProductKind.books:
-      dataList = booksGenresData;
-      break;
-  }
+  final dataList = switch (type) {
+    ProductKind.game => gamesCategoriesData,
+    ProductKind.app => appsCategoriesData,
+    ProductKind.book => booksGenresData,
+  };
 
   final category = dataList
       .where((c) => c.titleL10nKey == categoryKey || c.title == categoryKey)

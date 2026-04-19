@@ -1,9 +1,10 @@
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
+import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 
 abstract interface class IBannersRepository {
   Future<List<BannerEntity>> getBanners({
-    required String type,
+    required BannerKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
@@ -11,7 +12,7 @@ abstract interface class IBannersRepository {
   });
 
   Stream<List<BannerEntity>> watchBanners({
-    required String type,
+    required BannerKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
@@ -19,12 +20,12 @@ abstract interface class IBannersRepository {
 
   Future<BannerEntity?> getBannerById(
     String id, {
-    required String type,
+    required BannerKind type,
     required String locale,
     bool forceRefresh = false,
   });
 
-  Future<DataFreshness> getBannersFreshness({required String type});
+  Future<DataFreshness> getBannersFreshness({required BannerKind type});
 
-  Future<DataFreshness> getBannerFreshness(String id, String type);
+  Future<DataFreshness> getBannerFreshness(String id, BannerKind type);
 }

@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart' show SliverConstraints;
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
-import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
+import 'package:google_play/features/category/data/product_categories_data.dart';
 
 class CategoriesTabScreen extends StatelessWidget {
   final List<ProductCategoriesData> categories;
@@ -61,29 +61,25 @@ class CategoriesTabScreen extends StatelessWidget {
                       _buildCategoryTile(context, categories[index + 1]),
                 ),
               )
-            : LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: Constants.sliderMaxContentWidth,
-                      ),
-                      child: GridView.builder(
-                        primary: false,
-                        padding: EdgeInsets.all(22),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: crossAxisCount,
-                          mainAxisExtent: 56,
-                          mainAxisSpacing: 30,
-                          crossAxisSpacing: 20,
-                        ),
-                        itemCount: categories.length - 1,
-                        itemBuilder: (context, index) =>
-                            _buildCategoryTile(context, categories[index + 1]),
-                      ),
+            : Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: Constants.sliderMaxContentWidth,
+                  ),
+                  child: GridView.builder(
+                    primary: false,
+                    padding: EdgeInsets.all(22),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      mainAxisExtent: 56,
+                      mainAxisSpacing: 30,
+                      crossAxisSpacing: 20,
                     ),
-                  );
-                },
+                    itemCount: categories.length - 1,
+                    itemBuilder: (context, index) =>
+                        _buildCategoryTile(context, categories[index + 1]),
+                  ),
+                ),
               );
       },
     );

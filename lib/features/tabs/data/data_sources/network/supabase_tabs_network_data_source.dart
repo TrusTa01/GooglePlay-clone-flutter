@@ -15,7 +15,7 @@ class SupabaseTabsNetworkDataSource extends BaseSupabaseDataSourse<TabsDto> {
     required ({String column, bool ascending}) order,
     required int page,
     int pageSize = 20,
-  }) => getContent(
+  }) => getData(
     view: view,
     schemaName: schemaName,
     order: order,

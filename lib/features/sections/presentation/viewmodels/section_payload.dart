@@ -1,3 +1,4 @@
+import 'package:google_play/features/banners/presentation/view_models/ui_models/banner_item_ui_model.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_ui_models.dart';
 
 sealed class SectionPayload {

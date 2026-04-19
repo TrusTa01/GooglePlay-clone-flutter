@@ -1,10 +1,11 @@
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
+import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/repositories/i_banners_repository.dart';
 
 abstract interface class IGetBannerByIdUseCase {
   Future<BannerEntity?> call({
     required String id,
-    required String type,
+    required BannerKind type,
     required String locale,
     bool forceRefresh = false,
   });
@@ -18,7 +19,7 @@ final class GetBannerByIdUseCase implements IGetBannerByIdUseCase {
   @override
   Future<BannerEntity?> call({
     required String id,
-    required String type,
+    required BannerKind type,
     required String locale,
     bool forceRefresh = false,
   }) => _repository.getBannerById(

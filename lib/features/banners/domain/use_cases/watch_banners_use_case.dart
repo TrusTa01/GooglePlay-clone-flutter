@@ -1,9 +1,10 @@
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
+import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/repositories/i_banners_repository.dart';
 
 abstract interface class IWatchBannersUseCase {
   Stream<List<BannerEntity>> call({
-    required String type,
+    required BannerKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,
@@ -17,7 +18,7 @@ final class WatchBannersUseCase implements IWatchBannersUseCase {
 
   @override
   Stream<List<BannerEntity>> call({
-    required String type,
+    required BannerKind type,
     required String locale,
     int page = 1,
     int pageSize = 20,

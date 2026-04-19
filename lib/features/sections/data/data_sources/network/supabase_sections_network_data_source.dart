@@ -16,7 +16,7 @@ class SupabaseSectionsNetworkDataSource
     required ({bool ascending, String column}) order,
     required int page,
     int pageSize = 20,
-  }) => getContent(
+  }) => getData(
     view: view,
     schemaName: schemaName,
     order: order,

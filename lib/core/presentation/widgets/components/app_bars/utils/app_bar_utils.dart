@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/app_bar_constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 
 // Логотип
 class AppBarLogo extends StatelessWidget {

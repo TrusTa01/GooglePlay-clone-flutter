@@ -6,6 +6,7 @@ import 'package:google_play/core/local_database/app_database.dart';
 import 'package:google_play/features/banners/data/data_sources/local/i_banners_local_data_source.dart';
 import 'package:google_play/features/banners/data/models/local/local_banner_bundle.dart';
 import 'package:google_play/features/banners/data/models/network/banner_dto.dart';
+import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 
 part 'drift_banners_local_reader.dart';
 part 'drift_banners_local_writer.dart';
@@ -27,14 +28,14 @@ class DriftBannerLocalDataSource
 
   @override
   Future<List<LocalBannerBundle>> getBanners({
-    required String type,
+    required BannerKind type,
     required int page,
     required int pageSize,
   }) => _reader.getBanners(type: type, page: page, pageSize: pageSize);
 
   @override
   Stream<List<LocalBannerBundle>> watchBanners({
-    required String type,
+    required BannerKind type,
     required int page,
     required int pageSize,
   }) => _reader.watchBanners(type: type, page: page, pageSize: pageSize);
