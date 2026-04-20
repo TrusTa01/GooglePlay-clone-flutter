@@ -5,8 +5,11 @@ enum BannerKind {
   final String name;
   const BannerKind(this.name);
 
-  String getKind(BannerKind kind) => switch (kind) {
-    BannerKind.event => 'event',
-    BannerKind.action => 'action',
-  };
+  String get rawValue => name;
+
+  static BannerKind mapBannerKind(String contentType) {
+    final t = contentType.toLowerCase();
+    if (t.contains('action')) return BannerKind.action;
+    return BannerKind.event;
+  }
 }

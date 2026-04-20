@@ -109,7 +109,7 @@ class FilterSets {
           return ToggleFilter(
             label: ageLabel,
             isSelected: false,
-            onSelected: () => onKidsAgeTap?.call(ageLabel),
+            onSelected: () => onKidsAgeTap?.call(ageKey),
           );
         }).toList();
         break;

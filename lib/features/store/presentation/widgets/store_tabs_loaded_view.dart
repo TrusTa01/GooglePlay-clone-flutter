@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/presentation/widgets/components/app_bars/utils/store_app_bar_utils.dart';
+import 'package:google_play/features/sections/presentation/viewmodels/section_state.dart';
 import 'package:google_play/features/sections/presentation/widgets/resolved_sections_view.dart';
 import 'package:google_play/features/sections/presentation/widgets/section_widget_builder.dart';
 import 'package:google_play/features/tabs/domain/entities/tabs_entity.dart';
@@ -89,10 +90,12 @@ class StoreTabsLoadedView extends HookConsumerWidget {
               final tabKey = tabConfig.tabKey;
               final visitedKey = '${productKind.name}_$tabKey';
 
-              final sectionState = '';
-
               return Builder(
                 builder: (context) {
+                  final sectionState = ref.watch(
+                    resolvedSectionsProvider(productKind, tabKey),
+                  );
+
                   return visitedTabKeys.value.contains(visitedKey)
                       ? CustomScrollView(
                           key: PageStorageKey<String>(visitedKey),
@@ -103,7 +106,6 @@ class StoreTabsLoadedView extends HookConsumerWidget {
                                     context,
                                   ),
                             ),
-                            // Контент
                             ResolvedSectionsView(
                               sectionState: sectionState,
                               isSliver: true,

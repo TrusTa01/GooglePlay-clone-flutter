@@ -1,45 +1,13 @@
-import 'package:flutter/widgets.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
-import 'package:google_play/di/usecase_providers.dart';
-import 'package:google_play/core/presentation/providers/locale_provider.dart';
+import 'package:google_play/features/sections/domain/entities/resolved_section.dart';
+import 'package:google_play/features/sections/presentation/viewmodels/section_state.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'kids_age_category_view_model.g.dart';
 
 @riverpod
 class KidsAgeCategory extends _$KidsAgeCategory {
   @override
-  Future<List<ResolvedSection>> build(String ageKey) async {
-    final getTabSections = ref.read(getTabSectionsUseCaseProvider);
-    final resolveSection = ref.read(resolveSectionUseCaseProvider);
-    final locale =
-        ref.watch(localeProvider) ??
-        WidgetsBinding.instance.platformDispatcher.locale;
-
-    final fileName = _mapAgeKeyToFileName(ageKey);
-
-    final rawSections = await getTabSections(
-      productKind: ProductKind.games,
-      tabKey: fileName,
-    );
-
-    final resolvedSections = await Future.wait(
-      rawSections.map(
-        (section) => resolveSection(
-          section,
-          ProductKind.games.categoryKey,
-          locale.languageCode,
-        ),
-      ),
-    );
-
-    return resolvedSections;
-  }
-
-  String _mapAgeKeyToFileName(String ageKey) {
-    if (ageKey.contains('3')) return 'kids_by_age_3';
-    if (ageKey.contains('6')) return 'kids_by_age_6';
-    if (ageKey.contains('12')) return 'kids_by_age_12';
-    return 'kids_main';
-  }
+  Future<List<ResolvedSection>> build(String ageKey) async =>
+      ref.read(resolvedSectionsProvider(ProductKind.game, ageKey).future);
 }

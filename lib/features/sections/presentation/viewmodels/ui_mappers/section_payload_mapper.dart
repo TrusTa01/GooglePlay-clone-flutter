@@ -4,8 +4,7 @@ import 'package:google_play/features/banners/domain/entities/banner_entity.dart'
 import 'package:google_play/core/domain/entities/base_entity.dart';
 import 'package:google_play/features/banners/presentation/view_models/ui_models/banner_item_ui_model.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/features/product/domain/entities/filters/product_filters.dart';
-import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
+import 'package:google_play/features/sections/domain/entities/params_entity.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind_enum.dart';
 import 'package:google_play/features/sections/domain/entities/sections_entity.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/action_row_ui_mapper.dart';
@@ -25,13 +24,13 @@ class SectionPayloadMapper {
     SectionLayoutKind.banners => BannersPayload(_mapBanners(items: items)),
     SectionLayoutKind.carousel => CarouselPayload(
       _mapCarousel(items: items, l10n: l10n, locale: locale),
-      categoryKey: _extractCategoryKey(config),
-      title: config.title?[locale.languageCode] ?? config.title?['en'],
+      categoryKey: _extractCategoryValue(config),
+      title: config.title,
     ),
     SectionLayoutKind.grid => GridPayload(
       _mapGrid(items: items, l10n: l10n, locale: locale),
-      categoryKey: _extractCategoryKey(config),
-      title: config.title?[locale.languageCode] ?? config.title?['en'],
+      categoryKey: _extractCategoryValue(config),
+      title: config.title,
     ),
     SectionLayoutKind.preview => PreviewPayload(_mapPreview(items: items)),
     SectionLayoutKind.kidsHeroBanner ||
@@ -77,12 +76,15 @@ class SectionPayloadMapper {
     return ProductPreviewSectionUiModel.fromProducts(products.toList());
   }
 
-  String? _extractCategoryKey(SectionEntity config) {
-    final source = config.dataSource;
-    if (source is! ProductListSource || source.filters.isEmpty) return null;
-    final categoryFilter = source.filters
-        .whereType<CategoryFilter>()
-        .firstOrNull;
-    return categoryFilter?.genre;
+  String? _extractCategoryValue(SectionEntity config) {
+    final filters = config.dataParamsEntity?.extras?.filters;
+    if (filters == null || filters.isEmpty) return null;
+    for (final ParamFilterEntity f in filters) {
+      if (f.type?.toLowerCase() != 'category') continue;
+      final Object? v = f.value;
+      if (v is String && v.isNotEmpty) return v;
+      if (v != null) return v.toString();
+    }
+    return null;
   }
 }

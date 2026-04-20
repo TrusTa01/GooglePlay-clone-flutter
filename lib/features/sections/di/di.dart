@@ -5,8 +5,11 @@ import 'package:google_play/features/sections/data/data_sources/network/supabase
 import 'package:google_play/features/sections/data/data_sources/network/supabase_sections_remote_data_source.dart';
 import 'package:google_play/features/sections/data/repositories/sections_repository.dart';
 import 'package:google_play/features/sections/domain/repositories/i_sections_repository.dart';
+import 'package:google_play/features/banners/di/di.dart';
+import 'package:google_play/features/product/di/di.dart';
 import 'package:google_play/features/sections/domain/use_cases/get_sections_freshness_use_case.dart';
 import 'package:google_play/features/sections/domain/use_cases/get_sections_use_case.dart';
+import 'package:google_play/features/sections/domain/use_cases/resolved_sections_use_case.dart';
 
 part 'di.g.dart';
 
@@ -52,4 +55,13 @@ GetSectionsUseCaseImpl getSectionsUseCase(Ref ref) {
 GetSectionsFreshnessUseCase getSectionsFreshnessUseCase(Ref ref) {
   final repo = ref.watch(sectionsRepoProvider);
   return GetSectionsFreshnessUseCaseImpl(repo);
+}
+
+@riverpod
+ResolvedSectionsUseCase resolvedSectionsUseCase(Ref ref) {
+  return ResolvedSectionsUseCaseImpl(
+    ref.watch(getSectionsUseCaseProvider),
+    ref.watch(loadProductsByFiltersUseCaseProvider),
+    ref.watch(getBannersUseCaseProvider),
+  );
 }

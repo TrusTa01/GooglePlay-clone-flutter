@@ -40,6 +40,8 @@ class StoreTabsScreen extends ConsumerWidget {
                 valueKey: ValueKey(key),
                 productKind: productKind,
                 tabsData: tabsData,
+                onProductTap: onProductTap,
+                onSeeAllTap: onSeeAllTap,
               )
             : const SizedBox.shrink();
       },

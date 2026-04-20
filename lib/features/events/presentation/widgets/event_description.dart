@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 
 class EventDescription extends StatelessWidget {
   final String text;
 
-  const EventDescription({
-    super.key,
-    required this.text,
-  });
+  const EventDescription({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +12,10 @@ class EventDescription extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: Constants.sliderMaxContentWidth),
         child: Padding(
-          padding: Constants.horizontalContentPadding.copyWith(top: 20, bottom: 10),
+          padding: Constants.horizontalContentPadding.copyWith(
+            top: 20,
+            bottom: 10,
+          ),
           child: Text(
             text,
             maxLines: 5,

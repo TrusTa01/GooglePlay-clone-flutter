@@ -1,4 +1,4 @@
-import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
+import 'package:google_play/features/sections/domain/entities/resolved_section.dart';
 import 'package:google_play/features/banners/domain/entities/event_banner_entity.dart';
 
 // Формирует доменную модель event-экрана из уже загруженных данных

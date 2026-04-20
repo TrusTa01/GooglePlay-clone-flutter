@@ -1,11 +1,13 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/features/banners/di/di.dart';
+import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/entities/event_banner_entity.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/features/events/di/di.dart';
 import 'package:google_play/features/events/presentation/viewmodels/product_event_state.dart';
+import 'package:google_play/features/sections/di/di.dart';
 import 'package:google_play/features/events/presentation/viewmodels/ui_mappers/event_section_ui_mapper.dart';
 import 'package:google_play/features/banners/presentation/view_models/ui_mappers/event_hero_banner_mapper.dart';
 import 'package:google_play/core/presentation/providers/locale_provider.dart';
@@ -27,11 +29,10 @@ class ProductEventViewModel extends _$ProductEventViewModel {
     try {
       final AppLocalizations l10n = lookupAppLocalizations(locale);
 
-      // 1. Загружаем банер события
-      final bannerRepo = ref.read(bannersRepoProvider);
-      final banner = await bannerRepo.getBannerById(
-        eventId,
-        type: 'banners',
+      final getBannerById = ref.read(getBannerByIdUseCaseProvider);
+      final banner = await getBannerById(
+        id: eventId,
+        type: BannerKind.event,
         locale: locale.languageCode,
       );
 
@@ -40,8 +41,6 @@ class ProductEventViewModel extends _$ProductEventViewModel {
         return;
       }
 
-      // 2. Загружаем секции для этого события
-      // В текущей архитектуре секции события привязаны к категории события
       final eventCategory = banner.eventCategory;
       if (eventCategory == null) {
         state = state.copyWith(
@@ -51,25 +50,16 @@ class ProductEventViewModel extends _$ProductEventViewModel {
         return;
       }
 
-      final getTabSections = ref.read(getTabSectionsUseCaseProvider);
-      final sections = await getTabSections(
+      final resolvedSectionsUseCase = ref.read(resolvedSectionsUseCaseProvider);
+      final resolvedSections = await resolvedSectionsUseCase(
         productKind: productKind,
-        tabKey: eventCategory,
+        tabId: eventCategory,
+        locale: locale.languageCode,
       );
 
-      // 3. Резолвим секции (загружаем данные для каждой секции)
-      final resolveSection = ref.read(resolveSectionUseCaseProvider);
-      final resolvedSections = await Future.wait(
-        sections.map(
-          (s) => resolveSection(s, productKind.name, locale.languageCode),
-        ),
-      );
-
-      // 4. Формируем финальную модель через UseCase (санитизация)
       final buildEventScreen = ref.read(buildEventScreenUseCaseProvider);
       final data = buildEventScreen(banner: banner, sections: resolvedSections);
 
-      // 5. Маппим в UI стейт
       const heroMapper = EventHeroBannerMapper();
       const sectionMapper = EventSectionUiMapper();
 

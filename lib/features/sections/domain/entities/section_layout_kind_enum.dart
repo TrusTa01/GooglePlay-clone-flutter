@@ -5,5 +5,12 @@ enum SectionLayoutKind {
   banners,
   kidsHeroBanner,
   ageFilterSelector,
-  unknown,
+  unknown;
+
+  bool get shouldSkipDataFetch => switch (this) {
+    SectionLayoutKind.kidsHeroBanner ||
+    SectionLayoutKind.ageFilterSelector ||
+    SectionLayoutKind.unknown => true,
+    _ => false,
+  };
 }

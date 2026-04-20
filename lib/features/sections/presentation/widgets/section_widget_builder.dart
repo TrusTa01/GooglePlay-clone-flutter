@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
+import 'package:google_play/features/sections/domain/entities/resolved_section.dart';
 import 'package:google_play/features/sections/presentation/viewmodels/section_payload.dart';
 import 'package:google_play/features/sections/presentation/viewmodels/ui_mappers/section_payload_mapper.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
@@ -69,15 +70,11 @@ class SectionWidgetBuilder extends HookWidget {
 
   Widget _buildSectionWrapper(
     BuildContext context,
-     section,
+    section,
     SectionPayload payload,
   ) => RepaintBoundary(child: _buildSection(context, section, payload));
 
-  Widget _buildSection(
-    BuildContext context,
-     section,
-    SectionPayload payload,
-  ) {
+  Widget _buildSection(BuildContext context, section, SectionPayload payload) {
     final locale = Localizations.localeOf(context).languageCode;
     final title =
         section.config.title?[locale] ?? section.config.title?['en'] ?? '';

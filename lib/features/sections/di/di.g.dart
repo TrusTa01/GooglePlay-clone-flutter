@@ -300,3 +300,51 @@ final class GetSectionsFreshnessUseCaseProvider
 
 String _$getSectionsFreshnessUseCaseHash() =>
     r'c4e66205ca1a23c1ce57888c33ecda52147235b2';
+
+@ProviderFor(resolvedSectionsUseCase)
+final resolvedSectionsUseCaseProvider = ResolvedSectionsUseCaseProvider._();
+
+final class ResolvedSectionsUseCaseProvider
+    extends
+        $FunctionalProvider<
+          ResolvedSectionsUseCase,
+          ResolvedSectionsUseCase,
+          ResolvedSectionsUseCase
+        >
+    with $Provider<ResolvedSectionsUseCase> {
+  ResolvedSectionsUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'resolvedSectionsUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$resolvedSectionsUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<ResolvedSectionsUseCase> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ResolvedSectionsUseCase create(Ref ref) {
+    return resolvedSectionsUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ResolvedSectionsUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ResolvedSectionsUseCase>(value),
+    );
+  }
+}
+
+String _$resolvedSectionsUseCaseHash() =>
+    r'2899f57d3d99953b178edf389f1e1afa2e39300a';

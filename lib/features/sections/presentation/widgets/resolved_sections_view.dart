@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/presentation/widgets/shimmers/product_slider_skeleton.dart';
+import 'package:google_play/features/sections/domain/entities/resolved_section.dart';
 import 'package:google_play/features/sections/presentation/widgets/section_widget_builder.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ResolvedSectionsView extends StatelessWidget {
-  final AsyncValue<List<>> sectionState;
+  final AsyncValue<List<ResolvedSection>> sectionState;
   final bool isSliver;
   final String storageId;
   final ValueChanged<String>? onProductTap;
@@ -76,7 +77,7 @@ class _BuildError extends StatelessWidget {
 }
 
 class _BuildData extends StatelessWidget {
-  final List<> sections;
+  final List<ResolvedSection> sections;
   final bool isSliver;
   final String storageId;
   final ValueChanged<String>? onProductTap;
