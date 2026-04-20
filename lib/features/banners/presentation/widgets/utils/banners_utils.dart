@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/global_constants.dart';
-import 'package:google_play/core/presentation/widgets/components/feedback/error/asset_not_found_placeholder.dart';
+import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
 
 class BannerImage extends StatelessWidget {
   final String assetPath;
@@ -25,17 +25,21 @@ class BannerImage extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Image.asset(
+        child: Image.network(
           assetPath,
           cacheWidth: 800,
           cacheHeight: 800,
           fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) =>
-              const AssetNotFoundPlaceholder(
-                width: double.infinity,
-                height: 180,
-                borderRadius: 10,
-              ),
+          loadingBuilder: NetworkImageBuilders.shimmer(
+            width: double.infinity,
+            height: 180,
+            borderRadius: 10,
+          ),
+          errorBuilder: NetworkImageBuilders.placeholder(
+            width: double.infinity,
+            height: 180,
+            borderRadius: 10,
+          ),
         ),
       ),
     );

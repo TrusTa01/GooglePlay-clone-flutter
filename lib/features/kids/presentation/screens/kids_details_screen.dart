@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/constants/link_constants.dart';
+import 'package:google_play/core/constants/network_images_constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
+import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/core/presentation/widgets/widgets.dart';
 
@@ -28,11 +31,19 @@ class KidsDetailsScreen extends StatelessWidget {
                   onLeadingPressed: () => context.pop(),
                 ),
                 SliverToBoxAdapter(
-                  child: Image.asset(
-                    'assets/images/kids_tab/kids_details_image1.webp',
+                  child: Image.network(
+                    NetworkImagesConstants.kidsDetailsImage1,
                     width: double.infinity,
                     height: screenHeight / 4,
                     fit: BoxFit.cover,
+                    loadingBuilder: NetworkImageBuilders.shimmer(
+                      width: double.infinity,
+                      height: screenHeight / 4,
+                    ),
+                    errorBuilder: NetworkImageBuilders.placeholder(
+                      width: double.infinity,
+                      height: screenHeight / 4,
+                    ),
                   ),
                 ),
                 SliverPadding(
@@ -63,10 +74,20 @@ class KidsDetailsScreen extends StatelessWidget {
                       const SizedBox(height: 24),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          'assets/images/kids_tab/kids_details_image2.webp',
+                        child: Image.network(
+                          NetworkImagesConstants.kidsDetailsImage2,
                           width: double.infinity,
                           fit: BoxFit.contain,
+                          loadingBuilder: NetworkImageBuilders.shimmer(
+                            width: double.infinity,
+                            height: screenHeight / 4,
+                            borderRadius: 12,
+                          ),
+                          errorBuilder: NetworkImageBuilders.placeholder(
+                            width: double.infinity,
+                            height: screenHeight / 4,
+                            borderRadius: 12,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 32),
@@ -82,10 +103,20 @@ class KidsDetailsScreen extends StatelessWidget {
                       const SizedBox(height: 32),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          'assets/images/kids_tab/kids_details_image3.webp',
+                        child: Image.network(
+                          NetworkImagesConstants.kidsDetailsImage3,
                           width: double.infinity,
                           fit: BoxFit.contain,
+                          loadingBuilder: NetworkImageBuilders.shimmer(
+                            width: double.infinity,
+                            height: screenHeight / 4,
+                            borderRadius: 12,
+                          ),
+                          errorBuilder: NetworkImageBuilders.placeholder(
+                            width: double.infinity,
+                            height: screenHeight / 4,
+                            borderRadius: 12,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 32),
@@ -93,18 +124,14 @@ class KidsDetailsScreen extends StatelessWidget {
                       _buildMainText(context.l10n.kidsBadgeDescription),
                       _buildLinkButton(
                         context.l10n.detailsMore,
-                        () => launchMyUrl(
-                          'https://support.google.com/googleplay/',
-                        ),
+                        () => launchMyUrl(LinkConstants.supportLink),
                       ),
                       const SizedBox(height: 32),
                       _buildSectionTitle(context.l10n.kidsServicesTitle),
                       _buildMainText(context.l10n.kidsServicesDescription),
                       _buildLinkButton(
                         context.l10n.detailsMore,
-                        () => launchMyUrl(
-                          'https://support.google.com/googleplay/',
-                        ),
+                        () => launchMyUrl(LinkConstants.supportLink),
                       ),
                       const SizedBox(height: 40),
                     ]),

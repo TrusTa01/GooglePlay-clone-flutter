@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/app_bar_constants.dart';
 import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/constants/network_images_constants.dart';
+import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
 
 // Логотип
 class AppBarLogo extends StatelessWidget {
@@ -20,10 +22,15 @@ class AppBarLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform.translate(
       offset: Offset(-translate.dx, -translate.dy),
-      child: Image.asset(
-        'assets/icons/logo.png',
+      child: Image.network(
+        NetworkImagesConstants.logo,
         height: height,
         width: width,
+        loadingBuilder: NetworkImageBuilders.shimmer(
+          width: width,
+          height: height,
+          borderRadius: 8,
+        ),
         errorBuilder: (context, error, stackTrace) {
           return const Text(
             'GP',

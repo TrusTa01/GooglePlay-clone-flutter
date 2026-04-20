@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/constants/global_constants.dart';
-import 'package:google_play/core/presentation/widgets/shimmers/shimmer_box.dart';
-import 'package:google_play/core/presentation/widgets/components/feedback/error/asset_not_found_placeholder.dart';
+import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_card_ui_model.dart';
 
 class ProductCardThumbnail extends StatelessWidget {
@@ -44,31 +43,24 @@ class ProductCardThumbnail extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Image.asset(
+        child: Image.network(
           iconUrl,
           width: iconWidth,
           height: iconHeight,
           cacheWidth: cacheWidth,
           cacheHeight: cacheHeight,
           fit: fit,
-          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-            if (wasSynchronouslyLoaded) return child;
-            return frame != null
-                ? child
-                : ShimmerBox(width: iconWidth, height: iconHeight);
-          },
-          errorBuilder: (context, error, stackTrace) =>
-              _buildErrorPlaceholder(),
+          loadingBuilder: NetworkImageBuilders.shimmer(
+            width: iconWidth,
+            height: iconHeight,
+          ),
+          errorBuilder: NetworkImageBuilders.placeholder(
+            width: iconWidth,
+            height: iconHeight,
+            borderRadius: borderRadius,
+          ),
         ),
       ),
-    );
-  }
-
-  Widget _buildErrorPlaceholder() {
-    return AssetNotFoundPlaceholder(
-      width: iconWidth,
-      height: iconHeight,
-      borderRadius: borderRadius,
     );
   }
 }
@@ -233,10 +225,19 @@ class ProductInfoTag extends StatelessWidget {
           ),
           if (iconPath != null) ...[
             const SizedBox(width: 4),
-            Image.asset(
+            Image.network(
               iconPath!,
               height: 10,
               color: iconColor ?? const Color.fromARGB(255, 28, 94, 207),
+              loadingBuilder: NetworkImageBuilders.shimmer(
+                width: 10,
+                height: 10,
+                borderRadius: 2,
+              ),
+              errorBuilder: NetworkImageBuilders.icon(
+                size: 10,
+                color: iconColor ?? const Color.fromARGB(255, 28, 94, 207),
+              ),
             ),
           ],
         ],

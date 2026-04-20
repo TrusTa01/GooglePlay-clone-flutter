@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/presentation/widgets/shimmers/shimmer_box.dart';
-import 'package:google_play/core/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
 
 class ProductScreenshotImage extends StatelessWidget {
   final String imageUrl;
@@ -52,25 +51,19 @@ class ProductScreenshotImage extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(borderRadius),
-            child: Image.asset(
+            child: Image.network(
               imageUrl,
               width: currentWidth,
               height: height,
               cacheWidth: cacheWidth,
               cacheHeight: cacheHeight,
               fit: BoxFit.cover,
-              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                if (wasSynchronouslyLoaded) return child;
-                return frame != null
-                    ? child
-                    : ShimmerBox(
-                        width: currentWidth,
-                        height: height,
-                        borderRadius: borderRadius,
-                      );
-              },
-              errorBuilder: (context, error, stackTrace) =>
-                  AssetNotFoundPlaceholder(
+              loadingBuilder: NetworkImageBuilders.shimmer(
+                width: currentWidth,
+                height: height,
+                borderRadius: borderRadius,
+              ),
+              errorBuilder: NetworkImageBuilders.placeholder(
                 width: currentWidth,
                 height: height,
                 borderRadius: borderRadius,
