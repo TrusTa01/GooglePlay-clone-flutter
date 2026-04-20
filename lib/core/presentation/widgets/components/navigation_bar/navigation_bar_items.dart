@@ -7,7 +7,7 @@ import 'package:google_play/core/presentation/widgets/components/images/network_
 List<NavigationDestination> buildNavDestinations(BuildContext context) => [
   NavigationDestination(
     icon: Image.network(
-      NetworkImagesConstants.gamepad,
+      NetworkImagesConstants.gamepadOutlined,
       color: Constants.uiUnselectedColor,
       width: 20,
       height: 20,
@@ -22,7 +22,7 @@ List<NavigationDestination> buildNavDestinations(BuildContext context) => [
       ),
     ),
     selectedIcon: Image.network(
-      NetworkImagesConstants.gamepadOutlined,
+      NetworkImagesConstants.gamepad,
       color: Constants.uiSelectedIconColor,
       width: 20,
       height: 20,
@@ -40,7 +40,7 @@ List<NavigationDestination> buildNavDestinations(BuildContext context) => [
   ),
   NavigationDestination(
     icon: Image.network(
-      NetworkImagesConstants.app,
+      NetworkImagesConstants.appOutlined,
       color: Constants.uiUnselectedColor,
       width: 16,
       height: 16,
@@ -55,7 +55,7 @@ List<NavigationDestination> buildNavDestinations(BuildContext context) => [
       ),
     ),
     selectedIcon: Image.network(
-      NetworkImagesConstants.appOutlined,
+      NetworkImagesConstants.app,
       color: Constants.uiSelectedIconColor,
       width: 16,
       height: 16,
