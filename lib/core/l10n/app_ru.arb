@@ -118,5 +118,8 @@
   "reviewsCountLabel": "отзывов",
   "detailsSectionExtra": "Дополнительно",
   "failedToLoadTabs": "Не удалось загрузить вкладки: {error}",
-  "filterRecent": "Новое"
+  "filterRecent": "Новое",
+  "initializationLoadErrorTitle": "Ошибка загрузки",
+  "initializationRetry": "Попробовать снова",
+  "initializationRetryInProgress": "Повтор…"
 }

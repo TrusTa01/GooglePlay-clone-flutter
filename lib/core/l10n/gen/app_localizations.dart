@@ -811,6 +811,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recent'**
   String get filterRecent;
+
+  /// Cold start failure — generic message for the user
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the app'**
+  String get initializationLoadErrorTitle;
+
+  /// Retry bootstrap button
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get initializationRetry;
+
+  /// Retry button label while bootstrap is running again
+  ///
+  /// In en, this message translates to:
+  /// **'Retrying…'**
+  String get initializationRetryInProgress;
 }
 
 class _AppLocalizationsDelegate

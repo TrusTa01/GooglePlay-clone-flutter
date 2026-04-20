@@ -380,4 +380,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get filterRecent => 'Recent';
+
+  @override
+  String get initializationLoadErrorTitle => 'Couldn\'t load the app';
+
+  @override
+  String get initializationRetry => 'Try again';
+
+  @override
+  String get initializationRetryInProgress => 'Retrying…';
 }

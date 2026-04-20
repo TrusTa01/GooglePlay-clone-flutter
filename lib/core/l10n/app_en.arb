@@ -488,5 +488,17 @@
   "filterRecent": "Recent",
   "@filterRecent": {
     "description": "Filter label: recent / new"
+  },
+  "initializationLoadErrorTitle": "Couldn't load the app",
+  "@initializationLoadErrorTitle": {
+    "description": "Cold start failure — generic message for the user"
+  },
+  "initializationRetry": "Try again",
+  "@initializationRetry": {
+    "description": "Retry bootstrap button"
+  },
+  "initializationRetryInProgress": "Retrying…",
+  "@initializationRetryInProgress": {
+    "description": "Retry button label while bootstrap is running again"
   }
 }

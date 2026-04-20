@@ -380,4 +380,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get filterRecent => 'Новое';
+
+  @override
+  String get initializationLoadErrorTitle => 'Ошибка загрузки';
+
+  @override
+  String get initializationRetry => 'Попробовать снова';
+
+  @override
+  String get initializationRetryInProgress => 'Повтор…';
 }
