@@ -25,7 +25,7 @@ SupabaseTabsRemoteDataSource tabsRemoteDataSource(Ref ref) {
 // local
 @riverpod
 DriftTabsLocalDataSource tabsLocalDataSource(Ref ref) {
-  final db = appDatabase();
+  final db = appDatabase(ref);
   return DriftTabsLocalDataSource(db: db);
 }
 
@@ -34,7 +34,7 @@ DriftTabsLocalDataSource tabsLocalDataSource(Ref ref) {
 ITabsRepository tabsRepo(Ref ref) {
   final remote = tabsRemoteDataSource(ref);
   final local = tabsLocalDataSource(ref);
-  final policy = freshnessPolicy();
+  final policy = freshnessPolicy(ref);
   return TabsRepository(remote: remote, local: local, policy: policy);
 }
 

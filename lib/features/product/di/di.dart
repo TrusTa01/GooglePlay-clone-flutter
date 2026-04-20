@@ -31,7 +31,7 @@ SupabaseProductRemoteDataSource productRemoteDataSource(Ref ref) =>
 // local
 @riverpod
 DriftProductsLocalDataSource productsLocalDataSource(Ref ref) {
-  final db = appDatabase();
+  final db = appDatabase(ref);
   return DriftProductsLocalDataSource(db: db);
 }
 
@@ -40,13 +40,13 @@ DriftProductsLocalDataSource productsLocalDataSource(Ref ref) {
 IProductsRepository productsRepo(Ref ref) {
   final remote = productRemoteDataSource(ref);
   final local = productsLocalDataSource(ref);
-  final policy = freshnessPolicy();
+  final policy = freshnessPolicy(ref);
 
   return CacheFirstProductRepository(
     remote: remote,
     local: local,
     freshnessPolicy: policy,
-    fetchBackoffPolicy: fetchBackoffPolicy(),
+    fetchBackoffPolicy: fetchBackoffPolicy(ref),
   );
 }
 

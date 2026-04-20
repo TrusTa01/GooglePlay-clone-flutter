@@ -31,7 +31,7 @@ SupabaseSectionsRemoteDataSource sectionsRemoteDatasource(Ref ref) {
 // local
 @riverpod
 DriftSectionsLocalDataSource sectionsLocalDatasource(Ref ref) {
-  final db = appDatabase();
+  final db = appDatabase(ref);
   return DriftSectionsLocalDataSource(db: db);
 }
 
@@ -40,7 +40,7 @@ DriftSectionsLocalDataSource sectionsLocalDatasource(Ref ref) {
 ISectionsRepository sectionsRepo(Ref ref) {
   final remote = sectionsRemoteDatasource(ref);
   final local = sectionsLocalDatasource(ref);
-  final policy = freshnessPolicy();
+  final policy = freshnessPolicy(ref);
   return SectionsRepository(remote: remote, local: local, policy: policy);
 }
 

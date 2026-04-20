@@ -28,7 +28,7 @@ SupabaseBannerRemoteDataSource bannerRemoteDataSource(Ref ref) =>
 // local
 @riverpod
 DriftBannerLocalDataSource bannersLocalDataSource(Ref ref) {
-  final db = appDatabase();
+  final db = appDatabase(ref);
   return DriftBannerLocalDataSource(db: db);
 }
 
@@ -37,8 +37,8 @@ DriftBannerLocalDataSource bannersLocalDataSource(Ref ref) {
 IBannersRepository bannersRepo(Ref ref) {
   final remote = bannerRemoteDataSource(ref);
   final local = bannersLocalDataSource(ref);
-  final policy = freshnessPolicy();
-  final backoffPolicy = fetchBackoffPolicy();
+  final policy = freshnessPolicy(ref);
+  final backoffPolicy = fetchBackoffPolicy(ref);
 
   return CacheFirstBannersRepository(
     remote: remote,

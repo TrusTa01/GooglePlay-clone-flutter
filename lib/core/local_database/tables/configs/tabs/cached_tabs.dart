@@ -10,5 +10,5 @@ class CachedTabs extends Table {
   IntColumn get sortOrder => integer().withDefault(const Constant(0))();
 
   @override
-  Set<TextColumn> get primaryKey => {id};
+  Set<Column> get primaryKey => {id};
 }

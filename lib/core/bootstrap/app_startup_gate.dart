@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_play/core/bootstrap/app_bootstrap.dart';
@@ -19,6 +23,39 @@ class AppStartupGate extends StatefulWidget {
 class _AppStartupGateState extends State<AppStartupGate> {
   AppLaunchState _state = const AppLaunchBootstrapping();
 
+  void _sendDebugLog({
+    required String hypothesisId,
+    required String location,
+    required String message,
+    required Map<String, Object?> data,
+  }) {
+    unawaited(() async {
+      try {
+        final client = HttpClient();
+        final request = await client.postUrl(
+          Uri.parse(
+            'http://127.0.0.1:7524/ingest/51b596c6-c4f0-4a0d-9968-5cb11d9eeb41',
+          ),
+        );
+        request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
+        request.headers.set('X-Debug-Session-Id', '65c934');
+        request.write(
+          jsonEncode({
+            'sessionId': '65c934',
+            'runId': 'pre-fix',
+            'hypothesisId': hypothesisId,
+            'location': location,
+            'message': message,
+            'data': data,
+            'timestamp': DateTime.now().millisecondsSinceEpoch,
+          }),
+        );
+        await request.close();
+        client.close(force: true);
+      } catch (_) {}
+    }());
+  }
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +63,14 @@ class _AppStartupGateState extends State<AppStartupGate> {
   }
 
   Future<void> _runBootstrap() async {
+    // #region agent log
+    _sendDebugLog(
+      hypothesisId: 'H4',
+      location: 'lib/core/bootstrap/app_startup_gate.dart:_runBootstrap:enter',
+      message: 'bootstrap started',
+      data: {'mounted': mounted, 'stateType': _state.runtimeType.toString()},
+    );
+    // #endregion
     if (!mounted) return;
     setState(() {
       _state = switch (_state) {

@@ -8,7 +8,7 @@ import 'package:google_play/core/local_database/app_database.dart';
 part 'di.g.dart';
 
 @riverpod
-AppDatabase appDatabase() => AppDatabase();
+AppDatabase appDatabase(Ref ref) => AppDatabase();
 
 @riverpod
 SupabaseQueryExecutor queryExecutor(Ref ref) {
@@ -17,10 +17,11 @@ SupabaseQueryExecutor queryExecutor(Ref ref) {
 }
 
 @riverpod
-FreshnessPolicy freshnessPolicy() => TimeBasedFreshnessPolicy(
+FreshnessPolicy freshnessPolicy(Ref ref) => TimeBasedFreshnessPolicy(
   staleDuration: CacheConstants.staleDuration,
   expireDuration: CacheConstants.expireDuration,
 );
 
 @riverpod
-ExponentialFetchBackoff fetchBackoffPolicy() => const ExponentialFetchBackoff();
+ExponentialFetchBackoff fetchBackoffPolicy(Ref ref) =>
+    const ExponentialFetchBackoff();
