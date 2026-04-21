@@ -58,8 +58,18 @@ dependencies:
   # auth
   google_sign_in: ^7.2.0
 
+  # tests
+  mocktail: ^1.0.5
+
 dev_dependencies:
+  # tests
+  flutter_test:
+    sdk: flutter
+  
+  # lints
   flutter_lints: ^6.0.0
+
+  # local storage
   drift_dev: ">=2.31.0 <2.32.0"
 
   # generators
