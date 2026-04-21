@@ -8,15 +8,23 @@ part of 'product_dto.dart';
 
 _DeveloperDto _$DeveloperDtoFromJson(Map<String, dynamic> json) =>
     _DeveloperDto(
-      id: json['id'] as String,
-      city: DtoJsonConverters.localizedStringFromJson(json['city']),
-      phone: json['phone'] as String,
-      address: DtoJsonConverters.localizedStringFromJson(json['address']),
-      company: DtoJsonConverters.localizedStringFromJson(json['company']),
-      country: DtoJsonConverters.localizedStringFromJson(json['country']),
-      websiteUrl: json['website_url'] as String,
-      emailSupport: json['email_support'] as String,
-      privacyPolicyUrl: json['privacy_policy_url'] as String,
+      id: json['id'] as String? ?? '',
+      city: json['city'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['city']),
+      phone: json['phone'] as String? ?? '',
+      address: json['address'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['address']),
+      company: json['company'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['company']),
+      country: json['country'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['country']),
+      websiteUrl: json['website_url'] as String? ?? '',
+      emailSupport: json['email_support'] as String? ?? '',
+      privacyPolicyUrl: json['privacy_policy_url'] as String? ?? '',
     );
 
 Map<String, dynamic> _$DeveloperDtoToJson(_DeveloperDto instance) =>
@@ -34,11 +42,13 @@ Map<String, dynamic> _$DeveloperDtoToJson(_DeveloperDto instance) =>
 
 _BookPublisherDto _$BookPublisherDtoFromJson(Map<String, dynamic> json) =>
     _BookPublisherDto(
-      id: json['id'] as String,
-      name: DtoJsonConverters.localizedStringFromJson(json['name']),
-      description: DtoJsonConverters.localizedStringFromJson(
-        json['description'],
-      ),
+      id: json['id'] as String? ?? '',
+      name: json['name'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['name']),
+      description: json['description'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['description']),
     );
 
 Map<String, dynamic> _$BookPublisherDtoToJson(_BookPublisherDto instance) =>
@@ -49,16 +59,20 @@ Map<String, dynamic> _$BookPublisherDtoToJson(_BookPublisherDto instance) =>
     };
 
 _CategoryDto _$CategoryDtoFromJson(Map<String, dynamic> json) => _CategoryDto(
-  id: json['id'] as String,
-  name: DtoJsonConverters.localizedStringFromJson(json['name']),
+  id: json['id'] as String? ?? '',
+  name: json['name'] == null
+      ? const <String, String>{}
+      : DtoJsonConverters.localizedStringFromJson(json['name']),
 );
 
 Map<String, dynamic> _$CategoryDtoToJson(_CategoryDto instance) =>
     <String, dynamic>{'id': instance.id, 'name': instance.name};
 
 _TagDto _$TagDtoFromJson(Map<String, dynamic> json) => _TagDto(
-  id: json['id'] as String,
-  name: DtoJsonConverters.localizedStringFromJson(json['name']),
+  id: json['id'] as String? ?? '',
+  name: json['name'] == null
+      ? const <String, String>{}
+      : DtoJsonConverters.localizedStringFromJson(json['name']),
 );
 
 Map<String, dynamic> _$TagDtoToJson(_TagDto instance) => <String, dynamic>{
@@ -75,7 +89,7 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
     json['short_description'],
   ),
   description: DtoJsonConverters.localizedStringFromJson(json['description']),
-  rating: (json['rating'] as num).toDouble(),
+  rating: (json['rating'] as num?)?.toDouble(),
   reviewsCount: (json['reviews_count'] as num).toInt(),
   ratingAvg: (json['rating_avg'] as num?)?.toDouble() ?? 0,
   ratingDistribution: json['rating_distribution'] == null
@@ -100,26 +114,28 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   supportedLanguages: json['supported_languages'] == null
       ? const <String>[]
       : DtoJsonConverters.stringListFromJson(json['supported_languages']),
-  containsAds: json['contains_ads'] as bool,
-  containsPaidContent: json['contains_paid_content'] as bool,
-  version: json['version'] as String,
-  size: json['size'] as String,
+  containsAds: json['contains_ads'] as bool?,
+  containsPaidContent: json['contains_paid_content'] as bool?,
+  version: json['version'] as String?,
+  size: json['size'] as String?,
   eventText: DtoJsonConverters.localizedStringNullableFromJson(
     json['event_text'],
   ),
   whatsNewText: DtoJsonConverters.localizedStringFromJson(
     json['whats_new_text'],
   ),
-  downloadCount: (json['download_count'] as num).toInt(),
-  ageRating: (json['age_rating'] as num).toInt(),
-  isKidsFriendly: json['is_kids_friendly'] as bool,
+  downloadCount: (json['download_count'] as num?)?.toInt(),
+  ageRating: (json['age_rating'] as num?)?.toInt(),
+  isKidsFriendly: json['is_kids_friendly'] as bool?,
   ageRatingReasons: DtoJsonConverters.localizedStringListFromJson(
     json['age_rating_reasons'],
   ),
   permissions: DtoJsonConverters.localizedStringListFromJson(
     json['permissions'],
   ),
-  lastUpdated: DateTime.parse(json['last_updated'] as String),
+  lastUpdated: json['last_updated'] == null
+      ? null
+      : DateTime.parse(json['last_updated'] as String),
   creatorDescription: json['creator_description'] == null
       ? const <String, String>{}
       : DtoJsonConverters.localizedStringFromJson(json['creator_description']),
@@ -130,7 +146,9 @@ GameDto _$GameDtoFromJson(Map<String, dynamic> json) => GameDto(
   achievements: json['achievements'] == null
       ? const <LocalizedString>[]
       : DtoJsonConverters.localizedStringListFromJson(json['achievements']),
-  developer: DeveloperDto.fromJson(json['developer'] as Map<String, dynamic>),
+  developer: json['developer'] == null
+      ? null
+      : DeveloperDto.fromJson(json['developer'] as Map<String, dynamic>),
   categories: (json['categories'] as List<dynamic>)
       .map((e) => CategoryDto.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -172,7 +190,7 @@ Map<String, dynamic> _$GameDtoToJson(GameDto instance) => <String, dynamic>{
   'is_kids_friendly': instance.isKidsFriendly,
   'age_rating_reasons': instance.ageRatingReasons,
   'permissions': instance.permissions,
-  'last_updated': instance.lastUpdated.toIso8601String(),
+  'last_updated': instance.lastUpdated?.toIso8601String(),
   'creator_description': instance.creatorDescription,
   'is_online': instance.isOnline,
   'has_multiplayer': instance.hasMultiplayer,
@@ -193,7 +211,7 @@ AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
     json['short_description'],
   ),
   description: DtoJsonConverters.localizedStringFromJson(json['description']),
-  rating: (json['rating'] as num).toDouble(),
+  rating: (json['rating'] as num?)?.toDouble(),
   reviewsCount: (json['reviews_count'] as num).toInt(),
   ratingAvg: (json['rating_avg'] as num?)?.toDouble() ?? 0,
   ratingDistribution: json['rating_distribution'] == null
@@ -217,31 +235,35 @@ AppDto _$AppDtoFromJson(Map<String, dynamic> json) => AppDto(
   supportedLanguages: json['supported_languages'] == null
       ? const <String>[]
       : DtoJsonConverters.stringListFromJson(json['supported_languages']),
-  containsAds: json['contains_ads'] as bool,
-  containsPaidContent: json['contains_paid_content'] as bool,
-  version: json['version'] as String,
-  size: json['size'] as String,
+  containsAds: json['contains_ads'] as bool?,
+  containsPaidContent: json['contains_paid_content'] as bool?,
+  version: json['version'] as String?,
+  size: json['size'] as String?,
   eventText: DtoJsonConverters.localizedStringNullableFromJson(
     json['event_text'],
   ),
   whatsNewText: DtoJsonConverters.localizedStringFromJson(
     json['whats_new_text'],
   ),
-  downloadCount: (json['download_count'] as num).toInt(),
-  ageRating: (json['age_rating'] as num).toInt(),
-  isKidsFriendly: json['is_kids_friendly'] as bool,
+  downloadCount: (json['download_count'] as num?)?.toInt(),
+  ageRating: (json['age_rating'] as num?)?.toInt(),
+  isKidsFriendly: json['is_kids_friendly'] as bool?,
   ageRatingReasons: DtoJsonConverters.localizedStringListFromJson(
     json['age_rating_reasons'],
   ),
   permissions: DtoJsonConverters.localizedStringListFromJson(
     json['permissions'],
   ),
-  lastUpdated: DateTime.parse(json['last_updated'] as String),
+  lastUpdated: json['last_updated'] == null
+      ? null
+      : DateTime.parse(json['last_updated'] as String),
   creatorDescription: json['creator_description'] == null
       ? const <String, String>{}
       : DtoJsonConverters.localizedStringFromJson(json['creator_description']),
   packageName: json['package_name'] as String,
-  developer: DeveloperDto.fromJson(json['developer'] as Map<String, dynamic>),
+  developer: json['developer'] == null
+      ? null
+      : DeveloperDto.fromJson(json['developer'] as Map<String, dynamic>),
   categories: (json['categories'] as List<dynamic>)
       .map((e) => CategoryDto.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -282,7 +304,7 @@ Map<String, dynamic> _$AppDtoToJson(AppDto instance) => <String, dynamic>{
   'is_kids_friendly': instance.isKidsFriendly,
   'age_rating_reasons': instance.ageRatingReasons,
   'permissions': instance.permissions,
-  'last_updated': instance.lastUpdated.toIso8601String(),
+  'last_updated': instance.lastUpdated?.toIso8601String(),
   'creator_description': instance.creatorDescription,
   'package_name': instance.packageName,
   'developer': instance.developer,
@@ -299,7 +321,7 @@ BookDto _$BookDtoFromJson(Map<String, dynamic> json) => BookDto(
     json['short_description'],
   ),
   description: DtoJsonConverters.localizedStringFromJson(json['description']),
-  rating: (json['rating'] as num).toDouble(),
+  rating: (json['rating'] as num?)?.toDouble(),
   reviewsCount: (json['reviews_count'] as num).toInt(),
   ratingAvg: (json['rating_avg'] as num?)?.toDouble() ?? 0,
   ratingDistribution: json['rating_distribution'] == null

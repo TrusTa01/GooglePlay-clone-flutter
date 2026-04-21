@@ -16,29 +16,31 @@ part 'di.g.dart';
 // network
 @riverpod
 SupabaseBannerNetworkDataSource bannerNetworkDataSource(Ref ref) {
-  final executor = queryExecutor(ref);
+  final executor = ref.watch(queryExecutorProvider);
   return SupabaseBannerNetworkDataSource(executor: executor);
 }
 
 // remote
 @riverpod
 SupabaseBannerRemoteDataSource bannerRemoteDataSource(Ref ref) =>
-    SupabaseBannerRemoteDataSource(datasource: bannerNetworkDataSource(ref));
+    SupabaseBannerRemoteDataSource(
+      datasource: ref.watch(bannerNetworkDataSourceProvider),
+    );
 
 // local
 @riverpod
 DriftBannerLocalDataSource bannersLocalDataSource(Ref ref) {
-  final db = appDatabase(ref);
+  final db = ref.watch(appDatabaseProvider);
   return DriftBannerLocalDataSource(db: db);
 }
 
 // repo
 @riverpod
 IBannersRepository bannersRepo(Ref ref) {
-  final remote = bannerRemoteDataSource(ref);
-  final local = bannersLocalDataSource(ref);
-  final policy = freshnessPolicy(ref);
-  final backoffPolicy = fetchBackoffPolicy(ref);
+  final remote = ref.watch(bannerRemoteDataSourceProvider);
+  final local = ref.watch(bannersLocalDataSourceProvider);
+  final policy = ref.watch(freshnessPolicyProvider);
+  final backoffPolicy = ref.watch(fetchBackoffPolicyProvider);
 
   return CacheFirstBannersRepository(
     remote: remote,
@@ -61,7 +63,7 @@ IWatchBannersUseCase watchBannersUseCase(Ref ref) {
   return WatchBannersUseCase(repo);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 IGetBannerByIdUseCase getBannerByIdUseCase(Ref ref) {
   final repo = ref.watch(bannersRepoProvider);
   return GetBannerByIdUseCase(repo);

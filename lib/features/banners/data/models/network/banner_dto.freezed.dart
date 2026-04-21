@@ -38,7 +38,7 @@ BannerDto _$BannerDtoFromJson(
 /// @nodoc
 mixin _$BannerDto {
 
- String get type; String get id; String get imageAssetPath;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get topToolTipText;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description; DateTime get createdAt; DateTime get updatedAt;
+ String get type; String get id;@JsonKey(name: 'image_asset_path') String get imageAssetPath;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get topToolTipText;@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get description;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt;
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -69,7 +69,7 @@ abstract mixin class $BannerDtoCopyWith<$Res>  {
   factory $BannerDtoCopyWith(BannerDto value, $Res Function(BannerDto) _then) = _$BannerDtoCopyWithImpl;
 @useResult
 $Res call({
- String type, String id, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) Map<String, String>? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> description, DateTime createdAt, DateTime updatedAt
+ String type, String id,@JsonKey(name: 'image_asset_path') String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) Map<String, String>? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) Map<String, String> description,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
 });
 
 
@@ -181,7 +181,7 @@ return action(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String type,  String id,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription,  DateTime createdAt,  DateTime updatedAt)?  event,TResult Function( String type,  String id,  String productExternalId,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  DateTime createdAt,  DateTime updatedAt)?  action,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String type,  String id, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description, @JsonKey(name: 'event_id')  String? eventId, @JsonKey(name: 'event_category')  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)@JsonKey(name: 'event_description')  LocalizedString? eventDescription, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  event,TResult Function( String type,  String id, @JsonKey(name: 'product_external_id')  String productExternalId, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  action,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case EventBannerDto() when event != null:
 return event(_that.type,_that.id,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription,_that.createdAt,_that.updatedAt);case ActionBannerDto() when action != null:
@@ -203,7 +203,7 @@ return action(_that.type,_that.id,_that.productExternalId,_that.imageAssetPath,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String type,  String id,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription,  DateTime createdAt,  DateTime updatedAt)  event,required TResult Function( String type,  String id,  String productExternalId,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  DateTime createdAt,  DateTime updatedAt)  action,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String type,  String id, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description, @JsonKey(name: 'event_id')  String? eventId, @JsonKey(name: 'event_category')  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)@JsonKey(name: 'event_description')  LocalizedString? eventDescription, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)  event,required TResult Function( String type,  String id, @JsonKey(name: 'product_external_id')  String productExternalId, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)  action,}) {final _that = this;
 switch (_that) {
 case EventBannerDto():
 return event(_that.type,_that.id,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription,_that.createdAt,_that.updatedAt);case ActionBannerDto():
@@ -221,7 +221,7 @@ return action(_that.type,_that.id,_that.productExternalId,_that.imageAssetPath,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String type,  String id,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  String? eventId,  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? eventDescription,  DateTime createdAt,  DateTime updatedAt)?  event,TResult? Function( String type,  String id,  String productExternalId,  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description,  DateTime createdAt,  DateTime updatedAt)?  action,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String type,  String id, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description, @JsonKey(name: 'event_id')  String? eventId, @JsonKey(name: 'event_category')  String? eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)@JsonKey(name: 'event_description')  LocalizedString? eventDescription, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  event,TResult? Function( String type,  String id, @JsonKey(name: 'product_external_id')  String productExternalId, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)  LocalizedString description, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  action,}) {final _that = this;
 switch (_that) {
 case EventBannerDto() when event != null:
 return event(_that.type,_that.id,_that.imageAssetPath,_that.title,_that.topToolTipText,_that.description,_that.eventId,_that.eventCategory,_that.eventDescription,_that.createdAt,_that.updatedAt);case ActionBannerDto() when action != null:
@@ -237,12 +237,12 @@ return action(_that.type,_that.id,_that.productExternalId,_that.imageAssetPath,_
 @JsonSerializable(createToJson: false)
 
 class EventBannerDto extends BannerDto {
-  const EventBannerDto({this.type = 'event', required this.id, required this.imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, this.eventId, this.eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? eventDescription, required this.createdAt, required this.updatedAt}): _title = title,_topToolTipText = topToolTipText,_description = description,_eventDescription = eventDescription,super._();
+  const EventBannerDto({this.type = 'event', required this.id, @JsonKey(name: 'image_asset_path') this.imageAssetPath = '', @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) final  LocalizedString title = const <String, String>{}, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) final  LocalizedString description = const <String, String>{}, @JsonKey(name: 'event_id') this.eventId, @JsonKey(name: 'event_category') this.eventCategory, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)@JsonKey(name: 'event_description') final  LocalizedString? eventDescription, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt}): _title = title,_topToolTipText = topToolTipText,_description = description,_eventDescription = eventDescription,super._();
   factory EventBannerDto.fromJson(Map<String, dynamic> json) => _$EventBannerDtoFromJson(json);
 
 @override@JsonKey() final  String type;
 @override final  String id;
-@override final  String imageAssetPath;
+@override@JsonKey(name: 'image_asset_path') final  String imageAssetPath;
  final  LocalizedString _title;
 @override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
   if (_title is EqualUnmodifiableMapView) return _title;
@@ -266,10 +266,10 @@ class EventBannerDto extends BannerDto {
   return EqualUnmodifiableMapView(_description);
 }
 
- final  String? eventId;
- final  String? eventCategory;
+@JsonKey(name: 'event_id') final  String? eventId;
+@JsonKey(name: 'event_category') final  String? eventCategory;
  final  LocalizedString? _eventDescription;
-@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get eventDescription {
+@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)@JsonKey(name: 'event_description') LocalizedString? get eventDescription {
   final value = _eventDescription;
   if (value == null) return null;
   if (_eventDescription is EqualUnmodifiableMapView) return _eventDescription;
@@ -277,8 +277,8 @@ class EventBannerDto extends BannerDto {
   return EqualUnmodifiableMapView(value);
 }
 
-@override final  DateTime createdAt;
-@override final  DateTime updatedAt;
+@override@JsonKey(name: 'created_at') final  DateTime createdAt;
+@override@JsonKey(name: 'updated_at') final  DateTime updatedAt;
 
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
@@ -310,7 +310,7 @@ abstract mixin class $EventBannerDtoCopyWith<$Res> implements $BannerDtoCopyWith
   factory $EventBannerDtoCopyWith(EventBannerDto value, $Res Function(EventBannerDto) _then) = _$EventBannerDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String type, String id, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, String? eventId, String? eventCategory,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? eventDescription, DateTime createdAt, DateTime updatedAt
+ String type, String id,@JsonKey(name: 'image_asset_path') String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description,@JsonKey(name: 'event_id') String? eventId,@JsonKey(name: 'event_category') String? eventCategory,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)@JsonKey(name: 'event_description') LocalizedString? eventDescription,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
 });
 
 
@@ -351,13 +351,13 @@ as DateTime,
 @JsonSerializable(createToJson: false)
 
 class ActionBannerDto extends BannerDto {
-  const ActionBannerDto({this.type = 'action', required this.id, required this.productExternalId, required this.imageAssetPath, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) required final  LocalizedString description, required this.createdAt, required this.updatedAt}): _title = title,_topToolTipText = topToolTipText,_description = description,super._();
+  const ActionBannerDto({this.type = 'action', required this.id, @JsonKey(name: 'product_external_id') this.productExternalId = '', @JsonKey(name: 'image_asset_path') this.imageAssetPath = '', @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) final  LocalizedString title = const <String, String>{}, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? topToolTipText, @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) final  LocalizedString description = const <String, String>{}, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt}): _title = title,_topToolTipText = topToolTipText,_description = description,super._();
   factory ActionBannerDto.fromJson(Map<String, dynamic> json) => _$ActionBannerDtoFromJson(json);
 
 @override@JsonKey() final  String type;
 @override final  String id;
- final  String productExternalId;
-@override final  String imageAssetPath;
+@JsonKey(name: 'product_external_id') final  String productExternalId;
+@override@JsonKey(name: 'image_asset_path') final  String imageAssetPath;
  final  LocalizedString _title;
 @override@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString get title {
   if (_title is EqualUnmodifiableMapView) return _title;
@@ -381,8 +381,8 @@ class ActionBannerDto extends BannerDto {
   return EqualUnmodifiableMapView(_description);
 }
 
-@override final  DateTime createdAt;
-@override final  DateTime updatedAt;
+@override@JsonKey(name: 'created_at') final  DateTime createdAt;
+@override@JsonKey(name: 'updated_at') final  DateTime updatedAt;
 
 /// Create a copy of BannerDto
 /// with the given fields replaced by the non-null parameter values.
@@ -414,7 +414,7 @@ abstract mixin class $ActionBannerDtoCopyWith<$Res> implements $BannerDtoCopyWit
   factory $ActionBannerDtoCopyWith(ActionBannerDto value, $Res Function(ActionBannerDto) _then) = _$ActionBannerDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String type, String id, String productExternalId, String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description, DateTime createdAt, DateTime updatedAt
+ String type, String id,@JsonKey(name: 'product_external_id') String productExternalId,@JsonKey(name: 'image_asset_path') String imageAssetPath,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? topToolTipText,@JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson) LocalizedString description,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
 });
 
 

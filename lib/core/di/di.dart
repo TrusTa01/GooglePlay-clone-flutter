@@ -7,7 +7,7 @@ import 'package:google_play/core/local_database/app_database.dart';
 
 part 'di.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 AppDatabase appDatabase(Ref ref) => AppDatabase();
 
 @riverpod

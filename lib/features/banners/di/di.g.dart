@@ -57,7 +57,7 @@ final class BannerNetworkDataSourceProvider
 }
 
 String _$bannerNetworkDataSourceHash() =>
-    r'ba83128febaf250d39aea86b5f64e6b643b39a24';
+    r'63472bbb1f04517503469f5b9216115fdce8fe5d';
 
 @ProviderFor(bannerRemoteDataSource)
 final bannerRemoteDataSourceProvider = BannerRemoteDataSourceProvider._();
@@ -107,7 +107,7 @@ final class BannerRemoteDataSourceProvider
 }
 
 String _$bannerRemoteDataSourceHash() =>
-    r'7c93310c52a39a66cf10590189dfb5d9ce015a47';
+    r'73c428b83a250dd0c13d0017e172af4302cae85c';
 
 @ProviderFor(bannersLocalDataSource)
 final bannersLocalDataSourceProvider = BannersLocalDataSourceProvider._();
@@ -155,7 +155,7 @@ final class BannersLocalDataSourceProvider
 }
 
 String _$bannersLocalDataSourceHash() =>
-    r'a89686a91d0d4acbdb05a92a58720c564c0e7d07';
+    r'f2b2d01b42c1cb6ddf3e48feb3013df634899694';
 
 @ProviderFor(bannersRepo)
 final bannersRepoProvider = BannersRepoProvider._();
@@ -202,7 +202,7 @@ final class BannersRepoProvider
   }
 }
 
-String _$bannersRepoHash() => r'935f9a44d87c607920da0a9cd0c57eaecbf7cd66';
+String _$bannersRepoHash() => r'3603b222e884f7bee6266f5390e3deadd77a6154';
 
 @ProviderFor(getBannersUseCase)
 final getBannersUseCaseProvider = GetBannersUseCaseProvider._();
@@ -316,7 +316,7 @@ final class GetBannerByIdUseCaseProvider
         argument: null,
         retry: null,
         name: r'getBannerByIdUseCaseProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -345,7 +345,7 @@ final class GetBannerByIdUseCaseProvider
 }
 
 String _$getBannerByIdUseCaseHash() =>
-    r'18176d98803c19b02dc649bbb9684a9f8900abb7';
+    r'806a6c4fabc1a31709d68bca7c8eb8be17e23f65';
 
 @ProviderFor(getBannersFreshnessUseCase)
 final getBannersFreshnessUseCaseProvider =

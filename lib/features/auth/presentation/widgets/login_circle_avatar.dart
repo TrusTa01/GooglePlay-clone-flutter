@@ -37,7 +37,8 @@ class _LoginCircleAvatarState extends State<LoginCircleAvatar> {
 
   @override
   Widget build(BuildContext context) {
-    final avatarUrl = _user!.userMetadata?['avatar_url'];
+    final avatarUrl = _user?.userMetadata?['avatar_url'] as String?;
+
     return _user == null
         ? GestureDetector(
             onTap: () => AuthService().signInWithGoogle(),

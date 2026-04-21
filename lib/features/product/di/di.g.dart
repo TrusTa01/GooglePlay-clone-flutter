@@ -57,7 +57,7 @@ final class ProductNetworkDataSourceProvider
 }
 
 String _$productNetworkDataSourceHash() =>
-    r'b7a7c3313af98dd1b5153b3568e9fd5e7eb063b3';
+    r'08f17e3264a703e54ce08120c8d6e6b49b462e2b';
 
 @ProviderFor(productRemoteDataSource)
 final productRemoteDataSourceProvider = ProductRemoteDataSourceProvider._();
@@ -107,7 +107,7 @@ final class ProductRemoteDataSourceProvider
 }
 
 String _$productRemoteDataSourceHash() =>
-    r'2f170eda95fe0f8c3de055fded8ee7f67bda519a';
+    r'359fdadc222627ea3b75eac9869d728ca2f90fa0';
 
 @ProviderFor(productsLocalDataSource)
 final productsLocalDataSourceProvider = ProductsLocalDataSourceProvider._();
@@ -155,7 +155,7 @@ final class ProductsLocalDataSourceProvider
 }
 
 String _$productsLocalDataSourceHash() =>
-    r'b3b20a9bff2d160c3ff3ba7bff46a73b27e94670';
+    r'ce5eddc3a8bbcd60a7ea225c9f3df061bbd9bb65';
 
 @ProviderFor(productsRepo)
 final productsRepoProvider = ProductsRepoProvider._();
@@ -202,7 +202,7 @@ final class ProductsRepoProvider
   }
 }
 
-String _$productsRepoHash() => r'bbcc2826907cad8578305c9fb6b744b5a353d333';
+String _$productsRepoHash() => r'5b3e2d65f3c2d0695d2bba2e746afc4aa2795039';
 
 @ProviderFor(loadProductsUseCase)
 final loadProductsUseCaseProvider = LoadProductsUseCaseProvider._();
@@ -221,7 +221,7 @@ final class LoadProductsUseCaseProvider
         argument: null,
         retry: null,
         name: r'loadProductsUseCaseProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -250,7 +250,7 @@ final class LoadProductsUseCaseProvider
 }
 
 String _$loadProductsUseCaseHash() =>
-    r'5ee06b4528a5699760ebf029410438f9dda5e2ab';
+    r'3067ed595d0e377be39d008ce72a4bed79b7c9ed';
 
 @ProviderFor(watchProductsUseCase)
 final watchProductsUseCaseProvider = WatchProductsUseCaseProvider._();

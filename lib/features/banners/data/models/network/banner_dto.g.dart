@@ -10,36 +10,40 @@ EventBannerDto _$EventBannerDtoFromJson(Map<String, dynamic> json) =>
     EventBannerDto(
       type: json['type'] as String? ?? 'event',
       id: json['id'] as String,
-      imageAssetPath: json['imageAssetPath'] as String,
-      title: DtoJsonConverters.localizedStringFromJson(json['title']),
+      imageAssetPath: json['image_asset_path'] as String? ?? '',
+      title: json['title'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['title']),
       topToolTipText: DtoJsonConverters.localizedStringNullableFromJson(
         json['topToolTipText'],
       ),
-      description: DtoJsonConverters.localizedStringFromJson(
-        json['description'],
-      ),
-      eventId: json['eventId'] as String?,
-      eventCategory: json['eventCategory'] as String?,
+      description: json['description'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['description']),
+      eventId: json['event_id'] as String?,
+      eventCategory: json['event_category'] as String?,
       eventDescription: DtoJsonConverters.localizedStringNullableFromJson(
         json['eventDescription'],
       ),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
     );
 
 ActionBannerDto _$ActionBannerDtoFromJson(Map<String, dynamic> json) =>
     ActionBannerDto(
       type: json['type'] as String? ?? 'action',
       id: json['id'] as String,
-      productExternalId: json['productExternalId'] as String,
-      imageAssetPath: json['imageAssetPath'] as String,
-      title: DtoJsonConverters.localizedStringFromJson(json['title']),
+      productExternalId: json['product_external_id'] as String? ?? '',
+      imageAssetPath: json['image_asset_path'] as String? ?? '',
+      title: json['title'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['title']),
       topToolTipText: DtoJsonConverters.localizedStringNullableFromJson(
         json['topToolTipText'],
       ),
-      description: DtoJsonConverters.localizedStringFromJson(
-        json['description'],
-      ),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      description: json['description'] == null
+          ? const <String, String>{}
+          : DtoJsonConverters.localizedStringFromJson(json['description']),
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
     );

@@ -83,9 +83,9 @@ class SimpleSliverAppBar extends StatelessWidget {
     }
 
     // Определяем title
-    Widget? title;
+    Widget? appBarTitle;
     if (hasSearch) {
-      title = AppBarSearchContainer(
+      appBarTitle = AppBarSearchContainer(
         inputLeading: inputLeading,
         searchHint: searchHint ?? '',
         inputActions: inputActions,
@@ -106,7 +106,7 @@ class SimpleSliverAppBar extends StatelessWidget {
 
       // Добавляем колонку с заголовком и подзаголовком
       final List<Widget> titleColumnChildren = [];
-      if (this.title != null) {
+      if (title != null) {
         titleColumnChildren.add(title!);
       }
       if (subtitle != null) {
@@ -127,7 +127,10 @@ class SimpleSliverAppBar extends StatelessWidget {
       }
 
       if (titleRowChildren.isNotEmpty) {
-        title = Row(mainAxisSize: MainAxisSize.min, children: titleRowChildren);
+        appBarTitle = Row(
+          mainAxisSize: MainAxisSize.min,
+          children: titleRowChildren,
+        );
       }
     }
 
@@ -142,7 +145,10 @@ class SimpleSliverAppBar extends StatelessWidget {
           child: Row(
             children: [
               ?leading,
-              if (title != null) Expanded(child: title) else const Spacer(),
+              if (appBarTitle != null)
+                Expanded(child: appBarTitle)
+              else
+                const Spacer(),
               ...?actions,
             ],
           ),

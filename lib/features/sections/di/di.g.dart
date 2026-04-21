@@ -57,7 +57,7 @@ final class SectionsNetworkDatasourceProvider
 }
 
 String _$sectionsNetworkDatasourceHash() =>
-    r'9b9c09081632eaae9937af0f95ebe9672df03fed';
+    r'505b9ebd6fd0c1b417ec47668aaeedee322df855';
 
 @ProviderFor(sectionsRemoteDatasource)
 final sectionsRemoteDatasourceProvider = SectionsRemoteDatasourceProvider._();
@@ -107,7 +107,7 @@ final class SectionsRemoteDatasourceProvider
 }
 
 String _$sectionsRemoteDatasourceHash() =>
-    r'2579de413e8fba3ec57abbc26783ec233bf6f639';
+    r'97c92cb45fd512a95b74eea8994b26afa285536b';
 
 @ProviderFor(sectionsLocalDatasource)
 final sectionsLocalDatasourceProvider = SectionsLocalDatasourceProvider._();
@@ -155,7 +155,7 @@ final class SectionsLocalDatasourceProvider
 }
 
 String _$sectionsLocalDatasourceHash() =>
-    r'01035f352b8158bc7aa74dcd99fb8bda8b47fd06';
+    r'a841a31b566a51fac2c21910c8d297c0a975c019';
 
 @ProviderFor(sectionsRepo)
 final sectionsRepoProvider = SectionsRepoProvider._();
@@ -202,7 +202,7 @@ final class SectionsRepoProvider
   }
 }
 
-String _$sectionsRepoHash() => r'8d3c29c8bbf426bb4128ac765fd7d4e82f41baf5';
+String _$sectionsRepoHash() => r'fa9f17de874366c819cc9846f732b97648a0c6a0';
 
 @ProviderFor(getSectionsUseCase)
 final getSectionsUseCaseProvider = GetSectionsUseCaseProvider._();
@@ -318,7 +318,7 @@ final class ResolvedSectionsUseCaseProvider
         argument: null,
         retry: null,
         name: r'resolvedSectionsUseCaseProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -347,4 +347,4 @@ final class ResolvedSectionsUseCaseProvider
 }
 
 String _$resolvedSectionsUseCaseHash() =>
-    r'2899f57d3d99953b178edf389f1e1afa2e39300a';
+    r'8721ae555f0cfaeb628da209ffa0058377d760aa';

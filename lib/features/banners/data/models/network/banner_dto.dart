@@ -12,35 +12,40 @@ sealed class BannerDto with _$BannerDto {
   const factory BannerDto.event({
     @Default('event') String type,
     required String id,
-    required String imageAssetPath,
+    @JsonKey(name: 'image_asset_path') @Default('') String imageAssetPath,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
-    required LocalizedString title,
+    @Default(<String, String>{})
+    LocalizedString title,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)
     LocalizedString? topToolTipText,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
-    required LocalizedString description,
-    String? eventId,
-    String? eventCategory,
+    @Default(<String, String>{})
+    LocalizedString description,
+    @JsonKey(name: 'event_id') String? eventId,
+    @JsonKey(name: 'event_category') String? eventCategory,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)
+    @JsonKey(name: 'event_description')
     LocalizedString? eventDescription,
-    required DateTime createdAt,
-    required DateTime updatedAt,
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+    @JsonKey(name: 'updated_at') required DateTime updatedAt,
   }) = EventBannerDto;
 
   @FreezedUnionValue('action')
   const factory BannerDto.action({
     @Default('action') String type,
     required String id,
-    required String productExternalId,
-    required String imageAssetPath,
+    @JsonKey(name: 'product_external_id') @Default('') String productExternalId,
+    @JsonKey(name: 'image_asset_path') @Default('') String imageAssetPath,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
-    required LocalizedString title,
+    @Default(<String, String>{})
+    LocalizedString title,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)
     LocalizedString? topToolTipText,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringFromJson)
-    required LocalizedString description,
-    required DateTime createdAt,
-    required DateTime updatedAt,
+    @Default(<String, String>{})
+    LocalizedString description,
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+    @JsonKey(name: 'updated_at') required DateTime updatedAt,
   }) = ActionBannerDto;
 
   factory BannerDto.fromJson(Map<String, dynamic> json) =>

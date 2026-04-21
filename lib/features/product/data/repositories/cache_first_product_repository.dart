@@ -5,7 +5,6 @@ import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
 import 'package:google_play/features/product/data/data_sources/local/i_products_local_datasource.dart';
 import 'package:google_play/features/product/data/mappers/local/local_product_bundle_mapper.dart';
-import 'package:google_play/features/product/data/models/local/product_collection_coverage.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/book_entity.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
@@ -45,10 +44,11 @@ class CacheFirstProductRepository implements IProductsRepository {
       pageSize: pageSize,
     );
 
-    if (await _shouldAttemptRemoteRefresh(
+    final shouldRefresh = await _shouldAttemptRemoteRefresh(
       syncKey: pageSyncKey,
       forceRefresh: forceRefresh,
-    )) {
+    );
+    if (shouldRefresh) {
       await _refreshProducts(type: type, page: page, pageSize: pageSize);
     }
 
@@ -57,6 +57,18 @@ class CacheFirstProductRepository implements IProductsRepository {
       page: page,
       pageSize: pageSize,
     );
+    if (bundles.isEmpty && !forceRefresh && !shouldRefresh) {
+      await _refreshProducts(type: type, page: page, pageSize: pageSize);
+      final refreshedBundles = await _local.getProducts(
+        type: type,
+        page: page,
+        pageSize: pageSize,
+      );
+      return refreshedBundles
+          .map((bundle) => bundle.toEntity(locale))
+          .nonNulls
+          .toList();
+    }
     return bundles.map((bundle) => bundle.toEntity(locale)).nonNulls.toList();
   }
 
@@ -96,19 +108,21 @@ class CacheFirstProductRepository implements IProductsRepository {
     bool forceRefresh = false,
   }) async {
     final collectionSyncKey = SyncKeys.productsCollection(type);
-    if (await _shouldAttemptRemoteRefresh(
+    final shouldRefresh = await _shouldAttemptRemoteRefresh(
       syncKey: collectionSyncKey,
       forceRefresh: forceRefresh,
-    )) {
+    );
+    if (shouldRefresh) {
       await _refreshProducts(type: type, page: page, pageSize: pageSize);
     }
-    await _ensureCollectionCoverage(
-      type: type,
-      pageSize: pageSize,
-      coverageSyncKey: collectionSyncKey,
-    );
     final bundles = await _local.getAllProducts(type: type);
-    final allProducts = bundles
+    // Не дублируем сеть после shouldRefresh + _ensureCollectionCoverage.
+    if (bundles.isEmpty && !forceRefresh && !shouldRefresh) {
+      await _refreshProducts(type: type, page: page, pageSize: pageSize);
+    }
+    final effectiveBundles = await _local.getAllProducts(type: type);
+
+    final allProducts = effectiveBundles
         .map((b) => b.toEntity(locale))
         .nonNulls
         .toList();
@@ -183,16 +197,6 @@ class CacheFirstProductRepository implements IProductsRepository {
         await _local.upsertProducts(dtos);
         await _local.setLastSync(pageSyncKey, now);
         await _local.setLastSync(collectionSyncKey, now);
-        final existingCoverage = await _getCoverage(collectionSyncKey);
-        final mergedCoverage = existingCoverage.mergeLoadedPage(
-          page: page,
-          pageSize: pageSize,
-          loadedItemsCount: dtos.length,
-        );
-        await _setCoverage(
-          syncKey: collectionSyncKey,
-          coverage: mergedCoverage,
-        );
       case FailureResult():
         await _local.recordSyncFailure(pageSyncKey);
         await _local.recordSyncFailure(collectionSyncKey);
@@ -332,8 +336,12 @@ class CacheFirstProductRepository implements IProductsRepository {
 
   bool _matchesFilter(ProductEntity product, ProductFilter filter) {
     return switch (filter) {
-      CategoryFilter(:final genre) => product.categories.contains(genre),
-      TagFilter(:final tag) => product.tags.contains(tag),
+      CategoryFilter(:final genre) => product.categories.any(
+        (category) => category.toLowerCase() == genre.toLowerCase(),
+      ),
+      TagFilter(:final tag) => product.tags.any(
+        (productTag) => productTag.toLowerCase() == tag.toLowerCase(),
+      ),
       IsPaidFilter(:final isPaid) => product.isPaid == isPaid,
       AgeLimitFilter(:final age) =>
         product is SoftwareEntity ? (product.ageRating <= age) : true,
@@ -370,33 +378,4 @@ class CacheFirstProductRepository implements IProductsRepository {
     final end = (start + pageSize).clamp(0, items.length);
     return items.sublist(start, end);
   }
-
-  Future<void> _ensureCollectionCoverage({
-    required ProductKind type,
-    required int pageSize,
-    required String coverageSyncKey,
-  }) async {
-    var coverage = await _getCoverage(coverageSyncKey);
-    if (coverage.hasReachedEnd) return;
-
-    var pageToLoad = coverage.lastLoadedPage + 1;
-    if (pageToLoad < 1) pageToLoad = 1;
-
-    while (!coverage.hasReachedEnd) {
-      await _refreshProducts(type: type, page: pageToLoad, pageSize: pageSize);
-      coverage = await _getCoverage(coverageSyncKey);
-      if (coverage.lastLoadedPage < pageToLoad) break;
-      pageToLoad += 1;
-    }
-  }
-
-  Future<ProductCollectionCoverage> _getCoverage(String syncKey) async {
-    final raw = await _local.getSyncCursor(syncKey);
-    return ProductCollectionCoverage.fromCursor(raw);
-  }
-
-  Future<void> _setCoverage({
-    required String syncKey,
-    required ProductCollectionCoverage coverage,
-  }) => _local.setSyncCursor(syncKey, coverage.toCursor());
 }

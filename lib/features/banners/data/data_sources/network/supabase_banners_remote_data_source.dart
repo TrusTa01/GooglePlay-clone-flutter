@@ -23,7 +23,7 @@ class SupabaseBannerRemoteDataSource implements IBannersRemoteDataSource {
     required int page,
     int pageSize = 20,
   }) {
-    final order = SortOrders.releaseDateDesc;
+    final order = SortOrders.createdAtDesc;
 
     return _datasource.getBanners(
       view: view,

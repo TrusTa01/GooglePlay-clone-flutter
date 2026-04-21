@@ -30,6 +30,8 @@ class BannerSection extends HookWidget {
   Widget build(BuildContext context) {
     // Сохранение состояния при скролле списка
     useAutomaticKeepAlive();
+    // ignore: deprecated_member_use
+    final isMounted = useIsMounted();
 
     if (banners.isEmpty) return const SizedBox.shrink();
 
@@ -65,6 +67,10 @@ class BannerSection extends HookWidget {
       if (!isVisible.value) return null;
 
       final timer = Timer.periodic(const Duration(seconds: 7), (timer) {
+        if (!isMounted()) {
+          timer.cancel();
+          return;
+        }
         if (controller.hasClients) {
           int nextPage = currentPage.value + 1;
           if (nextPage >= bannersCount - 1) {
@@ -85,6 +91,7 @@ class BannerSection extends HookWidget {
     return VisibilityDetector(
       key: Key('banner_section_$title'),
       onVisibilityChanged: (info) {
+        if (!isMounted()) return;
         isVisible.value = info.visibleFraction > 0.1;
       },
       child: Center(
@@ -92,7 +99,6 @@ class BannerSection extends HookWidget {
           constraints: BoxConstraints(
             maxWidth: Constants.sliderMaxContentWidth,
           ),
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -112,6 +118,7 @@ class BannerSection extends HookWidget {
                 padding: EdgeInsets.only(left: contentWidth > 1000 ? 23 : 0),
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
+                    if (!isMounted()) return true;
                     // Пауза таймера при ручном скролле
                     if (notification is ScrollStartNotification) {
                       isVisible.value = false;
@@ -124,7 +131,10 @@ class BannerSection extends HookWidget {
                     height: screenHeight / config.heightFactor,
                     child: PageView.builder(
                       key: ValueKey('banner_${config.viewportFraction}'),
-                      onPageChanged: (index) => currentPage.value = index,
+                      onPageChanged: (index) {
+                        if (!isMounted()) return;
+                        currentPage.value = index;
+                      },
                       scrollDirection: Axis.horizontal,
                       controller: controller,
                       itemCount: bannersCount,

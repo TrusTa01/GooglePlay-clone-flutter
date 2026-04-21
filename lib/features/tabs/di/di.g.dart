@@ -57,7 +57,7 @@ final class TabsNetworkDataSourceProvider
 }
 
 String _$tabsNetworkDataSourceHash() =>
-    r'8204a9a75a65c72a31b78d5c29fb75ca277eaec8';
+    r'8a2231ac35e90652a085554f05d2d94cdf209cbb';
 
 @ProviderFor(tabsRemoteDataSource)
 final tabsRemoteDataSourceProvider = TabsRemoteDataSourceProvider._();
@@ -105,7 +105,7 @@ final class TabsRemoteDataSourceProvider
 }
 
 String _$tabsRemoteDataSourceHash() =>
-    r'afa2cf089344fd4e4937f8b56d512c8af2602cdf';
+    r'44e12f0e46789dc1100455b622cab99e86b05e06';
 
 @ProviderFor(tabsLocalDataSource)
 final tabsLocalDataSourceProvider = TabsLocalDataSourceProvider._();
@@ -153,7 +153,7 @@ final class TabsLocalDataSourceProvider
 }
 
 String _$tabsLocalDataSourceHash() =>
-    r'22d5bfc31f36760e446be40fb164e9d79e19d99f';
+    r'4cecf81d71b93c98140d2da52c029f5e816ecc3e';
 
 @ProviderFor(tabsRepo)
 final tabsRepoProvider = TabsRepoProvider._();
@@ -195,7 +195,7 @@ final class TabsRepoProvider
   }
 }
 
-String _$tabsRepoHash() => r'69748821be3a59642e1640c9a83abb00c44d1b9b';
+String _$tabsRepoHash() => r'bead1172da2c0afba2e9cd54d810268da56a71be';
 
 @ProviderFor(getTabsUseCase)
 final getTabsUseCaseProvider = GetTabsUseCaseProvider._();
@@ -214,7 +214,7 @@ final class GetTabsUseCaseProvider
         argument: null,
         retry: null,
         name: r'getTabsUseCaseProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -242,4 +242,4 @@ final class GetTabsUseCaseProvider
   }
 }
 
-String _$getTabsUseCaseHash() => r'a5734ab7252cd2fdb303f767a83bafd718d73504';
+String _$getTabsUseCaseHash() => r'dfd9e9da3fe4f11c7adb38f0ead74cfe270d025e';

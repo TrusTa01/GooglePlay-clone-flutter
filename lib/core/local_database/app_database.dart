@@ -94,6 +94,7 @@ QueryExecutor _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
-    return NativeDatabase(file);
+    // Миграции на фоновом изоляте — иначе UI-изолят блокируется на DDL/SQLite
+    return NativeDatabase.createInBackground(file);
   });
 }

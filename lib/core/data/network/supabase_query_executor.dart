@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:supabase/supabase.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/result_pattern/failure.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
@@ -46,10 +48,15 @@ class SupabaseQueryExecutor implements IQueryExecutor {
           .from(view)
           .select()
           .order(order.column, ascending: order.ascending)
-          .range(from, to);
+          .range(from, to)
+          .timeout(Constants.supabaseRequestTimeout);
 
       final data = List<Map<String, dynamic>>.from(response);
       return Result.success(data: data);
+    } on TimeoutException catch (e) {
+      return Result.failure(
+        failure: NetworkFailure(message: 'Server timeout', cause: e),
+      );
     } on PostgrestException catch (e) {
       return Result.failure(failure: ServerFailure(message: e.message));
     } on SocketException catch (e) {
@@ -73,12 +80,20 @@ class SupabaseQueryExecutor implements IQueryExecutor {
           .from(view)
           .select()
           .eq('id', id)
-          .maybeSingle();
+          .maybeSingle()
+          .timeout(Constants.supabaseRequestTimeout);
 
       if (response == null) return const Result.success(data: null);
 
       final data = Map<String, dynamic>.from(response);
       return Result.success(data: data);
+    } on TimeoutException catch (e) {
+      return Result.failure(
+        failure: NetworkFailure(
+          message: 'Превышено время ожидания ответа сервера',
+          cause: e,
+        ),
+      );
     } on PostgrestException catch (e) {
       return Result.failure(failure: ServerFailure(message: e.message));
     } on SocketException catch (e) {
@@ -96,9 +111,15 @@ class SupabaseQueryExecutor implements IQueryExecutor {
     Map<String, dynamic> params = const {},
   }) async {
     try {
-      final response = await _client.rpc(fn, params: params);
+      final response = await _client
+          .rpc(fn, params: params)
+          .timeout(Constants.supabaseRequestTimeout);
       final data = List<Map<String, dynamic>>.from(response as List);
       return Result.success(data: data);
+    } on TimeoutException catch (e) {
+      return Result.failure(
+        failure: NetworkFailure(message: 'Server timeout', cause: e),
+      );
     } on PostgrestException catch (e) {
       return Result.failure(failure: ServerFailure(message: e.message));
     } on SocketException catch (e) {

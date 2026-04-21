@@ -93,7 +93,7 @@ class StoreTabsLoadedView extends HookConsumerWidget {
               return Builder(
                 builder: (context) {
                   final sectionState = ref.watch(
-                    resolvedSectionsProvider(productKind, tabKey),
+                    resolvedSectionsProvider(productKind, tabConfig.id),
                   );
 
                   return visitedTabKeys.value.contains(visitedKey)

@@ -16,7 +16,7 @@ part 'di.g.dart';
 // network
 @riverpod
 SupabaseSectionsNetworkDataSource sectionsNetworkDatasource(Ref ref) {
-  final executor = queryExecutor(ref);
+  final executor = ref.watch(queryExecutorProvider);
   return SupabaseSectionsNetworkDataSource(executor: executor);
 }
 
@@ -24,23 +24,23 @@ SupabaseSectionsNetworkDataSource sectionsNetworkDatasource(Ref ref) {
 @riverpod
 SupabaseSectionsRemoteDataSource sectionsRemoteDatasource(Ref ref) {
   return SupabaseSectionsRemoteDataSource(
-    datasource: sectionsNetworkDatasource(ref),
+    datasource: ref.watch(sectionsNetworkDatasourceProvider),
   );
 }
 
 // local
 @riverpod
 DriftSectionsLocalDataSource sectionsLocalDatasource(Ref ref) {
-  final db = appDatabase(ref);
+  final db = ref.watch(appDatabaseProvider);
   return DriftSectionsLocalDataSource(db: db);
 }
 
 // repo
 @riverpod
 ISectionsRepository sectionsRepo(Ref ref) {
-  final remote = sectionsRemoteDatasource(ref);
-  final local = sectionsLocalDatasource(ref);
-  final policy = freshnessPolicy(ref);
+  final remote = ref.watch(sectionsRemoteDatasourceProvider);
+  final local = ref.watch(sectionsLocalDatasourceProvider);
+  final policy = ref.watch(freshnessPolicyProvider);
   return SectionsRepository(remote: remote, local: local, policy: policy);
 }
 
@@ -57,7 +57,7 @@ GetSectionsFreshnessUseCase getSectionsFreshnessUseCase(Ref ref) {
   return GetSectionsFreshnessUseCaseImpl(repo);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 ResolvedSectionsUseCase resolvedSectionsUseCase(Ref ref) {
   return ResolvedSectionsUseCaseImpl(
     ref.watch(getSectionsUseCaseProvider),

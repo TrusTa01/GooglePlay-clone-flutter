@@ -56,4 +56,7 @@ abstract final class Constants {
   static const Color uiSelectedLabelColor = Color(0xFF2076A7);
   static const Color uiSelectedIconColor = Color(0xFF004A75);
   static const Color uiSelectionBackgroundColor = Color(0xFFC3E7FF);
+
+  // Лимит ожидания HTTP к Supabase (без него зависший запрос держит UI в loading)
+  static const Duration supabaseRequestTimeout = Duration(seconds: 30);
 }

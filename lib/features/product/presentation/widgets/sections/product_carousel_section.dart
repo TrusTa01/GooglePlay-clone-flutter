@@ -52,6 +52,8 @@ class ProductCarousel extends HookWidget {
         ? items.sublist(0, maxItems!)
         : items;
 
+    if (displayProducts.isEmpty) return const SizedBox.shrink();
+
     // Расчет отступов и фракции (перенесено из LayoutBuilder)
     final double arrowSpace = ((viewportWidth - maxContentWidth) / 2).clamp(
       0.0,
@@ -60,9 +62,8 @@ class ProductCarousel extends HookWidget {
     final double edgePad = Constants.horizontalContentPadding.left;
     final double effectiveWidth = contentWidth - edgePad * 2;
 
-    final int visibleCount = carouselVisibleCountForWidth(
-      contentWidth,
-    ).clamp(1, displayProducts.length);
+    final int rawVisibleCount = carouselVisibleCountForWidth(contentWidth);
+    final int visibleCount = rawVisibleCount.clamp(1, displayProducts.length);
     final double carouselCardSpacing = contentWidth < 700 ? 5 : 11;
     final double slotWidth = effectiveWidth / visibleCount;
     final double cardWidth = (slotWidth - carouselCardSpacing).clamp(

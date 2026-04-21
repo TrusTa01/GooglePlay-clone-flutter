@@ -31,14 +31,13 @@ class SectionsRepository implements ISectionsRepository {
     int pageSize = 200,
     bool forceRefresh = false,
   }) async {
-    if (forceRefresh ||
-        await _needsSync(
-          syncKey: SyncKeys.sectionsList(
-            storeTypeName: productKind.name,
-            page: page,
-            pageSize: pageSize,
-          ),
-        )) {
+    final syncKey = SyncKeys.sectionsList(
+      storeTypeName: productKind.name,
+      page: page,
+      pageSize: pageSize,
+    );
+    final shouldSync = forceRefresh || await _needsSync(syncKey: syncKey);
+    if (shouldSync) {
       await _refreshSections(
         productKind: productKind,
         page: page,
@@ -68,7 +67,7 @@ class SectionsRepository implements ISectionsRepository {
       case SuccessResult<List<SectionsDto>>(data: final dtos):
         await _local.upsertSections(dtos);
         await _local.setLastSync(syncKey, DateTime.now());
-      case FailureResult():
+      case FailureResult<List<SectionsDto>>():
         await _local.recordSyncFailure(syncKey);
     }
   }

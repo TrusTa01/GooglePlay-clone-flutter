@@ -21,7 +21,7 @@ final class AppDatabaseProvider
         argument: null,
         retry: null,
         name: r'appDatabaseProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -48,7 +48,7 @@ final class AppDatabaseProvider
   }
 }
 
-String _$appDatabaseHash() => r'089c20883b151f5ee98a177cd44e5211c848590e';
+String _$appDatabaseHash() => r'8c69eb46d45206533c176c88a926608e79ca927d';
 
 @ProviderFor(queryExecutor)
 final queryExecutorProvider = QueryExecutorProvider._();
@@ -137,7 +137,7 @@ final class FreshnessPolicyProvider
   }
 }
 
-String _$freshnessPolicyHash() => r'c79a37f31d8bc8a3e31573d9a61e2e1d97273eb2';
+String _$freshnessPolicyHash() => r'792c84c764717e172f2fc391dc6052d11c4f7d0d';
 
 @ProviderFor(fetchBackoffPolicy)
 final fetchBackoffPolicyProvider = FetchBackoffPolicyProvider._();
@@ -185,4 +185,4 @@ final class FetchBackoffPolicyProvider
 }
 
 String _$fetchBackoffPolicyHash() =>
-    r'405ebf35e4ed45fb35a22f42f3aaf3773ea7e1fe';
+    r'5dbab776f5a5fcbc0e6c443a2f3c7790214b2321';

@@ -39,10 +39,12 @@ class CacheFirstBannersRepository implements IBannersRepository {
       page: page,
       pageSize: pageSize,
     );
-    if (await _shouldAttemptRemoteRefresh(
+    final shouldRefresh = await _shouldAttemptRemoteRefresh(
       syncKey: syncKey,
       forceRefresh: forceRefresh,
-    )) {
+    );
+
+    if (shouldRefresh) {
       await _refreshBanners(type: type, page: page, pageSize: pageSize);
     }
     final bundles = await _local.getBanners(
@@ -50,6 +52,18 @@ class CacheFirstBannersRepository implements IBannersRepository {
       page: page,
       pageSize: pageSize,
     );
+    if (bundles.isEmpty && !forceRefresh && !shouldRefresh) {
+      await _refreshBanners(type: type, page: page, pageSize: pageSize);
+      final refreshedBundles = await _local.getBanners(
+        type: type,
+        page: page,
+        pageSize: pageSize,
+      );
+      return refreshedBundles
+          .map((bundle) => bundle.toEntity(locale))
+          .nonNulls
+          .toList();
+    }
     return bundles.map((bundle) => bundle.toEntity(locale)).nonNulls.toList();
   }
 

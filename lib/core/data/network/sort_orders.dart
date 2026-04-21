@@ -8,4 +8,9 @@ abstract final class SortOrders {
     column: 'release_date',
     ascending: false,
   );
+
+  static const ({String column, bool ascending}) createdAtDesc = (
+    column: 'created_at', 
+    ascending: false
+  );
 }

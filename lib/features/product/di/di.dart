@@ -19,39 +19,41 @@ part 'di.g.dart';
 // network
 @riverpod
 SupabaseProductNetworkDataSource productNetworkDataSource(Ref ref) {
-  final executor = queryExecutor(ref);
+  final executor = ref.watch(queryExecutorProvider);
   return SupabaseProductNetworkDataSource(executor: executor);
 }
 
 // remote
 @riverpod
 SupabaseProductRemoteDataSource productRemoteDataSource(Ref ref) =>
-    SupabaseProductRemoteDataSource(datasource: productNetworkDataSource(ref));
+    SupabaseProductRemoteDataSource(
+      datasource: ref.watch(productNetworkDataSourceProvider),
+    );
 
 // local
 @riverpod
 DriftProductsLocalDataSource productsLocalDataSource(Ref ref) {
-  final db = appDatabase(ref);
+  final db = ref.watch(appDatabaseProvider);
   return DriftProductsLocalDataSource(db: db);
 }
 
 // repo
 @riverpod
 IProductsRepository productsRepo(Ref ref) {
-  final remote = productRemoteDataSource(ref);
-  final local = productsLocalDataSource(ref);
-  final policy = freshnessPolicy(ref);
+  final remote = ref.watch(productRemoteDataSourceProvider);
+  final local = ref.watch(productsLocalDataSourceProvider);
+  final policy = ref.watch(freshnessPolicyProvider);
 
   return CacheFirstProductRepository(
     remote: remote,
     local: local,
     freshnessPolicy: policy,
-    fetchBackoffPolicy: fetchBackoffPolicy(ref),
+    fetchBackoffPolicy: ref.watch(fetchBackoffPolicyProvider),
   );
 }
 
 // usecases
-@riverpod
+@Riverpod(keepAlive: true)
 LoadProductsUseCase loadProductsUseCase(Ref ref) {
   final repo = ref.watch(productsRepoProvider);
   return LoadProductsUseCaseImpl(repo);

@@ -12,10 +12,12 @@ final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
 
     await dto.map(
       game: (g) async {
-        await _upsertDeveloper(g.developer);
+        final developer = g.developer;
+        if (developer != null) await _upsertDeveloper(developer);
+
         await _upsertSoftwareCommon(
           productId: g.id,
-          developerId: g.developer.id,
+          developerId: developer?.id ?? '',
           screenshots: g.screenshots,
           supportedLanguages: g.supportedLanguages,
           containsAds: g.containsAds,
@@ -36,10 +38,12 @@ final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
         await _cleanupSubtypeTables(productId: g.id, keepType: 'game');
       },
       app: (a) async {
-        await _upsertDeveloper(a.developer);
+        final developer = a.developer;
+        if (developer != null) await _upsertDeveloper(developer);
+
         await _upsertSoftwareCommon(
           productId: a.id,
-          developerId: a.developer.id,
+          developerId: developer?.id ?? '',
           screenshots: a.screenshots,
           supportedLanguages: a.supportedLanguages,
           containsAds: a.containsAds,
@@ -78,7 +82,7 @@ final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
             title: dto.title,
             shortDescription: dto.shortDescription,
             description: dto.description,
-            rating: dto.rating,
+            rating: dto.rating ?? 0,
             releaseDate: dto.releaseDate,
             iconUrl: dto.iconUrl,
             isPaid: dto.isPaid,
@@ -99,18 +103,18 @@ final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
     required String developerId,
     required List<String> screenshots,
     required List<String> supportedLanguages,
-    required bool containsAds,
-    required bool containsPaidContent,
-    required String version,
-    required String size,
+    required bool? containsAds,
+    required bool? containsPaidContent,
+    required String? version,
+    required String? size,
     required LocalizedString? eventText,
-    required LocalizedString whatsNewText,
-    required int downloadCount,
-    required int ageRating,
-    required bool isKidsFriendly,
-    required List<LocalizedString> ageRatingReasons,
-    required List<LocalizedString> permissions,
-    required DateTime lastUpdated,
+    required LocalizedString? whatsNewText,
+    required int? downloadCount,
+    required int? ageRating,
+    required bool? isKidsFriendly,
+    required List<LocalizedString>? ageRatingReasons,
+    required List<LocalizedString>? permissions,
+    required DateTime? lastUpdated,
     required LocalizedString creatorDescription,
   }) async {
     await db
@@ -123,20 +127,24 @@ final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
             supportedLanguages: Value(
               supportedLanguages.isEmpty ? null : supportedLanguages,
             ),
-            containsAds: containsAds,
-            containsPaidContent: containsPaidContent,
-            version: version,
-            size: size,
+            containsAds: containsAds ?? false,
+            containsPaidContent: containsPaidContent ?? false,
+            version: version ?? '',
+            size: size ?? '',
             eventText: Value(eventText),
-            whatsNewText: whatsNewText,
-            downloadCount: downloadCount,
-            ageRating: ageRating,
-            isKidsFriendly: isKidsFriendly,
+            whatsNewText: whatsNewText ?? const <String, String>{},
+            downloadCount: downloadCount ?? 0,
+            ageRating: ageRating ?? 0,
+            isKidsFriendly: isKidsFriendly ?? false,
             ageRatingReasons: Value(
-              ageRatingReasons.isEmpty ? null : ageRatingReasons,
+              ageRatingReasons == null || ageRatingReasons.isEmpty
+                  ? null
+                  : ageRatingReasons,
             ),
-            permissions: Value(permissions.isEmpty ? null : permissions),
-            lastUpdated: lastUpdated,
+            permissions: Value(
+              permissions == null || permissions.isEmpty ? null : permissions,
+            ),
+            lastUpdated: lastUpdated ?? DateTime.fromMillisecondsSinceEpoch(0),
             creatorDescription: Value(creatorDescription),
           ),
         );

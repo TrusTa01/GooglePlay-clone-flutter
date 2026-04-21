@@ -70,30 +70,17 @@ class SectionWidgetBuilder extends HookWidget {
 
   Widget _buildSectionWrapper(
     BuildContext context,
-    section,
+    ResolvedSection section,
     SectionPayload payload,
   ) => RepaintBoundary(child: _buildSection(context, section, payload));
 
-  Widget _buildSection(BuildContext context, section, SectionPayload payload) {
-    final locale = Localizations.localeOf(context).languageCode;
-    final title =
-        section.config.title?[locale] ?? section.config.title?['en'] ?? '';
-    final subtitle =
-        section.config.subtitle?[locale] ??
-        section.config.subtitle?['en'] ??
-        '';
-    final imagePath = section.config.imageAssetPath;
-    if (imagePath == null || imagePath.isEmpty) {
-      assert(() {
-        debugPrint(
-          '[SectionWidgetBuilder] skip section: empty imagePath '
-          'id=${section.config.id}, layout=${section.config.layout}',
-        );
-        return true;
-      }());
-      return const SizedBox.shrink();
-    }
-
+  Widget _buildSection(
+    BuildContext context,
+    ResolvedSection section,
+    SectionPayload payload,
+  ) {
+    final title = section.config.title ?? '';
+    final subtitle = section.config.subtitle ?? '';
     return switch (payload) {
       BannersPayload(:final banners) => BannerSection(
         title: title,
@@ -139,7 +126,7 @@ class SectionWidgetBuilder extends HookWidget {
         debugPrint(
           '[SectionWidgetBuilder] EmptyPayload: '
           'sectionId=${section.config.id}, '
-          'layout=${section.config.layout}, '
+          'sectionType=${section.config.sectionType}, '
           'itemsType=${section.items.runtimeType}',
         );
         return const SizedBox.shrink();
