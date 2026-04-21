@@ -61,6 +61,10 @@ dependencies:
   # tests
   mocktail: ^1.0.5
 
+  # logger
+  talker_flutter: ^5.1.16
+  talker_riverpod_logger: ^5.1.16
+
 dev_dependencies:
   # tests
   flutter_test:
