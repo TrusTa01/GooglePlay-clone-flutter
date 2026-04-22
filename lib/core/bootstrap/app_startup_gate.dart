@@ -4,19 +4,21 @@ import 'package:google_play/core/bootstrap/app_bootstrap.dart';
 import 'package:google_play/core/bootstrap/app_launch_state.dart';
 import 'package:google_play/core/bootstrap/google_play_app.dart';
 import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/di/di.dart';
 import 'package:google_play/core/l10n/app_localization_setup.dart';
 import 'package:google_play/core/presentation/screens/initialization_error_screen.dart';
 import 'package:google_play/core/presentation/widgets/ui_kits/indicators/app_loading_indicator.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// Оболочка до успешного [AppBootstrap.init] - лоадер, ошибка или [GooglePlay]
-class AppStartupGate extends StatefulWidget {
+class AppStartupGate extends ConsumerStatefulWidget {
   const AppStartupGate({super.key});
 
   @override
-  State<AppStartupGate> createState() => _AppStartupGateState();
+  ConsumerState<AppStartupGate> createState() => _AppStartupGateState();
 }
 
-class _AppStartupGateState extends State<AppStartupGate> {
+class _AppStartupGateState extends ConsumerState<AppStartupGate> {
   AppLaunchState _state = const AppLaunchBootstrapping();
 
   @override
@@ -27,6 +29,7 @@ class _AppStartupGateState extends State<AppStartupGate> {
 
   Future<void> _runBootstrap() async {
     if (!mounted) return;
+    final talker = ref.read(talkerProvider);
     setState(() {
       _state = switch (_state) {
         AppLaunchFailed() => const AppLaunchFailed(isRetrying: true),
@@ -34,7 +37,7 @@ class _AppStartupGateState extends State<AppStartupGate> {
       };
     });
     try {
-      await AppBootstrap.init();
+      await AppBootstrap.init(talker);
       if (!mounted) return;
       setState(() => _state = const AppLaunchReady());
     } catch (e, stackTrace) {

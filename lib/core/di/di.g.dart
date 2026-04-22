@@ -48,7 +48,7 @@ final class AppDatabaseProvider
   }
 }
 
-String _$appDatabaseHash() => r'8c69eb46d45206533c176c88a926608e79ca927d';
+String _$appDatabaseHash() => r'98a09c6cfd43966155dfbdb0787fa18c85438e13';
 
 @ProviderFor(queryExecutor)
 final queryExecutorProvider = QueryExecutorProvider._();
@@ -186,3 +186,43 @@ final class FetchBackoffPolicyProvider
 
 String _$fetchBackoffPolicyHash() =>
     r'5dbab776f5a5fcbc0e6c443a2f3c7790214b2321';
+
+@ProviderFor(talker)
+final talkerProvider = TalkerProvider._();
+
+final class TalkerProvider extends $FunctionalProvider<Talker, Talker, Talker>
+    with $Provider<Talker> {
+  TalkerProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'talkerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$talkerHash();
+
+  @$internal
+  @override
+  $ProviderElement<Talker> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Talker create(Ref ref) {
+    return talker(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Talker value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Talker>(value),
+    );
+  }
+}
+
+String _$talkerHash() => r'ccdc022a6f87e5d735e4be257f1afdbfcce26e54';

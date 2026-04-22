@@ -3,10 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/app_bar_constants.dart';
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/constants/network_images_constants.dart';
+import 'package:google_play/core/di/di.dart';
 import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 // Логотип
-class AppBarLogo extends StatelessWidget {
+class AppBarLogo extends ConsumerWidget {
   final double width;
   final double height;
   final Offset translate;
@@ -19,28 +22,36 @@ class AppBarLogo extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Transform.translate(
       offset: Offset(-translate.dx, -translate.dy),
-      child: Image.network(
-        NetworkImagesConstants.logo,
-        height: height,
-        width: width,
-        loadingBuilder: NetworkImageBuilders.shimmer(
-          width: width,
+      child: GestureDetector(
+        onLongPress: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  TalkerScreen(talker: ref.read(talkerProvider)),
+            ),
+          );
+        },
+        child: Image.network(
+          NetworkImagesConstants.logo,
           height: height,
-          borderRadius: 8,
-        ),
-        errorBuilder: (context, error, stackTrace) {
-          return const Text(
-            'GP',
+          width: width,
+          loadingBuilder: NetworkImageBuilders.shimmer(
+            width: width,
+            height: height,
+            borderRadius: 8,
+          ),
+          errorBuilder: (context, error, stackTrace) => const Text(
+            'Google Play',
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
               color: Constants.googleBlue,
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

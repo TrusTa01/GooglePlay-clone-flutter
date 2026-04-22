@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/di/di.dart';
 import 'package:google_play/core/routes/app_routes_names.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/layouts/main_layout.dart';
@@ -20,6 +21,7 @@ import 'package:google_play/features/store/presentation/screens/books_screen.dar
 import 'package:google_play/features/store/presentation/screens/games_screen.dart';
 import 'package:google_play/features/search/presentation/screens/search_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 part 'app_router.g.dart';
 part 'routes/common_routes.dart';
@@ -32,7 +34,10 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 // Провайдер роутера
 final routerProvider = Provider<GoRouter>((ref) {
+  final talker = ref.read(talkerProvider);
+
   return GoRouter(
+    observers: [TalkerRouteObserver(talker)],
     initialLocation: Constants.initialLocation,
     navigatorKey: _rootNavigatorKey,
     routes: $appRoutes,
@@ -153,7 +158,5 @@ class MainShellRouteData extends StatefulShellRouteData {
     BuildContext context,
     GoRouterState state,
     StatefulNavigationShell navigationShell,
-  ) {
-    return MainLayout(navigationShell: navigationShell);
-  }
+  ) => MainLayout(navigationShell: navigationShell);
 }
