@@ -1,6 +1,7 @@
 import 'package:google_play/core/data/network/sort_orders.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/sections/data/data_sources/network/i_sections_remote_data_source.dart';
 import 'package:google_play/features/sections/data/data_sources/network/sections_network_views_names_enum.dart';
 import 'package:google_play/features/sections/data/data_sources/network/supabase_sections_network_data_source.dart';
@@ -18,6 +19,11 @@ class SupabaseSectionsRemoteDataSource implements ISectionsRemoteDataSource {
     required int page,
     int pageSize = 20,
   }) {
+    FeatureTalker.data(
+      'sections.remote',
+      'request sections from network source',
+      context: {'page': page, 'pageSize': pageSize},
+    );
     final view = NetworkSectionsViewsNames.sections;
     final schemaName = SchemaNamesEnum.views;
 

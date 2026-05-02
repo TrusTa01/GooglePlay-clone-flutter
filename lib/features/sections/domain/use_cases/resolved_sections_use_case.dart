@@ -1,4 +1,5 @@
 import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/use_cases/get_banners_use_case.dart';
 import 'package:google_play/features/product/domain/entities/filters/product_filters.dart';
@@ -38,13 +39,30 @@ final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
     required String locale,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domainStart(
+      'sections.usecase.resolved_sections',
+      'resolveSections',
+      context: {
+        'productKind': productKind.name,
+        'tabId': tabId,
+        'forceRefresh': forceRefresh,
+      },
+    );
     final configs = await _getSections(
       productKind: productKind,
       tabId: tabId,
       locale: locale,
       forceRefresh: forceRefresh,
     );
-    return Future.wait(configs.map((c) => _resolveOne(c, productKind, locale)));
+    final resolved = await Future.wait(
+      configs.map((c) => _resolveOne(c, productKind, locale)),
+    );
+    FeatureTalker.domainDone(
+      'sections.usecase.resolved_sections',
+      'resolveSections',
+      context: {'count': resolved.length},
+    );
+    return resolved;
   }
 
   Future<ResolvedSection> _resolveOne(
@@ -52,6 +70,14 @@ final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
     ProductKind productKind,
     String locale,
   ) async {
+    FeatureTalker.domain(
+      'sections.usecase.resolved_sections',
+      'resolve single section',
+      context: {
+        'sectionId': config.id,
+        'source': config.dataSource.runtimeType,
+      },
+    );
     if (config.sectionType.shouldSkipDataFetch) {
       return ResolvedSection(config: config, items: const []);
     }
@@ -71,6 +97,11 @@ final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
     ProductKind productKind,
     String locale,
   ) async {
+    FeatureTalker.domain(
+      'sections.usecase.resolved_sections',
+      'resolve products section',
+      context: {'sectionId': config.id, 'productKind': productKind.name},
+    );
     final filters = _mapFilters(config.dataParamsEntity);
     final sort = ProductSortMapper.fromRaw(config.dataParamsEntity?.sort);
     final products = await _loadProductsByFilters(
@@ -88,6 +119,11 @@ final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
     SectionEntity config,
     String locale,
   ) async {
+    FeatureTalker.domain(
+      'sections.usecase.resolved_sections',
+      'resolve banners section',
+      context: {'sectionId': config.id, 'contentType': config.contentType},
+    );
     final kind = BannerKind.mapBannerKind(config.contentType);
     final banners = await _getBanners(
       type: kind,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/core/utils/formatters.dart';
 import 'package:google_play/features/product/domain/entities/app_entity.dart';
 import 'package:google_play/features/product/domain/entities/book_entity.dart';
@@ -140,7 +141,7 @@ class ProductStateMapper {
       software,
     );
 
-    return ProductState(
+    final state = ProductState(
       id: product.id,
       type: product.type,
       currencyCode: product.currencyCode,
@@ -221,6 +222,17 @@ class ProductStateMapper {
       supportSectionType: supportSectionType,
       supportItems: supportItems,
     );
+    FeatureTalker.mapperOut(
+      'product.product_state_mapper',
+      'ProductEntity -> ProductState',
+      context: {
+        'id': product.id,
+        'type': product.type,
+        'locale': locale.languageCode,
+        'isBook': isBook,
+      },
+    );
+    return state;
   }
 
   String _formatPrice(ProductEntity product, Locale locale) {

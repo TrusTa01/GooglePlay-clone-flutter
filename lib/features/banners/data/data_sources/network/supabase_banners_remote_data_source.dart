@@ -1,6 +1,7 @@
 import 'package:google_play/core/data/network/sort_orders.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/data/data_sources/network/banners_network_views_names_enum.dart';
 import 'package:google_play/features/banners/data/data_sources/network/i_banners_remote_data_source.dart';
 import 'package:google_play/features/banners/data/data_sources/network/supabase_banners_network_datasource.dart';
@@ -23,6 +24,11 @@ class SupabaseBannerRemoteDataSource implements IBannersRemoteDataSource {
     required int page,
     int pageSize = 20,
   }) {
+    FeatureTalker.data(
+      'banners.remote',
+      'request banners from network source',
+      context: {'type': type.name, 'page': page, 'pageSize': pageSize},
+    );
     final order = SortOrders.createdAtDesc;
 
     return _datasource.getBanners(
@@ -35,6 +41,16 @@ class SupabaseBannerRemoteDataSource implements IBannersRemoteDataSource {
   }
 
   @override
-  Future<Result<BannerDto?>> getBannerById({required String id}) =>
-      _datasource.getBannerById(id: id, view: view, schemaName: schemaName);
+  Future<Result<BannerDto?>> getBannerById({required String id}) {
+    FeatureTalker.data(
+      'banners.remote',
+      'request banner by id from network source',
+      context: {'id': id},
+    );
+    return _datasource.getBannerById(
+      id: id,
+      view: view,
+      schemaName: schemaName,
+    );
+  }
 }

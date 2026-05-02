@@ -1,4 +1,5 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/book_entity.dart';
 
@@ -7,7 +8,7 @@ extension BookMapper on BookDto {
     final publisherName = publisher.name.display(locale);
     final publisherDescription = publisher.description.display(locale);
 
-    return BookEntity(
+    final entity = BookEntity(
       type: type,
       id: id,
       title: title.display(locale),
@@ -43,5 +44,11 @@ extension BookMapper on BookDto {
       publicationDate: publicationDate,
       awards: awards,
     );
+    FeatureTalker.mapperOut(
+      'product.book_mapper',
+      'BookDto -> BookEntity',
+      context: {'id': id, 'locale': locale, 'title': entity.title},
+    );
+    return entity;
   }
 }

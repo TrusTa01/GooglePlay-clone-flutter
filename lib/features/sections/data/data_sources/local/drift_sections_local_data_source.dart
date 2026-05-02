@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:google_play/core/data/local/base_drift_writter.dart';
 import 'package:google_play/core/data/local/simple_select_statement_ext.dart';
 import 'package:google_play/core/data/local/sync_state_mixin.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/core/local_database/app_database.dart';
 import 'package:google_play/features/sections/data/data_sources/local/i_sections_local_data_source.dart';
 import 'package:google_play/features/sections/data/mappers/local/cached_section_mapper.dart';
@@ -33,14 +34,27 @@ class DriftSectionsLocalDataSource
     required String locale,
     required int page,
     required int pageSize,
-  }) => _reader.getSections(
-    tabId: tabId,
-    locale: locale,
-    page: page,
-    pageSize: pageSize,
-  );
+  }) {
+    FeatureTalker.data(
+      'sections.local',
+      'read sections from cache',
+      context: {'tabId': tabId, 'page': page, 'pageSize': pageSize},
+    );
+    return _reader.getSections(
+      tabId: tabId,
+      locale: locale,
+      page: page,
+      pageSize: pageSize,
+    );
+  }
 
   @override
-  Future<void> upsertSections(List<SectionsDto> dtos) =>
-      _writer.upsertAll(dtos);
+  Future<void> upsertSections(List<SectionsDto> dtos) {
+    FeatureTalker.data(
+      'sections.local',
+      'upsert sections to cache',
+      context: {'dtos': dtos},
+    );
+    return _writer.upsertAll(dtos);
+  }
 }

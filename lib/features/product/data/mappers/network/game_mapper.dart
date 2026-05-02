@@ -1,11 +1,12 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/data/mappers/network/developer_mapper.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/game_entity.dart';
 
 extension GameMapper on GameDto {
   GameEntity toEntity(String locale) {
-    return GameEntity(
+    final entity = GameEntity(
       type: type,
       id: id,
       title: title.display(locale),
@@ -49,5 +50,11 @@ extension GameMapper on GameDto {
       gameModes: gameModes,
       hasControllerSupport: hasControllerSupport,
     );
+    FeatureTalker.mapperOut(
+      'product.game_mapper',
+      'GameDto -> GameEntity',
+      context: {'id': id, 'locale': locale, 'title': entity.title},
+    );
+    return entity;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:google_play/core/data/network/base_supabase_data_sourse.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/tabs/data/models/network/tabs_dto.dart';
 
 class SupabaseTabsNetworkDataSource extends BaseSupabaseDataSourse<TabsDto> {
@@ -15,11 +16,18 @@ class SupabaseTabsNetworkDataSource extends BaseSupabaseDataSourse<TabsDto> {
     required ({String column, bool ascending}) order,
     required int page,
     int pageSize = 100,
-  }) => getData(
-    view: view,
-    schemaName: schemaName,
-    order: order,
-    page: page,
-    pageSize: pageSize,
-  );
+  }) {
+    FeatureTalker.data(
+      'tabs.network',
+      'fetch tabs',
+      context: {'view': view, 'page': page, 'pageSize': pageSize},
+    );
+    return getData(
+      view: view,
+      schemaName: schemaName,
+      order: order,
+      page: page,
+      pageSize: pageSize,
+    );
+  }
 }

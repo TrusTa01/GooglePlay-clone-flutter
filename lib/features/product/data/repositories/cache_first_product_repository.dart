@@ -3,6 +3,7 @@ import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/data/data_sources/local/i_products_local_datasource.dart';
 import 'package:google_play/features/product/data/mappers/local/local_product_bundle_mapper.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
@@ -38,6 +39,11 @@ class CacheFirstProductRepository implements IProductsRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domainStart(
+      'product.repository',
+      'getProducts',
+      context: {'type': type.name, 'page': page, 'forceRefresh': forceRefresh},
+    );
     final pageSyncKey = SyncKeys.productListPage(
       type: type,
       page: page,
@@ -64,12 +70,27 @@ class CacheFirstProductRepository implements IProductsRepository {
         page: page,
         pageSize: pageSize,
       );
-      return refreshedBundles
+      final refreshed = refreshedBundles
           .map((bundle) => bundle.toEntity(locale))
           .nonNulls
           .toList();
+      FeatureTalker.domainDone(
+        'product.repository',
+        'getProducts',
+        context: {'type': type.name, 'page': page, 'resultCount': refreshed},
+      );
+      return refreshed;
     }
-    return bundles.map((bundle) => bundle.toEntity(locale)).nonNulls.toList();
+    final result = bundles
+        .map((bundle) => bundle.toEntity(locale))
+        .nonNulls
+        .toList();
+    FeatureTalker.domainDone(
+      'product.repository',
+      'getProducts',
+      context: {'type': type.name, 'page': page, 'resultCount': result},
+    );
+    return result;
   }
 
   Future<bool> _shouldAttemptRemoteRefresh({
@@ -107,6 +128,16 @@ class CacheFirstProductRepository implements IProductsRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domainStart(
+      'product.repository',
+      'getProductsByFilters',
+      context: {
+        'type': type.name,
+        'filters': filters,
+        'sort': sort?.runtimeType,
+        'page': page,
+      },
+    );
     final collectionSyncKey = SyncKeys.productsCollection(type);
     final shouldRefresh = await _shouldAttemptRemoteRefresh(
       syncKey: collectionSyncKey,
@@ -133,7 +164,13 @@ class CacheFirstProductRepository implements IProductsRepository {
       sort: sort,
     );
 
-    return _paginate(filtered, page: page, pageSize: pageSize);
+    final result = _paginate(filtered, page: page, pageSize: pageSize);
+    FeatureTalker.domainDone(
+      'product.repository',
+      'getProductsByFilters',
+      context: {'type': type.name, 'page': page, 'resultCount': result},
+    );
+    return result;
   }
 
   @override
@@ -164,6 +201,11 @@ class CacheFirstProductRepository implements IProductsRepository {
     required String locale,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domainStart(
+      'product.repository',
+      'getProductById',
+      context: {'id': id, 'type': type.name, 'forceRefresh': forceRefresh},
+    );
     final productSyncKey = SyncKeys.productItem(id);
 
     if (forceRefresh || await _needsSync(syncKey: productSyncKey)) {
@@ -171,7 +213,13 @@ class CacheFirstProductRepository implements IProductsRepository {
     }
 
     final fromLocal = await _local.getProductById(id);
-    return fromLocal?.toEntity(locale);
+    final result = fromLocal?.toEntity(locale);
+    FeatureTalker.domainDone(
+      'product.repository',
+      'getProductById',
+      context: {'id': id, 'hasResult': result != null},
+    );
+    return result;
   }
 
   Future<void> _refreshProducts({
@@ -179,6 +227,11 @@ class CacheFirstProductRepository implements IProductsRepository {
     required int page,
     required int pageSize,
   }) async {
+    FeatureTalker.dataStart(
+      'product.repository',
+      'refreshProducts',
+      context: {'type': type.name, 'page': page, 'pageSize': pageSize},
+    );
     final result = await _remote.getProducts(
       type: type,
       page: page,
@@ -193,27 +246,52 @@ class CacheFirstProductRepository implements IProductsRepository {
 
     switch (result) {
       case SuccessResult<List<ProductDto>>(data: final dtos):
+        FeatureTalker.dataDone(
+          'product.repository',
+          'refreshProducts',
+          context: {'type': type.name, 'dtos': dtos},
+        );
         final now = DateTime.now();
         await _local.upsertProducts(dtos);
         await _local.setLastSync(pageSyncKey, now);
         await _local.setLastSync(collectionSyncKey, now);
       case FailureResult():
+        FeatureTalker.data(
+          'product.repository',
+          'fail refreshProducts',
+          context: {'type': type.name},
+        );
         await _local.recordSyncFailure(pageSyncKey);
         await _local.recordSyncFailure(collectionSyncKey);
     }
   }
 
   Future<void> _refreshProductById(String id, ProductKind type) async {
+    FeatureTalker.dataStart(
+      'product.repository',
+      'refreshProductById',
+      context: {'id': id, 'type': type.name},
+    );
     final productSyncKey = SyncKeys.productItem(id);
     final result = await _remote.getProductById(id: id, type: type);
 
     switch (result) {
       case SuccessResult<ProductDto?>(data: final dto):
         if (dto != null) {
+          FeatureTalker.dataDone(
+            'product.repository',
+            'refreshProductById',
+            context: {'id': id},
+          );
           await _local.upsertProducts([dto]);
           await _local.setLastSync(productSyncKey, DateTime.now());
         }
       case FailureResult():
+        FeatureTalker.data(
+          'product.repository',
+          'fail refreshProductById',
+          context: {'id': id},
+        );
         await _local.recordSyncFailure(productSyncKey);
     }
   }
@@ -242,6 +320,11 @@ class CacheFirstProductRepository implements IProductsRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domainStart(
+      'product.repository',
+      'getSimilarProducts',
+      context: {'id': product.id, 'type': type.name, 'page': page},
+    );
     final syncKey = SyncKeys.productListPage(
       type: type,
       page: page,
@@ -270,6 +353,11 @@ class CacheFirstProductRepository implements IProductsRepository {
     );
 
     final matches = _getMatches(product: product, candidates: candidates);
+    FeatureTalker.domainDone(
+      'product.repository',
+      'getSimilarProducts',
+      context: {'id': product.id, 'matches': matches},
+    );
 
     return matches;
   }

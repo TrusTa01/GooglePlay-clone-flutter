@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/di/di.dart';
 import 'package:google_play/features/product/domain/use_cases/get_product_by_id_use_case.dart';
 import 'package:google_play/features/product/domain/use_cases/get_similar_products_use_case.dart';
@@ -19,6 +20,11 @@ class ProductViewModel extends _$ProductViewModel {
     final locale = ref.watch(localeProvider);
     final (id, type) = arg;
 
+    FeatureTalker.providerStart(
+      'product.viewmodel',
+      'build',
+      context: {'id': id, 'type': type.name, 'locale': locale?.languageCode},
+    );
     Future.microtask(() => loadById(id, type, locale: locale));
 
     return const ProductState(isLoading: true);
@@ -39,6 +45,11 @@ class ProductViewModel extends _$ProductViewModel {
     final GetSimilarProductsUseCase getSimilarProducts =
         getSimilarProductsUseCase(ref);
 
+    FeatureTalker.domainStart(
+      'product.viewmodel',
+      'loadById',
+      context: {'id': id, 'type': type.name, 'forceRefresh': forceRefresh},
+    );
     state = state.copyWith(isLoading: true, id: id, errorMessage: null);
 
     final product = await getProductById(
@@ -49,6 +60,11 @@ class ProductViewModel extends _$ProductViewModel {
     );
 
     if (product == null) {
+      FeatureTalker.domainDone(
+        'product.viewmodel',
+        'loadById',
+        context: {'id': id, 'type': type.name},
+      );
       state = state.copyWith(isLoading: false, errorMessage: l10n.emptyNoData);
       return;
     }
@@ -70,6 +86,11 @@ class ProductViewModel extends _$ProductViewModel {
         .toList();
 
     state = baseState.copyWith(isLoading: false, similarProducts: cards);
+    FeatureTalker.domainDone(
+      'product.viewmodel',
+      'loadById',
+      context: {'id': id, 'similarCards': cards},
+    );
   }
 
   void clear() => state = const ProductState();

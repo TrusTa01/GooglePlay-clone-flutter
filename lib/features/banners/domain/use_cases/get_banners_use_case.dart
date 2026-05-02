@@ -1,3 +1,4 @@
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/repositories/i_banners_repository.dart';
@@ -24,11 +25,18 @@ final class GetBannersUseCase implements IGetBannersUseCase {
     int page = 1,
     int pageSize = 20,
     bool forceRefresh = false,
-  }) => _repository.getBanners(
-    type: type,
-    locale: locale,
-    page: page,
-    pageSize: pageSize,
-    forceRefresh: forceRefresh,
-  );
+  }) {
+    FeatureTalker.domain(
+      'banners.usecase.get_banners',
+      'execute',
+      context: {'type': type.name, 'page': page, 'forceRefresh': forceRefresh},
+    );
+    return _repository.getBanners(
+      type: type,
+      locale: locale,
+      page: page,
+      pageSize: pageSize,
+      forceRefresh: forceRefresh,
+    );
+  }
 }

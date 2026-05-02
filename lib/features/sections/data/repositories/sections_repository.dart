@@ -3,6 +3,7 @@ import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/sections/data/data_sources/local/i_sections_local_data_source.dart';
 import 'package:google_play/features/sections/data/data_sources/network/i_sections_remote_data_source.dart';
 import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
@@ -31,6 +32,16 @@ class SectionsRepository implements ISectionsRepository {
     int pageSize = 200,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domain(
+      'sections.repository',
+      'get sections',
+      context: {
+        'productKind': productKind.name,
+        'tabId': tabId,
+        'page': page,
+        'forceRefresh': forceRefresh,
+      },
+    );
     final syncKey = SyncKeys.sectionsList(
       storeTypeName: productKind.name,
       page: page,
@@ -57,6 +68,11 @@ class SectionsRepository implements ISectionsRepository {
     int page = 1,
     int pageSize = 200,
   }) async {
+    FeatureTalker.data(
+      'sections.repository',
+      'refresh sections from remote',
+      context: {'productKind': productKind.name, 'page': page},
+    );
     final result = await _remote.getSections(page: page, pageSize: pageSize);
     final syncKey = SyncKeys.sectionsList(
       storeTypeName: productKind.name,
@@ -65,9 +81,19 @@ class SectionsRepository implements ISectionsRepository {
     );
     switch (result) {
       case SuccessResult<List<SectionsDto>>(data: final dtos):
+        FeatureTalker.data(
+          'sections.repository',
+          'sections refresh success',
+          context: {'dtos': dtos},
+        );
         await _local.upsertSections(dtos);
         await _local.setLastSync(syncKey, DateTime.now());
       case FailureResult<List<SectionsDto>>():
+        FeatureTalker.data(
+          'sections.repository',
+          'sections refresh failed',
+          context: {'productKind': productKind.name},
+        );
         await _local.recordSyncFailure(syncKey);
     }
   }

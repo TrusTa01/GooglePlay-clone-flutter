@@ -1,3 +1,4 @@
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/domain/entities/filters/product_filters.dart';
 
 extension ProductFilterMapper on ProductFilter {
@@ -5,13 +6,19 @@ extension ProductFilterMapper on ProductFilter {
     final key = type.toLowerCase();
     final raw = value?.toString().trim();
 
-    return switch (key) {
+    final filter = switch (key) {
       'category' || 'genre' => _toCategoryFilter(raw),
       'tag' => _toTagFilter(raw),
       'is_paid' || 'paid' => IsPaidFilter(isPaid: _parseBool(value)),
       'age' || 'age_limit' || 'agerating' => _toAgeFilter(value),
       _ => const UnknownFilter(),
     };
+    FeatureTalker.mapperOut(
+      'sections.product_filter_mapper',
+      'raw filter -> ProductFilter',
+      context: {'type': type, 'value': value, 'mapped': filter.runtimeType},
+    );
+    return filter;
   }
 
   static ProductFilter _toCategoryFilter(String? value) {

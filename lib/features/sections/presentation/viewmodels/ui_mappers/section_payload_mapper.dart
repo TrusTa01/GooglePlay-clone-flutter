@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 import 'package:google_play/core/domain/entities/base_entity.dart';
@@ -20,27 +21,48 @@ class SectionPayloadMapper {
     required List<Entity> items,
     required AppLocalizations l10n,
     required Locale locale,
-  }) => switch (config.sectionType) {
-    SectionLayoutKind.banners => BannersPayload(_mapBanners(items: items)),
-    SectionLayoutKind.carousel => CarouselPayload(
-      _mapCarousel(items: items, l10n: l10n, locale: locale),
-      categoryKey: _extractCategoryValue(config),
-      title: config.title,
-    ),
-    SectionLayoutKind.grid => GridPayload(
-      _mapGrid(items: items, l10n: l10n, locale: locale),
-      categoryKey: _extractCategoryValue(config),
-      title: config.title,
-    ),
-    SectionLayoutKind.preview => PreviewPayload(_mapPreview(items: items)),
-    SectionLayoutKind.kidsHeroBanner ||
-    SectionLayoutKind.ageFilterSelector ||
-    SectionLayoutKind.unknown => EmptyPayload(),
-  };
+  }) {
+    final payload = switch (config.sectionType) {
+      SectionLayoutKind.banners => BannersPayload(_mapBanners(items: items)),
+      SectionLayoutKind.carousel => CarouselPayload(
+        _mapCarousel(items: items, l10n: l10n, locale: locale),
+        categoryKey: _extractCategoryValue(config),
+        title: config.title,
+      ),
+      SectionLayoutKind.grid => GridPayload(
+        _mapGrid(items: items, l10n: l10n, locale: locale),
+        categoryKey: _extractCategoryValue(config),
+        title: config.title,
+      ),
+      SectionLayoutKind.preview => PreviewPayload(_mapPreview(items: items)),
+      SectionLayoutKind.kidsHeroBanner ||
+      SectionLayoutKind.ageFilterSelector ||
+      SectionLayoutKind.unknown => EmptyPayload(),
+    };
+    FeatureTalker.mapperOut(
+      'sections.section_payload_mapper',
+      'SectionPayload',
+      context: {
+        'sectionId': config.id,
+        'sectionType': config.sectionType.name,
+        'items': items,
+        'payload': payload.runtimeType,
+      },
+    );
+    return payload;
+  }
 
   List<BannerItemUiModel> _mapBanners({required List<Entity> items}) {
     final banners = items.whereType<BannerEntity>();
-    return banners.map((b) => const BannerItemMapper().fromEntity(b)).toList();
+    final mapped = banners
+        .map((b) => const BannerItemMapper().fromEntity(b))
+        .toList();
+    FeatureTalker.mapperOut(
+      'sections.section_payload_mapper',
+      'map banners payload items',
+      context: {'count': mapped.length},
+    );
+    return mapped;
   }
 
   List<ProductCardUiModel> _mapCarousel({
@@ -52,9 +74,15 @@ class SectionPayloadMapper {
     final state = products.map(
       (p) => const ProductStateMapper().fromEntity(p, l10n, locale),
     );
-    return state
+    final mapped = state
         .map((s) => const ProductCardMapper().mapToProductCardUi(s))
         .toList();
+    FeatureTalker.mapperOut(
+      'sections.section_payload_mapper',
+      'map carousel payload items',
+      context: {'count': mapped.length},
+    );
+    return mapped;
   }
 
   List<ActionRowUiModel> _mapGrid({
@@ -66,14 +94,26 @@ class SectionPayloadMapper {
     final state = products.map(
       (p) => const ProductStateMapper().fromEntity(p, l10n, locale),
     );
-    return state
+    final mapped = state
         .map((s) => const ActionRowUiMapper().fromStateGrid(s))
         .toList();
+    FeatureTalker.mapperOut(
+      'sections.section_payload_mapper',
+      'map grid payload items',
+      context: {'count': mapped.length},
+    );
+    return mapped;
   }
 
   ProductPreviewSectionUiModel _mapPreview({required List<Entity> items}) {
     final products = items.whereType<ProductEntity>();
-    return ProductPreviewSectionUiModel.fromProducts(products.toList());
+    final model = ProductPreviewSectionUiModel.fromProducts(products.toList());
+    FeatureTalker.mapperOut(
+      'sections.section_payload_mapper',
+      'map preview payload items',
+      context: {'count': model.productIds.length},
+    );
+    return model;
   }
 
   String? _extractCategoryValue(SectionEntity config) {

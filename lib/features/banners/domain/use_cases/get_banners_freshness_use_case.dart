@@ -1,4 +1,5 @@
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/repositories/i_banners_repository.dart';
 
@@ -12,6 +13,12 @@ final class GetBannersFreshnessUseCase implements IGetBannersFreshnessUseCase {
   const GetBannersFreshnessUseCase(this._repository);
 
   @override
-  Future<DataFreshness> call({required BannerKind type}) =>
-      _repository.getBannersFreshness(type: type);
+  Future<DataFreshness> call({required BannerKind type}) {
+    FeatureTalker.domain(
+      'banners.usecase.get_banners_freshness',
+      'execute',
+      context: {'type': type.name},
+    );
+    return _repository.getBannersFreshness(type: type);
+  }
 }

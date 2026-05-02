@@ -1,4 +1,5 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/sections/data/mappers/network/params_mapper.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind_enum.dart';
@@ -6,18 +7,26 @@ import 'package:google_play/features/sections/domain/entities/sections_entity.da
 import 'package:google_play/features/sections/data/models/network/tab_sections_dto.dart';
 
 extension SectionMapper on SectionsDto {
-  SectionEntity toEntity(String locale) => SectionEntity(
-    id: id,
-    tabKey: tabKey,
-    sectionType: _mapSectionType(sectionType, dataSource),
-    title: title?.display(locale),
-    subtitle: subtitle?.display(locale),
-    dataSource: _mapSectionDataSource(dataSource),
-    imageAssetPath: imageAssetPath,
-    sortOrder: sortOrder,
-    contentType: contentType,
-    dataParamsEntity: dataParamsDto?.toEntity(),
-  );
+  SectionEntity toEntity(String locale) {
+    final entity = SectionEntity(
+      id: id,
+      tabKey: tabKey,
+      sectionType: _mapSectionType(sectionType, dataSource),
+      title: title?.display(locale),
+      subtitle: subtitle?.display(locale),
+      dataSource: _mapSectionDataSource(dataSource),
+      imageAssetPath: imageAssetPath,
+      sortOrder: sortOrder,
+      contentType: contentType,
+      dataParamsEntity: dataParamsDto?.toEntity(),
+    );
+    FeatureTalker.mapperOut(
+      'sections.section_mapper',
+      'SectionsDto -> SectionEntity',
+      context: {'id': id, 'tabKey': tabKey, 'locale': locale},
+    );
+    return entity;
+  }
 
   SectionLayoutKind _mapSectionType(String? type, String? source) {
     final normalized = type?.trim().toLowerCase();

@@ -3,6 +3,7 @@ import 'package:google_play/core/data/network_schema_names_enum.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/result_pattern/failure.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/data/data_sources/network/i_products_remote_data_source.dart';
 import 'package:google_play/features/product/data/data_sources/network/products_network_views_names_enum.dart';
 import 'package:google_play/features/product/data/data_sources/network/supabase_product_network_datasource.dart';
@@ -23,6 +24,11 @@ class SupabaseProductRemoteDataSource implements IProductsRemoteDataSource {
     required int page,
     int pageSize = 20,
   }) {
+    FeatureTalker.data(
+      'product.remote',
+      'resolve view and request products',
+      context: {'type': type.name, 'page': page, 'pageSize': pageSize},
+    );
     final view = NetworkProductsViewsNames.getViewName(type.name);
     final order = SortOrders.releaseDateDesc;
 
@@ -44,6 +50,11 @@ class SupabaseProductRemoteDataSource implements IProductsRemoteDataSource {
     required String id,
     required ProductKind type,
   }) {
+    FeatureTalker.data(
+      'product.remote',
+      'resolve view and request product by id',
+      context: {'type': type.name, 'id': id},
+    );
     final view = NetworkProductsViewsNames.getViewName(type.name);
 
     return view == null
@@ -63,10 +74,17 @@ class SupabaseProductRemoteDataSource implements IProductsRemoteDataSource {
     int limit = 20,
     int excludeRecentDays = 30,
     String? seed,
-  }) => _datasource.getRecommendedProducts(
-    type: type,
-    limit: limit,
-    excludeRecentDays: excludeRecentDays,
-    seed: seed,
-  );
+  }) {
+    FeatureTalker.data(
+      'product.remote',
+      'request recommended products',
+      context: {'type': type.name, 'limit': limit},
+    );
+    return _datasource.getRecommendedProducts(
+      type: type,
+      limit: limit,
+      excludeRecentDays: excludeRecentDays,
+      seed: seed,
+    );
+  }
 }

@@ -64,6 +64,8 @@ dependencies:
   # logger
   talker_flutter: ^5.1.16
   talker_riverpod_logger: ^5.1.16
+  plugin_platform_interface: ^2.1.8
+  path_provider_platform_interface: ^2.1.2
 
 dev_dependencies:
   # tests

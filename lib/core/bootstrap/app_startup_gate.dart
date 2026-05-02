@@ -6,6 +6,7 @@ import 'package:google_play/core/bootstrap/google_play_app.dart';
 import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/di/di.dart';
 import 'package:google_play/core/l10n/app_localization_setup.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/core/presentation/screens/initialization_error_screen.dart';
 import 'package:google_play/core/presentation/widgets/ui_kits/indicators/app_loading_indicator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -41,6 +42,12 @@ class _AppStartupGateState extends ConsumerState<AppStartupGate> {
       if (!mounted) return;
       setState(() => _state = const AppLaunchReady());
     } catch (e, stackTrace) {
+      talker.error('AppBootstrap.init failed: $e\n$stackTrace');
+      FeatureTalker.error(
+        'bootstrap.startupGate',
+        'bootstrap failed',
+        context: {'error': e.runtimeType},
+      );
       if (kDebugMode) debugPrint('AppBootstrap.init failed: $e\n$stackTrace');
       if (!mounted) return;
       setState(() => _state = const AppLaunchFailed());

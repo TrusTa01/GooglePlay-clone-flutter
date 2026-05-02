@@ -68,13 +68,9 @@ class ProductPageSupportSection extends StatelessWidget {
           onTap: item.url != null ? () => launchMyUrl(item.url!) : null,
         );
       case SupportItemDataType.sectionHeader:
-        return SupportItem.sectionHeader(
-          title: item.title ?? '',
-        );
+        return SupportItem.sectionHeader(title: item.title ?? '');
       case SupportItemDataType.infoText:
-        return SupportItem.infoText(
-          title: item.title ?? '',
-        );
+        return SupportItem.infoText(title: item.title ?? '');
     }
   }
 }

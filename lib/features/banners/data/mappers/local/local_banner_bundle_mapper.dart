@@ -1,4 +1,5 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/data/models/local/local_banner_bundle.dart';
 import 'package:google_play/features/banners/domain/entities/action_banner_entity.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
@@ -6,11 +7,17 @@ import 'package:google_play/features/banners/domain/entities/event_banner_entity
 
 extension LocalBannerBundleMapper on LocalBannerBundle {
   BannerEntity? toEntity(String locale) {
-    return switch (bannerType) {
+    final entity = switch (bannerType) {
       BannerType.event => _toEvent(locale: locale),
       BannerType.action => _toAction(locale: locale),
       _ => null,
     };
+    FeatureTalker.mapperOut(
+      'banners.local_banner_bundle_mapper',
+      'LocalBannerBundle -> BannerEntity',
+      context: {'id': banner.id, 'type': bannerType.name, 'locale': locale},
+    );
+    return entity;
   }
 
   BannerEntity? _toEvent({required String locale}) {

@@ -1,4 +1,5 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/core/local_database/app_database.dart';
 import 'package:google_play/features/product/data/models/local/local_product_bundle.dart';
 import 'package:google_play/features/product/domain/entities/app_entity.dart';
@@ -15,7 +16,7 @@ extension LocalProductBundleMapper on LocalProductBundle {
         .map((c) => c.name.display(locale))
         .toList();
 
-    return switch (product.type) {
+    final entity = switch (product.type) {
       'game' => _toGame(
         locale: locale,
         localizedTags: localizedTags,
@@ -33,6 +34,12 @@ extension LocalProductBundleMapper on LocalProductBundle {
       ),
       _ => null,
     };
+    FeatureTalker.mapperOut(
+      'product.local_product_bundle_mapper',
+      'LocalProductBundle -> ProductEntity',
+      context: {'id': product.id, 'type': product.type, 'locale': locale},
+    );
+    return entity;
   }
 
   ProductEntity? _toGame({

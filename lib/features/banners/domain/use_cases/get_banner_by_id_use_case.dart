@@ -1,3 +1,4 @@
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/repositories/i_banners_repository.dart';
@@ -22,10 +23,17 @@ final class GetBannerByIdUseCase implements IGetBannerByIdUseCase {
     required BannerKind type,
     required String locale,
     bool forceRefresh = false,
-  }) => _repository.getBannerById(
-    id,
-    type: type,
-    locale: locale,
-    forceRefresh: forceRefresh,
-  );
+  }) {
+    FeatureTalker.domain(
+      'banners.usecase.get_banner_by_id',
+      'execute',
+      context: {'id': id, 'type': type.name, 'forceRefresh': forceRefresh},
+    );
+    return _repository.getBannerById(
+      id,
+      type: type,
+      locale: locale,
+      forceRefresh: forceRefresh,
+    );
+  }
 }

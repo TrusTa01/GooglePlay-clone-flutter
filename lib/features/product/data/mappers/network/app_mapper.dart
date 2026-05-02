@@ -1,11 +1,12 @@
 import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/data/mappers/network/developer_mapper.dart';
 import 'package:google_play/features/product/data/models/network/product_dto.dart';
 import 'package:google_play/features/product/domain/entities/app_entity.dart';
 
 extension AppMapper on AppDto {
   AppEntity toEntity(String locale) {
-    return AppEntity(
+    final entity = AppEntity(
       type: type,
       id: id,
       title: title.display(locale),
@@ -45,5 +46,11 @@ extension AppMapper on AppDto {
       developer: toDeveloperEntity(locale),
       packageName: packageName,
     );
+    FeatureTalker.mapperOut(
+      'product.app_mapper',
+      'AppDto -> AppEntity',
+      context: {'id': id, 'locale': locale, 'title': entity.title},
+    );
+    return entity;
   }
 }

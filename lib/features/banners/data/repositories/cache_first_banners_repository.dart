@@ -2,6 +2,7 @@ import 'package:google_play/core/data/local/sync_keys.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/data/data_sources/local/i_banners_local_data_source.dart';
 import 'package:google_play/features/banners/data/data_sources/network/i_banners_remote_data_source.dart';
 import 'package:google_play/features/banners/data/mappers/local/local_banner_bundle_mapper.dart';
@@ -34,6 +35,11 @@ class CacheFirstBannersRepository implements IBannersRepository {
     int pageSize = 20,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domainStart(
+      'banners.repository',
+      'getBanners',
+      context: {'type': type.name, 'page': page, 'forceRefresh': forceRefresh},
+    );
     final syncKey = SyncKeys.bannerListPage(
       type: type,
       page: page,
@@ -59,18 +65,38 @@ class CacheFirstBannersRepository implements IBannersRepository {
         page: page,
         pageSize: pageSize,
       );
-      return refreshedBundles
+      final refreshed = refreshedBundles
           .map((bundle) => bundle.toEntity(locale))
           .nonNulls
           .toList();
+      FeatureTalker.domainDone(
+        'banners.repository',
+        'getBanners',
+        context: {'type': type.name, 'page': page, 'resultCount': refreshed},
+      );
+      return refreshed;
     }
-    return bundles.map((bundle) => bundle.toEntity(locale)).nonNulls.toList();
+    final result = bundles
+        .map((bundle) => bundle.toEntity(locale))
+        .nonNulls
+        .toList();
+    FeatureTalker.domainDone(
+      'banners.repository',
+      'getBanners',
+      context: {'type': type.name, 'page': page, 'resultCount': result},
+    );
+    return result;
   }
 
   Future<bool> _shouldAttemptRemoteRefresh({
     required String syncKey,
     required bool forceRefresh,
   }) async {
+    FeatureTalker.dataStart(
+      'banners.repository',
+      'shouldAttemptRemoteRefresh',
+      context: {'syncKey': syncKey, 'forceRefresh': forceRefresh},
+    );
     if (forceRefresh) return true;
     final freshness = await _freshnessForSyncKey(syncKey);
     if (!freshness.status.shouldFetch) return false;
@@ -105,9 +131,19 @@ class CacheFirstBannersRepository implements IBannersRepository {
 
     switch (result) {
       case SuccessResult<List<BannerDto>>(data: final data):
+        FeatureTalker.dataDone(
+          'banners.repository',
+          'refreshBanners',
+          context: {'type': type.name, 'dtos': data},
+        );
         await _local.upsertBanners(data);
         await _local.setLastSync(syncKey, DateTime.now());
       case FailureResult():
+        FeatureTalker.data(
+          'banners.repository',
+          'fail refreshBanners',
+          context: {'type': type.name},
+        );
         await _local.recordSyncFailure(syncKey);
     }
   }
@@ -136,6 +172,11 @@ class CacheFirstBannersRepository implements IBannersRepository {
     required String locale,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domainStart(
+      'banners.repository',
+      'getBannerById',
+      context: {'id': id, 'type': type.name, 'forceRefresh': forceRefresh},
+    );
     final syncKey = SyncKeys.bannerItem(id);
     assert(
       type.name.isNotEmpty,
@@ -149,20 +190,41 @@ class CacheFirstBannersRepository implements IBannersRepository {
     }
 
     final fromLocal = await _local.getBannerById(id);
-    return fromLocal?.toEntity(locale);
+    final result = fromLocal?.toEntity(locale);
+    FeatureTalker.domainDone(
+      'banners.repository',
+      'getBannerById',
+      context: {'id': id, 'hasResult': result != null},
+    );
+    return result;
   }
 
   Future<void> _refreshBannerById(String id) async {
+    FeatureTalker.dataStart(
+      'banners.repository',
+      'refreshBannerById',
+      context: {'id': id},
+    );
     final syncKey = SyncKeys.bannerItem(id);
     final result = await _remote.getBannerById(id: id);
 
     switch (result) {
       case SuccessResult<BannerDto?>(data: final dto):
         if (dto != null) {
+          FeatureTalker.dataDone(
+            'banners.repository',
+            'refreshBannerById',
+            context: {'id': id},
+          );
           await _local.upsertBanners([dto]);
           await _local.setLastSync(syncKey, DateTime.now());
         }
       case FailureResult():
+        FeatureTalker.data(
+          'banners.repository',
+          'fail refreshBannerById',
+          context: {'id': id},
+        );
         await _local.recordSyncFailure(syncKey);
     }
   }

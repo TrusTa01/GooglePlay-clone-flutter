@@ -3,6 +3,7 @@ import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/tabs/data/data_sources/local/drift_tabs_local_data_source.dart';
 import 'package:google_play/features/tabs/data/data_sources/network/supabase_tabs_remote_data_source.dart';
 import 'package:google_play/features/tabs/data/models/network/tabs_dto.dart';
@@ -30,6 +31,15 @@ class TabsRepository implements ITabsRepository {
     int pageSize = 100,
     bool forceRefresh = false,
   }) async {
+    FeatureTalker.domain(
+      'tabs.repository',
+      'get tabs',
+      context: {
+        'productKind': productKind.name,
+        'page': page,
+        'forceRefresh': forceRefresh,
+      },
+    );
     if (forceRefresh ||
         await _needsSync(
           syncKey: SyncKeys.tabsList(
@@ -60,6 +70,15 @@ class TabsRepository implements ITabsRepository {
     required int page,
     required int pageSize,
   }) async {
+    FeatureTalker.data(
+      'tabs.repository',
+      'refresh tabs from remote',
+      context: {
+        'productKind': productKind.name,
+        'page': page,
+        'pageSize': pageSize,
+      },
+    );
     final result = await _remote.getTabs(page: page, pageSize: pageSize);
     final syncKey = SyncKeys.tabsList(
       storeTypeName: productKind.name,
@@ -69,9 +88,19 @@ class TabsRepository implements ITabsRepository {
 
     switch (result) {
       case SuccessResult<List<TabsDto>>(data: final dtos):
+        FeatureTalker.data(
+          'tabs.repository',
+          'tabs refresh success',
+          context: {'dtos': dtos},
+        );
         await _local.upsertSections(dtos);
         await _local.setLastSync(syncKey, DateTime.now());
       case FailureResult():
+        FeatureTalker.data(
+          'tabs.repository',
+          'tabs refresh failed',
+          context: {'productKind': productKind.name},
+        );
         await _local.recordSyncFailure(syncKey);
     }
   }

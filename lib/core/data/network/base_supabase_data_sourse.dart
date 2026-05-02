@@ -1,5 +1,6 @@
 import 'package:google_play/core/data/network/supabase_query_executor.dart';
 import 'package:google_play/core/data/network_schema_names_enum.dart';
+import 'package:google_play/core/domain/result_pattern/failure.dart';
 import 'package:google_play/core/domain/result_pattern/result.dart';
 
 abstract class BaseSupabaseDataSourse<T> {
@@ -25,8 +26,21 @@ abstract class BaseSupabaseDataSourse<T> {
       pageSize: pageSize,
     );
     return result.when(
-      success: (rawList) =>
-          Result.success(data: rawList.map(fromJson).toList()),
+      success: (rawList) {
+        try {
+          return Result.success(data: rawList.map(fromJson).toList());
+        } on FormatException catch (e) {
+          return Result.failure(failure: ParsingFailure(message: e.message));
+        } on TypeError catch (e) {
+          return Result.failure(
+            failure: ParsingFailure(message: 'Invalid response format: $e'),
+          );
+        } catch (e) {
+          return Result.failure(
+            failure: ParsingFailure(message: 'Failed to parse response: $e'),
+          );
+        }
+      },
       failure: (failure) => Result.failure(failure: failure),
     );
   }
@@ -43,8 +57,22 @@ abstract class BaseSupabaseDataSourse<T> {
     );
 
     return result.when(
-      success: (rawList) =>
-          Result.success(data: rawList == null ? null : fromJson(rawList)),
+      success: (rawList) {
+        if (rawList == null) return const Result.success(data: null);
+        try {
+          return Result.success(data: fromJson(rawList));
+        } on FormatException catch (e) {
+          return Result.failure(failure: ParsingFailure(message: e.message));
+        } on TypeError catch (e) {
+          return Result.failure(
+            failure: ParsingFailure(message: 'Invalid response format: $e'),
+          );
+        } catch (e) {
+          return Result.failure(
+            failure: ParsingFailure(message: 'Failed to parse response: $e'),
+          );
+        }
+      },
       failure: (failure) => Result.failure(failure: failure),
     );
   }

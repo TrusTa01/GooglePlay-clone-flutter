@@ -1,3 +1,4 @@
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/domain/entities/banner_entity.dart';
 import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/repositories/i_banners_repository.dart';
@@ -22,10 +23,17 @@ final class WatchBannersUseCase implements IWatchBannersUseCase {
     required String locale,
     int page = 1,
     int pageSize = 20,
-  }) => _repository.watchBanners(
-    type: type,
-    locale: locale,
-    page: page,
-    pageSize: pageSize,
-  );
+  }) {
+    FeatureTalker.domain(
+      'banners.usecase.watch_banners',
+      'execute',
+      context: {'type': type.name, 'page': page},
+    );
+    return _repository.watchBanners(
+      type: type,
+      locale: locale,
+      page: page,
+      pageSize: pageSize,
+    );
+  }
 }
