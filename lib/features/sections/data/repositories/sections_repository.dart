@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:google_play/core/data/local/sync_keys.dart';
+import 'package:google_play/core/debug/agent_session_log.dart';
 import 'package:google_play/core/domain/entities/product_kind.dart';
 import 'package:google_play/core/domain/freshness_policy/data_freshness.dart';
 import 'package:google_play/core/domain/freshness_policy/freshness_policy.dart';
@@ -88,11 +91,28 @@ class SectionsRepository implements ISectionsRepository {
         );
         await _local.upsertSections(dtos);
         await _local.setLastSync(syncKey, DateTime.now());
-      case FailureResult<List<SectionsDto>>():
+      case FailureResult<List<SectionsDto>>(failure: final fail):
+        // #region agent log
+        unawaited(
+          agentSessionLog(
+            hypothesisId: 'H1-H4',
+            location: 'sections_repository.dart:_refreshSections',
+            message: 'remote getSections failure',
+            data: {
+              'productKind': productKind.name,
+              'failureType': fail.runtimeType.toString(),
+              'failure': fail.toString(),
+            },
+          ),
+        );
+        // #endregion
         FeatureTalker.data(
           'sections.repository',
           'sections refresh failed',
-          context: {'productKind': productKind.name},
+          context: {
+            'productKind': productKind.name,
+            'failure': fail.toString(),
+          },
         );
         await _local.recordSyncFailure(syncKey);
     }

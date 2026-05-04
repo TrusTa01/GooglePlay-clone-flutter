@@ -4,7 +4,7 @@ import 'package:google_play/features/banners/domain/entities/banner_entity.dart'
 import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/use_cases/get_banners_use_case.dart';
 import 'package:google_play/features/product/domain/entities/product_entity.dart';
-import 'package:google_play/features/product/domain/use_cases/get_products_by_filters_use_case.dart';
+import 'package:google_play/features/product/domain/repositories/i_products_repository.dart';
 import 'package:google_play/features/sections/domain/entities/params_entity.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
 import 'package:google_play/features/sections/domain/entities/section_layout_kind_enum.dart';
@@ -15,8 +15,7 @@ import 'package:mocktail/mocktail.dart';
 
 class MockGetSectionsUseCase extends Mock implements GetSectionsUseCase {}
 
-class MockLoadProductsByFiltersUseCase extends Mock
-    implements LoadProductsByFiltersUseCase {}
+class MockProductsRepository extends Mock implements IProductsRepository {}
 
 class MockGetBannersUseCase extends Mock implements IGetBannersUseCase {}
 
@@ -56,7 +55,7 @@ class FakeBanner extends BannerEntity {
 
 void main() {
   late MockGetSectionsUseCase getSections;
-  late MockLoadProductsByFiltersUseCase loadProducts;
+  late MockProductsRepository productsRepo;
   late MockGetBannersUseCase getBanners;
   late ResolvedSectionsUseCaseImpl useCase;
 
@@ -67,16 +66,17 @@ void main() {
 
   setUp(() {
     getSections = MockGetSectionsUseCase();
-    loadProducts = MockLoadProductsByFiltersUseCase();
+    productsRepo = MockProductsRepository();
     getBanners = MockGetBannersUseCase();
     useCase = ResolvedSectionsUseCaseImpl(
       getSections,
-      loadProducts,
+      productsRepo,
       getBanners,
     );
   });
 
   test('resolves ProductListSource with mapped filters and sort', () async {
+    final catalog = [FakeProduct(id: 'p-1')];
     final section = const SectionEntity(
       id: 'products',
       tabKey: 'for_you',
@@ -100,15 +100,21 @@ void main() {
       ),
     ).thenAnswer((_) async => [section]);
     when(
-      () => loadProducts(
-        filters: any(named: 'filters'),
-        sort: any(named: 'sort'),
+      () => productsRepo.getCachedProductCatalog(
         type: ProductKind.app,
         locale: 'en',
+        forceRefresh: false,
+      ),
+    ).thenAnswer((_) async => catalog);
+    when(
+      () => productsRepo.sliceProductCatalog(
+        catalog: catalog,
+        filters: any(named: 'filters'),
+        sort: any(named: 'sort'),
         page: 1,
         pageSize: 100,
       ),
-    ).thenAnswer((_) async => [FakeProduct(id: 'p-1')]);
+    ).thenReturn([FakeProduct(id: 'p-1')]);
 
     final result = await useCase(
       productKind: ProductKind.app,
@@ -120,15 +126,88 @@ void main() {
     expect(result.first.config.id, 'products');
     expect(result.first.items.single.id, 'p-1');
     verify(
-      () => loadProducts(
-        filters: any(named: 'filters'),
-        sort: any(named: 'sort'),
+      () => productsRepo.getCachedProductCatalog(
         type: ProductKind.app,
         locale: 'en',
+        forceRefresh: false,
+      ),
+    ).called(1);
+    verify(
+      () => productsRepo.sliceProductCatalog(
+        catalog: catalog,
+        filters: any(named: 'filters'),
+        sort: any(named: 'sort'),
         page: 1,
         pageSize: 100,
       ),
     ).called(1);
+  });
+
+  test('loads catalog once for multiple ProductListSource sections', () async {
+    final catalog = [FakeProduct(id: 'p-1')];
+    final s1 = const SectionEntity(
+      id: 's1',
+      tabKey: 'for_you',
+      sectionType: SectionLayoutKind.grid,
+      sortOrder: 1,
+      contentType: 'apps',
+      dataSource: ProductListSource(),
+    );
+    final s2 = const SectionEntity(
+      id: 's2',
+      tabKey: 'for_you',
+      sectionType: SectionLayoutKind.grid,
+      sortOrder: 2,
+      contentType: 'apps',
+      dataSource: ProductListSource(),
+    );
+    when(
+      () => getSections(
+        productKind: ProductKind.game,
+        tabId: 'recommended',
+        locale: 'en',
+        forceRefresh: false,
+      ),
+    ).thenAnswer((_) async => [s1, s2]);
+    when(
+      () => productsRepo.getCachedProductCatalog(
+        type: ProductKind.game,
+        locale: 'en',
+        forceRefresh: false,
+      ),
+    ).thenAnswer((_) async => catalog);
+    when(
+      () => productsRepo.sliceProductCatalog(
+        catalog: catalog,
+        filters: any(named: 'filters'),
+        sort: any(named: 'sort'),
+        page: 1,
+        pageSize: 100,
+      ),
+    ).thenReturn(catalog);
+
+    await useCase(
+      productKind: ProductKind.game,
+      tabId: 'recommended',
+      locale: 'en',
+    );
+
+    verify(
+      () => productsRepo.getCachedProductCatalog(
+        type: ProductKind.game,
+        locale: 'en',
+        forceRefresh: false,
+      ),
+    ).called(1);
+    verify(
+      () => productsRepo.sliceProductCatalog(
+        catalog: catalog,
+        filters: any(named: 'filters'),
+        sort: any(named: 'sort'),
+        page: 1,
+        pageSize: 100,
+      ),
+    ).called(2);
   });
 
   test('resolves BannersSource with mapped BannerKind', () async {
@@ -172,6 +251,13 @@ void main() {
         pageSize: 50,
       ),
     ).called(1);
+    verifyNever(
+      () => productsRepo.getCachedProductCatalog(
+        type: any(named: 'type'),
+        locale: any(named: 'locale'),
+        forceRefresh: any(named: 'forceRefresh'),
+      ),
+    );
   });
 
   test(
@@ -202,14 +288,19 @@ void main() {
 
       expect(result.single.items, isEmpty);
       verifyNever(
-        () => loadProducts(
-          filters: any(named: 'filters'),
-          sort: any(named: 'sort'),
+        () => productsRepo.getCachedProductCatalog(
           type: any(named: 'type'),
           locale: any(named: 'locale'),
+          forceRefresh: any(named: 'forceRefresh'),
+        ),
+      );
+      verifyNever(
+        () => productsRepo.sliceProductCatalog(
+          catalog: any(named: 'catalog'),
+          filters: any(named: 'filters'),
+          sort: any(named: 'sort'),
           page: any(named: 'page'),
           pageSize: any(named: 'pageSize'),
-          forceRefresh: any(named: 'forceRefresh'),
         ),
       );
       verifyNever(

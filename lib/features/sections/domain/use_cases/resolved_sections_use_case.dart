@@ -3,7 +3,8 @@ import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/banners/domain/entities/banner_kind.dart';
 import 'package:google_play/features/banners/domain/use_cases/get_banners_use_case.dart';
 import 'package:google_play/features/product/domain/entities/filters/product_filters.dart';
-import 'package:google_play/features/product/domain/use_cases/get_products_by_filters_use_case.dart';
+import 'package:google_play/features/product/domain/entities/product_entity.dart';
+import 'package:google_play/features/product/domain/repositories/i_products_repository.dart';
 import 'package:google_play/features/sections/domain/entities/params_entity.dart';
 import 'package:google_play/features/sections/domain/entities/resolved_section.dart';
 import 'package:google_play/features/sections/domain/entities/section_data_source.dart';
@@ -23,12 +24,12 @@ abstract interface class ResolvedSectionsUseCase {
 
 final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
   final GetSectionsUseCase _getSections;
-  final LoadProductsByFiltersUseCase _loadProductsByFilters;
+  final IProductsRepository _productsRepo;
   final IGetBannersUseCase _getBanners;
 
   const ResolvedSectionsUseCaseImpl(
     this._getSections,
-    this._loadProductsByFilters,
+    this._productsRepo,
     this._getBanners,
   );
 
@@ -54,8 +55,27 @@ final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
       locale: locale,
       forceRefresh: forceRefresh,
     );
+    final needsProductCatalog = configs.any(
+      (c) =>
+          !c.sectionType.shouldSkipDataFetch &&
+          c.dataSource is ProductListSource,
+    );
+    final List<ProductEntity>? productCatalog = needsProductCatalog
+        ? await _productsRepo.getCachedProductCatalog(
+            type: productKind,
+            locale: locale,
+            forceRefresh: forceRefresh,
+          )
+        : null;
     final resolved = await Future.wait(
-      configs.map((c) => _resolveOne(c, productKind, locale)),
+      configs.map(
+        (c) => _resolveOne(
+          c,
+          productKind,
+          locale,
+          productCatalog: productCatalog,
+        ),
+      ),
     );
     FeatureTalker.domainDone(
       'sections.usecase.resolved_sections',
@@ -68,8 +88,9 @@ final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
   Future<ResolvedSection> _resolveOne(
     SectionEntity config,
     ProductKind productKind,
-    String locale,
-  ) async {
+    String locale, {
+    List<ProductEntity>? productCatalog,
+  }) async {
     FeatureTalker.domain(
       'sections.usecase.resolved_sections',
       'resolve single section',
@@ -84,8 +105,7 @@ final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
     return switch (config.dataSource) {
       ProductListSource() => await _resolveProducts(
         config,
-        productKind,
-        locale,
+        productCatalog ?? const [],
       ),
       BannersSource() => await _resolveBanners(config, locale),
       UnknownSource() => ResolvedSection(config: config, items: const []),
@@ -94,21 +114,19 @@ final class ResolvedSectionsUseCaseImpl implements ResolvedSectionsUseCase {
 
   Future<ResolvedSection> _resolveProducts(
     SectionEntity config,
-    ProductKind productKind,
-    String locale,
+    List<ProductEntity> catalog,
   ) async {
     FeatureTalker.domain(
       'sections.usecase.resolved_sections',
       'resolve products section',
-      context: {'sectionId': config.id, 'productKind': productKind.name},
+      context: {'sectionId': config.id},
     );
     final filters = _mapFilters(config.dataParamsEntity);
     final sort = ProductSortMapper.fromRaw(config.dataParamsEntity?.sort);
-    final products = await _loadProductsByFilters(
+    final products = _productsRepo.sliceProductCatalog(
+      catalog: catalog,
       filters: filters,
       sort: sort,
-      type: productKind,
-      locale: locale,
       page: 1,
       pageSize: 100,
     );

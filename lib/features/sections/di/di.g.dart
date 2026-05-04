@@ -347,4 +347,4 @@ final class ResolvedSectionsUseCaseProvider
 }
 
 String _$resolvedSectionsUseCaseHash() =>
-    r'8721ae555f0cfaeb628da209ffa0058377d760aa';
+    r'42d39529fbe1c4e6ab234f6cbf1ea613a6e28e67';

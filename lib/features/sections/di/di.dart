@@ -61,7 +61,7 @@ GetSectionsFreshnessUseCase getSectionsFreshnessUseCase(Ref ref) {
 ResolvedSectionsUseCase resolvedSectionsUseCase(Ref ref) {
   return ResolvedSectionsUseCaseImpl(
     ref.watch(getSectionsUseCaseProvider),
-    ref.watch(loadProductsByFiltersUseCaseProvider),
+    ref.watch(productsRepoProvider),
     ref.watch(getBannersUseCaseProvider),
   );
 }

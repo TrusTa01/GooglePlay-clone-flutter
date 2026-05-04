@@ -1,7 +1,9 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/debug/agent_session_log.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'package:google_play/features/banners/presentation/view_models/ui_models/banner_item_ui_model.dart';
@@ -119,11 +121,46 @@ class BannerSection extends HookWidget {
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
                     if (!isMounted()) return true;
-                    // Пауза таймера при ручном скролле
+                    // Пауза таймера при ручном скролле. Нельзя менять useState
+                    // (ValueNotifier) синхронно из onNotification — возможен
+                    // ScrollStart во время layout/build → Build scheduled during frame.
+                    void applyVisibility(bool visible) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (!isMounted()) return;
+                        isVisible.value = visible;
+                      });
+                    }
+
                     if (notification is ScrollStartNotification) {
-                      isVisible.value = false;
+                      // #region agent log
+                      unawaited(
+                        agentSessionLog(
+                          hypothesisId: 'H1',
+                          location:
+                              'banner_section.dart:onNotification:ScrollStart',
+                          message: 'defer isVisible=false',
+                          data: {
+                            'depth': notification.depth,
+                          },
+                        ),
+                      );
+                      // #endregion
+                      applyVisibility(false);
                     } else if (notification is ScrollEndNotification) {
-                      isVisible.value = true;
+                      // #region agent log
+                      unawaited(
+                        agentSessionLog(
+                          hypothesisId: 'H1',
+                          location:
+                              'banner_section.dart:onNotification:ScrollEnd',
+                          message: 'defer isVisible=true',
+                          data: {
+                            'depth': notification.depth,
+                          },
+                        ),
+                      );
+                      // #endregion
+                      applyVisibility(true);
                     }
                     return true;
                   },

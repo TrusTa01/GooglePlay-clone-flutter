@@ -66,7 +66,7 @@ final class ResolvedSectionsProvider
   }
 }
 
-String _$resolvedSectionsHash() => r'4593e8da0b6ccef4545580da6ba61812a829367b';
+String _$resolvedSectionsHash() => r'282d79c54f53e8f2ba5007a6cb849cb91f790990';
 
 final class ResolvedSectionsFamily extends $Family
     with

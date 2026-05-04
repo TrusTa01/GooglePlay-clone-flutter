@@ -37,6 +37,22 @@ abstract interface class IProductsRepository {
     bool forceRefresh = false,
   });
 
+  /// Один проход [getAllProducts] + маппинг (для экрана с многими секциями).
+  Future<List<ProductEntity>> getCachedProductCatalog({
+    required ProductKind type,
+    required String locale,
+    bool forceRefresh = false,
+  });
+
+  /// Только память: фильтрация, сортировка и страница по уже загруженному каталогу.
+  List<ProductEntity> sliceProductCatalog({
+    required List<ProductEntity> catalog,
+    required List<ProductFilter> filters,
+    ProductSort? sort,
+    int page = 1,
+    int pageSize = 20,
+  });
+
   Stream<List<ProductEntity>> watchProductsByFilters({
     required List<ProductFilter> filters,
     ProductSort? sort,

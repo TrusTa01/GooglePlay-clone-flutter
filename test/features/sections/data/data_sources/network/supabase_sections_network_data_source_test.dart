@@ -46,6 +46,54 @@ void main() {
     );
   });
 
+  test('getSections maps rows when optional string fields are null in view', () async {
+    when(
+      () => executor.getList(
+        view: 'sections_full_view',
+        schemaName: SchemaNamesEnum.views,
+        order: (column: 'sort_order', ascending: true),
+        page: 1,
+        pageSize: 20,
+      ),
+    ).thenAnswer(
+      (_) async => Result.success(
+        data: [
+          {
+            'id': 's-nulls',
+            'tab_id': 'for_you',
+            'tab_key': 'for_you',
+            'section_title': null,
+            'title': null,
+            'subtitle': null,
+            'data_source': 'products',
+            'image_asset_path': null,
+            'sort_order': null,
+            'content_type': null,
+            'data_params_dto': null,
+          },
+        ],
+      ),
+    );
+
+    final result = await datasource.getSections(
+      view: 'sections_full_view',
+      order: (column: 'sort_order', ascending: true),
+      page: 1,
+    );
+
+    expect(result, isA<SuccessResult<List<SectionsDto>>>());
+    result.when(
+      success: (data) {
+        expect(data, hasLength(1));
+        expect(data.first.sectionType, '');
+        expect(data.first.imageAssetPath, isNull);
+        expect(data.first.sortOrder, 0);
+        expect(data.first.contentType, '');
+      },
+      failure: (_) => fail('Expected success'),
+    );
+  });
+
   test('getSections returns ParsingFailure on malformed rows', () async {
     when(
       () => executor.getList(

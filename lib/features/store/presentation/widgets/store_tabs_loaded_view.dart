@@ -92,30 +92,32 @@ class StoreTabsLoadedView extends HookConsumerWidget {
 
               return Builder(
                 builder: (context) {
+                  if (!visitedTabKeys.value.contains(visitedKey)) {
+                    return const SizedBox.shrink();
+                  }
+
                   final sectionState = ref.watch(
-                    resolvedSectionsProvider(productKind, tabConfig.id),
+                    resolvedSectionsProvider(productKind, tabConfig.tabKey),
                   );
 
-                  return visitedTabKeys.value.contains(visitedKey)
-                      ? CustomScrollView(
-                          key: PageStorageKey<String>(visitedKey),
-                          slivers: [
-                            SliverOverlapInjector(
-                              handle:
-                                  NestedScrollView.sliverOverlapAbsorberHandleFor(
-                                    context,
-                                  ),
+                  return CustomScrollView(
+                    key: PageStorageKey<String>(visitedKey),
+                    slivers: [
+                      SliverOverlapInjector(
+                        handle:
+                            NestedScrollView.sliverOverlapAbsorberHandleFor(
+                              context,
                             ),
-                            ResolvedSectionsView(
-                              sectionState: sectionState,
-                              isSliver: true,
-                              storageId: visitedKey,
-                              onProductTap: onProductTap,
-                              onSeeAllTap: onSeeAllTap,
-                            ),
-                          ],
-                        )
-                      : const SizedBox.shrink();
+                      ),
+                      ResolvedSectionsView(
+                        sectionState: sectionState,
+                        isSliver: true,
+                        storageId: visitedKey,
+                        onProductTap: onProductTap,
+                        onSeeAllTap: onSeeAllTap,
+                      ),
+                    ],
+                  );
                 },
               );
             }).toList(),

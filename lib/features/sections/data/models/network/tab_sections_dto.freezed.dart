@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SectionsDto {
 
- String get id;@JsonKey(name: 'tab_id') String get tabId;@JsonKey(name: 'tab_key') String get tabKey;@JsonKey(name: 'section_title') String get sectionType;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get title;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get subtitle;@JsonKey(name: 'data_source') String? get dataSource;@JsonKey(name: 'image_asset_path') String get imageAssetPath;@JsonKey(name: 'sort_order') int get sortOrder;@JsonKey(name: 'content_type') String get contentType;@JsonKey(name: 'data_params_dto') ParamsDto? get dataParamsDto;
+ String get id;@JsonKey(name: 'tab_id') String get tabId;@JsonKey(name: 'tab_key') String get tabKey;@JsonKey(name: 'section_title') String get sectionType;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get title;@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? get subtitle;@JsonKey(name: 'data_source') String? get dataSource;@JsonKey(name: 'image_asset_path') String? get imageAssetPath;@JsonKey(name: 'sort_order') int get sortOrder;@JsonKey(name: 'content_type') String get contentType;@JsonKey(name: 'data_params_dto') ParamsDto? get dataParamsDto;
 /// Create a copy of SectionsDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $SectionsDtoCopyWith<$Res>  {
   factory $SectionsDtoCopyWith(SectionsDto value, $Res Function(SectionsDto) _then) = _$SectionsDtoCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'tab_id') String tabId,@JsonKey(name: 'tab_key') String tabKey,@JsonKey(name: 'section_title') String sectionType,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? subtitle,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'image_asset_path') String imageAssetPath,@JsonKey(name: 'sort_order') int sortOrder,@JsonKey(name: 'content_type') String contentType,@JsonKey(name: 'data_params_dto') ParamsDto? dataParamsDto
+ String id,@JsonKey(name: 'tab_id') String tabId,@JsonKey(name: 'tab_key') String tabKey,@JsonKey(name: 'section_title') String sectionType,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? subtitle,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'image_asset_path') String? imageAssetPath,@JsonKey(name: 'sort_order') int sortOrder,@JsonKey(name: 'content_type') String contentType,@JsonKey(name: 'data_params_dto') ParamsDto? dataParamsDto
 });
 
 
@@ -65,7 +65,7 @@ class _$SectionsDtoCopyWithImpl<$Res>
 
 /// Create a copy of SectionsDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? tabId = null,Object? tabKey = null,Object? sectionType = null,Object? title = freezed,Object? subtitle = freezed,Object? dataSource = freezed,Object? imageAssetPath = null,Object? sortOrder = null,Object? contentType = null,Object? dataParamsDto = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? tabId = null,Object? tabKey = null,Object? sectionType = null,Object? title = freezed,Object? subtitle = freezed,Object? dataSource = freezed,Object? imageAssetPath = freezed,Object? sortOrder = null,Object? contentType = null,Object? dataParamsDto = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,tabId: null == tabId ? _self.tabId : tabId // ignore: cast_nullable_to_non_nullable
@@ -74,8 +74,8 @@ as String,sectionType: null == sectionType ? _self.sectionType : sectionType // 
 as String,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as LocalizedString?,subtitle: freezed == subtitle ? _self.subtitle : subtitle // ignore: cast_nullable_to_non_nullable
 as LocalizedString?,dataSource: freezed == dataSource ? _self.dataSource : dataSource // ignore: cast_nullable_to_non_nullable
-as String?,imageAssetPath: null == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
-as String,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
+as String?,imageAssetPath: freezed == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
+as String?,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
 as int,contentType: null == contentType ? _self.contentType : contentType // ignore: cast_nullable_to_non_nullable
 as String,dataParamsDto: freezed == dataParamsDto ? _self.dataParamsDto : dataParamsDto // ignore: cast_nullable_to_non_nullable
 as ParamsDto?,
@@ -175,7 +175,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'tab_id')  String tabId, @JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'section_title')  String sectionType, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(name: 'sort_order')  int sortOrder, @JsonKey(name: 'content_type')  String contentType, @JsonKey(name: 'data_params_dto')  ParamsDto? dataParamsDto)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'tab_id')  String tabId, @JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'section_title')  String sectionType, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String? imageAssetPath, @JsonKey(name: 'sort_order')  int sortOrder, @JsonKey(name: 'content_type')  String contentType, @JsonKey(name: 'data_params_dto')  ParamsDto? dataParamsDto)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SectionsDto() when $default != null:
 return $default(_that.id,_that.tabId,_that.tabKey,_that.sectionType,_that.title,_that.subtitle,_that.dataSource,_that.imageAssetPath,_that.sortOrder,_that.contentType,_that.dataParamsDto);case _:
@@ -196,7 +196,7 @@ return $default(_that.id,_that.tabId,_that.tabKey,_that.sectionType,_that.title,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'tab_id')  String tabId, @JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'section_title')  String sectionType, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(name: 'sort_order')  int sortOrder, @JsonKey(name: 'content_type')  String contentType, @JsonKey(name: 'data_params_dto')  ParamsDto? dataParamsDto)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'tab_id')  String tabId, @JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'section_title')  String sectionType, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String? imageAssetPath, @JsonKey(name: 'sort_order')  int sortOrder, @JsonKey(name: 'content_type')  String contentType, @JsonKey(name: 'data_params_dto')  ParamsDto? dataParamsDto)  $default,) {final _that = this;
 switch (_that) {
 case _SectionsDto():
 return $default(_that.id,_that.tabId,_that.tabKey,_that.sectionType,_that.title,_that.subtitle,_that.dataSource,_that.imageAssetPath,_that.sortOrder,_that.contentType,_that.dataParamsDto);case _:
@@ -216,7 +216,7 @@ return $default(_that.id,_that.tabId,_that.tabKey,_that.sectionType,_that.title,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'tab_id')  String tabId, @JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'section_title')  String sectionType, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String imageAssetPath, @JsonKey(name: 'sort_order')  int sortOrder, @JsonKey(name: 'content_type')  String contentType, @JsonKey(name: 'data_params_dto')  ParamsDto? dataParamsDto)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'tab_id')  String tabId, @JsonKey(name: 'tab_key')  String tabKey, @JsonKey(name: 'section_title')  String sectionType, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)  LocalizedString? subtitle, @JsonKey(name: 'data_source')  String? dataSource, @JsonKey(name: 'image_asset_path')  String? imageAssetPath, @JsonKey(name: 'sort_order')  int sortOrder, @JsonKey(name: 'content_type')  String contentType, @JsonKey(name: 'data_params_dto')  ParamsDto? dataParamsDto)?  $default,) {final _that = this;
 switch (_that) {
 case _SectionsDto() when $default != null:
 return $default(_that.id,_that.tabId,_that.tabKey,_that.sectionType,_that.title,_that.subtitle,_that.dataSource,_that.imageAssetPath,_that.sortOrder,_that.contentType,_that.dataParamsDto);case _:
@@ -231,7 +231,7 @@ return $default(_that.id,_that.tabId,_that.tabKey,_that.sectionType,_that.title,
 @JsonSerializable()
 
 class _SectionsDto implements SectionsDto {
-  const _SectionsDto({required this.id, @JsonKey(name: 'tab_id') required this.tabId, @JsonKey(name: 'tab_key') required this.tabKey, @JsonKey(name: 'section_title') required this.sectionType, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? subtitle, @JsonKey(name: 'data_source') this.dataSource, @JsonKey(name: 'image_asset_path') required this.imageAssetPath, @JsonKey(name: 'sort_order') required this.sortOrder, @JsonKey(name: 'content_type') required this.contentType, @JsonKey(name: 'data_params_dto') required this.dataParamsDto}): _title = title,_subtitle = subtitle;
+  const _SectionsDto({required this.id, @JsonKey(name: 'tab_id') required this.tabId, @JsonKey(name: 'tab_key') required this.tabKey, @JsonKey(name: 'section_title') this.sectionType = '', @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? title, @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) final  LocalizedString? subtitle, @JsonKey(name: 'data_source') this.dataSource, @JsonKey(name: 'image_asset_path') this.imageAssetPath, @JsonKey(name: 'sort_order') this.sortOrder = 0, @JsonKey(name: 'content_type') this.contentType = '', @JsonKey(name: 'data_params_dto') this.dataParamsDto}): _title = title,_subtitle = subtitle;
   factory _SectionsDto.fromJson(Map<String, dynamic> json) => _$SectionsDtoFromJson(json);
 
 @override final  String id;
@@ -257,7 +257,7 @@ class _SectionsDto implements SectionsDto {
 }
 
 @override@JsonKey(name: 'data_source') final  String? dataSource;
-@override@JsonKey(name: 'image_asset_path') final  String imageAssetPath;
+@override@JsonKey(name: 'image_asset_path') final  String? imageAssetPath;
 @override@JsonKey(name: 'sort_order') final  int sortOrder;
 @override@JsonKey(name: 'content_type') final  String contentType;
 @override@JsonKey(name: 'data_params_dto') final  ParamsDto? dataParamsDto;
@@ -295,7 +295,7 @@ abstract mixin class _$SectionsDtoCopyWith<$Res> implements $SectionsDtoCopyWith
   factory _$SectionsDtoCopyWith(_SectionsDto value, $Res Function(_SectionsDto) _then) = __$SectionsDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'tab_id') String tabId,@JsonKey(name: 'tab_key') String tabKey,@JsonKey(name: 'section_title') String sectionType,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? subtitle,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'image_asset_path') String imageAssetPath,@JsonKey(name: 'sort_order') int sortOrder,@JsonKey(name: 'content_type') String contentType,@JsonKey(name: 'data_params_dto') ParamsDto? dataParamsDto
+ String id,@JsonKey(name: 'tab_id') String tabId,@JsonKey(name: 'tab_key') String tabKey,@JsonKey(name: 'section_title') String sectionType,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? title,@JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson) LocalizedString? subtitle,@JsonKey(name: 'data_source') String? dataSource,@JsonKey(name: 'image_asset_path') String? imageAssetPath,@JsonKey(name: 'sort_order') int sortOrder,@JsonKey(name: 'content_type') String contentType,@JsonKey(name: 'data_params_dto') ParamsDto? dataParamsDto
 });
 
 
@@ -312,7 +312,7 @@ class __$SectionsDtoCopyWithImpl<$Res>
 
 /// Create a copy of SectionsDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? tabId = null,Object? tabKey = null,Object? sectionType = null,Object? title = freezed,Object? subtitle = freezed,Object? dataSource = freezed,Object? imageAssetPath = null,Object? sortOrder = null,Object? contentType = null,Object? dataParamsDto = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? tabId = null,Object? tabKey = null,Object? sectionType = null,Object? title = freezed,Object? subtitle = freezed,Object? dataSource = freezed,Object? imageAssetPath = freezed,Object? sortOrder = null,Object? contentType = null,Object? dataParamsDto = freezed,}) {
   return _then(_SectionsDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,tabId: null == tabId ? _self.tabId : tabId // ignore: cast_nullable_to_non_nullable
@@ -321,8 +321,8 @@ as String,sectionType: null == sectionType ? _self.sectionType : sectionType // 
 as String,title: freezed == title ? _self._title : title // ignore: cast_nullable_to_non_nullable
 as LocalizedString?,subtitle: freezed == subtitle ? _self._subtitle : subtitle // ignore: cast_nullable_to_non_nullable
 as LocalizedString?,dataSource: freezed == dataSource ? _self.dataSource : dataSource // ignore: cast_nullable_to_non_nullable
-as String?,imageAssetPath: null == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
-as String,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
+as String?,imageAssetPath: freezed == imageAssetPath ? _self.imageAssetPath : imageAssetPath // ignore: cast_nullable_to_non_nullable
+as String?,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
 as int,contentType: null == contentType ? _self.contentType : contentType // ignore: cast_nullable_to_non_nullable
 as String,dataParamsDto: freezed == dataParamsDto ? _self.dataParamsDto : dataParamsDto // ignore: cast_nullable_to_non_nullable
 as ParamsDto?,

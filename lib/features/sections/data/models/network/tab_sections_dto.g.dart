@@ -10,13 +10,13 @@ _SectionsDto _$SectionsDtoFromJson(Map<String, dynamic> json) => _SectionsDto(
   id: json['id'] as String,
   tabId: json['tab_id'] as String,
   tabKey: json['tab_key'] as String,
-  sectionType: json['section_title'] as String,
+  sectionType: json['section_title'] as String? ?? '',
   title: DtoJsonConverters.localizedStringNullableFromJson(json['title']),
   subtitle: DtoJsonConverters.localizedStringNullableFromJson(json['subtitle']),
   dataSource: json['data_source'] as String?,
-  imageAssetPath: json['image_asset_path'] as String,
-  sortOrder: (json['sort_order'] as num).toInt(),
-  contentType: json['content_type'] as String,
+  imageAssetPath: json['image_asset_path'] as String?,
+  sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
+  contentType: json['content_type'] as String? ?? '',
   dataParamsDto: json['data_params_dto'] == null
       ? null
       : ParamsDto.fromJson(json['data_params_dto'] as Map<String, dynamic>),

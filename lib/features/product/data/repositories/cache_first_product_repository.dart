@@ -118,6 +118,83 @@ class CacheFirstProductRepository implements IProductsRepository {
             .toList(growable: false),
       );
 
+  Future<List<ProductEntity>> _loadMappedCatalog({
+    required ProductKind type,
+    required String locale,
+    required bool forceRefresh,
+    required int refreshPage,
+    required int refreshPageSize,
+  }) async {
+    final collectionSyncKey = SyncKeys.productsCollection(type);
+    final shouldRefresh = await _shouldAttemptRemoteRefresh(
+      syncKey: collectionSyncKey,
+      forceRefresh: forceRefresh,
+    );
+    if (shouldRefresh) {
+      await _refreshProducts(
+        type: type,
+        page: refreshPage,
+        pageSize: refreshPageSize,
+      );
+    }
+    var bundles = await _local.getAllProducts(type: type);
+    if (bundles.isEmpty && !forceRefresh && !shouldRefresh) {
+      await _refreshProducts(
+        type: type,
+        page: refreshPage,
+        pageSize: refreshPageSize,
+      );
+      bundles = await _local.getAllProducts(type: type);
+    }
+
+    return bundles
+        .map((b) => b.toEntity(locale))
+        .nonNulls
+        .toList();
+  }
+
+  @override
+  Future<List<ProductEntity>> getCachedProductCatalog({
+    required ProductKind type,
+    required String locale,
+    bool forceRefresh = false,
+  }) async {
+    FeatureTalker.domainStart(
+      'product.repository',
+      'getCachedProductCatalog',
+      context: {'type': type.name, 'forceRefresh': forceRefresh},
+    );
+    final result = await _loadMappedCatalog(
+      type: type,
+      locale: locale,
+      forceRefresh: forceRefresh,
+      refreshPage: 1,
+      refreshPageSize: 100,
+    );
+    FeatureTalker.domainDone(
+      'product.repository',
+      'getCachedProductCatalog',
+      context: {'type': type.name, 'entityCount': result.length},
+    );
+    return result;
+  }
+
+  @override
+  List<ProductEntity> sliceProductCatalog({
+    required List<ProductEntity> catalog,
+    required List<ProductFilter> filters,
+    ProductSort? sort,
+    int page = 1,
+    int pageSize = 20,
+  }) {
+    final filtered = _applyFiltersAndSort(
+      catalog,
+      filters: filters,
+      sort: sort,
+    );
+    return _paginate(filtered, page: page, pageSize: pageSize);
+  }
+
   @override
   Future<List<ProductEntity>> getProductsByFilters({
     required List<ProductFilter> filters,
@@ -138,33 +215,21 @@ class CacheFirstProductRepository implements IProductsRepository {
         'page': page,
       },
     );
-    final collectionSyncKey = SyncKeys.productsCollection(type);
-    final shouldRefresh = await _shouldAttemptRemoteRefresh(
-      syncKey: collectionSyncKey,
+    final allProducts = await _loadMappedCatalog(
+      type: type,
+      locale: locale,
       forceRefresh: forceRefresh,
+      refreshPage: page,
+      refreshPageSize: pageSize,
     );
-    if (shouldRefresh) {
-      await _refreshProducts(type: type, page: page, pageSize: pageSize);
-    }
-    final bundles = await _local.getAllProducts(type: type);
-    // Не дублируем сеть после shouldRefresh + _ensureCollectionCoverage.
-    if (bundles.isEmpty && !forceRefresh && !shouldRefresh) {
-      await _refreshProducts(type: type, page: page, pageSize: pageSize);
-    }
-    final effectiveBundles = await _local.getAllProducts(type: type);
 
-    final allProducts = effectiveBundles
-        .map((b) => b.toEntity(locale))
-        .nonNulls
-        .toList();
-
-    final filtered = _applyFiltersAndSort(
-      allProducts,
+    final result = sliceProductCatalog(
+      catalog: allProducts,
       filters: filters,
       sort: sort,
+      page: page,
+      pageSize: pageSize,
     );
-
-    final result = _paginate(filtered, page: page, pageSize: pageSize);
     FeatureTalker.domainDone(
       'product.repository',
       'getProductsByFilters',

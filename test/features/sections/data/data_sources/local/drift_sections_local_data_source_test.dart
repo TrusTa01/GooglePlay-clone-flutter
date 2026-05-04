@@ -95,6 +95,45 @@ void main() {
     },
   );
 
+  test(
+    'getSections matches tab_id UUID or tab_key when columns differ',
+    () async {
+      const uuid = '5d3ce9f3-0e25-4a9a-bc6a-49a1147be8a4';
+      await dataSource.upsertSections([
+        SectionsDto(
+          id: 's-by-tab',
+          tabId: uuid,
+          tabKey: 'recommended',
+          sectionType: 'carousel',
+          title: const {'en': 'Row'},
+          subtitle: null,
+          dataSource: 'products_list',
+          imageAssetPath: '/x.png',
+          sortOrder: 1,
+          contentType: 'game',
+          dataParamsDto: null,
+        ),
+      ]);
+
+      final byKey = await dataSource.getSections(
+        tabId: 'recommended',
+        locale: 'en',
+        page: 1,
+        pageSize: 20,
+      );
+      final byUuid = await dataSource.getSections(
+        tabId: uuid,
+        locale: 'en',
+        page: 1,
+        pageSize: 20,
+      );
+
+      expect(byKey, hasLength(1));
+      expect(byUuid, hasLength(1));
+      expect(byKey.single.id, 's-by-tab');
+    },
+  );
+
   test('sync state methods persist and restore values', () async {
     const syncKey = 'sections:app:page=1:size=200';
     final now = DateTime.now();

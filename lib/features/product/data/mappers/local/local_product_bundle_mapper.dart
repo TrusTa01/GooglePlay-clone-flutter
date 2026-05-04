@@ -34,11 +34,13 @@ extension LocalProductBundleMapper on LocalProductBundle {
       ),
       _ => null,
     };
-    FeatureTalker.mapperOut(
-      'product.local_product_bundle_mapper',
-      'LocalProductBundle -> ProductEntity',
-      context: {'id': product.id, 'type': product.type, 'locale': locale},
-    );
+    if (entity != null) {
+      FeatureTalker.mapperOut(
+        'product.local_product_bundle_mapper',
+        'LocalProductBundle -> ProductEntity',
+        context: {'id': product.id, 'type': product.type, 'locale': locale},
+      );
+    }
     return entity;
   }
 

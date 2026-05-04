@@ -10,16 +10,16 @@ abstract class SectionsDto with _$SectionsDto {
     required String id,
     @JsonKey(name: 'tab_id') required String tabId,
     @JsonKey(name: 'tab_key') required String tabKey,
-    @JsonKey(name: 'section_title') required String sectionType,
+    @JsonKey(name: 'section_title') @Default('') String sectionType,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)
     LocalizedString? title,
     @JsonKey(fromJson: DtoJsonConverters.localizedStringNullableFromJson)
     LocalizedString? subtitle,
     @JsonKey(name: 'data_source') String? dataSource,
-    @JsonKey(name: 'image_asset_path') required String imageAssetPath,
-    @JsonKey(name: 'sort_order') required int sortOrder,
-    @JsonKey(name: 'content_type') required String contentType,
-    @JsonKey(name: 'data_params_dto') required ParamsDto? dataParamsDto,
+    @JsonKey(name: 'image_asset_path') String? imageAssetPath,
+    @JsonKey(name: 'sort_order') @Default(0) int sortOrder,
+    @JsonKey(name: 'content_type') @Default('') String contentType,
+    @JsonKey(name: 'data_params_dto') ParamsDto? dataParamsDto,
   }) = _SectionsDto;
 
   factory SectionsDto.fromJson(Map<String, dynamic> json) =>

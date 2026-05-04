@@ -64,7 +64,7 @@ final class AvailableTabsProvider
   }
 }
 
-String _$availableTabsHash() => r'ab8e00e4755e9fff372c1ccf4696af2e9f64d780';
+String _$availableTabsHash() => r'356a72edac43d2c429e5f08c23068b7986920d7d';
 
 final class AvailableTabsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<TabsEntity>>, ProductKind> {

@@ -70,6 +70,22 @@ final class _ProductLocalReader {
     return Future.wait(products.map(_buildBundle));
   }
 
+  Future<Developer?> _resolveDeveloper(
+    CachedSoftwareProductData software,
+  ) async {
+    final row = await (_db.select(
+      _db.developers,
+    )..where((t) => t.id.equals(software.developerId))).getSingleOrNull();
+    if (row != null) return row;
+    if (software.developerId.isEmpty) {
+      await ensurePlaceholderDeveloperExists(_db);
+      return (_db.select(
+        _db.developers,
+      )..where((t) => t.id.equals(kPlaceholderDeveloperId))).getSingleOrNull();
+    }
+    return null;
+  }
+
   Future<LocalProductBundle> _buildBundle(CachedProductData product) async {
     final productId = product.id;
 
@@ -97,9 +113,7 @@ final class _ProductLocalReader {
 
     final developer = software == null
         ? null
-        : await (_db.select(
-            _db.developers,
-          )..where((t) => t.id.equals(software.developerId))).getSingleOrNull();
+        : await _resolveDeveloper(software);
 
     final publisher = book == null
         ? null

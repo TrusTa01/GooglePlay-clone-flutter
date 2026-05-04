@@ -3,6 +3,16 @@ part of 'drift_products_local_data_source.dart';
 final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
   const _ProductLocalWriter(super._db);
 
+  Future<String> _resolveDeveloperIdAndEnsureRow(DeveloperDto? developer) async {
+    final id = developer?.id;
+    if (id != null && id.isNotEmpty) {
+      await _upsertDeveloper(developer!);
+      return id;
+    }
+    await ensurePlaceholderDeveloperExists(db);
+    return kPlaceholderDeveloperId;
+  }
+
   @override
   Future<void> upsertOne(ProductDto dto) async {
     await _upsertBaseProduct(dto);
@@ -12,12 +22,11 @@ final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
 
     await dto.map(
       game: (g) async {
-        final developer = g.developer;
-        if (developer != null) await _upsertDeveloper(developer);
+        final developerId = await _resolveDeveloperIdAndEnsureRow(g.developer);
 
         await _upsertSoftwareCommon(
           productId: g.id,
-          developerId: developer?.id ?? '',
+          developerId: developerId,
           screenshots: g.screenshots,
           supportedLanguages: g.supportedLanguages,
           containsAds: g.containsAds,
@@ -38,12 +47,11 @@ final class _ProductLocalWriter extends BaseDriftWriter<ProductDto> {
         await _cleanupSubtypeTables(productId: g.id, keepType: 'game');
       },
       app: (a) async {
-        final developer = a.developer;
-        if (developer != null) await _upsertDeveloper(developer);
+        final developerId = await _resolveDeveloperIdAndEnsureRow(a.developer);
 
         await _upsertSoftwareCommon(
           productId: a.id,
-          developerId: developer?.id ?? '',
+          developerId: developerId,
           screenshots: a.screenshots,
           supportedLanguages: a.supportedLanguages,
           containsAds: a.containsAds,
