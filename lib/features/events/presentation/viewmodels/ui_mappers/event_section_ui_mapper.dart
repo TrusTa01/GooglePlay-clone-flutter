@@ -1,8 +1,6 @@
 import 'dart:ui';
-
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
-import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
+import 'package:google_play/features/sections/domain/entities/resolved_section.dart';
 import 'package:google_play/features/events/presentation/viewmodels/ui_models/event_section_ui_model.dart';
 import 'package:google_play/features/sections/presentation/viewmodels/ui_mappers/section_payload_mapper.dart';
 
@@ -23,14 +21,9 @@ class EventSectionUiMapper {
 
     return EventSectionUiModel(
       id: section.config.id,
-      title: _lookupKey(l10n, section.config.titleKey),
-      subtitle: _lookupKey(l10n, section.config.subtitleKey),
+      title: section.config.title ?? '',
+      subtitle: section.config.subtitle ?? '',
       payload: payload,
     );
-  }
-
-  String _lookupKey(AppLocalizations l10n, String? key) {
-    if (key == null || key.isEmpty) return '';
-    return lookupL10n(l10n, key);
   }
 }

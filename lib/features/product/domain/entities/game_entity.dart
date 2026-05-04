@@ -1,9 +1,13 @@
 import 'package:google_play/features/product/domain/entities/software_entity.dart';
 
 final class GameEntity extends SoftwareEntity {
-  final bool hasAchievements;
+  final List<String> achievements;
+  final bool? isOnline;
+  final bool? hasMultiplayer;
+  final String? gameModes;
+  final bool? hasControllerSupport;
 
-  GameEntity({
+  const GameEntity({
     required super.type,
     required super.id,
     required super.title,
@@ -11,8 +15,10 @@ final class GameEntity extends SoftwareEntity {
     required super.shortDescription,
     required super.description,
     required super.releaseDate,
-    required super.rating,
     required super.reviewsCount,
+    super.ratingAvg = 0,
+    super.ratingDistribution = const <String, int>{},
+    super.topReviews = const <Map<String, dynamic>>[],
     required super.iconUrl,
     required super.isPaid,
     required super.price,
@@ -32,16 +38,15 @@ final class GameEntity extends SoftwareEntity {
     required super.whatsNewText,
     required super.lastUpdated,
     required super.ageRating,
+    required super.isKidsFriendly,
     required super.ageRatingReasons,
     required super.permissions,
-    required super.websiteUrl,
-    required super.emailSupport,
-    required super.privacyPolicyUrl,
-    required super.developerCompany,
-    required super.developerAddress,
-    required super.developerCity,
-    required super.developerCountry,
-    required super.developerPhone,
-    this.hasAchievements = false,
+    super.supportedLanguages,
+    required super.developer,
+    this.achievements = const [],
+    this.isOnline,
+    this.hasMultiplayer,
+    this.gameModes,
+    this.hasControllerSupport,
   });
 }

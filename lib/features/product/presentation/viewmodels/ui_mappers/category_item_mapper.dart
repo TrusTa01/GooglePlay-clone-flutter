@@ -1,3 +1,4 @@
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_card_mapper.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/category_item_ui_model.dart';
@@ -10,11 +11,16 @@ class CategoryItemMapper {
   /// Строит один [CategoryItemUiModel] из состояния экрана продукта
   CategoryItemUiModel fromState(ProductState state) {
     final productCard = ProductCardMapper();
-
-    return CategoryItemUiModel(
-      id: state.productId,
+    final model = CategoryItemUiModel(
+      id: state.id,
       isBook: state.isBook,
       card: productCard.mapToProductCardUi(state),
     );
+    FeatureTalker.mapperOut(
+      'product.category_item_mapper',
+      'ProductState -> CategoryItemUiModel',
+      context: {'id': state.id, 'isBook': state.isBook},
+    );
+    return model;
   }
 }

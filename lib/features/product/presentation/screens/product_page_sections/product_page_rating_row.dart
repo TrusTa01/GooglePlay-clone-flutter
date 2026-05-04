@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/constants/network_images_constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
-import 'package:google_play/features/shared/presentation/widgets/components/feedback/error/custom_show_dialog.dart';
-import 'package:google_play/features/shared/presentation/widgets/product_widgets/elements/product_card_components.dart';
+import 'package:google_play/core/presentation/widgets/components/feedback/error/custom_show_dialog.dart';
+import 'package:google_play/features/product/presentation/widgets/elements/product_card_components.dart';
+import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
 
 class ProductPageRatingRow extends StatelessWidget {
   final ProductState state;
@@ -26,7 +28,7 @@ class ProductPageRatingRow extends StatelessWidget {
         children: [
           Expanded(
             child: _RatingColumn(
-              text: Text(state.rating.toStringAsFixed(1)), // TODO: [fields] готовая строка из state
+              text: Text(state.ratingAvgText),
               subText:
                   '${state.reviewsCount} ${context.l10n.reviewsCountLabel}',
               isReview: true,
@@ -142,10 +144,19 @@ class _RatingColumn extends StatelessWidget {
                 ),
               if (isReview) ...[
                 const SizedBox(width: 4),
-                Image.asset(
-                  'assets/icons/star.png',
+                Image.network(
+                  NetworkImagesConstants.star,
                   height: 10,
                   color: Constants.googleBlue,
+                  loadingBuilder: NetworkImageBuilders.shimmer(
+                    width: 10,
+                    height: 10,
+                    borderRadius: 2,
+                  ),
+                  errorBuilder: NetworkImageBuilders.icon(
+                    size: 10,
+                    color: Constants.googleBlue,
+                  ),
                 ),
               ],
             ],

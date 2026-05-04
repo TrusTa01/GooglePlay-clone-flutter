@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
-import 'package:google_play/core/extensions/l10n_ext.dart';
+import 'package:google_play/features/sections/domain/entities/resolved_section.dart';
 import 'package:google_play/features/sections/presentation/viewmodels/section_payload.dart';
 import 'package:google_play/features/sections/presentation/viewmodels/ui_mappers/section_payload_mapper.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 
-/// Колбэк для "Смотреть все" — передаёт ключ категории и ключ заголовка
-typedef OnSeeAllTap = void Function(String categoryKey, String titleKey);
+typedef OnSeeAllTap = void Function(String categoryKey, String title);
 
 class SectionWidgetBuilder extends HookWidget {
   final List<ResolvedSection> sections;
@@ -81,20 +79,8 @@ class SectionWidgetBuilder extends HookWidget {
     ResolvedSection section,
     SectionPayload payload,
   ) {
-    final title = context.l10nKey(section.config.titleKey);
-    final subtitle = context.l10nKey(section.config.subtitleKey);
-    final imagePath = section.config.imageAssetPath;
-    if (imagePath == null || imagePath.isEmpty) {
-      assert(() {
-        debugPrint(
-          '[SectionWidgetBuilder] skip section: empty imagePath '
-          'id=${section.config.id}, layout=${section.config.layout}',
-        );
-        return true;
-      }());
-      return const SizedBox.shrink();
-    }
-
+    final title = section.config.title ?? '';
+    final subtitle = section.config.subtitle ?? '';
     return switch (payload) {
       BannersPayload(:final banners) => BannerSection(
         title: title,
@@ -102,24 +88,32 @@ class SectionWidgetBuilder extends HookWidget {
         banners: banners,
         maxItems: 16,
       ),
-      CarouselPayload(:final items, :final categoryKey, :final titleKey) =>
+      CarouselPayload(
+        :final items,
+        :final categoryKey,
+        title: final sectionTitle,
+      ) =>
         ProductCarousel(
           title: title,
           subtitle: subtitle,
           items: items,
           onProductTap: (item) => onProductTap?.call(item.id),
-          onSeeAllTap: categoryKey != null && titleKey != null
-              ? () => onSeeAllTap?.call(categoryKey, titleKey)
+          onSeeAllTap: categoryKey != null && sectionTitle != null
+              ? () => onSeeAllTap?.call(categoryKey, sectionTitle)
               : null,
         ),
-      GridPayload(:final items, :final categoryKey, :final titleKey) =>
+      GridPayload(
+        :final items,
+        :final categoryKey,
+        title: final sectionTitle,
+      ) =>
         ProductGrid(
           title: title,
           subtitle: subtitle,
           items: items,
           onProductTap: (item) => onProductTap?.call(item.id),
-          onSeeAllTap: categoryKey != null && titleKey != null
-              ? () => onSeeAllTap?.call(categoryKey, titleKey)
+          onSeeAllTap: categoryKey != null && sectionTitle != null
+              ? () => onSeeAllTap?.call(categoryKey, sectionTitle)
               : null,
         ),
       PreviewPayload(:final model) => ProductPreviewSection(
@@ -132,7 +126,7 @@ class SectionWidgetBuilder extends HookWidget {
         debugPrint(
           '[SectionWidgetBuilder] EmptyPayload: '
           'sectionId=${section.config.id}, '
-          'layout=${section.config.layout}, '
+          'sectionType=${section.config.sectionType}, '
           'itemsType=${section.items.runtimeType}',
         );
         return const SizedBox.shrink();

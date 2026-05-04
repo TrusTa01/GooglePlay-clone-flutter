@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/shimmers/product_slider_skeleton.dart';
-import 'package:google_play/features/sections/domain/usecases/resolve_section_usecase.dart';
+import 'package:google_play/core/presentation/widgets/shimmers/product_slider_skeleton.dart';
+import 'package:google_play/features/sections/domain/entities/resolved_section.dart';
 import 'package:google_play/features/sections/presentation/widgets/section_widget_builder.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ResolvedSectionsView extends StatelessWidget {

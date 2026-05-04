@@ -26,8 +26,9 @@ final class ProductPreviewSectionUiModel {
     for (final p in products) {
       ids.add(p.id);
 
-      screenshots[p.id] =
-          p is SoftwareEntity ? p.screenshots : const <String>[];
+      screenshots[p.id] = p is SoftwareEntity
+          ? p.screenshots
+          : const <String>[];
 
       actionRows[p.id] = ActionRowUiModel(
         id: p.id,
@@ -42,13 +43,15 @@ final class ProductPreviewSectionUiModel {
         thumbnailCacheWidth: 120,
         thumbnailCacheHeight: 120,
         thumbnailFit: BoxFit.cover,
-        ratingText: p.rating.toStringAsFixed(1),
+        ratingText: p.ratingAvg.toStringAsFixed(1),
         technicalInfoText: p.technicalInfo,
         eventText: p is SoftwareEntity ? p.eventText : null,
         priceText: null,
         isPaid: p.isPaid,
         isBook: p.type == 'book',
-        containsPaidContent: p is SoftwareEntity ? p.containsPaidContent : false,
+        containsPaidContent: p is SoftwareEntity
+            ? p.containsPaidContent
+            : false,
         showThreeLines: true,
       );
     }
@@ -60,4 +63,3 @@ final class ProductPreviewSectionUiModel {
     );
   }
 }
-

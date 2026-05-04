@@ -365,7 +365,7 @@ mixin $GamesSectionMoreRoute on GoRouteData {
   static GamesSectionMoreRoute _fromState(GoRouterState state) =>
       GamesSectionMoreRoute(
         categoryKey: state.pathParameters['categoryKey']!,
-        titleKey: state.uri.queryParameters['title-key']!,
+        title: state.uri.queryParameters['title']!,
       );
 
   GamesSectionMoreRoute get _self => this as GamesSectionMoreRoute;
@@ -373,7 +373,7 @@ mixin $GamesSectionMoreRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/games/section/${Uri.encodeComponent(_self.categoryKey)}',
-    queryParams: {'title-key': _self.titleKey},
+    queryParams: {'title': _self.title},
   );
 
   @override
@@ -542,7 +542,7 @@ mixin $AppsSectionMoreRoute on GoRouteData {
   static AppsSectionMoreRoute _fromState(GoRouterState state) =>
       AppsSectionMoreRoute(
         categoryKey: state.pathParameters['categoryKey']!,
-        titleKey: state.uri.queryParameters['title-key']!,
+        title: state.uri.queryParameters['title']!,
       );
 
   AppsSectionMoreRoute get _self => this as AppsSectionMoreRoute;
@@ -550,7 +550,7 @@ mixin $AppsSectionMoreRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/apps/section/${Uri.encodeComponent(_self.categoryKey)}',
-    queryParams: {'title-key': _self.titleKey},
+    queryParams: {'title': _self.title},
   );
 
   @override
@@ -686,7 +686,7 @@ mixin $BooksSectionMoreRoute on GoRouteData {
   static BooksSectionMoreRoute _fromState(GoRouterState state) =>
       BooksSectionMoreRoute(
         categoryKey: state.pathParameters['categoryKey']!,
-        titleKey: state.uri.queryParameters['title-key']!,
+        title: state.uri.queryParameters['title']!,
       );
 
   BooksSectionMoreRoute get _self => this as BooksSectionMoreRoute;
@@ -694,7 +694,7 @@ mixin $BooksSectionMoreRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/books/section/${Uri.encodeComponent(_self.categoryKey)}',
-    queryParams: {'title-key': _self.titleKey},
+    queryParams: {'title': _self.title},
   );
 
   @override

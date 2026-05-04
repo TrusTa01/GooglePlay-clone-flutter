@@ -4,14 +4,13 @@ import 'package:google_play/features/product/presentation/viewmodels/ui_models/p
 class CategoryOverviewState {
   final String title;
   final String categoryKey;
-
   final bool isEmpty;
   final bool isGame;
 
-  /// Заполнен, когда `isGame == true` и `isEmpty == false`.
+  // isGame == true и\&& isEmpty == false
   final ProductPreviewSectionUiModel? previewModel;
 
-  /// Заполнен, когда `isGame == false` и `isEmpty == false`.
+  // isGame false && isEmpty == false
   final List<CategoryItemUiModel> items;
 
   const CategoryOverviewState({

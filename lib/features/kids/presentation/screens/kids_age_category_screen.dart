@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/extensions/l10n_ext.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
+import 'package:google_play/features/category/data/product_categories_data.dart';
 import 'package:google_play/features/kids/presentation/viewmodels/kids_age_category_view_model.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class KidsAgeCategoryScreen extends ConsumerWidget {
@@ -12,6 +14,10 @@ class KidsAgeCategoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionsAsync = ref.watch(kidsAgeCategoryProvider(ageKey));
+    final title = resolveProductCategoryTitle(
+      context.l10n,
+      ProductCategoriesData(titleL10nKey: ageKey),
+    );
 
     return Scaffold(
       body: Center(
@@ -24,7 +30,7 @@ class KidsAgeCategoryScreen extends ConsumerWidget {
               slivers: [
                 SimpleSliverAppBar(
                   showBackButton: true,
-                  title: AppBarTitle(title: ageKey),
+                  title: AppBarTitle(title: title.isEmpty ? ageKey : title),
                 ),
                 // TODO: [logic]
                 sectionsAsync.when(

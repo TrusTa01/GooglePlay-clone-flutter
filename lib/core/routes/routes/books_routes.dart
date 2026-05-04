@@ -8,9 +8,9 @@ class BooksRoute extends GoRouteData with $BooksRoute {
   Widget build(BuildContext context, GoRouterState state) => BooksScreen(
     onProductTap: (productId) =>
         BooksProductRoute(productId: productId).push(context),
-    onSeeAllTap: (categoryKey, titleKey) => BooksSectionMoreRoute(
+    onSeeAllTap: (categoryKey, title) => BooksSectionMoreRoute(
       categoryKey: categoryKey,
-      titleKey: titleKey,
+      title: title,
     ).push(context),
   );
 }
@@ -22,6 +22,7 @@ class BooksProductRoute extends GoRouteData with $BooksProductRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => ProductPageScreen(
+    productType: ProductKind.book,
     productId: productId,
     onAboutAuthorTap: () =>
         BooksAboutAuthorRoute(productId: productId).go(context),
@@ -35,7 +36,7 @@ class BooksAboutAuthorRoute extends GoRouteData with $BooksAboutAuthorRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      AboutAuthorScreen(productId: productId);
+      AboutAuthorScreen(productType: ProductKind.book, productId: productId);
 }
 
 class BooksCategoryRoute extends GoRouteData with $BooksCategoryRoute {
@@ -47,7 +48,7 @@ class BooksCategoryRoute extends GoRouteData with $BooksCategoryRoute {
   Widget build(BuildContext context, GoRouterState state) =>
       CategoriesTabOverviewScreen(
         categoryKey: categoryKey,
-        storeType: StoreType.books,
+        productKind: ProductKind.book,
         onProductTap: (productId) =>
             BooksProductRoute(productId: productId).push(context),
       );
@@ -55,18 +56,18 @@ class BooksCategoryRoute extends GoRouteData with $BooksCategoryRoute {
 
 class BooksSectionMoreRoute extends GoRouteData with $BooksSectionMoreRoute {
   final String categoryKey;
-  final String titleKey;
+  final String title;
 
   const BooksSectionMoreRoute({
     required this.categoryKey,
-    required this.titleKey,
+    required this.title,
   });
 
   @override
   Widget build(BuildContext context, GoRouterState state) => SectionMoreScreen(
-    storeType: StoreType.books,
+    productKind: ProductKind.book,
     categoryKey: categoryKey,
-    titleKey: titleKey,
+    title: title,
     onProductTap: (productId) =>
         BooksProductRoute(productId: productId).push(context),
   );

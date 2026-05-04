@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
 import 'package:google_play/core/utils/url_launcher.dart';
 import 'package:google_play/features/product/presentation/screens/utils/product_support_data.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
-import 'package:google_play/features/shared/presentation/widgets/custom_widgets/custom_expansion_tile.dart';
-import 'package:google_play/features/shared/presentation/widgets/product_widgets/elements/product_section_header.dart';
+import 'package:google_play/core/presentation/widgets/custom_widgets/custom_expansion_tile.dart';
+import 'package:google_play/features/product/presentation/widgets/elements/product_section_header.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_support_ui_model.dart';
 
 class ProductPageSupportSection extends StatelessWidget {
   final ProductState state;
@@ -58,7 +59,7 @@ class ProductPageSupportSection extends StatelessWidget {
     switch (item.type) {
       case SupportItemDataType.link:
         final icon = item.iconCodePoint != null
-            ? IconData(item.iconCodePoint!, fontFamily: 'MaterialIcons')
+            ? IconData(item.iconCodePoint!)
             : null;
         return SupportItem.link(
           icon: icon,
@@ -67,13 +68,9 @@ class ProductPageSupportSection extends StatelessWidget {
           onTap: item.url != null ? () => launchMyUrl(item.url!) : null,
         );
       case SupportItemDataType.sectionHeader:
-        return SupportItem.sectionHeader(
-          title: item.title ?? '',
-        );
+        return SupportItem.sectionHeader(title: item.title ?? '');
       case SupportItemDataType.infoText:
-        return SupportItem.infoText(
-          title: item.title ?? '',
-        );
+        return SupportItem.infoText(title: item.title ?? '');
     }
   }
 }

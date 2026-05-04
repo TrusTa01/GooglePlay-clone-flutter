@@ -1,45 +1,97 @@
 import 'package:flutter/material.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
+import 'package:google_play/features/product/di/di.dart';
+import 'package:google_play/features/product/domain/use_cases/get_product_by_id_use_case.dart';
+import 'package:google_play/features/product/domain/use_cases/get_similar_products_use_case.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/entity_to_card_mapper.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:google_play/core/l10n/gen/app_localizations.dart';
-import 'package:google_play/di/usecase_providers.dart';
-import 'package:google_play/features/product/domain/usecases/get_product_by_id_usecase.dart';
-import 'package:google_play/features/shared/presentation/providers/locale_provider.dart';
+import 'package:google_play/core/presentation/providers/locale_provider.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_mappers/product_state_mapper.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_view_model.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class ProductViewModel extends _$ProductViewModel {
-  late final GetProductByIdUseCase _getProductByIdUseCase;
-
   @override
-  ProductState build(String productId) {
-    _getProductByIdUseCase = ref.read(getProductByIdUseCaseProvider);
-    Future.microtask(() => loadById(productId));
+  ProductState build((String productId, ProductKind productType) arg) {
+    final locale = ref.watch(localeProvider);
+    final (id, type) = arg;
+
+    FeatureTalker.providerStart(
+      'product.viewmodel',
+      'build',
+      context: {'id': id, 'type': type.name, 'locale': locale?.languageCode},
+    );
+    Future.microtask(() => loadById(id, type, locale: locale));
+
     return const ProductState(isLoading: true);
   }
 
-  Future<void> loadById(String id) async {
-    final locale =
-        ref.read(localeProvider) ?? WidgetsBinding.instance.platformDispatcher.locale;
-    final l10n = lookupAppLocalizations(locale);
+  Future<void> loadById(
+    String id,
+    ProductKind type, {
+    Locale? locale,
+    bool forceRefresh = false,
+  }) async {
+    final effectiveLocale =
+        locale ??
+        ref.read(localeProvider) ??
+        WidgetsBinding.instance.platformDispatcher.locale;
+    final l10n = lookupAppLocalizations(effectiveLocale);
+    final GetProductByIdUseCase getProductById = getProductByIdUseCase(ref);
+    final GetSimilarProductsUseCase getSimilarProducts =
+        getSimilarProductsUseCase(ref);
 
-    state = state.copyWith(isLoading: true, productId: id, errorMessage: null);
+    FeatureTalker.domainStart(
+      'product.viewmodel',
+      'loadById',
+      context: {'id': id, 'type': type.name, 'forceRefresh': forceRefresh},
+    );
+    state = state.copyWith(isLoading: true, id: id, errorMessage: null);
 
-    final product = await _getProductByIdUseCase(id);
+    final product = await getProductById(
+      id: id,
+      type: type,
+      locale: effectiveLocale.languageCode,
+      forceRefresh: forceRefresh,
+    );
 
     if (product == null) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: 'Product not found',
+      FeatureTalker.domainDone(
+        'product.viewmodel',
+        'loadById',
+        context: {'id': id, 'type': type.name},
       );
+      state = state.copyWith(isLoading: false, errorMessage: l10n.emptyNoData);
       return;
     }
 
-    state = const ProductStateMapper().fromEntity(product, l10n, locale);
+    final similarProduct = await getSimilarProducts(
+      product: product,
+      type: type,
+      locale: effectiveLocale.languageCode,
+      pageSize: 10,
+    );
+
+    final baseState = const ProductStateMapper().fromEntity(
+      product,
+      l10n,
+      effectiveLocale,
+    );
+    final cards = similarProduct
+        .map((e) => mapEntityToCard(e, l10n, effectiveLocale))
+        .toList();
+
+    state = baseState.copyWith(isLoading: false, similarProducts: cards);
+    FeatureTalker.domainDone(
+      'product.viewmodel',
+      'loadById',
+      context: {'id': id, 'similarCards': cards},
+    );
   }
 
-  // Сбрасывает состояние
   void clear() => state = const ProductState();
 }

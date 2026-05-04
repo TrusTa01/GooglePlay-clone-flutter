@@ -1,10 +1,13 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/debug/agent_session_log.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:google_play/core/constants/constants.dart';
+
 import 'package:google_play/features/banners/presentation/view_models/ui_models/banner_item_ui_model.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:google_play/features/banners/presentation/widgets/configs/banner_layout_config.dart';
 
 class BannerSection extends HookWidget {
@@ -29,6 +32,8 @@ class BannerSection extends HookWidget {
   Widget build(BuildContext context) {
     // Сохранение состояния при скролле списка
     useAutomaticKeepAlive();
+    // ignore: deprecated_member_use
+    final isMounted = useIsMounted();
 
     if (banners.isEmpty) return const SizedBox.shrink();
 
@@ -64,6 +69,10 @@ class BannerSection extends HookWidget {
       if (!isVisible.value) return null;
 
       final timer = Timer.periodic(const Duration(seconds: 7), (timer) {
+        if (!isMounted()) {
+          timer.cancel();
+          return;
+        }
         if (controller.hasClients) {
           int nextPage = currentPage.value + 1;
           if (nextPage >= bannersCount - 1) {
@@ -84,6 +93,7 @@ class BannerSection extends HookWidget {
     return VisibilityDetector(
       key: Key('banner_section_$title'),
       onVisibilityChanged: (info) {
+        if (!isMounted()) return;
         isVisible.value = info.visibleFraction > 0.1;
       },
       child: Center(
@@ -91,7 +101,6 @@ class BannerSection extends HookWidget {
           constraints: BoxConstraints(
             maxWidth: Constants.sliderMaxContentWidth,
           ),
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -111,11 +120,47 @@ class BannerSection extends HookWidget {
                 padding: EdgeInsets.only(left: contentWidth > 1000 ? 23 : 0),
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
-                    // Пауза таймера при ручном скролле
+                    if (!isMounted()) return true;
+                    // Пауза таймера при ручном скролле. Нельзя менять useState
+                    // (ValueNotifier) синхронно из onNotification — возможен
+                    // ScrollStart во время layout/build → Build scheduled during frame.
+                    void applyVisibility(bool visible) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (!isMounted()) return;
+                        isVisible.value = visible;
+                      });
+                    }
+
                     if (notification is ScrollStartNotification) {
-                      isVisible.value = false;
+                      // #region agent log
+                      unawaited(
+                        agentSessionLog(
+                          hypothesisId: 'H1',
+                          location:
+                              'banner_section.dart:onNotification:ScrollStart',
+                          message: 'defer isVisible=false',
+                          data: {
+                            'depth': notification.depth,
+                          },
+                        ),
+                      );
+                      // #endregion
+                      applyVisibility(false);
                     } else if (notification is ScrollEndNotification) {
-                      isVisible.value = true;
+                      // #region agent log
+                      unawaited(
+                        agentSessionLog(
+                          hypothesisId: 'H1',
+                          location:
+                              'banner_section.dart:onNotification:ScrollEnd',
+                          message: 'defer isVisible=true',
+                          data: {
+                            'depth': notification.depth,
+                          },
+                        ),
+                      );
+                      // #endregion
+                      applyVisibility(true);
                     }
                     return true;
                   },
@@ -123,7 +168,10 @@ class BannerSection extends HookWidget {
                     height: screenHeight / config.heightFactor,
                     child: PageView.builder(
                       key: ValueKey('banner_${config.viewportFraction}'),
-                      onPageChanged: (index) => currentPage.value = index,
+                      onPageChanged: (index) {
+                        if (!isMounted()) return;
+                        currentPage.value = index;
+                      },
                       scrollDirection: Axis.horizontal,
                       controller: controller,
                       itemCount: bannersCount,

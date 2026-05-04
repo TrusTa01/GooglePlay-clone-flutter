@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
-import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
+import 'package:google_play/features/category/data/product_categories_data.dart';
 import 'package:google_play/features/filters/presentation/viewmodels/filter_provider.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 enum FilterType { games, apps, books, kidsAge }
@@ -56,7 +55,9 @@ class FilterSets {
               onSelected: (val) => notifier.updateGameCategory(val),
             ),
             ToggleFilter(
-              label: lookupL10n(l10n, state.selectedRecentFilter),
+              label: state.selectedRecentFilter == 'filterRecent'
+                  ? l10n.filterRecent
+                  : state.selectedRecentFilter,
               isSelected: state.isFilterOnlyMode,
               onSelected: notifier.toggleFilterOnly,
             ),
@@ -100,18 +101,17 @@ class FilterSets {
         break;
 
       case FilterType.kidsAge:
-        activeFilters = state.selectedKidsFilters
-            .map(
-              (ageKey) {
-                final ageLabel = lookupL10n(l10n, ageKey);
-                return ToggleFilter(
-                  label: ageLabel,
-                  isSelected: false,
-                  onSelected: () => onKidsAgeTap?.call(ageLabel),
-                );
-              },
-            )
-            .toList();
+        activeFilters = state.selectedKidsFilters.map((ageKey) {
+          final ageLabel = resolveProductCategoryTitle(
+            l10n,
+            ProductCategoriesData(titleL10nKey: ageKey),
+          );
+          return ToggleFilter(
+            label: ageLabel,
+            isSelected: false,
+            onSelected: () => onKidsAgeTap?.call(ageKey),
+          );
+        }).toList();
         break;
 
       case FilterType.books:

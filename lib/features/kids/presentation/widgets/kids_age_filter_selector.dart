@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class KidsAgeFilterSelector extends ConsumerWidget {

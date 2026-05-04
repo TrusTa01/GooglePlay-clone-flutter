@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show SliverConstraints;
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
 import 'package:google_play/core/extensions/l10n_ext.dart';
-import 'package:google_play/core/l10n/gen/l10n_lookup.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
-import 'package:google_play/features/category/presentation/screens/product_categories_data.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/features/category/data/product_categories_data.dart';
 
 class CategoriesTabScreen extends StatelessWidget {
   final List<ProductCategoriesData> categories;
-  final StoreType storeType;
+  final ProductKind productKind;
   final bool isSliver;
   final ValueChanged<String>? onCategoryTap;
 
   const CategoriesTabScreen({
     super.key,
     required this.categories,
-    required this.storeType,
+    required this.productKind,
     this.isSliver = false,
     this.onCategoryTap,
   });
 
   static Widget asSliver({
     required List<ProductCategoriesData> categories,
-    required StoreType storeType,
+    required ProductKind productKind,
   }) {
     return CategoriesTabScreen(
       categories: categories,
-      storeType: storeType,
+      productKind: productKind,
       isSliver: true,
     );
   }
@@ -62,29 +61,25 @@ class CategoriesTabScreen extends StatelessWidget {
                       _buildCategoryTile(context, categories[index + 1]),
                 ),
               )
-            : LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: Constants.sliderMaxContentWidth,
-                      ),
-                      child: GridView.builder(
-                        primary: false,
-                        padding: EdgeInsets.all(22),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: crossAxisCount,
-                          mainAxisExtent: 56,
-                          mainAxisSpacing: 30,
-                          crossAxisSpacing: 20,
-                        ),
-                        itemCount: categories.length - 1,
-                        itemBuilder: (context, index) =>
-                            _buildCategoryTile(context, categories[index + 1]),
-                      ),
+            : Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: Constants.sliderMaxContentWidth,
+                  ),
+                  child: GridView.builder(
+                    primary: false,
+                    padding: EdgeInsets.all(22),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      mainAxisExtent: 56,
+                      mainAxisSpacing: 30,
+                      crossAxisSpacing: 20,
                     ),
-                  );
-                },
+                    itemCount: categories.length - 1,
+                    itemBuilder: (context, index) =>
+                        _buildCategoryTile(context, categories[index + 1]),
+                  ),
+                ),
               );
       },
     );
@@ -104,9 +99,7 @@ class CategoriesTabScreen extends StatelessWidget {
     ProductCategoriesData category,
   ) {
     final l10n = context.l10n;
-    final displayTitle = category.titleL10nKey != null
-        ? lookupL10n(l10n, category.titleL10nKey!)
-        : (category.title ?? '');
+    final displayTitle = resolveProductCategoryTitle(l10n, category);
     return Padding(
       padding: Constants.horizontalContentPadding,
       child: Material(

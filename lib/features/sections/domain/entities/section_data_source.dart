@@ -1,15 +1,15 @@
-import 'package:google_play/features/product/domain/entities/product_filter.dart';
-
 sealed class SectionDataSource {
   const SectionDataSource();
 }
 
 final class ProductListSource extends SectionDataSource {
-  final List<ProductFilter> filters;
-  const ProductListSource(this.filters);
+  const ProductListSource();
 }
 
 final class BannersSource extends SectionDataSource {
-  final String prefix;
-  const BannersSource(this.prefix);
+  const BannersSource();
+}
+
+final class UnknownSource extends SectionDataSource {
+  const UnknownSource();
 }

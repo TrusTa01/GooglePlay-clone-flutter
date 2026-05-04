@@ -50,7 +50,7 @@ final class KidsAgeCategoryProvider
   }
 }
 
-String _$kidsAgeCategoryHash() => r'27de8f288662ca730937d61e7ff8fc065e925b6a';
+String _$kidsAgeCategoryHash() => r'540a3102b218460a095675de1585605e44958d3e';
 
 final class KidsAgeCategoryFamily extends $Family
     with

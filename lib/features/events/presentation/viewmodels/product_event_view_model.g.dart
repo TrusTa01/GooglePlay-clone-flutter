@@ -16,7 +16,7 @@ final class ProductEventViewModelProvider
     extends $NotifierProvider<ProductEventViewModel, ProductEventState> {
   ProductEventViewModelProvider._({
     required ProductEventViewModelFamily super.from,
-    required (String, StoreType) super.argument,
+    required (String, ProductKind) super.argument,
   }) : super(
          retry: null,
          name: r'productEventViewModelProvider',
@@ -59,7 +59,7 @@ final class ProductEventViewModelProvider
 }
 
 String _$productEventViewModelHash() =>
-    r'0cc5d16dd1a3dd3045a5086cc3b24d84bcf3196a';
+    r'99eb8b036074384ec11c166cd6179d9e75444105';
 
 final class ProductEventViewModelFamily extends $Family
     with
@@ -68,7 +68,7 @@ final class ProductEventViewModelFamily extends $Family
           ProductEventState,
           ProductEventState,
           ProductEventState,
-          (String, StoreType)
+          (String, ProductKind)
         > {
   ProductEventViewModelFamily._()
     : super(
@@ -79,9 +79,9 @@ final class ProductEventViewModelFamily extends $Family
         isAutoDispose: true,
       );
 
-  ProductEventViewModelProvider call(String eventId, StoreType storeType) =>
+  ProductEventViewModelProvider call(String eventId, ProductKind productKind) =>
       ProductEventViewModelProvider._(
-        argument: (eventId, storeType),
+        argument: (eventId, productKind),
         from: this,
       );
 
@@ -90,11 +90,11 @@ final class ProductEventViewModelFamily extends $Family
 }
 
 abstract class _$ProductEventViewModel extends $Notifier<ProductEventState> {
-  late final _$args = ref.$arg as (String, StoreType);
+  late final _$args = ref.$arg as (String, ProductKind);
   String get eventId => _$args.$1;
-  StoreType get storeType => _$args.$2;
+  ProductKind get productKind => _$args.$2;
 
-  ProductEventState build(String eventId, StoreType storeType);
+  ProductEventState build(String eventId, ProductKind productKind);
   @$mustCallSuper
   @override
   void runBuild() {

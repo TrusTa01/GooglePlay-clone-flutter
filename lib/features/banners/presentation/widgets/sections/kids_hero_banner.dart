@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
+
 import 'package:google_play/features/banners/presentation/widgets/configs/kids_hero_banner_layout_config.dart';
 
 class KidsHeroBanner extends StatelessWidget {
@@ -33,11 +35,19 @@ class KidsHeroBanner extends StatelessWidget {
           onTap: onTap,
           child: Stack(
             children: [
-              Image.asset(
+              Image.network(
                 imageAssetPath,
                 height: bannerHeight,
                 width: double.infinity,
                 fit: config.imageFit,
+                loadingBuilder: NetworkImageBuilders.shimmer(
+                  width: double.infinity,
+                  height: bannerHeight,
+                ),
+                errorBuilder: NetworkImageBuilders.placeholder(
+                  width: double.infinity,
+                  height: bannerHeight,
+                ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(

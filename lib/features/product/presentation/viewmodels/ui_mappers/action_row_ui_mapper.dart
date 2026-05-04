@@ -1,3 +1,4 @@
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/action_row_ui_model.dart';
 
@@ -5,8 +6,8 @@ class ActionRowUiMapper {
   const ActionRowUiMapper();
 
   ActionRowUiModel fromStateGrid(ProductState state) {
-    return ActionRowUiModel(
-      id: state.productId,
+    final model = ActionRowUiModel(
+      id: state.id,
       title: state.title,
       creator: state.creator,
       ageLabel: state.ageRating ?? '',
@@ -18,7 +19,7 @@ class ActionRowUiMapper {
       thumbnailCacheWidth: state.smallCacheWidth,
       thumbnailCacheHeight: state.smallCacheHeight,
       thumbnailFit: state.thumbnailFit,
-      ratingText: state.rating.toStringAsFixed(1),
+      ratingText: state.ratingAvgText,
       technicalInfoText: state.technicalInfoFormatted,
       eventText: state.eventText,
       priceText: state.price.isNotEmpty ? state.price : null,
@@ -27,11 +28,17 @@ class ActionRowUiMapper {
       containsPaidContent: state.containsPaidContent,
       showThreeLines: true,
     );
+    FeatureTalker.mapperOut(
+      'product.action_row_ui_mapper',
+      'ProductState -> ActionRowUiModel(grid)',
+      context: {'id': state.id, 'isPaid': state.isPaid, 'isBook': state.isBook},
+    );
+    return model;
   }
 
   ActionRowUiModel fromStatePreview(ProductState state) {
-    return ActionRowUiModel(
-      id: state.productId,
+    final model = ActionRowUiModel(
+      id: state.id,
       title: state.title,
       creator: state.creator,
       ageLabel: state.ageRating ?? '',
@@ -43,7 +50,7 @@ class ActionRowUiMapper {
       thumbnailCacheWidth: state.smallCacheWidth,
       thumbnailCacheHeight: state.smallCacheHeight,
       thumbnailFit: state.thumbnailFit,
-      ratingText: state.rating.toStringAsFixed(1),
+      ratingText: state.ratingAvgText,
       technicalInfoText: state.technicalInfoFormatted,
       eventText: state.eventText,
       priceText: state.price.isNotEmpty ? state.price : null,
@@ -52,5 +59,11 @@ class ActionRowUiMapper {
       containsPaidContent: state.containsPaidContent,
       showThreeLines: false,
     );
+    FeatureTalker.mapperOut(
+      'product.action_row_ui_mapper',
+      'ProductState -> ActionRowUiModel(preview)',
+      context: {'id': state.id, 'isPaid': state.isPaid, 'isBook': state.isBook},
+    );
+    return model;
   }
 }

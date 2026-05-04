@@ -25,23 +25,58 @@ dependencies:
   # state management
   hooks_riverpod: ^3.3.1
   flutter_hooks: ^0.21.0
+
   # data
   http: ^1.6.0
   json_annotation: ^4.8.1
   freezed_annotation: ^3.1.0
   riverpod_annotation: ^4.0.2
   faker: ^2.2.0
+  uuid: ^4.5.1
+  supabase: ^2.10.3
+  supabase_flutter: ^2.12.1
+  dotenv: ^4.2.0
+  flutter_dotenv: ^6.0.0
+
   # localization
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.2
   flutter_localized_locales: ^2.0.5
+
   # navigation
   go_router: ^17.1.0
   go_router_builder: ^4.2.0
 
+  # local storage
+  drift: ">=2.31.0 <2.32.0"
+  drift_flutter: ^0.2.8
+  path_provider: ^2.1.5
+  path: ^1.9.1
+  shared_preferences: ^2.5.5
+
+  # auth
+  google_sign_in: ^7.2.0
+
+  # tests
+  mocktail: ^1.0.5
+
+  # logger
+  talker_flutter: ^5.1.16
+  talker_riverpod_logger: ^5.1.16
+  plugin_platform_interface: ^2.1.8
+  path_provider_platform_interface: ^2.1.2
+
 dev_dependencies:
+  # tests
+  flutter_test:
+    sdk: flutter
+  
+  # lints
   flutter_lints: ^6.0.0
+
+  # local storage
+  drift_dev: ">=2.31.0 <2.32.0"
 
   # generators
   build_runner: ^2.4.10
@@ -54,24 +89,7 @@ flutter:
   generate: true
 
   assets:
-    # images
-    - assets/images/
-    - assets/images/games_screenshots/
-    - assets/images/apps_screenshots/
-    - assets/images/kids_tab/
-    - assets/images/notifications/
-    - assets/images/banners/
-
-    # icons
-    - assets/icons/
-    - assets/icons/apps_icons/
-    - assets/icons/books_icons/
-    - assets/icons/nav_bar_icons/
-    - assets/icons/games_icons/
-
-    # data
-    - assets/data/
-    - assets/config/
+    - .env
 
   fonts:
     - family: Nunito

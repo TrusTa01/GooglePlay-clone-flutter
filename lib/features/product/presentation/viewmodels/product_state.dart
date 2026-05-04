@@ -1,52 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_card_ui_model.dart';
+import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_support_ui_model.dart';
 
 part 'product_state.freezed.dart';
-
-// Одна строка блока 'Подробнее'
-class InfoRowData {
-  final String label;
-  final String value;
-  final bool hasTextButton;
-
-  const InfoRowData({
-    required this.label,
-    required this.value,
-    this.hasTextButton = false,
-  });
-}
-
-// Тип элемента блока поддержки
-enum SupportItemDataType { link, sectionHeader, infoText }
-
-// Данные одного элемента поддержки (иконка по codePoint, url для onTap)
-class SupportItemData {
-  final SupportItemDataType type;
-  final int? iconCodePoint;
-  final String? title;
-  final String? subtitle;
-  final String? url;
-
-  const SupportItemData({
-    required this.type,
-    this.iconCodePoint,
-    this.title,
-    this.subtitle,
-    this.url,
-  });
-}
-
-// Тип секции поддержки на странице продукта
-enum SupportSectionType { none, aboutAuthor, appSupport }
 
 @freezed
 abstract class ProductState with _$ProductState {
   const factory ProductState({
     @Default(false) bool isLoading,
     String? errorMessage,
-
-    // Id продукта для навигации (About Author, Permissions)
-    @Default('') String productId,
+    @Default('') String id,
+    @Default('') String type,
+    @Default('USD') String currencyCode,
 
     // Базовая информация
     @Default('') String title,
@@ -57,7 +23,14 @@ abstract class ProductState with _$ProductState {
     @Default('') String description,
     @Default('') String url,
     @Default('') String price,
-    @Default(0) double rating,
+
+    /// Средний рейтинг
+    @Default('') String ratingAvgText,
+    @Default(<String, int>{}) Map<String, int> ratingDistribution,
+    @Default(<Map<String, dynamic>>[]) List<Map<String, dynamic>> topReviews,
+
+    /// Отзывы
+    @Default(0) int reviewsCountRaw,
     @Default('') String reviewsCount,
     @Default('') String technicalInfo,
     @Default('') String technicalInfoFormatted,
@@ -74,7 +47,7 @@ abstract class ProductState with _$ProductState {
     @Default(false) bool isEbook,
     int? ageRatingValue,
 
-    // Конфигурация Thumbnail — как в ProductUIConfig (product_page_header, product_app_bar_leading)
+    // Конфигурация Thumbnail
     @Default(BoxFit.cover) BoxFit thumbnailFit,
     @Default(60) double iconWidth,
     @Default(60) double iconHeight,
@@ -98,6 +71,9 @@ abstract class ProductState with _$ProductState {
     @Default(false) bool showAudioSampleButton,
     @Default(false) bool showPreviewCard,
 
+    // Секция 'Похожие продукты'
+    @Default([]) List<ProductCardUiModel> similarProducts,
+
     // Секция 'Что нового'
     @Default(false) bool showWhatsNewSection,
     String? whatsNewText,
@@ -110,12 +86,42 @@ abstract class ProductState with _$ProductState {
     @Default(false) bool showAchievements,
     @Default(false) bool containsPaidContent,
 
+    /// Имена категорий
+    @Default(<String>[]) List<String> categories,
+    @Default(false) bool showCategories,
+
     // Теги (для приложений/игр)
     @Default([]) List<String> tags,
     @Default(false) bool showTags,
 
+    // Software (app / game)
+    @Default(<String>[]) List<String> screenshots,
+    @Default(<String>[]) List<String> supportedLanguages,
+    @Default(false) bool isKidsFriendly,
+
+    // Только для приложений
+    @Default('') String packageName,
+
+    // Game
+    @Default(<String>[]) List<String> achievements,
+    bool? isOnline,
+    bool? hasMultiplayer,
+    String? gameModes,
+    bool? hasControllerSupport,
+
+    // Book
+    int? audioDuration,
+    String? narrator,
+    @Default(false) bool isSeries,
+    String? seriesName,
+    int? seriesNumber,
+    @Default(false) bool sampleAvailable,
+    @Default(false) bool isAbridged,
+    DateTime? publicationDate,
+    @Default(<String>[]) List<String> awards,
+
     // Инфо-ряды и поддержка
-    @Default([]) List<InfoRowData> infoRows,
+    @Default([]) List<SupportInfoRowData> infoRows,
     @Default(SupportSectionType.none) SupportSectionType supportSectionType,
     @Default([]) List<SupportItemData> supportItems,
   }) = _ProductDetailsState;

@@ -1,0 +1,54 @@
+import 'package:google_play/core/extensions/localized_str_ext.dart';
+import 'package:google_play/core/logging/feature_talker.dart';
+import 'package:google_play/features/product/data/models/network/product_dto.dart';
+import 'package:google_play/features/product/domain/entities/book_entity.dart';
+
+extension BookMapper on BookDto {
+  BookEntity toEntity(String locale) {
+    final publisherName = publisher.name.display(locale);
+    final publisherDescription = publisher.description.display(locale);
+
+    final entity = BookEntity(
+      type: type,
+      id: id,
+      title: title.display(locale),
+      creator: publisherName,
+      shortDescription: shortDescription.display(locale),
+      description: description.display(locale),
+      releaseDate: releaseDate,
+      reviewsCount: reviewsCount,
+      ratingAvg: ratingAvg,
+      ratingDistribution: ratingDistribution,
+      topReviews: topReviews,
+      iconUrl: iconUrl,
+      isPaid: isPaid,
+      price: price,
+      currencyCode: currencyCode,
+      discountPrice: discountPrice,
+      creatorDescription: publisherDescription,
+      url: url,
+      tags: tags.map((t) => t.name.display(locale)).toList(),
+      categories: categories.map((c) => c.name.display(locale)).toList(),
+      pageCount: pageCount,
+      publisher: publisherName,
+      language: language,
+      format: format,
+      hasAudioVersion: hasAudioVersion,
+      audioDuration: audioDuration,
+      narrator: narrator,
+      isSeries: isSeries,
+      seriesName: seriesName,
+      seriesNumber: seriesNumber,
+      sampleAvailable: sampleAvailable,
+      isAbridged: isAbridged,
+      publicationDate: publicationDate,
+      awards: awards,
+    );
+    FeatureTalker.mapperOut(
+      'product.book_mapper',
+      'BookDto -> BookEntity',
+      context: {'id': id, 'locale': locale, 'title': entity.title},
+    );
+    return entity;
+  }
+}

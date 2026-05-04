@@ -1,23 +1,18 @@
+import 'package:google_play/core/logging/feature_talker.dart';
 import 'package:google_play/features/product/presentation/viewmodels/product_state.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_card_ui_model.dart';
 
 class ProductCardMapper {
   const ProductCardMapper();
-  
+
   /// Маппинг параметров карточки
   ProductCardUiModel mapToProductCardUi(ProductState state) {
     final bool showPrice = state.isPaid && state.price.isNotEmpty;
-
-    final String mainTagText = showPrice
-        ? state.price
-        : state.rating > 0
-        ? state.rating.toStringAsFixed(1)
-        : '';
-
+    final String mainTagText = showPrice ? state.price : state.ratingAvgText;
     final String? mainTagIconPath = showPrice ? null : 'assets/icons/star.png';
 
-    return ProductCardUiModel(
-      id: state.productId,
+    final model = ProductCardUiModel(
+      id: state.id,
       title: state.title,
       iconUrl: state.iconUrl,
       mainTagText: mainTagText,
@@ -29,5 +24,11 @@ class ProductCardMapper {
       cacheHeight: state.cacheHeight,
       thumbnailFit: state.thumbnailFit,
     );
+    FeatureTalker.mapperOut(
+      'product.product_card_mapper',
+      'ProductCardUiModel',
+      context: {'id': state.id, 'isPaid': state.isPaid, 'showPrice': showPrice},
+    );
+    return model;
   }
 }

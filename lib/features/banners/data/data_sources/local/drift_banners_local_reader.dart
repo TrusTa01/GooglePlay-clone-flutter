@@ -1,0 +1,69 @@
+part of 'drift_banners_local_data_source.dart';
+
+class _DriftBannerLocalReader {
+  final AppDatabase _db;
+
+  const _DriftBannerLocalReader(this._db);
+
+  Future<List<LocalBannerBundle>> getBanners({
+    required BannerKind type,
+    required int page,
+    required int pageSize,
+  }) async {
+    final banners =
+        await (_db.select(_db.cachedBanners)
+              ..where((b) => b.type.equals(type.name))
+              ..orderBy([(b) => OrderingTerm.desc(b.createdAt)]))
+            .withPagination(page, pageSize)
+            .get();
+
+    return _loadBundlesForBanners(banners);
+  }
+
+  Stream<List<LocalBannerBundle>> watchBanners({
+    required BannerKind type,
+    required int page,
+    required int pageSize,
+  }) {
+    final query =
+        (_db.select(_db.cachedBanners)
+              ..where((b) => b.type.equals(type.name))
+              ..orderBy([(b) => OrderingTerm.desc(b.createdAt)]))
+            .withPagination(page, pageSize)
+            .watch();
+    return query.asyncMap(_loadBundlesForBanners);
+  }
+
+  Future<LocalBannerBundle?> getBannerById(String id) async {
+    final banner = await (_db.select(
+      _db.cachedBanners,
+    )..where((b) => b.id.equals(id))).getSingleOrNull();
+
+    if (banner == null) return null;
+    return _buildBundle(banner);
+  }
+
+  Future<List<LocalBannerBundle>> _loadBundlesForBanners(
+    List<CachedBanner> banners,
+  ) {
+    if (banners.isEmpty) return Future.value(const <LocalBannerBundle>[]);
+    return Future.wait(banners.map(_buildBundle));
+  }
+
+  Future<LocalBannerBundle> _buildBundle(CachedBanner banner) async {
+    final bannerId = banner.id;
+    final event = banner.type == 'event'
+        ? await (_db.select(
+            _db.cachedEventBanners,
+          )..where((e) => e.bannerId.equals(bannerId))).getSingleOrNull()
+        : null;
+
+    final action = banner.type == 'action'
+        ? await (_db.select(
+            _db.cachedActionBanners,
+          )..where((a) => a.bannerId.equals(bannerId))).getSingleOrNull()
+        : null;
+
+    return LocalBannerBundle(banner: banner, event: event, action: action);
+  }
+}

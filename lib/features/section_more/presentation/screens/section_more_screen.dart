@@ -1,33 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:google_play/core/constants/constants.dart';
-import 'package:google_play/core/domain/entities/store_type.dart';
-import 'package:google_play/features/shared/presentation/screens/error_screen.dart';
-import 'package:google_play/features/section_more/presentation/viewmodels/section_more_state.dart';
+import 'package:google_play/core/presentation/screens/error_screen.dart';
+import 'package:google_play/core/presentation/widgets/widgets.dart';
+import 'package:google_play/core/domain/entities/product_kind.dart';
+import 'package:google_play/features/category/presentation/widgets/category_overview_sliver_scroll.dart';
+import 'package:google_play/features/section_more/presentation/viewmodels/section_more_args.dart';
 import 'package:google_play/features/section_more/presentation/viewmodels/section_more_view_model.dart';
-import 'package:google_play/features/shared/presentation/widgets/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SectionMoreScreen extends ConsumerWidget {
-  final StoreType storeType;
+  final ProductKind productKind;
   final String categoryKey;
-  final String titleKey;
+  final String title;
   final ValueChanged<String>? onProductTap;
 
   const SectionMoreScreen({
     super.key,
-    required this.storeType,
+    required this.productKind,
     required this.categoryKey,
-    required this.titleKey,
+    required this.title,
     this.onProductTap,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final args = SectionMoreArgs(
-      storeType: storeType,
+      productKind: productKind,
       categoryKey: categoryKey,
-      titleKey: titleKey,
+      barTitle: title,
     );
     final stateAsync = ref.watch(sectionMoreViewModelProvider(args));
 
@@ -39,59 +38,14 @@ class SectionMoreScreen extends ConsumerWidget {
           onRetry: () => ref.invalidate(sectionMoreViewModelProvider(args)),
         ),
       ),
-      data: (state) =>
-          _SectionMoreContent(state: state, onProductTap: onProductTap),
-    );
-  }
-}
-
-class _SectionMoreContent extends StatelessWidget {
-  final SectionMoreState state;
-  final ValueChanged<String>? onProductTap;
-
-  const _SectionMoreContent({required this.state, this.onProductTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: Constants.sliderMaxContentWidth,
-          ),
-          child: SafeArea(
-            child: CustomScrollView(
-              slivers: [
-                SimpleSliverAppBar(
-                  showLogo: false,
-                  showBackButton: true,
-                  onLeadingPressed: () => context.pop(),
-                  title: AppBarTitle(title: state.title),
-                ),
-                if (state.isEmpty)
-                  const SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Center(child: Text('No products')),
-                  )
-                else if (state.isGame)
-                  ProductPreviewSection.asSliver(
-                    productIds: state.previewModel!.productIds,
-                    screenshotsByProductId:
-                        state.previewModel!.screenshotsByProductId,
-                    actionRowsByProductId:
-                        state.previewModel!.actionRowsByProductId,
-                    onProductTap: onProductTap,
-                  )
-                else
-                  CategoryDetailsSection.asSliver(
-                    items: state.items,
-                    onProductTap: onProductTap != null
-                        ? (item) => onProductTap!(item.id)
-                        : null,
-                  ),
-              ],
-            ),
-          ),
+      data: (state) => Scaffold(
+        body: CategoryOverviewSliverScroll(
+          appBarTitle: state.title,
+          isEmpty: state.isEmpty,
+          isGame: state.isGame,
+          previewModel: state.previewModel,
+          items: state.items,
+          onProductTap: onProductTap,
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:google_play/features/banners/presentation/view_models/ui_models/banner_item_ui_model.dart';
 import 'package:google_play/features/product/presentation/viewmodels/ui_models/product_ui_models.dart';
 
 sealed class SectionPayload {
@@ -12,15 +13,15 @@ final class BannersPayload extends SectionPayload {
 final class CarouselPayload extends SectionPayload {
   final List<ProductCardUiModel> items;
   final String? categoryKey;
-  final String? titleKey;
-  const CarouselPayload(this.items, {this.categoryKey, this.titleKey});
+  final String? title;
+  const CarouselPayload(this.items, {this.categoryKey, this.title});
 }
 
 final class GridPayload extends SectionPayload {
   final List<ActionRowUiModel> items;
   final String? categoryKey;
-  final String? titleKey;
-  const GridPayload(this.items, {this.categoryKey, this.titleKey});
+  final String? title;
+  const GridPayload(this.items, {this.categoryKey, this.title});
 }
 
 final class PreviewPayload extends SectionPayload {

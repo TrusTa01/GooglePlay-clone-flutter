@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_play/core/constants/constants.dart';
+import 'package:google_play/core/constants/global_constants.dart';
+import 'package:google_play/core/presentation/widgets/components/images/network_image_builders.dart';
 import 'package:google_play/features/banners/presentation/view_models/ui_models/event_hero_banner_ui_model.dart';
 
 class EventHeroBanner extends StatelessWidget {
@@ -21,12 +22,20 @@ class EventHeroBanner extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             // Background image
-            Image.asset(
+            Image.network(
               model.imageAssetPath,
               fit: BoxFit.cover,
               cacheHeight:
                   (bannerHeight * MediaQuery.of(context).devicePixelRatio)
                       .toInt(),
+              loadingBuilder: NetworkImageBuilders.shimmer(
+                width: double.infinity,
+                height: bannerHeight,
+              ),
+              errorBuilder: NetworkImageBuilders.placeholder(
+                width: double.infinity,
+                height: bannerHeight,
+              ),
             ),
 
             // Gradient overlay for text readability

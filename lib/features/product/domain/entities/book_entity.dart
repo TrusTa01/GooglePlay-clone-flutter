@@ -2,7 +2,7 @@ import 'package:google_play/features/product/domain/entities/product_entity.dart
 
 final class BookEntity extends ProductEntity {
   final String publisher; // Издатель
-  final String pageCount; // Кол-во страниц
+  final int pageCount; // Кол-во страниц
   final String language; // Язык
   final String format; // Формат
   final bool hasAudioVersion; // Есть аудиокнига
@@ -14,8 +14,9 @@ final class BookEntity extends ProductEntity {
   final bool sampleAvailable; // Есть бесплатный фрагмент
   final bool isAbridged; // Сокращенное издание
   final DateTime publicationDate; // Дата публикации
+  final List<String> awards; // Награды
 
-  BookEntity({
+  const BookEntity({
     required super.type,
     required super.id,
     required super.title,
@@ -23,8 +24,10 @@ final class BookEntity extends ProductEntity {
     required super.shortDescription,
     required super.description,
     required super.releaseDate,
-    required super.rating,
     required super.reviewsCount,
+    super.ratingAvg = 0,
+    super.ratingDistribution = const <String, int>{},
+    super.topReviews = const <Map<String, dynamic>>[],
     required super.iconUrl,
     required super.isPaid,
     required super.price,
@@ -47,14 +50,15 @@ final class BookEntity extends ProductEntity {
     required this.sampleAvailable,
     required this.isAbridged,
     required this.publicationDate,
+    this.awards = const [],
   });
 
   /// Жанры книги (то же, что [ProductEntity.categories]; алиас для ясности в контексте книг)
   List<String> get genres => categories;
 
-  /// Электронная книга (не аудио).
+  /// Электронная книга (не аудио)
   bool get isEbook => !format.toLowerCase().contains('аудио');
 
   @override
-  String get technicalInfo => pageCount;
+  String get technicalInfo => pageCount.toString();
 }
